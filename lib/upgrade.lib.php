@@ -10,6 +10,7 @@ class G5Update {
     public $now_version = null;
     
     // token값 입력 필요
+    // token값이 없는 경우, 1시간에 60번의 데이터조회가 가능함
     private $token = null;
     
     private $url = "https://api.github.com";
@@ -236,7 +237,7 @@ class G5Update {
     }
 
     public function getApiCurlResult($option, $param1 = null, $param2 = null) {
-        if($this->token == null) return false;
+        // if($this->token == null) return false;
         $url = "https://api.github.com";
         switch($option) {
             case "version": 
@@ -272,7 +273,7 @@ class G5Update {
             CURLOPT_FOLLOWLOCATION => 1,
             CURLOPT_FAILONERROR => true,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: token  ' . $this->token
+                // 'Authorization: token  ' . $this->token
             ),
         ));
     
