@@ -26,6 +26,7 @@ if($target_version == null) alert("목표버전 정보가 입력되지 않았습
 if($port == null) alert("포트가 입력되지 않았습니다.");
 if($username == null)  alert("{$port}계정명이 입력되지 않았습니다.");
 if($userpassword == null) alert("{$port} 비밀번호가 입력되지 않았습니다.");
+if($target_version == 'v'.G5_GNUBOARD_VER) alert("현재버전과 목표버전이 동일합니다.");
 
 $conn_result = $g5['update']->connect($_SERVER['HTTP_HOST'], $port, $username, $userpassword);
 if($conn_result == false) alert("연결에 실패했습니다.");
@@ -59,8 +60,10 @@ if($compare_list == false) alert("파일 비교에 실패했습니다.");
         <?php } ?>
         <?php foreach($list as $key => $var) {
             $txt = '';
-            if(in_array($var, $compare_list['item'])) {
-                $txt = " (변경)";
+            if(isset($var) && isset($compare_list['item'])) {
+                if(in_array($var, $compare_list['item'])) {
+                    $txt = " (변경)";
+                }    
             } ?>
             <p>파일위치 : <?php echo $var.$txt; ?><p>
         <?php } ?>

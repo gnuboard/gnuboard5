@@ -19,9 +19,6 @@ class G5Update {
     private $conn;
     private $port;
     private $connPath;
-    private $hostname;
-    private $username;
-    private $userPassword;
 
     public function __construct() {  }
 
@@ -61,6 +58,22 @@ class G5Update {
         }
 
         return false;
+    }
+
+    public function disconnect() {
+        $this->port = $port;
+
+        if($this->port == 'ftp') {
+            ftp_close($this->conn);
+            $this->connPath = null;
+        } else if($this->port == 'sftp') {
+            ssh2_disconnect($this->conn);
+            $this->connPath = null;
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     public function getConn() {
@@ -108,7 +121,12 @@ class G5Update {
         if($content == false) return false;
 
         if($this->port == 'ftp') {
-            // ftp_put()
+            if(ftp_nlist($this->conn, dirname($originPath)) == false) {
+                ftp_mkdir($this->conn, dirname($originPath));
+            }
+            
+            $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
+            if($result == false) return false;
         } else if($this->port == 'sftp') {
             if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
                 if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
@@ -162,14 +180,11 @@ class G5Update {
 
             if(!file_exists($now_file_path)) continue;
             if(!file_exists($release_file_path)) continue;
-            
-            $now_fp = @fopen($now_file_path, 'r');
-            $release_fp = @fopen($release_file_path, 'r');
 
-            $now_content = @fread($now_fp, filesize($now_file_path));
-            $release_content = @fread($release_fp, filesize($release_file_path));
+            $now_content = file_get_contents($now_file_path, true);
+            $release_content = file_get_contents($release_file_path, true);
 
-            if($now_content != $release_content) {
+            if($now_content !== $release_content) {
                 $check['type'] = 'N';
                 $check['item'][] = $var;
             }
@@ -191,28 +206,33 @@ class G5Update {
     }
 
     public function getVersionCompareList() {
-        if($this->now_version == null || $this->target_version == null) return false;
+        try {
+            if($this->now_version == null || $this->target_version == null) throw new Exception("현재버전 및 목표버전이 설정되지 않았습니다.");
+            if($this->now_version == $this->target_version) throw new Exception("동일버전으로는 업데이트가 불가능합니다.");
 
-        $version_list = $this->getVersionList();
-        if($version_list == false) return false;
+            $version_list = $this->getVersionList();
+            if($version_list == false) throw new Exception("버전리스트를 가져오는데 실패했습니다.");
 
-        // 숫자가 작을수록 상위버전
-        $now_version_num = array_search($this->now_version, $version_list);
-        $target_version_num = array_search($this->target_version, $version_list);
+            // 숫자가 작을수록 상위버전
+            $now_version_num = array_search($this->now_version, $version_list);
+            $target_version_num = array_search($this->target_version, $version_list);
 
-        if($now_version_num > $target_version_num) {
-            $result = $this->getApiCurlResult("compare", $this->now_version, $this->target_version);
-        } else {
-            $result = $this->getApiCurlResult("compare", $this->target_version, $this->now_version);
+            if($now_version_num > $target_version_num) {
+                $result = $this->getApiCurlResult("compare", $this->now_version, $this->target_version);
+            } else {
+                $result = $this->getApiCurlResult("compare", $this->target_version, $this->now_version);
+            }
+            
+            if($result == false) throw new Exception("비교리스트확인 통신에 실패했습니다.");
+
+            foreach($result->files as $key => $var) {
+                $this->compare_list[] = $var->filename;
+            }
+
+            return $this->compare_list;
+        } catch (Exception $e) {
+            return false;
         }
-        
-        if($result == false) return false;
-
-        foreach($result->files as $key => $var) {
-            $this->compare_list[] = $var->filename;
-        }
-
-        return $this->compare_list;
     }
 
     public function getApiCurlResult($option, $param1 = null, $param2 = null) {
