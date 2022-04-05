@@ -5,14 +5,31 @@ include_once('./_common.php');
 $g5['title'] = '그누보드 업데이트';
 include_once ('./admin.head.php');
 
+$this_version = G5_GNUBOARD_VER;
+
 $version_list = $g5['update']->getVersionList();
 $latest_version = $g5['update']->getLatestVersion();
 if($latest_version == false) $message = "정보조회에 실패했습니다.";
 
-$this_version = G5_GNUBOARD_VER;
+$contents = $g5['update']->getVersionModifyContentList();
+
+$content_replace = array();
+foreach($contents as $key => $var) {
+    $content = $var;
+    preg_match_all('/(?:(?:https?|ftp):)?\/\/[a-z0-9+&@#\/%?=~_|!:,.;]*[a-z0-9+&@#\/%=~_|]/i', $var, $match);
+    foreach($match[0] as $key2 => $var2) {
+        $content = str_replace($var2, "<a href=\"".$var2."\" target=\"_blank\" class=\"a_style\">1234</a>", $content);
+    }
+
+    $content_replace[$key] = $content;
+}
 ?>
 
 <?php if($latest_version != false) { ?>
+<style>
+    .a_style {font-weight:400;padding:0.2em 0.4em;margin: 0;font-size: 12px;background-color: #ddf4ff;border-radius: 6px; border:1px; color: #0969da;}
+    .content_title {font-size:16px; font-weight:bold;}
+</style>
 <div class="version_box">
     <form method="POST" name="update_box" class="update_box" action="./upgrade_step1.php" onsubmit="return update_submit(this);">
         <input type="hidden" name="compare_check" value="0">
@@ -62,7 +79,16 @@ $this_version = G5_GNUBOARD_VER;
         <button type="button" class="btn btn_connect_check">ftp 연결확인</button>
         <?php } ?>
     </form>
-
+    <div>
+        <?php if(!empty($content_replace)) { ?>
+            <?php foreach($content_replace as $key => $var) {
+                    echo "<p class=\"content_title\">".$key." 버전 수정</p>";
+                    echo "<p style=\"white-space:pre-line; margin-bottm:20px;\">";
+                    echo htmlspecialchars_decode($var, ENT_HTML5);
+                    echo "</p><br>";
+            } ?>
+        <?php } ?>
+    </div>
 </div>
 <?php } else { ?>
 <div class="version_box">

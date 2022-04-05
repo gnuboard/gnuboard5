@@ -16,6 +16,7 @@ class G5Update {
     private $url = "https://api.github.com";
     private $version_list = array();
     private $compare_list = array();
+    public $patch = array();
 
     private $conn;
     private $port;
@@ -114,12 +115,41 @@ class G5Update {
         return $this->version_list;
     }
 
+    public function getVersionModifyContentList() {
+        $list = $this->getVersionList();
+        if($list == false) return false;
+
+        $version_content = array();
+        foreach($list as $key => $var) {
+            $result = $this->getVersionModifyContent($var);
+            if($result == false) return false;
+
+            $version_content[$var] = $result->body;
+        }
+
+        return $version_content;
+    }
+
+    public function getVersionModifyContent($tag = null) {
+        if($tag == null) return false;
+        $result = $this->getApiCurlResult('modify', $tag);
+        if($result == false) return false;
+
+        return $result;
+    }
+
     public function writeUpdateFile($originPath, $changePath) {
         if($this->conn == false) return false;
         
-        $fp = fopen($changePath, 'r');
-        $content = @fread($fp, filesize($changePath));
-        if($content == false) return false;
+        $exist = true;
+        if(!file_exists($changePath)) {
+            $exist = false;
+            $content = "";
+        } else {
+            $fp = fopen($changePath, 'r');
+            $content = @fread($fp, filesize($changePath));
+            if($content == false) return false;
+        }        
 
         if($this->port == 'ftp') {
             if(ftp_nlist($this->conn, dirname($originPath)) == false) {
@@ -129,13 +159,19 @@ class G5Update {
             $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
             if($result == false) return false;
         } else if($this->port == 'sftp') {
-            if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
-                $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
+            if($exist == false) {
+                if(file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                    ssh2_sftp_unlink($this->connPath, $originPath);
+                }
             } else {
-                $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
+                if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                    if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
+                    $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
+                } else {
+                    $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
+                }
+                if($result == false) return false;
             }
-            if($result == false) return false;
         }
 
         return true;
@@ -250,6 +286,10 @@ class G5Update {
             case "zip":
                 if($param1 == null) return false;
                 $url .= "/repos/gnuboard/gnuboard5/zipball/".$param1;
+                break;
+            case "modify":
+                if($param1 == null) return false;
+                $url .= "/repos/gnuboard/gnuboard5/releases/tags/".$param1;
                 break;
             default:
                 $url = false;
