@@ -22,21 +22,21 @@ $username = isset($_POST['username']) ? $_POST['username'] : null;
 $userpassword = isset($_POST['password']) ? $_POST['password'] : null;
 $port = isset($_POST['port']) ? $_POST['port'] : null;
 
-if($target_version == null) alert("목표버전 정보가 입력되지 않았습니다.");
-if($port == null) alert("포트가 입력되지 않았습니다.");
-if($username == null)  alert("{$port}계정명이 입력되지 않았습니다.");
-if($userpassword == null) alert("{$port} 비밀번호가 입력되지 않았습니다.");
-if($target_version == 'v'.G5_GNUBOARD_VER) alert("현재버전과 목표버전이 동일합니다.");
+if($target_version == null) die("목표버전 정보가 입력되지 않았습니다.");
+if($port == null) die("포트가 입력되지 않았습니다.");
+if($username == null)  die("{$port}계정명이 입력되지 않았습니다.");
+if($userpassword == null) die("{$port} 비밀번호가 입력되지 않았습니다.");
+if($target_version == 'v'.G5_GNUBOARD_VER) die("현재버전과 목표버전이 동일합니다.");
 
 $conn_result = $g5['update']->connect($_SERVER['HTTP_HOST'], $port, $username, $userpassword);
-if($conn_result == false) alert("연결에 실패했습니다.");
+if($conn_result == false) die("연결에 실패했습니다.");
 
 $g5['update']->setTargetVersion($version_list);
 $list = $g5['update']->getVersionCompareList();
-if($list == null) alert("비교파일리스트가 존재하지 않습니다.");
+if($list == null) die("비교파일리스트가 존재하지 않습니다.");
 
 $compare_list = $g5['update']->checkSameVersionComparison($list);
-if($compare_list == false) alert("파일 비교에 실패했습니다.");
+if($compare_list == false) die("파일 비교에 실패했습니다.");
 ?>
 
 <div class="version_box">

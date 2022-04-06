@@ -11,14 +11,14 @@ $userpassword = isset($_POST['password']) ? $_POST['password'] : null;
 $port = isset($_POST['port']) ? $_POST['port'] : null;
 
 $conn_result = $g5['update']->connect($_SERVER['HTTP_HOST'], $port, $username, $password);
-if($conn_result == false) alert("연결에 실패했습니다.");
+if($conn_result == false) die("연결에 실패했습니다.");
 
 $g5['update']->setTargetVersion($target_version);
 
-if($g5['update']->target_version == $g5['update']->now_version) alert("목표버전이 현재버전과 동일합니다.");
+if($g5['update']->target_version == $g5['update']->now_version) die("목표버전이 현재버전과 동일합니다.");
 
 $list = $g5['update']->getVersionCompareList();
-if($list == false) alert("비교파일리스트가 존재하지 않습니다.");
+if($list == false) die("비교파일리스트가 존재하지 않습니다.");
 
 $result = $g5['update']->downloadVersion($target_version);
 if($result == false) die("목표버전 다운로드에 실패했습니다.");
@@ -27,11 +27,13 @@ echo $g5['update']->targetVersion." 버전 파일 다운로드 완료<br>";
 
 foreach($list as $key => $var) {
     $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_DATA_PATH.'/update/'.$target_version.'/'.$var);
-    if($result == false) { 
-        echo $var." 업데이트 실패<br>";
-    } else {
-        echo $var." 업데이트 성공<br>";
+
+    echo $var;
+
+    if($result != false) { 
+        echo ": 업데이트 성공";
     }
+    echo "<br>";
 }
 
 $g5['update']->disconnect();

@@ -139,42 +139,44 @@ class G5Update {
     }
 
     public function writeUpdateFile($originPath, $changePath) {
-        if($this->conn == false) return false;
+        try {
+            if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
         
-        $exist = true;
-        if(!file_exists($changePath)) {
-            $exist = false;
-            $content = "";
-        } else {
+            if(!file_exists($changePath)) throw new Exception("업데이트에 존재하지 않는 파일입니다.");
+
             $fp = fopen($changePath, 'r');
             $content = @fread($fp, filesize($changePath));
-            if($content == false) return false;
-        }        
+            if($content == false) throw new Exception("파일을 여는데 실패했습니다.");
 
-        if($this->port == 'ftp') {
-            if(ftp_nlist($this->conn, dirname($originPath)) == false) {
-                ftp_mkdir($this->conn, dirname($originPath));
-            }
-            
-            $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
-            if($result == false) return false;
-        } else if($this->port == 'sftp') {
-            if($exist == false) {
-                if(file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                    ssh2_sftp_unlink($this->connPath, $originPath);
+            if($this->port == 'ftp') {
+                if(ftp_nlist($this->conn, dirname($originPath)) == false) {
+                    ftp_mkdir($this->conn, dirname($originPath));
                 }
-            } else {
-                if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                    if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
-                    $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
+                
+                $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
+                if($result == false) throw new Exception("ftp를 통한 파일전송에 실패했습니다.");
+            } else if($this->port == 'sftp') {
+                if($exist == false) {
+                    if(file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                        ssh2_sftp_unlink($this->connPath, $originPath);
+                    }
                 } else {
-                    $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
-                }
-                if($result == false) return false;
-            }
-        }
+                    if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                        if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
+                        $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
+                    } else {
+                        $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
+                    }
 
-        return true;
+                    if($result == false) throw new Exception("sftp를 통한 파일전송에 실패했습니다.");
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            print_r($e->getMessage());
+            return false;
+        }
     }
 
     public function downloadVersion($version = null) {
