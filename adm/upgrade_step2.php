@@ -23,23 +23,39 @@ if($list == false) die("비교파일리스트가 존재하지 않습니다.");
 $result = $g5['update']->downloadVersion($target_version);
 if($result == false) die("목표버전 다운로드에 실패했습니다.");
 
-echo $g5['update']->targetVersion." 버전 파일 다운로드 완료<br>";
+?>
+    <p style="font-size:15px; font-weight:bold;"><?php echo $g5['update']->targetVersion; ?> 버전 파일 다운로드 완료</p>
+    <br>
+    <br>
+    <br>
+<?php
 
+$update_check = array();
 foreach($list as $key => $var) {
     $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_DATA_PATH.'/update/'.$target_version.'/'.$var);
-
-    echo $var;
-
-    if($result != false) { 
-        echo ": 업데이트 성공";
+    if($result == "success") {
+        $update_check['success'][] = $var;
+    } else {
+        $update_check['fail'][] = array('file' => $var, 'message' => $result);
     }
-    echo "<br>";
 }
 
 $g5['update']->disconnect();
 
 ?>
 
+<div>
+    <p style="font-weight:bold; font-size:15px;">업데이트 성공</p>
+    <?php foreach($update_check['success'] as $key => $var) { ?>
+        <p><?php echo $var; ?></p>
+    <?php } ?>
+    <br>
+
+    <p style="font-weight:bold; font-size:15px;">업데이트 실패</p>
+    <?php foreach($update_check['fail'] as $key => $var) { ?>
+        <p><span style="color:red;"><?php echo $var['file']; ?></span><?php echo ' : ' . $var['message']; ?></p>
+    <?php } ?>
+</div>
 
 <?php
 include_once ('./admin.tail.php');

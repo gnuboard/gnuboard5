@@ -156,26 +156,19 @@ class G5Update {
                 $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
                 if($result == false) throw new Exception("ftp를 통한 파일전송에 실패했습니다.");
             } else if($this->port == 'sftp') {
-                if($exist == false) {
-                    if(file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                        ssh2_sftp_unlink($this->connPath, $originPath);
-                    }
+                if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                    if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
+                    $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
                 } else {
-                    if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                        if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
-                        $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
-                    } else {
-                        $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
-                    }
-
-                    if($result == false) throw new Exception("sftp를 통한 파일전송에 실패했습니다.");
+                    $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
                 }
+
+                if($result == false) throw new Exception("sftp를 통한 파일전송에 실패했습니다.");
             }
 
-            return true;
+            return "success";
         } catch (Exception $e) {
-            print_r($e->getMessage());
-            return false;
+            return $e->getMessage();
         }
     }
 
@@ -275,7 +268,7 @@ class G5Update {
     }
 
     public function getApiCurlResult($option, $param1 = null, $param2 = null) {
-        // if($this->token == null) return false;
+        if($this->token != null) $auth = 'Authorization: token  ' . $this->token;
         $url = "https://api.github.com";
         switch($option) {
             case "version": 
@@ -315,7 +308,7 @@ class G5Update {
             CURLOPT_FOLLOWLOCATION => 1,
             CURLOPT_FAILONERROR => true,
             CURLOPT_HTTPHEADER => array(
-                // 'Authorization: token  ' . $this->token
+                $auth
             ),
         ));
     
