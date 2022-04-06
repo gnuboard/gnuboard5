@@ -115,27 +115,29 @@ class G5Update {
         return $this->version_list;
     }
 
-    public function getVersionModifyContentList() {
-        $list = $this->getVersionList();
-        if($list == false) return false;
+    // 여러버전의 정보를 다 들고오는 부분에 대한 다중통신발생으로 주석처리
+    // public function getVersionModifyContentList() {
+    //     $list = $this->getVersionList();
+    //     if($list == false) return false;
 
-        $version_content = array();
-        foreach($list as $key => $var) {
-            $result = $this->getVersionModifyContent($var);
-            if($result == false) return false;
+    //     $version_content = array();
+    //     foreach($list as $key => $var) {
+    //         $result = $this->getVersionModifyContent($var);
+    //         if($result == false) return false;
 
-            $version_content[$var] = $result->body;
-        }
+    //         $version_content[$var] = $result->body;
+    //     }
 
-        return $version_content;
-    }
+    //     return $version_content;
+    // }
 
     public function getVersionModifyContent($tag = null) {
         if($tag == null) return false;
+
         $result = $this->getApiCurlResult('modify', $tag);
         if($result == false) return false;
 
-        return $result;
+        return $result->body;
     }
 
     public function writeUpdateFile($originPath, $changePath) {

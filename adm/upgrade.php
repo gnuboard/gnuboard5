@@ -11,18 +11,13 @@ $version_list = $g5['update']->getVersionList();
 $latest_version = $g5['update']->getLatestVersion();
 if($latest_version == false) $message = "정보조회에 실패했습니다.";
 
-$contents = $g5['update']->getVersionModifyContentList();
-
-$content_replace = array();
-foreach($contents as $key => $var) {
-    $content = $var;
-    preg_match_all('/(?:(?:https?|ftp):)?\/\/[a-z0-9+&@#\/%?=~_|!:,.;]*[a-z0-9+&@#\/%=~_|]/i', $var, $match);
-    foreach($match[0] as $key2 => $var2) {
-        $content = str_replace($var2, "<a href=\"".$var2."\" target=\"_blank\" class=\"a_style\">1234</a>", $content);
-    }
-
-    $content_replace[$key] = $content;
+$content = $g5['update']->getVersionModifyContent($latest_version);
+preg_match_all('/(?:(?:https?|ftp):)?\/\/[a-z0-9+&@#\/%?=~_|!:,.;]*[a-z0-9+&@#\/%=~_|]/i', $content, $match);
+$content_url = $match[0];
+foreach($content_url as $key => $var) {
+    $content = str_replace($var, "@".$key."@", $content);
 }
+
 ?>
 
 <?php if($latest_version != false) { ?>
@@ -79,15 +74,16 @@ foreach($contents as $key => $var) {
         <button type="button" class="btn btn_connect_check">ftp 연결확인</button>
         <?php } ?>
     </form>
-    <div>
-        <?php if(!empty($content_replace)) { ?>
-            <?php foreach($content_replace as $key => $var) {
-                    echo "<p class=\"content_title\">".$key." 버전 수정</p>";
-                    echo "<p style=\"white-space:pre-line; margin-bottm:20px;\">";
-                    echo htmlspecialchars_decode($var, ENT_HTML5);
-                    echo "</p><br>";
-            } ?>
-        <?php } ?>
+    <div class="version_content_box" style="margin-top:30px;">
+        <?php if(!empty($content)) {
+                echo "<p class=\"content_title\">".$latest_version." 버전 수정</p>";
+                echo "<p style=\"white-space:pre-line; line-height:2;\">";
+                foreach($content_url as $key => $var) {
+                    $content = str_replace('@'.$key.'@', '<a class="a_style" href="'.$var.'" target="_blank">변경코드확인</a>', $content);
+                }
+                echo htmlspecialchars_decode($content, ENT_HTML5);
+                echo "</p><br>";
+        } ?>
     </div>
 </div>
 <?php } else { ?>
@@ -99,6 +95,43 @@ foreach($contents as $key => $var) {
 <script>
     $(function() {
         var inAjax = false;
+
+        $(".version_list").change(function() {
+            var version = $(this).val();
+            
+            if(inAjax == false) {
+                inAjax = true;
+            } else {
+                alert("현재 통신중입니다.");
+                return false;
+            }
+
+            $.ajax({
+                url: "./ajax.version_content.php",
+                type: "POST",
+                data: {
+                    'version' : version,
+                },
+                dataType: "json",
+                success: function(data) {
+                    inAjax = false;
+                    if(data.error != 0) {
+                        alert(data.message);
+                        return false;
+                    }
+
+                    $(".version_content_box").empty();
+                    $(".version_content_box").append(data['item']);
+                },
+                error:function(request,status,error){
+                    inAjax = false;
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            });
+
+            return false;
+        })
+
         $(".btn_connect_check").click(function() {
             var version = $(".version_list").val();
             var username = $("#username").val();
