@@ -39,7 +39,7 @@ foreach((array) $list as $row){
         }
     }
 
-    echo "<li class=\"sct_li{$sct_last}\" data-css=\"nocss\">\n";
+    echo "<li class=\"sct_li ".implode(' ', $classes)."\" data-css=\"nocss\" style=\"height:auto\">\n";
 	echo "<div class=\"sct_img\">\n";
 
     if ($this->href) {
@@ -82,7 +82,7 @@ foreach((array) $list as $row){
     }
 
     if ($this->href) {
-        echo "<div class=\"sct_txt a1\"><a href=\"{$item_link_href}\">\n";
+        echo "<div class=\"sct_txt\"><a href=\"{$item_link_href}\">\n";
     }
 
     if ($this->view_it_name) {
