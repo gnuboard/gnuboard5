@@ -23,10 +23,10 @@ $result = $g5['update']->downloadVersion($target_version);
 if($result == false) die("목표버전 다운로드에 실패했습니다.");
 
 ?>
-    <p style="font-size:15px; font-weight:bold;"><?php echo $g5['update']->targetVersion; ?> 버전 파일 다운로드 완료</p>
-    <br>
-    <br>
-    <br>
+<h1><?php echo $g5['title']; ?></h1>
+<br>
+<p style="font-size:15px; font-weight:bold;"><?php echo $g5['update']->targetVersion; ?> 버전 파일 다운로드 완료</p>
+<br>
 <?php
 
 $update_check = array();
@@ -55,7 +55,3 @@ $g5['update']->disconnect();
         <p><span style="color:red;"><?php echo $var['file']; ?></span><?php echo ' : ' . $var['message']; ?></p>
     <?php } ?>
 </div>
-
-<?php
-include_once ('./admin.tail.php');
-?>

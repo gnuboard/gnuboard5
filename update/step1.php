@@ -37,7 +37,8 @@ if($list == null) die("비교파일리스트가 존재하지 않습니다.");
 $compare_list = $g5['update']->checkSameVersionComparison($list);
 if($compare_list == false) die("파일 비교에 실패했습니다.");
 ?>
-
+<h1><?php echo $g5['title']; ?></h1>
+<br>
 <div class="version_box">
     <form method="POST" name="update_box" class="update_box" action="./step2.php" onsubmit="return update_submit(this);">
         <input type="hidden" name="compare_check" value="<?php echo $compare_list['type']; ?>">
@@ -81,19 +82,5 @@ if($compare_list == false) die("파일 비교에 실패했습니다.");
         return true;
     }
 </script>
-
-<?php
-    include_once ('./admin.tail.php');
-// foreach($list as $key => $var) {
-//     $path_array = explode('/', $var);
-//     build_folder_structure($parray, $path_array);
-// }
-
-// foreach($parray as $key => $var) {
-//     echo $key =>
-// }
-?>
-
-
 
 
