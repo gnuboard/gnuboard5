@@ -266,7 +266,7 @@
 .sct_40 .sct_a:focus, .sct_40 .sct_a:hover {text-decoration:none}
 
 .sct_40 .sct_img {text-align:center;float:left;margin-right:20px}
-.sct_40 .sct_img a {display:block}
+.sct_40 .sct_img a {display:block;position:relative;z-index: 9999;}
 .sct_40 .sct_cart {position:absolute;right:0;bottom:0;border:0;width:150px;padding:15px 0;background:#000;background:rgba(0,0,0,0.5);color:#fff;font-size:1em;font-weight:bold;z-index:99999}
 .sct_40 .list-10-btn .sct_cart{z-index:1;top:40px;right:10px;bottom:initial;padding:8px 0;width:140px;border:1px solid #1c70e9;background:#3a8afd;color:#fff;cursor:pointer;border-radius:3px}
 .sct_40 .list-10-btn .sct_cart:hover {background:#2375eb}
