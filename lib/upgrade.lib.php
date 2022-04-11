@@ -159,8 +159,13 @@ class G5Update {
                 if($result == false) throw new Exception("ftp를 통한 파일전송에 실패했습니다.");
             } else if($this->port == 'sftp') {
                 if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                    if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
-                    $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
+                    if(!is_dir(dirname($originPath))) {
+                        mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
+                    }
+                    $permission = (int)substr(sprintf('%o', fileperms($changePath)), -4);
+                    $result = ssh2_scp_send($this->conn, $changePath, $originPath, $permission);
+
+                    // $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
                 } else {
                     $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
                 }
@@ -208,6 +213,7 @@ class G5Update {
 
         $check = array();
         $check['type'] = 'Y';
+        
         foreach($list as $key => $var) {
             $now_file_path = G5_PATH.'/'.$var;
             $release_file_path = G5_DATA_PATH.'/update/'.$this->now_version.'/'.$var;
