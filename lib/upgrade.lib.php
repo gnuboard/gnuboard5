@@ -162,7 +162,7 @@ class G5Update {
                     if(!is_dir(dirname($originPath))) {
                         mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
                     }
-                    $permission = (int)substr(sprintf('%o', fileperms($changePath)), -4);
+                    $permission = intval(substr(sprintf('%o', fileperms($changePath)), -4), 8);
                     $result = ssh2_scp_send($this->conn, $changePath, $originPath, $permission);
 
                     // $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
