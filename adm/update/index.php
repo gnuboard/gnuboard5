@@ -93,8 +93,8 @@ foreach($content_url as $key => $var) {
 <?php } ?>
 
 <script>
+    var inAjax = false;
     $(function() {
-        var inAjax = false;
 
         $(".target_version").change(function() {
             var version = $(this).val();
@@ -172,6 +172,44 @@ foreach($content_url as $key => $var) {
             return false;
         });
     })
+
+    function update_submit(f) {
+
+        if(inAjax == false) {
+            inAjax = true;
+        } else {
+            alert("현재 통신중입니다.");
+            return false;
+        }
+
+        var admin_password = prompt("관리자 비밀번호를 입력해주세요");
+        if(admin_password == "") {
+            alert("관리자 비밀번호없이 접근이 불가능합니다.");
+            return false;
+        } else {
+            $.ajax({
+                type : 'POST',
+                url : './ajax.password_check.php',
+                dataType : 'json',
+                data : { 'admin_password' : admin_password },
+                success: function(data) {
+                    inAjax = false;
+                    if(data.error != 0) {
+                        alert(data.message);
+                        return false;
+                    }
+
+                    f.submit();
+                },
+                error:function(request,status,error){
+                    inAjax = false;
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            });
+
+            return false;
+        }
+    }
 </script>
 
 <?php

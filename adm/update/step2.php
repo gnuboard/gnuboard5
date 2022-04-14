@@ -32,7 +32,7 @@ $result = $g5['update']->createBackupZipFile(G5_DATA_PATH."/backup/".date('Ymdhi
 if($result) {
     $update_check = array();
     foreach($list as $key => $var) {    
-        $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_PATH.'/download_data/'.$target_version.'/'.$var);
+        $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_PATH.'/update/'.$target_version.'/'.$var);
         if($result == "success") {
             $update_check['success'][] = $var;
         } else {
@@ -40,7 +40,6 @@ if($result) {
         }
     }
 }
-
 $g5['update']->disconnect();
 
 ?>

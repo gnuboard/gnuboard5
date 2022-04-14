@@ -265,6 +265,8 @@ class G5Update {
         if($version == null) return false;
         if($this->conn == false) return false;
 
+        umask(0002);
+
         $save = G5_DATA_PATH."/update/gnuboard.zip";
 
         $zip = fopen($save, 'w+');
@@ -280,6 +282,8 @@ class G5Update {
         exec('mv '.G5_DATA_PATH.'/update/'.$version.'/gnuboard-*/* '.G5_DATA_PATH.'/update/'.$version);
         exec('rm -rf '.G5_DATA_PATH.'/update/'.$version.'/gnuboard-*/');
         exec('rm -rf '.$save);
+
+        umask(0022);
         
         return true;
     }
