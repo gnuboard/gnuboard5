@@ -211,6 +211,19 @@ class G5Update {
         return $result->body;
     }
 
+    public function createBackupZipFile($backupPath) {
+        try {            
+            if(!is_dir(dirname($backupPath))) mkdir(dirname($backupPath), 0755);
+            
+            if(!file_exists($backupPath)) $result = exec("zip -r ".$backupPath." ../../"." -x '../../data/*'");
+
+            if($result == false) throw new Exception("압축에 실패했습니다.");
+            return "success";
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function writeUpdateFile($originPath, $changePath) {
         try {
             if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
