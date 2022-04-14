@@ -1,8 +1,11 @@
 <?php
+if (!defined('_GNUBOARD_')) exit;
+
+$sub_menu = '100600';
 include_once('./_common.php');
-include_once('./head.php');
 
 $g5['title'] = '그누보드 step2';
+include_once ('../admin.head.php');
 
 $target_version = isset($_POST['target_version']) ? $_POST['target_version'] : null;
 $username = isset($_POST['username']) ? $_POST['username'] : null;
@@ -23,15 +26,13 @@ $result = $g5['update']->downloadVersion($target_version);
 if($result == false) die("목표버전 다운로드에 실패했습니다.");
 
 ?>
-<h1><?php echo $g5['title']; ?></h1>
-<br>
-<p style="font-size:15px; font-weight:bold;"><?php echo $g5['update']->targetVersion; ?> 버전 파일 다운로드 완료</p>
-<br>
+    <p style="font-size:15px; font-weight:bold;"><?php echo $g5['update']->targetVersion; ?> 버전 파일 다운로드 완료</p>
+    <br>
 <?php
 
 $update_check = array();
 foreach($list as $key => $var) {
-    $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_DATA_PATH.'/update/'.$target_version.'/'.$var);
+    $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_PATH.'/download_data/'.$target_version.'/'.$var);
     if($result == "success") {
         $update_check['success'][] = $var;
     } else {
@@ -55,3 +56,7 @@ $g5['update']->disconnect();
         <p><span style="color:red;"><?php echo $var['file']; ?></span><?php echo ' : ' . $var['message']; ?></p>
     <?php } ?>
 </div>
+
+<?php
+include_once ('../admin.tail.php');
+?>

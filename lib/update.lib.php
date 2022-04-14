@@ -22,7 +22,7 @@ class G5Update {
     private $port;
     private $connPath;
 
-    public function __construct() {  }
+    public function __construct() { }
 
     public function connect($hostname, $port, $username, $userPassword) {
         $this->port = $port;
@@ -82,10 +82,97 @@ class G5Update {
         return $this->conn;
     }
 
-    public function clearUpdatedir() {
-        rm_rf(G5_DATA_PATH.'/update');
-        mkdir(G5_DATA_PATH.'/update', G5_DIR_PERMISSION, true);
-        @chmod(G5_DATA_PATH.'/update', G5_DIR_PERMISSION);
+    public function makeUpdateDir() {
+        try {
+            if($this->port == false) throw new Exception("프로토콜을 확인 할 수 없습니다.");
+            if($this->conn == false) throw new Exception("연결된 프로토콜을 찾을 수 없습니다.");
+
+            $update_dir = G5_DATA_PATH.'/update';
+
+            if($this->port == 'ftp') {
+                if(!is_dir($update_dir)) {
+                    if(!ftp_mkdir($this->conn, $update_dir)) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ftp_chmod($this->conn, 0707, $update_dir)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+
+                $list = ftp_nlist($this->conn, $update_dir);
+
+
+            } else if($this->port == 'sftp') {
+                if(!is_dir($update_dir)) {
+                    if(!ssh2_sftp_mkdir($this->connPath, $update_dir, 0707)) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ssh2_sftp_chmod($this->connPath, $update_dir, 0707)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+            } else {
+                throw new Exception("ftp/sftp가 아닌 프로토콜로 업데이트가 불가능합니다.");
+            }
+
+            $result = exec('rm -rf '.$update_dir.'/*');
+
+            return true;
+        } catch (Exception $e) {
+            $this->setError($e->getMessage());
+            return false;
+        }
+    }
+
+    public function checkInstallAvailable() {
+        $dfs = disk_free_space("/");
+
+        if(($dfs - 20971520) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getTotalStorageSize() {
+        $dts = disk_total_space("/");
+        if($dts < 1024){ 
+            return number_format($dts*1.024).'b'; 
+        } else if(($dts > 1024) && ($dts < 1024000)){ 
+            return number_format($dts*0.001024).'Kb'; 
+        } else if($dts > 1024000){ 
+            return number_format($dts*0.000001024,2).'Mb'; 
+        }
+        return 0;
+    }
+
+    public function getUseableStorageSize() {
+        $dff = disk_free_space("/");
+        if($dff < 1024){ 
+            return number_format($dff*1.024).'b'; 
+        } else if(($dff > 1024) && ($dff < 1024000)){ 
+            return number_format($dff*0.001024).'Kb'; 
+        } else if($dff > 1024000){ 
+            return number_format($dff*0.000001024,2).'Mb'; 
+        }
+        return 0;
+    }
+
+    public function getUseStorageSize() {
+        $dts = disk_total_space("/");
+        $dff = disk_free_space("/");
+
+        $useSize = $dts - $dff;
+
+        if($useSize < 1024){ 
+            return number_format($useSize*1.024).'b'; 
+        } else if(($useSize > 1024) && ($useSize < 1024000)){ 
+            return number_format($useSize*0.001024).'Kb'; 
+        } else if($useSize > 1024000){ 
+            return number_format($useSize*0.000001024,2).'Mb'; 
+        }
+        return 0;
+    }
+
+    public function getUseStoragePercenty() {
+        $dts = disk_total_space("/");
+        $dff = disk_free_space("/");
+
+        $useSize = $dts - $dff;
+
+        return round(($useSize / $dts * 100), 2);
     }
 
     public function setNowVersion($now_version = null) {
@@ -115,22 +202,6 @@ class G5Update {
         return $this->version_list;
     }
 
-    // 여러버전의 정보를 다 들고오는 부분에 대한 다중통신발생으로 주석처리
-    // public function getVersionModifyContentList() {
-    //     $list = $this->getVersionList();
-    //     if($list == false) return false;
-
-    //     $version_content = array();
-    //     foreach($list as $key => $var) {
-    //         $result = $this->getVersionModifyContent($var);
-    //         if($result == false) return false;
-
-    //         $version_content[$var] = $result->body;
-    //     }
-
-    //     return $version_content;
-    // }
-
     public function getVersionModifyContent($tag = null) {
         if($tag == null) return false;
 
@@ -143,7 +214,7 @@ class G5Update {
     public function writeUpdateFile($originPath, $changePath) {
         try {
             if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
-        
+
             if(!file_exists($changePath)) throw new Exception("업데이트에 존재하지 않는 파일입니다.");
 
             $fp = fopen($changePath, 'r');
@@ -164,8 +235,6 @@ class G5Update {
                     }
                     $permission = intval(substr(sprintf('%o', fileperms($changePath)), -4), 8);
                     $result = ssh2_scp_send($this->conn, $changePath, $originPath, $permission);
-
-                    // $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
                 } else {
                     $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
                 }
@@ -182,8 +251,6 @@ class G5Update {
     public function downloadVersion($version = null) {
         if($version == null) return false;
         if($this->conn == false) return false;
-
-        $this->clearUpdatedir();
 
         $save = G5_DATA_PATH."/update/gnuboard.zip";
 
@@ -248,7 +315,7 @@ class G5Update {
     public function getVersionCompareList() {
         try {
             if($this->now_version == null || $this->target_version == null) throw new Exception("현재버전 및 목표버전이 설정되지 않았습니다.");
-            if($this->now_version == $this->target_version) throw new Exception("동일버전으로는 업데이트가 불가능합니다.");
+            if($this->now_version == $this->target_version) throw new Exception("동일버전으로는 업데이트가 불가능합니다.");            
 
             $version_list = $this->getVersionList();
             if($version_list == false) throw new Exception("버전리스트를 가져오는데 실패했습니다.");
@@ -332,5 +399,10 @@ class G5Update {
         }
     
         return $response;
+    }
+
+    public function setError($msg) {
+        echo $msg;
+        exit;
     }
 }
