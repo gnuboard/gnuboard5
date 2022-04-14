@@ -29,7 +29,6 @@ if($result == false) die("목표버전 다운로드에 실패했습니다.");
 <?php
 
 $update_check = array();
-umask(0002);
 foreach($list as $key => $var) {
     $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_DATA_PATH.'/update/'.$target_version.'/'.$var);
     if($result == "success") {
@@ -38,7 +37,6 @@ foreach($list as $key => $var) {
         $update_check['fail'][] = array('file' => $var, 'message' => $result);
     }
 }
-umask(0022);
 $g5['update']->disconnect();
 
 ?>
