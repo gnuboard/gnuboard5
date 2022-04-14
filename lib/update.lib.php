@@ -292,8 +292,8 @@ class G5Update {
             if(!file_exists($now_file_path)) continue;
             if(!file_exists($release_file_path)) continue;
 
-            $now_content = preg_replace('/\r\n|\r|\n/','',file_get_contents($now_file_path, true));
-            $release_content = preg_replace('/\r\n|\r|\n/','',file_get_contents($release_file_path, true));
+            $now_content = preg_replace('/\r/','',file_get_contents($now_file_path, true));
+            $release_content = preg_replace('/\r/','',file_get_contents($release_file_path, true));
 
             if($now_content !== $release_content) {
                 $check['type'] = 'N';

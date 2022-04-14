@@ -18,6 +18,15 @@ foreach($content_url as $key => $var) {
     $content = str_replace($var, "@".$key."@", $content);
 }
 
+
+$connect_array = array();
+if(function_exists("ftp_connect")) {
+    $connect_array[] = 'ftp';
+}
+if(function_exists('ssh2_connect')) {
+    $connect_array[] = 'sftp';
+}
+
 ?>
 
 <?php if($latest_version != false) { ?>
@@ -47,10 +56,14 @@ foreach($content_url as $key => $var) {
                 <tr>
                     <th>포트</th>
                     <td>
-                        <label for="ftp">ftp</label>
-                        <input id="ftp" type="radio" name="port" value="ftp" checked>
-                        <label for="sftp">sftp</label>
-                        <input id="sftp" type="radio" name="port" value="sftp">
+                        <?php if(!empty($connect_array)) { ?>
+                            <?php foreach($connect_array as $key => $var) { ?>
+                            <label for="<?php echo $var; ?>"><?php echo $var; ?></label>
+                            <input id="<?php echo $var; ?>" type="radio" name="port" value="<?php echo $var; ?>" <?php if($key == 0 ) echo "checked"; ?>>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <p>통신연결 lib가 존재하지 않습니다.</p>
+                        <?php }?>
                     </td>
                 </tr>
                 <tr>
