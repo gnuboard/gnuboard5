@@ -12,7 +12,7 @@ class G5Update {
     
     // token값 입력 필요
     // token값이 없는 경우, 1시간에 60번의 데이터조회가 가능함
-    private $token = "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";
+    private $token = null;
     
     private $url = "https://api.github.com";
     private $version_list = array();
@@ -433,7 +433,7 @@ class G5Update {
             } else {
                 $result = $this->getApiCurlResult("compare", $this->target_version, $this->now_version);
             }
-            
+
             if($result == false) throw new Exception("비교리스트확인 통신에 실패했습니다.");
 
             foreach($result->files as $key => $var) {
