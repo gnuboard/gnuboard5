@@ -7,6 +7,7 @@ class G5Update {
     public $path = null;
     public $latest_version = null;
     public $target_version = null;
+    public $rollback_version = null;
     public $now_version = null;
     
     // token값 입력 필요
@@ -16,6 +17,8 @@ class G5Update {
     private $url = "https://api.github.com";
     private $version_list = array();
     private $compare_list = array();
+    private $backup_list = array();
+
     public $patch = array();
 
     private $conn;
@@ -183,6 +186,16 @@ class G5Update {
         $this->target_version = $target_version;
     }
 
+    public function setRollbackVersion($backup_dir) {
+        $backup_version_file = file_get_contents($backup_dir.'/version.php');
+        preg_match("/(?<=define\('G5_GNUBOARD_VER', ')(.*?)(?='\);)/", $backup_version_file, $rollback_version); // 백업버전 체크
+        $this->rollback_version = "v" . $rollback_version[0];
+    }
+    
+    public function getRollbackVersion() {
+        return $this->rollback_version;
+    }
+
     public function getToken() {
         return $this->token;
     }
@@ -209,6 +222,93 @@ class G5Update {
         if($result == false) return false;
 
         return $result->body;
+    }
+
+    public function getBackupList($backupPath) {
+        if(empty($this->backup_list)) {
+            if(is_dir($backupPath)) {
+                if($dh = @opendir($backupPath)) {
+                    $key = 0;
+                    while (($dl = @readdir($dh)) !== false){
+                        if(preg_match('/.zip/i', $dl)) {
+                            $backupTime = preg_replace('/.zip/', '', $dl);
+                            $listName = date("Y-m-d H:i:s", strtotime($backupTime));
+                            $this->backup_list[$key]->realName = $dl;
+                            $this->backup_list[$key]->listName = $listName;
+                            $key++;
+                        }
+                    }
+                      closedir($dh);
+                }
+            }
+        }
+        return $this->backup_list;
+    }
+
+    public function createBackupZipFile($backupPath) {
+        try {            
+            if(!is_dir(dirname($backupPath))) mkdir(dirname($backupPath), 0707);
+            
+            if(!file_exists($backupPath)) $result = exec("zip -r ".$backupPath." ../../"." -x '../../data/*'");
+
+            if($result == false) throw new Exception("압축에 실패했습니다.");
+            return "success";
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function unzipBackupFile($backupFile) {
+        try {
+            $backupDir = preg_replace('/.zip/', '', $backupFile);
+
+            if(is_dir($backupDir)) return "suecess";
+
+            if(file_exists($backupFile)) $result = exec("unzip ".$backupFile. " -d " . $backupDir);
+            else throw new Exception("해당 파일이 존재하지 않습니다.");
+
+            if($result == false) throw new Exception("압축해제에 실패했습니다.");
+            return "success";
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function writeRollbackFile($originPath, $changePath) {
+        try {
+            if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
+
+            if(!file_exists($changePath)) throw new Exception("업데이트에 존재하지 않는 파일입니다.");
+
+            $fp = fopen($changePath, 'r');
+            $content = @fread($fp, filesize($changePath));
+            if($content == false) throw new Exception("파일을 여는데 실패했습니다.");
+
+            if($this->port == 'ftp') {
+                if(ftp_nlist($this->conn, dirname($originPath)) == false) {
+                    ftp_mkdir($this->conn, dirname($originPath));
+                }
+                
+                $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
+                if($result == false) throw new Exception("ftp를 통한 파일전송에 실패했습니다.");
+            } else if($this->port == 'sftp') {
+                if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                    if(!is_dir(dirname($originPath))) {
+                        mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
+                    }
+                    $permission = intval(substr(sprintf('%o', fileperms($changePath)), -4), 8);
+                    $result = ssh2_scp_send($this->conn, $changePath, $originPath, $permission);
+                } else {
+                    $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
+                }
+
+                if($result == false) throw new Exception("sftp를 통한 파일전송에 실패했습니다.");
+            }
+
+            return "success";
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function writeUpdateFile($originPath, $changePath) {
@@ -333,7 +433,7 @@ class G5Update {
             } else {
                 $result = $this->getApiCurlResult("compare", $this->target_version, $this->now_version);
             }
-            
+
             if($result == false) throw new Exception("비교리스트확인 통신에 실패했습니다.");
 
             foreach($result->files as $key => $var) {
@@ -437,7 +537,7 @@ class G5Update {
                 $auth
             ),
         ));
-    
+
         $cinfo = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if($option == 'zip') {
             $response = curl_exec($curl);
