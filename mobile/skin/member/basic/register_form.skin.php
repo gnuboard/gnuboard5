@@ -47,6 +47,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
         <ul>
             <li>
                 <?php 
+                $desc_name = '';
+                $desc_phone = '';
 	            if ($config['cf_cert_use']) {
                     $desc_name = ' - 본인확인 시 자동입력';
                     $desc_phone = ' - 본인확인 시 자동입력';
