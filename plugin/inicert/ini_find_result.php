@@ -50,6 +50,22 @@ if ($_POST["resultCode"] === "0000") {
             alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
             exit;                
         }
+
+        $md5_cert_no = md5($cert_no);
+        $hash_data   = md5($user_name.$cert_type.$birth_day.$phone_no.$md5_cert_no);
+
+        // 성인인증결과
+        $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
+        $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
+
+        set_session("ss_cert_type",    $cert_type);
+        set_session("ss_cert_no",      $md5_cert_no);
+        set_session("ss_cert_hash",    $hash_data);
+        set_session("ss_cert_adult",   $adult);
+        set_session("ss_cert_birth",   $birth_day);
+        //set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 간편인증은 성별정보 리턴 없음
+        set_session('ss_cert_dupinfo', $mb_dupinfo);
+        set_session('ss_cert_mb_id', $row['mb_id']);
     } else {
         // 인증실패 curl의 인증실패 체크
         alert_close('코드 : '.$res_data['resultCode'].'  '.urldecode($res_data['resultMsg']));

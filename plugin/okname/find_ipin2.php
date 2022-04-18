@@ -95,7 +95,26 @@ if (empty($row['mb_id'])) { // ci로 등록된 계정이 없다면
         alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
         exit;
     }
+}else{
+    $mb_dupinfo = $md5_ci;
 }
+
+$md5_cert_no = md5($cert_no);
+$hash_data   = md5($user_name.$cert_type.$birth_day.$phone_no.$md5_cert_no);
+
+// 성인인증결과
+$adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
+$adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
+
+set_session("ss_cert_type",    $cert_type);
+set_session("ss_cert_no",      $md5_cert_no);
+set_session("ss_cert_hash",    $hash_data);
+set_session("ss_cert_adult",   $adult);
+set_session("ss_cert_birth",   $birth_day);
+set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
+set_session('ss_cert_dupinfo', $mb_dupinfo);
+set_session('ss_cert_mb_id', $row['mb_id']);
+
 $g5['title'] = 'KCB 아이핀 본인확인';
 include_once(G5_PATH.'/head.sub.php');
 ?>
