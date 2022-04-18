@@ -28,11 +28,11 @@ if($result == false) die("목표버전 다운로드에 실패했습니다.");
     <br>
 <?php
 
-$result = $g5['update']->createBackupZipFile(G5_DATA_PATH."/backup/".date('Ymdhis', G5_SERVER_TIME).".zip");
+$result = $g5['update']->createBackupZipFile(G5_DATA_PATH."/backup/".date('YmdHis', G5_SERVER_TIME).".zip");
 if($result) {
     $update_check = array();
     foreach($list as $key => $var) {    
-        $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_PATH.'/update/'.$target_version.'/'.$var);
+        $result = $g5['update']->writeUpdateFile(G5_PATH.'/'.$var, G5_DATA_PATH.'/update/'.$target_version.'/'.$var);
         if($result == "success") {
             $update_check['success'][] = $var;
         } else {
