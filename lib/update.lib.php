@@ -342,6 +342,53 @@ class G5Update {
 
             return $this->compare_list;
         } catch (Exception $e) {
+            print_r2($e->getMessage());
+            return false;
+        }
+    }
+
+    public function build_folder_structure(&$dirs, $path_array) {
+        if (count($path_array) > 1) {
+            if (!isset($dirs[$path_array[0]])) {
+                $dirs[$path_array[0]] = array();
+            }
+
+            $this->build_folder_structure($dirs[$path_array[0]], array_splice($path_array, 1));
+        } else {
+            if(!in_array($path_array[0], $dirs)) {
+                $dirs[] = $path_array[0];
+            }
+        }
+    }
+
+    public function changeDepthListPrinting($list) {
+        
+
+        return $out;
+    }
+
+    public function getDepthVersionCompareList() {
+        try {
+            $compare_list = $this->getVersionCompareList();
+            if($compare_list == false) throw new Exception("비교리스트확인에 실패했습니다.");
+
+            $result = $this->checkSameVersionComparison($compare_list);
+            if($result == false) throw new Exception("파일 비교에 실패했습니다.");
+
+            foreach($compare_list as $key => $var) {
+                if(in_array($var, $result['item'])) {
+                    $compare_list[$key] = $var." (변경)";
+                }
+            }
+
+            $parray = array();
+            foreach($compare_list as $key => $var) {
+                $path_array = explode('/', $var);
+                $this->build_folder_structure($parray, $path_array);
+            }
+
+            return $parray;
+        } catch (Exception $e) {
             return false;
         }
     }

@@ -46,6 +46,11 @@ if($list == null) die("비교파일리스트가 존재하지 않습니다.");
 $compare_list = $g5['update']->checkSameVersionComparison($list);
 if($compare_list == false) die("파일 비교에 실패했습니다.");
 
+// $plist = $g5['update']->getDepthVersionCompareList();
+// $printing = $g5['update']->changeDepthListPrinting($plist);
+// print_r2($printing);
+// exit;
+
 ?>
 
 <div class="version_box">
