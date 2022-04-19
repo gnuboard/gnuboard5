@@ -35,7 +35,7 @@ if($result == "success") {
         $backupPath = preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file) .'/'. $var;
 
         if(!file_exists($backupPath) && file_exists($originPath)) { // 백업파일은 존재하지않지만 서버파일은 존재할때
-            $result = $g5['update']->deleteOriginFile($originPath, $backupPath);
+            $result = $g5['update']->deleteOriginFile($originPath);
             if($result == "success") {
                 $update_check['success'][] = $var;
             } else {
@@ -43,7 +43,7 @@ if($result == "success") {
             }
         }
         if(!is_dir(dirname($backupPath)) && is_dir(dirname($originPath))) { // 백업디렉토리는 존재하지않지만 서버디렉토리는 존재할때
-            $result = $g5['update']->removeEmptyDir(dirname($originPath));
+            $result = $g5['update']->removeEmptyOriginDir(dirname($originPath));
             if($result == "success") {
                 $update_check['success'][] = $var;
             } else {
@@ -57,6 +57,8 @@ if($result == "success") {
             $update_check['fail'][] = array('file' => $var, 'message' => $result);
         }
     }
+
+    $g5['update']->deleteBackupDir(preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file));
 }else {
     $update_check['fail'][] = array('file' => $var, 'message' => $result);
 }
