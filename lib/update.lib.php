@@ -274,6 +274,21 @@ class G5Update {
         }
     }
 
+    public function deleteBackupDir($backupDir) {                                 
+        $dh = dir($backupDir);     
+        while(false !== ($dl = $dh->read())) {
+            if(($dl != '.') && ($dl != '..')) {
+                if(is_dir($backupDir.'/'.$dl)) {
+                    $this->deleteBackupDir($backupDir.'/'.$dl);
+                } else {
+                    @unlink($backupDir.'/'.$dl); 
+                } 
+            } 
+        }
+        $dh->close();
+        @rmdir($backupDir);
+    }
+
     public function deleteOriginFile($originPath, $changePath) { // 롤백 파일 삭제
         try {
             if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");

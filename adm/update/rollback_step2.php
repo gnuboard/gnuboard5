@@ -57,6 +57,8 @@ if($result == "success") {
             $update_check['fail'][] = array('file' => $var, 'message' => $result);
         }
     }
+
+    $g5['update']->deleteBackupDir(preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file));
 }else {
     $update_check['fail'][] = array('file' => $var, 'message' => $result);
 }
