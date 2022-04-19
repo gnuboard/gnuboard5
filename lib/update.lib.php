@@ -461,10 +461,28 @@ class G5Update {
         }
     }
 
-    public function changeDepthListPrinting($list) {
-        
+    public function changeDepthListPrinting($list, $depth = 0) {
+        if(!is_array($list)) return $list."<br>";
+        $line = '';
+        if($depth > 0) {
+            $line = '&#9492; &nbsp;';
+        }
+    
+        $txt = '';
+        foreach($list as $key => $var) {
+            for($i = 0; $i < ($depth*2)-1; $i++) {
+                $txt .= "&nbsp; &nbsp;";;
+            }
+            if($depth > 0) $txt .= $line;
 
-        return $out;
+            if(is_array($var)) {
+                $txt .= $key."<br>";
+            }
+
+            $txt .= $this->changeDepthListPrinting($var, $depth+1);
+        }
+        
+        return $txt;
     }
 
     public function getDepthVersionCompareList() {
@@ -476,7 +494,7 @@ class G5Update {
             if($result == false) throw new Exception("파일 비교에 실패했습니다.");
 
             foreach($compare_list as $key => $var) {
-                if(in_array($var, $result['item'])) {
+                if(@in_array($var, $result['item'])) {
                     $compare_list[$key] = $var." (변경)";
                 }
             }

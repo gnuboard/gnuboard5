@@ -46,29 +46,22 @@ if($list == null) die("비교파일리스트가 존재하지 않습니다.");
 $compare_list = $g5['update']->checkSameVersionComparison($list);
 if($compare_list == false) die("파일 비교에 실패했습니다.");
 
-// $plist = $g5['update']->getDepthVersionCompareList();
-// $printing = $g5['update']->changeDepthListPrinting($plist);
-// print_r2($printing);
-// exit;
-
+$plist = $g5['update']->getDepthVersionCompareList();
 ?>
 
 <div class="version_box">
+    <div style="line-height:2;">
+        <?php
+            print_r($g5['update']->changeDepthListPrinting($plist));
+        ?>
+    </div>
+
     <form method="POST" name="update_box" class="update_box" action="./step2.php" onsubmit="return update_submit(this);">
         <input type="hidden" name="compare_check" value="<?php echo $compare_list['type']; ?>">
         <input type="hidden" name="username" value="<?php echo $username; ?>">
         <input type="hidden" name="password" value="<?php echo $userpassword; ?>">
         <input type="hidden" name="port" value="<?php echo $port; ?>">
         <input type="hidden" name="target_version" value="<?php echo $target_version; ?>">
-        <?php foreach($list as $key => $var) {
-            $txt = '';
-            if(isset($var) && isset($compare_list['item'])) {
-                if(in_array($var, $compare_list['item'])) {
-                    $txt = " (변경)";
-                }    
-            } ?>
-            <p>파일위치 : <?php echo $var.$txt; ?><p>
-        <?php } ?>
         <br>
         <?php if($compare_list['type'] == 'Y') { ?>
             <button type="submit" class="btn btn_submit">업데이트 진행</button>
