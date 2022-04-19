@@ -12,7 +12,7 @@ class G5Update {
     
     // token값 입력 필요
     // token값이 없는 경우, 1시간에 60번의 데이터조회가 가능함
-    private $token = "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";
+    private $token = null;
     
     private $url = "https://api.github.com";
     private $version_list = array();
