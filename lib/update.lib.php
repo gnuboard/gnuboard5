@@ -251,7 +251,7 @@ class G5Update {
             
             if(!file_exists($backupPath)) $result = exec("zip -r ".$backupPath." ../../"." -x '../../data/*'");
 
-            if($result == false) throw new Exception("압축에 실패했습니다.");
+            if($result == false) throw new Exception("백업파일 생성이 실패했습니다.");
             return "success";
         } catch (Exception $e) {
             return $e->getMessage();
@@ -274,41 +274,49 @@ class G5Update {
         }
     }
 
-    public function writeRollbackFile($originPath, $changePath) {
+    public function deleteOriginFile($originPath, $changePath) { // 롤백 파일 삭제
         try {
             if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
 
-            if(!file_exists($changePath)) throw new Exception("업데이트에 존재하지 않는 파일입니다.");
-
-            $fp = fopen($changePath, 'r');
-            $content = @fread($fp, filesize($changePath));
-            if($content == false) throw new Exception("파일을 여는데 실패했습니다.");
-
             if($this->port == 'ftp') {
-                if(ftp_nlist($this->conn, dirname($originPath)) == false) {
-                    ftp_mkdir($this->conn, dirname($originPath));
-                }
-                
-                $result = ftp_put($this->conn, $originPath, $changePath, FTP_BINARY);
-                if($result == false) throw new Exception("ftp를 통한 파일전송에 실패했습니다.");
+                // ftp 삭제
             } else if($this->port == 'sftp') {
-                if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
-                    if(!is_dir(dirname($originPath))) {
-                        mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
-                    }
-                    $permission = intval(substr(sprintf('%o', fileperms($changePath)), -4), 8);
-                    $result = ssh2_scp_send($this->conn, $changePath, $originPath, $permission);
-                } else {
-                    $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
-                }
-
-                if($result == false) throw new Exception("sftp를 통한 파일전송에 실패했습니다.");
+                $result = ssh2_sftp_unlink($this->connPath, $originPath);
+                if($result == false) throw new Exception("통신이 연결되지 않았습니다.");
             }
 
             return "success";
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function removeEmptyDir($originDir) { // 비어있는 dir 삭제
+        try {
+            if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
+
+            if(!is_dir($originDir)) throw new Exception("디렉토리가 아닙니다.");
+
+            $result = $this->checkDirIsEmpty($originDir);
+            if($result) ssh2_sftp_rmdir($this->connPath, $originDir);
+
+           return "success";
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function checkDirIsEmpty($originDir) { // dir이 비었는지 체크
+            if($dh = @opendir($originDir)) {
+                while (($dl = @readdir($dh)) !== false) {
+                    if($dl != "." && $dl != ".."){
+                        return false;
+                    }
+                }
+                closedir($dh);
+            }
+
+        return true;
     }
 
     public function writeUpdateFile($originPath, $changePath) {
@@ -388,6 +396,35 @@ class G5Update {
         foreach($list as $key => $var) {
             $now_file_path = G5_PATH.'/'.$var;
             $release_file_path = G5_DATA_PATH.'/update/'.$this->now_version.'/'.$var;
+
+            if(!file_exists($now_file_path)) continue;
+            if(!file_exists($release_file_path)) continue;
+
+            $now_content = preg_replace('/\r/','',file_get_contents($now_file_path, true));
+            $release_content = preg_replace('/\r/','',file_get_contents($release_file_path, true));
+
+            if($now_content !== $release_content) {
+                $check['type'] = 'N';
+                $check['item'][] = $var;
+            }
+        }
+
+        return $check;
+    }
+
+    public function checkRollbackVersionComparison($list = null, $backupFile) {
+        if($this->now_version == null) return false;
+        if($list == null) return false;
+
+        $result = $this->downloadVersion($this->now_version);
+        if($result == false) return false;
+
+        $check = array();
+        $check['type'] = 'Y';
+        
+        foreach($list as $key => $var) {
+            $now_file_path = G5_PATH.'/'.$var;
+            $release_file_path = preg_replace('/.zip/', '', $backupFile);
 
             if(!file_exists($now_file_path)) continue;
             if(!file_exists($release_file_path)) continue;
