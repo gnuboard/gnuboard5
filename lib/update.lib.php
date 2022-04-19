@@ -239,9 +239,11 @@ class G5Update {
                         }
                     }
                       closedir($dh);
+
+                      rsort($this->backup_list);
                 }
             }
-        }
+        }        
         return $this->backup_list;
     }
 
