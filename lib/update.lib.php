@@ -289,16 +289,16 @@ class G5Update {
         @rmdir($backupDir);
     }
 
-    public function deleteOriginFile($originPath, $changePath) { // 롤백 파일 삭제
+    public function deleteOriginFile($originPath) { // 롤백 파일 삭제
         try {
             if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
 
             if($this->port == 'ftp') {
-                // ftp 삭제
+                $result = ftp_delete($this->conn, $originPath);
             } else if($this->port == 'sftp') {
                 $result = ssh2_sftp_unlink($this->connPath, $originPath);
-                if($result == false) throw new Exception("통신이 연결되지 않았습니다.");
             }
+            if($result == false) throw new Exception("파일삭제가 실패하였습니다.");
 
             return "success";
         } catch (Exception $e) {
@@ -306,14 +306,21 @@ class G5Update {
         }
     }
 
-    public function removeEmptyDir($originDir) { // 비어있는 dir 삭제
+    public function removeEmptyOriginDir($originDir) { // 비어있는 dir 삭제
         try {
             if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
 
             if(!is_dir($originDir)) throw new Exception("디렉토리가 아닙니다.");
 
-            $result = $this->checkDirIsEmpty($originDir);
-            if($result) ssh2_sftp_rmdir($this->connPath, $originDir);
+            $dirCheck = $this->checkDirIsEmpty($originDir);
+            if($dirCheck){
+                if($this->port == 'ftp') {
+                    $result = ftp_rmdir($this->conn, $originDir);
+                } else if($this->port == 'sftp') {
+                    $result = ssh2_sftp_rmdir($this->connPath, $originDir);                    
+                }
+                if($result == false) throw new Exception("디렉토리 삭제가 실패하였습니다.");
+            }
 
            return "success";
         } catch (Exception $e) {
