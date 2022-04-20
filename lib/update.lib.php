@@ -21,6 +21,8 @@ class G5Update {
 
     public $patch = array();
 
+    private $username;
+
     private $conn;
     private $port;
     private $connPath;
@@ -38,6 +40,8 @@ class G5Update {
                 $login = ftp_login($this->conn, $username, $userPassword);
                 if($login == false) return false;
 
+                $this->username = $username;
+
                 ftp_pasv($this->conn, true);
 
                 return true;
@@ -49,6 +53,8 @@ class G5Update {
 
                 if($this->conn == false) return false;
                 if(!ssh2_auth_password($this->conn, $username, $userPassword)) return false;
+
+                $this->username = $username;
     
                 $this->connPath = @ssh2_sftp($this->conn);
                 if(!$this->connPath) {
@@ -98,6 +104,21 @@ class G5Update {
                     if(!ftp_chmod($this->conn, 0707, $update_dir)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
                 }
 
+                if(!is_dir($update_dir.'/version')) {
+                    if(!ftp_mkdir($this->conn, $update_dir.'/version')) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ftp_chmod($this->conn, 0707, $update_dir.'/version')) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+
+                if(!is_dir($update_dir.'/log')) {
+                    if(!ftp_mkdir($this->conn, $update_dir.'/log')) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ftp_chmod($this->conn, 0707, $update_dir.'/log')) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+
+                if(!is_dir($update_dir.'/backup')) {
+                    if(!ftp_mkdir($this->conn, $update_dir.'/backup')) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ftp_chmod($this->conn, 0707, $update_dir)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+
                 $list = ftp_nlist($this->conn, $update_dir);
 
 
@@ -106,11 +127,26 @@ class G5Update {
                     if(!ssh2_sftp_mkdir($this->connPath, $update_dir, 0707)) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
                     if(!ssh2_sftp_chmod($this->connPath, $update_dir, 0707)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
                 }
+
+                if(!is_dir($update_dir.'/version')) {
+                    if(!ssh2_sftp_mkdir($this->connPath, $update_dir.'/version', 0707)) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ssh2_sftp_chmod($this->connPath, $update_dir.'/version', 0707)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+
+                if(!is_dir($update_dir.'/log')) {
+                    if(!ssh2_sftp_mkdir($this->connPath, $update_dir.'/log', 0755)) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ssh2_sftp_chmod($this->connPath, $update_dir.'/log', 0755)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
+
+                if(!is_dir($update_dir.'/backup')) {
+                    if(!ssh2_sftp_mkdir($this->connPath, $update_dir.'/backup', 0707)) throw new Exception("디렉토리를 생성하는데 실패했습니다.");
+                    if(!ssh2_sftp_chmod($this->connPath, $update_dir.'/backup', 0707)) throw new Exception("디렉토리의 권한을 변경하는데 실패했습니다.");
+                }
             } else {
                 throw new Exception("ftp/sftp가 아닌 프로토콜로 업데이트가 불가능합니다.");
             }
 
-            $result = exec('rm -rf '.$update_dir.'/*');
+            $result = exec('rm -rf '.$update_dir.'/version/*');
 
             return true;
         } catch (Exception $e) {
@@ -365,6 +401,7 @@ class G5Update {
                     if(!is_dir(dirname($originPath))) {
                         mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
                     }
+                    
                     $permission = intval(substr(sprintf('%o', fileperms($changePath)), -4), 8);
                     $result = ssh2_scp_send($this->conn, $changePath, $originPath, $permission);
                 } else {
@@ -380,13 +417,80 @@ class G5Update {
         }
     }
 
+    public function writeLogFile($success_list = null, $fail_list = null, $status = null) {
+        try {
+            if($this->conn == false) throw new Exception("통신이 연결되지 않았습니다.");
+            if(empty($success_list) && empty($fail_list)) throw new Exception("기록할 데이터가 존재하지 않습니다.");
+            if($status != "update" && $status !="rollback") throw new Exception("올바르지 않은 명령입니다.");
+
+            $log_dir = G5_DATA_PATH.'/update/log';
+
+            if($this->port == 'ftp') {
+                if(ftp_nlist($this->conn, dirname($log_dir)) == false) {
+                    $result = ftp_mkdir($this->conn, $log_dir);
+                    if($result == false) throw new Exception("디렉토리 생성에 실패했습니다.");
+                }
+            } else if($this->port == 'sftp') {
+                if(!is_dir($log_dir)) {
+                    $result = mkdir("ssh2.sftp://".intval($this->connPath).$log_dir);
+                    if($result == false) throw new Exception("디렉토리 생성에 실패했습니다.");
+                }
+
+                $datetime = date('Y-m-d_his', time());
+                $rand = rand(0000,9999);
+
+                $fp = fopen("ssh2.sftp://".intval($this->connPath).$log_dir."/".$datetime.'_'.$status.'_'.$rand.'.log', 'w+');
+                if($fp == false) throw new Exception('파일생성에 실패했습니다.');
+                
+                switch($status) {
+                    case 'update':
+                        $success_txt = "성공한 업데이트 내역\n";
+                        $fail_txt = "실패한 업데이트 내역\n";
+                        break;
+                    case 'rollback':
+                        $success_txt = "성공한 롤백 내역\n";
+                        $fail_txt = "실패한 롤백 내역\n";
+                        break;
+                    default:
+                        unlink("ssh2.sftp://".intval($this->connPath).$log_dir."/".$datetime.'_'.$status.'_'.$rand.'.log');
+                        throw new Exception("올바르지 않은 명령입니다.");
+                }
+
+                if(count($success_list) > 0) {
+                    foreach($success_list as $key => $var) {
+                        $success_txt .= $var['file']." : ".$var['message']."\n";
+                    }
+                } else {
+                    $success_txt = '';
+                }
+                
+                if(count($fail_list) > 0) {
+                    foreach($fail_list as $key => $var) {
+                        $fail_txt .= $var['file']." : ".$var['message']."\n";
+                    }
+                } else {
+                    $fail_txt = '';
+                }
+
+                $result = fwrite($fp, $success_txt."\n\n".$fail_txt);
+                if($result == false) throw new Exception('파일쓰기에 실패했습니다.');
+            }
+
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage()."\n";
+
+            return false;
+        }
+    }
+
     public function downloadVersion($version = null) {
         if($version == null) return false;
         if($this->conn == false) return false;
 
         umask(0002);
 
-        $save = G5_DATA_PATH."/update/gnuboard.zip";
+        $save = G5_DATA_PATH."/update/version/gnuboard.zip";
 
         $zip = fopen($save, 'w+');
         if($zip == false) return false;
@@ -397,9 +501,9 @@ class G5Update {
         $file_result = @fwrite($zip, $result);
         if($file_result == false) return false;
 
-        exec('unzip '.$save.' -d '.G5_DATA_PATH.'/update/'.$version);
-        exec('mv '.G5_DATA_PATH.'/update/'.$version.'/gnuboard-*/* '.G5_DATA_PATH.'/update/'.$version);
-        exec('rm -rf '.G5_DATA_PATH.'/update/'.$version.'/gnuboard-*/');
+        exec('unzip '.$save.' -d '.G5_DATA_PATH.'/update/version/'.$version);
+        exec('mv '.G5_DATA_PATH.'/update/version/'.$version.'/gnuboard-*/* '.G5_DATA_PATH.'/update/version/'.$version);
+        exec('rm -rf '.G5_DATA_PATH.'/update/version/'.$version.'/gnuboard-*/');
         exec('rm -rf '.$save);
 
         umask(0022);
@@ -419,13 +523,13 @@ class G5Update {
         
         foreach($list as $key => $var) {
             $now_file_path = G5_PATH.'/'.$var;
-            $release_file_path = G5_DATA_PATH.'/update/'.$this->now_version.'/'.$var;
+            $release_file_path = G5_DATA_PATH.'/update/version/'.$this->now_version.'/'.$var;
 
             if(!file_exists($now_file_path)) continue;
             if(!file_exists($release_file_path)) continue;
 
-            $now_content = preg_replace('/\r/','',file_get_contents($now_file_path, true));
-            $release_content = preg_replace('/\r/','',file_get_contents($release_file_path, true));
+            $now_content = preg_replace('/\r\n|\r|\n/','',file_get_contents($now_file_path, true));
+            $release_content = preg_replace('/\r\n|\r|\n/','',file_get_contents($release_file_path, true));
 
             if($now_content !== $release_content) {
                 $check['type'] = 'N';

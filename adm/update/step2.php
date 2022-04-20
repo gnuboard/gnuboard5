@@ -42,6 +42,9 @@ if($result == "success") {
 }else {
     $update_check['fail'][] = array('file' => $var, 'message' => $result);
 }
+
+$result = $g5['update']->writeLogFile($update_check['success'], $update_check['fail'], 'update');
+
 $g5['update']->disconnect();
 
 ?>
