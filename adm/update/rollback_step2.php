@@ -15,7 +15,7 @@ if($conn_result == false) die("연결에 실패했습니다.");
 
 if($g5['update']->target_version == $g5['update']->now_version) die("목표버전이 현재버전과 동일합니다.");
 
-$g5['update']->setRollbackVersion(preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file));
+$g5['update']->setRollbackVersion(preg_replace('/.zip/', '', G5_DATA_PATH . '/update/backup/' .  $rollback_file));
 $rollback_version = $g5['update']->getRollbackVersion();
 
 $g5['update']->setTargetVersion($rollback_version);
@@ -27,12 +27,12 @@ if($list == null) die("비교파일리스트가 존재하지 않습니다.");
     <br>
 <?php
 
-$result = $g5['update']->createBackupZipFile(G5_DATA_PATH."/backup/".date('YmdHis', G5_SERVER_TIME).".zip");
+$result = $g5['update']->createBackupZipFile(G5_DATA_PATH."/update/backup/".date('YmdHis', G5_SERVER_TIME).".zip");
 if($result == "success") {
     $update_check = array();
     foreach($list as $key => $var) {
         $originPath = G5_PATH.'/'.$var;
-        $backupPath = preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file) .'/'. $var;
+        $backupPath = preg_replace('/.zip/', '', G5_DATA_PATH . '/update/backup/' .  $rollback_file) .'/'. $var;
 
         if(!file_exists($backupPath) && file_exists($originPath)) { // 백업파일은 존재하지않지만 서버파일은 존재할때
             $result = $g5['update']->deleteOriginFile($originPath);
@@ -58,10 +58,13 @@ if($result == "success") {
         }
     }
 
-    $g5['update']->deleteBackupDir(preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file));
+    $g5['update']->deleteBackupDir(preg_replace('/.zip/', '', G5_DATA_PATH . '/update/backup/' .  $rollback_file));
 }else {
     $update_check['fail'][] = array('file' => $var, 'message' => $result);
 }
+
+$result = $g5['update']->writeLogFile($update_check['success'], $update_check['fail'], 'rollback');
+
 $g5['update']->disconnect();
 
 ?>

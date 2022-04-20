@@ -36,17 +36,17 @@ if($userpassword == null) die("{$port} 비밀번호가 입력되지 않았습니
 $conn_result = $g5['update']->connect($_SERVER['HTTP_HOST'], $port, $username, $userpassword);
 if($conn_result == false) die("연결에 실패했습니다.");
 
-$result = $g5['update']->unzipBackupFile(G5_DATA_PATH . '/backup/' . $rollback_file);
+$result = $g5['update']->unzipBackupFile(G5_DATA_PATH . '/update/backup/' . $rollback_file);
 if($result == false) die("압축해제에 실패했습니다.");
 
-$g5['update']->setRollbackVersion(preg_replace('/.zip/', '', G5_DATA_PATH . '/backup/' .  $rollback_file));
+$g5['update']->setRollbackVersion(preg_replace('/.zip/', '', G5_DATA_PATH . '/update/backup/' .  $rollback_file));
 $rollback_version = $g5['update']->getRollbackVersion();
 
 $g5['update']->setTargetVersion($rollback_version);
 $list = $g5['update']->getVersionCompareList();
 if($list == null) die("비교파일리스트가 존재하지 않습니다.");
 
-$compare_list = $g5['update']->checkRollbackVersionComparison($list, G5_DATA_PATH . '/backup/' . $rollback_file);
+$compare_list = $g5['update']->checkRollbackVersionComparison($list, G5_DATA_PATH . '/update/backup/' . $rollback_file);
 if($compare_list == false) die("파일 비교에 실패했습니다.");
 
 ?>

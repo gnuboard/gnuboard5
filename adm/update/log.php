@@ -1,0 +1,40 @@
+<?php
+$sub_menu = '100600';
+include_once('./_common.php');
+
+$g5['title'] = '로그 기록';
+include_once ('../admin.head.php');
+
+$log_dir = G5_DATA_PATH."/update/log";
+
+if(!is_dir($log_dir)) die("로그 디렉토리가 존재하지 않습니다.");
+
+$list = $g5['update']->getLogList();
+
+?>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>파일명</th>
+                <th>상태</th>
+                <th>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($list as $key => $var) { ?>
+                <tr>
+                    <td><a href="./log_detail.php?filename=<?php echo $var['filename']; ?>"><?php echo $var['filename']; ?></a></td>
+                    <td><a><?php echo $var['status']; ?></a></td>
+                    <td><a><?php echo $var['datetime']; ?></a></td>
+                </tr>
+            <?php } ?>
+        </tbody>
+
+    </table>
+
+</div>
+
+<?php
+include_once('../admin.tail.php');

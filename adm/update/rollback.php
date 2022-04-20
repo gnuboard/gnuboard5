@@ -7,7 +7,7 @@ include_once ('../admin.head.php');
 
 $this_version = G5_GNUBOARD_VER;
 
-$backup_list = $g5['update']->getBackupList(G5_DATA_PATH . "/backup");
+$backup_list = $g5['update']->getBackupList(G5_DATA_PATH . "/update/backup");
 
 $latest_version = $g5['update']->getLatestVersion();
 if($latest_version == false) $message = "정보조회에 실패했습니다.";

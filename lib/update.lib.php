@@ -18,6 +18,7 @@ class G5Update {
     private $version_list = array();
     private $compare_list = array();
     private $backup_list = array();
+    private $log_list = array();
 
     public $patch = array();
 
@@ -34,7 +35,7 @@ class G5Update {
 
         if($port == "ftp") {
             if(function_exists("ftp_connect")) {
-                $this->conn = @ftp_connect($hostname, 21);
+                $this->conn = @ftp_connect($hostname, 21, 5);
                 if($this->conn == false) return false;
 
                 $login = ftp_login($this->conn, $username, $userPassword);
@@ -283,6 +284,78 @@ class G5Update {
         return $this->backup_list;
     }
 
+    public function getLogList() {
+        if(empty($this->log_list)) {
+            $log_list = G5_DATA_PATH.'/update/log';
+            if(is_dir($log_list)) {
+                if($dh = @opendir($log_list)) {
+                    while(($dl = readdir($dh)) !== false) {
+                        if($dl == '.' || $dl == '..') continue;
+                        if(preg_match('/.log/i', $dl)) {
+                            list($date, $time, $status, $rand) = explode("_", $dl);
+                            $file_name = $dl;
+
+                            switch($status) {
+                                case 'update':
+                                    $status_txt = '업데이트';
+                                    break;
+                                case 'rollback':
+                                    $status_txt = '롤백';
+                                    break;
+                                default:
+                                    throw new Exception("상태값이 올바르지 않은 파일입니다.");
+                            }
+
+                            $this->log_list[] = array(
+                                'filename' => $dl,
+                                'datetime' => date('Y-m-d h:i:s', strtotime($date. implode(':',str_split($time, 2)))),
+                                'status' => $status_txt
+                            );
+                        }
+                    }
+                    closedir($dh);  
+                }
+            }
+        }
+
+        return $this->log_list;
+    }
+
+    public function getLogDetail($file_name = null) {
+        try {
+            if($file_name == null) throw new Exception("");
+            $file = G5_DATA_PATH.'/update/log/'.$file_name;
+
+            $fp = fopen($file, 'r');
+            if($fp == false) throw new Exception("파일을 열람할 권한이 없습니다.");
+            $content = fread($fp, filesize($file));
+
+            list($date, $time, $status, $rand) = explode("_", $file_name);
+
+            switch($status) {
+                case 'update':
+                    $status_txt = '업데이트';
+                    break;
+                case 'rollback':
+                    $status_txt = '롤백';
+                    break;
+                default:
+                    throw new Exception("상태값이 올바르지 않은 파일입니다.");
+            }
+
+            $log_detail = array(
+                'filename' => $file_name,
+                'datetime' => date('Y-m-d h:i:s', strtotime($date. implode(':',str_split($time, 2)))),
+                'status' => $status_txt,
+                'content' => $content,
+            );
+
+            return $log_detail;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function createBackupZipFile($backupPath) {
         try {            
             if(!is_dir(dirname($backupPath))) mkdir(dirname($backupPath), 0707);
@@ -458,7 +531,7 @@ class G5Update {
 
                 if(count($success_list) > 0) {
                     foreach($success_list as $key => $var) {
-                        $success_txt .= $var['file']." : ".$var['message']."\n";
+                        $success_txt .= $var."\n";
                     }
                 } else {
                     $success_txt = '';
