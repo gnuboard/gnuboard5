@@ -26,7 +26,7 @@ foreach($content_url as $key => $var) {
     .a_style {font-weight:400;padding:0.2em 0.4em;margin: 0;font-size: 12px;background-color: #ddf4ff;border-radius: 6px; border:1px; color: #0969da;}
     .content_title {font-size:16px; font-weight:bold;}
 </style>
-<ul class="anchor"><li><a href="./">업데이트</a></li><li><a href="./rollback.php">복원</a></li></ul>
+<ul class="anchor"><li><a href="./">업데이트</a></li><li><a href="./rollback.php">복원</a></li><li><a href="./log.php">로그</a></li></ul>
 <div class="version_box">
     <form method="POST" name="update_box" class="update_box" action="./rollback_step1.php" onsubmit="return update_submit(this);">
         <input type="hidden" name="compare_check" value="0">

@@ -10,9 +10,8 @@ $log_dir = G5_DATA_PATH."/update/log";
 if(!is_dir($log_dir)) die("로그 디렉토리가 존재하지 않습니다.");
 
 $list = $g5['update']->getLogList();
-
 ?>
-
+<ul class="anchor"><li><a href="./">업데이트</a></li><li><a href="./rollback.php">복원</a></li><li><a href="./log.php">로그</a></li></ul>
 <div>
     <table>
         <thead>
