@@ -3337,6 +3337,11 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
+    // KVE-2021-1277 Open Redirect 취약점 해결
+    if (preg_match('#\\\0#', $url)) {
+        alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
+    }
+
     $url = urldecode($url);
     $p = @parse_url(trim($url));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
