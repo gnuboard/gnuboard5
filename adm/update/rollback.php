@@ -2,7 +2,7 @@
 $sub_menu = '100600';
 include_once('./_common.php');
 
-$g5['title'] = '그누보드 업데이트';
+$g5['title'] = '그누보드 업데이트 복원';
 include_once ('../admin.head.php');
 
 $this_version = G5_GNUBOARD_VER;

@@ -28,7 +28,7 @@ class G5Update {
     private $port;
     private $connPath;
 
-    private $log_page_size = 5;
+    private $log_page_size = 10;
     private $log_page_list = 10;
 
     public function __construct() { }
@@ -307,9 +307,9 @@ class G5Update {
         }
     }
 
-    
 
-    public function getLogList() {
+
+    public function getLogList($page = null) {
         if(empty($this->log_list)) {
             $log_list = G5_DATA_PATH.'/update/log';
             if(is_dir($log_list)) {
@@ -339,11 +339,32 @@ class G5Update {
                         }
                     }
                     closedir($dh);  
+
+                    array_multisort(array_map('strtotime',array_column($this->log_list,'datetime')),SORT_DESC,$this->log_list);
+
+                    return $this->log_list;
                 }
             }
+
+            return false;
+        } else {
+            return $this->log_list;
         }
 
-        return $this->log_list;
+        // if($page == null) return false;
+
+        // $list_size = $this->getLogListSize();
+        // $page_size = $this->getLogPageSize();
+    }
+
+    public function getLogListSize() {
+        if($this->log_page_list == null) return false;
+
+        $count = $this->getLogTotalCount();
+
+        $max_list_size = ceil($count / $this->log_page_list);
+
+        return $max_list_size;
     }
 
     public function getLogDetail($file_name = null) {

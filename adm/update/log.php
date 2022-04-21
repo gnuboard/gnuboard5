@@ -2,7 +2,7 @@
 $sub_menu = '100600';
 include_once('./_common.php');
 
-$g5['title'] = '로그 기록';
+$g5['title'] = '그누보드 업데이트 로그 기록';
 include_once ('../admin.head.php');
 
 $log_dir = G5_DATA_PATH."/update/log";
