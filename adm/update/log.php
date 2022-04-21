@@ -9,6 +9,11 @@ $log_dir = G5_DATA_PATH."/update/log";
 
 if(!is_dir($log_dir)) die("로그 디렉토리가 존재하지 않습니다.");
 
+// echo $g5['update']->getLogTotalCount();
+// exit;
+
+$page = $_REQUEST['page'];
+
 $list = $g5['update']->getLogList();
 ?>
 <ul class="anchor"><li><a href="./">업데이트</a></li><li><a href="./rollback.php">복원</a></li><li><a href="./log.php">로그</a></li></ul>
@@ -32,6 +37,11 @@ $list = $g5['update']->getLogList();
         </tbody>
 
     </table>
+
+    <?php
+    $pagelist = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page=');
+    echo $pagelist;
+    ?>
 
 </div>
 

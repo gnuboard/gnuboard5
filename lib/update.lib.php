@@ -28,6 +28,9 @@ class G5Update {
     private $port;
     private $connPath;
 
+    private $log_page_size = 5;
+    private $log_page_list = 10;
+
     public function __construct() { }
 
     public function connect($hostname, $port, $username, $userPassword) {
@@ -283,6 +286,28 @@ class G5Update {
         }        
         return $this->backup_list;
     }
+
+    public function getLogTotalCount() {
+        try {
+            if(empty($this->log_list)) {
+                $log_list = G5_DATA_PATH.'/update/log';
+                if(is_dir($log_list)) {
+                    $dirs = scandir($log_list);
+                    $result = array_values(array_diff($dirs, array('.', '..')));
+                    $count = count($result);
+                }
+                
+                return $count;
+            } else {
+                throw new Exception("페이지 전체정보를 확인할 수 없습니다.");
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage().'<br>';
+            return false;
+        }
+    }
+
+    
 
     public function getLogList() {
         if(empty($this->log_list)) {
