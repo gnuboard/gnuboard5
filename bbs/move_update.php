@@ -247,7 +247,24 @@ if ($sw == 'move')
         sql_query(" delete from {$g5['board_new_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
         sql_query(" delete from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
     }
-    sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write - '$save_count_write', bo_count_comment = bo_count_comment - '$save_count_comment' where bo_table = '$bo_table' ");
+
+    // 공지사항이 이동되는 경우의 처리 begin
+    $arr = array();
+    $sql = " select bo_notice from {$g5['board_table']} where bo_table = '{$bo_table}' ";
+    $row = sql_fetch($sql);
+    $arr_notice = explode(',', $row['bo_notice']);
+    for ($i=0; $i<count($arr_notice); $i++) {
+        $move_id = (int)$arr_notice[$i];
+        // 게시판에 wr_id 가 있다면 이동한게 아니므로 bo_notice 에 다시 넣음
+        $row2 = sql_fetch(" select count(*) as cnt from $write_table where wr_id = '{$move_id}' ");
+        if ($row2['cnt']) {
+            $arr[] = $move_id;
+        }
+        $bo_notice = implode(',', $arr);
+    }
+    // 공지사항이 이동되는 경우의 처리 end
+
+    sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}', bo_count_write = bo_count_write - '$save_count_write', bo_count_comment = bo_count_comment - '$save_count_comment' where bo_table = '$bo_table' ");
 }
 
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';

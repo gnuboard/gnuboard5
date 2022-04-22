@@ -93,19 +93,12 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 				                    $is_reply_content = get_view_thumbnail(conv_content($row['is_reply_content'], 1), $thumbnail_width);
 				                ?>
 				                <div class="sps_reply">
-				                    <div class="sps_img">
-				                        <a href="<?php echo $it_href; ?>">
-				                            <?php echo get_itemuselist_thumbnail($row['it_id'], $row['is_reply_content'], 50, 50); ?>
-				                            <span><?php echo $row2['it_name']; ?></span>
-				                        </a>
-				                    </div>
-				
 				                    <section>
 				                        <h2 class="is_use_reply"><?php echo get_text($row['is_reply_subject']); ?></h2>
 				                        <div class="sps_dl">
 				                            <?php echo $row['is_reply_name']; ?>
 				                        </div>
-				                        <div id="sps_con_<?php echo $i; ?>_reply" style="display:none;">
+				                        <div id="sps_con_<?php echo $i; ?>_reply">
 				                            <?php echo $is_reply_content; // 사용후기 답변 내용 ?>
 				                        </div>
 				                    </section>

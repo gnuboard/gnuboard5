@@ -1527,7 +1527,7 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
     global $g5;
 
     if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
-        $link = mysqli_connect($host, $user, $pass, $db);
+        $link = @mysqli_connect($host, $user, $pass, $db) or die('MySQL Host, User, Password, DB 정보에 오류가 있습니다.');
 
         // 연결 오류 발생 시 스크립트 종료
         if (mysqli_connect_errno()) {
@@ -2764,6 +2764,41 @@ function insert_cert_history($mb_id, $company, $method)
     sql_query($sql);
 }
 
+// 본인확인 변경내역 기록
+function insert_member_cert_history($mb_id, $name, $hp, $birth, $type)
+{
+    global $g5;
+
+    // 본인인증 내역 테이블 정보가 dbconfig에 없으면 소셜 테이블 정의
+    if( !isset($g5['member_cert_history']) ){
+        $g5['member_cert_history_table'] = G5_TABLE_PREFIX.'member_cert_history';
+    }
+    
+    // 멤버 본인인증 정보 변경 내역 테이블 없을 경우 생성
+    if(isset($g5['member_cert_history_table']) && !sql_query(" DESC {$g5['member_cert_history_table']} ", false)) {
+        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['member_cert_history_table']}` (
+                        `ch_id` int(11) NOT NULL auto_increment,
+                        `mb_id` varchar(20) NOT NULL DEFAULT '',
+                        `ch_name` varchar(255) NOT NULL DEFAULT '',
+                        `ch_hp` varchar(255) NOT NULL DEFAULT '',
+                        `ch_birth` varchar(255) NOT NULL DEFAULT '',
+                        `ch_type` varchar(20) NOT NULL DEFAULT '',
+                        `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+                        PRIMARY KEY (`ch_id`),
+                        KEY `mb_id` (`mb_id`)
+                    ) ", true);
+    }
+
+    $sql = " insert into {$g5['member_cert_history_table']}
+                set mb_id = '{$mb_id}',
+                    ch_name = '{$name}',
+                    ch_hp = '{$hp}',
+                    ch_birth = '{$birth}',
+                    ch_type = '{$type}',
+                    ch_datetime = '".G5_TIME_YMD." ".G5_TIME_HIS."'";
+    sql_query($sql);
+}
+
 // 인증시도회수 체크
 function certify_count_check($mb_id, $type)
 {
@@ -2788,6 +2823,9 @@ function certify_count_check($mb_id, $type)
     $row = sql_fetch($sql);
 
     switch($type) {
+        case 'simple' :
+            $cert = '간편인증';
+            break;
         case 'hp':
             $cert = '휴대폰';
             break;
@@ -3144,7 +3182,7 @@ function member_delete($mb_id)
     }
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
-    $sql = " update {$g5['member_table']} set mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_addr3 = '', mb_point = 0, mb_profile = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n".sql_real_escape_string($mb['mb_memo'])."' where mb_id = '{$mb_id}' ";
+    $sql = " update {$g5['member_table']} set mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_addr3 = '', mb_point = 0, mb_profile = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n".sql_real_escape_string($mb['mb_memo'])."', mb_certify = '', mb_adult = 0, mb_dupinfo = '' where mb_id = '{$mb_id}' ";
 
     sql_query($sql);
 
@@ -3299,6 +3337,11 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
+    // KVE-2021-1277 Open Redirect 취약점 해결
+    if (preg_match('#\\\0#', $url)) {
+        alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
+    }
+
     $url = urldecode($url);
     $p = @parse_url(trim($url));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
@@ -3320,10 +3363,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         }
     }
 
-    if(stripos($url, 'http:') !== false) {
-        if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
-            alert('url 정보가 올바르지 않습니다.', $return_url);
-    }
+    // if(stripos($url, 'http:') !== false) {
+    //     if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
+    //         alert('url 정보가 올바르지 않습니다.', $return_url);
+    // }
 
     //php 5.6.29 이하 버전에서는 parse_url 버그가 존재함
     //php 7.0.1 ~ 7.0.5 버전에서는 parse_url 버그가 존재함

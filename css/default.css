@@ -165,7 +165,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 /* 중간 레이아웃 */
 #wrapper {}
 #container_wr:after {display:block;visibility:hidden;clear:both;content:""}
-#container_wr {margin:0 auto;height:100%;zoom:1}
+#container_wr {margin:0 auto;zoom:1}
 #aside {float:right;width:235px;padding:0;height:100%;margin:20px 0 20px 20px}
 
 #container {position:relative;float:left;min-height:500px;height:auto !important;margin:20px 0;height:500px;font-size:1em;width:930px;zoom:1}
@@ -402,7 +402,8 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .new_win_con2 {margin:20px 0}
 .new_win .btn_confirm:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .win_btn {text-align:center}
-.new_win .btn_close {height:45px;width:60px;overflow:hidden;cursor:pointer}
+.new_win .cert_btn {margin-bottom:30px;text-align:center}
+.new_win .btn_close {padding:0 20px;height:45px;overflow:hidden;cursor:pointer}
 .new_win .btn_submit {padding:0 20px;height:45px;font-weight:bold;font-size:1.083em}
 
 /* 검색결과 색상 */

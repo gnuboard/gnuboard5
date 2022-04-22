@@ -80,7 +80,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
 
             $result = false;
 
-            if($row['pp_id']) {
+            if(isset($row['pp_id']) && $row['pp_id']) {
                 // 개인결제 UPDATE
                 $sql = " update {$g5['g5_shop_personalpay_table']}
                             set pp_receipt_price = '$LGD_AMOUNT',
@@ -113,7 +113,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
             }
 
             if($result) {
-                if($row['od_id'])
+                if(isset($row['od_id']) && $row['od_id'])
                     $od_id = $row['od_id'];
                 else
                     $od_id = $LGD_OID;
