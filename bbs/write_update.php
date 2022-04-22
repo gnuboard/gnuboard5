@@ -221,9 +221,6 @@ if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
 
 $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
 
-$options = array($html,$secret,$mail);
-$wr_option = implode(',', array_filter($options, function($v) { return trim($v); }));
-
 if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
@@ -261,7 +258,7 @@ if ($w == '' || $w == 'r') {
                      wr_reply = '$wr_reply',
                      wr_comment = 0,
                      ca_name = '$ca_name',
-                     wr_option = '$wr_option',
+                     wr_option = '$html,$secret,$mail',
                      wr_subject = '$wr_subject',
                      wr_content = '$wr_content',
                      wr_seo_title = '$wr_seo_title',
@@ -383,7 +380,7 @@ if ($w == '' || $w == 'r') {
 
     $sql = " update {$write_table}
                 set ca_name = '{$ca_name}',
-                     wr_option = '{$wr_option}',
+                     wr_option = '{$html},{$secret},{$mail}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
                      wr_seo_title = '$wr_seo_title',

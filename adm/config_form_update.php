@@ -22,7 +22,7 @@ check_admin_token();
 
 $cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
 
-$check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret','cf_cert_kg_cd','cf_cert_kg_mid');
+$check_keys = array('cf_lg_mid', 'cf_lg_mert_key', 'cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret');
 
 foreach( $check_keys as $key ){
     if ( isset($_POST[$key]) && $_POST[$key] ){
@@ -99,10 +99,8 @@ $check_keys = array(
 'cf_social_login_use' => 'int',
 'cf_cert_req' => 'int',
 'cf_cert_use' => 'int',
-'cf_cert_find' => 'int',
 'cf_cert_ipin' => 'char',
 'cf_cert_hp' => 'char',
-'cf_cert_simple' => 'char',
 'cf_admin_email' => 'char',
 'cf_admin_email_name' => 'char',
 'cf_add_script' => 'text',
@@ -173,13 +171,12 @@ foreach( $check_keys as $k => $v ){
 }
 
 // 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
-if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] && !$_POST['cf_cert_simple'])
-    alert('본인확인을 위해 아이핀, 휴대폰 본인확인, KG이니시스 간편인증 서비스 중 하나 이상 선택해 주십시오.');
+if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'])
+    alert('본인확인을 위해 아이핀 또는 휴대폰 본인학인 서비스를 하나이상 선택해 주십시오');
 
 if(!$_POST['cf_cert_use']) {
     $posts[$key] = $_POST['cf_cert_ipin'] = '';
     $posts[$key] = $_POST['cf_cert_hp'] = '';
-    $posts[$key] = $_POST['cf_cert_simple'] = '';
 }
 
 $sql = " update {$g5['config_table']}
@@ -277,14 +274,12 @@ $sql = " update {$g5['config_table']}
                 cf_captcha_mp3 = '{$_POST['cf_captcha_mp3']}',
                 cf_editor = '{$_POST['cf_editor']}',
                 cf_cert_use = '{$_POST['cf_cert_use']}',
-                cf_cert_find = '{$_POST['cf_cert_find']}',
                 cf_cert_ipin = '{$_POST['cf_cert_ipin']}',
                 cf_cert_hp = '{$_POST['cf_cert_hp']}',
-                cf_cert_simple = '{$_POST['cf_cert_simple']}',
-                cf_cert_kg_cd = '{$_POST['cf_cert_kg_cd']}',
-                cf_cert_kg_mid = '".trim($_POST['cf_cert_kg_mid'])."',
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
                 cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
+                cf_lg_mid = '{$_POST['cf_lg_mid']}',
+                cf_lg_mert_key = '{$_POST['cf_lg_mert_key']}',
                 cf_cert_limit = '{$_POST['cf_cert_limit']}',
                 cf_cert_req = '{$_POST['cf_cert_req']}',
                 cf_sms_use = '{$_POST['cf_sms_use']}',

@@ -15,7 +15,7 @@ sql_query($sql);
 
 $group_code = null;
 $primary_code = null;
-$count = isset($_POST['code']) ? count($_POST['code']) : 0;
+$count = count($_POST['code']);
 
 for ($i=0; $i<$count; $i++)
 {

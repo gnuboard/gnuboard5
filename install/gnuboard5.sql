@@ -285,12 +285,8 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_captcha_mp3` varchar(255) NOT NULL DEFAULT '',
   `cf_editor` varchar(50) NOT NULL DEFAULT '',
   `cf_cert_use` tinyint(4) NOT NULL DEFAULT '0',
-  `cf_cert_find` tinyint(4) NOT NULL DEFAULT '0',
   `cf_cert_ipin` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_hp` varchar(255) NOT NULL DEFAULT '',
-  `cf_cert_simple` varchar(255) NOT NULL DEFAULT '',
-  `cf_cert_kg_cd` varchar(255) NOT NULL DEFAULT '',
-  `cf_cert_kg_mid` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_lg_mid` varchar(100) NOT NULL DEFAULT '',
@@ -303,7 +299,6 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_icode_pw` varchar(255) NOT NULL DEFAULT '',  
   `cf_icode_server_ip` varchar(50) NOT NULL DEFAULT '',
   `cf_icode_server_port` varchar(50) NOT NULL DEFAULT '',
-  `cf_icode_token_key` varchar(100) NOT NULL DEFAULT '',
   `cf_googl_shorturl_apikey` varchar(50) NOT NULL DEFAULT '',
   `cf_social_login_use` tinyint(4) NOT NULL DEFAULT '0',
   `cf_social_servicelist` varchar(255) NOT NULL DEFAULT '',
@@ -361,25 +356,6 @@ CREATE TABLE IF NOT EXISTS `g5_cert_history` (
   `cr_date` date NOT NULL DEFAULT '0000-00-00',
   `cr_time` time NOT NULL DEFAULT '00:00:00',
   PRIMARY KEY (`cr_id`),
-  KEY `mb_id` (`mb_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_cert_history`
---
-
-DROP TABLE IF EXISTS `g5_member_cert_history`;
-CREATE TABLE IF NOT EXISTS `g5_member_cert_history` (
-  `ch_id` int(11) NOT NULL auto_increment,
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
-  `ch_name` varchar(255) NOT NULL DEFAULT '',
-  `ch_hp` varchar(255) NOT NULL DEFAULT '',
-  `ch_birth` varchar(255) NOT NULL DEFAULT '',
-  `ch_type` varchar(20) NOT NULL DEFAULT '',
-  `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY (`ch_id`),
   KEY `mb_id` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

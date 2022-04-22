@@ -32,12 +32,6 @@ class HttpClient {
         $data = substr($data, 1); // remove leading "&"
         $url_data = parse_url($url);
 
-        // host 가 inicis.com 의 주소가 아니라면 false 반환
-        // [scheme] => https, [host] => fcstdpay.inicis.com, [path] => /api/payAuth
-        if (preg_match("#inicis\.com$#", $url_data["host"]) == false) {
-            // error_log(print_r($url_data, 1));
-            return false;
-        }
 
         if ($url_data["scheme"] == "https") {
             $this->ssl = "ssl://";

@@ -272,33 +272,12 @@ if(!isset($member['mb_scrap_cnt'])) {
 }
 
 // 아이코드 토큰키 추가
-if(!isset($config['cf_icode_token_key']) ){
+if( ! isset($config['cf_icode_token_key']) ){
     $sql = "ALTER TABLE `{$g5['config_table']}` 
             ADD COLUMN `cf_icode_token_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_server_port`; ";
     sql_query($sql, false);
 }
-// 아이디/비밀번호 찾기에 본인확인 사용 여부 필드 추가
-if(!isset($config['cf_cert_find']) ){
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
-            ADD COLUMN `cf_cert_find` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_cert_use`; ";
-    sql_query($sql, false);
-}
-// 간편인증 필드 추가
-if(!isset($config['cf_cert_simple']) ){
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
-            ADD COLUMN `cf_cert_simple` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`; ";
-    sql_query($sql, false);
-}
-if(!isset($config['cf_cert_kg_cd']) ){
-    $sql = "ALTER TABLE `{$g5['config_table']}`
-            ADD COLUMN `cf_cert_kg_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_simple`; ";
-    sql_query($sql, false);
-}
-if(!isset($config['cf_cert_kg_mid']) ){
-    $sql = "ALTER TABLE `{$g5['config_table']}`
-            ADD COLUMN `cf_cert_kg_mid` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kg_cd`; ";
-    sql_query($sql, false);
-}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -860,19 +839,11 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_find">회원정보찾기</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
             <td class="cf_cert_service">
-                <?php echo help('휴대폰/아이핀 본인확인을 이용하시다가 간편인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.') ?>
-                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if (isset($config['cf_cert_find']) && $config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find"> 아이디/비밀번호 찾기에 사용하기</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_simple">통합인증(간편인증)</label></th>
-            <td class="cf_cert_service">
-                <?php echo help('KG이니시스의 통합인증(간편인증+전자서명) 서비스에서 전자서명을 제외한 간편인증 서비스 입니다. <a href="https://www.inicis.com/all-auth-service" target="_blank"><u>KG이니시스 통합인증 안내</u></a>') ?>
-                <select name="cf_cert_simple" id="cf_cert_simple">
-                    <?php echo option_selected("", $config['cf_cert_simple'], "사용안함"); ?>
-                    <?php echo option_selected("inicis", $config['cf_cert_simple'], "KG이니시스 통합인증(간편인증)"); ?>
+                <select name="cf_cert_ipin" id="cf_cert_ipin">
+                    <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
+                    <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
                 </select>
             </td>
         </tr>
@@ -883,37 +854,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <?php echo option_selected("",    $config['cf_cert_hp'], "사용안함"); ?>
                     <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
                     <?php echo option_selected("kcp", $config['cf_cert_hp'], "NHN KCP 휴대폰 본인확인"); ?>
+                    <?php echo option_selected("lg",  $config['cf_cert_hp'], "LG유플러스 휴대폰 본인확인"); ?>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
-            <td class="cf_cert_service">
-                <select name="cf_cert_ipin" id="cf_cert_ipin">
-                    <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
-                    <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 간편인증 MID</label></th>
-            <td class="cf_cert_service">
-                <span class="sitecode">SRA</span>
-                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="10" minlength="7" maxlength="7">
-                <a href="http://sir.kr/main/service/inicis_cert_form.php" target="_blank" class="btn_frmline">KG이니시스 통합인증(간편인증) 신청페이지</a>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 간편인증 API KEY</label></th>
-            <td class="cf_cert_service">
-                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40" minlength="32" maxlength="32">
             </td>
         </tr>
         <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_kcb_cd">코리아크레딧뷰로<br>KCB 회원사ID</label></th>
             <td class="cf_cert_service">
                 <?php echo help('KCB 회원사ID를 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, KCB와 계약체결 후 회원사ID를 발급 받으실 수 있습니다.<br>이용하시려는 서비스에 대한 계약을 아이핀, 휴대폰 본인확인 각각 체결해주셔야 합니다.<br>아이핀 본인확인 테스트의 경우에는 KCB 회원사ID가 필요 없으나,<br>휴대폰 본인확인 테스트의 경우 KCB 에서 따로 발급 받으셔야 합니다.') ?>
-                <input type="text" name="cf_cert_kcb_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcb_cd']); ?>" id="cf_cert_kcb_cd" class="frm_input" size="20">
+                <input type="text" name="cf_cert_kcb_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcb_cd']); ?>" id="cf_cert_kcb_cd" class="frm_input" size="20"> <a href="http://sir.kr/main/service/b_ipin.php" target="_blank" class="btn_frmline">KCB 아이핀 서비스 신청페이지</a>
+                <a href="http://sir.kr/main/service/b_cert.php" target="_blank" class="btn_frmline">KCB 휴대폰 본인확인 서비스 신청페이지</a>
             </td>
         </tr>
         <tr>
@@ -925,9 +875,24 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_lg_mid">LG유플러스 상점아이디</label></th>
+            <td class="cf_cert_service">
+                <?php echo help('LG유플러스 상점아이디 중 si_를 제외한 나머지 아이디만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 상점아이디를 발급 받으실 수 있습니다.<br><strong>LG유플러스 휴대폰본인확인은 ActiveX 설치가 필요하므로 Internet Explorer 에서만 사용할 수 있습니다.</strong>') ?>
+                <span class="sitecode">si_</span>
+                <input type="text" name="cf_lg_mid" value="<?php echo get_sanitize_input($config['cf_lg_mid']); ?>" id="cf_lg_mid" class="frm_input" size="20"> <a href="http://sir.kr/main/service/lg_cert.php" target="_blank" class="btn_frmline">LG유플러스 본인확인 서비스 신청페이지</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_lg_mert_key">LG유플러스 MERT KEY</label></th>
+            <td class="cf_cert_service">
+                <?php echo help('LG유플러스 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.') ?>
+                <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input" size="40">
+            </td>
+        </tr>
+        <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_limit">본인확인 이용제한</label></th>
             <td class="cf_cert_service">
-                <?php echo help('1일 단위 본인인증을 시도할 수 있는 최대횟수를 지정합니다. (0으로 설정 시 무한으로 인증시도 가능)<br>아이핀/휴대폰/간편인증에서 개별 적용됩니다.)'); ?>
+                <?php echo help('하루동안 아이핀과 휴대폰 본인확인 인증 이용회수를 제한할 수 있습니다.<br>회수제한은 실서비스에서 아이핀과 휴대폰 본인확인 인증에 개별 적용됩니다.<br>0 으로 설정하시면 회수제한이 적용되지 않습니다.'); ?>
                 <input type="text" name="cf_cert_limit" value="<?php echo (int) $config['cf_cert_limit']; ?>" id="cf_cert_limit" class="frm_input" size="3"> 회
             </td>
         </tr>
@@ -1423,7 +1388,6 @@ $(function(){
                 break;
         }
     });
-
     $("#cf_captcha").on("change", function(){
         if ($(this).val() == 'recaptcha' || $(this).val() == 'recaptcha_inv') {
             $("[class^='kcaptcha_']").hide();

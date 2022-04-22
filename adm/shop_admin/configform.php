@@ -1399,6 +1399,13 @@ if(!$default['de_kakaopay_cancelpwd']){
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="de_code_dup_use">코드 중복검사</label></th>
+            <td>
+                 <?php echo help("분류, 상품 등을 추가할 때 자동으로 코드 중복검사를 하려면 체크하십시오."); ?>
+                <input type="checkbox" name="de_code_dup_use" value="1" id="de_code_dup_use"<?php echo $default['de_code_dup_use']?' checked':''; ?>> 사용
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="de_cart_keep_term">장바구니 보관기간</label></th>
             <td>
                  <?php echo help("장바구니 상품의 보관 기간을 설정하십시오."); ?>

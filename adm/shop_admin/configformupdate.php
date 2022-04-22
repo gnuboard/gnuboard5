@@ -458,8 +458,6 @@ $sql = " update {$g5['config_table']}
                 cf_lg_mert_key          = '{$cf_lg_mert_key}' ";
 sql_query($sql);
 
-run_event('shop_admin_configformupdate');
-
 if( $warning_msg ){
     alert($warning_msg, "./configform.php");
 } else {

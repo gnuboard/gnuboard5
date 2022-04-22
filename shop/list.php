@@ -29,7 +29,7 @@ if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true) {
 }
 
 // 본인인증, 성인인증체크
-if(!$is_admin && $config['cf_cert_use']) {
+if(!$is_admin) {
     $msg = shop_member_cert_check($ca_id, 'list');
     if($msg)
         alert($msg, G5_SHOP_URL);
