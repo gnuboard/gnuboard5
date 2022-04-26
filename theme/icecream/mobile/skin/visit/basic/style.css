@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+#visit {margin:30px 15px;background:#fff;border-radius:5px;position:relative}
+#visit h2{font-size:1.154em	;line-height:60px;padding:0 30px;border-bottom:1px solid #e3e3e3}
+#visit dl{background:#fff;padding:30px;border-radius:3px;line-height:30px;}
+#visit dl:after {display:block;visibility:hidden;clear:both;content:""}
+#visit dt {color: #888;float:left;width:50%}
+#visit dd {color: #888;float:left;width:50%;text-align:right}
+#visit a {display:inline-block;text-align:center;text-decoration:none;line-height:30px;padding:0 10px;vertical-align:middle;position:absolute;top:15px;right:15px}
+
+
+ 
+@media (max-width: 639px){
+    #visit{margin:15px 0 }
+}
+         

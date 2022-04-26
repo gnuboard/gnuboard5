@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* 새글 스킨 (latest) */
+.notice {position:relative;padding:15px 50px;border-bottom:1px solid #d0d6e4}
+.notice li{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.notice li a:hover{color:#a22121}
+.notice li .lock_icon{display: inline-block;line-height: 14px;width: 16px;font-size: 0.833em;color: #4f818c;background: #cbe3e8;text-align: center;border-radius: 2px;font-size: 12px;border:1px solid #a2c6ce;vertical-align:top}
+.notice li .new_icon{display:inline-block;line-height:16px;width:16px;font-size:0.833em;color:#ffff00;background:#6db142;text-align:center;margin-right:3px;border-radius:2px;vertical-align:top}
+.notice .cnt_cmt{background:#5c85c1;color:#fff; font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;white-space: nowrap;margin-left:5px;
+-webkit-box-shadow: inset 0 2px 5px  rgba(255,255,255,0.4);
+-moz-box-shadow: inset 0 2px 5px  rgba(255,255,255,0.4);
+box-shadow: inset 0 2px 5px  rgba(255,255,255,0.4)}
+
+.notice h2{position:absolute;top:50%;left:10px;margin-top:-15px;left:5;line-height:30px}
+.notice h2 a{display:inline-block;width:30px;line-height:30px;border-radius:25px;background:#4158d1;color:#fff;text-align:center;color:#fff}
+.notice .bx-next{position:absolute;top:50%;right:10px;;width:26px;height:26px;line-height:24px;text-align:center;background:#fff;border:1px solid #d1d1d1;margin-top:-12px}
+.notice .bx-prev{position:absolute;top:50%;right:35px;width:26px;height:26px;line-height:24px;text-align:center;background:#fff;border:1px solid #d1d1d1;margin-top:-12px}

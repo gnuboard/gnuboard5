@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+/* ### 기본 스타일 커스터마이징 시작 ### */
+
+#poll a.btn_admin {} /* 관리자 전용 버튼 */
+#poll a.btn_admin:focus, #poll a.btn_admin:hover {}
+
+#poll_result .tbl_frm table {}
+#poll_result .tbl_frm .frm_info {}
+#poll_result .tbl_frm .frm_address {}
+#poll_result .tbl_frm .frm_file {}
+#poll_result .tbl_frm caption {}
+
+#poll_result .tbl_frm01 {}
+#poll_result .tbl_frm01 th {}
+#poll_result .tbl_frm01 td {}
+#poll_result .tbl_frm01 textarea, #poll_result tbl_frm01 .frm_input {}
+#poll_result .tbl_frm01 textarea {}
+/*
+#poll_result .tbl_frm01 #captcha {}
+#poll_result .tbl_frm01 #captcha input {}
+*/
+#poll_result .tbl_frm01 a {}
+
+/* 필수입력 */
+#poll_result .required, #poll_result textarea.required {}
+
+#poll_result .btn_confirm {} /* 서식단계 진행 */
+#poll_result .btn_submit {}
+#poll_result button.btn_submit {}
+#poll_result .win_btn {} /* 새창용 */
+#poll_result .win_btn button {}
+#poll_result .win_btn input {}
+#poll_result .win_btn a {}
+#poll_result .win_btn a:focus, #poll_result .win_btn a:hover {}
+
+/* ### 기본 스타일 커스터마이징 끝 ### */
+
+/* 설문조사 스킨 */
+#poll {border: 1px solid #d2d9e6; border-bottom: 1px solid #c1ccda;background:#fff;margin:50px 20px 20px;position:relative;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+box-shadow:0 1px 2px rgba(0,0,0,0.1)}
+#poll h2 {font-size:1.167em;text-align:center;padding-top:25px;color:#1d9d74;position:relative}
+#poll h2 i{position:absolute;top:-22px;left:50%;width:44px;line-height:44px;margin-left:-22px;border-radius:25px;background:#1d9d74;color:#fff}
+#poll header .btn_admin {text-align:center;position:absolute;top:10px;right:10px;height:25px;line-height:25px;padding:0 5px;border-radius:3px}
+#poll ul {padding: 10px 15px;list-style:none}
+#poll li {padding:5px 0}
+#poll .poll_con{}
+#poll .poll_con p{font-weight:bold;padding: 10px 15px;background: #f1f9f7;border:1px solid #e0f1e9;color: #457163;margin:10px 10px 0}
+#poll_btn{background:#f7f7f7;padding:10px;text-align:center}
+#poll_btn:after {display:block;visibility:hidden;clear:both;content:""}
+#poll_btn .btn_poll{display:inline-block;height:30px;line-height:28px;padding: 0 10px}
+#poll_btn .btn_result{;display:inline-block;height:30px;line-height:30px;padding: 0 10px;font-weight:bold}
+
+
+/* 설문조사 결과 (새창) */
+#poll_result {}
+#poll_result section {margin:0 0 20px;padding:25px;border:1px solid #dbdbdb;background:#fff;
+-webkit-box-shadow: 0 0 5px rgba(55,55,5,0.1));
+   -moz-box-shadow: 0 0 5px rgba(55,55,5,0.1));
+        box-shadow: 0 0 5px rgba(55,55,5,0.1); }
+#poll_result .tbl_wrap {margin:0}
+#poll_result h2 {}
+#poll_result a {}
+#poll_result .sv_member,
+#poll_result .sv_guest {font-weight:bold}
+#poll_result .poll_all{float:right;display:inline-block;margin:0 0 10px;line-height: 30px;font-size: 0.92em;color: #4e546f;background: #d4d4d4;padding: 0 10px;border-radius: 5px;}
+#poll_result_list {margin:0 auto 20px;clear:both}
+#poll_result_list h2 {margin:0;font-size:1.25em;padding: 0 0 15px;margin:0 0 15px;border-bottom:1px solid #ddd;text-align:center;}
+#poll_result_list dt {margin-right:5%;color:#e8180d;text-align:right}
+#poll_result_list ol {margin:0;padding:0}
+#poll_result_list li {margin:20px 0;position:relative;list-style-position:inside}
+#poll_result_list .poll_percent{position:absolute;top:0;right:0;color:#415b72;font-weight:bold}
+.poll_result_graph {position:relative;margin-right:5%;margin:5px 0  ;height:15px;background:#f4f4f4;border-radius:10px 10px}
+.poll_result_graph span {position:absolute;top:0;left:0;height:15px;background:#ae99da;border-radius:10px 10px;white-space: nowrap;}
+.poll_result_graph span .poll_cnt {display:none;position:absolute;top:18px;right:0;font-size:0.92em;text-align:right;background:#333;color:#fff;padding:0 7px;line-height:22px;border-radius:3px}
+.poll_result_graph span:hover .poll_cnt {display:block}
+.poll_result_graph span .poll_cnt:before{content: "";position: absolute;top: -6px;left: 50%;margin-left:-4px;width: 0;height: 0;border-style: solid;border-width: 0 4px 6px 4px;border-color: transparent transparent #333 transparent;}
+#poll_result_cmt {}
+#poll_result_cmt h2  {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#poll_result_cmt h3 {margin:0;font-size:1.25em;padding: 0 0 15px;margin:0 0 15px;border-bottom:1px solid #ddd;text-align:center;}
+#poll_result_cmt article {margin:15px 0 ;position:relative;}
+#poll_result_cmt h1 {position:absolute;margin:0;padding:0;border:0;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
+#poll_result_cmt header{margin:0 0 5px}
+#poll_result_cmt .poll_datetime{display:inline-block;position:absolute;top:0;right:0;font-size:0.92em;color:#777;font-style:italic}
+#poll_result_cmt .profile_img img{border-radius:50%}
+#poll_result_cmt p {padding:10px;background:#f6f6f6;border-radius:5px;line-height:1.5em}
+#poll_result_cmt fieldset {margin-bottom:0;text-align:left}
+#poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 0px;text-align:left}
+#poll_result_cmt footer {text-align:right}
+#poll_result_cmt .btn_submit {padding:0 20px;float:right}
+
+.poll_cmt_del a {display:inline-block;margin-left:5px;color:#49857c;font-size:15px;}
+.poll_cmt_del a:hover{color:#98ca69}
+#poll_result_oth {padding:0 0 30px}
+#poll_result_oth h2 {padding:0 0 10px}
+#poll_result_oth ul {margin:0;padding:0;list-style:none;border:1px solid #ddd;background:#fff;border-top:0}
+#poll_result_oth ul li{border-top:1px solid #ddd; position:relative;line-height:20px}
+#poll_result_oth a {display:block;padding: 10px}
+#poll_result_oth li span{position:absolute;bottom:10px;right:15px;color:#777;font-size:0.92em;font-style:italic}

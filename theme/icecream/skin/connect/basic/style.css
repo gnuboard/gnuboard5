@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+#current_connect ul{margin:0 -10px 0;padding:0;list-style:none;zoom:1}
+#current_connect ul:after{display:block;visibility:hidden;clear:both;content:""}
+#current_connect li{position:relative;min-height:1px;padding-left:10px;*padding-left:0;padding-right:10px;*padding-right:0;float:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin-left:0}
+#current_connect li{width:25%}
+#current_connect li.box_clear{clear:both}
+#current_connect li .inner{position:relative;border:1px solid #d8d8d8;background:#fff;margin-bottom:10px;text-align:center}
+#current_connect .crt_name {margin:20px 20px 15px;display:block;min-height:88px}
+#current_connect .crt_name img{ border-radius:50%;margin: 0 0 5px;max-width:100%;height:auto}
+#current_connect .crt_lct{display:block;text-align:center;border-top:1px solid #ddd;padding:10px 5px;line-height:1.4em}
+#current_connect .crt_lct a{color:#3ca1ff}
+#current_connect .crt_num{position:absolute;top:10px;left:10px;color:#777;font-weight:bold}
+#current_connect li.empty_li{width:100%;padding:200px 0 ;border:0;color:#666}
