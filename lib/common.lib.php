@@ -3076,6 +3076,9 @@ function get_search_string($stx)
 // XSS 관련 태그 제거
 function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0)
 {
+    // space, tab('\t'), formfeed('\f'), vertical tab('\v'), newline('\n'), carriage return('\r') 를 제거한다.
+    $str = preg_replace('#[[:space:]]#', '', $str);
+
     if( $is_remove_tags ){
         $str = strip_tags($str);
     }
@@ -3336,6 +3339,11 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 {
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
+
+    // KVE-2021-1277 Open Redirect 취약점 해결
+    if (preg_match('#\\\0#', $url)) {
+        alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
+    }
 
     $url = urldecode($url);
     $p = @parse_url(trim($url));

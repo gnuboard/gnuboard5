@@ -752,7 +752,7 @@ box-shadow: 1px 2px 2px #eee;}
 #sod_frm_taker .tbl_frm01 .choice_place input[type="radio"] + label span {top:7px}
 #sod_frm_taker .tbl_frm01 .choice_place input,
 #sod_frm_taker .tbl_frm01 .choice_place label {margin-left:10px}
-#sod_frm_taker .tbl_frm01 .btn_frmline {width:80px;height:30px;line-height:28px;background:#fff;border:1px solid #d4d6db;color:#606060;text-align:center;float:right}
+#sod_frm_taker .tbl_frm01 .btn_frmline {padding:0;width:80px;height:30px;line-height:28px;background:#fff;border:1px solid #d4d6db;color:#606060;text-align:center;float:right}
 
 #sod_frm_taker .tbl_frm01 td input {width:100%}
 #sod_frm_taker .tbl_frm01 td .addr input {width:20%}

@@ -210,7 +210,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
 
 <form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
 
-<input type="hidden" name="codedup" value="<?php echo $default['de_code_dup_use']; ?>">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="sca" value="<?php echo $sca; ?>">
 <input type="hidden" name="sst" value="<?php echo $sst; ?>">
@@ -333,11 +332,8 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <th scope="row">상품코드</th>
             <td colspan="2">
                 <?php if ($w == '') { // 추가 ?>
-                    <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
-                    <!-- <input type=text class=required name=it_id value="<?php echo 10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
                     <?php echo help("상품의 코드는 10자리 숫자로 자동생성합니다. <b>직접 상품코드를 입력할 수도 있습니다.</b>\n상품코드는 영문자, 숫자, - 만 입력 가능합니다."); ?>
                     <input type="text" name="it_id" value="<?php echo time(); ?>" id="it_id" required class="frm_input required" size="20" maxlength="20">
-                    <!-- <?php if ($default['de_code_dup_use']) { ?><button type="button" class="btn_frmline" onclick="codedupcheck(document.all.it_id.value)">중복검사</a><?php } ?> -->
                 <?php } else { ?>
                     <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
                     <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
@@ -1781,35 +1777,6 @@ $(function() {
     });
 });
 <?php } ?>
-
-function codedupcheck(id)
-{
-    if (!id) {
-        alert('상품코드를 입력하십시오.');
-        f.it_id.focus();
-        return;
-    }
-
-    var it_id = id.replace(/[A-Za-z0-9\-_]/g, "");
-    if(it_id.length > 0) {
-        alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
-        return false;
-    }
-
-    $.post(
-        "./codedupcheck.php",
-        { it_id: id },
-        function(data) {
-            if(data.name) {
-                alert("코드 '"+data.code+"' 는 '".data.name+"' (으)로 이미 등록되어 있으므로\n\n사용하실 수 없습니다.");
-                return false;
-            } else {
-                alert("'"+data.code+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
-                document.fitemform.codedup.value = '';
-            }
-        }, "json"
-    );
-}
 
 function fitemformcheck(f)
 {
