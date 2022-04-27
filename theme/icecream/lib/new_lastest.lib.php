@@ -57,12 +57,14 @@ function new_latest($skin_dir='', $rows=20, $subject_len=40, $is_comment=false, 
         $datetime = substr($row2['wr_datetime'],0,10);
 
         $list[$i]['bo_table'] = $row['bo_table'];
-        $list[$i]['href'] = short_url_clean(G5_BBS_URL.'/board.php?bo_table='.$row['bo_table'].'&amp;wr_id='.$row2['wr_parent'].$comment_link);
+        $list[$i]['href'] = short_url_clean(G5_BBS_URL.'/board.php?bo_table='.$row['bo_table'].'&amp;wr_id='.$row2['wr_parent']);
         $list[$i]['subject'] = conv_subject($list[$i]['wr_subject'], $subject_len, '…');
         $list[$i]['datetime'] = $datetime;
-        $list[$i]['datetime2'] = $datetime2;
+        //$list[$i]['datetime2'] = $datetime2;
         $list[$i]['bo_subject'] = $row['bo_subject'];
         $list[$i]['wr_subject'] = $row2['wr_subject'];
+        //print_r2($list);
+        //exit;
     }
 
 

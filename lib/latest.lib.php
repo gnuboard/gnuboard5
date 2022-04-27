@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 // 최신글 추출
 // $cache_time 캐시 갱신시간
-function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=1, $options='')
+function latest($skin_dir, $bo_table, $rows=10, $subject_len=40, $cache_time=1, $options='')
 {
     global $g5;
 

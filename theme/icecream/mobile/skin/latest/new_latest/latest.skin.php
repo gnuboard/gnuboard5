@@ -14,7 +14,7 @@ for ($i=0; $i<$count; $i++) {
 $bo_subject = mb_substr($list[$i]['bo_subject'],0,8,"utf-8"); // 게시판명 글자수
 $thumb = get_list_thumbnail($list[$i]['bo_table'], $list[$i]['wr_id'], $thumb_width, $thumb_height);
 if($thumb['src']) {
-    $img = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" width="'.$thumb_width.' hegiht="'.$thumb_hegiht.'">';
+    $img = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" width="'.$thumb_width.' hegiht="'.$thumb_height.'">';
 }
 ?>
 <li class="<?php if ($thumb['src']) { ?>lt_liimg<?php } ?> ">
