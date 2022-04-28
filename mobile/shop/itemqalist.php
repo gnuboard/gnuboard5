@@ -40,7 +40,7 @@ $sql = " select count(*) as cnt
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$rows = $config['cf_page_rows'];
+$rows = $config['cf_mobile_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
