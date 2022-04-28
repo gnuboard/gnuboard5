@@ -63,8 +63,7 @@ function new_latest($skin_dir='', $rows=20, $subject_len=40, $is_comment=false, 
         //$list[$i]['datetime2'] = $datetime2;
         $list[$i]['bo_subject'] = $row['bo_subject'];
         $list[$i]['wr_subject'] = $row2['wr_subject'];
-        //print_r2($list);
-        //exit;
+ 
     }
 
 
