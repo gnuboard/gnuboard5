@@ -59,6 +59,7 @@ define('G5_MOBILE_DIR',     'mobile');
 define('G5_OKNAME_DIR',     'okname');
 
 define('G5_KCPCERT_DIR',    'kcpcert');
+define('G5_INICERT_DIR',     'inicert');
 define('G5_LGXPAY_DIR',     'lgxpay');
 
 define('G5_SNS_DIR',        'sns');
@@ -97,6 +98,7 @@ define('G5_PLUGIN_URL',     G5_URL.'/'.G5_PLUGIN_DIR);
 define('G5_EDITOR_URL',     G5_PLUGIN_URL.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_URL',     G5_PLUGIN_URL.'/'.G5_OKNAME_DIR);
 define('G5_KCPCERT_URL',    G5_PLUGIN_URL.'/'.G5_KCPCERT_DIR);
+define('G5_INICERT_URL',     G5_PLUGIN_URL.'/'.G5_INICERT_DIR);
 define('G5_LGXPAY_URL',     G5_PLUGIN_URL.'/'.G5_LGXPAY_DIR);
 define('G5_SNS_URL',        G5_PLUGIN_URL.'/'.G5_SNS_DIR);
 define('G5_SYNDI_URL',      G5_PLUGIN_URL.'/'.G5_SYNDI_DIR);
@@ -116,6 +118,7 @@ define('G5_EDITOR_PATH',    G5_PLUGIN_PATH.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_PATH',    G5_PLUGIN_PATH.'/'.G5_OKNAME_DIR);
 
 define('G5_KCPCERT_PATH',   G5_PLUGIN_PATH.'/'.G5_KCPCERT_DIR);
+define('G5_INICERT_PATH',   G5_PLUGIN_PATH.'/'.G5_INICERT_DIR);
 define('G5_LGXPAY_PATH',    G5_PLUGIN_PATH.'/'.G5_LGXPAY_DIR);
 
 define('G5_SNS_PATH',       G5_PLUGIN_PATH.'/'.G5_SNS_DIR);
@@ -226,7 +229,8 @@ define('G5_VISIT_BROWSCAP_USE', false);
 */
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
-if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때 daum 주소 js
+if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') || 
+    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']==='https')) {   //https 통신일때 daum 주소 js
     define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>');
 } else {  //http 통신일때 daum 주소 js
     define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>');

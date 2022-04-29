@@ -1,5 +1,7 @@
 <?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once('./_common.php');
+if (!defined('_SHOP_COMMON_')) exit; // 모바일 페이지로 직접 접근하는 것을 막음
 
 $ev_id = isset($_GET['ev_id']) ? (int) $_GET['ev_id'] : 0;
 

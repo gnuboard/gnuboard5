@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 // 테마에 orderinquiryview.php 있으면 include
-if(defined('G5_THEME_SHOP_PATH')) {
+if(defined('G5_THEME_MSHOP_PATH')) {
     $theme_inquiryview_file = G5_THEME_MSHOP_PATH.'/orderinquiryview.php';
     if(is_file($theme_inquiryview_file)) {
         include_once($theme_inquiryview_file);

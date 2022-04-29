@@ -49,7 +49,7 @@ if ($total_count == 0)
         alert('주문이 존재하지 않습니다.');
 }
 
-$rows = $config['cf_page_rows'];
+$rows = $config['cf_mobile_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함

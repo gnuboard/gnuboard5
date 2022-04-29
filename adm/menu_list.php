@@ -140,7 +140,7 @@ $(function() {
     });
 
     $(document).on("click", ".btn_del_menu", function() {
-        if(!confirm("메뉴를 삭제하시겠습니까?"))
+        if(!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제후 메뉴설정의 확인 버튼을 눌러 메뉴를 저장해 주세요."))
             return false;
 
         var $tr = $(this).closest("tr");

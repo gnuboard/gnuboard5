@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 // 테마에 wishlist.php 있으면 include
-if(defined('G5_THEME_SHOP_PATH')) {
+if(defined('G5_THEME_MSHOP_PATH')) {
     $theme_wishlist_file = G5_THEME_MSHOP_PATH.'/wishlist.php';
     if(is_file($theme_wishlist_file)) {
         include_once($theme_wishlist_file);
