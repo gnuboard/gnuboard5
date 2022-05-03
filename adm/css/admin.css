@@ -876,20 +876,6 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sbn_img {text-align:center}
 .sbn_image {display:none;margin:0 0 10px;text-align:left}
 
-/* SMS문자전송 */
-#sms_send {padding-bottom:100px;zoom:1}
-#sms_send:after {display:block;visibility:hidden;clear:both;content:""}
-
-#sms_frm {float:left;width:650px}
-#sms_frm table {margin:0 0 30px}
-#sms_frm textarea {height:70px}
-
-#sms_sm {position:relative;float:left;width:229px;height:418px;background:url('../shop_admin/img/mobilebg.jpg') no-repeat}
-#sms_sm_text {position:absolute;top:75px;left:27px;width:180px;color:#fff;font-size:2em;word-break:break-all}
-#sms_sm p {position:absolute;bottom:-70px;left:0;font-size:0.95em;letter-spacing:-0.1em}
-
-#sms_send .local_desc01 {min-width:320px}
-
 /* 가격비교사이트 */
 #anc_pricecompare_info li {margin:5px 0 5px -1px}
 
