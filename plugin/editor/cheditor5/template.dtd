@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!ELEMENT Template (Container|PopupWindow|Toolbar)*>
+<!ELEMENT Container (Html)*>
+<!ELEMENT Html (#PCDATA)>
+<!ELEMENT PopupWindow (Html)*>
+<!ELEMENT Toolbar (Image|Group)*>
+<!ELEMENT Image EMPTY>
+<!ATTLIST Image
+    file CDATA #IMPLIED
+  >
+<!ELEMENT Group (Button)*>
+<!ATTLIST Group
+    name CDATA #IMPLIED
+  >
+<!ELEMENT Button (Attribute)*>
+<!ATTLIST Button
+    name CDATA #IMPLIED
+    tooltip CDATA #IMPLIED
+  >
+<!ELEMENT Attribute (Icon|Execution)*>
+<!ATTLIST Attribute
+    class CDATA #IMPLIED
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    check CDATA #IMPLIED
+    default CDATA #IMPLIED
+    use CDATA #IMPLIED
+    type CDATA #IMPLIED
+    node CDATA #IMPLIED
+  >
+<!ELEMENT Icon EMPTY>
+<!ATTLIST Icon
+    position CDATA #IMPLIED
+    width CDATA #IMPLIED
+    class CDATA #IMPLIED
+    margin CDATA #IMPLIED
+    alt CDATA #IMPLIED
+  >
+<!ELEMENT Execution EMPTY>
+<!ATTLIST Execution
+    method CDATA #IMPLIED
+    value CDATA #IMPLIED
+  >

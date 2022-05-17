@@ -335,7 +335,7 @@ function startUpload(count) {
 
 function fileFilterError(file) {
     alert("선택하신 '" + file + "' 파일은 전송할 수 없습니다.\n" +
-       "gif, png, jpg, webp 그림 파일만 전송할 수 있습니다.");
+       "gif, png, jpg, 그림 파일만 전송할 수 있습니다.");
 }
 
 function imgComplete(img, imgSize, boxId) {
@@ -857,8 +857,8 @@ function init(dialog) {
     uploadButton = '../icons/imageUpload/add.gif';
     AppSRC = oEditor.config.popupPath + 'flash/chximage.swf';
     uploadMaxNumber = oEditor.config.imgUploadNumber;
-    uploadScript = oEditor.config.editorPath + 'imageUpload/upload.php';
-    deleteScript = oEditor.config.editorPath + 'imageUpload/delete.php';
+    uploadScript = oEditor.config.editorPath + 'imageUpload/upload.jsp';
+    deleteScript = oEditor.config.editorPath + 'imageUpload/delete.jsp';
 
     imageResizeWidth = oEditor.config.imgMaxWidth;
     makeThumbnail = oEditor.config.makeThumbnail;
