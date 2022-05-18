@@ -68,6 +68,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             if ($i == 0) {  ?>
                 <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하세요.<?php } ?></li>
             <?php } ?>
+            <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
+                <li class="gnb_1dli"><a href="<?php echo G5_SHOP_URL ?>" class="gnb_1da"> 쇼핑몰</a></li>
+            <?php } ?>
             </ul>
             <ul id="hd_nb">
             	<li class="hd_nb1"><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq"><i class="fa fa-question" aria-hidden="true"></i>FAQ</a></li>

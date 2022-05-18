@@ -12,7 +12,7 @@ if(function_exists('clean_relative_paths')){
 
 $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
-if ( ! preg_match('/(jpg|jpeg|png|gif|bmp)$/i', $extension) ){
+if ( ! preg_match('/(jpg|jpeg|png|gif|bmp|webp)$/i', $extension) ){
     alert_close('이미지 확장자가 아닙니다.');
 }
 
@@ -101,6 +101,12 @@ $.fn.imgLoad = function(callback) {
             if(win_w > screen.width) {
                 win_w = screen.width - 20;
                 win_l = 0;
+            }
+        }
+
+        if(win_w < screen.width) {
+            if(window.outerWidth){
+                win_w = win_w + (window.outerWidth - (document.documentElement.clientWidth || window.innerWidth));
             }
         }
 

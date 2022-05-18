@@ -61,11 +61,6 @@ for ($i=0; $i<count($f); $i++) {
 echo "<script>document.getElementById('sms5_job_01').innerHTML='전체 테이블 생성 완료';</script>";
 flush(); usleep(50000);
 
-$read_point = -1;
-$write_point = 5;
-$comment_point = 1;
-$download_point = -20;
-
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 $sql = " insert into {$g5['sms5_book_group_table']} set bg_name='미분류'";

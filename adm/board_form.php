@@ -11,8 +11,6 @@ if (!$row['cnt'])
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
 
 $html_title = '게시판';
-$reaonly = '';
-$required_valid = '';
 
 if (!isset($board['bo_device'])) {
     // 게시판 사용 필드 추가
@@ -142,6 +140,7 @@ run_event('adm_board_form_before', $board, $w);
 $required = "";
 $readonly = "";
 $sound_only = "";
+$required_valid = "";
 if ($w == '') {
 
     $html_title .= ' 생성';
@@ -706,8 +705,6 @@ $pg_anchor = '<ul class="anchor">
                     if ($config['cf_cert_use']) {
                         echo option_selected("cert",  $board['bo_use_cert'], "본인확인된 회원전체");
                         echo option_selected("adult", $board['bo_use_cert'], "본인확인된 성인회원만");
-                        echo option_selected("hp-cert",  $board['bo_use_cert'], "휴대폰 본인확인된 회원전체");
-                        echo option_selected("hp-adult", $board['bo_use_cert'], "휴대폰 본인확인된 성인회원만");
                     }
                     ?>
                 </select>
@@ -1062,7 +1059,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="bo_gallery_cols">갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값') ?>
-                <?php echo get_member_level_select('bo_gallery_cols', 1, 10, $board['bo_gallery_cols']); ?>
+                <input type="text" name="bo_gallery_cols" value="<?php echo $board['bo_gallery_cols'] ?>" id="bo_gallery_cols" required class="required numeric frm_input" size="4">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_gallery_cols" value="1" id="chk_grp_gallery_cols">

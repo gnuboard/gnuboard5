@@ -9,10 +9,11 @@ if( !function_exists('che_reprocessImage') ){
     function che_reprocessImage($file_path, $callback){
 
         $MIME_TYPES_PROCESSORS = array(
-            "image/gif"       => array("imagecreatefromgif", "imagegif"),
+            "image/gif"       => array("imagecreatefromgif",  "imagegif"),
             "image/jpg"       => array("imagecreatefromjpeg", "imagejpeg"),
             "image/jpeg"      => array("imagecreatefromjpeg", "imagejpeg"),
-            "image/png"       => array("imagecreatefrompng", "imagepng"),
+            "image/png"       => array("imagecreatefrompng",  "imagepng"),
+            "image/webp"      => array("imagecreatefromwebp", "imagewebp"),
             "image/bmp"       => array("imagecreatefromwbmp", "imagewbmp")
         );
 
@@ -69,12 +70,14 @@ if( !$is_editor_upload ){
     exit;
 }
 
+run_event('cheditor_photo_upload', $data_dir, $data_url);
+
 //----------------------------------------------------------------------------
 //
 //
 $tempfile = $_FILES['file']['tmp_name'];
 $filename = $_FILES['file']['name'];
-
+$filename_len = strrpos($filename, ".");
 $type = substr($filename, strrpos($filename, ".")+1);
 $found = false;
 switch ($type) {
@@ -82,10 +85,11 @@ switch ($type) {
 	case "jpeg":
 	case "gif":
 	case "png":
+    case "webp":
 		$found = true;
 }
 
-if ($found != true) {
+if ($found != true || $filename_len != 23) {
 	exit;
 }
 

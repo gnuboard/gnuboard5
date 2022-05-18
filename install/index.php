@@ -1,6 +1,7 @@
 <?php
 @header('Content-Type: text/html; charset=utf-8');
 @header('X-Robots-Tag: noindex');
+$g5_path['path'] = '..';
 include_once ('../config.php');
 $title = G5_VERSION." 라이센스 확인 1/3";
 include_once ('./install.inc.php');

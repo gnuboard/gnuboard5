@@ -29,6 +29,11 @@ if ($w == 'u' || $w == 'r') {
     } else {
         alert("글이 존재하지 않습니다.\\n삭제되었거나 이동된 경우입니다.", G5_URL);
     }
+} else if ($w == '') { // 게시글 입력시에도 $wr_1 ~ $wr_10 변수 사용시 오류 나오지 않도록 가변변수 생성  (다온테마님,210806)
+    for ($i=1; $i<=10; $i++) {
+        $vvar = "wr_".$i;
+        $$vvar = '';
+    }
 }
 
 run_event('bbs_write', $board, $wr_id, $w);
@@ -182,26 +187,22 @@ if (!empty($group['gr_use_access'])) {
 }
 
 // 본인확인을 사용한다면
-if ($config['cf_cert_use'] && !$is_admin) {
+if ($board['bo_use_cert'] != '' && $config['cf_cert_use'] && !$is_admin) {
     // 인증된 회원만 가능
-    if ($board['bo_use_cert'] != '' && $is_guest) {
-        alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
+    if ($is_guest) {
+        alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
     }
 
-    if ($board['bo_use_cert'] == 'cert' && !$member['mb_certify']) {
+    if (strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
+        goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
+    }
+
+    if ($board['bo_use_cert'] == 'cert' && !$member['mb_certify']) {            
         alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원정보 수정에서 본인확인을 해주시기 바랍니다.', G5_URL);
     }
 
     if ($board['bo_use_cert'] == 'adult' && !$member['mb_adult']) {
-        alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글쓰기가 가능합니다.\\n\\n성인인데 글쓰기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G5_URL);
-    }
-
-    if ($board['bo_use_cert'] == 'hp-cert' && $member['mb_certify'] != 'hp') {
-        alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G5_URL);
-    }
-
-    if ($board['bo_use_cert'] == 'hp-adult' && (!$member['mb_adult'] || $member['mb_certify'] != 'hp')) {
-        alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G5_URL);
+        alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G5_URL);
     }
 }
 

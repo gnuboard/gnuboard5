@@ -287,7 +287,7 @@ function preview(thumb) {
 			var thumb = file.bf_file;
 		}
 		
-		var pattern = /\.(jpg|png|gif)$/i;
+		var pattern = /\.(jpg|png|gif|webp)$/i;
 		if (pattern.test(thumb)) {
 			var thumb_kind = "img";
 		} else {
@@ -321,7 +321,7 @@ function file_to_editor() {
 				var file = get_file_info(files_list.options[i].value);
 				var path = board_file_path + '/' + file.bf_file;
 				
-				var pattern = /\.(jpg|png|gif)$/i;
+				var pattern = /\.(jpg|png|gif|webp)$/i;
 				if (pattern.test(file.bf_file)) {
 					if (wr_id) {
 						html = "{이미지:" + file.bf_no + "}";

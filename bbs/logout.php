@@ -1,4 +1,5 @@
 <?php
+define('G5_CERT_IN_PROG', true);
 include_once('./_common.php');
 
 if(function_exists('social_provider_logout')){
@@ -27,7 +28,10 @@ if ($url) {
         alert('url에 도메인을 지정할 수 없습니다.', G5_URL);
     }
 
-    $link = $url;
+    if($url == 'shop')
+        $link = G5_SHOP_URL;
+    else
+        $link = $url;
 } else if ($bo_table) {
     $link = get_pretty_url($bo_table);
 } else {

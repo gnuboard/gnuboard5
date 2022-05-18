@@ -294,7 +294,7 @@ function get_thumbnail_find_cache($bo_table, $wr_id, $wr_key){
         return get_write($write_table, $wr_id, true);
     }
 
-    return get_board_file_db($bo_table, $wr_id, 'bf_file, bf_content', "and bf_type between '1' and '3'", true);
+    return get_board_file_db($bo_table, $wr_id, 'bf_file, bf_content', "and bf_type in (1, 2, 3, 18) ", true);
 }
 
 function get_write_table_name($bo_table){
@@ -455,6 +455,20 @@ function get_board_sfl_select_options($sfl){
     $str .= '<option value="wr_name,0" '.get_selected($sfl, 'wr_name,0').'>글쓴이(코)</option>';
 
     return run_replace('get_board_sfl_select_options', $str, $sfl);
+}
+
+function get_qa_sfl_select_options($sfl) {
+
+    global $is_admin;
+
+    $str = '';
+    $str .= '<option value="qa_subject" '.get_selected($sfl, 'qa_subject', true).'>제목</option>';
+    $str .= '<option value="qa_content" '.get_selected($sfl, 'qa_content').'>내용</option>';
+    $str .= '<option value="qa_name" '.get_selected($sfl, 'qa_name').'>글쓴이</option>';
+    if ($is_admin)
+        $str .= '<option value="mb_id" '.get_selected($sfl, 'mb_id').'>회원아이디</option>';
+
+    return run_replace('get_qa_sfl_select_options', $str, $sfl);
 }
 
 // 읽지 않은 메모 갯수 반환

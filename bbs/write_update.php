@@ -221,6 +221,9 @@ if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
 
 $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
 
+$options = array($html,$secret,$mail);
+$wr_option = implode(',', array_filter($options, function($v) { return trim($v); }));
+
 if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
@@ -258,7 +261,7 @@ if ($w == '' || $w == 'r') {
                      wr_reply = '$wr_reply',
                      wr_comment = 0,
                      ca_name = '$ca_name',
-                     wr_option = '$html,$secret,$mail',
+                     wr_option = '$wr_option',
                      wr_subject = '$wr_subject',
                      wr_content = '$wr_content',
                      wr_seo_title = '$wr_seo_title',
@@ -380,7 +383,7 @@ if ($w == '' || $w == 'r') {
 
     $sql = " update {$write_table}
                 set ca_name = '{$ca_name}',
-                     wr_option = '{$html},{$secret},{$mail}',
+                     wr_option = '{$wr_option}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
                      wr_seo_title = '$wr_seo_title',
@@ -532,7 +535,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             // image type
             if ( preg_match("/\.({$config['cf_image_extension']})$/i", $filename) ||
                  preg_match("/\.({$config['cf_flash_extension']})$/i", $filename) ) {
-                if ($timg['2'] < 1 || $timg['2'] > 16)
+                if ($timg['2'] < 1 || $timg['2'] > 18)
                     continue;
             }
             //=================================================================
@@ -561,13 +564,13 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             $upload[$i]['filesize'] = $filesize;
 
             // 아래의 문자열이 들어간 파일은 -x 를 붙여서 웹경로를 알더라도 실행을 하지 못하도록 함
-            $filename = preg_replace("/\.(php|pht|phtm|htm|cgi|pl|exe|jsp|asp|inc)/i", "$0-x", $filename);
+            $filename = preg_replace("/\.(php|pht|phtm|htm|cgi|pl|exe|jsp|asp|inc|phar)/i", "$0-x", $filename);
 
             shuffle($chars_array);
             $shuffle = implode('', $chars_array);
 
             // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
-            $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.replace_filename($filename);
+            $upload[$i]['file'] = md5(sha1($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.replace_filename($filename);
 
             $dest_file = G5_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
 
@@ -658,7 +661,7 @@ for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
     $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
     // 정보가 있다면 빠집니다.
-    if ($row2['bf_file']) break;
+    if (isset($row2['bf_file']) && $row2['bf_file']) break;
 
     // 그렇지 않다면 정보를 삭제합니다.
     sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
@@ -725,8 +728,10 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     }
 
     // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
-    if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
-        $array_email[] = $wr['wr_email'];
+    if (isset($wr['wr_option']) && isset($wr['wr_email'])) {
+        if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
+            $array_email[] = $wr['wr_email'];
+    }
 
     // 중복된 메일 주소는 제거
     $unique_email = array_unique($array_email);

@@ -4,11 +4,10 @@
     상수 선언
 ********************/
 
-define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.4.5.2');
-
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
+
+include_once($g5_path['path'].'/version.php');   // 설정 파일
 
 // 기본 시간대 설정
 date_default_timezone_set("Asia/Seoul");
@@ -27,7 +26,7 @@ date_default_timezone_set("Asia/Seoul");
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
-// 디버깅 상수, 실제 서버운영시 false 로 설정해 주제요.
+// 디버깅 상수, 실제 서버운영시 false 로 설정해 주세요.
 define('G5_DEBUG', false);
 
 // Set Databse table default engine is Databse default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
@@ -60,6 +59,7 @@ define('G5_MOBILE_DIR',     'mobile');
 define('G5_OKNAME_DIR',     'okname');
 
 define('G5_KCPCERT_DIR',    'kcpcert');
+define('G5_INICERT_DIR',     'inicert');
 define('G5_LGXPAY_DIR',     'lgxpay');
 
 define('G5_SNS_DIR',        'sns');
@@ -98,6 +98,7 @@ define('G5_PLUGIN_URL',     G5_URL.'/'.G5_PLUGIN_DIR);
 define('G5_EDITOR_URL',     G5_PLUGIN_URL.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_URL',     G5_PLUGIN_URL.'/'.G5_OKNAME_DIR);
 define('G5_KCPCERT_URL',    G5_PLUGIN_URL.'/'.G5_KCPCERT_DIR);
+define('G5_INICERT_URL',     G5_PLUGIN_URL.'/'.G5_INICERT_DIR);
 define('G5_LGXPAY_URL',     G5_PLUGIN_URL.'/'.G5_LGXPAY_DIR);
 define('G5_SNS_URL',        G5_PLUGIN_URL.'/'.G5_SNS_DIR);
 define('G5_SYNDI_URL',      G5_PLUGIN_URL.'/'.G5_SYNDI_DIR);
@@ -117,6 +118,7 @@ define('G5_EDITOR_PATH',    G5_PLUGIN_PATH.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_PATH',    G5_PLUGIN_PATH.'/'.G5_OKNAME_DIR);
 
 define('G5_KCPCERT_PATH',   G5_PLUGIN_PATH.'/'.G5_KCPCERT_DIR);
+define('G5_INICERT_PATH',   G5_PLUGIN_PATH.'/'.G5_INICERT_DIR);
 define('G5_LGXPAY_PATH',    G5_PLUGIN_PATH.'/'.G5_LGXPAY_DIR);
 
 define('G5_SNS_PATH',       G5_PLUGIN_PATH.'/'.G5_SNS_DIR);
@@ -159,7 +161,7 @@ define('G5_SPACE',          32); // 공백
 define('G5_SPECIAL',        64); // 특수문자
 
 // SEO TITLE 문단 길이
-define('G5_SEO_TITEL_WORD_CUT', 8);        // SEO TITLE 문단 길이
+define('G5_SEO_TITLE_WORD_CUT', 8);        // SEO TITLE 문단 길이
 
 // 퍼미션
 define('G5_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션
@@ -227,7 +229,8 @@ define('G5_VISIT_BROWSCAP_USE', false);
 */
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
-if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때 daum 주소 js
+if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') || 
+    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']==='https')) {   //https 통신일때 daum 주소 js
     define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>');
 } else {  //http 통신일때 daum 주소 js
     define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>');

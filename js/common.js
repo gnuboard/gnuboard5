@@ -373,6 +373,10 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         return false;
     }
 
+    // 핀치 줌 현상 제거
+    var vContent = "width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10";
+    $("#meta_viewport").attr("content", vContent + ",user-scalable=no");
+
     var zip_case = 1;   //0이면 레이어, 1이면 페이지에 끼워 넣기, 2이면 새창
 
     var complete_fn = function(data){
@@ -418,6 +422,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         }
         
         setTimeout(function(){
+            $("#meta_viewport").attr("content", vContent);
             of[frm_addr2].focus();
         } , 100);
     };
@@ -435,6 +440,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 jQuery('form[name="'+frm_name+'"]').find('input[name="'+frm_addr1+'"]').before(element_wrap);
                 jQuery("#"+daum_pape_id).off("click", ".close_daum_juso").on("click", ".close_daum_juso", function(e){
                     e.preventDefault();
+                    $("#meta_viewport").attr("content", vContent);
                     jQuery(this).parent().hide();
                 });
             }
@@ -478,6 +484,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 document.body.appendChild(element_layer);
                 jQuery("#"+rayer_id).off("click", ".close_daum_juso").on("click", ".close_daum_juso", function(e){
                     e.preventDefault();
+                    $("#meta_viewport").attr("content", vContent);
                     jQuery(this).parent().hide();
                 });
             }
@@ -514,6 +521,15 @@ var win_poll = function(href) {
     var new_win = window.open(href, 'win_poll', 'width=616, height=500, scrollbars=1');
     new_win.focus();
 }
+
+/**
+ * 쿠폰
+ **/
+var win_coupon = function(href) {
+    var new_win = window.open(href, "win_coupon", "left=100,top=100,width=700, height=600, scrollbars=1");
+    new_win.focus();
+}
+
 
 /**
  * 스크린리더 미사용자를 위한 스크립트 - 지운아빠 2013-04-22
@@ -609,6 +625,11 @@ $(function(){
         return false;
     });
     */
+
+    $(".win_coupon").click(function() {
+        win_coupon(this.href);
+        return false;
+    });
 
     // 사이드뷰
     var sv_hide = false;
