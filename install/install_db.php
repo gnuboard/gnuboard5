@@ -648,6 +648,7 @@ $str = <<<EOD
 Order allow,deny
 Deny from all
 </FilesMatch>
+RedirectMatch 403 /session/.*
 EOD;
 fwrite($f, $str);
 fclose($f);

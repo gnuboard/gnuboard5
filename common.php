@@ -208,7 +208,8 @@ if (file_exists($dbconfig_file)) {
 @ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 @ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
-session_save_path(G5_SESSION_PATH);
+// 세션파일 저장 디렉토리를 지정할 경우
+// session_save_path(G5_SESSION_PATH);
 
 if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
@@ -232,8 +233,15 @@ function chrome_domain_session_name(){
     '.maru.net',    // 마루호스팅
     );
 
-    if(isset($_SERVER['HTTP_HOST']) && preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
-        if(! defined('G5_SESSION_NAME')) define('G5_SESSION_NAME', 'G5PHPSESSID');
+    $add_str = '';
+    $document_root_path = str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT']));
+
+    if( G5_PATH !== $document_root_path ){
+        $add_str = substr_count(G5_PATH, '/').basename(dirname(__FILE__));
+    }
+
+    if($add_str || (isset($_SERVER['HTTP_HOST']) && preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])) ){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
+        if(! defined('G5_SESSION_NAME')) define('G5_SESSION_NAME', 'G5'.$add_str.'PHPSESSID');
         @session_name(G5_SESSION_NAME);
     }
 }
