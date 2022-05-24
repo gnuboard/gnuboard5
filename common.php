@@ -505,8 +505,8 @@ if (isset($_REQUEST['gr_id'])) {
 if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
-    // 차단된 회원이면 ss_mb_id 초기화
-    if($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) {
+    // 차단된 회원이면 ss_mb_id 초기화, 또는 세션에 저장된 회원 토큰값을 비교하여 틀리면 초기화
+    if( ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) || (function_exists('check_auth_session_token') && !check_auth_session_token($member['mb_datetime'])) ) {
         set_session('ss_mb_id', '');
         $member = array();
     } else {
@@ -529,7 +529,7 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
         $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
         // 최고관리자는 자동로그인 금지
         if (strtolower($tmp_mb_id) !== strtolower($config['cf_admin'])) {
-            $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
+            $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify, mb_datetime from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
             if($row['mb_password']){
                 $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['SERVER_SOFTWARE'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
@@ -542,6 +542,7 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
                         (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
                         // 세션에 회원아이디를 저장하여 로그인으로 간주
                         set_session('ss_mb_id', $tmp_mb_id);
+                        if(function_exists('update_auth_session_token')) update_auth_session_token($row['mb_datetime']);
 
                         // 페이지를 재실행
                         echo "<script type='text/javascript'> window.location.reload(); </script>";
