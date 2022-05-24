@@ -28,14 +28,14 @@ function get_icode_port_type($id, $pw)
 * 접속, 발송, URL발송, 결과등의 실질적으로 쓰이는 모든 부분이 포함되어 있다.
 */
 class LMS {
-	var $icode_id;
-	var $icode_pw;
-	var $socket_host;
-	var $socket_port;
-	var $socket_portcode;
-	var $Data = array();
-	var $Result = array();
-    var $icode_key;
+	public $icode_id;
+	public $icode_pw;
+    public $socket_host;
+    public $socket_port;
+    public $socket_portcode;
+    public $Data = array();
+    public $Result = array();
+    public $icode_key;
 
 	// SMS 서버 접속
 	function SMS_con($host, $id, $pw, $portcode) {

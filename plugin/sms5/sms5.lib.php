@@ -151,15 +151,15 @@ if($config['cf_sms_type'] == 'LMS') {
     include_once(G5_LIB_PATH.'/icode.lms.lib.php');
 
     class SMS5 extends LMS {
-        var $icode_id;
-        var $icode_pw;
-        var $socket_host;
-        var $socket_port;
-        var $socket_portcode;
-        var $send_type;
-        var $Data = array();
-        var $Result = array();
-        var $Log = array();
+        public $icode_id;
+        public $icode_pw;
+        public $socket_host;
+        public $socket_port;
+        public $socket_portcode;
+        public $send_type;
+        public $Data = array();
+        public $Result = array();
+        public $Log = array();
 
         function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
             global $config;
