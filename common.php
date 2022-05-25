@@ -251,8 +251,18 @@ chrome_domain_session_name();
 if( ! class_exists('XenoPostToForm') ){
     class XenoPostToForm
     {
+        public static function g5_session_name(){
+            return (defined('G5_SESSION_NAME') && G5_SESSION_NAME) ? G5_SESSION_NAME : 'PHPSESSID';
+        }
+
+        public static function php52_request_check(){
+            $cookie_session_name = self::g5_session_name();
+            if (isset($_REQUEST[$cookie_session_name]) && $_REQUEST[$cookie_session_name] != session_id())
+                goto_url(G5_BBS_URL.'/logout.php');
+        }
+
         public static function check() {
-            $cookie_session_name = (defined('G5_SESSION_NAME') && G5_SESSION_NAME) ? G5_SESSION_NAME : 'PHPSESSID'; 
+            $cookie_session_name = self::g5_session_name(); 
 
             return !isset($_COOKIE[$cookie_session_name]) && count($_POST) && ((isset($_SERVER['HTTP_REFERER']) && !preg_match('~^https://'.preg_quote($_SERVER['HTTP_HOST'], '~').'/~', $_SERVER['HTTP_REFERER']) || ! isset($_SERVER['HTTP_REFERER']) ));
         }
@@ -359,8 +369,9 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
 
             $headers = headers_list();
             krsort($headers);
+            $cookie_session_name = method_exists('XenoPostToForm', 'g5_session_name') ? XenoPostToForm::g5_session_name() : 'PHPSESSID'; 
             foreach ($headers as $header) {
-                if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
+                if (!preg_match('~^Set-Cookie: '.$cookie_session_name.'=~', $header)) continue;
                 $header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
                 header($header, false);
                 $g5['session_cookie_samesite'] = 'none';
@@ -383,9 +394,8 @@ define('G5_CAPTCHA_DIR',    !empty($config['cf_captcha']) ? $config['cf_captcha'
 define('G5_CAPTCHA_URL',    G5_PLUGIN_URL.'/'.G5_CAPTCHA_DIR);
 define('G5_CAPTCHA_PATH',   G5_PLUGIN_PATH.'/'.G5_CAPTCHA_DIR);
 
-// 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
-if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
-    goto_url(G5_BBS_URL.'/logout.php');
+// 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다. php5.2 버전 이하에서만 해당되는 코드이며, 오히려 무한리다이렉트 오류가 일어날수 있으므로 주석처리합니다.
+// if( method_exists('XenoPostToForm', 'php52_request_check') ) XenoPostToForm::php52_request_check();
 
 // QUERY_STRING
 $qstr = '';
