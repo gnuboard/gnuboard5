@@ -242,7 +242,7 @@ if($config['cf_sms_type'] == 'LMS') {
         function CheckCommonTypeDate($strDate) {
             $strDate=preg_replace("/[^0-9]/","",$strDate);
             if ($strDate) {
-                if (!checkdate(substr($strDate,4,2),substr($strDate,6,2),substr($rsvTime,0,4))) return "예약날짜가 잘못되었습니다";
+                if (!checkdate(substr($strDate,4,2),substr($strDate,6,2),substr($strDate,0,4))) return "예약날짜가 잘못되었습니다";
                 if (substr($strDate,8,2)>23 || substr($strDate,10,2)>59) return "예약시간이 잘못되었습니다";
             }
         }
