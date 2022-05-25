@@ -3941,6 +3941,21 @@ function get_token_encryption_key($str=''){
     return md5($token);
 }
 
+function get_random_token_string($length=6)
+{
+    if(function_exists('random_bytes')){
+        return bin2hex(random_bytes($length));
+    }
+
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    $characters_length = strlen($characters);
+    $output = '';
+    for ($i = 0; $i < $length; $i++)
+        $output .= $characters[rand(0, $characters_length - 1)];
+
+    return bin2hex($output);
+}
+
 function filter_input_include_path($path){
     return str_replace('//', '/', $path);
 }
