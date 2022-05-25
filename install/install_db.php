@@ -569,7 +569,7 @@ fwrite($f, "define('G5_MYSQL_PASSWORD', '".addcslashes($mysql_pass, "\\'")."');\
 fwrite($f, "define('G5_MYSQL_DB', '".addcslashes($mysql_db, "\\'")."');\n");
 fwrite($f, "define('G5_MYSQL_SET_MODE', {$mysql_set_mode});\n\n");
 fwrite($f, "define('G5_TABLE_PREFIX', '{$table_prefix}');\n\n");
-fwrite($f, "define('G5_TOKEN_ENCRYPTION_KEY', '".bin2hex(random_bytes(16))."'); // 토큰 암호화에 사용할 키\n\n");
+fwrite($f, "define('G5_TOKEN_ENCRYPTION_KEY', '".get_random_token_string(16)."'); // 토큰 암호화에 사용할 키\n\n");
 fwrite($f, "\$g5['write_prefix'] = G5_TABLE_PREFIX.'write_'; // 게시판 테이블명 접두사\n\n");
 fwrite($f, "\$g5['auth_table'] = G5_TABLE_PREFIX.'auth'; // 관리권한 설정 테이블\n");
 fwrite($f, "\$g5['config_table'] = G5_TABLE_PREFIX.'config'; // 기본환경 설정 테이블\n");
