@@ -222,7 +222,7 @@ if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
 $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
 
 $options = array($html,$secret,$mail);
-$wr_option = implode(',', array_filter($options, function($v) { return trim($v); }));
+$wr_option = implode(',', array_filter(array_map('trim', $options)));
 
 if ($w == '' || $w == 'r') {
 
