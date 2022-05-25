@@ -6,7 +6,7 @@ Class G5_object_cache {
     public $contents = array();
     public $etcs = array();
 
-	function get($type, $key, $group ='default') {
+    function get($type, $key, $group ='default') {
 
         switch ($type) {
             case 'bbs':
@@ -28,10 +28,10 @@ Class G5_object_cache {
         }
 
         return false;
-	}
+    }
 
-	function exists($type, $key, $group = 'default' ) {
-        
+    function exists($type, $key, $group = 'default' ) {
+
         $return_data = '';
 
         switch ($type) {
@@ -47,9 +47,9 @@ Class G5_object_cache {
         }
 
         return isset($datas[$group]) && ( isset($datas[$group][$key]) || array_key_exists($key, $datas[$group]) );
-	}
+    }
 
-	function set($type, $key, $data=array(), $group='default') {
+    function set($type, $key, $data=array(), $group='default') {
         if ( is_object( $data ) )
             $data = clone $data;
 
@@ -65,10 +65,10 @@ Class G5_object_cache {
                 break;
         }
 
-	}
+    }
 
     function delete($key, $group='default') {
-        switch ($type) {
+        switch ($key) {
             case 'bbs':
                 $datas = $this->writes;
                 break;
