@@ -6,6 +6,11 @@ auth_check_menu($auth, $sub_menu, 'w');
 
 $g5['title'] = '게시판 복사';
 include_once(G5_PATH.'/head.sub.php');
+
+$bo_table = $_REQUEST['bo_table'];
+if (empty($bo_table)) {
+    alert_close("정상적인 방법으로 이용해주세요.");
+}
 ?>
 
 <script src="<?php echo G5_ADMIN_URL ?>/admin.js?ver=<?php echo G5_JS_VER; ?>"></script>
@@ -59,9 +64,10 @@ include_once(G5_PATH.'/head.sub.php');
 function fboardcopy_check(f)
 {
     <?php
-    if(!$w){
-    $js_array = get_bo_table_banned_word();
-    echo "var banned_array = ". json_encode($js_array) . ";\n";
+    
+    if (!$w) {
+        $js_array = get_bo_table_banned_word();
+        echo "var banned_array = ". json_encode($js_array) . ";\n";
     }
     ?>
 
