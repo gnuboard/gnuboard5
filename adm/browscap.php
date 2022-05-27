@@ -2,11 +2,13 @@
 $sub_menu = "100510";
 include_once('./_common.php');
 
-if(!(version_compare(phpversion(), '5.3.0', '>=') && defined('G5_BROWSCAP_USE') && G5_BROWSCAP_USE))
+if (!(version_compare(phpversion(), '5.3.0', '>=') && defined('G5_BROWSCAP_USE') && G5_BROWSCAP_USE)) {
     alert('사용할 수 없는 기능입니다.', correct_goto_url(G5_ADMIN_URL));
+}
 
-if ($is_admin != 'super')
+if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
+}
 
 $g5['title'] = 'Browscap 업데이트';
 include_once('./admin.head.php');
