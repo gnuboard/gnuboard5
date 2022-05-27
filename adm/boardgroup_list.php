@@ -16,27 +16,29 @@ if (!isset($group['gr_device'])) {
 $sql_common = " from {$g5['group_table']} ";
 
 $sql_search = " where (1) ";
-if ($is_admin != 'super')
+if ($is_admin != 'super') {
     $sql_search .= " and (gr_admin = '{$member['mb_id']}') ";
+}
 
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
-        case "gr_id" :
-        case "gr_admin" :
+        case "gr_id":
+        case "gr_admin":
             $sql_search .= " ({$sfl} = '{$stx}') ";
             break;
-        default :
+        default:
             $sql_search .= " ({$sfl} like '%{$stx}%') ";
             break;
     }
     $sql_search .= " ) ";
 }
 
-if ($sst)
+if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
-else
+} else {
     $sql_order = " order by gr_id asc ";
+}
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
@@ -44,7 +46,9 @@ $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+if ($page < 1) {
+    $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+}
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
@@ -64,15 +68,15 @@ $colspan = 10;
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
-<label for="sfl" class="sound_only">검색대상</label>
-<select name="sfl" id="sfl">
-    <option value="gr_subject"<?php echo get_selected($sfl, "gr_subject"); ?>>제목</option>
-    <option value="gr_id"<?php echo get_selected($sfl, "gr_id"); ?>>ID</option>
-    <option value="gr_admin"<?php echo get_selected($sfl, "gr_admin"); ?>>그룹관리자</option>
-</select>
-<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" name="stx" id="stx" value="<?php echo $stx ?>" required class="required frm_input">
-<input type="submit" value="검색" class="btn_submit">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
+        <option value="gr_subject"<?php echo get_selected($sfl, "gr_subject"); ?>>제목</option>
+        <option value="gr_id"<?php echo get_selected($sfl, "gr_id"); ?>>ID</option>
+        <option value="gr_admin"<?php echo get_selected($sfl, "gr_admin"); ?>>그룹관리자</option>
+    </select>
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" id="stx" value="<?php echo $stx ?>" required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
 </form>
 
 
@@ -106,8 +110,7 @@ $colspan = 10;
     </thead>
     <tbody>
     <?php
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 접근회원수
         $sql1 = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$row['gr_id']}' ";
         $row1 = sql_fetch($sql1);
@@ -133,10 +136,10 @@ $colspan = 10;
             <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="tbl_input">
         </td>
         <td class="td_mng td_input">
-        <?php if ($is_admin == 'super'){ ?>
+        <?php if ($is_admin == 'super') { ?>
             <label for="gr_admin_<?php echo $i; ?>" class="sound_only">그룹관리자</label>
             <input type="text" name="gr_admin[<?php echo $i ?>]" value="<?php echo get_sanitize_input($row['gr_admin']); ?>" id="gr_admin_<?php echo $i ?>" class="tbl_input" size="10" maxlength="20">
-        <?php }else{ ?>
+        <?php } else { ?>
             <input type="hidden" name="gr_admin[<?php echo $i ?>]" value="<?php echo get_sanitize_input($row['gr_admin']); ?>"><?php echo get_text($row['gr_admin']); ?>
         <?php } ?>
         </td>
@@ -160,11 +163,11 @@ $colspan = 10;
         </td>
         <td class="td_mng td_mng_s"><?php echo $s_upd ?></td>
     </tr>
-
     <?php
-        }
-    if ($i == 0)
+    }
+    if ($i == 0) {
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    }
     ?>
     </table>
 </div>

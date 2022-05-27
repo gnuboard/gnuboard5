@@ -4,35 +4,41 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, 'w');
 
-if ($is_admin != 'super' && $w == '') alert('최고관리자만 접근 가능합니다.');
+if ($is_admin != 'super' && $w == '') {
+    alert('최고관리자만 접근 가능합니다.');
+}
 
 $html_title = '게시판그룹';
 $gr_id_attr = '';
 $sound_only = '';
 
-if( ! isset($group['gr_id']) ){
+if (! isset($group['gr_id'])) {
     $group['gr_id'] = '';
     $group['gr_subject'] = '';
     $group['gr_device'] = '';
 }
 
+$gr = array('gr_use_access' => 0, 'gr_admin'=>'');
 if ($w == '') {
     $gr_id_attr = 'required';
     $sound_only = '<strong class="sound_only"> 필수</strong>';
-    $gr = array('gr_use_access' => 0, 'gr_admin'=>'');
     $html_title .= ' 생성';
-} else if ($w == 'u') {
+} elseif ($w == 'u') {
     $gr_id_attr = 'readonly';
     $gr = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
     $html_title .= ' 수정';
-}
-else
+} else {
     alert('제대로 된 값이 넘어오지 않았습니다.');
+}
 
 if (!isset($group['gr_device'])) {
     sql_query(" ALTER TABLE `{$g5['group_table']}` ADD `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both' AFTER `gr_subject` ", false);
 }
 
+// 접근회원수
+$sql1 = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$gr_id}' ";
+$row1 = sql_fetch($sql1);
+$group_member_count = $row1['cnt'];
 
 $g5['title'] = $html_title;
 include_once('./admin.head.php');
@@ -59,10 +65,11 @@ include_once('./admin.head.php');
         <th scope="row"><label for="gr_id">그룹 ID<?php echo $sound_only ?></label></th>
         <td><input type="text" name="gr_id" value="<?php echo $group['gr_id'] ?>" id="gr_id" <?php echo $gr_id_attr; ?> class="<?php echo $gr_id_attr; ?> alnum_ frm_input" maxlength="10">
             <?php
-            if ($w=='')
+            if ($w=='') {
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
-            else
+            } else {
                 echo '<a href="'.G5_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'" class="btn_frmline">게시판그룹 바로가기</a>';
+            }
             ?>
         </td>
     </tr>
@@ -71,8 +78,9 @@ include_once('./admin.head.php');
         <td>
             <input type="text" name="gr_subject" value="<?php echo get_text($group['gr_subject']) ?>" id="gr_subject" required class="required frm_input" size="80">
             <?php
-            if ($w == 'u')
+            if ($w == 'u') {
                 echo '<a href="./board_form.php?gr_id='.$gr_id.'" class="btn_frmline">게시판생성</a>';
+            }
             ?>
         </td>
     </tr>
@@ -88,14 +96,23 @@ include_once('./admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><?php if ($is_admin == 'super') { ?><label for="gr_admin"><?php } ?>그룹 관리자<?php if ($is_admin == 'super') { ?></label><?php } ?></th>
+        <th scope="row">
+        <?php
+        if ($is_admin == 'super') {
+            echo '<label for="gr_admin">그룹 관리자</label>';
+        } else {
+            echo '그룹 관리자';
+        }
+        ?>
+        </th>
         <td>
-            <?php
-            if ($is_admin == 'super')
-                echo '<input type="text" id="gr_admin" name="gr_admin" class="frm_input" value="'.$gr['gr_admin'].'" maxlength="20">';
-            else
-                echo '<input type="hidden" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'">'.$gr['gr_admin'];
-            ?>
+        <?php
+        if ($is_admin == 'super') {
+            echo '<input type="text" id="gr_admin" name="gr_admin" class="frm_input" value="'.$gr['gr_admin'].'" maxlength="20">';
+        } else {
+            echo '<input type="hidden" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'">'.$gr['gr_admin'];
+        }
+        ?>
         </td>
     </tr>
     <tr>
@@ -109,15 +126,12 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row">접근회원수</th>
         <td>
-            <?php
-            // 접근회원수
-            $sql1 = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$gr_id}' ";
-            $row1 = sql_fetch($sql1);
-            echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
-            ?>
+        <?php
+        echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$group_member_count.'</a>';
+        ?>
         </td>
     </tr>
-    <?php for ($i=1;$i<=10;$i++) { ?>
+    <?php for ($i=1; $i<=10; $i++) { ?>
     <tr>
         <th scope="row">여분필드<?php echo $i ?></th>
         <td class="td_extra">
@@ -155,4 +169,4 @@ function fboardgroup_check(f)
 </script>
 
 <?php
-include_once ('./admin.tail.php');
+include_once('./admin.tail.php');

@@ -7,8 +7,9 @@ auth_check_menu($auth, $sub_menu, 'w');
 
 $sql = " select count(*) as cnt from {$g5['group_table']} ";
 $row = sql_fetch($sql);
-if (!$row['cnt'])
+if (!$row['cnt']) {
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
+}
 
 $html_title = '게시판';
 
@@ -58,7 +59,7 @@ if (!isset($board['bo_use_sns'])) {
 
 $sql = " SHOW COLUMNS FROM `{$g5['board_table']}` LIKE 'bo_use_cert' ";
 $row = sql_fetch($sql);
-if(strpos($row['Type'], 'hp-') === false) {
+if (strpos($row['Type'], 'hp-') === false) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '' ", false);
 }
 
@@ -128,7 +129,7 @@ $board_default = array(
 'bo_sort_field'=>'',
 );
 
-for($i=0;$i<=10;$i++){
+for ($i = 0; $i <= 10; $i++) {
     $board_default['bo_'.$i.'_subj'] = '';
     $board_default['bo_'.$i] = '';
 }
@@ -142,7 +143,6 @@ $readonly = "";
 $sound_only = "";
 $required_valid = "";
 if ($w == '') {
-
     $html_title .= ' 생성';
 
     $required = 'required';
@@ -179,21 +179,20 @@ if ($w == '') {
     $board['bo_use_secret'] = 0;
     $board['bo_include_head'] = '_head.php';
     $board['bo_include_tail'] = '_tail.php';
-
-} else if ($w == 'u') {
-
+} elseif ($w == 'u') {
     $html_title .= ' 수정';
 
-    if (!$board['bo_table'])
+    if (!$board['bo_table']) {
         alert('존재하지 않은 게시판 입니다.');
+    }
 
     if ($is_admin == 'group') {
-        if ($member['mb_id'] != $group['gr_admin'])
+        if ($member['mb_id'] != $group['gr_admin']) {
             alert('그룹이 틀립니다.');
+        }
     }
 
     $readonly = 'readonly';
-
 }
 
 if ($is_admin != 'super') {
@@ -202,7 +201,7 @@ if ($is_admin != 'super') {
 }
 
 $g5['title'] = $html_title;
-include_once ('./admin.head.php');
+include_once('./admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_basic">기본 설정</a></li>
@@ -253,7 +252,9 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
             <td colspan="2">
                 <?php echo get_group_select('gr_id', $board['gr_id'], 'required'); ?>
-                <?php if ($w=='u') { ?><a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a><?php } ?>
+                <?php if ($w=='u') { ?>
+                    <a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a>
+                <?php } ?>
             </td>
         </tr>
         <tr>
@@ -548,7 +549,9 @@ $pg_anchor = '<ul class="anchor">
                 <?php
                 $arr = get_skin_dir('', G5_EDITOR_PATH);
                 for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">기본환경설정의 에디터 사용</option>";
+                    if ($i == 0) {
+                        echo "<option value=\"\">기본환경설정의 에디터 사용</option>";
+                    }
                     echo "<option value=\"".$arr[$i]."\"".get_selected($board['bo_select_editor'], $arr[$i]).">".$arr[$i]."</option>\n";
                 }
                 ?>
@@ -701,9 +704,9 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help("본인확인 여부에 따라 게시물을 조회 할 수 있도록 합니다."); ?>
                 <select id="bo_use_cert" name="bo_use_cert">
                     <?php
-                    echo option_selected("",  $board['bo_use_cert'], "사용안함");
+                    echo option_selected("", $board['bo_use_cert'], "사용안함");
                     if ($config['cf_cert_use']) {
-                        echo option_selected("cert",  $board['bo_use_cert'], "본인확인된 회원전체");
+                        echo option_selected("cert", $board['bo_use_cert'], "본인확인된 회원전체");
                         echo option_selected("adult", $board['bo_use_cert'], "본인확인된 성인회원만");
                     }
                     ?>
@@ -903,7 +906,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_mobile_skin">전체적용</label>
             </td>
         </tr>
-        <?php if ($is_admin === 'super'){   // 슈퍼관리자인 경우에만 수정 가능 ?>
+        <?php if ($is_admin === 'super') {   // 슈퍼관리자인 경우에만 수정 가능 ?>
         <tr>
             <th scope="row"><label for="bo_include_head">상단 파일 경로</label></th>
             <td>
@@ -1192,17 +1195,16 @@ $pg_anchor = '<ul class="anchor">
             <td>
                 <?php echo help('리스트에서 기본으로 정렬에 사용할 필드를 선택합니다. "기본"으로 사용하지 않으시는 경우 속도가 느려질 수 있습니다.') ?>
                 <select id="bo_sort_field" name="bo_sort_field">
-                    <?php foreach( get_board_sort_fields($board) as $v ){
-                        
+                    <?php foreach (get_board_sort_fields($board) as $v) {
                         $option_value = $order_by_str = $v[0];
-                        if( $v[0] === 'wr_num, wr_reply' ){
+                        if ($v[0] === 'wr_num, wr_reply') {
                             $selected = (! $board['bo_sort_field']) ? 'selected="selected"' : '';
                             $option_value = '';
                         } else {
                             $selected = ($board['bo_sort_field'] === $v[0]) ? 'selected="selected"' : '';
                         }
                         
-                        if( $order_by_str !== 'wr_num, wr_reply' ){
+                        if ($order_by_str !== 'wr_num, wr_reply') {
                             $tmp = explode(',', $v[0]);
                             $order_by_str = $tmp[0];
                         }
@@ -1335,7 +1337,7 @@ $pg_anchor = '<ul class="anchor">
 
 
 <div class="btn_fixed_top">
-    <?php if( $bo_table && $w ){ ?>
+    <?php if ($bo_table && $w) { ?>
         <a href="./board_copy.php?bo_table=<?php echo $board['bo_table']; ?>" id="board_copy" target="win_board_copy" class=" btn_02 btn">게시판복사</a>
         <a href="<?php echo get_pretty_url($board['bo_table']); ?>" class=" btn_02 btn">게시판 바로가기</a>
         <a href="./board_thumbnail_delete.php?bo_table=<?php echo $board['bo_table'].'&amp;'.$qstr;?>" onclick="return delete_confirm2('게시판 썸네일 파일을 삭제하시겠습니까?');" class="btn_02 btn">게시판 썸네일 삭제</a>
@@ -1451,9 +1453,9 @@ jQuery(function($){
 function fboardform_submit(f)
 {
     <?php
-    if(!$w){
-    $js_array = get_bo_table_banned_word();
-    echo "var banned_array = ". json_encode($js_array) . ";\n";
+    if (!$w) {
+        $js_array = get_bo_table_banned_word();
+        echo "var banned_array = ". json_encode($js_array) . ";\n";
     }
     ?>
 
@@ -1489,4 +1491,4 @@ function fboardform_submit(f)
 </script>
 
 <?php
-include_once ('./admin.tail.php');
+include_once('./admin.tail.php');

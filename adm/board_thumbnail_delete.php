@@ -4,8 +4,9 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, 'w');
 
-if(!$board['bo_table'])
+if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.');
+}
 
 $g5['title'] = $board['bo_subject'].' 게시판 썸네일 삭제';
 include_once('./admin.head.php');
@@ -21,11 +22,11 @@ include_once('./admin.head.php');
 $dir = G5_DATA_PATH.'/file/'.$bo_table;
 
 $cnt = 0;
-if(is_dir($dir)) {
+if (is_dir($dir)) {
     echo '<ul>';
     $files = glob($dir.'/thumb-*');
     if (is_array($files)) {
-        foreach($files as $thumbnail) {
+        foreach ($files as $thumbnail) {
             $cnt++;
             @unlink($thumbnail);
 
@@ -33,8 +34,9 @@ if(is_dir($dir)) {
 
             flush();
 
-            if ($cnt%10==0)
+            if (($cnt % 10) == 0) {
                 echo PHP_EOL;
+            }
         }
     }
 

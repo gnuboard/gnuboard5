@@ -15,13 +15,13 @@ if ($is_admin != "super") {
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
-        case "bo_table" :
+        case "bo_table":
             $sql_search .= " ($sfl like '$stx%') ";
             break;
-        case "a.gr_id" :
+        case "a.gr_id":
             $sql_search .= " ($sfl = '$stx') ";
             break;
-        default :
+        default:
             $sql_search .= " ($sfl like '%$stx%') ";
             break;
     }
@@ -40,7 +40,9 @@ $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+if ($page < 1) {
+    $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+}
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
@@ -60,7 +62,6 @@ $colspan = 15;
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
-
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
     <option value="bo_table"<?php echo get_selected($sfl, "bo_table", true); ?>>TABLE</option>
@@ -70,10 +71,7 @@ $colspan = 15;
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
 <input type="submit" value="검색" class="btn_submit">
-
 </form>
-
-
 
 <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
 <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -114,7 +112,7 @@ $colspan = 15;
         $one_update = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'" class="btn btn_03">수정</a>';
         $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy btn btn_02" target="win_board_copy">복사</a>';
 
-        $bg = 'bg'.($i%2);
+        $bg = 'bg'.($i % 2);
     ?>
 
     <tr class="<?php echo $bg; ?>">
@@ -123,9 +121,9 @@ $colspan = 15;
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td>
-            <?php if ($is_admin == 'super'){ ?>
+            <?php if ($is_admin == 'super') { ?>
                 <?php echo get_group_select("gr_id[$i]", $row['gr_id']) ?>
-            <?php }else{ ?>
+            <?php } else { ?>
                 <input type="hidden" name="gr_id[<?php echo $i ?>]" value="<?php echo $row['gr_id'] ?>"><?php echo $row['gr_subject'] ?>
             <?php } ?>
         </td>
@@ -188,8 +186,9 @@ $colspan = 15;
     </tr>
     <?php
     }
-    if ($i == 0)
+    if ($i == 0) {
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    }
     ?>
     </tbody>
     </table>
@@ -199,8 +198,6 @@ $colspan = 15;
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn_02 btn">
     <?php if ($is_admin == 'super') { ?>
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn_02 btn">
-    <?php } ?>
-    <?php if ($is_admin == 'super') { ?>
     <a href="./board_form.php" id="bo_add" class="btn_01 btn">게시판 추가</a>
     <?php } ?>
 </div>

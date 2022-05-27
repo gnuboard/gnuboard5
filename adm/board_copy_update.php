@@ -14,6 +14,8 @@ $target_subject = isset($_POST['target_subject']) ? trim($_POST['target_subject'
 
 $target_subject = strip_tags(clean_xss_attributes($target_subject));
 
+$file_copy      = array();
+
 if (empty($bo_table)) {
     alert("원본 테이블 정보가 없습니다.");
 }
@@ -36,8 +38,6 @@ if ($row['cnt']) {
 $sql = get_table_define($g5['write_prefix'] . $bo_table);
 $sql = str_replace($g5['write_prefix'] . $bo_table, $g5['write_prefix'] . $target_table, $sql);
 sql_query($sql, false);
-
-$file_copy = array();
 
 // 구조만 복사시에는 공지사항 번호는 복사하지 않는다.
 if ($copy_case == 'schema_only') {
