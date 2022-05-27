@@ -1,6 +1,6 @@
 <?php
 $sub_menu = "300200";
-include_once('./_common.php');
+require_once './_common.php';
 
 sql_query(" ALTER TABLE {$g5['group_member_table']} CHANGE `gm_id` `gm_id` INT( 11 ) DEFAULT '0' NOT NULL AUTO_INCREMENT ", false);
 
@@ -30,7 +30,7 @@ if ($w == '') {
         $sql = " insert into {$g5['group_member_table']}
                     set gr_id = '{$_POST['gr_id']}',
                          mb_id = '{$_POST['mb_id']}',
-                         gm_datetime = '".G5_TIME_YMDHIS."' ";
+                         gm_datetime = '" . G5_TIME_YMDHIS . "' ";
         sql_query($sql);
     }
 } elseif ($w == 'd' || $w == 'ld') {
@@ -61,7 +61,7 @@ if ($w == '') {
 }
 
 if ($w == 'ld') {
-    goto_url('./boardgroupmember_list.php?gr_id='.$gr_id);
+    goto_url('./boardgroupmember_list.php?gr_id=' . $gr_id);
 } else {
-    goto_url('./boardgroupmember_form.php?mb_id='.$mb_id);
+    goto_url('./boardgroupmember_form.php?mb_id=' . $mb_id);
 }

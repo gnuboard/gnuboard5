@@ -1,7 +1,7 @@
 <?php
 // board_delete.php , boardgroup_delete.php 에서 include 하는 파일
 
- // 개별 페이지 접근 불가
+// 개별 페이지 접근 불가
 if (!defined('_GNUBOARD_')) {
     exit;
 }
@@ -39,4 +39,4 @@ sql_query(" delete from {$g5['board_good_table']} where bo_table = '{$tmp_bo_tab
 delete_cache_latest($tmp_bo_table);
 
 // 게시판 폴더 전체 삭제
-rm_rf(G5_DATA_PATH.'/file/'.$tmp_bo_table);
+rm_rf(G5_DATA_PATH . '/file/' . $tmp_bo_table);

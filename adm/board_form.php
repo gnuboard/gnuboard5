@@ -1,7 +1,7 @@
 <?php
 $sub_menu = "300100";
-include_once('./_common.php');
-include_once(G5_EDITOR_LIB);
+require_once './_common.php';
+require_once G5_EDITOR_LIB;
 
 auth_check_menu($auth, $sub_menu, 'w');
 
@@ -51,9 +51,11 @@ if (!isset($board['bo_use_sns'])) {
 
     $result = sql_query(" select bo_table from `{$g5['board_table']}` ");
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(" ALTER TABLE `{$g5['write_prefix']}{$row['bo_table']}`
+        sql_query(
+            " ALTER TABLE `{$g5['write_prefix']}{$row['bo_table']}`
                     ADD `wr_facebook_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_ip`,
-                    ADD `wr_twitter_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_facebook_user` ", false);
+                    ADD `wr_twitter_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_facebook_user` ", false
+        );
     }
 }
 
@@ -68,8 +70,10 @@ if (!isset($board['bo_use_list_file'])) {
 
     $result = sql_query(" select bo_table from `{$g5['board_table']}` ");
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(" ALTER TABLE `{$g5['write_prefix']}{$row['bo_table']}`
-                    ADD `wr_file` TINYINT NOT NULL DEFAULT '0' AFTER `wr_datetime` ", false);
+        sql_query(
+            " ALTER TABLE `{$g5['write_prefix']}{$row['bo_table']}`
+                    ADD `wr_file` TINYINT NOT NULL DEFAULT '0' AFTER `wr_datetime` ", false
+        );
     }
 }
 
@@ -201,7 +205,7 @@ if ($is_admin != 'super') {
 }
 
 $g5['title'] = $html_title;
-include_once('./admin.head.php');
+require_once './admin.head.php';
 
 $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_basic">기본 설정</a></li>
@@ -937,7 +941,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php
                 echo help("파일 경로를 입력 또는 수정시 캡챠를 반드시 입력해야 합니다.");
 
-                include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+                include_once G5_CAPTCHA_PATH.'/captcha.lib.php';
                 $captcha_html = captcha_html();
                 $captcha_js   = chk_captcha_js();
                 echo $captcha_html;
@@ -1491,4 +1495,4 @@ function fboardform_submit(f)
 </script>
 
 <?php
-include_once('./admin.tail.php');
+require_once './admin.tail.php';

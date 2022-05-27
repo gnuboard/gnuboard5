@@ -1,6 +1,6 @@
 <?php
 $sub_menu = '300100';
-include_once('./_common.php');
+require_once './_common.php';
 
 check_demo();
 
@@ -31,7 +31,7 @@ if ($w == '' && in_array($target_table, get_bo_table_banned_word())) {
 
 $row = sql_fetch(" select count(*) as cnt from {$g5['board_table']} where bo_table = '$target_table' ");
 if ($row['cnt']) {
-    alert($target_table.'은(는) 이미 존재하는 게시판 테이블명 입니다.\\n복사할 테이블명으로 사용할 수 없습니다.');
+    alert($target_table . '은(는) 이미 존재하는 게시판 테이블명 입니다.\\n복사할 테이블명으로 사용할 수 없습니다.');
 }
 
 // 게시판 테이블 생성
@@ -93,11 +93,11 @@ $sql = " insert into {$g5['board_table']}
                 bo_mobile_skin = '{$board['bo_mobile_skin']}',
                 bo_include_head = '{$board['bo_include_head']}',
                 bo_include_tail = '{$board['bo_include_tail']}',
-                bo_content_head = '".addslashes($board['bo_content_head'])."',
-                bo_content_tail = '".addslashes($board['bo_content_tail'])."',
-                bo_mobile_content_head = '".addslashes($board['bo_mobile_content_head'])."',
-                bo_mobile_content_tail = '".addslashes($board['bo_mobile_content_tail'])."',
-                bo_insert_content = '".addslashes($board['bo_insert_content'])."',
+                bo_content_head = '" . addslashes($board['bo_content_head']) . "',
+                bo_content_tail = '" . addslashes($board['bo_content_tail']) . "',
+                bo_mobile_content_head = '" . addslashes($board['bo_mobile_content_head']) . "',
+                bo_mobile_content_tail = '" . addslashes($board['bo_mobile_content_tail']) . "',
+                bo_insert_content = '" . addslashes($board['bo_insert_content']) . "',
                 bo_gallery_cols = '{$board['bo_gallery_cols']}',
                 bo_gallery_width = '{$board['bo_gallery_width']}',
                 bo_gallery_height = '{$board['bo_gallery_height']}',
@@ -114,34 +114,34 @@ $sql = " insert into {$g5['board_table']}
                 bo_use_sns = '{$board['bo_use_sns']}',
                 bo_use_captcha = '{$board['bo_use_captcha']}',
                 bo_sort_field = '{$board['bo_sort_field']}',
-                bo_1_subj = '".addslashes($board['bo_1_subj'])."',
-                bo_2_subj = '".addslashes($board['bo_2_subj'])."',
-                bo_3_subj = '".addslashes($board['bo_3_subj'])."',
-                bo_4_subj = '".addslashes($board['bo_4_subj'])."',
-                bo_5_subj = '".addslashes($board['bo_5_subj'])."',
-                bo_6_subj = '".addslashes($board['bo_6_subj'])."',
-                bo_7_subj = '".addslashes($board['bo_7_subj'])."',
-                bo_8_subj = '".addslashes($board['bo_8_subj'])."',
-                bo_9_subj = '".addslashes($board['bo_9_subj'])."',
-                bo_10_subj = '".addslashes($board['bo_10_subj'])."',
-                bo_1 = '".addslashes($board['bo_1'])."',
-                bo_2 = '".addslashes($board['bo_2'])."',
-                bo_3 = '".addslashes($board['bo_3'])."',
-                bo_4 = '".addslashes($board['bo_4'])."',
-                bo_5 = '".addslashes($board['bo_5'])."',
-                bo_6 = '".addslashes($board['bo_6'])."',
-                bo_7 = '".addslashes($board['bo_7'])."',
-                bo_8 = '".addslashes($board['bo_8'])."',
-                bo_9 = '".addslashes($board['bo_9'])."',
-                bo_10 = '".addslashes($board['bo_10'])."' ";
+                bo_1_subj = '" . addslashes($board['bo_1_subj']) . "',
+                bo_2_subj = '" . addslashes($board['bo_2_subj']) . "',
+                bo_3_subj = '" . addslashes($board['bo_3_subj']) . "',
+                bo_4_subj = '" . addslashes($board['bo_4_subj']) . "',
+                bo_5_subj = '" . addslashes($board['bo_5_subj']) . "',
+                bo_6_subj = '" . addslashes($board['bo_6_subj']) . "',
+                bo_7_subj = '" . addslashes($board['bo_7_subj']) . "',
+                bo_8_subj = '" . addslashes($board['bo_8_subj']) . "',
+                bo_9_subj = '" . addslashes($board['bo_9_subj']) . "',
+                bo_10_subj = '" . addslashes($board['bo_10_subj']) . "',
+                bo_1 = '" . addslashes($board['bo_1']) . "',
+                bo_2 = '" . addslashes($board['bo_2']) . "',
+                bo_3 = '" . addslashes($board['bo_3']) . "',
+                bo_4 = '" . addslashes($board['bo_4']) . "',
+                bo_5 = '" . addslashes($board['bo_5']) . "',
+                bo_6 = '" . addslashes($board['bo_6']) . "',
+                bo_7 = '" . addslashes($board['bo_7']) . "',
+                bo_8 = '" . addslashes($board['bo_8']) . "',
+                bo_9 = '" . addslashes($board['bo_9']) . "',
+                bo_10 = '" . addslashes($board['bo_10']) . "' ";
 sql_query($sql, false);
 
 // 게시판 폴더 생성
-@mkdir(G5_DATA_PATH.'/file/'.$target_table, G5_DIR_PERMISSION);
-@chmod(G5_DATA_PATH.'/file/'.$target_table, G5_DIR_PERMISSION);
+@mkdir(G5_DATA_PATH . '/file/' . $target_table, G5_DIR_PERMISSION);
+@chmod(G5_DATA_PATH . '/file/' . $target_table, G5_DIR_PERMISSION);
 
 // 디렉토리에 있는 파일의 목록을 보이지 않게 한다.
-$board_path = G5_DATA_PATH.'/file/'.$target_table;
+$board_path = G5_DATA_PATH . '/file/' . $target_table;
 $file = $board_path . '/index.php';
 $f = @fopen($file, 'w');
 @fwrite($f, '');
@@ -150,34 +150,34 @@ $f = @fopen($file, 'w');
 
 $copy_file = 0;
 if ($copy_case == 'schema_data_both') {
-    $d = dir(G5_DATA_PATH.'/file/'.$bo_table);
+    $d = dir(G5_DATA_PATH . '/file/' . $bo_table);
     while ($entry = $d->read()) {
         if ($entry == '.' || $entry == '..') {
             continue;
         }
 
         // 김선용 201007 :
-        if (is_dir(G5_DATA_PATH.'/file/'.$bo_table.'/'.$entry)) {
-            $dd = dir(G5_DATA_PATH.'/file/'.$bo_table.'/'.$entry);
-            @mkdir(G5_DATA_PATH.'/file/'.$target_table.'/'.$entry, G5_DIR_PERMISSION);
-            @chmod(G5_DATA_PATH.'/file/'.$target_table.'/'.$entry, G5_DIR_PERMISSION);
+        if (is_dir(G5_DATA_PATH . '/file/' . $bo_table . '/' . $entry)) {
+            $dd = dir(G5_DATA_PATH . '/file/' . $bo_table . '/' . $entry);
+            @mkdir(G5_DATA_PATH . '/file/' . $target_table . '/' . $entry, G5_DIR_PERMISSION);
+            @chmod(G5_DATA_PATH . '/file/' . $target_table . '/' . $entry, G5_DIR_PERMISSION);
             while ($entry2 = $dd->read()) {
                 if ($entry2 == '.' || $entry2 == '..') {
                     continue;
                 }
-                @copy(G5_DATA_PATH.'/file/'.$bo_table.'/'.$entry.'/'.$entry2, G5_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2);
-                @chmod(G5_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2, G5_DIR_PERMISSION);
+                @copy(G5_DATA_PATH . '/file/' . $bo_table . '/' . $entry . '/' . $entry2, G5_DATA_PATH . '/file/' . $target_table . '/' . $entry . '/' . $entry2);
+                @chmod(G5_DATA_PATH . '/file/' . $target_table . '/' . $entry . '/' . $entry2, G5_DIR_PERMISSION);
                 $copy_file++;
             }
             $dd->close();
         } else {
-            @copy(G5_DATA_PATH.'/file/'.$bo_table.'/'.$entry, G5_DATA_PATH.'/file/'.$target_table.'/'.$entry);
-            @chmod(G5_DATA_PATH.'/file/'.$target_table.'/'.$entry, G5_DIR_PERMISSION);
+            @copy(G5_DATA_PATH . '/file/' . $bo_table . '/' . $entry, G5_DATA_PATH . '/file/' . $target_table . '/' . $entry);
+            @chmod(G5_DATA_PATH . '/file/' . $target_table . '/' . $entry, G5_DIR_PERMISSION);
             $copy_file++;
         }
     }
     $d->close();
-    
+
     run_event('admin_board_copy_file', $bo_table, $target_table);
 
     // 글복사
@@ -194,26 +194,26 @@ if ($copy_case == 'schema_data_both') {
     // 위의 코드는 같은 테이블명을 사용하였다는 오류가 발생함. (희한하네 ㅡㅡ;)
     $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' ";
     $result = sql_query($sql, false);
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
+    for ($i = 0; $row = sql_fetch_array($result); $i++) {
         $file_copy[$i] = $row;
     }
 }
 
 if (count($file_copy)) {
-    for ($i=0; $i<count($file_copy); $i++) {
+    for ($i = 0; $i < count($file_copy); $i++) {
         $file_copy[$i] = run_replace('admin_copy_update_file', $file_copy[$i], $file_copy[$i]['bf_file'], $bo_table, $target_table);
 
         $sql = " insert into {$g5['board_file_table']}
                     set bo_table = '$target_table',
                          wr_id = '{$file_copy[$i]['wr_id']}',
                          bf_no = '{$file_copy[$i]['bf_no']}',
-                         bf_source = '".addslashes($file_copy[$i]['bf_source'])."',
+                         bf_source = '" . addslashes($file_copy[$i]['bf_source']) . "',
                          bf_file = '{$file_copy[$i]['bf_file']}',
                          bf_download = '{$file_copy[$i]['bf_download']}',
-                         bf_content = '".addslashes($file_copy[$i]['bf_content'])."',
-                         bf_fileurl = '".addslashes($file_copy[$i]['bf_fileurl'])."',
-                         bf_thumburl = '".addslashes($file_copy[$i]['bf_thumburl'])."',
-                         bf_storage = '".addslashes($file_copy[$i]['bf_storage'])."',
+                         bf_content = '" . addslashes($file_copy[$i]['bf_content']) . "',
+                         bf_fileurl = '" . addslashes($file_copy[$i]['bf_fileurl']) . "',
+                         bf_thumburl = '" . addslashes($file_copy[$i]['bf_thumburl']) . "',
+                         bf_storage = '" . addslashes($file_copy[$i]['bf_storage']) . "',
                          bf_filesize = '{$file_copy[$i]['bf_filesize']}',
                          bf_width = '{$file_copy[$i]['bf_width']}',
                          bf_height = '{$file_copy[$i]['bf_height']}',
@@ -229,4 +229,4 @@ delete_cache_latest($target_table);
 
 echo "<script>opener.document.location.reload();</script>";
 
-alert("복사에 성공 했습니다.", './board_copy.php?bo_table='.$bo_table.'&amp;'.$qstr);
+alert("복사에 성공 했습니다.", './board_copy.php?bo_table=' . $bo_table . '&amp;' . $qstr);

@@ -38,7 +38,7 @@ $bo_include_tail = isset($_POST['bo_include_tail']) ? preg_replace(array("#[\\\]
 
 // 관리자가 자동등록방지를 사용해야 할 경우
 if ($board && (isset($board['bo_include_head']) && $board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()) {
-    include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+    include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
 
     if (!chk_captcha()) {
         alert('자동등록방지 숫자가 틀렸습니다.');
@@ -48,7 +48,7 @@ if ($board && (isset($board['bo_include_head']) && $board['bo_include_head'] !==
 if ($file = $bo_include_head) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
-    if (! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $file)) {
+    if (!$file_ext || !in_array($file_ext, array('php', 'htm', 'html')) || !preg_match('/^.*\.(php|htm|html)$/i', $file)) {
         alert('상단 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
     }
 }
@@ -56,7 +56,7 @@ if ($file = $bo_include_head) {
 if ($file = $bo_include_tail) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
-    if (! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $file)) {
+    if (!$file_ext || !in_array($file_ext, array('php', 'htm', 'html')) || !preg_match('/^.*\.(php|htm|html)$/i', $file)) {
         alert('하단 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
     }
 }
@@ -74,7 +74,7 @@ if (function_exists('filter_input_include_path')) {
     $bo_include_tail = filter_input_include_path($bo_include_tail);
 }
 
-$board_path = G5_DATA_PATH.'/file/'.$bo_table;
+$board_path = G5_DATA_PATH . '/file/' . $bo_table;
 
 // 게시판 디렉토리 생성
 @mkdir($board_path, G5_DIR_PERMISSION);
@@ -164,8 +164,8 @@ $bo_sort_field = isset($_POST['bo_sort_field']) ? clean_xss_tags($_POST['bo_sort
 $etcs = array();
 
 for ($i = 1; $i <= 10; $i++) {
-    $etcs['bo_'.$i.'_subj'] = ${'bo_'.$i.'_subj'} = isset($_POST['bo_'.$i.'_subj']) ? $_POST['bo_'.$i.'_subj'] : '';
-    $etcs['bo_'.$i] = ${'bo_'.$i} = isset($_POST['bo_'.$i]) ? $_POST['bo_'.$i] : '';
+    $etcs['bo_' . $i . '_subj'] = ${'bo_' . $i . '_subj'} = isset($_POST['bo_' . $i . '_subj']) ? $_POST['bo_' . $i . '_subj'] : '';
+    $etcs['bo_' . $i] = ${'bo_' . $i} = isset($_POST['bo_' . $i]) ? $_POST['bo_' . $i] : '';
 }
 
 $sql_common = " gr_id               = '{$gr_id}',
@@ -222,8 +222,8 @@ $sql_common = " gr_id               = '{$gr_id}',
 
 // 최고 관리자인 경우에만 수정가능
 if ($is_admin === 'super') {
-    $sql_common .= " bo_include_head     = '".$bo_include_head."',
-                bo_include_tail     = '".$bo_include_tail."',
+    $sql_common .= " bo_include_head     = '" . $bo_include_head . "',
+                bo_include_tail     = '" . $bo_include_tail . "',
                 bo_content_head     = '{$bo_content_head}',
                 bo_content_tail     = '{$bo_content_tail}',
                 bo_mobile_content_head     = '{$bo_mobile_content_head}',
@@ -271,7 +271,7 @@ $sql_common .= " bo_insert_content   = '{$bo_insert_content}',
 if ($w == '') {
     $row = sql_fetch(" select count(*) as cnt from {$g5['board_table']} where bo_table = '{$bo_table}' ");
     if ($row['cnt']) {
-        alert($bo_table.' 은(는) 이미 존재하는 TABLE 입니다.');
+        alert($bo_table . ' 은(는) 이미 존재하는 TABLE 입니다.');
     }
 
     $sql = " insert into {$g5['board_table']}
@@ -315,7 +315,7 @@ if ($w == '') {
         //$sql = " select wr_id from {$g5['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
         $sql = " select a.wr_id, (count(b.wr_parent) - 1) as cnt from {$g5['write_prefix']}{$bo_table} a, {$g5['write_prefix']}{$bo_table} b where a.wr_id=b.wr_parent and a.wr_is_comment=0 group by a.wr_id ";
         $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++) {
+        for ($i = 0; $row = sql_fetch_array($result); $i++) {
             /*
             // 코멘트수를 얻습니다.
             $sql2 = " select count(*) as cnt from {$g5['write_prefix']}$bo_table where wr_parent = '{$row['wr_id']}' and wr_is_comment = 1 ";
@@ -331,7 +331,7 @@ if ($w == '') {
     $lf = "";
     if ($board['bo_notice']) {
         $tmp_array = explode(",", $board['bo_notice']);
-        for ($i=0; $i<count($tmp_array); $i++) {
+        for ($i = 0; $i < count($tmp_array); $i++) {
             $tmp_wr_id = trim($tmp_array[$i]);
             $row = sql_fetch(" select count(*) as cnt from {$g5['write_prefix']}{$bo_table} where wr_id = '{$tmp_wr_id}' ");
             if ($row['cnt']) {
@@ -401,9 +401,9 @@ if (is_checked('chk_grp_mobile_gallery_width')) $grp_fields .= " , bo_mobile_gal
 if (is_checked('chk_grp_mobile_gallery_height'))$grp_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_grp_table_width'))          $grp_fields .= " , bo_table_width = '{$bo_table_width}' ";
 if (is_checked('chk_grp_page_rows'))            $grp_fields .= " , bo_page_rows = '{$bo_page_rows}' ";
-if (is_checked('chk_grp_mobile_page_rows'))            $grp_fields .= " , bo_mobile_page_rows = '{$bo_mobile_page_rows}' ";
+if (is_checked('chk_grp_mobile_page_rows'))     $grp_fields .= " , bo_mobile_page_rows = '{$bo_mobile_page_rows}' ";
 if (is_checked('chk_grp_subject_len'))          $grp_fields .= " , bo_subject_len = '{$bo_subject_len}' ";
-if (is_checked('chk_grp_mobile_subject_len'))          $grp_fields .= " , bo_mobile_subject_len = '{$bo_mobile_subject_len}' ";
+if (is_checked('chk_grp_mobile_subject_len'))   $grp_fields .= " , bo_mobile_subject_len = '{$bo_mobile_subject_len}' ";
 if (is_checked('chk_grp_new'))                  $grp_fields .= " , bo_new = '{$bo_new}' ";
 if (is_checked('chk_grp_hot'))                  $grp_fields .= " , bo_hot = '{$bo_hot}' ";
 if (is_checked('chk_grp_image_width'))          $grp_fields .= " , bo_image_width = '{$bo_image_width}' ";
@@ -429,10 +429,10 @@ if ($is_admin === 'super') {
 if (is_checked('chk_grp_insert_content'))       $grp_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_grp_use_search'))           $grp_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_grp_order'))                $grp_fields .= " , bo_order = '{$bo_order}' ";
-for ($i=1; $i<=10; $i++) {
-    if (is_checked('chk_grp_'.$i)) {
-        $grp_fields .= " , bo_{$i}_subj = '".$etcs['bo_'.$i.'_subj']."' ";
-        $grp_fields .= " , bo_{$i} = '".$etcs['bo_'.$i]."' ";
+for ($i = 1; $i <= 10; $i++) {
+    if (is_checked('chk_grp_' . $i)) {
+        $grp_fields .= " , bo_{$i}_subj = '" . $etcs['bo_' . $i . '_subj'] . "' ";
+        $grp_fields .= " , bo_{$i} = '" . $etcs['bo_' . $i] . "' ";
     }
 }
 
@@ -488,12 +488,12 @@ if (is_checked('chk_all_gallery_cols'))         $all_fields .= " , bo_gallery_co
 if (is_checked('chk_all_gallery_width'))        $all_fields .= " , bo_gallery_width = '{$bo_gallery_width}' ";
 if (is_checked('chk_all_gallery_height'))       $all_fields .= " , bo_gallery_height = '{$bo_gallery_height}' ";
 if (is_checked('chk_all_mobile_gallery_width')) $all_fields .= " , bo_mobile_gallery_width = '{$bo_mobile_gallery_width}' ";
-if (is_checked('chk_all_mobile_gallery_height'))$all_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
+if (is_checked('chk_all_mobile_gallery_height')) $all_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_all_table_width'))          $all_fields .= " , bo_table_width = '{$bo_table_width}' ";
 if (is_checked('chk_all_page_rows'))            $all_fields .= " , bo_page_rows = '{$bo_page_rows}' ";
-if (is_checked('chk_all_mobile_page_rows'))            $all_fields .= " , bo_mobile_page_rows = '{$bo_mobile_page_rows}' ";
+if (is_checked('chk_all_mobile_page_rows'))     $all_fields .= " , bo_mobile_page_rows = '{$bo_mobile_page_rows}' ";
 if (is_checked('chk_all_subject_len'))          $all_fields .= " , bo_subject_len = '{$bo_subject_len}' ";
-if (is_checked('chk_all_mobile_subject_len'))          $all_fields .= " , bo_mobile_subject_len = '{$bo_mobile_subject_len}' ";
+if (is_checked('chk_all_mobile_subject_len'))   $all_fields .= " , bo_mobile_subject_len = '{$bo_mobile_subject_len}' ";
 if (is_checked('chk_all_new'))                  $all_fields .= " , bo_new = '{$bo_new}' ";
 if (is_checked('chk_all_hot'))                  $all_fields .= " , bo_hot = '{$bo_hot}' ";
 if (is_checked('chk_all_image_width'))          $all_fields .= " , bo_image_width = '{$bo_image_width}' ";
@@ -519,10 +519,10 @@ if ($is_admin === 'super') {
 if (is_checked('chk_all_insert_content'))       $all_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_all_use_search'))           $all_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_all_order'))                $all_fields .= " , bo_order = '{$bo_order}' ";
-for ($i=1; $i<=10; $i++) {
-    if (is_checked('chk_all_'.$i)) {
-        $all_fields .= " , bo_{$i}_subj = '".$etcs['bo_'.$i.'_subj']."' ";
-        $all_fields .= " , bo_{$i} = '".$etcs['bo_'.$i]."' ";
+for ($i = 1; $i <= 10; $i++) {
+    if (is_checked('chk_all_' . $i)) {
+        $all_fields .= " , bo_{$i}_subj = '" . $etcs['bo_' . $i . '_subj'] . "' ";
+        $all_fields .= " , bo_{$i} = '" . $etcs['bo_' . $i] . "' ";
     }
 }
 

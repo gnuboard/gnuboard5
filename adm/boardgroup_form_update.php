@@ -1,6 +1,6 @@
 <?php
 $sub_menu = "300200";
-include_once('./_common.php');
+require_once './_common.php';
 
 if ($w == 'u') {
     check_demo();
@@ -27,14 +27,14 @@ if (empty($gr_subject)) {
 $posts = array();
 
 $check_keys = array(
-    'gr_subject'=>'',
-    'gr_device'=>'',
-    'gr_admin'=>'',
+    'gr_subject' => '',
+    'gr_device' => '',
+    'gr_admin' => '',
 );
 
 for ($i = 1; $i <= 10; $i++) {
-    $check_keys['gr_'.$i.'_subj']   = isset($_POST['gr_'.$i.'_subj']) ? $_POST['gr_'.$i.'_subj'] : '';
-    $check_keys['gr_'.$i]           = isset($_POST['gr_'.$i]) ? $_POST['gr_'.$i] : '';
+    $check_keys['gr_' . $i . '_subj']   = isset($_POST['gr_' . $i . '_subj']) ? $_POST['gr_' . $i . '_subj'] : '';
+    $check_keys['gr_' . $i]           = isset($_POST['gr_' . $i]) ? $_POST['gr_' . $i] : '';
 }
 
 foreach ($check_keys as $key => $value) {
@@ -96,4 +96,4 @@ if ($w == '') {
 
 run_event('admin_boardgroup_form_update', $gr_id, $w);
 
-goto_url('./boardgroup_form.php?w=u&amp;gr_id='.$gr_id.'&amp;'.$qstr);
+goto_url('./boardgroup_form.php?w=u&amp;gr_id=' . $gr_id . '&amp;' . $qstr);

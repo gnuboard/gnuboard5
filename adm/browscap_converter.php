@@ -1,6 +1,6 @@
 <?php
 ini_set('memory_limit', '-1');
-include_once('./_common.php');
+require_once './_common.php';
 
 // clean the output buffer
 ob_end_clean();
@@ -14,14 +14,14 @@ if ($is_admin != 'super') {
 }
 
 // browscap cache 파일 체크
-if (!is_file(G5_DATA_PATH.'/cache/browscap_cache.php')) {
-    echo '<p>Browscap 정보가 없습니다. 아래 링크로 이동해 Browscap 정보를 업데이트 하세요.</p>'.PHP_EOL;
-    echo '<p><a href="'.G5_ADMIN_URL.'/browscap.php">Browscap 업데이트</a></p>'.PHP_EOL;
+if (!is_file(G5_DATA_PATH . '/cache/browscap_cache.php')) {
+    echo '<p>Browscap 정보가 없습니다. 아래 링크로 이동해 Browscap 정보를 업데이트 하세요.</p>' . PHP_EOL;
+    echo '<p><a href="' . G5_ADMIN_URL . '/browscap.php">Browscap 업데이트</a></p>' . PHP_EOL;
     exit;
 }
 
-include_once(G5_PLUGIN_PATH.'/browscap/Browscap.php');
-$browscap = new phpbrowscap\Browscap(G5_DATA_PATH.'/cache');
+require_once G5_PLUGIN_PATH . '/browscap/Browscap.php';
+$browscap = new phpbrowscap\Browscap(G5_DATA_PATH . '/cache');
 $browscap->doAutoUpdate = false;
 $browscap->cacheFilename = 'browscap_cache.php';
 
@@ -77,5 +77,5 @@ for ($i = 0; $row = sql_fetch_array($result); $i++) {
 if (($total_count - $cnt) == 0 || $total_count == 0) {
     echo '<div class="check_processing"></div><p>변환완료</p>';
 } else {
-    echo '<p>총 '.number_format($total_count).'건 중 '.number_format($cnt).'건 변환완료<br><br>접속로그를 추가로 변환하시려면 아래 업데이트 버튼을 클릭해 주세요.</p><button type="button" id="run_update">업데이트</button>';
+    echo '<p>총 ' . number_format($total_count) . '건 중 ' . number_format($cnt) . '건 변환완료<br><br>접속로그를 추가로 변환하시려면 아래 업데이트 버튼을 클릭해 주세요.</p><button type="button" id="run_update">업데이트</button>';
 }
