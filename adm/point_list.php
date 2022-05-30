@@ -75,7 +75,7 @@ else
     if (isset($mb['mb_id']) && $mb['mb_id']) {
         echo '&nbsp;<span class="btn_ov01"><span class="ov_txt">' . $mb['mb_id'] .' 님 포인트 합계 </span><span class="ov_num"> ' . number_format($mb['mb_point']) . '점</span></span>';
     } else {
-        $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g5['point_table']} ");
+        $row2 = sql_fetch(" select sum(po_point) as sum_point, mb_id from {$g5['point_table']} ");
         echo '&nbsp;<span class="btn_ov01"><span class="ov_txt">전체 합계</span><span class="ov_num">'.number_format($row2['sum_point']).'점 </span></span>';
     }
     ?>
@@ -123,8 +123,12 @@ else
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
-            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = "select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
+        }
+
+        if (!isset($row2)) { //회원정보가 없는 경우
+            $row2 = array('mb_id' => '', 'mb_nick' => '', 'mb_name'=> '', 'mb_email' => '', 'mb_homepage' => '', 'mb_point' => '');
         }
 
         $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
