@@ -3801,7 +3801,7 @@ class HTMLPurifier_ElementDef
 
         if (!empty($def->content_model)) {
             $this->content_model =
-                str_replace("#SUPER", $this->content_model, $def->content_model);
+                str_replace("#SUPER", (string)$this->content_model, $def->content_model);
             $this->child = false;
         }
         if (!empty($def->content_model_type)) {
@@ -7555,7 +7555,7 @@ class HTMLPurifier_Length
         if ($this->n === '0' && $this->unit === false) {
             return true;
         }
-        if (!ctype_lower($this->unit)) {
+        if ($this->unit === false || !ctype_lower($this->unit)) {
             $this->unit = strtolower($this->unit);
         }
         if (!isset(HTMLPurifier_Length::$allowedUnits[$this->unit])) {
@@ -7946,8 +7946,8 @@ class HTMLPurifier_Lexer
     {
         // normalize newlines to \n
         if ($config->get('Core.NormalizeNewlines')) {
-            $html = str_replace("\r\n", "\n", $html);
-            $html = str_replace("\r", "\n", $html);
+            $html = str_replace("\r\n", "\n", (string)$html);
+            $html = str_replace("\r", "\n", (string)$html);
         }
 
         if ($config->get('HTML.Trusted')) {
@@ -21914,11 +21914,11 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
         $string = $uri->toString();
         // always available
         $this->replace['%s'] = $string;
-        $this->replace['%r'] = $context->get('EmbeddedURI', true);
-        $token = $context->get('CurrentToken', true);
-        $this->replace['%n'] = $token ? $token->name : null;
-        $this->replace['%m'] = $context->get('CurrentAttr', true);
-        $this->replace['%p'] = $context->get('CurrentCSSProperty', true);
+        $this->replace['%r'] = $context->get('EmbeddedURI', true)?: '';
+        $token = $context->get('CurrentToken', true) ?: '';
+        $this->replace['%n'] = $token ? $token->name : '';
+        $this->replace['%m'] = $context->get('CurrentAttr', true) ?: '';
+        $this->replace['%p'] = $context->get('CurrentCSSProperty', true) ?: '';
         // not always available
         if ($this->secretKey) {
             $this->replace['%t'] = hash_hmac("sha256", $string, $this->secretKey);

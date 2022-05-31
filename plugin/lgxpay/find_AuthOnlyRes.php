@@ -136,8 +136,25 @@ if ($xpay->TX()) {
                 alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
                 exit;
             }
+        }else{
+            $mb_dupinfo = $md5_ci;
         }
-
+        
+        $md5_cert_no = md5($cert_no);
+        $hash_data   = md5($user_name.$cert_type.$birth_day.$phone_no.$md5_cert_no);
+        
+        // 성인인증결과
+        $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
+        $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
+        
+        set_session("ss_cert_type",    $cert_type);
+        set_session("ss_cert_no",      $md5_cert_no);
+        set_session("ss_cert_hash",    $hash_data);
+        set_session("ss_cert_adult",   $adult);
+        set_session("ss_cert_birth",   $birth_day);
+        set_session("ss_cert_sex",     $mb_sex); // 이니시스 간편인증은 성별정보 리턴 없음
+        set_session('ss_cert_dupinfo', $mb_dupinfo);
+        set_session('ss_cert_mb_id', $row['mb_id']);
     } else {
         //인증요청 결과 실패 DB처리
         //echo "인증요청 결과 실패 DB처리하시기 바랍니다.<br>";

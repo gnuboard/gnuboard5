@@ -36,9 +36,9 @@ foreach((array) $list as $row){
     $list_right_pad = 10;
     $list_bottom_pad = 20;
     $list_left_pad = $this->img_width + 10;
-    $list_real_width = 360;
-    $list_width = $list_real_width - $list_right_pad - $list_left_pad;
-    $list_height = $this->img_height - $list_top_pad - $list_bottom_pad;
+    $list_real_width = 389;
+    $list_width = $list_real_width;
+    $list_height = $this->img_height;
 
     echo "<li class=\"sct_li{$sct_last}\" data-css=\"nocss\" style=\"padding:{$list_top_pad}px {$list_right_pad}px {$list_bottom_pad}px {$list_left_pad}px;width:{$list_width}px;height:{$list_height}px\">\n";
 
@@ -83,7 +83,7 @@ foreach((array) $list as $row){
         echo "<div class=\"sct_cost\">\n";
 
         if ($this->view_it_cust_price && $row['it_cust_price']) {
-           echo "<span class=\"sct_dict\">".display_price($row['it_cust_price'])."</span>\n";
+            echo "<span class=\"sct_dict\">".display_price($row['it_cust_price'])."</span>\n";
         }
 
         if ($this->view_it_price) {
@@ -114,4 +114,16 @@ if ($i >= 1) echo "</ul>\n";
 
 if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
-<!-- } 상품진열 12 끝 -->
+<!-- } 상품진열 30 끝 -->
+
+<script>
+//SNS 공유
+$(function (){
+	$(".btn_share").on("click", function() {
+		$(this).parent("div").children(".sct_sns_wrap").show();
+	});
+    $('.sct_sns_bg, .sct_sns_cls').click(function(){
+        $('.sct_sns_wrap').hide();
+	});
+});			
+</script>

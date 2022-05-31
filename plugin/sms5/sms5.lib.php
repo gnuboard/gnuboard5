@@ -151,15 +151,15 @@ if($config['cf_sms_type'] == 'LMS') {
     include_once(G5_LIB_PATH.'/icode.lms.lib.php');
 
     class SMS5 extends LMS {
-        var $icode_id;
-        var $icode_pw;
-        var $socket_host;
-        var $socket_port;
-        var $socket_portcode;
-        var $send_type;
-        var $Data = array();
-        var $Result = array();
-        var $Log = array();
+        public $icode_id;
+        public $icode_pw;
+        public $socket_host;
+        public $socket_port;
+        public $socket_portcode;
+        public $send_type;
+        public $Data = array();
+        public $Result = array();
+        public $Log = array();
 
         function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
             global $config;
@@ -242,7 +242,7 @@ if($config['cf_sms_type'] == 'LMS') {
         function CheckCommonTypeDate($strDate) {
             $strDate=preg_replace("/[^0-9]/","",$strDate);
             if ($strDate) {
-                if (!checkdate(substr($strDate,4,2),substr($strDate,6,2),substr($rsvTime,0,4))) return "예약날짜가 잘못되었습니다";
+                if (!checkdate(substr($strDate,4,2),substr($strDate,6,2),substr($strDate,0,4))) return "예약날짜가 잘못되었습니다";
                 if (substr($strDate,8,2)>23 || substr($strDate,10,2)>59) return "예약시간이 잘못되었습니다";
             }
         }
@@ -426,10 +426,6 @@ if($config['cf_sms_type'] == 'LMS') {
                 $fsocket = fsockopen($this->SMS_Server,$this->SMS_Port);
                 if (!$fsocket) return false;
                 set_time_limit(300);
-
-                ## php4.3.10일경우
-                ## zend 최신버전으로 업해주세요..
-                ## 또는 69번째 줄을 $this->Data as $tmp => $puts 로 변경해 주세요.
 
                 foreach($this->Data as $puts) {
                     $dest = substr($puts,26,11);

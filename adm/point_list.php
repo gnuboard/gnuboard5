@@ -127,7 +127,6 @@ if (strstr($sfl, "mb_id")) {
             <tbody>
                 <?php
                 for ($i = 0; $row = sql_fetch_array($result); $i++) {
-
                     $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
                     $link1 = $link2 = '';

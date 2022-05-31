@@ -2491,22 +2491,6 @@ function get_skin_javascript($skin_path, $dir='')
     return $str;
 }
 
-// file_put_contents 는 PHP5 전용 함수이므로 PHP4 하위버전에서 사용하기 위함
-// http://www.phpied.com/file_get_contents-for-php4/
-if (!function_exists('file_put_contents')) {
-    function file_put_contents($filename, $data) {
-        $f = @fopen($filename, 'w');
-        if (!$f) {
-            return false;
-        } else {
-            $bytes = fwrite($f, $data);
-            fclose($f);
-            return $bytes;
-        }
-    }
-}
-
-
 // HTML 마지막 처리
 function html_end()
 {
@@ -3092,6 +3076,9 @@ function get_search_string($stx)
 // XSS 관련 태그 제거
 function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0)
 {
+    // tab('\t'), formfeed('\f'), vertical tab('\v'), newline('\n'), carriage return('\r') 를 제거한다.
+    $str = preg_replace("#[\t\f\v\n\r]#", '', $str);
+
     if( $is_remove_tags ){
         $str = strip_tags($str);
     }
@@ -3352,6 +3339,11 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 {
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
+
+    // KVE-2021-1277 Open Redirect 취약점 해결
+    if (preg_match('#\\\0#', $url)) {
+        alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
+    }
 
     $url = urldecode($url);
     $p = @parse_url(trim($url));
