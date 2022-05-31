@@ -2,7 +2,7 @@
   /* ============================================================================== */
   /* =   PAGE : 라이브버리 PAGE                                                   = */
   /* = -------------------------------------------------------------------------- = */
-  /* =   Copyright (c)  2010.02   KCP Inc.   All Rights Reserverd.                = */
+  /* =   Copyright (c)  2010.02   KCP Inc.   All Rights Reserved.                = */
   /* ============================================================================== */
 
   /* ============================================================================== */
@@ -10,21 +10,21 @@
   /* ============================================================================== */
   class   C_PP_CLI_T
   {
-    var   $m_payx_common;
-    var   $m_payx_card;
-    var   $m_ordr_data;
-    var   $m_rcvr_data;
-    var   $m_escw_data;
-    var   $m_modx_data;
-    var   $m_encx_data;
-    var   $m_encx_info;
+    public   $m_payx_common;
+    public   $m_payx_card;
+    public   $m_ordr_data;
+    public   $m_rcvr_data;
+    public   $m_escw_data;
+    public   $m_modx_data;
+    public   $m_encx_data;
+    public   $m_encx_info;
 
     /* -------------------------------------------------------------------- */
     /* -   처리 결과 값                                                   - */
     /* -------------------------------------------------------------------- */
-    var   $m_res_data;
-    var   $m_res_cd;
-    var   $m_res_msg;
+    public   $m_res_data;
+    public   $m_res_cd;
+    public   $m_res_msg;
 
     /* -------------------------------------------------------------------- */
     /* -   생성자                                                         - */
