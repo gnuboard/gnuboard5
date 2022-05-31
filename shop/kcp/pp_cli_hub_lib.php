@@ -10,20 +10,20 @@
 /* ====================================================================== */
 class   C_PAYPLUS_CLI_T
 {
-    var   $m_payx_data;
-    var   $m_ordr_data;
-    var   $m_rcvr_data;
-    var   $m_escw_data;
-    var   $m_modx_data;
-    var   $m_encx_data;
-    var   $m_encx_info;
+    public $m_payx_data;
+    public $m_ordr_data;
+    public $m_rcvr_data;
+    public $m_escw_data;
+    public $m_modx_data;
+    public $m_encx_data;
+    public $m_encx_info;
 
     /* -------------------------------------------------------------------- */
     /* -   처리 결과 값                                                   - */
     /* -------------------------------------------------------------------- */
-    var   $m_res_data;
-    var   $m_res_cd;
-    var   $m_res_msg;
+    public $m_res_data;
+    public $m_res_cd;
+    public $m_res_msg;
 
     /* -------------------------------------------------------------------- */
     /* -   생성자                                                         - */
