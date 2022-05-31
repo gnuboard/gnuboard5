@@ -1,6 +1,6 @@
 <?php
 $sub_menu = '200300';
-include_once('./_common.php');
+require_once './_common.php';
 
 auth_check_menu($auth, $sub_menu, 'r');
 
@@ -17,7 +17,7 @@ $sql = " select * {$sql_common} order by ma_id desc ";
 $result = sql_query($sql);
 
 $g5['title'] = '회원메일발송';
-include_once('./admin.head.php');
+require_once './admin.head.php';
 
 $colspan = 7;
 ?>
@@ -32,73 +32,74 @@ $colspan = 7;
 
 
 <form name="fmaillist" id="fmaillist" action="./mail_delete.php" method="post">
-<div class="tbl_head01 tbl_wrap">
-    <table>
-    <caption><?php echo $g5['title']; ?> 목록</caption>
-    <thead>
-    <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 목록 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col">번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">작성일시</th>
-        <th scope="col">테스트</th>
-        <th scope="col">보내기</th>
-        <th scope="col">미리보기</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank" class="btn btn_03">미리보기</a>';
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+            <caption><?php echo $g5['title']; ?> 목록</caption>
+            <thead>
+                <tr>
+                    <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 목록 전체선택" onclick="check_all(this.form)"></th>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성일시</th>
+                    <th scope="col">테스트</th>
+                    <th scope="col">보내기</th>
+                    <th scope="col">미리보기</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                for ($i = 0; $row = sql_fetch_array($result); $i++) {
+                    $s_vie = '<a href="./mail_preview.php?ma_id=' . $row['ma_id'] . '" target="_blank" class="btn btn_03">미리보기</a>';
 
-        $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
+                    $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
 
-        $bg = 'bg'.($i%2);
-    ?>
+                    $bg = 'bg' . ($i % 2);
+                ?>
 
-    <tr class="<?php echo $bg; ?>">
-        <td class="td_chk">
-            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['ma_subject']; ?> 메일</label>
-            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>">
-        </td>
-        <td class="td_num_c"><?php echo $num ?></td>
-        <td class="td_left"><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>
-        <td class="td_datetime"><?php echo $row['ma_time'] ?></td>
-        <td class="td_test"><a href="./mail_test.php?ma_id=<?php echo $row['ma_id'] ?>">테스트</a></td>
-        <td class="td_send"><a href="./mail_select_form.php?ma_id=<?php echo $row['ma_id'] ?>">보내기</a></td>
-        <td class="td_mng"><?php echo $s_vie ?></td>
-    </tr>
+                    <tr class="<?php echo $bg; ?>">
+                        <td class="td_chk">
+                            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['ma_subject']; ?> 메일</label>
+                            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>">
+                        </td>
+                        <td class="td_num_c"><?php echo $num ?></td>
+                        <td class="td_left"><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>
+                        <td class="td_datetime"><?php echo $row['ma_time'] ?></td>
+                        <td class="td_test"><a href="./mail_test.php?ma_id=<?php echo $row['ma_id'] ?>">테스트</a></td>
+                        <td class="td_send"><a href="./mail_select_form.php?ma_id=<?php echo $row['ma_id'] ?>">보내기</a></td>
+                        <td class="td_mng"><?php echo $s_vie ?></td>
+                    </tr>
 
-    <?php
-    }
-    if (!$i)
-        echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
-    ?>
-    </tbody>
-    </table>
-</div>
-<div class="btn_fixed_top">
-    <input type="submit" value="선택삭제" class="btn btn_02">
-    <a href="./mail_form.php" id="mail_add" class="btn btn_01">메일내용추가</a>
-</div>
+                <?php
+                }
+                if (!$i) {
+                    echo "<tr><td colspan=\"" . $colspan . "\" class=\"empty_table\">자료가 없습니다.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="btn_fixed_top">
+        <input type="submit" value="선택삭제" class="btn btn_02">
+        <a href="./mail_form.php" id="mail_add" class="btn btn_01">메일내용추가</a>
+    </div>
 </form>
 
 <script>
-$(function() {
-    $('#fmaillist').submit(function() {
-        if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-            if (!is_checked("chk[]")) {
-                alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+    $(function() {
+        $('#fmaillist').submit(function() {
+            if (confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+                if (!is_checked("chk[]")) {
+                    alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+                    return false;
+                }
+
+                return true;
+            } else {
                 return false;
             }
-
-            return true;
-        } else {
-            return false;
-        }
+        });
     });
-});
 </script>
 
 <?php
-include_once ('./admin.tail.php');
+require_once './admin.tail.php';

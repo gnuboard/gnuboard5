@@ -49,13 +49,15 @@ include_once(G5_PATH.'/head.sub.php');
 //if ($board['bo_content_head']) { echo html_purifier(stripslashes($board['bo_content_head'])); }
 
 /* 비밀글의 제목을 가져옴 지운아빠 2013-01-29 */
-$sql = " select wr_subject from {$write_table}
-                      where wr_num = '{$write['wr_num']}'
-                      and wr_reply = ''
-                      and wr_is_comment = 0 ";
-$row = sql_fetch($sql);
+if (isset($write['wr_num'])) {
+    $sql = " select wr_subject from {$write_table}
+                        where wr_num = '{$write['wr_num']}'
+                        and wr_reply = ''
+                        and wr_is_comment = 0 ";
+    $row = sql_fetch($sql);
 
-$g5['title'] = get_text($row['wr_subject']);
+    $g5['title'] = get_text((string)$row['wr_subject']);
+}
 
 include_once($member_skin_path.'/password.skin.php');
 

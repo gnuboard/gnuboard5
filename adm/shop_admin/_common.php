@@ -9,4 +9,6 @@ if (!defined('G5_USE_SHOP') || !G5_USE_SHOP)
 include_once(G5_ADMIN_PATH.'/admin.lib.php');
 include_once('./admin.shop.lib.php');
 
+run_event('admin_common');
+
 check_order_inicis_tmps();

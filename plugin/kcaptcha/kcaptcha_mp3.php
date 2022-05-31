@@ -16,7 +16,7 @@ function make_mp3()
         $mp3s[] = $file;
     }
 
-    $ip = sprintf("%u", ip2long($_SERVER['REMOTE_ADDR']));
+    $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
     $mp3_file = 'cache/kcaptcha-'.$ip.'_'.G5_SERVER_TIME.'.mp3';
 
     $contents = '';

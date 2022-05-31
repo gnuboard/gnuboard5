@@ -159,7 +159,7 @@ jQuery(function($){
                         }
                     });
 
-                    $("#sit_tot_price").empty().html("<span>총 금액 </span><strong>"+number_format(String(total))+"</strong> 원");
+                    $("#sit_tot_price").empty().html("<span>총 금액 :</span><strong>"+number_format(String(total))+"</strong> 원");
                     
                     $("#sit_tot_price").trigger("price_calculate", [total]);
                 } else {

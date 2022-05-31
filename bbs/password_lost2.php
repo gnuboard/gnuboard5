@@ -23,10 +23,11 @@ if ($row['cnt'] > 1)
 
 $sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime, mb_leave_date from {$g5['member_table']} where mb_email = '$email' ";
 $mb = sql_fetch($sql);
-if (!$mb['mb_id'] || $mb['mb_leave_date'])
+if (empty($mb['mb_id']) || $mb['mb_leave_date']) {
     alert('존재하지 않는 회원입니다.');
-else if (is_admin($mb['mb_id']))
+} elseif (is_admin($mb['mb_id'])) {
     alert('관리자 아이디는 접근 불가합니다.');
+}
 
 // 임시비밀번호 발급
 $change_password = rand(100000, 999999);

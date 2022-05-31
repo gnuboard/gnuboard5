@@ -1,18 +1,18 @@
 <?php
 $sub_menu = '300700';
-include_once('./_common.php');
+require_once './_common.php';
 
 auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = 'FAQ 상세관리';
-if (isset($_REQUEST['fm_subject'])){
+if (isset($_REQUEST['fm_subject'])) {
     $fm_subject = clean_xss_tags($_REQUEST['fm_subject'], 1, 1, 255);
-    $g5['title'] .= ' : '.$fm_subject;
+    $g5['title'] .= ' : ' . $fm_subject;
 }
 
-$fm_id = (int) $fm_id;
+$fm_id = isset($fm_id) ? (int) $fm_id : 0;
 
-include_once (G5_ADMIN_PATH.'/admin.head.php');
+require_once G5_ADMIN_PATH . '/admin.head.php';
 
 $sql = " select * from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
@@ -29,7 +29,7 @@ $result = sql_query($sql);
 ?>
 
 <div class="local_ov01 local_ov">
-   <span class="btn_ov01"><span class="ov_txt"> 등록된 FAQ 상세내용</span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 등록된 FAQ 상세내용</span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
 </div>
 
 <div class="local_desc01 local_desc">
@@ -46,54 +46,52 @@ $result = sql_query($sql);
 
 <div class="tbl_head01 tbl_wrap">
     <table>
-    <caption><?php echo $g5['title']; ?> 목록</caption>
-    <thead>
-    <tr>
-        <th scope="col">번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">순서</th>
-        <th scope="col">관리</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $row1 = sql_fetch(" select COUNT(*) as cnt from {$g5['faq_table']} where fm_id = '{$row['fm_id']}' ");
-        $cnt = $row1['cnt'];
+        <caption><?php echo $g5['title']; ?> 목록</caption>
+        <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">순서</th>
+                <th scope="col">관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            for ($i = 0; $row = sql_fetch_array($result); $i++) {
+                $row1 = sql_fetch(" select COUNT(*) as cnt from {$g5['faq_table']} where fm_id = '{$row['fm_id']}' ");
+                $cnt = $row1['cnt'];
 
-        $s_mod = icon("수정", "");
-        $s_del = icon("삭제", "");
+                $s_mod = icon("수정", "");
+                $s_del = icon("삭제", "");
 
-        $num = $i + 1;
+                $num = $i + 1;
 
-        $bg = 'bg'.($i%2);
+                $bg = 'bg' . ($i % 2);
 
-        $fa_subject = conv_content($row['fa_subject'], 1);
-    ?>
+                $fa_subject = conv_content($row['fa_subject'], 1);
+                ?>
 
-    <tr class="<?php echo $bg; ?>">
-        <td class="td_num"><?php echo $num; ?></td>
-        <td class="td_left"><?php echo $fa_subject; ?></td>
-        <td class="td_num"><?php echo $row['fa_order']; ?></td>
-        <td class="td_mng td_mng_m">
-            <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" class="btn btn_03"><span class="sound_only"><?php echo $fa_subject; ?> </span>수정</a>
-            <a href="./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02"><span class="sound_only"><?php echo $fa_subject; ?> </span>삭제</a>
-        </td>
-    </tr>
+                <tr class="<?php echo $bg; ?>">
+                    <td class="td_num"><?php echo $num; ?></td>
+                    <td class="td_left"><?php echo $fa_subject; ?></td>
+                    <td class="td_num"><?php echo $row['fa_order']; ?></td>
+                    <td class="td_mng td_mng_m">
+                        <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" class="btn btn_03"><span class="sound_only"><?php echo $fa_subject; ?> </span>수정</a>
+                        <a href="./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02"><span class="sound_only"><?php echo $fa_subject; ?> </span>삭제</a>
+                    </td>
+                </tr>
+                <?php
+            }
 
-    <?php
-    }
-
-    if ($i == 0) {
-        echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
-    }
-    ?>
-    </tbody>
+            if ($i == 0) {
+                echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
+            }
+            ?>
+        </tbody>
     </table>
 
 </div>
 
 
 <?php
-include_once (G5_ADMIN_PATH.'/admin.tail.php');
+require_once G5_ADMIN_PATH . '/admin.tail.php';
