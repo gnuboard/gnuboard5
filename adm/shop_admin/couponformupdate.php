@@ -139,7 +139,7 @@ if($w == '') {
 }
 
 // 쿠폰생성알림 발송
-if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
+if ($w == '' && (isset($_POST['cp_sms_send']) || isset($_POST['cp_email_send']))) {
     include_once(G5_LIB_PATH.'/mailer.lib.php');
 
     $sms_count = 0;

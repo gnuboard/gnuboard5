@@ -80,8 +80,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
                 <label for="pc_name" class="sound_only">이름<strong>필수</strong></label>
                 <input type="text" name="pc_name" id="pc_name" required class="full_input required" size="20" placeholder="이름">
             </div>
-        	<?php }  ?>
             <?php echo captcha_html(); ?>
+        	<?php } ?>
 			<button type="submit" class="btn_submit">의견남기기</button>           
             </form>
             <?php }  ?>

@@ -171,10 +171,10 @@ class KCAPTCHA{
 				if($sx<0 || $sy<0 || $sx>=$width-1 || $sy>=$height-1){
 					continue;
 				}else{
-					$color=imagecolorat($img, $sx, $sy) & 0xFF;
-					$color_x=imagecolorat($img, $sx+1, $sy) & 0xFF;
-					$color_y=imagecolorat($img, $sx, $sy+1) & 0xFF;
-					$color_xy=imagecolorat($img, $sx+1, $sy+1) & 0xFF;
+					$color=imagecolorat($img, (int)$sx, (int)$sy) & 0xFF;
+					$color_x=imagecolorat($img, (int)$sx+1, (int)$sy) & 0xFF;
+					$color_y=imagecolorat($img, (int)$sx, (int)$sy+1) & 0xFF;
+					$color_xy=imagecolorat($img, (int)$sx+1, (int)$sy+1) & 0xFF;
 				}
 
 				if($color==255 && $color_x==255 && $color_y==255 && $color_xy==255){
@@ -204,7 +204,7 @@ class KCAPTCHA{
 					$newblue=$newcolor0*$foreground_color[2]+$newcolor*$background_color[2];
 				}
 
-				imagesetpixel($img2, $x, $y, imagecolorallocate($img2, $newred, $newgreen, $newblue));
+				imagesetpixel($img2, (int)$x, (int)$y, imagecolorallocate($img2, (int)$newred, (int)$newgreen, (int)$newblue));
 			}
 		}
 

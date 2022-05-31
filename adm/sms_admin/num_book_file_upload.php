@@ -74,13 +74,13 @@ for ($i = 1; $i <= $num_rows; $i++) {
 
     switch ($ext) {
         case '.csv' :
-            $name = $csv[$i][0];
+            $name = isset($csv[$i][0]) ? $csv[$i][0] : '';
             $str_encode = @mb_detect_encoding($name, $encode);
             if( $str_encode == "EUC-KR" ){
                 $name = iconv_utf8( $name );
             }
             $name = addslashes($name);
-            $hp   = addslashes($csv[$i][1]);
+            $hp   = addslashes(isset($csv[$i][1]) ? $csv[$i][1] : '');
             break;
         case '.xls' :
         case '.xlsx' :

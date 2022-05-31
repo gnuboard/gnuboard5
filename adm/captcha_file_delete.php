@@ -1,12 +1,13 @@
 <?php
 $sub_menu = '100910';
-include_once('./_common.php');
+require_once './_common.php';
 
-if ($is_admin != 'super')
+if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.', G5_URL);
+}
 
 $g5['title'] = '캡챠파일 일괄삭제';
-include_once('./admin.head.php');
+require_once './admin.head.php';
 ?>
 
 <div class="local_desc02 local_desc">
@@ -18,35 +19,38 @@ include_once('./admin.head.php');
 <?php
 flush();
 
-if (!$dir=@opendir(G5_DATA_PATH.'/cache')) {
+if (!$dir = @opendir(G5_DATA_PATH . '/cache')) {
     echo '<p>캐시디렉토리를 열지못했습니다.</p>';
 }
 
-$cnt=0;
-echo '<ul class="session_del">'.PHP_EOL;
+$cnt = 0;
+echo '<ul class="session_del">' . PHP_EOL;
 
-$files = glob(G5_DATA_PATH.'/cache/?captcha-*');
+$files = glob(G5_DATA_PATH . '/cache/?captcha-*');
 if (is_array($files)) {
     $before_time  = G5_SERVER_TIME - 3600; // 한시간전
     foreach ($files as $gcaptcha_file) {
         $modification_time = filemtime($gcaptcha_file); // 파일접근시간
 
-        if ($modification_time > $before_time) continue;
+        if ($modification_time > $before_time) {
+            continue;
+        }
 
         $cnt++;
         unlink($gcaptcha_file);
-        echo '<li>'.$gcaptcha_file.'</li>'.PHP_EOL;
+        echo '<li>' . $gcaptcha_file . '</li>' . PHP_EOL;
 
         flush();
 
-        if ($cnt%10==0) 
+        if ($cnt % 10 == 0) {
             echo PHP_EOL;
+        }
     }
 }
 
-echo '<li>완료됨</li></ul>'.PHP_EOL;
-echo '<div class="local_desc01 local_desc"><p><strong>캡챠파일 '.$cnt.'건의 삭제 완료됐습니다.</strong><br>프로그램의 실행을 끝마치셔도 좋습니다.</p></div>'.PHP_EOL;
+echo '<li>완료됨</li></ul>' . PHP_EOL;
+echo '<div class="local_desc01 local_desc"><p><strong>캡챠파일 ' . $cnt . '건의 삭제 완료됐습니다.</strong><br>프로그램의 실행을 끝마치셔도 좋습니다.</p></div>' . PHP_EOL;
 ?>
 
 <?php
-include_once('./admin.tail.php');
+require_once './admin.tail.php';

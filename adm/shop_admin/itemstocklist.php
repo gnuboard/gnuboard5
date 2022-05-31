@@ -171,9 +171,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <?php echo $row['it_id']; ?>
         </td>
         <td class="td_left"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo $it_stock_qty; ?></td>
-        <td class="td_num"><?php echo number_format($wait_qty); ?></td>
-        <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
+        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo (int)$it_stock_qty; ?></td>
+        <td class="td_num"><?php echo number_format((float)$wait_qty); ?></td>
+        <td class="td_num"><?php echo number_format((float)$temporary_qty); ?></td>
         <td class="td_num">
             <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고수정</label>
             <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="frm_input" size="10" autocomplete="off">
