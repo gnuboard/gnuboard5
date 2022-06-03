@@ -1,6 +1,5 @@
 <?php
 require_once './_common.php';
-require_once G5_LIB_PATH . '/json.lib.php';
 
 set_session('ss_admin_token', '');
 
