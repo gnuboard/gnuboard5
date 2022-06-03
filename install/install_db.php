@@ -10,21 +10,20 @@ header('Pragma: no-cache'); // HTTP/1.0
 @header('X-Robots-Tag: noindex');
 
 $g5_path['path'] = '..';
-include_once ('../config.php');
-include_once ('../lib/common.lib.php');
+include_once('../config.php');
+include_once('../lib/common.lib.php');
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
 
 include_once('../lib/hook.lib.php');    // hook 함수 파일
-include_once('../lib/get_data.lib.php');    
+include_once('../lib/get_data.lib.php');
 include_once('../lib/uri.lib.php');    // URL 함수 파일
 include_once('../lib/cache.lib.php');
 
 $title = G5_VERSION." 설치 완료 3/3";
-include_once ('./install.inc.php');
+include_once('./install.inc.php');
 
 $tmp_bo_table   = array ("notice", "qa", "free", "gallery");
 
-//print_r($_POST); exit;
 
 $mysql_host  = isset($_POST['mysql_host']) ? safe_install_string_check($_POST['mysql_host']) : '';
 $mysql_user  = isset($_POST['mysql_user']) ? safe_install_string_check($_POST['mysql_user']) : '';
@@ -58,7 +57,7 @@ if (!$dblink) {
 </div>
 
 <?php
-    include_once ('./install.inc2.php');
+    include_once('./install.inc2.php');
     exit;
 }
 
@@ -73,7 +72,7 @@ if (!$select_db) {
 </div>
 
 <?php
-    include_once ('./install.inc2.php');
+    include_once('./install.inc2.php');
     exit;
 }
 
@@ -94,11 +93,11 @@ unset($row);
 
     <ol>
 <?php
-$sql = " desc {$table_prefix}config";
-$result = @sql_query($sql, false, $dblink);
+$sql = "SHOW TABLES LIKE '{$table_prefix}config'";
+$is_install = sql_query($sql, false, $dblink)->num_rows > 0;
 
 // 그누보드5 재설치에 체크하였거나 그누보드5가 설치되어 있지 않다면
-if($g5_install || !$result) {
+if ($g5_install || $is_install === false) {
     // 테이블 생성 ------------------------------------
     $file = implode('', file('./gnuboard5.sql'));
     eval("\$file = \"$file\";");
@@ -107,10 +106,11 @@ if($g5_install || !$result) {
     $file = preg_replace('/`g5_([^`]+`)/', '`'.$table_prefix.'$1', $file);
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
-        if (trim($f[$i]) == '') continue;
+        if (trim($f[$i]) == '') {
+            continue;
+        }
 
         $sql = get_db_create_replace($f[$i]);
-
         sql_query($sql, true, $dblink);
     }
 }
@@ -123,10 +123,11 @@ if($g5_shop_install) {
     $file = preg_replace('/`g5_shop_([^`]+`)/', '`'.$g5_shop_prefix.'$1', $file);
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
-        if (trim($f[$i]) == '') continue;
+        if (trim($f[$i]) == '') {
+            continue;
+        }
 
         $sql = get_db_create_replace($f[$i]);
-
         sql_query($sql, true, $dblink);
     }
 }
@@ -143,7 +144,7 @@ $download_point = 0;
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
-if($g5_install || !$result) {
+if ($g5_install || $is_install === false) {
     // 기본 이미지 확장자를 설정하고
     $image_extension = "gif|jpg|jpeg|png";
     // 서버에서 webp 를 지원하면 확장자를 추가한다.
