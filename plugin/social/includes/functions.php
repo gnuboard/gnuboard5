@@ -391,7 +391,8 @@ function social_session_exists_check(){
     }
 
     if( $provider_name && isset($_SESSION['HA::STORE']['hauth_session.'.strtolower($provider_name).'.is_logged_in']) && !empty($_SESSION['sl_userprofile'][$provider_name]) ){
-        return json_decode($_SESSION['sl_userprofile'][$provider_name]);
+        $decode_value = function_exists('get_string_decrypt') ? json_decode(get_string_decrypt($_SESSION['sl_userprofile'][$provider_name])) : json_decode($_SESSION['sl_userprofile'][$provider_name]);
+        return $decode_value;
     }
 
     return false;
@@ -485,8 +486,9 @@ function social_check_login_before($p_service=''){
                 $_SESSION['sl_userprofile'] = array(); 
             }
 
-            if( ! $is_member ){ 
-                $_SESSION['sl_userprofile'][$provider_name] = json_encode( $user_profile );
+            if( ! $is_member ){
+                $encode_value = function_exists('get_string_encrypt') ? get_string_encrypt(json_encode($user_profile)) : json_encode($user_profile);
+                $_SESSION['sl_userprofile'][$provider_name] = $encode_value;
             }
         }
 

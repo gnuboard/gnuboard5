@@ -8,6 +8,10 @@ function make_mp3()
     $number = get_session("ss_captcha_key");
 
     if ($number == "") return;
+    $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
+    if( $number && function_exists('get_string_decrypt') ){
+        $number = str_replace($ip, '', get_string_decrypt($number));
+    }
     if ($number == get_session("ss_captcha_save")) return;
 
     $mp3s = array();
@@ -16,7 +20,6 @@ function make_mp3()
         $mp3s[] = $file;
     }
 
-    $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
     $mp3_file = 'cache/kcaptcha-'.$ip.'_'.G5_SERVER_TIME.'.mp3';
 
     $contents = '';
@@ -35,6 +38,9 @@ function make_mp3()
         }
     }
 
+    if( $number && function_exists('get_string_encrypt') ){
+        $number = get_string_encrypt($ip.$number);
+    }
     set_session("ss_captcha_save", $number);
 
     return G5_DATA_URL.'/'.$mp3_file;

@@ -11,6 +11,7 @@ require_once realpath(dirname(__FILE__)) . "/StorageInterface.php";
  * HybridAuth storage manager
  */
 class Hybrid_Storage implements Hybrid_Storage_Interface {
+    public static $stores = array();
 
 	/**
 	 * Constructor
@@ -37,11 +38,21 @@ class Hybrid_Storage implements Hybrid_Storage_Interface {
 		$key = strtolower($key);
 
 		if ($value) {
-			$_SESSION["HA::CONFIG"][$key] = serialize($value);
+			$serialize_value = function_exists('get_string_encrypt') ? get_string_encrypt(serialize($value)) : serialize($value);
+
+			if( in_array($key, array('php_session_id', 'config')) ){
+				$this->stores[$key] = $serialize_value;
+			} else {
+				$_SESSION["HA::CONFIG"][$key] = $serialize_value;
+			}
+		} elseif (isset($this->stores[$key])) {
+			$unserialize_value = function_exists('get_string_decrypt') ? unserialize(get_string_decrypt($this->stores[$key])) : unserialize($this->stores[$key]);
+			return $unserialize_value;
 		} elseif (isset($_SESSION["HA::CONFIG"][$key])) {
-			return unserialize($_SESSION["HA::CONFIG"][$key]);
+			$unserialize_value = function_exists('get_string_decrypt') ? unserialize(get_string_decrypt($_SESSION["HA::CONFIG"][$key])) : unserialize($_SESSION["HA::CONFIG"][$key]);
+			return $unserialize_value;
 		}
-		
+
 		return null;
 	}
 
@@ -55,7 +66,8 @@ class Hybrid_Storage implements Hybrid_Storage_Interface {
 		$key = strtolower($key);
 
 		if (isset($_SESSION["HA::STORE"], $_SESSION["HA::STORE"][$key])) {
-			return unserialize($_SESSION["HA::STORE"][$key]);
+			$unserialize_value = function_exists('get_string_decrypt') ? unserialize(get_string_decrypt($_SESSION["HA::STORE"][$key])) : unserialize($_SESSION["HA::STORE"][$key]);
+			return $unserialize_value;
 		}
 
 		return null;
@@ -70,7 +82,8 @@ class Hybrid_Storage implements Hybrid_Storage_Interface {
 	 */
 	public function set($key, $value) {
 		$key = strtolower($key);
-		$_SESSION["HA::STORE"][$key] = serialize($value);
+		$serialize_value = function_exists('get_string_encrypt') ? get_string_encrypt(serialize($value)) : serialize($value);
+		$_SESSION["HA::STORE"][$key] = $serialize_value;
 	}
 
 	/**
