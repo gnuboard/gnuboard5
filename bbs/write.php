@@ -347,7 +347,7 @@ if ($w == '') {
 
     for($i=0;$i<$file_count;$i++){
         if(! isset($file[$i])) {
-            $file[$i] = array('file'=>null, 'source'=>null, 'size'=>null);
+            $file[$i] = array('file'=>null, 'source'=>null, 'size'=>null, 'bf_content' => null);
         }
     }
 
