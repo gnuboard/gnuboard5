@@ -226,6 +226,7 @@ if($result) {
 
         //바로 로그인 처리
         set_session('ss_mb_id', $mb['mb_id']);
+        if(function_exists('update_auth_session_token')) update_auth_session_token(G5_TIME_YMDHIS);
 
     } else {    // 메일인증을 사용한다면
         $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';

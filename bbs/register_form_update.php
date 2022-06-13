@@ -304,8 +304,10 @@ if ($w == '') {
     }
 
     // 메일인증 사용하지 않는 경우에만 로그인
-    if (!$config['cf_use_email_certify'])
+    if (!$config['cf_use_email_certify']) {
         set_session('ss_mb_id', $mb_id);
+        if(function_exists('update_auth_session_token')) update_auth_session_token(G5_TIME_YMDHIS);
+    }
 
     set_session('ss_mb_reg', $mb_id);
 

@@ -11,6 +11,11 @@ while(true){
     if(!preg_match('/cp|cb|ck|c6|c9|rn|rm|mm|co|do|cl|db|qp|qb|dp|ww/', $keystring)) break;
 }
 
+if( $keystring && function_exists('get_string_encrypt') ){
+    $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
+    $keystring = get_string_encrypt($ip.$keystring);
+}
+
 set_session("ss_captcha_count", 0);
 set_session("ss_captcha_key", $keystring);
 $captcha = new KCAPTCHA();

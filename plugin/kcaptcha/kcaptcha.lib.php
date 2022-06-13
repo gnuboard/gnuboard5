@@ -274,9 +274,15 @@ function chk_captcha()
         return false;
     }
 
-    if (!isset($_POST['captcha_key'])) return false;
-    if (!trim($_POST['captcha_key'])) return false;
-    if ($_POST['captcha_key'] != get_session('ss_captcha_key')) {
+    $post_captcha_key = (isset($_POST['captcha_key']) && $_POST['captcha_key']) ? trim($_POST['captcha_key']) : '';
+    if (!trim($post_captcha_key)) return false;
+
+    if( $post_captcha_key && function_exists('get_string_encrypt') ){
+        $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
+        $post_captcha_key = get_string_encrypt($ip.$post_captcha_key);
+    }
+
+    if ($post_captcha_key != get_session('ss_captcha_key')) {
         $_SESSION['ss_captcha_count'] = $captcha_count + 1;
         return false;
     }

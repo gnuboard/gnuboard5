@@ -208,7 +208,8 @@ if (file_exists($dbconfig_file)) {
 @ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 @ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
-session_save_path(G5_SESSION_PATH);
+// 세션파일 저장 디렉토리를 지정할 경우
+// session_save_path(G5_SESSION_PATH);
 
 if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
@@ -232,8 +233,15 @@ function chrome_domain_session_name(){
     '.maru.net',    // 마루호스팅
     );
 
-    if(isset($_SERVER['HTTP_HOST']) && preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
-        if(! defined('G5_SESSION_NAME')) define('G5_SESSION_NAME', 'G5PHPSESSID');
+    $add_str = '';
+    $document_root_path = str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT']));
+
+    if( G5_PATH !== $document_root_path ){
+        $add_str = substr_count(G5_PATH, '/').basename(dirname(__FILE__));
+    }
+
+    if($add_str || (isset($_SERVER['HTTP_HOST']) && preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])) ){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
+        if(! defined('G5_SESSION_NAME')) define('G5_SESSION_NAME', 'G5'.$add_str.'PHPSESSID');
         @session_name(G5_SESSION_NAME);
     }
 }
@@ -243,8 +251,18 @@ chrome_domain_session_name();
 if( ! class_exists('XenoPostToForm') ){
     class XenoPostToForm
     {
+        public static function g5_session_name(){
+            return (defined('G5_SESSION_NAME') && G5_SESSION_NAME) ? G5_SESSION_NAME : 'PHPSESSID';
+        }
+
+        public static function php52_request_check(){
+            $cookie_session_name = self::g5_session_name();
+            if (isset($_REQUEST[$cookie_session_name]) && $_REQUEST[$cookie_session_name] != session_id())
+                goto_url(G5_BBS_URL.'/logout.php');
+        }
+
         public static function check() {
-            $cookie_session_name = (defined('G5_SESSION_NAME') && G5_SESSION_NAME) ? G5_SESSION_NAME : 'PHPSESSID'; 
+            $cookie_session_name = self::g5_session_name(); 
 
             return !isset($_COOKIE[$cookie_session_name]) && count($_POST) && ((isset($_SERVER['HTTP_REFERER']) && !preg_match('~^https://'.preg_quote($_SERVER['HTTP_HOST'], '~').'/~', $_SERVER['HTTP_REFERER']) || ! isset($_SERVER['HTTP_REFERER']) ));
         }
@@ -351,8 +369,9 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
 
             $headers = headers_list();
             krsort($headers);
+            $cookie_session_name = method_exists('XenoPostToForm', 'g5_session_name') ? XenoPostToForm::g5_session_name() : 'PHPSESSID'; 
             foreach ($headers as $header) {
-                if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
+                if (!preg_match('~^Set-Cookie: '.$cookie_session_name.'=~', $header)) continue;
                 $header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
                 header($header, false);
                 $g5['session_cookie_samesite'] = 'none';
@@ -375,9 +394,8 @@ define('G5_CAPTCHA_DIR',    !empty($config['cf_captcha']) ? $config['cf_captcha'
 define('G5_CAPTCHA_URL',    G5_PLUGIN_URL.'/'.G5_CAPTCHA_DIR);
 define('G5_CAPTCHA_PATH',   G5_PLUGIN_PATH.'/'.G5_CAPTCHA_DIR);
 
-// 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
-if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
-    goto_url(G5_BBS_URL.'/logout.php');
+// 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다. php5.2 버전 이하에서만 해당되는 코드이며, 오히려 무한리다이렉트 오류가 일어날수 있으므로 주석처리합니다.
+// if( method_exists('XenoPostToForm', 'php52_request_check') ) XenoPostToForm::php52_request_check();
 
 // QUERY_STRING
 $qstr = '';
@@ -497,8 +515,8 @@ if (isset($_REQUEST['gr_id'])) {
 if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
-    // 차단된 회원이면 ss_mb_id 초기화
-    if($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) {
+    // 차단된 회원이면 ss_mb_id 초기화, 또는 세션에 저장된 회원 토큰값을 비교하여 틀리면 초기화
+    if( ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) || (function_exists('check_auth_session_token') && !check_auth_session_token($member['mb_datetime'])) ) {
         set_session('ss_mb_id', '');
         $member = array();
     } else {
@@ -521,7 +539,7 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
         $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
         // 최고관리자는 자동로그인 금지
         if (strtolower($tmp_mb_id) !== strtolower($config['cf_admin'])) {
-            $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
+            $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify, mb_datetime from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
             if($row['mb_password']){
                 $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['SERVER_SOFTWARE'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
@@ -534,6 +552,7 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
                         (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
                         // 세션에 회원아이디를 저장하여 로그인으로 간주
                         set_session('ss_mb_id', $tmp_mb_id);
+                        if(function_exists('update_auth_session_token')) update_auth_session_token($row['mb_datetime']);
 
                         // 페이지를 재실행
                         echo "<script type='text/javascript'> window.location.reload(); </script>";

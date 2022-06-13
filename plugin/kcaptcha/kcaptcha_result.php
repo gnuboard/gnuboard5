@@ -9,5 +9,10 @@ if ($count >= 5) { // 설정값 이상이면 자동등록방지 입력 문자가
     echo false;
 } else {
     set_session("ss_captcha_count", $count + 1);
+
+    if( $captcha_key && function_exists('get_string_encrypt') ){
+        $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
+        $captcha_key = get_string_encrypt($ip.$captcha_key);
+    }
     echo (get_session("ss_captcha_key") === $captcha_key) ? true : false;
 }
