@@ -70,7 +70,11 @@ for ($i = 1; $i <= 10; $i++) {
 }
 
 foreach ($check_keys as $key) {
-    $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+    if( in_array($key, array('mb_signature', 'mb_profile')) ){
+        $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1, 0, 0) : '';
+    } else {
+        $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+    }
 }
 
 $mb_memo = isset($_POST['mb_memo']) ? $_POST['mb_memo'] : '';

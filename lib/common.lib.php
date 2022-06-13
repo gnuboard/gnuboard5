@@ -3075,10 +3075,12 @@ function get_search_string($stx)
 }
 
 // XSS 관련 태그 제거
-function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0)
+function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0, $is_trim_both=1)
 {
-    // tab('\t'), formfeed('\f'), vertical tab('\v'), newline('\n'), carriage return('\r') 를 제거한다.
-    $str = preg_replace("#[\t\f\v\n\r]#", '', $str);
+    if( $is_trim_both ) {
+        // tab('\t'), formfeed('\f'), vertical tab('\v'), newline('\n'), carriage return('\r') 를 제거한다.
+        $str = preg_replace("#[\t\f\v\n\r]#", '', $str);
+    }
 
     if( $is_remove_tags ){
         $str = strip_tags($str);
