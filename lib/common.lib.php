@@ -3951,10 +3951,7 @@ function get_random_token_string($length=6)
     }
 
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    $characters_length = strlen($characters);
-    $output = '';
-    for ($i = 0; $i < $length; $i++)
-        $output .= $characters[rand(0, $characters_length - 1)];
+    $output = substr(str_shuffle($characters), 0, $length);     // jihan001 님 제안코드로 수정
 
     return bin2hex($output);
 }
