@@ -72,7 +72,7 @@ function order_update_delivery($od_id, $mb_id, $change_status, $delivery)
     if($change_status != '배송')
         return;
 
-    $sql = " update {$g5['g5_shop_order_table']} set od_delivery_company = '{$delivery['delivery_company']}', od_invoice = '{$delivery['invoice']}', od_invoice_time = '{$delivery['invoice_time']}' where od_id = '$od_id' and od_status = '준비' ";
+    $sql = " update {$g5['g5_shop_order_table']} set od_delivery_company = '".sql_real_escape_string($delivery['delivery_company'])."', od_invoice = '".sql_real_escape_string($delivery['invoice'])."', od_invoice_time = '".sql_real_escape_string($delivery['invoice_time'])."' where od_id = '$od_id' and od_status = '준비' ";
     sql_query($sql);
 
     $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";

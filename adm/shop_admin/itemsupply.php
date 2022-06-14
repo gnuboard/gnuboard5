@@ -85,7 +85,7 @@ if($ps_run) {
         } // for
     } else {
         for($i=0; $i<$subject_count; $i++) {
-            $spl_subject = isset($_POST['subject'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['subject'][$i]))) : '';
+            $spl_subject = isset($_POST['subject'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags(trim(stripslashes($_POST['subject'][$i])))) : '';
             $spl_val = isset($_POST['supply'][$i]) ? explode(',', preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['supply'][$i])))) : '';
             $spl_count = count($spl_val);
 
