@@ -3343,6 +3343,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
+    if(run_replace('check_url_host_before', '', $url, $msg, $return_url, $is_redirect) === 'is_checked'){
+        return;
+    }
+
     // KVE-2021-1277 Open Redirect 취약점 해결
     if (preg_match('#\\\0#', $url)) {
         alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
@@ -3393,7 +3397,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
-        if ( ($p['host'] != $host) || $is_host_check ) {
+        if (run_replace('check_same_url_host', (($p['host'] != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
             echo '<script>'.PHP_EOL;
             echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
             echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;
