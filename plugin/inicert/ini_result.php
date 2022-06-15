@@ -1,10 +1,10 @@
 <?php
 include_once('./_common.php');
 
-$txId = $_POST['txId'];
+$txId = isset($_POST['txId']) ? clean_xss_tags($_POST['txId'], 1, 1) : '';
 $mid  = substr($txId, 6, 10);
 
-if ($_POST["resultCode"] === "0000") { 
+if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
     $data = array(
         'mid' => $mid,        
@@ -12,6 +12,12 @@ if ($_POST["resultCode"] === "0000") {
     );
 
     $post_data = json_encode($data);
+
+    $url_data = isset($_POST["authRequestUrl"]) ? @parse_url($_POST["authRequestUrl"]) : array();
+
+    if(!(isset($url_data["host"]) && preg_match("#\.inicis\.com$#", $url_data["host"]))){
+        alert('잘못된 요청입니다.', G5_URL);
+    }
 
     // curl 통신 시작 
     $ch = curl_init();
@@ -81,7 +87,7 @@ if ($_POST["resultCode"] === "0000") {
     }
 } else {   // resultCode===0000 아닐경우 아래 인증 실패를 출력함 
     // 인증실패
-    alert_close('코드 : '.$_POST['resultCode'].'  '.urldecode($_POST['resultMsg']));
+    alert_close('코드 : '.(isset($_POST['resultCode']) ? clean_xss_tags($_POST['resultCode'], 1, 1) : '').'  '.(isset($_POST['resultMsg']) ? clean_xss_tags(urldecode($_POST['resultMsg']), 1, 1) : ''));
     exit;
 }
 
