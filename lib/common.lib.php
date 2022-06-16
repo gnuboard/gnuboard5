@@ -3352,7 +3352,9 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
     }
 
-    $url = urldecode($url);
+    while ( ( $replace_url = preg_replace(array('/\/{2,}/', '/\\@/'), array('//', ''), urldecode($url)) ) != $url ) {
+        $url = $replace_url;
+    }
     $p = @parse_url(trim($url));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
