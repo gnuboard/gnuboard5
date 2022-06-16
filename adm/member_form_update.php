@@ -18,6 +18,15 @@ $mb_certify_case = isset($_POST['mb_certify_case']) ? preg_replace('/[^0-9a-z_]/
 $mb_certify     = isset($_POST['mb_certify']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['mb_certify']) : '';
 $mb_zip         = isset($_POST['mb_zip']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['mb_zip']) : '';
 
+// 관리자가 자동등록방지를 사용해야 할 경우 ( 회원의 비밀번호 변경시 캡챠를 체크한다 )
+if ($mb_password && function_exists('get_admin_captcha_by') && get_admin_captcha_by()) {
+    include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
+
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
+    }
+}
+
 // 휴대폰번호 체크
 $mb_hp = hyphen_hp_number($_POST['mb_hp']);
 if ($mb_hp) {
@@ -287,6 +296,10 @@ if ($w == '' || $w == 'u') {
             }
         }
     }
+}
+
+if (function_exists('get_admin_captcha_by')) {
+    get_admin_captcha_by('remove');
 }
 
 run_event('admin_member_form_update', $w, $mb_id);

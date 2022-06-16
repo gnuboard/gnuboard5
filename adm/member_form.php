@@ -240,7 +240,19 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php if ($w == 'u') { ?><a href="./boardgroupmember_form.php?mb_id=<?php echo $mb['mb_id'] ?>" class="btn_frmline">접근가능그룹보기</a><?php } ?>
                     </td>
                     <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?></label></th>
-                    <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20"></td>
+                    <td>
+                        <div>
+                        <input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20">
+                        </div>
+                        <div id="mb_password_captcha_wrap" style="display:none">
+                            <?php
+                            require_once G5_CAPTCHA_PATH . '/captcha.lib.php';
+                            $captcha_html = captcha_html();
+                            $captcha_js   = chk_captcha_js();
+                            echo $captcha_html;
+                            ?>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
@@ -582,8 +594,35 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             return false;
         }
 
+        if( jQuery("#mb_password").val() ){
+            <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
+        }
+
         return true;
     }
+
+    jQuery(function($){
+        $("#captcha_key").prop('required', false).removeAttr("required").removeClass("required");
+
+        $("#mb_password").on("keyup", function(e) {
+            var $warp = $("#mb_password_captcha_wrap"),
+                tooptipid = "mp_captcha_tooltip",
+                $span_text = $("<span>", {id:tooptipid, style:"font-size:0.95em;letter-spacing:-0.1em"}).html("비밀번호를 수정할 경우 캡챠를 입력해야 합니다."),
+                $parent = $(this).parent(),
+                is_invisible_recaptcha = $("#captcha").hasClass("invisible_recaptcha");
+
+            if($(this).val()){
+                $warp.show();
+                if(! is_invisible_recaptcha) {
+                    $warp.css("margin-top","1em");
+                    if(! $("#"+tooptipid).length){ $parent.append($span_text) }
+                }
+            } else {
+                $warp.hide();
+                if($("#"+tooptipid).length && ! is_invisible_recaptcha){ $parent.find("#"+tooptipid).remove(); }
+            }
+        });
+    });
 </script>
 <?php
 run_event('admin_member_form_after', $mb, $w);
