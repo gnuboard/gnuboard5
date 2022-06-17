@@ -8,7 +8,7 @@ set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
 $oid  = isset($_REQUEST['P_NOTI']) ? trim($_REQUEST['P_NOTI']) : '';
-$p_req_url = isset($_REQUEST['P_REQ_URL']) ? trim($_REQUEST['P_REQ_URL']) : '';
+$p_req_url = isset($_REQUEST['P_REQ_URL']) ? is_inicis_url_return(trim($_REQUEST['P_REQ_URL'])) : '';
 $p_status = isset($_REQUEST['P_STATUS']) ? trim($_REQUEST['P_STATUS']) : '';
 $p_tid = isset($_REQUEST['P_TID']) ? trim($_REQUEST['P_TID']) : '';
 $p_rmesg1 = isset($_REQUEST['P_RMESG1']) ? trim($_REQUEST['P_RMESG1']) : '';

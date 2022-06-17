@@ -3933,6 +3933,16 @@ function is_include_path_check($path='', $is_input='')
     return true;
 }
 
+function is_inicis_url_return($url){
+    $url_data = parse_url($url);
+
+    // KG 이니시스 url이 맞는지 체크하여 맞으면 url을 리턴하고 틀리면 '' 빈값을 리턴합니다.
+    if (isset($url_data['host']) && preg_match('#\.inicis\.com$#i', $url_data['host'])) {
+        return $url;
+    }
+    return '';
+}
+
 function check_auth_session_token($str=''){
     if (get_session('ss_mb_token_key') === get_token_encryption_key($str)) {
         return true;

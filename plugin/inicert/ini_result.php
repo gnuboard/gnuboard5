@@ -13,15 +13,14 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
     $post_data = json_encode($data);
 
-    $url_data = isset($_POST["authRequestUrl"]) ? @parse_url($_POST["authRequestUrl"]) : array();
-
-    if(!(isset($url_data["host"]) && preg_match("#\.inicis\.com$#", $url_data["host"]))){
+    $authRequestUrl = isset($_POST["authRequestUrl"]) ? is_inicis_url_return($_POST["authRequestUrl"]) : '';
+    if(!$authRequestUrl){
         alert('잘못된 요청입니다.', G5_URL);
     }
 
     // curl 통신 시작 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $_POST["authRequestUrl"]);
+    curl_setopt($ch, CURLOPT_URL, $authRequestUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);

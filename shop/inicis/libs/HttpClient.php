@@ -36,7 +36,7 @@ class HttpClient {
         // [scheme] => https
         // [host] => fcstdpay.inicis.com || stdpay.inicis.com || ksstdpay.inicis.com
         // [path] => /api/payAuth
-        if (preg_match("#\.inicis\.com$#", $url_data["host"]) == false) {
+        if (! is_inicis_url_return($url)) {
             return false;
         }
 
