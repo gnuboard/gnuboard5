@@ -476,13 +476,13 @@ if ($w == "" || $w == "u")
         {
             $sql = " insert into {$g5['g5_shop_item_relation_table']}
                         set it_id  = '$it_id',
-                            it_id2 = '$it_id2[$i]',
+                            it_id2 = '".sql_real_escape_string($it_id2[$i])."',
                             ir_no = '$i' ";
             sql_query($sql, false);
 
             // 관련상품의 반대로도 등록
             $sql = " insert into {$g5['g5_shop_item_relation_table']}
-                        set it_id  = '$it_id2[$i]',
+                        set it_id  = '".sql_real_escape_string($it_id2[$i])."',
                             it_id2 = '$it_id',
                             ir_no = '$i' ";
             sql_query($sql, false);
@@ -496,7 +496,7 @@ if ($w == "" || $w == "u")
         if (trim($ev_id[$i]))
         {
             $sql = " insert into {$g5['g5_shop_event_item_table']}
-                        set ev_id = '$ev_id[$i]',
+                        set ev_id = '".sql_real_escape_string($ev_id[$i])."',
                             it_id = '$it_id' ";
             sql_query($sql, false);
         }
@@ -510,7 +510,7 @@ if($option_count) {
                     ( `io_id`, `io_type`, `it_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
                 VALUES ";
     for($i=0; $i<$option_count; $i++) {
-        $sql .= $comma . " ( '{$_POST['opt_id'][$i]}', '0', '$it_id', '{$_POST['opt_price'][$i]}', '{$_POST['opt_stock_qty'][$i]}', '{$_POST['opt_noti_qty'][$i]}', '{$_POST['opt_use'][$i]}' )";
+        $sql .= $comma . " ( '".sql_real_escape_string($_POST['opt_id'][$i])."', '0', '$it_id', '".sql_real_escape_string($_POST['opt_price'][$i])."', '".sql_real_escape_string($_POST['opt_stock_qty'][$i])."', '".sql_real_escape_string($_POST['opt_noti_qty'][$i])."', '".sql_real_escape_string($_POST['opt_use'][$i])."' )";
         $comma = ' , ';
     }
 
@@ -524,7 +524,7 @@ if($supply_count) {
                     ( `io_id`, `io_type`, `it_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
                 VALUES ";
     for($i=0; $i<$supply_count; $i++) {
-        $sql .= $comma . " ( '{$_POST['spl_id'][$i]}', '1', '$it_id', '{$_POST['spl_price'][$i]}', '{$_POST['spl_stock_qty'][$i]}', '{$_POST['spl_noti_qty'][$i]}', '{$_POST['spl_use'][$i]}' )";
+        $sql .= $comma . " ( '".sql_real_escape_string($_POST['spl_id'][$i])."', '1', '$it_id', '".sql_real_escape_string($_POST['spl_price'][$i])."', '".sql_real_escape_string($_POST['spl_stock_qty'][$i])."', '".sql_real_escape_string($_POST['spl_noti_qty'][$i])."', '".sql_real_escape_string($_POST['spl_use'][$i])."' )";
         $comma = ' , ';
     }
 
