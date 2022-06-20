@@ -1577,10 +1577,6 @@ function sql_data_seek($result, $offset=0)
         mysql_data_seek($result, $offset);
 }
 
-function _callback_sql_show_tables($m){
-    return "show tables like '".str_replace("`", "", $m[1])."'";
-}
-
 // mysqli_query 와 mysqli_error 를 한꺼번에 처리
 // mysql connect resource 지정 - 명랑폐인님 제안
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
@@ -1597,10 +1593,6 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
-
-    if (preg_match("#^desc(?:ribe)?\s+(.*)#i", $sql)) {
-        $sql = preg_replace_callback("#^desc(?:ribe)?\s+(.*)#i", '_callback_sql_show_tables', trim($sql));
-    }
 
     $is_debug = get_permission_debug_show();
     
