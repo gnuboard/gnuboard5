@@ -156,32 +156,32 @@ $cart_count = sql_num_rows($result);
     <div class="go_shopping"><a href="<?php echo G5_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a></div>
     <?php } else { ?>
     <div class="sod_ta_wr">
-    <?php
-    $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비
-    if ($tot_price > 0 || $send_cost > 0) {
-    ?>
-    <dl id="m_sod_bsk_tot">
-        <?php if ($send_cost > 0) { // 배송비가 0 보다 크다면 (있다면) ?>
-        <dt class="sod_bsk_dvr">배송비</dt>
-        <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
+        <?php
+        $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비
+        if ($tot_price > 0 || $send_cost > 0) {
+        ?>
+        <dl id="m_sod_bsk_tot">
+            <?php if ($send_cost > 0) { // 배송비가 0 보다 크다면 (있다면) ?>
+            <dt class="sod_bsk_dvr">배송비</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
+            <?php } ?>
+
+            <?php if ($tot_price > 0) { ?>
+            <dt>포인트</dt>
+            <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+            <dt class="sod_bsk_cnt">총계</dt>
+            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?></strong> 원</dd>
+            <?php } ?>
+        </dl>
         <?php } ?>
 
-        <?php if ($tot_price > 0) { ?>
-        <dt>포인트</dt>
-        <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
-        <dt class="sod_bsk_cnt">총계</dt>
-        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?></strong> 원</dd>
-        <?php } ?>
-    </dl>
-    <?php } ?>
-
-    <div id="sod_bsk_act" class="btn_confirm">
-        <div class="total">총계 <strong class="total_cnt"><?php echo number_format($tot_price); ?>원</strong>
+        <div id="sod_bsk_act" class="btn_confirm">
+            <div class="total">총계 <strong class="total_cnt"><?php echo number_format($tot_price); ?>원</strong></div>
+            <input type="hidden" name="url" value="<?php echo G5_SHOP_URL; ?>/orderform.php">
+            <input type="hidden" name="act" value="">
+            <input type="hidden" name="records" value="<?php echo $i; ?>">
+            <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
         </div>
-        <input type="hidden" name="url" value="<?php echo G5_SHOP_URL; ?>/orderform.php">
-        <input type="hidden" name="act" value="">
-        <input type="hidden" name="records" value="<?php echo $i; ?>">
-        <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
     </div>
     <?php } ?>
         <?php if ($naverpay_button_js) { ?>
