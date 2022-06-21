@@ -168,7 +168,6 @@ if ($csv == 'xls')
     if (!$cnt)
         alert("출력할 내역이 없습니다.");
 
-    if (phpversion() >= '5.2.0') {
         include_once(G5_LIB_PATH.'/PHPExcel.php');
 
         $headers = array('우편번호', '주소', '이름', '전화1', '전화2', '상품명', '수량', '선택사항', '배송비', '상품코드', '주문번호', '운송장번호', '전하실말씀');
@@ -235,7 +234,7 @@ if ($csv == 'xls')
         $data = array_merge(array($headers), $rows);
 
         $excel = new PHPExcel();
-        $excel->setActiveSheetIndex(0)->getStyle( "A1:${last_char}1" )->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB($header_bgcolor);
+        $excel->setActiveSheetIndex(0)->getStyle( "A1:{$last_char}1" )->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB($header_bgcolor);
         $excel->setActiveSheetIndex(0)->getStyle( "A:$last_char" )->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER)->setWrapText(true);
         foreach($widths as $i => $w) $excel->setActiveSheetIndex(0)->getColumnDimension( column_char($i) )->setWidth($w);
         $excel->getActiveSheet()->fromArray($data,NULL,'A1');
@@ -246,95 +245,6 @@ if ($csv == 'xls')
 
         $writer = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
         $writer->save('php://output');
-
-    } else {
-        /*================================================================================
-        php_writeexcel http://www.bettina-attack.de/jonny/view.php/projects/php_writeexcel/
-        =================================================================================*/
-
-        include_once(G5_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_workbook.inc.php');
-        include_once(G5_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_worksheet.inc.php');
-
-        $fname = tempnam(G5_DATA_PATH, "tmp-orderlist.xls");
-        $workbook = new writeexcel_workbook($fname);
-        $worksheet = $workbook->addworksheet();
-
-        // Put Excel data
-        $data = array('우편번호', '주소', '이름', '전화1', '전화2', '상품명', '수량', '선택사항', '배송비', '상품코드', '주문번호', '운송장번호', '전하실말씀');
-        $data = array_map('iconv_euckr', $data);
-
-        $col = 0;
-        foreach($data as $cell) {
-            $worksheet->write(0, $col++, $cell);
-        }
-
-        $save_it_id = '';
-        for($i=1; $row=sql_fetch_array($result); $i++)
-        {
-            if($save_it_id != $row['it_id']) {
-                // 합계금액 계산
-                $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                                SUM(ct_qty) as qty
-                            from {$g5['g5_shop_cart_table']}
-                            where it_id = '{$row['it_id']}'
-                              and od_id = '{$row['od_id']}' ";
-                $sum = sql_fetch($sql);
-
-                switch($row['ct_send_cost'])
-                {
-                    case 1:
-                        $ct_send_cost = '착불';
-                        break;
-                    case 2:
-                        $ct_send_cost = '무료';
-                        break;
-                    default:
-                        $ct_send_cost = '선불';
-                        break;
-                }
-
-                // 조건부무료
-                if($row['it_sc_type'] == 2) {
-                    $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $row['od_id']);
-
-                    if($sendcost == 0)
-                        $ct_send_cost = '무료';
-                }
-
-                $save_it_id = $row['it_id'];
-
-                $ct_send_cost = iconv_euckr($ct_send_cost);
-            }
-
-            $pull_address = iconv('UTF-8', 'UHC', print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
-
-            $row = array_map('iconv_euckr', $row);
-
-            $worksheet->write($i, 0, ' '.$row['od_b_zip1'].$row['od_b_zip2']);
-            $worksheet->write($i, 1, $pull_address);
-            $worksheet->write($i, 2, $row['od_b_name']);
-            $worksheet->write($i, 3, ' '.$row['od_b_tel']);
-            $worksheet->write($i, 4, ' '.$row['od_b_hp']);
-            $worksheet->write($i, 5, $row['it_name']);
-            $worksheet->write($i, 6, $row['ct_qty']);
-            $worksheet->write($i, 7, $row['ct_option']);
-            $worksheet->write($i, 8, $ct_send_cost);
-            $worksheet->write($i, 9, ' '.$row['it_id']);
-            $worksheet->write($i, 10, ' '.$row['od_id']);
-            $worksheet->write($i, 11, $row['od_invoice']);
-            $worksheet->write($i, 12, $row['od_memo']);
-        }
-
-        $workbook->close();
-
-        header("Content-Type: application/x-msexcel; name=\"orderlist-".date("ymd", time()).".xls\"");
-        header("Content-Disposition: inline; filename=\"orderlist-".date("ymd", time()).".xls\"");
-        $fh=fopen($fname, "rb");
-        fpassthru($fh);
-        unlink($fname);
-
-        exit;
-    }   //end if php 5.2.0
 }
 
 

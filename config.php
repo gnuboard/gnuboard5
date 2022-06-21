@@ -21,19 +21,23 @@ date_default_timezone_set("Asia/Seoul");
 회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다.
 포트가 있다면 도메인 뒤에 :443 과 같이 입력하세요.
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
-입력예) https://www.domain.com:443/gnuboard5
+입력 예) https://www.domain.com:443/gnuboard5
 */
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
-// 디버깅 상수, 실제 서버운영시 false 로 설정해 주세요.
+// 그누보드 디버그바 설정입니다, 실제 서버운영시 false 로 설정해 주세요.
 define('G5_DEBUG', false);
 
-// Set Databse table default engine is Databse default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
+// Set Database table default engine is Database default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
+// DB에 테이블 생성 시 테이블의 기본 스토리지 엔진을 설정할 수 있습니다.
+// InnoDB 또는 MyISAM 으로 설정 가능합니다.
+// 빈값으로 두면 DB 버전이나 호스팅사 정책의 기본값에 따라 설정됩니다.
 define('G5_DB_ENGINE', '');
 
-// Set Databse table default Charset
-// utf8, utf8mb4 등 지정 가능 기본값은 utf8, 설치전에 utf8mb4 으로 수정시 모든 테이블에 이모지 입력이 가능합니다. utf8mb4 는 mysql 또는 mariadb 5.5 버전 이상을 요구합니다.
+// Set Database table default Charset
+// utf8, utf8mb4 등 지정 가능 기본값은 utf8, 설치전에 utf8mb4 으로 수정 시 모든 테이블에 이모지 입력이 가능합니다.
+// utf8mb4 인코딩은 MySQL 또는 MariaDB 5.5 버전 이상을 요구합니다.
 define('G5_DB_CHARSET', 'utf8');
 
 /*
@@ -71,7 +75,7 @@ define('G5_THEME_DIR',      'theme');
 define('G5_GROUP_DIR',      'group');
 define('G5_CONTENT_DIR',    'content');
 
-// URL 은 브라우저상에서의 경로 (도메인으로 부터의)
+// URL 은 브라우저상에서의 경로 (도메인으로 부터)
 if (G5_DOMAIN) {
     define('G5_URL', G5_DOMAIN);
 } else {
@@ -188,8 +192,8 @@ define('G5_STRING_ENCRYPT_FUNCTION', 'create_hash');
 define('G5_MYSQL_PASSWORD_LENGTH', 41);         // mysql password length 41, old_password 의 경우에는 16
 
 // SQL 에러를 표시할 것인지 지정
-// 에러를 표시하려면 TRUE 로 변경
-define('G5_DISPLAY_SQL_ERROR', FALSE);
+// 에러를 표시하려면 true 로 변경
+define('G5_DISPLAY_SQL_ERROR', false);
 
 // escape string 처리 함수 지정
 // addslashes 로 변경 가능

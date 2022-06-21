@@ -1,6 +1,6 @@
 <?php
 $sub_menu = "300500";
-include_once('./_common.php');
+require_once './_common.php';
 
 check_demo();
 
@@ -14,49 +14,49 @@ $qaconfig = get_qa_config();
 
 $check_keys = array('qa_title', 'qa_category', 'qa_skin', 'qa_mobile_skin', 'qa_use_email', 'qa_req_email', 'qa_use_hp', 'qa_req_hp', 'qa_use_sms', 'qa_send_number', 'qa_admin_hp', 'qa_admin_email', 'qa_subject_len', 'qa_mobile_subject_len', 'qa_page_rows', 'qa_mobile_page_rows', 'qa_image_width', 'qa_upload_size');
 
-foreach($check_keys as $key){
-	$$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
+foreach ($check_keys as $key) {
+    $$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
 }
 
-$qa_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_head, 0, 255));
-$qa_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_tail, 0, 255));
+$qa_include_head = isset($qa_include_head) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_head, 0, 255)) : '';
+$qa_include_tail = isset($qa_include_tail) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_tail, 0, 255)) : '';
 
 // 관리자가 자동등록방지를 사용해야 할 경우
-if ($board && ($qaconfig['qa_include_head'] !== $qa_include_head || $qaconfig['qa_include_tail'] !== $qa_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
-    include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+if ($board && ($qaconfig['qa_include_head'] !== $qa_include_head || $qaconfig['qa_include_tail'] !== $qa_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()) {
+    include_once G5_CAPTCHA_PATH . '/captcha.lib.php';
 
     if (!chk_captcha()) {
         alert('자동등록방지 숫자가 틀렸습니다.');
     }
 }
 
-if( $qa_include_head ){
+if ($qa_include_head) {
     $file_ext = pathinfo($qa_include_head, PATHINFO_EXTENSION);
 
-    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $qa_include_head) ) {
+    if (!$file_ext || !in_array($file_ext, array('php', 'htm', 'html')) || !preg_match('/^.*\.(php|htm|html)$/i', $qa_include_head)) {
         alert('상단 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
     }
 }
 
-if( $qa_include_tail ){
+if ($qa_include_tail) {
     $file_ext = pathinfo($qa_include_tail, PATHINFO_EXTENSION);
 
-    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $qa_include_tail) ) {
+    if (!$file_ext || !in_array($file_ext, array('php', 'htm', 'html')) || !preg_match('/^.*\.(php|htm|html)$/i', $qa_include_tail)) {
         alert('하단 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
     }
 }
 
-if( $qa_include_head && ! is_include_path_check($qa_include_head, 1) ){
+if ($qa_include_head && !is_include_path_check($qa_include_head, 1)) {
     $qa_include_head = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.';
 }
 
-if( $qa_include_tail && ! is_include_path_check($qa_include_tail, 1) ){
+if ($qa_include_tail && !is_include_path_check($qa_include_tail, 1)) {
     $qa_include_tail = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
 }
 
-if( function_exists('filter_input_include_path') ){
+if (function_exists('filter_input_include_path')) {
     $qa_include_head = filter_input_include_path($qa_include_head);
     $qa_include_tail = filter_input_include_path($qa_include_tail);
 }
@@ -67,7 +67,7 @@ $dst_char = array('＆', '〓');
 $qa_category = str_replace($src_char, $dst_char, $_POST['qa_category']);
 
 //https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
-$qa_category = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $qa_category);
+$qa_category = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", (string)$qa_category);
 
 $sql = " update {$g5['qa_config_table']}
             set qa_title                = '{$_POST['qa_title']}',
@@ -108,10 +108,11 @@ $sql = " update {$g5['qa_config_table']}
                 qa_5                    = '{$_POST['qa_5']}' ";
 sql_query($sql);
 
-if(function_exists('get_admin_captcha_by'))
+if (function_exists('get_admin_captcha_by')) {
     get_admin_captcha_by('remove');
+}
 
-if($error_msg){
+if ($error_msg) {
     alert($error_msg, './qa_config.php');
 } else {
     goto_url('./qa_config.php');

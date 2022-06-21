@@ -66,7 +66,7 @@ class ntlm_sasl_client_class
     public function NTLMResponse($challenge, $password)
     {
         $unicode = $this->ASCIIToUnicode($password);
-        $md4 = mhash(MHASH_MD4, $unicode);
+        $md4 = hash('md4', $unicode, true);
         $padded = $md4 . str_repeat(chr(0), 21 - strlen($md4));
         $iv_size = mcrypt_get_iv_size(MCRYPT_DES, MCRYPT_MODE_ECB);
         $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);

@@ -1,20 +1,22 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/json.lib.php');
 include(G5_SHOP_PATH.'/kakaopay/incKakaopayCommon.php');
 
 // 카카오페이를 사용하지 않을 경우
-if( ! $default['de_kakaopay_enckey'] ) die('카카오페이를 사용하지 않습니다.');
+if (!$default['de_kakaopay_enckey']) {
+    die('카카오페이를 사용하지 않습니다.');
+}
 
-if( ! ($default['de_kakaopay_mid'] && $default['de_kakaopay_key']) ){
-    die(json_encode(array('error'=>'올바른 방법으로 이용해 주십시오.')));
+if (!($default['de_kakaopay_mid'] && $default['de_kakaopay_key'])) {
+    die(json_encode(array('error' => '올바른 방법으로 이용해 주십시오.')));
 }
 
 $orderNumber = get_session('ss_order_id');
 $price = preg_replace('#[^0-9]#', '', $_POST['price']);
 
-if(strlen($price) < 1)
-    die(json_encode(array('error'=>'가격이 올바르지 않습니다.')));
+if (strlen($price) < 1) {
+    die(json_encode(array('error' => '가격이 올바르지 않습니다.')));
+}
 
 //
 //###################################

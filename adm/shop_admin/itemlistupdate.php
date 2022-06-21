@@ -35,8 +35,8 @@ if ($post_act_button == "선택수정") {
         $p_it_stock_qty = (isset($_POST['it_stock_qty']) && is_array($_POST['it_stock_qty'])) ? strip_tags($_POST['it_stock_qty'][$k]) : '';
         $p_it_skin = (isset($_POST['it_skin']) && is_array($_POST['it_skin'])) ? strip_tags($_POST['it_skin'][$k]) : '';
         $p_it_mobile_skin = (isset($_POST['it_mobile_skin']) && is_array($_POST['it_mobile_skin'])) ? strip_tags($_POST['it_mobile_skin'][$k]) : '';
-        $p_it_use = (isset($_POST['it_use']) && is_array($_POST['it_use'])) ? strip_tags($_POST['it_use'][$k]) : '';
-        $p_it_soldout = (isset($_POST['it_soldout']) && is_array($_POST['it_soldout'])) ? strip_tags($_POST['it_soldout'][$k]) : '';
+        $p_it_use       = isset($_POST['it_use'][$k])       ? clean_xss_tags($_POST['it_use'][$k], 1, 1)        : 0;
+        $p_it_soldout   = isset($_POST['it_soldout'][$k])   ? clean_xss_tags($_POST['it_soldout'][$k], 1, 1)    : 0;
         $p_it_order = (isset($_POST['it_order']) && is_array($_POST['it_order'])) ? strip_tags($_POST['it_order'][$k]) : '';
         $p_it_id = isset($_POST['it_id'][$k]) ? preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k]) : '';
 

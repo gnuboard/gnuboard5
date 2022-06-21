@@ -22,13 +22,10 @@ function cut_char($word, $cut) {
 }
 
 function CheckCommonType($dest, $rsvTime) {
-	//$dest=eregi_replace("[^0-9]","",$dest);
 	$dest=preg_replace("/[^0-9]/i","",$dest);
 	if (strlen($dest)<10 || strlen($dest)>11) return "휴대폰 번호가 틀렸습니다";
 	$CID=substr($dest,0,3);
-	//if ( eregi("[^0-9]",$CID) || ($CID!='010' && $CID!='011' && $CID!='016' && $CID!='017' && $CID!='018' && $CID!='019') ) return "휴대폰 앞자리 번호가 잘못되었습니다";
 	if ( preg_match("/[^0-9]/i",$CID) || ($CID!='010' && $CID!='011' && $CID!='016' && $CID!='017' && $CID!='018' && $CID!='019') ) return "휴대폰 앞자리 번호가 잘못되었습니다";
-	//$rsvTime=eregi_replace("[^0-9]","",$rsvTime);
 	$rsvTime=preg_replace("/[^0-9]/i","",$rsvTime);
 	if ($rsvTime) {
 		if (!checkdate(substr($rsvTime,4,2),substr($rsvTime,6,2),substr($rsvTime,0,4))) return "예약날짜가 잘못되었습니다";
@@ -37,16 +34,16 @@ function CheckCommonType($dest, $rsvTime) {
 }
 
 class SMS {
-	var $ID;
-	var $PWD;
-	var $SMS_Server;
-	var $port;
-	var $SMS_Port;
-	var $Data = array();
-	var $Result = array();
-    var $icode_key;
-    var $socket_port;
-    var $socket_host;
+	public $ID;
+    public $PWD;
+    public $SMS_Server;
+    public $port;
+    public $SMS_Port;
+    public $Data = array();
+    public $Result = array();
+    public $icode_key;
+    public $socket_port;
+    public $socket_host;
 
 	function SMS_con($sms_server,$sms_id,$sms_pw,$port) {
         global $config;
@@ -102,7 +99,7 @@ class SMS {
             if($enc === 'EUC-KR'){
                 $msg = iconv_utf8($msg);
             }
-            
+
             // 보낼 내용을 배열에 집어넣기
             $dest = spacing($dest,11);
             $callBack = spacing($callBack,11);

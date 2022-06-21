@@ -46,6 +46,7 @@
  *             Ability to define "_NANO_SHA2_UPPER" to yeild upper case hashes.
  * 2009-08-01: Added ability to attempt to use mhash() prior to running pure
  *             php code.
+ * 2022-05-19: PHP 8.1 부터 deprecate 되는 mhash() 삭제
  *
  * NOTE: Some sporadic versions of PHP do not handle integer overflows the
  *       same as the majority of builds.  If you get hash results of:
@@ -211,11 +212,7 @@ if (!class_exists('nanoSha2'))
 
             // check for php's internal sha256 function, ignore if ig_func==true
             if ($ig_func == false) {
-                if (version_compare(PHP_VERSION,'5.1.2','>=')) {
                     return hash("sha256", $str, false);
-                } else if (function_exists('mhash') && defined('MHASH_SHA256')) {
-                    return base64_encode(bin2hex(mhash(MHASH_SHA256, $str)));
-                }
             }
 
             /*

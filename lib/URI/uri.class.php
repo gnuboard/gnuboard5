@@ -17,11 +17,12 @@ class G5_URI {
     }
 
 	public function parseURL() {
-		 /* grab URL query string and script name */
+		/* grab URL query string and script name */
 		$uri = $_SERVER['REQUEST_URI'];
 		$script = $_SERVER['SCRIPT_NAME'];
 		/* get extension */
-		$ext = end( explode(".",$script) );
+		$script_names = explode(".",$script);
+		$ext = end($script_names);
 
 		/* if extension is found in URL, eliminate it */
 		if(strstr($uri,".")) {
@@ -83,14 +84,17 @@ class G5_URI {
 
         return $links;
    }
-
+   /** 
+   * convert normal URL query string to clean URL 
+   */
    public function makeClean($string_url) {
-		/* convert normal URL query string to clean URL */
-		$url=parse_url($string_url);
-		$strurl = basename($url['path'],".php");
-		$qstring = parse_str($url['query'],$vars);
-		while(list($k,$v) = each($vars)) $strurl .= "/".$v;
-		return $strurl;
+	$url = parse_url($string_url);
+        $strUrl = basename($url['path'],".php");
+        parse_str($url['query'],$queryString);
+        foreach($queryString as $value){
+            $strUrl .= "/$value";
+        }
+        return $strUrl;
    }
 
    public function url_clean($string_url, $add_qry='') {
@@ -107,7 +111,7 @@ class G5_URI {
         }
 
         $return_url = '';
-		$qstring = parse_str($url['query'], $vars);
+	    parse_str($url['query'], $vars);
 
         // 예) Array ( [scheme] => http [host] => sir.kr [path] => /bbs/board.php [query] => wr_id=1110870&bo_table=cm_free&cpage=1 [fragment] => c_1110946 )
         //while(list($k,$v) = each($vars)) $page_name .= "/".$v;
@@ -159,8 +163,10 @@ class G5_URI {
             $add_param .= $add_param ? '&amp;'.$add_qry : '?'.$add_qry;
         }
 
-        while(list($k,$v) = each($s)) $return_url .= '/'.$v;
+        foreach($s as $value){
+            $return_url .= "/$value";
+        }
 
-		return $host.$return_url.$add_param.$fragment;
+        return $host.$return_url.$add_param.$fragment;
    }
 }

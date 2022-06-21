@@ -62,6 +62,8 @@ if($cancelFlag == "true")
 
     }
 
+    if(! (isset($inipay) && method_exists($inipay, 'SetField'))) return;
+
     $TID = $tno;
     $inipay->SetField("type", "cancel"); // 고정
     if( $default['de_kakaopay_cancelpwd'] ){

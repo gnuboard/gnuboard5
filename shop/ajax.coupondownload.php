@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/json.lib.php');
 
 if(!$member['mb_id'])
     die(json_encode(array('error' => '회원 로그인 후 이용해 주십시오.')));

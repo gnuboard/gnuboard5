@@ -1,10 +1,10 @@
 <?php
 include_once('./_common.php');
 
-$txId = $_POST['txId'];
+$txId = isset($_POST['txId']) ? clean_xss_tags($_POST['txId'], 1, 1) : '';
 $mid  = substr($txId, 6, 10);
 
-if ($_POST["resultCode"] === "0000") { 
+if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
     $data = array(
         'mid' => $mid,        
@@ -13,9 +13,14 @@ if ($_POST["resultCode"] === "0000") {
 
     $post_data = json_encode($data);
 
+    $authRequestUrl = isset($_POST["authRequestUrl"]) ? is_inicis_url_return($_POST["authRequestUrl"]) : '';
+    if(!$authRequestUrl){
+        alert('잘못된 요청입니다.', G5_URL);
+    }
+
     // curl 통신 시작 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $_POST["authRequestUrl"]);
+    curl_setopt($ch, CURLOPT_URL, $authRequestUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
@@ -73,7 +78,7 @@ if ($_POST["resultCode"] === "0000") {
     }
 } else {   // resultCode===0000 아닐경우 아래 인증 실패를 출력함 
     // 인증실패
-    alert_close('코드 : '.$_POST['resultCode'].'  '.urldecode($_POST['resultMsg']));
+    alert_close('코드 : '.(isset($_POST['resultCode']) ? clean_xss_tags($_POST['resultCode'], 1, 1) : '').'  '.(isset($_POST['resultMsg']) ? clean_xss_tags(urldecode($_POST['resultMsg']), 1, 1) : ''));
     exit;
 }
 
@@ -81,7 +86,7 @@ $g5['title'] = 'KG이니시스 간편인증 결과';
 include_once(G5_PATH.'/head.sub.php'); 
 ?>
 <form name="mbFindForm" method="POST">
-<input type="hidden" name="mb_id" value="<?php echo $row["mb_id"]; ?>">    
+<input type="hidden" name="mb_id" value="<?php echo isset($row["mb_id"]) ? get_text($row["mb_id"]) : ''; ?>">
 </form>
 <script>
     jQuery(function($) {

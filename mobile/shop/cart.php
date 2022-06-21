@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$cart_action_url = G5_SHOP_URL.'/cartupdate.php';
+
 // 테마에 cart.php 있으면 include
 if(defined('G5_THEME_MSHOP_PATH')) {
     $theme_cart_file = G5_THEME_MSHOP_PATH.'/cart.php';

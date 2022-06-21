@@ -67,7 +67,7 @@ include_once(G5_PATH.'/head.sub.php');
         <input type="hidden" name="userBirth" value="<?php echo $userBirth ?>">
         <input type="hidden" name="userHash" value="<?php echo $userHash ?>">
         <input type="hidden" name="mbId" value="<?php echo $member['mb_id'] ?>">
-        <input type="hidden" name="directAgency" value="<?php echo $_GET['directAgency']; ?>">
+        <input type="hidden" name="directAgency" value="<?php echo isset($_GET['directAgency']) ? clean_xss_tags($_GET['directAgency'], 1, 1) : ''; ?>">
 
         <input type="hidden" name="successUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->
         <input type="hidden" name="failUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->

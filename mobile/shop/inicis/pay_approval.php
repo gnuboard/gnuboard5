@@ -8,7 +8,7 @@ set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
 $oid  = isset($_REQUEST['P_NOTI']) ? trim($_REQUEST['P_NOTI']) : '';
-$p_req_url = isset($_REQUEST['P_REQ_URL']) ? trim($_REQUEST['P_REQ_URL']) : '';
+$p_req_url = isset($_REQUEST['P_REQ_URL']) ? is_inicis_url_return(trim($_REQUEST['P_REQ_URL'])) : '';
 $p_status = isset($_REQUEST['P_STATUS']) ? trim($_REQUEST['P_STATUS']) : '';
 $p_tid = isset($_REQUEST['P_TID']) ? trim($_REQUEST['P_TID']) : '';
 $p_rmesg1 = isset($_REQUEST['P_RMESG1']) ? trim($_REQUEST['P_RMESG1']) : '';
@@ -168,7 +168,11 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
                 $_POST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
             }
         } else {
-            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+            if(in_array($key, array('od_memo'))){
+                $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value), 0, 0, 0, 0);
+            } else {
+                $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+            }
         }
     }
 

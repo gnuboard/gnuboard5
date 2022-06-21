@@ -20,7 +20,7 @@ if ($is_member && $count) {
         $ad_subject = isset($_POST['ad_subject'][$k]) ? clean_xss_tags($_POST['ad_subject'][$k]) : '';
 
         $sql = " update {$g5['g5_shop_order_address_table']}
-                    set ad_subject = '$ad_subject' ";
+                    set ad_subject = '".sql_real_escape_string($ad_subject)."' ";
 
         if(!empty($_POST['ad_default']) && $ad_id === $_POST['ad_default']) {
             sql_query(" update {$g5['g5_shop_order_address_table']} set ad_default = '0' where mb_id = '{$member['mb_id']}' ");

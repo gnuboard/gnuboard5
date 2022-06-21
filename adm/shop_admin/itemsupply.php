@@ -85,7 +85,7 @@ if($ps_run) {
         } // for
     } else {
         for($i=0; $i<$subject_count; $i++) {
-            $spl_subject = isset($_POST['subject'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['subject'][$i]))) : '';
+            $spl_subject = isset($_POST['subject'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags(trim(stripslashes($_POST['subject'][$i])))) : '';
             $spl_val = isset($_POST['supply'][$i]) ? explode(',', preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['supply'][$i])))) : '';
             $spl_count = count($spl_val);
 
@@ -103,7 +103,7 @@ if($ps_run) {
                         $sql = " select io_price, io_stock_qty, io_noti_qty, io_use
                                     from {$g5['g5_shop_item_option_table']}
                                     where it_id = '{$post_it_id}'
-                                      and io_id = '$spl_id'
+                                      and io_id = '".sql_real_escape_string($spl_id)."'
                                       and io_type = '1' ";
                         $row = sql_fetch($sql);
 
@@ -117,11 +117,11 @@ if($ps_run) {
     ?>
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="spl_id[]" value="<?php echo $spl_id; ?>">
-            <label for="spl_chk_<?php echo $i; ?>" class="sound_only"><?php echo $spl_subject.' '.$spl; ?></label>
+            <input type="hidden" name="spl_id[]" value="<?php echo get_text($spl_id); ?>">
+            <label for="spl_chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($spl_subject.' '.$spl); ?></label>
             <input type="checkbox" name="spl_chk[]" id="spl_chk_<?php echo $i; ?>" value="1">
         </td>
-        <td class="spl-subject-cell"><?php echo $spl_subject; ?></td>
+        <td class="spl-subject-cell"><?php echo get_text($spl_subject); ?></td>
         <td class="spl-cell"><?php echo $spl; ?></td>
         <td class="td_numsmall">
             <label for="spl_price_<?php echo $i; ?>" class="sound_only">상품금액</label>
