@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/json.lib.php');
 
 // LG유플러스 공통 설정
 require_once(G5_SHOP_PATH.'/settle_lg.inc.php');

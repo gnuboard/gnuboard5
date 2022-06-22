@@ -21,7 +21,7 @@ $g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo
 // wr_id 값이 있으면 글읽기
 if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
     // 글이 없을 경우 해당 게시판 목록으로 이동
-    if (!$write['wr_id']) {
+    if (!isset($write['wr_id'])) {
         $msg = '글이 존재하지 않습니다.\\n\\n글이 삭제되었거나 이동된 경우입니다.';
         alert($msg, get_pretty_url($bo_table));
     }

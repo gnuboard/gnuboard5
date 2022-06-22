@@ -904,7 +904,7 @@ class XPayClient
 	*/
 	function StringToHex($MertKey)
 	{
-		$szKey; 
+		$szKey = array();
 		$szMertKey = str_split($MertKey,2);
 		for ($i = 0 ; $i < 16 ; $i++)
 		{

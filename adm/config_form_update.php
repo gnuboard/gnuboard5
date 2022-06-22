@@ -1,13 +1,14 @@
 <?php
 $sub_menu = "100100";
-include_once('./_common.php');
+require_once './_common.php';
 
 check_demo();
 
 auth_check_menu($auth, $sub_menu, 'w');
 
-if ($is_admin != 'super')
+if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
+}
 
 $cf_title = isset($_POST['cf_title']) ? strip_tags(clean_xss_attributes($_POST['cf_title'])) : '';
 $cf_admin = isset($_POST['cf_admin']) ? clean_xss_tags($_POST['cf_admin'], 1, 1) : '';
@@ -15,156 +16,157 @@ $posts = array();
 
 $mb = get_member($cf_admin);
 
-if (! (isset($mb['mb_id']) && $mb['mb_id']))
+if (!(isset($mb['mb_id']) && $mb['mb_id'])) {
     alert('최고관리자 회원아이디가 존재하지 않습니다.');
+}
 
 check_admin_token();
 
 $cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
 
-$check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret','cf_cert_kg_cd','cf_cert_kg_mid');
+$check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret', 'cf_cert_kg_cd', 'cf_cert_kg_mid');
 
-foreach( $check_keys as $key ){
-    if ( isset($_POST[$key]) && $_POST[$key] ){
+foreach ($check_keys as $key) {
+    if (isset($_POST[$key]) && $_POST[$key]) {
         $posts[$key] = $_POST[$key] = preg_replace('/[^a-z0-9_\-\.]/i', '', $_POST[$key]);
     }
 }
 
 $posts['cf_icode_server_port'] = $_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
 
-if(isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']){
-
+if (isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']) {
     $pattern = explode("\n", trim($_POST['cf_intercept_ip']));
-    for ($i=0; $i<count($pattern); $i++) {
+    for ($i = 0; $i < count($pattern); $i++) {
         $pattern[$i] = trim($pattern[$i]);
-        if (empty($pattern[$i]))
+        if (empty($pattern[$i])) {
             continue;
+        }
 
         $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
         $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
         $pat = "/^{$pattern[$i]}$/";
 
-        if( preg_match($pat, $_SERVER['REMOTE_ADDR']) ){
-            alert("현재 접속 IP : ".$_SERVER['REMOTE_ADDR']." 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
+        if (preg_match($pat, $_SERVER['REMOTE_ADDR'])) {
+            alert("현재 접속 IP : " . $_SERVER['REMOTE_ADDR'] . " 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
         }
     }
 }
 
 $check_keys = array(
-'cf_use_email_certify' => 'int',
-'cf_use_homepage' => 'int',
-'cf_req_homepage' => 'int',
-'cf_use_tel' => 'int',
-'cf_req_tel' => 'int',
-'cf_use_hp' => 'int',
-'cf_req_hp' => 'int',
-'cf_use_addr' => 'int',
-'cf_req_addr' => 'int',
-'cf_use_signature' => 'int',
-'cf_req_signature' => 'int',
-'cf_use_profile' => 'int',
-'cf_req_profile' => 'int',
-'cf_register_level' => 'int',
-'cf_register_point' => 'int',
-'cf_icon_level' => 'int',
-'cf_use_recommend' => 'int',
-'cf_leave_day' => 'int',
-'cf_search_part' => 'int',
-'cf_email_use' => 'int',
-'cf_email_wr_super_admin' => 'int',
-'cf_email_wr_group_admin' => 'int',
-'cf_email_wr_board_admin' => 'int',
-'cf_email_wr_write' => 'int',
-'cf_email_wr_comment_all' => 'int',
-'cf_email_mb_super_admin' => 'int',
-'cf_email_mb_member' => 'int',
-'cf_email_po_super_admin' => 'int',
-'cf_prohibit_id' => 'text',
-'cf_prohibit_email' => 'text',
-'cf_new_del' => 'int',
-'cf_memo_del' => 'int',
-'cf_visit_del' => 'int',
-'cf_popular_del' => 'int',
-'cf_use_member_icon' => 'int',
-'cf_member_icon_size' => 'int',
-'cf_member_icon_width' => 'int',
-'cf_member_icon_height' => 'int',
-'cf_member_img_size' => 'int',
-'cf_member_img_width' => 'int',
-'cf_member_img_height' => 'int',
-'cf_login_minutes' => 'int',
-'cf_formmail_is_member' => 'int',
-'cf_page_rows' => 'int',
-'cf_mobile_page_rows' => 'int',
-'cf_social_login_use' => 'int',
-'cf_cert_req' => 'int',
-'cf_cert_use' => 'int',
-'cf_cert_find' => 'int',
-'cf_cert_ipin' => 'char',
-'cf_cert_hp' => 'char',
-'cf_cert_simple' => 'char',
-'cf_admin_email' => 'char',
-'cf_admin_email_name' => 'char',
-'cf_add_script' => 'text',
-'cf_use_point' => 'int',
-'cf_point_term' => 'int',
-'cf_use_copy_log' => 'int',
-'cf_login_point' => 'int',
-'cf_cut_name' => 'int',
-'cf_nick_modify' => 'int',
-'cf_new_skin' => 'char',
-'cf_new_rows' => 'int',
-'cf_search_skin' => 'char',
-'cf_connect_skin' => 'char',
-'cf_faq_skin' => 'char',
-'cf_read_point' => 'int',
-'cf_write_point' => 'int',
-'cf_comment_point' => 'int',
-'cf_download_point' => 'int',
-'cf_write_pages' => 'int',
-'cf_mobile_pages' => 'int',
-'cf_link_target' => 'char',
-'cf_delay_sec' => 'int',
-'cf_filter' => 'text',
-'cf_possible_ip' => 'text',
-'cf_analytics' => 'text',
-'cf_add_meta' => 'text',
-'cf_member_skin' => 'char',
-'cf_image_extension' => 'char',
-'cf_flash_extension' => 'char',
-'cf_movie_extension' => 'char',
-'cf_visit' => 'char',
-'cf_stipulation' => 'text',
-'cf_privacy' => 'text',
-'cf_open_modify' => 'int',
-'cf_memo_send_point' => 'int',
-'cf_mobile_new_skin' => 'char',
-'cf_mobile_search_skin' => 'char',
-'cf_mobile_connect_skin' => 'char',
-'cf_mobile_faq_skin' => 'char',
-'cf_mobile_member_skin' => 'char',
-'cf_captcha_mp3' => 'char',
-'cf_cert_limit' => 'int',
-'cf_sms_use' => 'char',
-'cf_sms_type' => 'char',
-'cf_icode_id' => 'char',
-'cf_icode_pw' => 'char',
-'cf_icode_server_ip' => 'char',
-'cf_captcha' => 'char',
-'cf_syndi_token' => '',
-'cf_syndi_except' => ''
+    'cf_use_email_certify' => 'int',
+    'cf_use_homepage' => 'int',
+    'cf_req_homepage' => 'int',
+    'cf_use_tel' => 'int',
+    'cf_req_tel' => 'int',
+    'cf_use_hp' => 'int',
+    'cf_req_hp' => 'int',
+    'cf_use_addr' => 'int',
+    'cf_req_addr' => 'int',
+    'cf_use_signature' => 'int',
+    'cf_req_signature' => 'int',
+    'cf_use_profile' => 'int',
+    'cf_req_profile' => 'int',
+    'cf_register_level' => 'int',
+    'cf_register_point' => 'int',
+    'cf_icon_level' => 'int',
+    'cf_use_recommend' => 'int',
+    'cf_leave_day' => 'int',
+    'cf_search_part' => 'int',
+    'cf_email_use' => 'int',
+    'cf_email_wr_super_admin' => 'int',
+    'cf_email_wr_group_admin' => 'int',
+    'cf_email_wr_board_admin' => 'int',
+    'cf_email_wr_write' => 'int',
+    'cf_email_wr_comment_all' => 'int',
+    'cf_email_mb_super_admin' => 'int',
+    'cf_email_mb_member' => 'int',
+    'cf_email_po_super_admin' => 'int',
+    'cf_prohibit_id' => 'text',
+    'cf_prohibit_email' => 'text',
+    'cf_new_del' => 'int',
+    'cf_memo_del' => 'int',
+    'cf_visit_del' => 'int',
+    'cf_popular_del' => 'int',
+    'cf_use_member_icon' => 'int',
+    'cf_member_icon_size' => 'int',
+    'cf_member_icon_width' => 'int',
+    'cf_member_icon_height' => 'int',
+    'cf_member_img_size' => 'int',
+    'cf_member_img_width' => 'int',
+    'cf_member_img_height' => 'int',
+    'cf_login_minutes' => 'int',
+    'cf_formmail_is_member' => 'int',
+    'cf_page_rows' => 'int',
+    'cf_mobile_page_rows' => 'int',
+    'cf_social_login_use' => 'int',
+    'cf_cert_req' => 'int',
+    'cf_cert_use' => 'int',
+    'cf_cert_find' => 'int',
+    'cf_cert_ipin' => 'char',
+    'cf_cert_hp' => 'char',
+    'cf_cert_simple' => 'char',
+    'cf_admin_email' => 'char',
+    'cf_admin_email_name' => 'char',
+    'cf_add_script' => 'text',
+    'cf_use_point' => 'int',
+    'cf_point_term' => 'int',
+    'cf_use_copy_log' => 'int',
+    'cf_login_point' => 'int',
+    'cf_cut_name' => 'int',
+    'cf_nick_modify' => 'int',
+    'cf_new_skin' => 'char',
+    'cf_new_rows' => 'int',
+    'cf_search_skin' => 'char',
+    'cf_connect_skin' => 'char',
+    'cf_faq_skin' => 'char',
+    'cf_read_point' => 'int',
+    'cf_write_point' => 'int',
+    'cf_comment_point' => 'int',
+    'cf_download_point' => 'int',
+    'cf_write_pages' => 'int',
+    'cf_mobile_pages' => 'int',
+    'cf_link_target' => 'char',
+    'cf_delay_sec' => 'int',
+    'cf_filter' => 'text',
+    'cf_possible_ip' => 'text',
+    'cf_analytics' => 'text',
+    'cf_add_meta' => 'text',
+    'cf_member_skin' => 'char',
+    'cf_image_extension' => 'char',
+    'cf_flash_extension' => 'char',
+    'cf_movie_extension' => 'char',
+    'cf_visit' => 'char',
+    'cf_stipulation' => 'text',
+    'cf_privacy' => 'text',
+    'cf_open_modify' => 'int',
+    'cf_memo_send_point' => 'int',
+    'cf_mobile_new_skin' => 'char',
+    'cf_mobile_search_skin' => 'char',
+    'cf_mobile_connect_skin' => 'char',
+    'cf_mobile_faq_skin' => 'char',
+    'cf_mobile_member_skin' => 'char',
+    'cf_captcha_mp3' => 'char',
+    'cf_cert_limit' => 'int',
+    'cf_sms_use' => 'char',
+    'cf_sms_type' => 'char',
+    'cf_icode_id' => 'char',
+    'cf_icode_pw' => 'char',
+    'cf_icode_server_ip' => 'char',
+    'cf_captcha' => 'char',
+    'cf_syndi_token' => '',
+    'cf_syndi_except' => ''
 );
 
-for($i=1;$i<=10;$i++){
-    $check_keys['cf_'.$i.'_subj'] = isset($_POST['cf_'.$i.'_subj']) ? $_POST['cf_'.$i.'_subj'] : '';
-    $check_keys['cf_'.$i] = isset($_POST['cf_'.$i]) ? $_POST['cf_'.$i] : '';
+for ($i = 1; $i <= 10; $i++) {
+    $check_keys['cf_' . $i . '_subj'] = isset($_POST['cf_' . $i . '_subj']) ? $_POST['cf_' . $i . '_subj'] : '';
+    $check_keys['cf_' . $i] = isset($_POST['cf_' . $i]) ? $_POST['cf_' . $i] : '';
 }
 
-foreach( $check_keys as $k => $v ){
-    if( $v === 'int' ){
+foreach ($check_keys as $k => $v) {
+    if ($v === 'int') {
         $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? (int) $_POST[$k] : 0;
     } else {
-        if(in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy'))){
+        if (in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy'))) {
             $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
         } else {
             $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? strip_tags(clean_xss_attributes($_POST[$k])) : '';
@@ -173,10 +175,11 @@ foreach( $check_keys as $k => $v ){
 }
 
 // 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
-if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] && !$_POST['cf_cert_simple'])
+if ($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] && !$_POST['cf_cert_simple']) {
     alert('본인확인을 위해 아이핀, 휴대폰 본인확인, KG이니시스 간편인증 서비스 중 하나 이상 선택해 주십시오.');
+}
 
-if(!$_POST['cf_cert_use']) {
+if (!$_POST['cf_cert_use']) {
     $posts[$key] = $_POST['cf_cert_ipin'] = '';
     $posts[$key] = $_POST['cf_cert_hp'] = '';
     $posts[$key] = $_POST['cf_cert_simple'] = '';
@@ -209,8 +212,8 @@ $sql = " update {$g5['config_table']}
                 cf_link_target = '{$_POST['cf_link_target']}',
                 cf_delay_sec = '{$_POST['cf_delay_sec']}',
                 cf_filter = '{$_POST['cf_filter']}',
-                cf_possible_ip = '".trim($_POST['cf_possible_ip'])."',
-                cf_intercept_ip = '".trim($_POST['cf_intercept_ip'])."',
+                cf_possible_ip = '" . trim($_POST['cf_possible_ip']) . "',
+                cf_intercept_ip = '" . trim($_POST['cf_intercept_ip']) . "',
                 cf_analytics = '{$_POST['cf_analytics']}',
                 cf_add_meta = '{$_POST['cf_add_meta']}',
                 cf_syndi_token = '{$_POST['cf_syndi_token']}',
@@ -282,7 +285,7 @@ $sql = " update {$g5['config_table']}
                 cf_cert_hp = '{$_POST['cf_cert_hp']}',
                 cf_cert_simple = '{$_POST['cf_cert_simple']}',
                 cf_cert_kg_cd = '{$_POST['cf_cert_kg_cd']}',
-                cf_cert_kg_mid = '".trim($_POST['cf_cert_kg_mid'])."',
+                cf_cert_kg_mid = '" . trim($_POST['cf_cert_kg_mid']) . "',
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
                 cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
                 cf_cert_limit = '{$_POST['cf_cert_limit']}',
@@ -337,7 +340,7 @@ sql_query($sql);
 
 //sql_query(" OPTIMIZE TABLE `$g5[config_table]` ");
 
-if( isset($_POST['cf_bbs_rewrite']) ){
+if (isset($_POST['cf_bbs_rewrite'])) {
     g5_delete_all_cache();
 }
 

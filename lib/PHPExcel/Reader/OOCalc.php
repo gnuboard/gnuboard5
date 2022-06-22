@@ -535,7 +535,7 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
                                             array_push($dataArray, $pData);
                                         }
                                     }
-                                    $allCellDataText = implode($dataArray, "\n");
+                                    $allCellDataText = implode("\n", $dataArray);
 
 //                                    echo 'Value Type is '.$cellDataOfficeAttributes['value-type'].'<br />';
                                     switch ($cellDataOfficeAttributes['value-type']) {

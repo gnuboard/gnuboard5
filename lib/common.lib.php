@@ -1511,7 +1511,7 @@ function hsc($str)
 // &nbsp; &amp; &middot; 등을 정상으로 출력
 function html_symbol($str)
 {
-    return preg_replace("/\&([a-z0-9]{1,20}|\#[0-9]{0,3});/i", "&#038;\\1;", $str);
+    return $str ? preg_replace("/\&([a-z0-9]{1,20}|\#[0-9]{0,3});/i", "&#038;\\1;", $str) : "";
 }
 
 
@@ -1527,6 +1527,7 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
     global $g5;
 
     if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
+        mysqli_report(MYSQLI_REPORT_OFF);
         $link = @mysqli_connect($host, $user, $pass, $db) or die('MySQL Host, User, Password, DB 정보에 오류가 있습니다.');
 
         // 연결 오류 발생 시 스크립트 종료
@@ -1601,7 +1602,11 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         if ($error) {
             $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
         } else {
-            $result = @mysqli_query($link, $sql);
+            try {
+                $result = @mysqli_query($link, $sql);
+            } catch (Exception $e) {
+                $result = null;
+            }
         }
     } else {
         if ($error) {
@@ -1649,7 +1654,11 @@ function sql_fetch_array($result)
     if( ! $result) return array();
 
     if(function_exists('mysqli_fetch_assoc') && G5_MYSQLI_USE)
-        $row = @mysqli_fetch_assoc($result);
+        try {
+            $row = @mysqli_fetch_assoc($result);
+        } catch (Exception $e) {
+            $row = null;
+        }
     else
         $row = @mysql_fetch_assoc($result);
 
@@ -2475,22 +2484,6 @@ function get_skin_javascript($skin_path, $dir='')
     return $str;
 }
 
-// file_put_contents 는 PHP5 전용 함수이므로 PHP4 하위버전에서 사용하기 위함
-// http://www.phpied.com/file_get_contents-for-php4/
-if (!function_exists('file_put_contents')) {
-    function file_put_contents($filename, $data) {
-        $f = @fopen($filename, 'w');
-        if (!$f) {
-            return false;
-        } else {
-            $bytes = fwrite($f, $data);
-            fclose($f);
-            return $bytes;
-        }
-    }
-}
-
-
 // HTML 마지막 처리
 function html_end()
 {
@@ -3074,10 +3067,12 @@ function get_search_string($stx)
 }
 
 // XSS 관련 태그 제거
-function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0)
+function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0, $is_trim_both=1)
 {
-    // tab('\t'), formfeed('\f'), vertical tab('\v'), newline('\n'), carriage return('\r') 를 제거한다.
-    $str = preg_replace("#[\t\f\v\n\r]#", '', $str);
+    if( $is_trim_both ) {
+        // tab('\t'), formfeed('\f'), vertical tab('\v'), newline('\n'), carriage return('\r') 를 제거한다.
+        $str = preg_replace("#[\t\f\v\n\r]#", '', $str);
+    }
 
     if( $is_remove_tags ){
         $str = strip_tags($str);
@@ -3340,12 +3335,18 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
+    if(run_replace('check_url_host_before', '', $url, $msg, $return_url, $is_redirect) === 'is_checked'){
+        return;
+    }
+
     // KVE-2021-1277 Open Redirect 취약점 해결
     if (preg_match('#\\\0#', $url)) {
         alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
     }
 
-    $url = urldecode($url);
+    while ( ( $replace_url = preg_replace(array('/\/{2,}/', '/\\@/'), array('//', ''), urldecode($url)) ) != $url ) {
+        $url = $replace_url;
+    }
     $p = @parse_url(trim($url));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
@@ -3390,7 +3391,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
-        if ( ($p['host'] != $host) || $is_host_check ) {
+        if (run_replace('check_same_url_host', (($p['host'] != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
             echo '<script>'.PHP_EOL;
             echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
             echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;
@@ -3924,6 +3925,16 @@ function is_include_path_check($path='', $is_input='')
     return true;
 }
 
+function is_inicis_url_return($url){
+    $url_data = parse_url($url);
+
+    // KG 이니시스 url이 맞는지 체크하여 맞으면 url을 리턴하고 틀리면 '' 빈값을 리턴합니다.
+    if (isset($url_data['host']) && preg_match('#\.inicis\.com$#i', $url_data['host'])) {
+        return $url;
+    }
+    return '';
+}
+
 function check_auth_session_token($str=''){
     if (get_session('ss_mb_token_key') === get_token_encryption_key($str)) {
         return true;
@@ -3948,10 +3959,7 @@ function get_random_token_string($length=6)
     }
 
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    $characters_length = strlen($characters);
-    $output = '';
-    for ($i = 0; $i < $length; $i++)
-        $output .= $characters[rand(0, $characters_length - 1)];
+    $output = substr(str_shuffle($characters), 0, $length);     // jihan001 님 제안코드로 수정
 
     return bin2hex($output);
 }

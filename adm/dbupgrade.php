@@ -197,7 +197,7 @@ if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
 
     $result = sql_query("describe `{$g5['g5_shop_post_log_table']}`");
     while ($row = sql_fetch_array($result)){
-        if( $row['Field'] === 'ol_msg' && $row['Type'] === 'varchar(255)' ){
+        if( isset($row['Field']) && $row['Field'] === 'ol_msg' && $row['Type'] === 'varchar(255)' ){
             sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` MODIFY ol_msg TEXT NOT NULL;", false);
             sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` DROP PRIMARY KEY;", false);
             sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` ADD `log_id` int(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (`log_id`);", false);

@@ -13,7 +13,7 @@ set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
 $oid  = isset($_REQUEST['P_NOTI']) ? trim($_REQUEST['P_NOTI']) : '';
-$p_req_url = isset($_REQUEST['P_REQ_URL']) ? trim($_REQUEST['P_REQ_URL']) : '';
+$p_req_url = isset($_REQUEST['P_REQ_URL']) ? is_inicis_url_return(trim($_REQUEST['P_REQ_URL'])) : '';
 
 if( ! $p_req_url || !preg_match('/^https\:\/\//i', $p_req_url)){
     alert("잘못된 요청 URL 입니다.");
@@ -91,7 +91,7 @@ if($_REQUEST['P_STATUS'] != '00') {
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_PORT, 443);
-    curl_setopt($ch, CURLOPT_URL, $_REQUEST['P_REQ_URL']);
+    curl_setopt($ch, CURLOPT_URL, $p_req_url);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

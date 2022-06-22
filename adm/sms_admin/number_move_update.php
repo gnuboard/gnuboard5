@@ -1,4 +1,5 @@
 <?php
+$sub_menu = "900800";
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
@@ -20,7 +21,7 @@ for ($kk=0;$row = sql_fetch_array($result);$kk++)
     $bk_no = $row['bk_no'];
     for ($i=0; $i<count($post_chk_bg_no); $i++)
     {
-        $bg_no = $post_chk_bg_no[$i];
+        $bg_no = (int) $post_chk_bg_no[$i];
         if( !$bg_no ) continue;
 
         $sql = " insert into {$g5['sms5_book_table']}

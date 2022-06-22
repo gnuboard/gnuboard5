@@ -346,7 +346,7 @@ class PHPExcel_Calculation_Statistical
         $y = $x;
         if ($y > 0.0 && $y <= LOG_GAMMA_X_MAX_VALUE) {
             if ($y <= EPS) {
-                $res = -log(y);
+                $res = -log($y);
             } elseif ($y <= 1.5) {
                 // ---------------------
                 //    EPS .LT. X .LE. 1.5
@@ -677,7 +677,7 @@ class PHPExcel_Calculation_Statistical
         $q = $p - 0.5;
 
         //    computation for p close to 0.5
-        if (abs($q) <= split1) {
+        if (abs($q) <= $split1) {
             $R = $const1 - $q * $q;
             $z = $q * ((((((($a7 * $R + $a6) * $R + $a5) * $R + $a4) * $R + $a3) * $R + $a2) * $R + $a1) * $R + $a0) /
                       ((((((($b7 * $R + $b6) * $R + $b5) * $R + $b4) * $R + $b3) * $R + $b2) * $R + $b1) * $R + 1);

@@ -1067,6 +1067,17 @@ a.btn_frmline.is-long-text{height:auto;width:160px}
 
 #sod_fin_dvr .dvr_link {color:#ff3061;text-decoration:underline}
 
+#sod_fin_tot {margin:10px 0}
+#sod_fin_tot h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sod_fin_tot ul {margin:0;padding:0;list-style:none}
+#sod_fin_tot li {padding:10px;background:#38b2b9;border-bottom:1px solid #5ec2c7;color:#fff;zoom:1}
+#sod_fin_tot li:after {display:block;visibility:hidden;clear:both;content:""}
+#sod_fin_tot #alrdy {border-bottom:0 !important}
+#sod_fin_tot #alrdy .right{margin-top:10px;text-align:right;color:#f3f3f3;font-size:0.9em}
+#sod_fin_tot #alrdy .right p{position:relative}
+#sod_fin_tot #alrdy .right .title{position:absolute;left:0;padding-left:8px}
+#sod_fin_tot strong {float:right}
+
 #sod_fin_cancel {text-align:center}
 #sod_fin_cancel .sod_fin_c_btn {height:50px;border:1px solid #bababa;border-radius:3px;font-weight:bold;width:100%;background:none;color:#5e6b6f}
 #sod_fin_cancel .sod_fin_c_btn:hover {background:#fff}

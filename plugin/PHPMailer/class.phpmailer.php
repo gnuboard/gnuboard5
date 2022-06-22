@@ -3818,7 +3818,9 @@ class PHPMailer
         if (version_compare(PHP_VERSION, '5.3.0') >= 0 and
             in_array('sha256WithRSAEncryption', openssl_get_md_methods(true))) {
             if (openssl_sign($signHeader, $signature, $privKey, 'sha256WithRSAEncryption')) {
-                openssl_pkey_free($privKey);
+                if (PHP_MAJOR_VERSION < 8) {
+                    openssl_pkey_free($privKey);
+                }
                 return base64_encode($signature);
             }
         } else {
@@ -3831,11 +3833,15 @@ class PHPMailer
             $eb = pack('H*', '0001' . str_repeat('FF', $pslen) . '00' . $t);
 
             if (openssl_private_encrypt($eb, $signature, $privKey, OPENSSL_NO_PADDING)) {
-                openssl_pkey_free($privKey);
+                if (PHP_MAJOR_VERSION < 8) {
+                    openssl_pkey_free($privKey);
+                }
                 return base64_encode($signature);
             }
         }
-        openssl_pkey_free($privKey);
+        if (PHP_MAJOR_VERSION < 8) {
+            openssl_pkey_free($privKey);
+        }
         return '';
     }
 

@@ -1,19 +1,21 @@
 <?php
 $sub_menu = '300700';
-include_once('./_common.php');
+require_once './_common.php';
 
-if ($w == "u" || $w == "d")
+if ($w == "u" || $w == "d") {
     check_demo();
+}
 
-if ($w == 'd')
+if ($w == 'd') {
     auth_check_menu($auth, $sub_menu, "d");
-else
+} else {
     auth_check_menu($auth, $sub_menu, "w");
+}
 
 check_admin_token();
 
-@mkdir(G5_DATA_PATH."/faq", G5_DIR_PERMISSION);
-@chmod(G5_DATA_PATH."/faq", G5_DIR_PERMISSION);
+@mkdir(G5_DATA_PATH . "/faq", G5_DIR_PERMISSION);
+@chmod(G5_DATA_PATH . "/faq", G5_DIR_PERMISSION);
 
 $fm_id = isset($_REQUEST['fm_id']) ? (int) $_REQUEST['fm_id'] : 0;
 $fm_himg_del = isset($_POST['fm_himg_del']) ? (int) $_POST['fm_himg_del'] : 0;
@@ -25,8 +27,12 @@ $fm_mobile_head_html = isset($_POST['fm_mobile_head_html']) ? $_POST['fm_mobile_
 $fm_mobile_tail_html = isset($_POST['fm_mobile_tail_html']) ? $_POST['fm_mobile_tail_html'] : '';
 $fm_order = isset($_POST['fm_order']) ? (int) $_POST['fm_order'] : 0;
 
-if ($fm_himg_del)  @unlink(G5_DATA_PATH."/faq/{$fm_id}_h");
-if ($fm_timg_del)  @unlink(G5_DATA_PATH."/faq/{$fm_id}_t");
+if ($fm_himg_del) {
+    @unlink(G5_DATA_PATH . "/faq/{$fm_id}_h");
+}
+if ($fm_timg_del) {
+    @unlink(G5_DATA_PATH . "/faq/{$fm_id}_t");
+}
 
 $sql_common = " set fm_subject = '$fm_subject',
                     fm_head_html = '$fm_head_html',
@@ -35,8 +41,7 @@ $sql_common = " set fm_subject = '$fm_subject',
                     fm_mobile_tail_html = '$fm_mobile_tail_html',
                     fm_order = '$fm_order' ";
 
-if ($w == "")
-{
+if ($w == "") {
     $sql = " alter table {$g5['faq_master_table']} auto_increment=1 ";
     sql_query($sql);
 
@@ -44,40 +49,35 @@ if ($w == "")
     sql_query($sql);
 
     $fm_id = sql_insert_id();
-}
-else if ($w == "u")
-{
+} elseif ($w == "u") {
     $sql = " update {$g5['faq_master_table']} $sql_common where fm_id = '$fm_id' ";
     sql_query($sql);
-}
-else if ($w == "d")
-{
-    @unlink(G5_DATA_PATH."/faq/{$fm_id}_h");
-    @unlink(G5_DATA_PATH."/faq/{$fm_id}_t");
+} elseif ($w == "d") {
+    @unlink(G5_DATA_PATH . "/faq/{$fm_id}_h");
+    @unlink(G5_DATA_PATH . "/faq/{$fm_id}_t");
 
     // FAQ삭제
-	$sql = " delete from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
+    $sql = " delete from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
     sql_query($sql);
 
     // FAQ상세삭제
-	$sql = " delete from {$g5['faq_table']} where fm_id = '$fm_id' ";
+    $sql = " delete from {$g5['faq_table']} where fm_id = '$fm_id' ";
     sql_query($sql);
 }
 
-if ($w == "" || $w == "u")
-{
-    if ($_FILES['fm_himg']['name']){
-        $dest_path = G5_DATA_PATH."/faq/".$fm_id."_h";
+if ($w == "" || $w == "u") {
+    if ($_FILES['fm_himg']['name']) {
+        $dest_path = G5_DATA_PATH . "/faq/" . $fm_id . "_h";
         @move_uploaded_file($_FILES['fm_himg']['tmp_name'], $dest_path);
         @chmod($dest_path, G5_FILE_PERMISSION);
     }
-    if ($_FILES['fm_timg']['name']){
-        $dest_path = G5_DATA_PATH."/faq/".$fm_id."_t";
+    if ($_FILES['fm_timg']['name']) {
+        $dest_path = G5_DATA_PATH . "/faq/" . $fm_id . "_t";
         @move_uploaded_file($_FILES['fm_timg']['tmp_name'], $dest_path);
         @chmod($dest_path, G5_FILE_PERMISSION);
     }
 
     goto_url("./faqmasterform.php?w=u&amp;fm_id=$fm_id");
-}
-else
+} else {
     goto_url("./faqmasterlist.php");
+}

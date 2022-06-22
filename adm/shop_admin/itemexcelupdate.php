@@ -10,7 +10,7 @@ auth_check_menu($auth, $sub_menu, "w");
 
 function only_number($n)
 {
-    return preg_replace('/[^0-9]/', '', $n);
+    return preg_replace('/[^0-9]/', '', (string)$n);
 }
 
 $is_upload_file = (isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) ? 1 : 0;
@@ -50,44 +50,44 @@ if($is_upload_file) {
         $it_id              = (string) $rowData[0][$j++];
         $it_id              = preg_match('/[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)/', $it_id) ? addslashes(sprintf("%.0f", $it_id)) : preg_replace('/[^0-9a-z_\-]/i', '', $it_id);
         $ca_id              = addslashes($rowData[0][$j++]);
-        $ca_id2             = addslashes($rowData[0][$j++]);
-        $ca_id3             = addslashes($rowData[0][$j++]);
+        $ca_id2             = addslashes((string)$rowData[0][$j++]);
+        $ca_id3             = addslashes((string)$rowData[0][$j++]);
         $it_name            = addslashes($rowData[0][$j++]);
-        $it_maker           = addslashes($rowData[0][$j++]);
-        $it_origin          = addslashes($rowData[0][$j++]);
-        $it_brand           = addslashes($rowData[0][$j++]);
-        $it_model           = addslashes($rowData[0][$j++]);
-        $it_type1           = addslashes($rowData[0][$j++]);
-        $it_type2           = addslashes($rowData[0][$j++]);
-        $it_type3           = addslashes($rowData[0][$j++]);
-        $it_type4           = addslashes($rowData[0][$j++]);
-        $it_type5           = addslashes($rowData[0][$j++]);
-        $it_basic           = addslashes($rowData[0][$j++]);
-        $it_explan          = addslashes($rowData[0][$j++]);
-        $it_mobile_explan   = addslashes($rowData[0][$j++]);
+        $it_maker           = addslashes((string)$rowData[0][$j++]);
+        $it_origin          = addslashes((string)$rowData[0][$j++]);
+        $it_brand           = addslashes((string)$rowData[0][$j++]);
+        $it_model           = addslashes((string)$rowData[0][$j++]);
+        $it_type1           = addslashes((string)$rowData[0][$j++]);
+        $it_type2           = addslashes((string)$rowData[0][$j++]);
+        $it_type3           = addslashes((string)$rowData[0][$j++]);
+        $it_type4           = addslashes((string)$rowData[0][$j++]);
+        $it_type5           = addslashes((string)$rowData[0][$j++]);
+        $it_basic           = addslashes((string)$rowData[0][$j++]);
+        $it_explan          = addslashes((string)$rowData[0][$j++]);
+        $it_mobile_explan   = addslashes((string)$rowData[0][$j++]);
         $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
         $it_price           = addslashes(only_number($rowData[0][$j++]));
-        $it_tel_inq         = addslashes($rowData[0][$j++]);
+        $it_tel_inq         = addslashes((string)$rowData[0][$j++]);
         $it_point           = addslashes(only_number($rowData[0][$j++]));
         $it_point_type      = addslashes(only_number($rowData[0][$j++]));
-        $it_sell_email      = addslashes($rowData[0][$j++]);
-        $it_use             = addslashes($rowData[0][$j++]);
+        $it_sell_email      = addslashes((string)$rowData[0][$j++]);
+        $it_use             = addslashes((string)$rowData[0][$j++]);
         $it_stock_qty       = addslashes(only_number($rowData[0][$j++]));
         $it_noti_qty        = addslashes(only_number($rowData[0][$j++]));
         $it_buy_min_qty     = addslashes(only_number($rowData[0][$j++]));
         $it_buy_max_qty     = addslashes(only_number($rowData[0][$j++]));
         $it_notax           = addslashes(only_number($rowData[0][$j++]));
         $it_order           = addslashes(only_number($rowData[0][$j++]));
-        $it_img1            = addslashes($rowData[0][$j++]);
-        $it_img2            = addslashes($rowData[0][$j++]);
-        $it_img3            = addslashes($rowData[0][$j++]);
-        $it_img4            = addslashes($rowData[0][$j++]);
-        $it_img5            = addslashes($rowData[0][$j++]);
-        $it_img6            = addslashes($rowData[0][$j++]);
-        $it_img7            = addslashes($rowData[0][$j++]);
-        $it_img8            = addslashes($rowData[0][$j++]);
-        $it_img9            = addslashes($rowData[0][$j++]);
-        $it_img10           = addslashes($rowData[0][$j++]);
+        $it_img1            = addslashes((string)$rowData[0][$j++]);
+        $it_img2            = addslashes((string)$rowData[0][$j++]);
+        $it_img3            = addslashes((string)$rowData[0][$j++]);
+        $it_img4            = addslashes((string)$rowData[0][$j++]);
+        $it_img5            = addslashes((string)$rowData[0][$j++]);
+        $it_img6            = addslashes((string)$rowData[0][$j++]);
+        $it_img7            = addslashes((string)$rowData[0][$j++]);
+        $it_img8            = addslashes((string)$rowData[0][$j++]);
+        $it_img9            = addslashes((string)$rowData[0][$j++]);
+        $it_img10           = addslashes((string)$rowData[0][$j++]);
         $it_explan2         = strip_tags(trim($it_explan));
 
         if(!$it_id || !$ca_id || !$it_name) {

@@ -38,7 +38,11 @@ foreach($data as $key=>$value) {
             $_POST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
         }
     } else {
-        $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+        if(in_array($key, array('od_memo'))){
+            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value), 0, 0, 0, 0);
+        } else {
+            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+        }
     }
 }
 

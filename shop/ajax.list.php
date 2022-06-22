@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/json.lib.php');
 
 define('G5_IS_SHOP_AJAX_LIST', true);
 

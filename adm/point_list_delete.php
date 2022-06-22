@@ -1,6 +1,6 @@
 <?php
 $sub_menu = '200200';
-include_once('./_common.php');
+require_once './_common.php';
 
 check_demo();
 
@@ -9,11 +9,11 @@ auth_check_menu($auth, $sub_menu, 'd');
 check_admin_token();
 
 $count = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
-if(!$count)
-    alert($_POST['act_button'].' 하실 항목을 하나 이상 체크하세요.');
+if (!$count) {
+    alert($_POST['act_button'] . ' 하실 항목을 하나 이상 체크하세요.');
+}
 
-for ($i=0; $i<$count; $i++)
-{
+for ($i = 0; $i < $count; $i++) {
     // 실제 번호를 넘김
     $k = $_POST['chk'][$i];
     $po_id = (int) $_POST['po_id'][$k];
@@ -23,19 +23,21 @@ for ($i=0; $i<$count; $i++)
     $sql = " select * from {$g5['point_table']} where po_id = '{$po_id}' ";
     $row = sql_fetch($sql);
 
-    if(!$row['po_id'])
+    if (!$row['po_id']) {
         continue;
+    }
 
-    if($row['po_point'] < 0) {
+    if ($row['po_point'] < 0) {
         $mb_id = $row['mb_id'];
         $po_point = abs($row['po_point']);
 
-        if($row['po_rel_table'] == '@expire')
+        if ($row['po_rel_table'] == '@expire') {
             delete_expire_point($mb_id, $po_point);
-        else
+        } else {
             delete_use_point($mb_id, $po_point);
+        }
     } else {
-        if($row['po_use_point'] > 0) {
+        if ($row['po_use_point'] > 0) {
             insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
         }
     }
@@ -53,8 +55,8 @@ for ($i=0; $i<$count; $i++)
 
     // 포인트 UPDATE
     $sum_point = get_point_sum($_POST['mb_id'][$k]);
-    $sql= " update {$g5['member_table']} set mb_point = '$sum_point' where mb_id = '{$str_mb_id}' ";
+    $sql = " update {$g5['member_table']} set mb_point = '$sum_point' where mb_id = '{$str_mb_id}' ";
     sql_query($sql);
 }
 
-goto_url('./point_list.php?'.$qstr);
+goto_url('./point_list.php?' . $qstr);
