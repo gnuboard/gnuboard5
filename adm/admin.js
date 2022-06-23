@@ -83,11 +83,13 @@ function delete_confirm2(msg)
 
 function get_ajax_token()
 {
-    var token = "";
+    var token = "",
+        admin_csrf_token_key = (typeof g5_admin_csrf_token_key !== "undefined") ? g5_admin_csrf_token_key : "";
 
     $.ajax({
         type: "POST",
         url: g5_admin_url+"/ajax.token.php",
+        data : {admin_csrf_token_key:admin_csrf_token_key},
         cache: false,
         async: false,
         dataType: "json",

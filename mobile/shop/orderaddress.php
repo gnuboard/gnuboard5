@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
+
 // 테마에 orderaddress.php 있으면 include
 if(defined('G5_THEME_MSHOP_PATH')) {
     $theme_orderaddress_file = G5_THEME_MSHOP_PATH.'/orderaddress.php';

@@ -87,6 +87,7 @@ if (!empty($_COOKIE['g5_admin_btn_gnb'])) {
 ?>
 
 <script>
+    var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key')) ? admin_csrf_token_key() : ''; ?>";
     var tempX = 0;
     var tempY = 0;
 

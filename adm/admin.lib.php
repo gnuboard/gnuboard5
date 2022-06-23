@@ -481,6 +481,18 @@ function check_admin_token()
     return true;
 }
 
+function admin_csrf_token_key($is_must=0){
+    global $member;
+
+    $key = '';
+
+    if($is_must || !((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'))){
+        $key = md5((isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '').(defined('G5_TOKEN_ENCRYPTION_KEY') ? G5_TOKEN_ENCRYPTION_KEY : '').$member['mb_id'].$_SERVER['DOCUMENT_ROOT']);
+    }
+
+    return run_replace('admin_csrf_token_key', $key, $is_must);
+}
+
 // 관리자 페이지 referer 체크
 function admin_referer_check($return = false)
 {

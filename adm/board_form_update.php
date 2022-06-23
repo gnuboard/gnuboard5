@@ -161,6 +161,10 @@ $bo_comment_min = isset($_POST['bo_comment_min']) ? (int) $_POST['bo_comment_min
 $bo_comment_max = isset($_POST['bo_comment_max']) ? (int) $_POST['bo_comment_max'] : 0;
 $bo_sort_field = isset($_POST['bo_sort_field']) ? clean_xss_tags($_POST['bo_sort_field'], 1, 1) : '';
 
+if (strpbrk($bo_skin.$bo_mobile_skin, "?%*:|\"<>") !== false) {
+    alert('스킨 디렉토리명 오류!');
+}
+
 $etcs = array();
 
 for ($i = 1; $i <= 10; $i++) {

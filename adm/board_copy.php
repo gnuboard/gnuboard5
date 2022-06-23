@@ -7,12 +7,13 @@ auth_check_menu($auth, $sub_menu, 'w');
 $g5['title'] = '게시판 복사';
 require_once G5_PATH . '/head.sub.php';
 
-$bo_table = $_REQUEST['bo_table'];
 if (empty($bo_table)) {
     alert_close("정상적인 방법으로 이용해주세요.");
 }
 ?>
-
+<script>
+    var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key')) ? admin_csrf_token_key() : ''; ?>";
+</script>
 <script src="<?php echo G5_ADMIN_URL ?>/admin.js?ver=<?php echo G5_JS_VER; ?>"></script>
 
 <div class="new_win">
