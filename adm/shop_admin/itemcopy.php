@@ -32,6 +32,8 @@ include_once(G5_PATH.'/head.sub.php');
 
 <script>
 // <![CDATA[
+var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key')) ? admin_csrf_token_key() : ''; ?>";
+
 function _copy(link)
 {
     var new_it_id = document.getElementById('new_it_id').value;
