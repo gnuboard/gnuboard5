@@ -25,6 +25,12 @@ function m_Completepayment( FormOrJson, closeEvent )
     /********************************************************************/
     GetField( frm, FormOrJson );
 
+    $("body").css({
+        "position": "",
+        "width": "",
+        "top" : ""
+    });
+
     if( frm.res_cd.value == "0000" )
     {
         document.getElementById("display_pay_button").style.display = "none" ;
@@ -49,6 +55,11 @@ function jsf__pay( form )
     try
     {
         KCP_Pay_Execute( form );
+        $("body").css({
+            "position": "fixed",
+            "width": "100%",
+            "top" : "0"
+        });
     }
     catch (e)
     {
