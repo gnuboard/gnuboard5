@@ -194,7 +194,6 @@ $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
 $sns_url  = shop_item_url($it['it_id']);
 $sns_share_links = get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png').' ';
 $sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/twitter.png').' ';
-$sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/gplus.png');
 
 // 상품품절체크
 if(G5_SOLDOUT_CHECK)

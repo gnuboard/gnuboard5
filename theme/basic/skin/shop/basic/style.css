@@ -218,7 +218,6 @@
 .sct_10 .sct_sns a {display:inline-block;border-radius:50%;width:50px;height:50px;line-height:25px;text-align:center;padding:10px 0;margin:20px 5px}
 .sct_10 .sct_sns .share-facebook {background:#415b92}
 .sct_10 .sct_sns .share-twitter {background:#35b3dc}
-.sct_10 .sct_sns .share-googleplus {background:#ea3838}
 .sct_10 .sct_sns img {width:24px}
 .sct_10 .sct_sns_bg {background:rgba(0,0,0,0.1);width:100%;height:100%}
 .sct_10 .sct_sns_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
@@ -291,7 +290,6 @@
 .sct_40 .sct_sns a {display:inline-block;border-radius:50%;width:50px;height:50px;line-height:25px;text-align:center;padding:10px 0;margin:20px 5px}
 .sct_40 .sct_sns .share-facebook {background:#415b92}
 .sct_40 .sct_sns .share-twitter {background:#35b3dc}
-.sct_40 .sct_sns .share-googleplus {background:#ea3838}
 .sct_40 .sct_sns img {width:24px}
 .sct_40 .sct_sns_bg {background:rgba(0,0,0,0.1);width:100%;height:100%}
 .sct_40 .sct_sns_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
@@ -346,7 +344,6 @@
 .smt_10 .sct_sns a {display:inline-block;border-radius:50%;width:50px;height:50px;line-height:25px;text-align:center;padding:10px 0;margin:20px 5px}
 .smt_10 .sct_sns .share-facebook {background:#415b92}
 .smt_10 .sct_sns .share-twitter {background:#35b3dc}
-.smt_10 .sct_sns .share-googleplus {background:#ea3838}
 .smt_10 .sct_sns img {width:24px}
 .smt_10 .sct_sns_bg {background:rgba(0,0,0,0.1);width:100%;height:100%}
 .smt_10 .sct_sns_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
@@ -381,7 +378,6 @@
 .smt_20 .sct_sns a {display:inline-block;border-radius:50%;width:30px;height:30px;line-height:28px;margin-right:5px;text-align:center}
 .smt_20 .sct_sns .share-facebook {background:#415b92}
 .smt_20 .sct_sns .share-twitter {background:#35b3dc}
-.smt_20 .sct_sns .share-googleplus {background:#ea3838}
 .smt_20 .sct_sns img {width:20px}
 
 .smt_20 .sct_icon {margin:0 0 10px}
@@ -559,7 +555,6 @@
 #sit_star_sns .sns_area a {display:inline-block;width:35px;height:35px;line-height:35px;margin-bottom:5px;background:#eee;text-align:center;border-radius:50%}
 #sit_star_sns .sns_area a img {width:24px;height:auto}
 #sit_star_sns .sns_area #sit_btn_rec {font-size:15px}
-#sit_star_sns .sns_area .share-googleplus {background:#ea3838}
 #sit_star_sns .sns_area .share-facebook {background:#415b92}
 #sit_star_sns .sns_area .share-twitter {background:#35b3dc}
 

@@ -8,9 +8,4 @@ $(function() {
         window.open($(this).attr("href"), "win_twitter", "menubar=1,resizable=1,width=600,height=350");
         return false;
     });
-
-    $(".share-googleplus").click(function() {
-        window.open($(this).attr("href"), "win_googleplus", "menubar=1,resizable=1,width=600,height=600");
-        return false;
-    });
 });

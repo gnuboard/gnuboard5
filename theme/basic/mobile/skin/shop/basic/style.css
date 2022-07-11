@@ -69,7 +69,6 @@
 .sct_sns a {display:inline-block;margin:0 2px;width:28px;height:28px;line-height:28px;border-radius:3px;font-size:0;text-align:center}
 .share-facebook {background:#415b92}
 .share-twitter {background:#35b3dc}
-.share-googleplus {background:#d5503a}
 .share-kakaotalk {background:#ffeb00}
 .sct_sns img {width:20px;height:auto;vertical-align:middle}
 .sct_sns button {margin:0 4px 0 0;padding:0;border:0}
@@ -103,7 +102,6 @@
 .sct_10 .sct_sns a {display:inline-block;border-radius:50%;width:50px;height:50px;line-height:25px;text-align:center;padding:13px 0;margin:20px 5px}
 .sct_10 .sct_sns .share-facebook {background:#415b92}
 .sct_10 .sct_sns .share-twitter {background:#35b3dc}
-.sct_10 .sct_sns .share-googleplus {background:#ea3838}
 .sct_10 .sct_sns img {width:24px}
 .sct_10 .sct_sns_bg {background:rgba(0,0,0,0.1);width:100%;height:100%}
 .sct_10 .sct_sns_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff;margin:0;height:50px}
@@ -129,7 +127,6 @@
 .sct_10_list .sct_sns a {display:inline-block;border-radius:50%;width:50px;height:50px;line-height:25px;text-align:center;padding:13px 0;margin:20px 5px}
 .sct_10_list .sct_sns .share-facebook {background:#415b92}
 .sct_10_list .sct_sns .share-twitter {background:#35b3dc}
-.sct_10_list .sct_sns .share-googleplus {background:#ea3838}
 .sct_10_list .sct_sns img {width:24px}
 .sct_10_list .sct_sns_bg {background:rgba(0,0,0,0.1);width:100%;height:100%}
 .sct_10_list .sct_sns_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
@@ -332,7 +329,6 @@
 #sit_star_sns .sns_area a {display:inline-block;width:35px;height:35px;line-height:35px;background:#eee;text-align:center;border-radius:50%;padding-top:5px}
 #sit_star_sns .sns_area a img {width:24px;height:auto}
 #sit_star_sns .sns_area #sit_btn_rec {font-size:15px;padding-top:0}
-#sit_star_sns .sns_area .share-googleplus {background:#ea3838}
 #sit_star_sns .sns_area .share-facebook {background:#415b92}
 #sit_star_sns .sns_area .share-twitter {background:#35b3dc}
 
