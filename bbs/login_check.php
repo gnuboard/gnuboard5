@@ -153,7 +153,7 @@ if( is_admin($mb['mb_id']) && is_dir(G5_DATA_PATH.'/tmp/') ){
             $tmp_data_check = false;
         }
     }
-    @fclose($tmp_data_check);
+    if (is_resource($tmp_data_check)) @fclose($tmp_data_check);
     @unlink($tmp_data_file);
 
     if(! $tmp_data_check){
