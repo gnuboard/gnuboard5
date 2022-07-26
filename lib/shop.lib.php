@@ -2359,7 +2359,7 @@ function save_order_point($ct_status="완료")
     global $g5, $default;
 
     $beforedays = date("Y-m-d H:i:s", ( time() - (86400 * (int)$default['de_point_days']) ) ); // 86400초는 하루
-    $sql = " select * from {$g5['g5_shop_cart_table']} where ct_status = '$ct_status' and ct_point_use = '0' and ct_time <= '$beforedays' ";
+    $sql = " select * from {$g5['g5_shop_cart_table']} where ct_status = '$ct_status' and ct_point_use = '0' and ct_select_time <= '$beforedays' ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 회원 ID 를 얻는다.
