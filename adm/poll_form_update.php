@@ -51,8 +51,8 @@ $po_id = isset($_POST['po_id']) ? $_POST['po_id'] : '';
 
 if ($w == '') {
     $sql = " insert {$g5['poll_table']}
-                    ( po_subject, po_poll1, po_poll2, po_poll3, po_poll4, po_poll5, po_poll6, po_poll7, po_poll8, po_poll9, po_cnt1, po_cnt2, po_cnt3, po_cnt4, po_cnt5, po_cnt6, po_cnt7, po_cnt8, po_cnt9, po_etc, po_level, po_point, po_date )
-             values ( '{$_POST['po_subject']}', '{$_POST['po_poll1']}', '{$_POST['po_poll2']}', '{$_POST['po_poll3']}', '{$_POST['po_poll4']}', '{$_POST['po_poll5']}', '{$_POST['po_poll6']}', '{$_POST['po_poll7']}', '{$_POST['po_poll8']}', '{$_POST['po_poll9']}', '{$_POST['po_cnt1']}', '{$_POST['po_cnt2']}', '{$_POST['po_cnt3']}', '{$_POST['po_cnt4']}', '{$_POST['po_cnt5']}', '{$_POST['po_cnt6']}', '{$_POST['po_cnt7']}', '{$_POST['po_cnt8']}', '{$_POST['po_cnt9']}', '{$_POST['po_etc']}', '{$_POST['po_level']}', '{$_POST['po_point']}', '" . G5_TIME_YMD . "' ) ";
+                    ( po_subject, po_poll1, po_poll2, po_poll3, po_poll4, po_poll5, po_poll6, po_poll7, po_poll8, po_poll9, po_cnt1, po_cnt2, po_cnt3, po_cnt4, po_cnt5, po_cnt6, po_cnt7, po_cnt8, po_cnt9, po_etc, po_level, po_point, po_date, po_use )
+             values ( '{$_POST['po_subject']}', '{$_POST['po_poll1']}', '{$_POST['po_poll2']}', '{$_POST['po_poll3']}', '{$_POST['po_poll4']}', '{$_POST['po_poll5']}', '{$_POST['po_poll6']}', '{$_POST['po_poll7']}', '{$_POST['po_poll8']}', '{$_POST['po_poll9']}', '{$_POST['po_cnt1']}', '{$_POST['po_cnt2']}', '{$_POST['po_cnt3']}', '{$_POST['po_cnt4']}', '{$_POST['po_cnt5']}', '{$_POST['po_cnt6']}', '{$_POST['po_cnt7']}', '{$_POST['po_cnt8']}', '{$_POST['po_cnt9']}', '{$_POST['po_etc']}', '{$_POST['po_level']}', '{$_POST['po_point']}', '" . G5_TIME_YMD . "', 1 ) ";
     sql_query($sql);
 
     $po_id = sql_insert_id();
@@ -79,7 +79,8 @@ if ($w == '') {
                      po_cnt9 = '{$_POST['po_cnt9']}',
                      po_etc = '{$_POST['po_etc']}',
                      po_level = '{$_POST['po_level']}',
-                     po_point = '{$_POST['po_point']}'
+                     po_point = '{$_POST['po_point']}',
+                     po_use = '{$_POST['po_use']}'
                 where po_id = '{$_POST['po_id']}' ";
     sql_query($sql);
 } elseif ($w == 'd') {
