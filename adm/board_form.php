@@ -914,7 +914,7 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="bo_include_head">상단 파일 경로</label></th>
             <td>
-                <input type="text" name="bo_include_head" value="<?php echo $board['bo_include_head'] ?>" id="bo_include_head" class="frm_input" size="50">
+                <input type="text" name="bo_include_head" value="<?php echo get_sanitize_input($board['bo_include_head']); ?>" id="bo_include_head" class="frm_input" size="50">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_include_head" value="1" id="chk_grp_include_head">
@@ -926,7 +926,7 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="bo_include_tail">하단 파일 경로</label></th>
             <td>
-                <input type="text" name="bo_include_tail" value="<?php echo $board['bo_include_tail'] ?>" id="bo_include_tail" class="frm_input" size="50">
+                <input type="text" name="bo_include_tail" value="<?php echo get_sanitize_input($board['bo_include_tail']); ?>" id="bo_include_tail" class="frm_input" size="50">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_include_tail" value="1" id="chk_grp_include_tail">
@@ -1423,9 +1423,10 @@ function use_captcha_check(){
     });
 }
 
+var bo_include_head = jQuery.trim(jQuery("#bo_include_head").val()),
+    bo_include_tail = jQuery.trim(jQuery("#bo_include_tail").val());
+
 function frm_check_file(){
-    var bo_include_head = "<?php echo $board['bo_include_head']; ?>";
-    var bo_include_tail = "<?php echo $board['bo_include_tail']; ?>";
     var head = jQuery.trim(jQuery("#bo_include_head").val());
     var tail = jQuery.trim(jQuery("#bo_include_tail").val());
 

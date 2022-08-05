@@ -266,13 +266,13 @@ if (!isset($qaconfig['qa_include_head'])) {
                     <tr>
                         <th scope="row"><label for="qa_include_head">상단 파일 경로</label></th>
                         <td>
-                            <input type="text" name="qa_include_head" value="<?php echo $qaconfig['qa_include_head'] ?>" id="qa_include_head" class="frm_input" size="50">
+                            <input type="text" name="qa_include_head" value="<?php echo get_sanitize_input($qaconfig['qa_include_head']); ?>" id="qa_include_head" class="frm_input" size="50">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="qa_include_tail">하단 파일 경로</label></th>
                         <td>
-                            <input type="text" name="qa_include_tail" value="<?php echo $qaconfig['qa_include_tail'] ?>" id="qa_include_tail" class="frm_input" size="50">
+                            <input type="text" name="qa_include_tail" value="<?php echo get_sanitize_input($qaconfig['qa_include_tail']); ?>" id="qa_include_tail" class="frm_input" size="50">
                         </td>
                     </tr>
                     <tr id="admin_captcha_box" style="display:none;">
@@ -344,7 +344,9 @@ if (!isset($qaconfig['qa_include_head'])) {
 </form>
 
 <script>
-    var captcha_chk = false;
+    var captcha_chk = false,
+        qa_include_head = jQuery.trim(jQuery("#qa_include_head").val()),
+        qa_include_tail = jQuery.trim(jQuery("#qa_include_tail").val());
 
     function use_captcha_check() {
         $.ajax({
@@ -361,8 +363,6 @@ if (!isset($qaconfig['qa_include_head'])) {
     }
 
     function frm_check_file() {
-        var qa_include_head = "<?php echo $qaconfig['qa_include_head']; ?>";
-        var qa_include_tail = "<?php echo $qaconfig['qa_include_tail']; ?>";
         var head = jQuery.trim(jQuery("#qa_include_head").val());
         var tail = jQuery.trim(jQuery("#qa_include_tail").val());
 

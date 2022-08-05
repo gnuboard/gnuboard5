@@ -3965,7 +3965,7 @@ function get_random_token_string($length=6)
 }
 
 function filter_input_include_path($path){
-    return str_replace('//', '/', $path);
+    return str_replace('//', '/', strip_tags($path));
 }
 
 function option_array_checked($option, $arr=array()){

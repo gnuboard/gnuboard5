@@ -103,7 +103,6 @@ foreach((array) $list as $row){
         echo "<div class=\"sct_sns\" style=\"top:{$sns_top}px\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png');
         echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/twitter.png');
-        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/gplus.png');
         echo "</div>\n";
     }
 	

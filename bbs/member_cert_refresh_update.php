@@ -77,6 +77,8 @@ if($result){
     }
 }
 
+run_event('cert_refresh_update_after', $mb_id);
+
 //===============================================================
 
 (empty($url))? goto_url(G5_URL) : goto_url($url);

@@ -18,6 +18,8 @@
 
 class KCAPTCHA{
 
+    private $keystring;
+
 	// generates keystring and image
 	function image(){
         require(dirname(__FILE__).'/kcaptcha_config.php');

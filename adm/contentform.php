@@ -137,14 +137,14 @@ require_once G5_ADMIN_PATH . '/admin.head.php';
                     <th scope="row"><label for="co_include_head">상단 파일 경로</label></th>
                     <td>
                         <?php echo help("설정값이 없으면 기본 상단 파일을 사용합니다."); ?>
-                        <input type="text" name="co_include_head" value="<?php echo $co['co_include_head']; ?>" id="co_include_head" class="frm_input" size="60">
+                        <input type="text" name="co_include_head" value="<?php echo get_sanitize_input($co['co_include_head']); ?>" id="co_include_head" class="frm_input" size="60">
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="co_include_tail">하단 파일 경로</label></th>
                     <td>
                         <?php echo help("설정값이 없으면 기본 하단 파일을 사용합니다."); ?>
-                        <input type="text" name="co_include_tail" value="<?php echo $co['co_include_tail']; ?>" id="co_include_tail" class="frm_input" size="60">
+                        <input type="text" name="co_include_tail" value="<?php echo get_sanitize_input($co['co_include_tail']); ?>" id="co_include_tail" class="frm_input" size="60">
                     </td>
                 </tr>
                 <tr id="admin_captcha_box" style="display:none;">
