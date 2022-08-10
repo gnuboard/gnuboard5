@@ -617,6 +617,7 @@ CREATE TABLE IF NOT EXISTS `g5_poll` (
   `po_date` date NOT NULL default '0000-00-00',
   `po_ips` mediumtext NOT NULL,
   `mb_ids` text NOT NULL,
+  `po_use` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`po_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

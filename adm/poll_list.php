@@ -49,7 +49,7 @@ $listall = '<a href="' . $_SERVER['SCRIPT_NAME'] . '" class="ov_listall">전체�
 $g5['title'] = '투표관리';
 require_once './admin.head.php';
 
-$colspan = 7;
+$colspan = 8;
 ?>
 
 <div class="local_ov01 local_ov">
@@ -92,6 +92,7 @@ $colspan = 7;
                     <th scope="col">투표권한</th>
                     <th scope="col">투표수</th>
                     <th scope="col">기타의견</th>
+                    <th scope="col">사용</th>
                     <th scope="col">관리</th>
                 </tr>
             </thead>
@@ -101,6 +102,7 @@ $colspan = 7;
                     $sql2 = " select sum(po_cnt1+po_cnt2+po_cnt3+po_cnt4+po_cnt5+po_cnt6+po_cnt7+po_cnt8+po_cnt9) as sum_po_cnt from {$g5['poll_table']} where po_id = '{$row['po_id']}' ";
                     $row2 = sql_fetch($sql2);
                     $po_etc = ($row['po_etc']) ? "사용" : "미사용";
+                    $po_use = ($row['po_use']) ? "사용" : "미사용";
 
                     $s_mod = '<a href="./poll_form.php?' . $qstr . '&amp;w=u&amp;po_id=' . $row['po_id'] . '" class="btn btn_03">수정</a>';
 
@@ -117,6 +119,7 @@ $colspan = 7;
                         <td class="td_num"><?php echo $row['po_level'] ?></td>
                         <td class="td_num"><?php echo $row2['sum_po_cnt'] ?></td>
                         <td class="td_etc"><?php echo $po_etc ?></td>
+                        <td class="td_use"><?php echo $po_use ?></td>
                         <td class="td_mng td_mng_s"><?php echo $s_mod ?></td>
                     </tr>
 
