@@ -9,19 +9,19 @@ if (!defined('G5_USE_SHOP') || !G5_USE_SHOP) return;
 */
 define('G5_DELIVERY_COMPANY',
      '(경동택배^https://kdexp.com/basicNewDelivery.kd?barcode=^080-873-2178)'
-    .'(대신택배^http://home.daesinlogistics.co.kr/daesin/jsp/d_freight_chase/d_general_process2.jsp?billno1=^043-222-4582)'
+    .'(대신택배^https://www.ds3211.co.kr/freight/internalFreightSearch.ht?billno=^043-222-4582)'
     .'(동부택배^http://www.dongbups.com/delivery/delivery_search_view.jsp?item_no=^1588-8848)'
     .'(로젠택배^https://www.ilogen.com/m/personal/trace.pop/^1588-9988)'
-    .'(우체국^http://service.epost.go.kr/trace.RetrieveRegiPrclDeliv.postal?sid1=^1588-1300)'
+    .'(우체국^https://m.epost.go.kr/postal/mobile/mobile.trace.RetrieveDomRigiTraceList.comm?ems_gubun=E&sid1=^1588-1300)'
     .'(이노지스택배^http://www.innogis.co.kr/tracking_view.asp?invoice=^1566-4082)'
-    .'(한진택배^http://www.hanjin.co.kr/Delivery_html/inquiry/result_waybill.jsp?wbl_num=^1588-0011)'
+    .'(한진택배^https://www.hanjin.co.kr/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&schLang=KR&wblnumText2=^1588-0011)'
     .'(롯데택배^https://www.lotteglogis.com/open/tracking?invno=^1588-2121)'
     .'(CJ대한통운^https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=^1588-1255)'
-    .'(CVSnet편의점택배^http://was.cvsnet.co.kr/_ver2/board/ctod_status.jsp?invoice_no=^1577-1287)'
+    .'(CVSnet편의점택배^https://www.cvsnet.co.kr/invoice/tracking.do?invoice_no=^1577-1287)'
     .'(KG옐로우캡택배^http://www.yellowcap.co.kr/custom/inquiry_result.asp?invoice_no=^1588-0123)'
     .'(KGB택배^http://www.kgbls.co.kr/sub5/trace.asp?f_slipno=^1577-4577)'
     .'(KG로지스^http://www.kglogis.co.kr/contents/waybill.jsp?item_no=^1588-8848)'
-    .'(건영택배^http://www.kunyoung.com/goods/goods_01.php?mulno=^031-460-2700)'
+    .'(건영택배^https://www.kunyoung.com/goods/goods_01.php?mulno=^031-460-2700)'
     .'(호남택배^http://www.honamlogis.co.kr/04estimate/songjang_list.php?c_search1=^031-376-6070)'
 );
 
