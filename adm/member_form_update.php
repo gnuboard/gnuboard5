@@ -158,7 +158,13 @@ if ($w == '') {
     }
 
     if ($mb_id === $member['mb_id'] && $_POST['mb_level'] != $mb['mb_level']) {
-        alert($mb['mb_id'] . ' : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.');
+        alert($mb['mb_id'] . ' : 로그인 중인 관리자 레벨은 수정할 수 없습니다.');
+    }
+
+    if ($posts['mb_leave_date'] || $posts['mb_intercept_date']){
+        if ($member['mb_id'] === $mb['mb_id'] || is_admin($mb['mb_id']) === 'super'){
+            alert('해당 관리자의 탈퇴 일자 또는 접근 차단 일자를 수정할 수 없습니다.');
+        }
     }
 
     // 닉네임중복체크

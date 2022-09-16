@@ -421,6 +421,16 @@ function get_sanitize_input($s, $is_html = false)
     return $s;
 }
 
+function domain_mail_host($is_at=true){
+    list($domain_host,) = explode(':', $_SERVER['HTTP_HOST']);
+
+    if ('www.' === substr($domain_host, 0, 4)) {
+        $domain_host = substr($domain_host, 4);
+    }
+
+    return $is_at ? '@'.$domain_host : $domain_host;
+}
+
 function check_log_folder($log_path, $is_delete = true)
 {
 
