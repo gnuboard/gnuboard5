@@ -24,7 +24,7 @@ if (!$file['bf_file'])
 
 $nonce = isset($_REQUEST['nonce']) ? preg_replace('/[^0-9a-z\|]/i', '', $_REQUEST['nonce']) : '';
 
-if (function_exists('download_file_nonce_is_valid')){
+if (function_exists('download_file_nonce_is_valid') && !defined('G5_DOWNLOAD_NONCE_CHECK')){
     if(! download_file_nonce_is_valid($nonce, $bo_table, $wr_id)){
         alert('토큰 유효시간이 지났거나 토큰이 유효하지 않습니다.\\n브라우저를 새로고침 후 다시 시도해 주세요.', G5_URL);
     }

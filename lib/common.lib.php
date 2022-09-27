@@ -604,7 +604,7 @@ function check_html_link_nofollow($type=''){
 // Open  : HTML Purifier is open-source and highly customizable
 function html_purifier($html)
 {
-    global $is_admin;
+    global $is_admin, $write;
 
     $f = file(G5_PLUGIN_PATH.'/htmlpurifier/safeiframe.txt');
     $domains = array();
@@ -616,9 +616,9 @@ function html_purifier($html)
                 array_push($domains, $domain);
         }
     }
-    // 관리자인 경우에만 내 도메인을 추가
-    if ($is_admin) array_push($domains, $_SERVER['HTTP_HOST'].'/');
-    $safeiframe = implode('|', $domains);
+    // 글쓴이가 관리자인 경우에만 현재 사이트 도메인을 허용
+    if (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id'])) array_push($domains, $_SERVER['HTTP_HOST'].'/');
+    $safeiframe = implode('|', run_replace('html_purifier_safeiframes', $domains, $html));
 
     include_once(G5_PLUGIN_PATH.'/htmlpurifier/HTMLPurifier.standalone.php');
     include_once(G5_PLUGIN_PATH.'/htmlpurifier/extend.video.php');
