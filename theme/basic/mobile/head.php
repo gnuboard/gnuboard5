@@ -97,7 +97,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <script>
                 function fsearchbox_submit(f)
                 {
-                    if (f.stx.value.length < 2) {
+                    var stx = f.stx.value.trim();
+                    if (stx.length < 2) {
                         alert("검색어는 두글자 이상 입력하십시오.");
                         f.stx.select();
                         f.stx.focus();
@@ -106,8 +107,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
                     // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
                     var cnt = 0;
-                    for (var i=0; i<f.stx.value.length; i++) {
-                        if (f.stx.value.charAt(i) == ' ')
+                    for (var i = 0; i < stx.length; i++) {
+                        if (stx.charAt(i) == ' ')
                             cnt++;
                     }
 
@@ -117,6 +118,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         f.stx.focus();
                         return false;
                     }
+                    f.stx.value = stx;
 
                     return true;
                 }
