@@ -18,6 +18,7 @@ while ($row=sql_fetch_array($result))
 }
 
 if (isset($fm_id) && $fm_id){
+    $fm_id = (int) $fm_id;
     $qstr .= '&amp;fm_id=' . $fm_id; // 마스터faq key_id
 }
 

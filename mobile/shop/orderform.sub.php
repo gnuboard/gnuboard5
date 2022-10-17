@@ -922,7 +922,7 @@ $(function() {
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("변경").focus();
         if(!$("#od_coupon_cancel").length)
-            $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"cp_cancel1\">취소</button>");
+            $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"cp_cancel cp_cancel1\">취소</button>");
     });
 
     $(document).on("click", "#od_coupon_close", function() {
