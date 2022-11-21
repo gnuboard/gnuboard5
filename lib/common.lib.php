@@ -269,12 +269,12 @@ function url_auto_link($str)
 
 
 // url에 http:// 를 붙인다
-function set_http($url)
+function set_http($url, $protocol="http://")
 {
     if (!trim($url)) return;
 
     if (!preg_match("/^(http|https|ftp|telnet|news|mms)\:\/\//i", $url))
-        $url = "http://" . $url;
+        $url = $protocol. $url;
 
     return $url;
 }
