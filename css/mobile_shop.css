@@ -83,7 +83,7 @@ input[type=radio] {-webkit-appearance: radio}
 
 /*카테고리*/
 .menu {display:none;position:fixed;top:0;height:100%;z-index:99999;-webkit-backface-visibility:hidden;width:100%;background:#efefef}
-.menu .menu_wr{;width:100%;height:100%;overflow-y:auto;background:#eee;position:relative;z-index:199919;
+.menu .menu_wr{width:100%;height:100%;overflow-y:auto;background:#eee;position:relative;z-index:199919;
  -webkit-box-shadow: 0 0 5px rgba(55,55,5,0.4));
     -moz-box-shadow: 0 0 5px rgba(55,55,5,0.4));
          box-shadow: 0 0 5px rgba(55,55,5,0.4);}
@@ -318,7 +318,7 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
 
 #sod_frm .sod_ta_wr{background: #fff}
-#sod_frm .btn_confirm{;margin:0 10px 10px}
+#sod_frm .btn_confirm{margin:0 10px 10px}
 #sod_frm .btn_submit{width:100%;height:45px;font-size: 1.167em;font-weight: bold;margin:5px 0;border-radius:4px}
 #sod_frm .btn_cancel,#sod_frm .btn01{width:100%;height:45px;line-height:43px;font-size:1.167em;font-weight: bold;padding:0;border-radius:4px}
 
