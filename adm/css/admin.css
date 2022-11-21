@@ -1062,7 +1062,7 @@ box-shadow: 1px 2px 5px rgba(150,150,150,0.5);z-index:1000}
 #theme_detail:after{display:block;visibility:hidden;clear:both;content:""}
 #theme_detail h2{font-size:1.25em;background:#fff;padding:0 15px;line-height:40px;border-bottom:1px solid #d8d8d8;margin:0}
 .theme_dt_img{float:left;padding:20px}
-.theme_dt_img img{border:1px solid #aaa;}
+.theme_dt_img img{border:1px solid #aaa;max-width:600px;max-height:460px}
 .theme_dt_if{float:left;width:235px;padding:20px 0}
 .theme_dt_if table{width:100%;border-collapse:collapse;margin:15px 0 0 ;font-size:0.92em}
 .theme_dt_if table th{padding:5px;background:#fff;border-bottom:1px solid #f3f3f3;vertical-align:top;color:#3f51b5}
