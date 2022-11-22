@@ -2511,37 +2511,61 @@ function get_skin_javascript($skin_path, $dir='')
     return $str;
 }
 
+if (!function_exists('get_called_class')) {
+    function get_called_class() {
+        $bt = debug_backtrace();
+        $lines = file($bt[1]['file']);
+        preg_match(
+            '/([a-zA-Z0-9\_]+)::'.$bt[1]['function'].'/',
+            $lines[$bt[1]['line']-1],
+            $matches
+        );
+        return $matches[1];
+    }
+}
+
+function get_html_process_cls() {
+    return html_process::getInstance();
+}
+
 // HTML 마지막 처리
 function html_end()
 {
-    global $html_process;
-
-    return $html_process->run();
+    return get_html_process_cls()->run();
 }
 
 function add_stylesheet($stylesheet, $order=0)
 {
-    global $html_process;
-
-    if(trim($stylesheet) && method_exists($html_process, 'merge_stylesheet') )
-        $html_process->merge_stylesheet($stylesheet, $order);
+    if(trim($stylesheet))
+        get_html_process_cls()->merge_stylesheet($stylesheet, $order);
 }
 
 function add_javascript($javascript, $order=0)
 {
-    global $html_process;
-
-    if(trim($javascript) && method_exists($html_process, 'merge_javascript') )
-        $html_process->merge_javascript($javascript, $order);
+    if(trim($javascript))
+        get_html_process_cls()->merge_javascript($javascript, $order);
 }
 
 class html_process {
-    protected $css = array();
-    protected $js  = array();
+    protected static $id = '0';
+    private static $instances = array();
+    protected static $is_end = '0';
+    protected static $css = array();
+    protected static $js  = array();
 
-    function merge_stylesheet($stylesheet, $order)
+    public static function getInstance($id = '0')
     {
-        $links = $this->css;
+        self::$id = $id;
+        if (isset(self::$instances[self::$id])) {
+            return self::$instances[self::$id];
+        }
+        $calledClass = get_called_class();
+        return self::$instances[self::$id] = new $calledClass;
+    }
+
+    public static function merge_stylesheet($stylesheet, $order)
+    {
+        $links = self::$css;
         $is_merge = true;
 
         foreach($links as $link) {
@@ -2552,12 +2576,12 @@ class html_process {
         }
 
         if($is_merge)
-            $this->css[] = array($order, $stylesheet);
+            self::$css[] = array($order, $stylesheet);
     }
 
-    function merge_javascript($javascript, $order)
+    public static function merge_javascript($javascript, $order)
     {
-        $scripts = $this->js;
+        $scripts = self::$js;
         $is_merge = true;
 
         foreach($scripts as $script) {
@@ -2568,12 +2592,16 @@ class html_process {
         }
 
         if($is_merge)
-            $this->js[] = array($order, $javascript);
+            self::$js[] = array($order, $javascript);
     }
 
-    function run()
+    public static function run()
     {
         global $config, $g5, $member;
+
+        if (self::$is_end) return;  // 여러번 호출해도 한번만 실행되게 합니다.
+
+        self::$is_end = 1;
 
         // 현재접속자 처리
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
@@ -2599,7 +2627,7 @@ class html_process {
         ob_end_clean();
 
         $stylesheet = '';
-        $links = $this->css;
+        $links = self::$css;
 
         if(!empty($links)) {
             foreach ($links as $key => $row) {
@@ -2623,7 +2651,7 @@ class html_process {
         }
 
         $javascript = '';
-        $scripts = $this->js;
+        $scripts = self::$js;
         $php_eol = '';
 
         unset($order);
