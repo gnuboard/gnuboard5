@@ -2685,7 +2685,12 @@ class html_process {
         <link rel="stylesheet" href="default.css">
         밑으로 스킨의 스타일시트가 위치하도록 하게 한다.
         */
-        $buffer = preg_replace('#(</title>[^<]*<link[^>]+>)#', "$1$stylesheet", $buffer);
+        $title_find_pattern = '#(</title>[^<]*<link[^>]+>)#';
+        if (preg_match($title_find_pattern, $buffer)) {
+            $buffer = preg_replace($title_find_pattern, "$1$stylesheet", $buffer);
+        } else {    // 패턴이 없다면 자바스크립트 코드 위에 위치하게 합니다.
+            $javascript = $stylesheet. PHP_EOL. $javascript;
+        }
 
         /*
         </head>
