@@ -17,7 +17,7 @@ if ($w == 'u' && $is_admin == 'super') {
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
-if (!chk_captcha()) {
+if (run_replace('register_member_chk_captcha', !chk_captcha(), $w)) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
@@ -94,10 +94,15 @@ if ($w == '' || $w == 'u') {
         alert('닉네임을 올바르게 입력해 주십시오.');
     }
 
-    if ($w == '' && !$mb_password)
-        alert('비밀번호가 넘어오지 않았습니다.');
-    if($w == '' && $mb_password != $mb_password_re)
-        alert('비밀번호가 일치하지 않습니다.');
+    // 비밀번호를 체크하는 상태의 기본값은 true이며, 비밀번호를 체크하지 않으려면 hook 을 통해 false 값으로 바꿔야 합니다.
+    $is_check_password = run_replace('register_member_password_check', true, $mb_id, $mb_nick, $mb_email, $w);
+
+    if ($is_check_password){
+        if ($w == '' && !$mb_password)
+            alert('비밀번호가 넘어오지 않았습니다.');
+        if ($w == '' && $mb_password != $mb_password_re)
+            alert('비밀번호가 일치하지 않습니다.');
+    }
 
     if ($msg = empty_mb_name($mb_name))       alert($msg, "", true, true);
     if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);

@@ -17,6 +17,8 @@ if( function_exists('social_member_comfirm_redirect') && (! $url || $url === 're
     social_member_comfirm_redirect();
 }
 
+$url = run_replace('member_confirm_next_url', $url);
+
 $g5['title'] = '회원 비밀번호 확인';
 include_once('./_head.sub.php');
 
@@ -30,7 +32,6 @@ if($url){
         $url = preg_replace('#^/{3,}#', '/', $url);
     }
 }
-
 
 $url = get_text($url);
 
