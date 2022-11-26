@@ -54,7 +54,27 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/debugbar/style.cs
                 ?>
                 <tr>
                     <td scope="row" data-label="실행순서"><?php echo $key; ?></td>
-                    <td class="left" data-label="쿼리문"><?php echo $query['sql']; ?></td>
+                    <td class="left" data-label="쿼리문">
+                        <?php
+                            if(isset($query['source']['class'])) {
+                                $function = "{$query['source']['class']}{$query['source']['type']}{$query['source']['function']}()";
+                            } else if (isset($query['source']['function'])) {
+                                $function = "{$query['source']['function']}()";
+                            } else {
+                                $function = null;
+                            }
+                        ?>
+                        <p class="query_source">
+                            <em><?php echo "{$query['source']['file']}:{$query['source']['line']}" ?></em><br>
+                            <?php if($function) { echo "<em>{$function}</em><br>"; } ?>
+                        </p>
+                        <?php
+                        echo "<p class=\"query_sql\">{$query['sql']}</p>";
+                        if(!$query['success']) {
+                            echo '<p class="query_error_message">오류: [' . $query['error_code'] . '] ' . $query['error_message'] . '</p>';
+                        }
+                        ?>
+                    </td>
                     <td data-label="실행시간"><?php echo $show_excuted_time.' ms'; ?></td>
                 </tr>
                 <?php } ?>
