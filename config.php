@@ -8,6 +8,10 @@
 define('_GNUBOARD_', true);
 
 include_once($g5_path['path'].'/version.php');   // 설정 파일
+// 사용자 커스텀 설정 파일
+if (file_exists($g5_path['path'] . '/config.custom.php')) {
+    include_once($g5_path['path'] . '/config.custom.php');
+}
 
 // 기본 시간대 설정
 date_default_timezone_set("Asia/Seoul");
@@ -27,8 +31,12 @@ define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
 // 그누보드 디버그바 설정입니다, 실제 서버운영시 false 로 설정해 주세요.
-define('G5_DEBUG', false);
-define('G5_COLLECT_QUERY', false);
+if (!defined('G5_DEBUG')) {
+    define('G5_DEBUG', false);
+}
+if (!defined('G5_COLLECT_QUERY')) {
+    define('G5_COLLECT_QUERY', false);
+}
 
 // Set Database table default engine is Database default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
 // DB에 테이블 생성 시 테이블의 기본 스토리지 엔진을 설정할 수 있습니다.
