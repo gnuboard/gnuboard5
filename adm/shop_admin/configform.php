@@ -593,7 +593,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr>
             <th scope="row"><label for="de_bank_account">은행계좌번호</label></th>
             <td>
-                <textarea name="de_bank_account" id="de_bank_account"><?php echo $default['de_bank_account']; ?></textarea>
+                <textarea name="de_bank_account" id="de_bank_account"><?php echo html_purifier($default['de_bank_account']); ?></textarea>
             </td>
         </tr>
         <tr>

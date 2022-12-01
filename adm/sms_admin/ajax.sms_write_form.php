@@ -66,6 +66,8 @@ while($res = sql_fetch_array($qry))
         $group_name = '미분류';
     else
         $group_name = $tmp['fg_name'];
+
+    $res['fo_content'] = html_purifier($res['fo_content']);
     $list_text .="
     <li class=\"screen_list sms5_box\">
         <span class=\"box_ico\"></span>

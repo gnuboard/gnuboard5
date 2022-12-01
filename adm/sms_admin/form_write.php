@@ -67,7 +67,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
             <div class="sms5_box write_wrap">
                 <span class="box_ico"></span>
                 <label for="sms_contents" id="wr_message_lbl">내용</label>
-                <textarea name="fo_content" id="sms_contents" class="box_txt box_square" onkeyup="byte_check('sms_contents', 'sms_bytes');" accesskey="m"><?php echo $write['fo_content']?></textarea>
+                <textarea name="fo_content" id="sms_contents" class="box_txt box_square" onkeyup="byte_check('sms_contents', 'sms_bytes');" accesskey="m"><?php echo html_purifier($write['fo_content']); ?></textarea>
 
                 <div id="sms_byte"><span id="sms_bytes">0</span> / 80 byte</div>
 

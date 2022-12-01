@@ -109,7 +109,7 @@ function all_send()
 
     <div id="con_sms" class="sms5_box">
         <span class="box_ico"></span>
-        <textarea class="box_txt is_overview" readonly><?php echo $write['wr_message'];?></textarea>
+        <textarea class="box_txt is_overview" readonly><?php echo html_purifier($write['wr_message']); ?></textarea>
     </div>
 
     <?php if ($write['wr_re_total'] && !$wr_renum) { ?>

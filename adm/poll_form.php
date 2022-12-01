@@ -108,11 +108,11 @@ require_once './admin.head.php';
                     </tr>
                     <tr>
                         <th scope="row"><label for="po_ips">투표참가 IP</label></th>
-                        <td><textarea name="po_ips" id="po_ips" readonly rows="10"><?php echo preg_replace("/\n/", " / ", $po['po_ips']) ?></textarea></td>
+                        <td><textarea name="po_ips" id="po_ips" readonly rows="10"><?php echo html_purifier(preg_replace("/\n/", " / ", $po['po_ips'])); ?></textarea></td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="mb_ids">투표참가 회원</label></th>
-                        <td><textarea name="mb_ids" id="mb_ids" readonly rows="10"><?php echo preg_replace("/\n/", " / ", $po['mb_ids']) ?></textarea></td>
+                        <td><textarea name="mb_ids" id="mb_ids" readonly rows="10"><?php echo html_purifier(preg_replace("/\n/", " / ", $po['mb_ids'])); ?></textarea></td>
                     </tr>
                 <?php } ?>
             </tbody>

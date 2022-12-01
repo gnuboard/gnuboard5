@@ -174,7 +174,7 @@ function multi_update(sel)
             <input type="checkbox" name="fo_no[]" value="<?php echo $res['fo_no']?>" id="fo_no_<?php echo $i; ?>">
         </div>
         <div class="li_preview">
-            <textarea readonly class="box_txt box_square"><?php echo $res['fo_content']?></textarea>
+            <textarea readonly class="box_txt box_square"><?php echo html_purifier($res['fo_content']); ?></textarea>
         </div>
         <div class="li_info">
             <span class="sound_only">그룹 </span><b><?php echo $group_name?></b><br>

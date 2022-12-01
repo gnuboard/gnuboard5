@@ -121,7 +121,7 @@ require_once './admin.head.php';
                 <?php } ?>
             </tbody>
         </table>
-        <textarea name="ma_list" style="display:none"><?php echo $ma_list ?></textarea>
+        <textarea name="ma_list" style="display:none"><?php echo html_purifier($ma_list); ?></textarea>
     </div>
 
     <div class="btn_confirm01 btn_confirm">

@@ -380,15 +380,15 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_signature">서명</label></th>
-                    <td colspan="3"><textarea name="mb_signature" id="mb_signature"><?php echo $mb['mb_signature'] ?></textarea></td>
+                    <td colspan="3"><textarea name="mb_signature" id="mb_signature"><?php echo html_purifier($mb['mb_signature']); ?></textarea></td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_profile">자기 소개</label></th>
-                    <td colspan="3"><textarea name="mb_profile" id="mb_profile"><?php echo $mb['mb_profile'] ?></textarea></td>
+                    <td colspan="3"><textarea name="mb_profile" id="mb_profile"><?php echo html_purifier($mb['mb_profile']); ?></textarea></td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_memo">메모</label></th>
-                    <td colspan="3"><textarea name="mb_memo" id="mb_memo"><?php echo $mb['mb_memo'] ?></textarea></td>
+                    <td colspan="3"><textarea name="mb_memo" id="mb_memo"><?php echo html_purifier($mb['mb_memo']); ?></textarea></td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_cert_history">본인인증 내역</label></th>
