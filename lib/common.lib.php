@@ -1625,7 +1625,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
     $is_debug = get_permission_debug_show();
     
-    $start_time = $is_debug ? get_microtime() : 0;
+    $start_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
     if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
         if ($error) {
@@ -1645,18 +1645,68 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         }
     }
 
-    $end_time = $is_debug ? get_microtime() : 0;
+    $end_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
-    if($result && $is_debug) {
-        // 여기에 실행한 sql문을 화면에 표시하는 로직 넣기
+    $error = null;
+    if ($is_debug || G5_COLLECT_QUERY) {
+        if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
+            $error = array(
+                'error_code' => mysqli_errno($g5['connect_db']),
+                'error_message' => mysqli_error($g5['connect_db']),
+            );
+        } else {
+            $error = array(
+                'error_code' => mysql_errno($g5['connect_db']),
+                'error_message' => mysql_error($g5['connect_db']),
+            );
+        }
+
+        $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        $source = array();
+        $found = false;
+
+        foreach ($stack as $index => $trace) {
+            if ($trace['function'] === 'sql_query') {
+                $found = true;
+            }
+            if (isset($stack[$index + 1]) && $stack[$index + 1]['function'] === 'sql_fetch') {
+                continue;
+            }
+
+            if ($found) {
+                $trace['file'] = str_replace($_SERVER['DOCUMENT_ROOT'], '', $trace['file']);
+                $source['file'] = $trace['file'];
+                $source['line'] = $trace['line'];
+
+                $parent = (isset($stack[$index + 1])) ? $stack[$index + 1] : array();
+                if (isset($parent['function'])) {
+                    if (in_array($trace['function'], array('sql_query', 'sql_fetch')) && (isset($parent['function']) && !in_array($parent['function'], array('sql_fetch', 'include', 'include_once', 'require', 'require_once')))) {
+                        if (isset($parent['class']) && $parent['class']) {
+                            $source['class'] = $parent['class'];
+                            $source['function'] = $parent['function'];
+                            $source['type'] = $parent['type'];
+                        } else {
+                            $source['function'] = $parent['function'];
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
         $g5_debug['sql'][] = array(
             'sql' => $sql,
+            'result' => $result,
+            'success' => !!$result,
+            'source' => $source,
+            'error_code' => $error['error_code'],
+            'error_message' => $error['error_message'],
             'start_time' => $start_time,
             'end_time' => $end_time,
-            );
+        );
     }
 
-    run_event('sql_query_after', $result, $sql, $start_time, $end_time);
+    run_event('sql_query_after', $result, $sql, $start_time, $end_time, $error);
 
     return $result;
 }

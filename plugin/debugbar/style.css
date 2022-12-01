@@ -23,12 +23,14 @@
 .debug_table{border:1px solid #ccc;border-collapse:collapse;margin:0;padding:0;width:100%}
 .debug_table caption{display:none}
 .debug_table tr{background:#f8f8f8;border:1px solid #ddd;padding:.35em}
-.debug_table th,.debug_table td{padding:.625em;text-align:center}
+.debug_table th,.debug_table td{padding:.625em;text-align:center;white-space:nowrap;}
 .debug_table tbody tr:hover td{background:#c7d4dd!important}
 .debug_table tbody tr:nth-child(even){background-color:#fff}
-.debug_table td.left{text-align:left}
+.debug_table td.left{text-align:left;font-family:monospace;white-space:initial}
 .debug_table th{font-size:.85em;letter-spacing:.1em;text-transform:uppercase}
 .debug_table td img{text-align:center}
+.debug_table .query_sql {font-weight:bold;margin:.5em 0}
+.debug_table .query_error_message {color:red;margin:.5em 0}
 
 .debug_table.hook_table th, .debug_table.hook_table td {text-align:left;border:1px solid #ddd;}
 .hook_table .hook_count{margin-left:3px;font-size:0.9em;color:#7cbc0a}
