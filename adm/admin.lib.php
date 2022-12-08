@@ -685,5 +685,9 @@ if (isset($_REQUEST) && $_REQUEST) {
     }
 }
 
-// 관리자에서는 추가 스크립트는 사용하지 않는다.
-//$config['cf_add_script'] = '';
+// 관리자에서는 추가 스크립트와 추가 매타태그, 방문자분석 스크립트가 실행되지 않게 빈값으로 합니다.
+if (run_replace('safe_admin_add_script_boolean', false) === false) {
+    $config['cf_analytics'] = '';
+    $config['cf_add_script'] = '';
+    $config['cf_add_meta'] = '';
+}

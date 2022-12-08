@@ -8,6 +8,8 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
+$copy_config = get_config(true);
+
 if (!isset($config['cf_add_script'])) {
     sql_query(
         " ALTER TABLE `{$g5['config_table']}`
@@ -696,15 +698,15 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_analytics">방문자분석 스크립트</label></th>
                         <td colspan="3">
-                            <?php echo help('방문자분석 스크립트 코드를 입력합니다. 예) 구글 애널리틱스'); ?>
-                            <textarea name="cf_analytics" id="cf_analytics"><?php echo get_text($config['cf_analytics']); ?></textarea>
+                            <?php echo help('방문자분석 스크립트 코드를 입력합니다. 예) 구글 애널리틱스<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.'); ?>
+                            <textarea name="cf_analytics" id="cf_analytics"><?php echo get_text($copy_config['cf_analytics']); ?></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="cf_add_meta">추가 메타태그</label></th>
                         <td colspan="3">
-                            <?php echo help('추가로 사용하실 meta 태그를 입력합니다.'); ?>
-                            <textarea name="cf_add_meta" id="cf_add_meta"><?php echo get_text($config['cf_add_meta']); ?></textarea>
+                            <?php echo help('추가로 사용하실 meta 태그를 입력합니다.<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.'); ?>
+                            <textarea name="cf_add_meta" id="cf_add_meta"><?php echo get_text($copy_config['cf_add_meta']); ?></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -1390,7 +1392,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
                         <td>
                             <?php echo help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.') ?>
-                            <textarea name="cf_add_script" id="cf_add_script"><?php echo get_text($config['cf_add_script']); ?></textarea>
+                            <textarea name="cf_add_script" id="cf_add_script"><?php echo get_text($copy_config['cf_add_script']); ?></textarea>
                         </td>
                     </tr>
                 </tbody>
