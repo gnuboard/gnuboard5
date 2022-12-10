@@ -1648,21 +1648,21 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $end_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
     $error = null;
+    $source = array();
     if ($is_debug || G5_COLLECT_QUERY) {
         if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
             $error = array(
-                'error_code' => mysqli_errno($g5['connect_db']),
-                'error_message' => mysqli_error($g5['connect_db']),
+                'error_code' => mysqli_errno($link),
+                'error_message' => mysqli_error($link),
             );
         } else {
             $error = array(
-                'error_code' => mysql_errno($g5['connect_db']),
-                'error_message' => mysql_error($g5['connect_db']),
+                'error_code' => mysql_errno($link),
+                'error_message' => mysql_error($link),
             );
         }
 
         $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-        $source = array();
         $found = false;
 
         foreach ($stack as $index => $trace) {
@@ -1706,7 +1706,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         );
     }
 
-    run_event('sql_query_after', $result, $sql, $start_time, $end_time, $error);
+    run_event('sql_query_after', $result, $sql, $start_time, $end_time, $error, $source);
 
     return $result;
 }
