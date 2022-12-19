@@ -195,6 +195,7 @@ class LMS {
 
             foreach($this->Data as $puts) {
                 fputs($fsocket, $puts);
+                $gets = '';
                 while(!$gets) { $gets = fgets($fsocket,32); }
                 $json = json_decode(substr($puts,6), true);
 
@@ -206,7 +207,6 @@ class LMS {
                     $this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
                     if(substr($gets,6,2) >= "80") break;
                 }
-                $gets = "";
             }
 
             fclose($fsocket);
@@ -217,6 +217,7 @@ class LMS {
 
             foreach($this->Data as $puts) {
                 fputs($fsocket, $puts);
+                $gets = '';
                 while(!$gets) { $gets = fgets($fsocket,30); }
                 $dest = substr($puts,26,11);
                 if (substr($gets,0,19) == "0223  00".$dest) {
@@ -224,7 +225,6 @@ class LMS {
                 } else {
                     $this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
                 }
-                $gets = "";
             }
 
             fclose($fsocket);

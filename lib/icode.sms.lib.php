@@ -198,6 +198,7 @@ class SMS {
 
             foreach($this->Data as $puts) {
                 fputs($fsocket, $puts);
+                $gets = '';
                 while(!$gets) { $gets = fgets($fsocket,32); }
                 $json = json_decode(substr($puts,6), true);
 
@@ -209,7 +210,6 @@ class SMS {
                     $this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
                     if(substr($gets,6,2) >= "80") break;
                 }
-                $gets = "";
             }
             fclose($fsocket);
 
@@ -226,10 +226,10 @@ class SMS {
             foreach($this->Data as $puts) {
                 $dest = substr($puts,26,11);
                 fputs($fp,$puts);
+                $gets = '';
                 while(!$gets) { $gets=fgets($fp,30); }
                 if (substr($gets,0,19)=="0223  00".$dest) $this->Result[]=$dest.":".substr($gets,19,10);
                 else $this->Result[$dest]=$dest.":Error";
-                $gets="";
             }
             fclose($fp);
         }
