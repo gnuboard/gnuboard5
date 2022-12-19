@@ -22,6 +22,11 @@ function certify_win_open(type, url, event) {
         if( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 )
         {
             var $frm = $(event.target.form);
+
+            if($frm.length < 1){
+                $frm = $(event.target).parent();
+            }
+
             if($("#kcp_cert").length < 1) {
                 $frm.wrap('<div id="cert_info"></div>');
 
@@ -31,7 +36,7 @@ function certify_win_open(type, url, event) {
             }
 
             $("#cert_info")
-                .after('<iframe id="kcp_cert" name="kcp_cert" width="100%" height="700" frameborder="0" scrolling="no" style="display:none"></iframe>');
+                .after('<iframe id="kcp_cert" name="kcp_cert" width="100%" height="700" frameborder="0" scrolling="yes" style="display:none"></iframe>');
 
             var temp_form = document.form_temp;
             temp_form.target = "kcp_cert";
