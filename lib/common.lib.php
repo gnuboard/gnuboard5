@@ -863,7 +863,8 @@ function subject_sort_link($col, $query_string='', $flag='asc')
     $arr_query[] = 'page='.$page;
     $qstr = implode("&amp;", $arr_query);
 
-    return "<a href=\"{$_SERVER['SCRIPT_NAME']}?{$qstr}\">";
+    $url = G5_HTTP_BBS_URL . "/board.php?{$qstr}";
+    return '<a href="'.short_url_clean($url).'">';
 }
 
 
