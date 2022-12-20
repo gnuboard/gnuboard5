@@ -211,14 +211,17 @@ $ct_cert->mf_clear();
         
         var $opener = window.opener;
         var is_mobile = false;        
-        $opener.name="parentPage";       
+        $opener.name="parentPage";
 
+        // 안드로이드 웹뷰에서 거의 다 새창을 지원하므로 더 이상 iframe 을 사용하지 않습니다.
+        /*
         if (typeof g5_is_mobile != "undefined" && g5_is_mobile ) {
             $opener = window.parent;
             is_mobile = true;
         } else {
             $opener = window.opener;
         }
+        */
         
         // up_hash 검증
         if( document.mbFindForm.up_hash.value != $opener.$("input[name=veri_up_hash]").val() ) {

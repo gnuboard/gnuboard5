@@ -211,8 +211,10 @@ $ct_cert->mf_clear();
 $(function() {
     var $opener;
     var is_mobile = false;
+    // iframe에서 세션공유 문제가 있어서 더 이상 iframe 을 사용하지 않습니다.
+    var use_iframe = false;
 
-    if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) ) { // 스마트폰인 경우
+    if(use_iframe && ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) ) {
         $opener = window.parent;
         is_mobile = true;
     } else {

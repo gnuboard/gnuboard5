@@ -116,17 +116,17 @@ window.onload = function() {
 function cert_page()
 {
     var frm = document.form_auth;
+    // iframe에서 세션공유 문제가 있어서 더 이상 iframe 을 사용하지 않습니다.
+    var use_iframe = false;
 
     if ( ( frm.req_tx.value == "auth" || frm.req_tx.value == "otp_auth" ) )
     {
         frm.action=".<?php echo $resultPage; ?>";
 
-       // MOBILE
-        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) )
+        if(use_iframe && ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) )
         {
             self.name="kcp_cert";
         }
-        // PC
         else
         {
             frm.target="kcp_cert";
@@ -139,12 +139,12 @@ function cert_page()
 
     else if ( frm.req_tx.value == "cert" )
     {
-        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) ) // 스마트폰인 경우
+        if(use_iframe && ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) )
         {
             window.parent.$("input[name=veri_up_hash]").val(frm.up_hash.value); // up_hash 데이터 검증을 위한 필드
             self.name="auth_popup";
         }
-        else // 스마트폰 아닐때
+        else
         {
             window.opener.$("input[name=veri_up_hash]").val(frm.up_hash.value); // up_hash 데이터 검증을 위한 필드
             frm.target = "auth_popup";
