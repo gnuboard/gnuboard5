@@ -134,7 +134,7 @@ if ($is_admin) {
 <!-- 상품 상세보기 시작 { -->
 <?php
 // 상단 HTML
-echo '<div id="sit_hhtml">'.conv_content($it['it_head_html'], 1).'</div>';
+echo run_replace('shop_it_head_html', '<div id="sit_hhtml">'.conv_content($it['it_head_html'], 1).'</div>', $it);
 
 // 보안서버경로
 if (G5_HTTPS_DOMAIN)
@@ -274,7 +274,7 @@ include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 
 <?php
 // 하단 HTML
-echo conv_content($it['it_tail_html'], 1);
+echo run_replace('shop_it_tail_html', conv_content($it['it_tail_html'], 1), $it);
 ?>
 
 <?php
