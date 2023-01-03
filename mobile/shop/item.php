@@ -87,7 +87,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
           limit 1 ";
 $row = sql_fetch($sql);
 if (isset($row['it_id']) && $row['it_id']) {
-    $next_title = '다음 상품 <span>'.$row['it_name'].'</span>';
+    $next_title = '다음상품 <span>'.$row['it_name'].'</span>';
     $next_href = '<a href="'.shop_item_url($row['it_id']).'" id="siblings_next">';
     $next_href2 = '</a>';
 } else {
