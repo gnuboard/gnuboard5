@@ -9,7 +9,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
     <h2>답변등록</h2>
 
-    <form name="fanswer" method="post" action="./qawrite_update.php" onsubmit="return fwrite_submit(this);" autocomplete="off">
+    <form name="fanswer" method="post" action="./qawrite_update.php" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off">
     <input type="hidden" name="qa_id" value="<?php echo $view['qa_id']; ?>">
     <input type="hidden" name="w" value="a">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -46,6 +46,21 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
                 <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
             </li>
+
+            <li class="bo_w_flie">
+                <div class="file_wr filebox">
+                	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
+                    <label for="bf_file[1]"><i class="fa fa-download lb_icon" aria-hidden="true"></i><span class="sound_only">파일 #1</span><span class="btn_file">파일첨부</span></label>
+                    <input type="file" name="bf_file[1]" id="bf_file[1]" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file uploadBtn">
+                </div>
+				<br>
+                <div class="file_wr filebox">
+                	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
+                    <label for="bf_file[2]"><i class="fa fa-download lb_icon" aria-hidden="true"></i><span class="sound_only">파일 #2</span><span class="btn_file">파일첨부</span></label>
+                    <input type="file" name="bf_file[2]" id="bf_file[2]" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file uploadBtn">
+                </div>
+            </li>
+
         </ul>
     </div>
 

@@ -31,7 +31,43 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	</header>
 	
     <div id="ans_con">
+        <?php
+        // 파일 출력
+        if(isset($answer['img_count']) && $answer['img_count']) {
+            echo "<div id=\"bo_v_img\">\n";
+
+            for ($i=0; $i<$answer['img_count']; $i++) {
+                echo get_view_thumbnail($answer['img_file'][$i], $qaconfig['qa_image_width']);
+            }
+
+            echo "</div>\n";
+        }
+        ?>
+
         <?php echo get_view_thumbnail(conv_content($answer['qa_content'], $answer['qa_html']), $qaconfig['qa_image_width']); ?>
+
+        <?php if(isset($answer['download_count']) && $answer['download_count']) { ?>
+        <!-- 첨부파일 시작 { -->
+        <section id="bo_v_file">
+            <h2>첨부파일</h2>
+            <ul>
+            <?php
+            // 가변 파일
+            for ($i=0; $i<$answer['download_count']; $i++) {
+             ?>
+                <li>
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    <a href="<?php echo $answer['download_href'][$i];  ?>" class="view_file_download" download>
+                        <strong><?php echo $answer['download_source'][$i] ?></strong>
+                    </a>
+                </li>
+            <?php
+            }
+             ?>
+            </ul>
+        </section>
+        <!-- } 첨부파일 끝 -->
+        <?php } ?>
     </div>
 
 </section>
