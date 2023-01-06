@@ -2766,6 +2766,8 @@ class html_process {
             $buffer = preg_replace('#(<title[^>]*>.*?</title>)#', "$meta_tag{$nl}$1", $buffer);
         }
 
+        $buffer = run_replace('html_process_buffer', $buffer);
+
         return $buffer;
     }
 }
