@@ -96,6 +96,8 @@ function print_r2($var)
 // header("location:URL") 을 대체
 function goto_url($url)
 {
+    run_event('goto_url', $url);
+
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
 
