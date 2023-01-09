@@ -96,6 +96,8 @@ function print_r2($var)
 // header("location:URL") 을 대체
 function goto_url($url)
 {
+    run_event('goto_url', $url);
+
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
 
@@ -1328,86 +1330,137 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     global $g5;
     global $bo_table, $sca, $is_admin, $member;
 
-    $email = get_string_encrypt($email);
-    $homepage = set_http(clean_xss_tags($homepage));
+    static $cache = array();
 
-    $name     = get_text($name, 0, true);
-    $email    = get_text($email);
+    $name = get_text($name, 0, true);
+
+    if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
+        return $cache['id:' . $mb_id];
+    } else if (
+        isset($name)
+        && isset($cache['name:' . $name])
+        && $cache['name:' . $name]
+    ) {
+        return $cache['name:' . $name];
+    }
+
+    $email = get_string_encrypt($email);
+    $email = get_text($email);
+
+    $homepage = set_http(clean_xss_tags($homepage));
     $homepage = get_text($homepage);
 
-    $tmp_name = "";
     $en_mb_id = $mb_id;
 
+    $name_tag = array();
+    $menus = array();
+
     if ($mb_id) {
-        //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" rel="nofollow" target=\"_blank\" onclick=\"return false;\">$name</a>";
-        $tmp_name = '<a href="'.G5_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" rel="nofollow" onclick="return false;">';
+        // $tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" rel="nofollow" target=\"_blank\" onclick=\"return false;\">$name</a>";
+        $name_tag_open = '<a href="' . G5_BBS_URL . '/profile.php?mb_id=' . $mb_id . '" class="sv_member" title="' . $name . ' 자기소개" target="_blank" rel="nofollow" onclick="return false;">';
 
         if ($config['cf_use_member_icon']) {
-            $mb_dir = substr($mb_id,0,2);
-            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif';
+            $mb_dir = substr($mb_id, 0, 2);
+            $icon_file = G5_DATA_PATH . '/member/' . $mb_dir . '/' . get_mb_icon_name($mb_id) . '.gif';
 
             if (file_exists($icon_file)) {
-                $icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file) : '';
+                $icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?' . filemtime($icon_file) : '';
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif'.$icon_filemtile;
-                $tmp_name .= '<span class="profile_img"><img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt=""></span>';
+                $icon_file_url = G5_DATA_URL . '/member/' . $mb_dir . '/' . get_mb_icon_name($mb_id) . '.gif' . $icon_filemtile;
+                $name_tag['profile_image'] = '<span class="profile_img"><img src="' . $icon_file_url . '" width="' . $width . '" height="' . $height . '" alt=""></span>';
 
-                if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name.' '.$name;
-            } else {
-                if( defined('G5_THEME_NO_PROFILE_IMG') ){
-                    $tmp_name .= G5_THEME_NO_PROFILE_IMG;
-                } else if( defined('G5_NO_PROFILE_IMG') ){
-                    $tmp_name .= G5_NO_PROFILE_IMG;
+                // 회원아이콘+이름
+                if ($config['cf_use_member_icon'] == 2) {
+                    $name_tag['name'] = $name;
                 }
-                if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name.' '.$name;
+            } else {
+                if (defined('G5_THEME_NO_PROFILE_IMG')) {
+                    $name_tag['profile_image'] = G5_THEME_NO_PROFILE_IMG;
+                } else if (defined('G5_NO_PROFILE_IMG')) {
+                    $name_tag['profile_image'] = G5_NO_PROFILE_IMG;
+                }
+
+                // 회원아이콘+이름
+                if ($config['cf_use_member_icon'] == 2) {
+                    $name_tag['name'] = $name;
+                }
             }
         } else {
-            $tmp_name = $tmp_name.' '.$name;
+            $name_tag['name'] = $name;
         }
-        $tmp_name .= '</a>';
-
-        $title_mb_id = '['.$mb_id.']';
     } else {
-        if(!$bo_table)
+        if (!$bo_table) {
             return $name;
+        }
 
-        $tmp_name = '<a href="'.get_pretty_url($bo_table, '', 'sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name).'" title="'.$name.' 이름으로 검색" class="sv_guest" rel="nofollow" onclick="return false;">'.$name.'</a>';
-        $title_mb_id = '[비회원]';
+        $name_tag_open = '<a href="' . get_pretty_url($bo_table, '', 'sca=' . $sca . '&amp;sfl=wr_name,1&amp;stx=' . $name) . '" title="' . $name . ' 이름으로 검색" class="sv_guest" rel="nofollow" onclick="return false;">';
+        $name_tag['name'] = $name;
     }
 
-    $str = "<span class=\"sv_wrap\">\n";
-    $str .= $tmp_name."\n";
+    if ($mb_id) {
+        $menus['memo'] = '<a href="' . G5_BBS_URL . '/memo_form.php?me_recv_mb_id=' . $mb_id . '" rel="nofollow" onclick="win_memo(this.href); return false;">쪽지보내기</a>';
+    }
 
-    $str2 = "<span class=\"sv\">\n";
-    if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
-    if($email)
-        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
-    if($homepage)
-        $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
-    if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
-    if($bo_table) {
-        if($mb_id) {
-            $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$en_mb_id)."\">아이디로 검색</a>\n";
+    if ($email) {
+        $menus['email'] = '<a href="' . G5_BBS_URL . '/formmail.php?mb_id=' . $mb_id . '&amp;name=' . urlencode($name) . '&amp;email=' . $email . '" onclick="win_email(this.href); return false;" rel="nofollow">메일보내기</a>';
+    }
+
+    if ($homepage) {
+        $menus['homepage'] = '<a href="' . $homepage . '" rel="nofollow noopener" target="_blank">홈페이지</a>';
+    }
+
+    if ($mb_id) {
+        $menus['profile'] = '<a href="' . G5_BBS_URL . '/profile.php?mb_id=' . $mb_id . '" onclick="win_profile(this.href); return false;" rel="nofollow">자기소개</a>';
+    }
+
+    if ($bo_table) {
+        if ($mb_id) {
+            $menus['search_id'] = '<a href="' . get_pretty_url($bo_table, '', 'sca=' . $sca . '&amp;sfl=mb_id,1&amp;stx=' . $en_mb_id) . '" rel="nofollow">아이디로 검색</a>';
         } else {
-            $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name)."\">이름으로 검색</a>\n";
+            $menus['search_name'] = '<a href="' . get_pretty_url($bo_table, '', 'sca=' . $sca . '&amp;sfl=wr_name,1&amp;stx=' . $name) . '" rel="nofollow">이름으로 검색</a>';
         }
     }
-    if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\" class=\"link_new_page\" onclick=\"check_goto_new(this.href, event);\">전체게시물</a>\n";
-    if($is_admin == "super" && $mb_id) {
-        $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
-        $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
-    }
-    $str2 .= "</span>\n";
-    $str .= $str2;
-    $str .= "\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
 
+    if ($mb_id) {
+        $menus['search_all'] = '<a href="' . G5_BBS_URL . '/new.php?mb_id=' . $mb_id . '" class="link_new_page" onclick="check_goto_new(this.href, event);" rel="nofollow">전체게시물</a>';
+
+        if ($is_admin == 'super') {
+            $menus['admin_member_modify'] = '<a href="' . G5_ADMIN_URL . '/member_form.php?w=u&amp;mb_id=' . $mb_id . '" target="_blank" rel="nofollow">회원정보변경</a>';
+            $menus['admin_member_point'] = '<a href="' . G5_ADMIN_URL . '/point_list.php?sfl=mb_id&amp;stx=' . $mb_id . '" target="_blank" rel="nofollow">포인트내역</a>';
+        }
+    }
+
+    $name_tag_close = '</a>';
+
+    $items = run_replace('member_sideview_items', array(
+        'name_tag_open' => $name_tag_open,
+        'name_tag_close' => $name_tag_close,
+        'name_tag' => $name_tag,
+        'menus' => $menus
+    ), array(
+            'mb_id' => $mb_id,
+            'name' => $name,
+            'bo_table' => $bo_table,
+        )
+    );
+
+    $str = '<span class="sv_wrap">';
+    $str .= $items['name_tag_open'] . implode(' ', $items['name_tag']) . $items['name_tag_close'];
+
+    $str2 = '<span class="sv">';
+    $str2 .= implode("\n", $items['menus']);
+    $str2 .= '</span>';
+
+    $str .= $str2;
+    $str .= '<noscript class="sv_nojs">' . $str2 . '</noscript>';
     $str .= "</span>";
+
+    if ($mb_id) {
+        $cache['id:' . $mb_id] = $str;
+    } else {
+        $cache['name:' . $name] = $str;
+    }
 
     return $str;
 }
@@ -1649,21 +1702,21 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $end_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
     $error = null;
+    $source = array();
     if ($is_debug || G5_COLLECT_QUERY) {
         if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
             $error = array(
-                'error_code' => mysqli_errno($g5['connect_db']),
-                'error_message' => mysqli_error($g5['connect_db']),
+                'error_code' => mysqli_errno($link),
+                'error_message' => mysqli_error($link),
             );
         } else {
             $error = array(
-                'error_code' => mysql_errno($g5['connect_db']),
-                'error_message' => mysql_error($g5['connect_db']),
+                'error_code' => mysql_errno($link),
+                'error_message' => mysql_error($link),
             );
         }
 
         $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-        $source = array();
         $found = false;
 
         foreach ($stack as $index => $trace) {
@@ -1707,7 +1760,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         );
     }
 
-    run_event('sql_query_after', $result, $sql, $start_time, $end_time, $error);
+    run_event('sql_query_after', $result, $sql, $start_time, $end_time, $error, $source);
 
     return $result;
 }
@@ -2765,6 +2818,8 @@ class html_process {
             $nl = "\n";
             $buffer = preg_replace('#(<title[^>]*>.*?</title>)#', "$meta_tag{$nl}$1", $buffer);
         }
+
+        $buffer = run_replace('html_process_buffer', $buffer);
 
         return $buffer;
     }
