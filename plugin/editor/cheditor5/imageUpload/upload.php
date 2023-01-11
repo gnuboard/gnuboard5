@@ -93,9 +93,9 @@ if ($found != true || $filename_len != 23) {
 	exit;
 }
 
-// ÀúÀå ÆÄÀÏ ÀÌ¸§: ³â¿ùÀÏ½ÃºĞÃÊ_·»´ı¹®ÀÚ8ÀÚ
+// ì €ì¥ íŒŒì¼ ì´ë¦„: ë…„ì›”ì¼ì‹œë¶„ì´ˆ_ë Œë¤ë¬¸ì8ì
 // 20140327125959_abcdefghi.jpg
-// ¿øº» ÆÄÀÏ ÀÌ¸§: $_POST["origname"]
+// ì›ë³¸ íŒŒì¼ ì´ë¦„: $_POST["origname"]
 
 $filename = che_replace_filename($filename);
 $savefile = SAVE_DIR . '/' . $filename;
