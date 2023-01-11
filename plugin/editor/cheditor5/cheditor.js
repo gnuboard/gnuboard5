@@ -568,7 +568,7 @@ function setConfig() {
     this.cheditor.tabSpaces = '';
     this.cheditor.modifyState = false;
     this.cheditor.tabSpaces = new Array(this.config.tabIndent + 1).join(' ');
-    // this.URI = URI;
+    this.URI = URI;
 }
 
 function cheditor() {
