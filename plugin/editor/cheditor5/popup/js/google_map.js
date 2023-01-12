@@ -13,7 +13,9 @@ var oEditor = null,
     mapWidth = 512,
     mapHeight = 320,
     panorama,
-    panoramaVisible = false;
+    panoramaVisible = false,
+    marker,
+    staticMapsAPI = 'STATIC_MAPS_API_KEY';
 
 function doSubmit() {
     var mapImg = document.createElement("img"),
@@ -29,10 +31,9 @@ function doSubmit() {
     mapImg.style.width = mapWidth + 'px';
     mapImg.style.height = mapHeight + 'px';
     mapImg.style.border = '1px #000 solid';
-    mapImg.setAttribute("alt", "Google Map");
+    mapImg.setAttribute('alt', 'Google Map');
     mapImg.onload = function () {
         oEditor.insertHtmlPopup(mapImg);
-        oEditor.setImageEvent(true);
         oEditor.popupWinClose();
     };
 
@@ -41,42 +42,46 @@ function doSubmit() {
         panoramaHeading = panorama.getPov().heading;
         panoramaZoom = panorama.getPov().zoom;
         panoramaPosition = panorama.getPosition();
-
-        mapImg.src = "http://maps.googleapis.com/maps/api/streetview?location=" + panoramaPosition +
+        mapImg.src = "http://maps.googleapis.com/maps/api/streetview?" +
+            "location=" + panoramaPosition.lat() + ',' + panoramaPosition.lng() +
             "&pitch=" + panoramaPitch +
             "&heading=" + panoramaHeading +
             "&size=" + mapWidth + 'x' + mapHeight +
             "&zoom=" + panoramaZoom +
             "&sensor=false" +
-            "&region=KR";
+            "&region=KR" +
+            "&key=" + staticMapsAPI;
     } else {
-        mapImg.src = "http://maps.google.com/maps/api/staticmap?center=" + centerLat + ',' + centerLng +
+        mapImg.src = "http://maps.google.com/maps/api/staticmap?" +
+            "center=" + centerLat + ',' + centerLng +
             "&zoom=" + setZoom +
             "&size=" + mapWidth + 'x' + mapHeight +
             "&maptype=" + mapType +
-            //"&markers=" + marker_lat + ',' + marker_lng +
+            "&markers=" + marker_lat + ',' + marker_lng +
             "&sensor=false" +
             "&language=ko" +
-            "&region=KR";
+            "&region=KR" +
+            "&key=" + staticMapsAPI;
     }
 }
 
 function searchAddress() {
     var address = document.getElementById('fm_address').value,
         geocoder = new google.maps.Geocoder();
-    //var results, status;
-    //var marker = new google.maps.Marker({ 'map': map, 'draggable': true });
 
     geocoder.geocode({'address' : address},
-            function (results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    centerLat = results[0].geometry.location.lat();
-                    centerLng = results[0].geometry.location.lng();
-                    latlng = new google.maps.LatLng(centerLat, centerLng);
-                    map.setCenter(latlng);
-                    map.setZoom(setZoom);
-                }
-            });
+        function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                centerLat = results[0].geometry.location.lat();
+                centerLng = results[0].geometry.location.lng();
+                latlng = new google.maps.LatLng(centerLat, centerLng);
+                map.setCenter(latlng);
+                map.setZoom(setZoom);
+                marker = new google.maps.Marker({ 'map': map, 'draggable': true, 'position': latlng,
+                    animation: google.maps.Animation.DROP});
+                marker.setMap(map);
+            }
+        });
 }
 
 function initMap(zoom) {

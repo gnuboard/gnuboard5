@@ -1,9 +1,9 @@
 // ================================================================
-//                       CHEditor 5.1.9.3-p4
+//                       CHEditor 5.1.9.4
 // ----------------------------------------------------------------
 // Homepage: http://www.chcode.com
 // EMail: support@chcode.com
-// Copyright (c) 1997-2020 CHSOFT
+// Copyright (c) 1997-2021 CHSOFT
 // ================================================================
 var GB = {
     colors: ['#000000','#313131','#434343','#535353','#666666','#999999','#a0a0a0','#b5b5b5','#c0c0c0','#dcdcdc','#eeeeee','#ffffff',
@@ -568,6 +568,7 @@ function setConfig() {
     this.cheditor.tabSpaces = '';
     this.cheditor.modifyState = false;
     this.cheditor.tabSpaces = new Array(this.config.tabIndent + 1).join(' ');
+    this.URI = URI;
 }
 
 function cheditor() {
