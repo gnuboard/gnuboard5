@@ -12,7 +12,6 @@ $ca = array(
 'ca_name'=>'',
 'ca_order'=>'',
 'ca_mb_id'=>'',
-'ca_skin_dir'=>'',
 'ca_cert_use'=>0,
 'ca_adult_use'=>0,
 'ca_sell_email'=>'',
