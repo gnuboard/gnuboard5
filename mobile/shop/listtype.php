@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
 
-$type = isset($_REQUEST['type']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $_REQUEST['type']) : '';
-if ($type == 1)      $g5['title'] = '히트상품';
-else if ($type == 2) $g5['title'] = '추천상품';
-else if ($type == 3) $g5['title'] = '최신상품';
-else if ($type == 4) $g5['title'] = '인기상품';
-else if ($type == 5) $g5['title'] = '세일상품';
+$type = isset($_REQUEST['type']) ? (int) preg_replace("/[^0-9]/", "", $_REQUEST['type']) : 1;
+if ($type === 1)      $g5['title'] = '히트상품';
+else if ($type === 2) $g5['title'] = '추천상품';
+else if ($type === 3) $g5['title'] = '최신상품';
+else if ($type === 4) $g5['title'] = '인기상품';
+else if ($type === 5) $g5['title'] = '세일상품';
 else
     alert('상품유형이 아닙니다.');
 
