@@ -41,7 +41,7 @@ class Hybrid_Logger {
       $dt = new DateTime('now', new DateTimeZone( 'UTC' ));
 			file_put_contents(Hybrid_Auth::$config["debug_file"], implode(' -- ', array(
 				"DEBUG",
-				$_SERVER['REMOTE_ADDR'],
+				get_real_client_ip(),
 				$dt->format(DATE_ATOM),
 				$message,
 				print_r($object, true) . PHP_EOL,
@@ -61,7 +61,7 @@ class Hybrid_Logger {
       $dt = new DateTime('now', new DateTimeZone( 'UTC' ));
 			file_put_contents(Hybrid_Auth::$config["debug_file"], implode(' -- ', array(
 				"INFO",
-				$_SERVER['REMOTE_ADDR'],
+				get_real_client_ip(),
 				$dt->format(DATE_ATOM),
 				$message . PHP_EOL,
 					)), FILE_APPEND);
@@ -80,7 +80,7 @@ class Hybrid_Logger {
       $dt = new DateTime('now', new DateTimeZone( 'UTC' ));
 			file_put_contents(Hybrid_Auth::$config["debug_file"], implode(' -- ', array(
 				'ERROR',
-				$_SERVER['REMOTE_ADDR'],
+				get_real_client_ip(),
 				$dt->format(DATE_ATOM),
 				$message,
 				print_r($object, true) . PHP_EOL

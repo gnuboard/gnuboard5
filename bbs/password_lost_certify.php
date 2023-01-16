@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 // 봇의 메일 링크 크롤링을 방지합니다.
-if(function_exists('check_mail_bot')){ check_mail_bot($_SERVER['REMOTE_ADDR']); }
+if(function_exists('check_mail_bot')){ check_mail_bot(get_real_client_ip()); }
 
 run_event('password_lost_certify_before');
 

@@ -120,7 +120,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
         // 자신의 글이면 통과
         if ($write['mb_id'] && $write['mb_id'] === $member['mb_id']) {
             ;
-        } else if ($is_guest && $board['bo_read_level'] == 1 && $write['wr_ip'] == $_SERVER['REMOTE_ADDR']) {
+        } else if ($is_guest && $board['bo_read_level'] == 1 && $write['wr_ip'] == get_real_client_ip()) {
             // 비회원이면서 읽기레벨이 1이고 등록된 아이피가 같다면 자신의 글이므로 통과
             ;
         } else {

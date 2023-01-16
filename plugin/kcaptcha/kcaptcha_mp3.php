@@ -8,10 +8,12 @@ function make_mp3()
     $number = get_session("ss_captcha_key");
 
     if ($number == "") return;
-    $ip = md5(sha1($_SERVER['REMOTE_ADDR']));
+
+    $ip = md5(sha1(get_real_client_ip()));
     if( $number && function_exists('get_string_decrypt') ){
         $number = str_replace($ip, '', get_string_decrypt($number));
     }
+
     if ($number == get_session("ss_captcha_save")) return;
 
     $mp3s = array();

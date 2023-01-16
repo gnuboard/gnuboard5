@@ -34,6 +34,7 @@ $wr_10 = isset($_POST['wr_10']) ? $_POST['wr_10'] : '';
 $wr_facebook_user = isset($_POST['wr_facebook_user']) ? clean_xss_tags($_POST['wr_facebook_user'], 1, 1) : '';
 $wr_twitter_user = isset($_POST['wr_twitter_user']) ? clean_xss_tags($_POST['wr_twitter_user'], 1, 1) : '';
 $wr_homepage = isset($_POST['wr_homepage']) ? clean_xss_tags($_POST['wr_homepage'], 1, 1) : '';
+$realClientIp = get_real_client_ip();
 
 if (!empty($_POST['wr_email']))
     $wr_email = get_email_address(trim($_POST['wr_email']));
@@ -180,7 +181,7 @@ if ($w == 'c') // 댓글 입력
                      wr_homepage = '$wr_homepage',
                      wr_datetime = '".G5_TIME_YMDHIS."',
                      wr_last = '',
-                     wr_ip = '{$_SERVER['REMOTE_ADDR']}',
+                     wr_ip = '{$realClientIp}',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
                      wr_3 = '$wr_3',
@@ -322,7 +323,7 @@ else if ($w == 'cu') // 댓글 수정
 
     $sql_ip = "";
     if (!$is_admin)
-        $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql_ip = " , wr_ip = '{$realClientIp}' ";
 
     $sql_secret = " , wr_option = '$wr_secret' ";
 

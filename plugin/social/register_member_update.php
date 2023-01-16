@@ -87,6 +87,7 @@ $data = array(
 );
 
 $mb_email_certify = G5_TIME_YMDHIS;
+$realClientIp = get_real_client_ip();
 
 //메일인증을 사용한다면
 if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_use_email_certify'] ){
@@ -160,9 +161,9 @@ $sql = " insert into {$g5['member_table']}
                 mb_email_certify = '".$mb_email_certify."',
                 mb_today_login = '".G5_TIME_YMDHIS."',
                 mb_datetime = '".G5_TIME_YMDHIS."',
-                mb_ip = '{$_SERVER['REMOTE_ADDR']}',
+                mb_ip = '{$realClientIp}',
                 mb_level = '{$config['cf_register_level']}',
-                mb_login_ip = '{$_SERVER['REMOTE_ADDR']}',
+                mb_login_ip = '{$realClientIp}',
                 mb_mailling = '{$mb_mailling}',
                 mb_sms = '0',
                 mb_open = '{$mb_open}',

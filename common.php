@@ -535,7 +535,8 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
 
             // 오늘의 로그인이 될 수도 있으며 마지막 로그인일 수도 있음
             // 해당 회원의 접근일시와 IP 를 저장
-            $sql = " update {$g5['member_table']} set mb_today_login = '".G5_TIME_YMDHIS."', mb_login_ip = '{$_SERVER['REMOTE_ADDR']}' where mb_id = '{$member['mb_id']}' ";
+            $realClientIp = get_real_client_ip();
+            $sql = " update {$g5['member_table']} set mb_today_login = '".G5_TIME_YMDHIS."', mb_login_ip = '{$realClientIp}' where mb_id = '{$member['mb_id']}' ";
             sql_query($sql);
         }
     }
@@ -639,7 +640,7 @@ if ($is_admin != 'super') {
             $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
             $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
             $pat = "/^{$pattern[$i]}$/";
-            $is_possible_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
+            $is_possible_ip = preg_match($pat, get_real_client_ip());
             if ($is_possible_ip)
                 break;
         }
@@ -658,7 +659,7 @@ if ($is_admin != 'super') {
         $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
         $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
         $pat = "/^{$pattern[$i]}$/";
-        $is_intercept_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
+        $is_intercept_ip = preg_match($pat, get_real_client_ip());
         if ($is_intercept_ip)
             die ("<meta charset=utf-8>접근 불가합니다.");
     }

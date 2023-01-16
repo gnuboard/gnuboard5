@@ -1,16 +1,18 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+$realClientIp = get_real_client_ip();
+
 // 컴퓨터의 아이피와 쿠키에 저장된 아이피가 다르다면 테이블에 반영함
-if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
+if (get_cookie('ck_visit_ip') != $realClientIp)
 {
-    set_cookie('ck_visit_ip', $_SERVER['REMOTE_ADDR'], 86400); // 하루동안 저장
+    set_cookie('ck_visit_ip', $realClientIp, 86400); // 하루동안 저장
 
     $tmp_row = sql_fetch(" select max(vi_id) as max_vi_id from {$g5['visit_table']} ");
     $vi_id = $tmp_row['max_vi_id'] + 1;
 
     // $_SERVER 배열변수 값의 변조를 이용한 SQL Injection 공격을 막는 코드입니다. 110810
-    $remote_addr = escape_trim($_SERVER['REMOTE_ADDR']);
+    $remote_addr = escape_trim($realClientIp);
     $referer = "";
     if (isset($_SERVER['HTTP_REFERER']))
         $referer = escape_trim(clean_xss_tags(strip_tags($_SERVER['HTTP_REFERER'])));

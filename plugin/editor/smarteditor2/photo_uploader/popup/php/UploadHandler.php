@@ -1069,7 +1069,7 @@ class UploadHandler
     }
 
     protected function get_file_passname(){
-        $tmp_name = $this->get_user_id().$_SERVER['REMOTE_ADDR'];
+        $tmp_name = $this->get_user_id() . get_real_client_ip();
         $tmp_name = md5(sha1($tmp_name));
         return $tmp_name;
     }

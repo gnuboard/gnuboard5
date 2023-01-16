@@ -36,7 +36,7 @@ function chk_captcha(){
 
         $reCaptcha = new ReCaptcha_GNU( $config['cf_recaptcha_secret_key'] );
 
-        $resp = $reCaptcha->verify($_POST["g-recaptcha-response"], $_SERVER["REMOTE_ADDR"]);
+        $resp = $reCaptcha->verify($_POST["g-recaptcha-response"], get_real_client_ip());
     }
 
     if( ! $resp ){

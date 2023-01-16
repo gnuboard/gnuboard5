@@ -82,6 +82,7 @@ $bf_content = isset($_POST['bf_content']) ? (array) $_POST['bf_content'] : array
 $_POST['html'] = isset($_POST['html']) ? clean_xss_tags($_POST['html'], 1, 1) : '';
 $_POST['secret'] = isset($_POST['secret']) ? clean_xss_tags($_POST['secret'], 1, 1) : '';
 $_POST['mail'] = isset($_POST['mail']) ? clean_xss_tags($_POST['mail'], 1, 1) : '';
+$realClientIp = get_real_client_ip();
 
 if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
@@ -279,7 +280,7 @@ if ($w == '' || $w == 'r') {
                      wr_homepage = '$wr_homepage',
                      wr_datetime = '".G5_TIME_YMDHIS."',
                      wr_last = '".G5_TIME_YMDHIS."',
-                     wr_ip = '{$_SERVER['REMOTE_ADDR']}',
+                     wr_ip = '{$realClientIp}',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
                      wr_3 = '$wr_3',
@@ -379,7 +380,7 @@ if ($w == '' || $w == 'r') {
 
     $sql_ip = '';
     if (!$is_admin)
-        $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql_ip = " , wr_ip = '{$realClientIp}' ";
 
     $sql = " update {$write_table}
                 set ca_name = '{$ca_name}',
@@ -570,7 +571,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             $shuffle = implode('', $chars_array);
 
             // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
-            $upload[$i]['file'] = md5(sha1($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.replace_filename($filename);
+            $upload[$i]['file'] = md5(sha1($realClientIp)) . '_' . substr($shuffle, 0, 8) . '_' . replace_filename($filename);
 
             $dest_file = G5_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
 

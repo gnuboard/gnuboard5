@@ -58,6 +58,7 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
         $wr_password = $member['mb_password'];
         $wr_email = addslashes($member['mb_email']);
         $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
+        $realClientIp = get_real_client_ip();
 
         $sql = " select max(wr_comment) as max_comment from $write_table
                     where wr_parent = '$wr_id' and wr_is_comment = '1' ";
@@ -79,7 +80,7 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
                          wr_email = '$wr_email',
                          wr_homepage = '$wr_homepage',
                          wr_datetime = '".G5_TIME_YMDHIS."',
-                         wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+                         wr_ip = '{$realClientIp}' ";
         sql_query($sql);
 
         $comment_id = sql_insert_id();

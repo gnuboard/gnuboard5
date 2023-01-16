@@ -180,6 +180,8 @@ if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert
 $sql_certify = '';
 $md5_cert_no = get_session('ss_cert_no');
 $cert_type = get_session('ss_cert_type');
+$realClientIp = get_real_client_ip();
+
 if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
     // 해시값이 같은 경우에만 본인확인 값을 저장한다.
     if ($cert_type == 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { // 아이핀일때 hash 값 체크 hp미포함
@@ -233,10 +235,10 @@ if ($w == '') {
                      mb_profile = '{$mb_profile}',
                      mb_today_login = '".G5_TIME_YMDHIS."',
                      mb_datetime = '".G5_TIME_YMDHIS."',
-                     mb_ip = '{$_SERVER['REMOTE_ADDR']}',
+                     mb_ip = '{$realClientIp}',
                      mb_level = '{$config['cf_register_level']}',
                      mb_recommend = '{$mb_recommend}',
-                     mb_login_ip = '{$_SERVER['REMOTE_ADDR']}',
+                     mb_login_ip = '{$realClientIp}',
                      mb_mailling = '{$mb_mailling}',
                      mb_sms = '{$mb_sms}',
                      mb_open = '{$mb_open}',

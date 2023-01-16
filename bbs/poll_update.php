@@ -16,6 +16,7 @@ if(!$gb_poll)
 
 $search_mb_id = false;
 $search_ip = false;
+$realClientIp = get_real_client_ip();
 
 if($is_member) {
     // 투표했던 회원아이디들 중에서 찾아본다
@@ -30,7 +31,7 @@ if($is_member) {
     // 투표했던 ip들 중에서 찾아본다
     $ips = explode(',', trim($po['po_ips']));
     for ($i=0; $i<count($ips); $i++) {
-        if ($_SERVER['REMOTE_ADDR'] == trim($ips[$i])) {
+        if ($realClientIp == trim($ips[$i])) {
             $search_ip = true;
             break;
         }
@@ -42,7 +43,7 @@ $result_url = G5_BBS_URL."/poll_result.php?po_id=$po_id&skin_dir={$post_skin_dir
 
 // 없다면 선택한 투표항목을 1증가 시키고 ip, id를 저장
 if (!($search_ip || $search_mb_id)) {
-    $po_ips = $po['po_ips'] . $_SERVER['REMOTE_ADDR'].",";
+    $po_ips = $po['po_ips'] . $realClientIp . ",";
     $mb_ids = $po['mb_ids'];
     if ($is_member) { // 회원일 때는 id만 추가
         $mb_ids .= $member['mb_id'].',';

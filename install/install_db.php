@@ -141,6 +141,7 @@ $read_point = 0;
 $write_point = 0;
 $comment_point = 0;
 $download_point = 0;
+$realClientIp = get_real_client_ip();
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
@@ -240,7 +241,7 @@ if ($g5_install || $is_install === false) {
                      mb_nick_date = '".G5_TIME_YMDHIS."',
                      mb_email_certify = '".G5_TIME_YMDHIS."',
                      mb_datetime = '".G5_TIME_YMDHIS."',
-                     mb_ip = '{$_SERVER['REMOTE_ADDR']}'
+                     mb_ip = '{$realClientIp}'
                      ";
     sql_query($sql, true, $dblink);
 

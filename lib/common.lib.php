@@ -2334,7 +2334,7 @@ function is_checked($field)
 
 function abs_ip2long($ip='')
 {
-    $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
+    $ip = $ip ? $ip : get_real_client_ip();
     return abs(ip2long($ip));
 }
 
@@ -2388,12 +2388,14 @@ function get_uniqid()
 {
     global $g5;
 
+    $realClientIp = get_real_client_ip();
+
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
         $key = date('YmdHis', time()) . str_pad((int)((float)microtime()*100), 2, "0", STR_PAD_LEFT);
 
-        $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
+        $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$realClientIp}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
 
         // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
@@ -2709,16 +2711,18 @@ class html_process {
 
         self::$is_end = 1;
 
+        $realClientIp = get_real_client_ip();
+
         // 현재접속자 처리
-        $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$realClientIp}' ";
         $tmp_row = sql_fetch($tmp_sql);
         $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
 
         if ($tmp_row['cnt']) {
-            $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+            $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$realClientIp}' ";
             sql_query($tmp_sql, FALSE);
         } else {
-            $tmp_sql = " insert into {$g5['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$g5['lo_location']}',  '{$g5['lo_url']}' ) ";
+            $tmp_sql = " insert into {$g5['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$realClientIp}', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$g5['lo_location']}',  '{$g5['lo_url']}' ) ";
             sql_query($tmp_sql, FALSE);
 
             // 시간이 지난 접속은 삭제한다
@@ -2915,11 +2919,13 @@ function insert_cert_history($mb_id, $company, $method)
 {
     global $g5;
 
+    $realClientIp = get_real_client_ip();
+
     $sql = " insert into {$g5['cert_history_table']}
                 set mb_id = '$mb_id',
                     cr_company = '$company',
                     cr_method = '$method',
-                    cr_ip = '{$_SERVER['REMOTE_ADDR']}',
+                    cr_ip = '{$realClientIp}',
                     cr_date = '".G5_TIME_YMD."',
                     cr_time = '".G5_TIME_HIS."' ";
     sql_query($sql);
@@ -2965,6 +2971,8 @@ function certify_count_check($mb_id, $type)
 {
     global $g5, $config;
 
+    $realClientIp = get_real_client_ip();
+
     if($config['cf_cert_use'] != 2)
         return;
 
@@ -2976,7 +2984,7 @@ function certify_count_check($mb_id, $type)
     if($mb_id) {
         $sql .= " where mb_id = '$mb_id' ";
     } else {
-        $sql .= " where cr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql .= " where cr_ip = '{$realClientIp}' ";
     }
 
     $sql .= " and cr_method = '".$type."' and cr_date = '".G5_TIME_YMD."' ";
@@ -3412,9 +3420,10 @@ function replace_filename($name)
     $usec = get_microtime();
     $file_path = pathinfo($name);
     $ext = $file_path['extension'];
-    $return_filename = sha1($ss_id.$_SERVER['REMOTE_ADDR'].$usec); 
-    if( $ext )
-        $return_filename .= '.'.$ext;
+    $return_filename = sha1($ss_id . get_real_client_ip() . $usec);
+    if ($ext) {
+        $return_filename .= '.' . $ext;
+    }
 
     return $return_filename;
 }
@@ -3439,8 +3448,9 @@ function insert_popular($field, $str)
 {
     global $g5;
 
-    if(!in_array('mb_id', $field)) {
-        $sql = " insert into {$g5['popular_table']} set pp_word = '{$str}', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+    if (!in_array('mb_id', $field)) {
+        $realClientIp = get_real_client_ip();
+        $sql = " insert into {$g5['popular_table']} set pp_word = '{$str}', pp_date = '" . G5_TIME_YMD . "', pp_ip = '{$realClientIp}' ";
         sql_query($sql, FALSE);
     }
 }

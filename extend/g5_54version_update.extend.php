@@ -42,6 +42,8 @@ function g54_user_memo_insert($kind, $unkind, $page=1){
 
     if( ! $is_member || $kind !== 'send' ) return;
 
+    $realClientIp = get_real_client_ip();
+
     $sql = " select count(*) as cnt from {$g5['memo_table']} where me_send_mb_id = '{$member['mb_id']}' and me_type = 'recv' and me_send_ip = '' ";
     $row = sql_fetch($sql);
 
@@ -61,7 +63,7 @@ function g54_user_memo_insert($kind, $unkind, $page=1){
             sql_query($sql);
         }
 
-        $sql = " update {$g5['memo_table']} set me_send_ip = '{$_SERVER['REMOTE_ADDR']}' where me_send_mb_id = '{$member['mb_id']}' and me_type = 'recv' and me_send_ip = '' ";
+        $sql = " update {$g5['memo_table']} set me_send_ip = '{$realClientIp}' where me_send_mb_id = '{$member['mb_id']}' and me_type = 'recv' and me_send_ip = '' ";
 
         sql_query($sql);
     }

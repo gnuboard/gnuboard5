@@ -86,6 +86,7 @@ $qa_related = 0;
 $qa_email_recv = (isset($_POST['qa_email_recv']) && $_POST['qa_email_recv']) ? 1 : 0;
 $qa_sms_recv = (isset($_POST['qa_sms_recv']) && $_POST['qa_sms_recv']) ? 1 : 0;
 $qa_status = 0;
+$realClientIp = get_real_client_ip();
 
 for ($i=1; $i<=5; $i++) {
     $var = "qa_$i";
@@ -223,7 +224,7 @@ for ($i=1; $i<=$upload_count; $i++) {
         $shuffle = implode('', $chars_array);
 
         // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
-        $upload[$i]['file'] = md5(sha1($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.replace_filename($filename);
+        $upload[$i]['file'] = md5(sha1($realClientIp)) . '_' . substr($shuffle, 0, 8) . '_' . replace_filename($filename);
 
         $dest_file = G5_DATA_PATH.'/qa/'.$upload[$i]['file'];
 
@@ -275,7 +276,7 @@ if($w == '' || $w == 'a' || $w == 'r') {
                     qa_source1      = '{$insert_qa_source1}',
                     qa_file2        = '{$insert_qa_file2}',
                     qa_source2      = '{$insert_qa_source2}',
-                    qa_ip           = '{$_SERVER['REMOTE_ADDR']}',
+                    qa_ip           = '{$realClientIp}',
                     qa_datetime     = '".G5_TIME_YMDHIS."',
                     qa_1            = '$qa_1',
                     qa_2            = '$qa_2',

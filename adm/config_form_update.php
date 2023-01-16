@@ -46,8 +46,9 @@ if (isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']) {
         $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
         $pat = "/^{$pattern[$i]}$/";
 
-        if (preg_match($pat, $_SERVER['REMOTE_ADDR'])) {
-            alert("현재 접속 IP : " . $_SERVER['REMOTE_ADDR'] . " 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
+        $realClientIp = get_real_client_ip();
+        if (preg_match($pat, $realClientIp)) {
+            alert("현재 접속 IP : " . $realClientIp . " 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
         }
     }
 }

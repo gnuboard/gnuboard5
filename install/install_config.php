@@ -20,7 +20,7 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
 }
 
 $tmp_str = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
-$ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'));
+$ajax_token = md5($tmp_str . get_real_client_ip() . dirname(dirname(__FILE__) . '/'));
 ?>
 
 

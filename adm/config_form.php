@@ -1598,7 +1598,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     });
 
     function fconfigform_submit(f) {
-        var current_user_ip = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
+        var current_user_ip = "<?php echo get_real_client_ip(); ?>";
         var cf_intercept_ip_val = f.cf_intercept_ip.value;
 
         if (cf_intercept_ip_val && current_user_ip) {
