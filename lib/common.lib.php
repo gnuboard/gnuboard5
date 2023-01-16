@@ -3969,7 +3969,7 @@ function get_real_client_ip()
 {
     $real_ip = $_SERVER['REMOTE_ADDR'];
 
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $_SERVER['HTTP_X_FORWARDED_FOR']) ){
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !!filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
         $real_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
     }
 
@@ -3977,7 +3977,7 @@ function get_real_client_ip()
         $real_ip = $replacedIp;
     }
 
-    return preg_replace('/[^0-9.]/', '', $real_ip);
+    return preg_replace('/[^0-9a-f\.:]/', '', $real_ip);
 }
 
 function check_mail_bot($ip=''){
