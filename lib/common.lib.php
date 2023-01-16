@@ -3965,12 +3965,16 @@ function safe_replace_regex($str, $str_case=''){
     return preg_replace('/[^0-9a-z_\-]/i', '', $str);
 }
 
-function get_real_client_ip(){
-
+function get_real_client_ip()
+{
     $real_ip = $_SERVER['REMOTE_ADDR'];
 
     if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $_SERVER['HTTP_X_FORWARDED_FOR']) ){
         $real_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+
+    if ($replacedIp = filter_var(run_replace('get_real_client_ip', $real_ip), FILTER_VALIDATE_IP)) {
+        $real_ip = $replacedIp;
     }
 
     return preg_replace('/[^0-9.]/', '', $real_ip);
