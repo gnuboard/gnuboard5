@@ -42,15 +42,15 @@ if (function_exists('before_check_cart_price')) {
 }
 
 // 재고체크
-$sql = " select *
+$sql = " select *, sum(ct_qty) as sum_ct_qty
             from {$g5['g5_shop_cart_table']}
             where od_id = '$tmp_cart_id'
               and ct_select = '1'
-              and ct_status = '쇼핑' ";
+              and ct_status = '쇼핑' GROUP BY od_id, it_id, it_name, ct_option, io_id, io_type ";
 $result = sql_query($sql);
 
 for($i=0; $row=sql_fetch_array($result); $i++) {
-    $ct_qty = $row['ct_qty'];
+    $ct_qty = $row['sum_ct_qty'];
 
     // 해당 상품이 품절 또는 판매중지 상태인지 체크합니다.
     $sql = " select it_soldout, it_use, ca_id, ca_id2, ca_id3 from {$g5['g5_shop_item_table']} where it_id = '".$row['it_id']."' ";

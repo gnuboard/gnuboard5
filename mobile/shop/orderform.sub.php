@@ -1233,6 +1233,7 @@ var temp_point = 0;
 
 function pay_approval()
 {
+    // 무통장 아닌 가상계좌, 계좌이체, 휴대폰, 신용카드, 기타 등등 을 처리한다.
     // 재고체크
     var stock_msg = order_stock_check();
     if(stock_msg != "") {
@@ -1435,6 +1436,14 @@ function pay_approval()
 
 function forderform_check()
 {
+    // 무통장만 여기에처 처리한다.
+    // 재고체크
+    var stock_msg = order_stock_check();
+    if(stock_msg != "") {
+        alert(stock_msg);
+        return false;
+    }
+
     var f = document.forderform;
 
     // 필드체크

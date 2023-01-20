@@ -58,10 +58,14 @@ if($act == "buy")
             }
 
             // 주문 상품의 재고체크
-            $sql = " select ct_qty, it_name, ct_option, io_id, io_type
+            // 동일 상품 옵션이 레코드에 있는 경우 재고를 제대로 체크하지 못하는 오류가 있음
+            // $sql = " select ct_qty, it_name, ct_option, io_id, io_type from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ";
+
+            $sql = " select sum(ct_qty) as ct_qty, it_name, ct_option, io_id, io_type
                         from {$g5['g5_shop_cart_table']}
                         where od_id = '$tmp_cart_id'
-                          and it_id = '$it_id' ";
+                          and it_id = '$it_id' GROUP BY od_id, it_id, it_name, ct_option, io_id, io_type ";
+
             $result = sql_query($sql);
 
             for($k=0; $row=sql_fetch_array($result); $k++) {
@@ -73,6 +77,7 @@ if($act == "buy")
                             and ct_stock_use = 0
                             and ct_status = '쇼핑'
                             and ct_select = '1' ";
+
                 $sum = sql_fetch($sql);
                 // $sum['cnt'] 가 null 일때 재고 반영이 제대로 안되는 오류 수정 (그누위즈님,210614)
                 // $sum_qty = $sum['cnt'];
