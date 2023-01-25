@@ -305,6 +305,11 @@ function get_nginx_conf_rules($return_string = false)
 
     $rules = array();
     $rules[] = '#### ' . G5_VERSION . ' nginx rules BEGIN #####';
+
+    if ($add_rules = run_replace('add_nginx_conf_pre_rules', '', $get_path_url, $base_path, $return_string)) {
+        $rules[] = $add_rules;
+    }
+
     $rules[] = 'if (!-e $request_filename) {';
 
     if ($add_rules = run_replace('add_nginx_conf_rules', '', $get_path_url, $base_path, $return_string)) {
@@ -334,6 +339,11 @@ function get_mod_rewrite_rules($return_string = false)
     $rules[] = '<IfModule mod_rewrite.c>';
     $rules[] = 'RewriteEngine On';
     $rules[] = 'RewriteBase ' . $base_path;
+
+    if ($add_rules = run_replace('add_mod_rewrite_pre_rules', '', $get_path_url, $base_path, $return_string)) {
+        $rules[] = $add_rules;
+    }
+
     $rules[] = 'RewriteCond %{REQUEST_FILENAME} -f [OR]';
     $rules[] = 'RewriteCond %{REQUEST_FILENAME} -d';
     $rules[] = 'RewriteRule ^ - [L]';
