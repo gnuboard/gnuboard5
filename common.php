@@ -502,6 +502,7 @@ if (isset($_REQUEST['url'])) {
     $urlencode = urlencode($_SERVER['REQUEST_URI']);
     if (G5_DOMAIN) {
         $p = @parse_url(G5_DOMAIN);
+        $p['path'] = isset($p['path']) ? $p['path'] : '/';
         $urlencode = G5_DOMAIN.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode));
     }
 }
