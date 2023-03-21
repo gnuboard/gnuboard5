@@ -111,7 +111,7 @@ $cp_count = get_shop_member_coupon_count($member['mb_id'], true);
             <li>
                 <div class="wish_img"><?php echo $image; ?></div>
                 <div class="wish_info">
-                    <a href="<?php echo get_shop_item($row['it_id'], true); ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>
+                    <a href="<?php echo shop_item_url($row['it_id']); ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>
                      <span class="info_date"><?php echo substr($row['wi_time'], 2, 8); ?></span>
                 </div>
             </li>
