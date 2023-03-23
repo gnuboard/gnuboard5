@@ -624,6 +624,9 @@ if($is_kakaopay_use) {
                 if( in_array('nhnkcp_kakaopay', $de_easy_pay_service_array) ){
                     $easypay_prints['nhnkcp_kakaopay'] = '<li><input type="radio" id="od_settle_nhnkcp_kakaopay" name="od_settle_case" data-pay="kakaopay" value="간편결제" > <label for="od_settle_nhnkcp_kakaopay" class="kakaopay_icon nhnkcp_kakaopay lb_icon" title="NHN_KCP - 카카오페이">카카오페이</label></li>';
                 }
+                if( in_array('nhnkcp_applepay', $de_easy_pay_service_array) && preg_match('~^(?:(?:(?:Mozilla/\d\.\d\s*\()+|Mobile\s*Safari\s*\d+\.\d+(\.\d+)?\s*)(?:iPhone(?:\s+Simulator)?|iPad|iPod);\s*(?:U;\s*)?(?:[a-z]+(?:-[a-z]+)?;\s*)?CPU\s*(?:iPhone\s*)?(?:OS\s*\d+_\d+(?:_\d+)?\s*)?(?:like|comme)\s*Mac\s*O?S?\s*X(?:;\s*[a-z]+(?:-[a-z]+)?)?\)\s*)?(?:AppleWebKit/\d+(?:\.\d+(?:\.\d+)?|\s*\+)?\s*)?(?:\(KHTML,\s*(?:like|comme)\s*Gecko\s*\)\s*)?(?:Version/\d+\.\d+(?:\.\d+)?\s*)?(?:Mobile/\w+\s*)?(?:Safari/\d+\.\d+(?:\.\d+)?.*)?$~', $_SERVER['HTTP_USER_AGENT']) ){
+                    $easypay_prints['nhnkcp_applepay'] = '<li><input type="radio" id="od_settle_nhnkcp_applepay" name="od_settle_case" data-pay="applepay" value="간편결제" > <label for="od_settle_nhnkcp_applepay" class="applepay_icon nhnkcp_applepay lb_icon" title="NHN_KCP - 애플페이">애플페이</label></li>';
+                }
             } else {
                 $easypay_prints[strtolower($pg_easy_pay_name)] = '<li><input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay" class="'.$pg_easy_pay_name.' lb_icon">'.$pg_easy_pay_name.'</label></li>';
             }
@@ -1300,6 +1303,7 @@ function pay_approval()
         if(typeof f.payco_direct !== "undefined") f.payco_direct.value = "";
         if(typeof f.naverpay_direct !== "undefined") f.naverpay_direct.value = "A";
         if(typeof f.kakaopay_direct !== "undefined") f.kakaopay_direct.value = "A";
+        if(typeof f.applepay_direct !== "undefined") f.applepay_direct.value = "A";
         if(typeof f.ActionResult !== "undefined") f.ActionResult.value = "";
         if(typeof f.pay_method !== "undefined") f.pay_method.value = "";
 
@@ -1312,6 +1316,8 @@ function pay_approval()
                 }
             } else if(nhnkcp_easy_pay === "kakaopay"){
                 if(typeof f.kakaopay_direct !== "undefined") f.kakaopay_direct.value = "Y";
+            } else if(nhnkcp_easy_pay === "applepay"){
+                if(typeof f.applepay_direct !== "undefined") f.applepay_direct.value = "Y";
             } else {
                 if(typeof f.payco_direct !== "undefined") f.payco_direct.value = "Y";
             }
@@ -1319,6 +1325,10 @@ function pay_approval()
             if(typeof f.ActionResult !== "undefined") f.ActionResult.value = "CARD";    // 대소문자 구분
             if(typeof f.pay_method !== "undefined") f.pay_method.value = "card";        // 대소문자 구분
 
+            //if(nhnkcp_easy_pay === "applepay"){
+            //    if(typeof f.ActionResult !== "undefined") f.ActionResult.value = "card";
+            //    if(typeof f.pay_method !== "undefined") f.pay_method.value = "CARD";
+            //}
         }
 
         <?php } else if($default['de_pg_service'] == 'lg') { ?>

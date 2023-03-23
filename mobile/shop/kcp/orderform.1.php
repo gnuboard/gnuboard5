@@ -24,6 +24,7 @@ $param_opt_3 = isset($_REQUEST['param_opt_3']) ? clean_xss_tags($_REQUEST['param
 <input type="hidden" name="payco_direct"   value="">      <!-- PAYCO 결제창 호출 -->
 <input type="hidden" name="naverpay_direct" value="A" >    <!-- NAVERPAY 결제창 호출 -->
 <input type="hidden" name="kakaopay_direct" value="A" >    <!-- KAKAOPAY 결제창 호출 -->
+<input type="hidden" name="applepay_direct" value="A" >    <!-- APPLEPAY 결제창 호출 -->
 <!-- 주문번호 -->
 <input type="hidden" name="ordr_idxx" value="<?php echo $od_id; ?>">
 <!-- 인증수단(영문 소문자) * 반드시 대소문자 구분 -->

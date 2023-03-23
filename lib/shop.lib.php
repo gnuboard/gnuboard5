@@ -2769,6 +2769,8 @@ function check_pay_name_replace($payname, $od=array(), $is_client=0){
                 return '네이버페이_NHNKCP'.$add_str;
             } else if( isset($od['od_other_pay_type']) && ($od['od_other_pay_type'] === 'OT13' || $od['od_other_pay_type'] === 'NHNKCP_KAKAOMONEY') ){
                 return '카카오페이_NHNKCP'.$add_str;
+            } else if( isset($od['od_other_pay_type']) && $od['od_other_pay_type'] === 'OT21' ){
+                return '애플페이_NHNKCP'.$add_str;
             }
 
             return 'PAYCO'.$add_str;

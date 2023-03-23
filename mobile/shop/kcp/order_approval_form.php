@@ -67,6 +67,7 @@ include_once('./_common.php');
     $payco_direct    = isset($_POST["payco_direct"]) ? $_POST["payco_direct"] : ''; // PAYCO 결제창 호출
     $naverpay_direct = isset($_POST["naverpay_direct"]) ? $_POST["naverpay_direct"] : ''; // NAVERPAY 결제창 호출
     $kakaopay_direct = isset($_POST["kakaopay_direct"]) ? $_POST["kakaopay_direct"] : ''; // KAKAOPAY 결제창 호출
+    $applepay_direct = isset($_POST["applepay_direct"]) ? $_POST["applepay_direct"] : ''; // APPLEPAY 결제창 호출
 
 	/*
      * 기타 파라메터 추가 부분 - Start -
@@ -157,7 +158,7 @@ include_once('./_common.php');
     {
 
        var v_frm = document.sm_form;
-
+        
         layer_cont_obj   = document.getElementById("content");
         layer_receipt_obj = document.getElementById("layer_receipt");
 
@@ -165,9 +166,16 @@ include_once('./_common.php');
         layer_receipt_obj.style.display = "block";
         
         v_frm.target = "frm_receipt";
+        
+        // IOS 환경의 경우 iframe에서 네이버페이와 애플페이의 cors 문제가 일어나므로 iframe으로 열지 않는다.
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-        // 네이버페이면 반드시 페이지전환 방식이어야 하며, 그 외에는 iframe 방식으로 한다.
-        if(typeof v_frm.naverpay_direct !== "undefined" && v_frm.naverpay_direct.value == "Y") {
+        if (isIOS) {
+            v_frm.target = "";
+        }
+
+        // 네이버페이 또는 애플페이의 경우 반드시 페이지전환 방식이어야 하며, 그 외에는 iframe 방식으로 한다.
+        if((typeof v_frm.naverpay_direct !== "undefined" && v_frm.naverpay_direct.value == "Y") || (typeof v_frm.applepay_direct !== "undefined" && v_frm.applepay_direct.value == "Y")) {
             v_frm.target = "";
         }
 
@@ -267,18 +275,20 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 ?>
 
 <?php if($payco_direct){ ?>
-<input type="hidden" name="payco_direct"   value="<?php echo $payco_direct; ?>">      <!-- PAYCO 결제창 호출 -->
+<input type="hidden" name="payco_direct"   value="<?php echo get_text($payco_direct); ?>">      <!-- PAYCO 결제창 호출 -->
 <?php } ?>
 <?php if($naverpay_direct){ ?>
-<input type="hidden" name="naverpay_direct"   value="<?php echo $naverpay_direct; ?>">      <!-- 네이버페이 결제창 호출 -->
+<input type="hidden" name="naverpay_direct"   value="<?php echo get_text($naverpay_direct); ?>">      <!-- 네이버페이 결제창 호출 -->
     <?php if(isset($default['de_easy_pay_services']) && in_array('used_nhnkcp_naverpay_point', explode(',', $default['de_easy_pay_services'])) ){     // 네이버페이 포인트 결제 옵션 ?>
     <input type="hidden" name="naverpay_point_direct" value="Y">    <!-- 네이버페이 포인트 결제를 하려면 naverpay_point_direct 를 Y  -->
     <?php } ?>
 <?php } ?>
-<?php if($kakaopay_direct){ ?>
-<input type="hidden" name="kakaopay_direct"   value="<?php echo $kakaopay_direct; ?>">      <!-- 카카오페이 결제창 호출 -->
+<?php if($applepay_direct === "Y"){ ?>
+<input type="hidden" name="applepay_direct" value="<?php echo get_text($applepay_direct); ?>">  <!-- 애플페이 결제창 호출 -->
 <?php } ?>
-
+<?php if($kakaopay_direct){ ?>
+<input type="hidden" name="kakaopay_direct"   value="<?php echo get_text($kakaopay_direct); ?>">      <!-- 카카오페이 결제창 호출 -->
+<?php } ?>
 <!-- 필수 사항 -->
 
 <!-- 요청 구분 -->
