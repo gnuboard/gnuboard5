@@ -17,13 +17,15 @@ while ($row=sql_fetch_array($result))
     $faq_master_list[$key] = $row;
 }
 
+$fm = array();
 if (isset($fm_id) && $fm_id){
     $fm_id = (int) $fm_id;
     $qstr .= '&amp;fm_id=' . $fm_id; // 마스터faq key_id
+
+    $fm = $faq_master_list[$fm_id];
 }
 
-$fm = $faq_master_list[$fm_id];
-if (!$fm['fm_id'])
+if (! (isset($fm['fm_id']) && $fm['fm_id']))
     alert('등록된 내용이 없습니다.');
 
 $g5['title'] = $fm['fm_subject'];
