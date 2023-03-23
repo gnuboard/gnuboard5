@@ -61,29 +61,39 @@ Class G5_object_cache {
                 $this->contents[$group][$key] = $data;
                 break;
             default :
-                $datas = $this->etcs[$group][$key] = $data;
+                $this->etcs[$group][$key] = $data;
                 break;
         }
 
     }
+    /**
+     * cache 데이터 제거
+     * @param string $type
+     * @param string $key
+     * @param string $group
+     * @return bool
+     * kkigomi 님이 고쳐주심
+     */
+    function delete($type, $key, $group = 'default')
+    {
+        if (!$this->exists($type, $key, $group)) {
+            return false;
+        }
 
-    function delete($key, $group='default') {
-        switch ($key) {
+        switch ($type) {
             case 'bbs':
-                $datas = $this->writes;
+                $datas = &$this->writes;
                 break;
             case 'content':
-                $datas = $this->contents;
+                $datas = &$this->contents;
                 break;
-            default :
-                $datas = $this->etcs;
+            default:
+                $datas = &$this->etcs;
                 break;
         }
 
-        if ( ! $this->exists('bbs', $key, $group) )
-            return false;
+        unset($datas[$group][$key]);
 
-        unset( $datas[$group][$key] );
         return true;
     }
 
