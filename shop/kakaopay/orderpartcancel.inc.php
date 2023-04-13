@@ -15,46 +15,25 @@ $buyeremail    = $od['od_email'];
 $tax           = (int)$tax_mny - $vat_mny;
 $taxfree       = (int)$free_mny;
 
-/***********************
- * 3. 재승인 정보 설정 *
- ***********************/
-$inipay->SetField("type",          "repay");                         // 고정 (절대 수정 불가)
-$inipay->SetField("pgid",          "INIphpRPAY");                    // 고정 (절대 수정 불가)
-$inipay->SetField("subpgip",       "203.238.3.10");                  // 고정
-$inipay->SetField("mid",           $default['de_kakaopay_mid']);       // 상점아이디
-$inipay->SetField("admin",         $default['de_kakaopay_cancelpwd']); //비대칭 사용키 키패스워드
-$inipay->SetField("oldtid",        $oldtid);                         // 취소할 거래의 거래아이디
-$inipay->SetField("currency",      $currency);                       // 화폐단위
-$inipay->SetField("price",         $price);                          // 취소금액
-$inipay->SetField("confirm_price", $confirm_price);                  // 승인요청금액
-$inipay->SetField("buyeremail",    $buyeremail);                     // 구매자 이메일 주소
-$inipay->SetField("tax",           $tax);                            // 부가세금액
-$inipay->SetField("taxfree",       $taxfree);                        // 비과세금액
+$args = array(
+    'key' => isset($default['de_kakaopay_iniapi_key']) ? $default['de_kakaopay_iniapi_key'] : '',
+    'mid' => $default['de_kakaopay_mid'],
+    'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
+    'tid' => $od['od_tno'],
+    'msg' => $od['od_id'].' '.$mod_memo,
+    'price' => $price,
+    'confirmPrice' => $confirm_price,
+    'tax' => $tax,
+    'taxFree' => $taxfree
+);
 
-/******************
- * 4. 재승인 요청 *
- ******************/
-$inipay->startAction();
+$response = inicis_tid_cancel($args, true);     // KG 이니시스 부분취소일 경우 inicis_tid_cancel 함수 2번째 인자값을 true로
+$result = json_decode($response, true);
 
-
-/*******************************************************************
- * 5. 재승인 결과                                                  *
- *                                                                 *
- * 신거래번호 : $inipay->getResult('TID')                                     *
- * 결과코드 : $inipay->getResult('ResultCode') ("00"이면 재승인 성공)         *
- * 결과내용 : $inipay->getResult('ResultMsg') (재승인결과에 대한 설명)        *
- * 원거래 번호 : $inipay->getResult('PRTC_TID')                                *
- * 최종결제 금액 : $inipay->getResult('PRTC_Remains')                              *
- * 부분취소 금액 : $inipay->getResult('PRTC_Price')                          *
- * 부분취소,재승인 구분값 : $inipay->getResult('PRTC_Type')              *
- *                          ("0" : 재승인, "1" : 부분취소)         *
- * 부분취소(재승인) 요청횟수 : $inipay->getResult('PRTC_Cnt')           *
- *******************************************************************/
-
- if($inipay->getResult('ResultCode') == '00') {
+if (isset($result['resultCode']) && $result['resultCode'] == '00') {
      // 환불금액기록
-    $tno      = $inipay->getResult('PRTC_TID');
-    $re_price = $inipay->getResult('PRTC_Price');
+    $tno      = $result['prtcTid'];
+    $re_price = $result['prtcPrice'];
 
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_refund_price = od_refund_price + '$re_price',
@@ -74,5 +53,9 @@ $inipay->startAction();
                 where od_id = '$od_id' ";
     sql_query($sql);
  } else {
-     alert(iconv_utf8($inipay->GetResult("ResultMsg")).' 코드 : '.$inipay->GetResult("ResultCode"));
+     if (isset($result['resultCode'])){
+         alert($result['resultMsg'].' 코드 : '.$result['resultCode']);
+     } else {
+         alert('curl 오류로 부분환불에 실패했습니다.');
+     }
  }

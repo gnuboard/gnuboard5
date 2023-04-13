@@ -14,12 +14,10 @@ if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
         // 에스크로결제 테스트
         $default['de_inicis_mid'] = 'iniescrow0';
-        $default['de_inicis_admin_key'] = '1111';
     }
     else {
         // 일반결제 테스트
         $default['de_inicis_mid'] = 'INIpayTest';
-        $default['de_inicis_admin_key'] = '1111';
     }
 }
 else {
@@ -108,6 +106,8 @@ $inicis_cardpoint = $default['de_inicis_cartpoint_use'] ? '&cp_yn=Y' : '';
 // 신용카드 상점 부담 무이자 옵션
 // 예) BC 2,3,6개월, 국민 3,6개월, 삼성 6,9개월 무이자 : 11-2:3:6^06-3:6^12-3:6:4
 //$inicis_cardpoint .= '';        // &merc_noint=Y&noint_quota=카드사코드-개월:개월^추가카드사코드-개월:개월:개월 형식으로 설정
+
+require_once(G5_SHOP_PATH.'/inicis/libs/inicis_youngcart_fn.php');
 
 $noti_url   = G5_MSHOP_URL.'/inicis/settle_common.php';
 $next_url   = G5_MSHOP_URL.'/inicis/pay_approval.php';

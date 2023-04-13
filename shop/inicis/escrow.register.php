@@ -5,27 +5,12 @@ if($od['od_pg'] != 'inicis') return;
 
 include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
 
-$oid        = $od['od_id'];
-$EscrowType = 'I';
-$invoice    = $escrow_numb;
-$dlv_charge = 'SH'; // 배송비 지급형태 (SH : 판매자부담, BH : 구매자부담)
-$sendName   = iconv_euckr($od['od_name']);
-$sendPost   = $od['od_zip1'].$od['od_zip2'];
-$sendAddr1  = iconv_euckr($od['od_addr1']);
-$sendAddr2  = iconv_euckr($od['od_addr2']);
-$sendTel    = $od['od_tel'];
-$recvName   = iconv_euckr($od['od_b_name']);
-$recvPost   = $od['od_b_zip1'].$od['od_b_zip2'];
-$recvAddr   = iconv_euckr($od['od_b_addr1'].($od['od_b_addr2'] ? ' ' : '').$od['od_b_addr2']);
-$recvTel    = $od['od_b_tel'];
-$price      = $od['od_receipt_price'];
-
-// 택배회사 코드
+// 택배회사 코드, https://manual.inicis.com/iniweb/code.html 에서 조회
 $exCode = array(
     '대한통운'         => 'korex',
     '아주택배'         => 'ajutb',
     'KT로지스'         => 'ktlogistics',
-    '현대택배'         => 'hyundai',
+    '롯데택배(구.현대)'  => 'hyundai',
     'CJ대한통운'       => 'cjgls',
     '한진택배'         => 'hanjin',
     '트라넷'           => 'tranet',
@@ -39,76 +24,109 @@ $exCode = array(
     '동부택배'         => 'dongbu',
     '우체국'           => 'EPOST',
     '우편등기'         => 'registpost',
+    '경동택배'         => 'kdexp',
+    '천일택배'         => 'chunil',
+    '대신택배'         => 'daesin',
+    '일양로지스'        => 'ilyang',
+    '호남택배'         => 'honam',
+    '편의점택배'        => 'cvsnet',
+    '합동택배'         => 'hdexp',
     '기타택배'         => '9999'
 );
 
-$dlv_exName = $escrow_corp;
-$dlv_exCode = $exCode[$dlv_exName];
-if(!$dlv_exCode)
-    $dlv_exCode = '9999';
+//step1. 요청을 위한 파라미터 설정
+// 가맹점관리자 > 상점정보 > 계약정보 > 부가정보 > INIAPI key 생성조회
+if (function_exists('get_inicis_iniapi_key')) {
+    $key = get_inicis_iniapi_key();
+} else {
+    $key = ! $default['de_card_test'] ? $default['de_inicis_iniapi_key'] : "ItEQKi3rY7uvDS8l";
+}
 
-/*********************
- * 3. 지불 정보 설정 *
- *********************/
-$inipay->SetField("tid",            $escrow_tno);                    // 거래아이디
-$inipay->SetField("mid",            $default['de_inicis_mid']);      // 상점아이디
-/**************************************************************************************************
- * admin 은 키패스워드 변수명입니다. 수정하시면 안됩니다. 1111의 부분만 수정해서 사용하시기 바랍니다.
- * 키패스워드는 상점관리자 페이지(https://iniweb.inicis.com)의 비밀번호가 아닙니다. 주의해 주시기 바랍니다.
- * 키패스워드는 숫자 4자리로만 구성됩니다. 이 값은 키파일 발급시 결정됩니다.
- * 키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오.
- **************************************************************************************************/
-$inipay->SetField("admin",          $default['de_inicis_admin_key']); // 키패스워드(상점아이디에 따라 변경)
-$inipay->SetField("type",           "escrow");                        // 고정 (절대 수정 불가)
-$inipay->SetField("escrowtype",     "dlv");                           // 고정 (절대 수정 불가)
-$inipay->SetField("dlv_ip",         getenv("REMOTE_ADDR"));           // 고정
+$dlv_exName         = $escrow_corp;
+$type        		= "Dlv";												    //"Dlv" 고정	
+$mid         		= $default['de_inicis_mid'];					
+$clientIp    		= $_SERVER['SERVER_ADDR'];                                  // 가맹점 요청 서버IP, 상점 임의 설정 가능 (상점측 서버 구분을 위함)
+$timestamp   		= date("YmdHis");
+$tid         		= $escrow_tno;				                                //에스크로 결제 승인TID	
+$oid		 		= $od['od_id'];
+$price		 		= $od['od_receipt_price'];
+$report		 		= "I";													    //에스크로 등록형태 ["I":등록, "U":변경]	
+$invoice			= $escrow_numb;											    //운송장번호
+$registName			= $member['mb_id'];							
+$exCode		 		= isset($exCode[$dlv_exName]) ? $exCode[$dlv_exName] : '';	//택배사코드 참고(https://manual.inicis.com/code/#gls)
+$exName		 		= $dlv_exName;							
+$charge		 		= "SH";														//배송비 지급형태 ("SH":판매자부담, "BH":구매자부담)	
+$invoiceDay		 	= G5_TIME_YMDHIS;									        //배송등록 확인일자 (String 으로 timestamp 사용 가능)
+$sendName		 	= $od['od_name'];
+$sendTel		 	= $od['od_tel'];
+$sendPost		 	= $od['od_zip1'].$od['od_zip2'];
+$sendAddr1		 	= $od['od_addr1'].' '.$od['od_addr2'];
+$recvName		 	= $od['od_b_name'];
+$recvTel		 	= $od['od_b_tel'];
+$recvPost		 	= $od['od_b_zip1'].$od['od_b_zip2'];
+$recvAddr		 	= $od['od_b_addr1'].($od['od_b_addr2'] ? ' ' : '').$od['od_b_addr2'];
 
-$inipay->SetField("oid",            $oid);
-$inipay->SetField("soid",           "1");
-//$inipay->SetField("dlv_date",     $dlv_date);
-//$inipay->SetField("dlv_time",     $dlv_time);
-$inipay->SetField("dlv_report",     $EscrowType);
-$inipay->SetField("dlv_invoice",    $invoice);
-$inipay->SetField("dlv_name",       $member['mb_id']);
+if(!$exCode)
+    $exCode = '9999';
 
-$inipay->SetField("dlv_excode",     $dlv_exCode);
-$inipay->SetField("dlv_exname",     $dlv_exName);
-$inipay->SetField("dlv_charge",     $dlv_charge);
+// hash => INIAPIKey + type + timestamp + clientIp + mid + oid + tid + price
+$plainText = (string)$key.(string)$type.(string)$timestamp.(string)$clientIp.(string)$mid.(string)$oid.(string)$tid.(string)$price;
 
-$inipay->SetField("dlv_invoiceday", G5_TIME_YMDHIS);
-$inipay->SetField("dlv_sendname",   $sendName);
-$inipay->SetField("dlv_sendpost",   $sendPost);
-$inipay->SetField("dlv_sendaddr1",  $sendAddr1);
-$inipay->SetField("dlv_sendaddr2",  $sendAddr2);
-$inipay->SetField("dlv_sendtel",    $sendTel);
+// hash 암호화
+$hashData = hash("sha512", $plainText); 
 
-$inipay->SetField("dlv_recvname",   $recvName);
-$inipay->SetField("dlv_recvpost",   $recvPost);
-$inipay->SetField("dlv_recvaddr",   $recvAddr);
-$inipay->SetField("dlv_recvtel",    $recvTel);
+//step2. key=value 로 post 요청
 
-$inipay->SetField("dlv_goodscode",  $goodsCode);
-$inipay->SetField("dlv_goods",      $goods);
-$inipay->SetField("dlv_goodscnt",   $goodCnt);
-$inipay->SetField("price",          $price);
-$inipay->SetField("dlv_reserved1",  $reserved1);
-$inipay->SetField("dlv_reserved2",  $reserved2);
-$inipay->SetField("dlv_reserved3",  $reserved3);
+$data = array(
+    'type' => $type,
+    'mid' => $mid,
+    'clientIp' => $clientIp,
+    'timestamp' => $timestamp,
+    'tid' => $tid,
+    'oid' => $oid,
+    'price' => $price,
+    'report' => $report,
+    'invoice' => $invoice,
+    'registName' => $registName,
+    'exCode' => $exCode,
+    'exName' => $exName,
+    'charge' => $charge,
+    'invoiceDay' => $invoiceDay,
+    'sendName' => $sendName,
+    'sendTel' => $sendTel,
+    'sendPost' => $sendPost,
+    'sendAddr1' => $sendAddr1,
+    'recvName' => $recvName,
+    'recvTel' => $recvTel,
+    'recvPost' => $recvPost,
+    'recvAddr' => $recvAddr,
+    'hashData'=> $hashData
+);
 
-$inipay->SetField("pgn",            $pgn);
+// Request URL
+$url = "https://iniapi.inicis.com/api/v1/escrow";  
 
-/*********************
- * 3. 배송 등록 요청 *
- *********************/
-$inipay->startAction();
+$ch = curl_init();                                                      // curl 초기화
+curl_setopt($ch, CURLOPT_URL, $url);                                    // 전송 URL 지정하기
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                         // 요청 결과를 문자열로 반환 
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);                           // connection timeout 10초 
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));          // POST data
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);                            // (※ 로컬 테스트에서만 사용) 원격 서버의 인증서가 유효한지 검사 안함
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=utf-8'));   // 전송헤더 설정
+curl_setopt($ch, CURLOPT_POST, 1);                                      // post 전송 
+ 
+$response = curl_exec($ch);
+curl_close($ch);
 
+//step3. 요청 결과
+$ini_result = json_decode($response, true);
 
+ 
 /**********************
  * 4. 배송 등록  결과 *
  **********************/
 
- $tid        = $inipay->GetResult("tid");                    // 거래번호
- $resultCode = $inipay->GetResult("ResultCode");     // 결과코드 ("00"이면 지불 성공)
- $resultMsg  = $inipay->GetResult("ResultMsg");          // 결과내용 (지불결과에 대한 설명)
- $dlv_date   = $inipay->GetResult("DLV_Date");
- $dlv_time   = $inipay->GetResult("DLV_Time");
+$resultCode = $ini_result['resultCode'];        // 결과코드 ("00"이면 지불 성공)
+$resultMsg  = $ini_result['resultMsg'];          // 결과내용 (지불결과에 대한 설명)
+$dlv_date   = $ini_result['resultDate'];
+$dlv_time   = $ini_result['resultTime'];

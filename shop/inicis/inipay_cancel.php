@@ -46,18 +46,16 @@ if($cancelFlag == "true")
 
         sql_query($sql, false);
     }
+    
+    $ini_paymethod = get_type_inicis_paymethod($od_settle_case);
 
-    $TID = $tno;
-    $inipay->SetField("type", "cancel"); // 고정
-    if( $default['de_inicis_admin_key'] ){
-        $inipay->SetField("mid", $mid);
-        $inipay->SetField("admin", $default['de_inicis_admin_key']);
-    }
-    $inipay->SetField("tid", $TID); // 고정
-    $inipay->SetField("cancelmsg", "DB FAIL"); // 취소사유
-    $inipay->startAction();
-    if($inipay->GetResult('ResultCode') == "00")
-    {
-        $inipay->MakeTXErrMsg(MERCHANT_DB_ERR,"Merchant DB FAIL");
+    if ($ini_paymethod){
+        $args = array(
+            'paymethod' => $ini_paymethod,
+            'tid' => $tno,
+            'msg' => 'DB FAIL'          // 취소사유
+        );
+
+        $response = inicis_tid_cancel($args); 
     }
 }

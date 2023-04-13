@@ -13,8 +13,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
 
-check_log_folder(G5_SHOP_PATH.'/inicis/key', false);
-
 $g5['title'] = '쇼핑몰설정';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
@@ -68,8 +66,7 @@ if(!isset($default['de_pg_service'])) {
 // inicis 필드 추가
 if(!isset($default['de_inicis_mid'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_inicis_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_site_key`,
-                    ADD `de_inicis_admin_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_mid` ", true);
+                    ADD `de_inicis_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_site_key` ", true);
 }
 
 // 모바일 초기화면 이미지 줄 수 필드 추가
@@ -137,7 +134,7 @@ if(!isset($default['de_kakaopay_mid'])) {
 // 이니시스 웹결제 사인키 필드 추가
 if(!isset($default['de_inicis_sign_key'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_inicis_sign_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_admin_key` ", true);
+                    ADD `de_inicis_sign_key` varchar(255) NOT NULL DEFAULT '' ", true);
 }
 
 // 네이버페이 필드추가
@@ -199,6 +196,14 @@ if( ! isset($config['cf_icode_token_key']) ){
 if( ! isset($default['de_easy_pay_services']) ){
     $sql = "ALTER TABLE `{$g5['g5_shop_default_table']}` 
             ADD COLUMN `de_easy_pay_services` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_easy_pay_use`; ";
+    sql_query($sql, false);
+}
+
+// KG 이니시스 iniapi_key 추가
+if( ! isset($default['de_inicis_iniapi_key']) ){
+    $sql = "ALTER TABLE `{$g5['g5_shop_default_table']}` 
+            ADD COLUMN `de_inicis_iniapi_key` VARCHAR(30) NOT NULL DEFAULT '' AFTER `de_inicis_sign_key`,
+            ADD COLUMN `de_inicis_iniapi_iv` VARCHAR(30) NOT NULL DEFAULT '' AFTER `de_inicis_iniapi_key`; ";
     sql_query($sql, false);
 }
 
@@ -830,17 +835,24 @@ if(!$default['de_kakaopay_cancelpwd']){
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row"><label for="de_inicis_admin_key">KG이니시스 키패스워드</label></th>
+            <th scope="row"><label for="de_inicis_sign_key">KG이니시스 웹결제 사인키</label></th>
             <td>
-                <?php echo help("KG이니시스에서 발급받은 4자리 상점 키패스워드를 입력합니다.\nKG이니시스 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
-                <input type="text" name="de_inicis_admin_key" value="<?php echo get_sanitize_input($default['de_inicis_admin_key']); ?>" id="de_inicis_admin_key" class="frm_input" size="5" maxlength="4">
+                <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\n<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
+                <input type="text" name="de_inicis_sign_key" value="<?php echo get_sanitize_input($default['de_inicis_sign_key']); ?>" id="de_inicis_sign_key" class="frm_input" size="40" maxlength="50">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row"><label for="de_inicis_sign_key">KG이니시스 웹결제 사인키</label></th>
+            <th scope="row"><label for="de_inicis_iniapi_key">KG이니시스 INIAPI KEY</label></th>
             <td>
-                <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\nKG이니시스 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
-                <input type="text" name="de_inicis_sign_key" value="<?php echo get_sanitize_input($default['de_inicis_sign_key']); ?>" id="de_inicis_sign_key" class="frm_input" size="40" maxlength="50">
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI key 생성 조회 하여 KEY를 여기에 입력합니다.\n이 항목은 영카트 주문에서 kg이니시스 PG 결제 취소, 부분취소, 에스크로 배송등록, 현금영수증 발급에 필요합니다."); ?>
+                <input type="text" name="de_inicis_iniapi_key" value="<?php echo get_sanitize_input($default['de_inicis_iniapi_key']); ?>" id="de_inicis_iniapi_key" class="frm_input" size="30" maxlength="30">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_inicis_iniapi_iv">KG이니시스 INIAPI IV</label></th>
+            <td>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI IV 생성 조회 하여 KEY를 여기에 입력합니다.\n이 항목은 영카트 주문에서 kg이니시스 현금영수증 발급에 필요합니다."); ?>
+                <input type="text" name="de_inicis_iniapi_iv" value="<?php echo get_sanitize_input($default['de_inicis_iniapi_iv']); ?>" id="de_inicis_iniapi_iv" class="frm_input" size="30" maxlength="30">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
@@ -849,7 +861,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <a href="http://sir.kr/main/service/samsungpay.php" target="_blank" class="kg_btn">삼성페이 서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("KG이니시스와 별도로 <strong>삼성페이 사용 계약을 하신 경우</strong>에만 체크해주세요. (모바일 주문서 결제수단에 삼성페이가 노출됩니다.) <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 키패스워드를 입력해 주세요.", 50); ?>
+                <?php echo help("KG이니시스와 별도로 <strong>삼성페이 사용 계약을 하신 경우</strong>에만 체크해주세요. (모바일 주문서 결제수단에 삼성페이가 노출됩니다.) <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 웹결제 사인키를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_samsung_pay_use" value="1" id="de_samsung_pay_use"<?php echo $default['de_samsung_pay_use']?' checked':''; ?>> <label for="de_samsung_pay_use">사용</label>
             </td>
         </tr>
@@ -858,7 +870,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_inicis_lpay_use">KG이니시스 L.pay 사용</label>
             </th>
             <td>
-                <?php echo help("체크시 KG이니시스 L.pay를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
+                <?php echo help("체크시 KG이니시스 L.pay를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_inicis_lpay_use" value="1" id="de_inicis_lpay_use"<?php echo $default['de_inicis_lpay_use']?' checked':''; ?>> <label for="de_inicis_lpay_use">사용</label>
             </td>
         </tr>
@@ -867,7 +879,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_inicis_kakaopay_use">KG이니시스 카카오페이 사용</label>
             </th>
             <td>
-                <?php echo help("체크시 KG이니시스 결제의 카카오페이를 사용합니다. 주문서 결제수단에 카카오페이가 노출됩니다. <br>실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
+                <?php echo help("체크시 KG이니시스 결제의 카카오페이를 사용합니다. 주문서 결제수단에 카카오페이가 노출됩니다. <br>실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_inicis_kakaopay_use" value="1" id="de_inicis_kakaopay_use"<?php echo $default['de_inicis_kakaopay_use']?' checked':''; ?>> <label for="de_inicis_kakaopay_use">사용</label>
             </td>
         </tr>
@@ -2012,20 +2024,8 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         } catch(Exception $e) {
         }
 
-        if(!is_dir($log_path)) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_SHOP_PATH).'/inicis 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        } else {
-            if(!is_writable($log_path)) {
-                echo '<script>'.PHP_EOL;
-                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
-                echo '</script>'.PHP_EOL;
-            } else {
-                if( function_exists('check_log_folder') && is_writable($log_path) ){
-                    check_log_folder($log_path);
-                }
-            }
+        if( function_exists('check_log_folder') && is_writable($log_path) ){
+            check_log_folder($log_path);
         }
     }
 

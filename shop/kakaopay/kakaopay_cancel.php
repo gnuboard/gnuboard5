@@ -62,27 +62,24 @@ if($cancelFlag == "true")
 
     }
 
-    if(! (isset($inipay) && method_exists($inipay, 'SetField'))) return;
+    $args = array(
+        'key' => isset($default['de_kakaopay_iniapi_key']) ? $default['de_kakaopay_iniapi_key'] : '',
+        'mid' => $default['de_kakaopay_mid'],
+        'paymethod' => 'Card',
+        'tid' => $tno,
+        'msg' => $cancel_msg          // 취소사유
+    );
 
-    $TID = $tno;
-    $inipay->SetField("type", "cancel"); // 고정
-    if( $default['de_kakaopay_cancelpwd'] ){
-        $inipay->SetField("mid", $default['de_kakaopay_mid']);
-        $inipay->SetField("admin", $default['de_kakaopay_cancelpwd']);
-    }
-    $inipay->SetField("tid", $TID); // 고정
-    $inipay->SetField("cancelmsg", $cancel_msg); // 취소사유
-    $inipay->startAction();
-    if($inipay->GetResult('ResultCode') == "00" && $db_check)
-    {
-        $inipay->MakeTXErrMsg(MERCHANT_DB_ERR,"Merchant DB FAIL");
-    }
+    $response = inicis_tid_cancel($args); 
+    $result = json_decode($response, true);
 
-    $res_cd  = $inipay->getResult('ResultCode');
-    $res_msg = $inipay->getResult('ResultMsg');
-
-    if($res_cd != '00') {
-        $pg_res_cd = $res_cd;
-        $pg_res_msg = iconv_utf8($res_msg);
+    if (isset($result['resultCode'])) {
+        if ($result['resultCode'] != '00') {
+            $pg_res_cd = $result['resultCode'];
+            $pg_res_msg = $result['resultMsg'];
+        }
+    } else {
+        $pg_res_cd = '';
+        $pg_res_msg = 'curl 로 데이터를 받지 못했습니다.';
     }
 }
