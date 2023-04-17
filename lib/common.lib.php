@@ -768,7 +768,7 @@ function get_next_num($table)
     $sql = " select min(wr_num) as min_wr_num from $table ";
     $row = sql_fetch($sql);
     // 가장 작은 번호에 1을 빼서 넘겨줌
-    return (int)($row['min_wr_num'] - 1);
+    return isset($row['min_wr_num']) ? (int)($row['min_wr_num'] - 1) : -1;
 }
 
 
