@@ -42,8 +42,8 @@ include_once('./_head.php');
 ?>
 
 <!-- 장바구니 시작 { -->
-<script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/shop.override.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.override.js?ver=<?php echo G5_JS_VER; ?>"></script>
 
 <div id="sod_bsk" class="od_prd_list">
 

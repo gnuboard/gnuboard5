@@ -5,4 +5,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // 예) https://도메인/css/default.css?ver=220620
 // 예) https://도메인/js/common.js?ver=220620
 define('G5_CSS_VER', '2303229');
-define('G5_JS_VER',  '2210172');
+define('G5_JS_VER',  '2304171');

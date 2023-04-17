@@ -40,7 +40,7 @@ $(function() {
     });
 
     if(isAndroid) {
-        $(document).on("touchend", "select.it_option", function() {
+        $(document).on("touchend mouseup", "select.it_option", function() {
             option_add = true;
         });
     } else {
@@ -151,7 +151,7 @@ $(function() {
     });
 
     if(isAndroid) {
-        $(document).on("touchend", "select.it_supply", function() {
+        $(document).on("touchend mouseup", "select.it_supply", function() {
             supply_add = true;
         });
     } else {

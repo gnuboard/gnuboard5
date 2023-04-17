@@ -36,8 +36,8 @@ $result = sql_query($sql);
 $cart_count = sql_num_rows($result);
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/shop.override.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.override.js?ver=<?php echo G5_JS_VER; ?>"></script>
 
 <div id="sod_bsk">
 

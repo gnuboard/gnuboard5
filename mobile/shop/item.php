@@ -201,7 +201,7 @@ echo run_replace('shop_it_mobile_head_html', '<div id="sit_hhtml">'.conv_content
 ?>
 
 <?php if($is_orderable) { ?>
-<script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 
 <?php
