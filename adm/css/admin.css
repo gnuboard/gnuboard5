@@ -1,9 +1,9 @@
 @charset "utf-8";
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic',"맑은 고딕",AppleGothic,Dotum,"돋움", sans-serif;background:#f3f3f3;height:100%;}
+body {margin:0;padding:0;font-size:0.875rem;font-family:-apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";background:#f3f3f3;height:100%;}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic',"맑은 고딕",AppleGothic,Dotum,"돋움", sans-serif;}
+h1, h2, h3, h4, h5, h6 {font-size:1em;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 
 ul{margin:0;padding:0;list-style:none}
@@ -11,9 +11,8 @@ li,dt,dd,ol{margin:0;padding:0}
 ol{list-style-position:inside}
 legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
-input, button {margin:0;padding:0;font-family:'Malgun Gothic',"맑은 고딕",AppleGothic,Dotum,"돋움", sans-serif;font-size:1em}
 button,input[type="submit"] {cursor:pointer}
-textarea, select {font-family:'Malgun Gothic',"맑은 고딕",AppleGothic,Dotum,"돋움", sans-serif;font-size:1em}
+textarea, select {font-family:-apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-size:1em}
 select {margin:0}
 p {margin:0;padding:0;word-break:break-all}
 pre {overflow-x:scroll;font-size:1.1em}
@@ -441,8 +440,8 @@ tfoot th {}
 .td_cntsmall {width:50px;font-size:0.95em;text-align:center}
 .td_code {width:80px;text-align:center}
 .td_confirm {width:90px;text-align:center}
-.td_date {width:70px;text-align:center}
-.td_datetime {width:130px;text-align:center}
+.td_date {width:80px;text-align:center}
+.td_datetime {width:150px;text-align:center}
 .td_delicom {width:100px}
 .td_delino {width:130px}
 .td_device {width:70px;text-align:center}
@@ -461,10 +460,10 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_imgline {width:70px;text-align:center}
 .td_input input {width:94%}
 .td_mbcert {text-align:center}
-.td_mbid, .td_name, .td_mbname {width:100px;text-align:left !important}
+.td_mbid, .td_name, .td_mbname {min-width:100px;text-align:left !important}
 .td_mbstat {text-align:center}
 .td_mng {width:100px;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
-.td_mngsmall {width:60px;text-align:center;}
+.td_mngsmall {width:80px;text-align:center;}
 .td_num {width:60px;text-align:center}
 .td_num_c{width:70px;text-align:center}
 .td_num_c2{width:60px;text-align:center}
