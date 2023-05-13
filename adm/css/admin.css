@@ -11,6 +11,9 @@ li,dt,dd,ol{margin:0;padding:0}
 ol{list-style-position:inside}
 legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
+label {cursor: pointer; padding: 0.5em 0;}
+label:hover{color:#435ffe;}
+input, button {margin:0;padding:0;font-size:1em}
 button,input[type="submit"] {cursor:pointer}
 textarea, select {font-family:-apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-size:1em}
 select {margin:0}
