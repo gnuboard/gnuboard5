@@ -5,7 +5,7 @@ body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic',"맑은 �
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic',"맑은 고딕",AppleGothic,Dotum,"돋움", sans-serif;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
-
+/*201812722공리*/
 ul{margin:0;padding:0;list-style:none}
 li,dt,dd,ol{margin:0;padding:0}
 ol{list-style-position:inside}
