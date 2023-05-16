@@ -146,7 +146,6 @@ if (!isset($qaconfig['qa_include_head'])) {
                         <th scope="row"><label for="qa_title">타이틀<strong class="sound_only">필수</strong></label></th>
                         <td>
                             <input type="text" name="qa_title" value="<?php echo get_sanitize_input($qaconfig['qa_title']); ?>" id="qa_title" required class="required frm_input" size="40">
-                            <a href="<?php echo G5_BBS_URL; ?>/qalist.php" class="btn_frmline">1:1문의 바로가기</a>
                         </td>
                     </tr>
                     <tr>
@@ -338,7 +337,8 @@ if (!isset($qaconfig['qa_include_head'])) {
     </section>
 
     <div class="btn_fixed_top">
-        <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
+        <input type="submit" value="저장" class="btn_submit btn" accesskey="s">
+        <a href="<?php echo G5_BBS_URL; ?>/qalist.php" class="btn_frmline">목록</a>                    
     </div>
 
 </form>
