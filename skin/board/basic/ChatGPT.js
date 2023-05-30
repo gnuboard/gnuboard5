@@ -3,7 +3,7 @@
 function Send () {
   const MeQ = txtMsg.value
   if (MeQ == '') {
-    alert('질문을 입려하세요!') // 
+    alert('질문을 입력하세요!') // 
     txtMsg.focus()
     return
   }
