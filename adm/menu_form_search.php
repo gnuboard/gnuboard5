@@ -74,20 +74,12 @@ if ($sql) {
             ?>
                 <td><?php echo $group['gr_subject']; ?></td>
             <?php } ?>
-
             <td class="td_mngsmall">
                 <input type="hidden" name="subject[]" value="<?php echo preg_replace('/[\'\"]/', '', $row['subject']); ?>">
                 <input type="hidden" name="link[]" value="<?php echo $link; ?>">
-                <input type="checkbox" id="myCheckbox" class="add_select_check btn btn_03"><span class="sound_only" onclick="toggleCheckbox()"> <?php echo $row['subject']?></span> </input>
+                <button type="button" class="add_select btn btn_03"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택</button>
             </td>
         </tr>
-
-        <script>
-        function toggleCheckbox() {
-            var checkbox = document.getElementById("myCheckbox");
-            checkbox.checked = !checkbox.checked;
-        }
-        </script>
 
     <?php } ?>
 
@@ -95,15 +87,12 @@ if ($sql) {
     </table>
 </div>
 
-
 <div class="local_desc01 menu_exists_tip" style="display:none">
     <p>* <strong>빨간색</strong>의 제목은 이미 메뉴에 연결되어 경우 표시됩니다.</p>
 </div>
 
 <div class="btn_win02 btn_win">
     <button type="button" class="btn_02 btn" onclick="window.close();">창닫기</button>
-    <button type="button" class="add_select btn btn_03"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택
-        </button>
 </div>
 
 <?php } else { ?>
