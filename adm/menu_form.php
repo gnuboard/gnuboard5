@@ -12,7 +12,7 @@ require_once G5_PATH . '/head.sub.php';
 $new    = isset($_GET['new']) ? clean_xss_tags($_GET['new'], 1, 1) : '';
 $code   = isset($_GET['code']) ? (string)preg_replace('/[^0-9a-zA-Z]/', '', $_GET['code']) : '';
 
-// 코드
+
 if ($new == 'new' || !$code) {
     $code = (int)base_convert(substr($code, 0, 2), 36, 10);
     $code += 36;
@@ -25,7 +25,6 @@ if ($new == 'new' || !$code) {
     <h1><?php echo $g5['title']; ?></h1>
 
     <form name="fmenuform" id="fmenuform" class="new_win_con">
-
         <div class="new_win_desc">
             <label for="me_type">대상선택</label>
             <select name="me_type" id="me_type">
@@ -35,7 +34,6 @@ if ($new == 'new' || !$code) {
                 <option value="content">내용관리</option>
             </select>
         </div>
-
         <div id="menu_result"></div>
 
     </form>
@@ -68,6 +66,7 @@ if ($new == 'new' || !$code) {
                 });
             }
 
+            // 메뉴가 존재하면 menu_exists_tip 띄움
             if (menu_exist) {
                 $(".menu_exists_tip").show();
             } else {
@@ -102,6 +101,7 @@ if ($new == 'new' || !$code) {
 
         });
 
+        // 다시 click으로 변경
         $(document).on("click", "#add_manual", function() {
             var me_name = $.trim($("#me_name").val());
             var me_link = $.trim($("#me_link").val());
@@ -109,7 +109,7 @@ if ($new == 'new' || !$code) {
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
         });
 
-        $(document).on("click", ".add_select", function() {
+        $(document).on("checklist", ".add_select", function() {
             var me_name = $.trim($(this).siblings("input[name='subject[]']").val());
             var me_link = $.trim($(this).siblings("input[name='link[]']").val());
 
@@ -117,6 +117,7 @@ if ($new == 'new' || !$code) {
         });
     });
 
+    // 추가된 메뉴들 여기에 표시
     function add_menu_list(name, link, code) {
         var $menulist = $("#menulist", opener.document);
         var ms = new Date().getTime();
@@ -124,13 +125,14 @@ if ($new == 'new' || !$code) {
         <?php if ($new == 'new') { ?>
             sub_menu_class = " class=\"td_category\"";
         <?php } else { ?>
-            sub_menu_class = " class=\"td_category sub_menu_class\"";
+            sub_menu_class = " class=\"td_category sub_menu_class\""; 
         <?php } ?>
 
         var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">";
         list += "<td" + sub_menu_class + ">";
         list += "<label for=\"me_name_" + ms + "\"  class=\"sound_only\">메뉴<strong class=\"sound_only\"> 필수</strong></label>";
         list += "<input type=\"hidden\" name=\"code[]\" value=\"<?php echo $code; ?>\">";
+    
         list += "<input type=\"text\" name=\"me_name[]\" value=\"" + name + "\" id=\"me_name_" + ms + "\" required class=\"required frm_input full_input\">";
         list += "</td>";
         list += "<td>";
@@ -191,7 +193,7 @@ if ($new == 'new' || !$code) {
                 .addClass("bg" + (index % 2));
         });
 
-        window.close();
+        //window.close();
     }
 </script>
 
