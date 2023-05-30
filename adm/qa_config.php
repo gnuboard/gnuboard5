@@ -338,7 +338,7 @@ if (!isset($qaconfig['qa_include_head'])) {
 
     <div class="btn_fixed_top">
         <input type="submit" value="저장" class="btn_submit btn" accesskey="s">
-        <a href="<?php echo G5_BBS_URL; ?>/qalist.php" class="btn_frmline">목록</a>                    
+        <a href="<?php echo G5_BBS_URL; ?>/qalist.php" class="btn_submit btn">목록</a>                    
     </div>
 
 </form>

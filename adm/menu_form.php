@@ -103,7 +103,8 @@ if ($new == 'new' || !$code) {
 
         // 다시 click으로 변경
         $(document).on("click", "#add_manual", function() {
-            var me_name = $.trim($("#me_name").val());
+            var me_name = $
+            .trim($("#me_name").val());
             var me_link = $.trim($("#me_link").val());
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
