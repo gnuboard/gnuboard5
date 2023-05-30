@@ -1,4 +1,4 @@
-﻿const OPENAI_API_KEY = 'OPENAI_API_KEY'  // OPENAI_API_KEY 삽입
+﻿const OPENAI_API_KEY = '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'  // 이곳에 OPENAI_API_KEY 삽입
 
 function Send () {
   const MeQ = txtMsg.value
