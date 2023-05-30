@@ -78,16 +78,39 @@ if ($sql) {
             <td class="td_mngsmall">
                 <input type="hidden" name="subject[]" value="<?php echo preg_replace('/[\'\"]/', '', $row['subject']); ?>">
                 <input type="hidden" name="link[]" value="<?php echo $link; ?>">
-                <input type="checkbox" id="myCheckbox" class="add_select_check btn btn_03"><span class="sound_only" onclick="toggleCheckbox()"> <?php echo $row['subject']?></span> </input>
+                <input type="checkbox" id="myCheckbox" class = "add_select" name="subject[]" value="<?php echo $row['subject'];?>"><span class="sound_only" onclick="toggleCheckbox()"></span> </input>
+
             </td>
         </tr>
 
         <script>
+        // 체크박스를 클릭하면 실행되는 함수
         function toggleCheckbox() {
             var checkbox = document.getElementById("myCheckbox");
             checkbox.checked = !checkbox.checked;
+
+            // 선택된 게시판 정보를 가져옴
+            var subject = checkbox.parentNode.querySelector('input[name="subject[]"]').value;
+            var link = checkbox.parentNode.querySelector('input[name="link[]"]').value;
+
+            // 선택된 게시판 정보를 배열에 추가
+            var menu = {
+                subject: subject,
+                link: link
+            };
+            <?php if (!empty($menu_list)): ?>
+                <?php foreach ($menu_list as $menu_item): ?>
+                    <?php
+                    // 기존에 이미 선택한 게시판인지 확인 후 추가
+                    ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php
+            // 추가된 게시판 정보를 $menu_list에 저장 (PHP 변수로 전달하기 위해 AJAX 등을 사용해야 함)
+            ?>
         }
-        </script>
+</script>
+
 
     <?php } ?>
 
@@ -102,8 +125,7 @@ if ($sql) {
 
 <div class="btn_win02 btn_win">
     <button type="button" class="btn_02 btn" onclick="window.close();">창닫기</button>
-    <button type="button" class="add_select btn btn_03"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택
-        </button>
+   
 </div>
 
 <?php } else { ?>
