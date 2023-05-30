@@ -111,9 +111,10 @@ if ($new == 'new' || !$code) {
             var me_name = $.trim($(this).siblings("input[name='subject[]']").val());
             var me_link = $.trim($(this).siblings("input[name='link[]']").val());
             
-            $new = 'new';
+            //$new = 'new';
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
+            
         });
     });
 

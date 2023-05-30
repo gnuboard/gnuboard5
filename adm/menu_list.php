@@ -150,7 +150,7 @@ $sub_menu_info = '';
                     code : code
                 },
                 success: function(response) {
-                    
+                    console.log(data)
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
