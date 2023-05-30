@@ -110,7 +110,7 @@ if ($new == 'new' || !$code) {
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
         });
 
-        $(document).on("checklist", ".add_select", function() {
+        $(document).on("click", ".add_select", function() {
             var me_name = $.trim($(this).siblings("input[name='subject[]']").val());
             var me_link = $.trim($(this).siblings("input[name='link[]']").val());
 
@@ -193,7 +193,7 @@ if ($new == 'new' || !$code) {
             $(this).removeClass("bg0 bg1")
                 .addClass("bg" + (index % 2));
         });
-
+        list = [];
         //window.close();
     }
 </script>
