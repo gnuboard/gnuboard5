@@ -640,6 +640,18 @@ function html_purifier($html)
     $config->set('Attr.AllowedFrameTargets', array('_blank'));
     //유튜브, 비메오 전체화면 가능하게 하기
     $config->set('Filter.Custom', array(new HTMLPurifier_Filter_Iframevideo()));
+
+    /*
+     * HTMLPurifier 설정을 변경할 수 있는 Event hook
+     * 리스너에서는 첫번째 인자($config)로 `HTMLPurifier_Config` 객체를 받을 수 있다
+     */
+    run_event('html_purifier_config', $config, array(
+        'html' => $html,
+        'write' => $write,
+        'is_admin' => $is_admin
+    )
+    );
+
     $purifier = new HTMLPurifier($config);
     return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
 }
