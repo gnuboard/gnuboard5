@@ -190,7 +190,7 @@ if ($new == 'new' || !$code) {
                 .addClass("bg" + (index % 2));
         });
         
-        loacation.replace(location.bref);
+        window.close();
     }
 </script>
 
