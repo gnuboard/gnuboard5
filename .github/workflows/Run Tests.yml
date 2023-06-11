@@ -1,5 +1,6 @@
 name: Run Tests
 
+# 매 push시 실행
 on: [ push ]
 
 jobs:
@@ -13,7 +14,7 @@ jobs:
         uses: tighten/phpreleases-action@v1
         id: releases
         with:
-          releases: '7.4'
+          releases: '8.0' #version update
   tests:
     needs: output_releases
     strategy:
