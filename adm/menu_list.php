@@ -184,7 +184,7 @@ $sub_menu_info = '';
 
     // 서브 메뉴 추가
     function add_submenu(code) {
-        var url = "./menu_form.php?code=" + max_code;
+        var url = "./menu_form.php?code=" + code;
         window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");
         return false;
     }
