@@ -1,5 +1,5 @@
+# check version compatibility
 name: Run Tests
-
 # 매 push시 실행
 on: [ push ]
 
