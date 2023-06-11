@@ -84,16 +84,11 @@ if ($sql) {
         </tr>
 
         <script>
-        // 체크박스를 클릭하면 실행되는 함수
         function toggleCheckbox() {
             var checkbox = document.getElementById("myCheckbox");
             checkbox.checked = !checkbox.checked;
-
-            // 선택된 게시판 정보를 가져옴
             var subject = checkbox.parentNode.querySelector('input[name="subject[]"]').value;
             var link = checkbox.parentNode.querySelector('input[name="link[]"]').value;
-
-            // 선택된 게시판 정보를 배열에 추가
             var menu = {
                 subject: subject,
                 link: link
@@ -101,12 +96,10 @@ if ($sql) {
             <?php if (!empty($menu_list)): ?>
                 <?php foreach ($menu_list as $menu_item): ?>
                     <?php
-                    // 기존에 이미 선택한 게시판인지 확인 후 추가
                     ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php
-            // 추가된 게시판 정보를 $menu_list에 저장 (PHP 변수로 전달하기 위해 AJAX 등을 사용해야 함)
             ?>
         }
 </script>

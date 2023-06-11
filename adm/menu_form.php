@@ -66,7 +66,6 @@ if ($new == 'new' || !$code) {
                 });
             }
 
-            // 메뉴가 존재하면 menu_exists_tip 띄움
             if (menu_exist) {
                 $(".menu_exists_tip").show();
             } else {
@@ -116,7 +115,6 @@ if ($new == 'new' || !$code) {
         });
     });
 
-    // 선택 누르면 이 함수가 실행
     function add_menu_list(name, link, code) {
         var $menulist = $("#menulist", opener.document);
         var ms = new Date().getTime();
@@ -181,12 +179,11 @@ if ($new == 'new' || !$code) {
 
         if ($menu_last.length > 0) {
             $menu_last.after(list);
-        } else { // 리스트가 없을 때(추가한 게 없을 때)
-            if ($menulist.find("#empty_menu_list").length > 0) // 이미 추가된 게 있으면
-                $menulist.find("#empty_menu_list").remove(); // 메뉴리스트가 비지 않았다 
+        } else {
+            if ($menulist.find("#empty_menu_list").length > 0)
+                $menulist.find("#empty_menu_list").remove();
 
-            $menulist.find("table tbody").append(list); // 리스트를 붙혀 
-        }
+            $menulist.find("table tbody").append(list); 
 
         $menulist.find("tr.menu_list").each(function(index) {
             $(this).removeClass("bg0 bg1")
