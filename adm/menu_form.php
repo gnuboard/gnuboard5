@@ -48,20 +48,22 @@ if ($new == 'new' || !$code) {
 
         function link_checks_all_chage() {
 
-            var $links = $(opener.document).find("#menulist input[name='me_link[]']"),
+            var $links = $(opener.document).find("#menulist input[name='me_link[]']"), 
                 $o_link = $(".td_mngsmall input[name='link[]']"),
-                hrefs = [],
-                menu_exist = false;
+                hrefs = [], // 이미 존재하는 메뉴 링크를 저장하는 배열
+                menu_exist = false; // 메뉴가 존재하지 않음으로 초기화
 
+                // link의 요소를 hrefs 배열에 추가
             if ($links.length) {
                 $links.each(function(index) {
                     hrefs.push($(this).val());
                 });
 
+                // 현재 요소의 값이 hrefs에 존재하면
                 $o_link.each(function(index) {
                     if ($.inArray($(this).val(), hrefs) != -1) {
                         $(this).closest("tr").find("td:eq( 0 )").addClass("exist_menu_link");
-                        menu_exist = true;
+                        menu_exist = true; // 메뉴가 존재함을 표시
                     }
                 });
             }
@@ -74,16 +76,19 @@ if ($new == 'new' || !$code) {
             }
         }
 
+        // munu_form_search 페이지를 비동기 작업으로 로드
         function menu_result_change(type) {
 
             var dfd = new $.Deferred();
 
+            // menu_result 요소를 지우고 
+            // munu_form_search의 결과를 menu_result에 다시 넣음
             $("#menu_result").empty().load(
                 "./menu_form_search.php", {
                     type: type
                 },
                 function() {
-                    dfd.resolve('Finished');
+                    dfd.resolve('Finished'); // 비동기 작업 완료
                 }
             );
 
@@ -125,7 +130,7 @@ if ($new == 'new' || !$code) {
         <?php if ($new == 'new') { ?>
             sub_menu_class = " class=\"td_category\"";
         <?php } else { ?>
-            sub_menu_class = " class=\"td_category sub_menu_class\""; 
+            sub_menu_class = " class=\"td_category sub_menu_class\""; // 얘 수정 x
         <?php } ?>
 
         var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">";
@@ -166,7 +171,7 @@ if ($new == 'new' || !$code) {
         list += "</td>";
         list += "<td class=\"td_mng\">";
         <?php if ($new == 'new') { ?>
-            list += "<button type=\"button\" class=\"btn_add_menu btn_03\">추가</button>\n";
+            list += "<button type=\"button\" class=\"btn_add_submenu btn_03\">추가</button>\n";
         <?php } ?>
         list += "<button type=\"button\" class=\"btn_del_menu btn_02\">삭제</button>";
         list += "</td>";
