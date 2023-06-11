@@ -112,8 +112,8 @@ $sub_menu_info = '';
                             </select>
                         </td>
                         <td class="td_mng">
-                            <?php if (strlen($row['me_code']) == 2) { ?> 
-                                <button type="button" class="btn_add_menu btn_03 ">추가</button>
+                            <?php if (strlen($row['me_code']) == 2) { ?>
+                                <button type="button" class="btn_add_submenu btn_03 ">추가</button>
                             <?php } ?>
                             <button type="button" class="btn_del_menu btn_02">삭제</button>
                         </td>
@@ -138,51 +138,48 @@ $sub_menu_info = '';
 
 <script>
     $(function() {
-        $(document).on("click", ".btn_add_menu", function() {
+        $(document).on("click", ".btn_add_submenu", function() {
             var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
-            add_menu(code);
+            add_submenu(code);
         });
 
-
-        // 메뉴 삭제 버튼 눌렀을 때 
         $(document).on("click", ".btn_del_menu", function() {
-            if (!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제 후 메뉴 설정의 확인 버튼을 눌러 메뉴를 저장해 주세요.")) {
+            if (!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제후 메뉴설정의 확인 버튼을 눌러 메뉴를 저장해 주세요."))
                 return false;
+
+            var $tr = $(this).closest("tr");
+            if ($tr.find("td.sub_menu_class").length > 0) {
+                $tr.remove();
+            } else {
+                var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
+                $("tr.menu_group_" + code).remove();
             }
 
-            var $tr = $(this).closest("tr"); // 변수 정의 (list 값 받아올 때마다 tr 단위로 끊음)
-                $tr.remove(); // tr을 지움
-
-
-            // 메뉴리스트가 빈 경우    
             if ($("#menulist tr.menu_list").length < 1) {
                 var list = "<tr id=\"empty_menu_list\"><td colspan=\"<?php echo $colspan; ?>\" class=\"empty_table\">자료가 없습니다.</td></tr>\n";
                 $("#menulist table tbody").append(list);
-
-            } else { // 메뉴리스트가 있는 경우 
+            } else {
                 $("#menulist tr.menu_list").each(function(index) {
-                    $(this).removeClass("bg0 bg1").addClass("bg" + (index % 2));
+                    $(this).removeClass("bg0 bg1")
+                        .addClass("bg" + (index % 2));
                 });
             }
         });
     });
 
-    // 메뉴 추가 창을 염
     function add_menu() {
         var max_code = base_convert(0, 10, 36);
         $("#menulist tr.menu_list").each(function() {
             var me_code = $(this).find("input[name='code[]']").val().substr(0, 2);
             if (max_code < me_code)
-                max_code = me_code; // max_code를 바꿔주는 역할
+                max_code = me_code;
         });
 
-        // menu_form을 염
         var url = "./menu_form.php?code=" + max_code + "&new=new";
         window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");
         return false;
     }
 
-    // 서브 메뉴 추가
     function add_submenu(code) {
         var url = "./menu_form.php?code=" + code;
         window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");

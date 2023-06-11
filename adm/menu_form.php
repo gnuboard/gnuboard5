@@ -48,22 +48,20 @@ if ($new == 'new' || !$code) {
 
         function link_checks_all_chage() {
 
-            var $links = $(opener.document).find("#menulist input[name='me_link[]']"), 
+            var $links = $(opener.document).find("#menulist input[name='me_link[]']"),
                 $o_link = $(".td_mngsmall input[name='link[]']"),
-                hrefs = [], 
-                menu_exist = false; 
+                hrefs = [],
+                menu_exist = false;
 
-                // link의 요소를 hrefs 배열에 추가
             if ($links.length) {
                 $links.each(function(index) {
                     hrefs.push($(this).val());
                 });
 
-                // 현재 요소의 값이 hrefs에 존재하면
                 $o_link.each(function(index) {
                     if ($.inArray($(this).val(), hrefs) != -1) {
                         $(this).closest("tr").find("td:eq( 0 )").addClass("exist_menu_link");
-                        menu_exist = true; // 메뉴가 존재함을 표시
+                        menu_exist = true;
                     }
                 });
             }
@@ -76,19 +74,16 @@ if ($new == 'new' || !$code) {
             }
         }
 
-        // munu_form_search 페이지를 비동기 작업으로 로드
         function menu_result_change(type) {
 
             var dfd = new $.Deferred();
 
-            // menu_result 요소를 지우고 
-            // munu_form_search의 결과를 menu_result에 다시 넣음
             $("#menu_result").empty().load(
                 "./menu_form_search.php", {
                     type: type
                 },
                 function() {
-                    dfd.resolve('Finished'); // 비동기 작업 완료
+                    dfd.resolve('Finished');
                 }
             );
 
@@ -130,7 +125,7 @@ if ($new == 'new' || !$code) {
         <?php if ($new == 'new') { ?>
             sub_menu_class = " class=\"td_category\"";
         <?php } else { ?>
-            sub_menu_class = " class=\"td_category sub_menu_class\""; // 얘 수정 x
+            sub_menu_class = " class=\"td_category sub_menu_class\""; 
         <?php } ?>
 
         var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">";
