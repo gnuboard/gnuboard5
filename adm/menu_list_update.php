@@ -10,7 +10,6 @@ if ($is_admin != 'super') {
 
 check_admin_token();
 
-// 이전 메뉴정보 삭제
 $sql = " delete from {$g5['menu_table']} ";
 sql_query($sql);
 
@@ -62,7 +61,6 @@ for ($i = 0; $i < $count; $i++) {
         $primary_code = $me_code;
     }
 
-    // 메뉴 등록
     $sql = " insert into {$g5['menu_table']}
                 set me_code         = '" . $me_code . "',
                     me_name         = '" . $me_name . "',
