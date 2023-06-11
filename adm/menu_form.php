@@ -50,8 +50,8 @@ if ($new == 'new' || !$code) {
 
             var $links = $(opener.document).find("#menulist input[name='me_link[]']"), 
                 $o_link = $(".td_mngsmall input[name='link[]']"),
-                hrefs = [], // 이미 존재하는 메뉴 링크를 저장하는 배열
-                menu_exist = false; // 메뉴가 존재하지 않음으로 초기화
+                hrefs = [], 
+                menu_exist = false; 
 
                 // link의 요소를 hrefs 배열에 추가
             if ($links.length) {
