@@ -101,10 +101,8 @@ if ($new == 'new' || !$code) {
 
         });
 
-        // 다시 click으로 변경
         $(document).on("click", "#add_manual", function() {
-            var me_name = $
-            .trim($("#me_name").val());
+            var me_name = $.trim($("#me_name").val());
             var me_link = $.trim($("#me_link").val());
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
@@ -118,11 +116,12 @@ if ($new == 'new' || !$code) {
         });
     });
 
-    // 추가된 메뉴들 여기에 표시
+    // 선택 누르면 이 함수가 실행
     function add_menu_list(name, link, code) {
         var $menulist = $("#menulist", opener.document);
         var ms = new Date().getTime();
         var sub_menu_class;
+
         <?php if ($new == 'new') { ?>
             sub_menu_class = " class=\"td_category\"";
         <?php } else { ?>
@@ -173,7 +172,7 @@ if ($new == 'new' || !$code) {
         list += "</td>";
         list += "</tr>";
 
-        var $menu_last = null;
+        /*var $menu_last = null;
 
         if (code)
             $menu_last = $menulist.find("tr.menu_group_" + code + ":last");
@@ -182,19 +181,21 @@ if ($new == 'new' || !$code) {
 
         if ($menu_last.length > 0) {
             $menu_last.after(list);
-        } else {
-            if ($menulist.find("#empty_menu_list").length > 0)
-                $menulist.find("#empty_menu_list").remove();
+        } else { // 리스트가 없을 때(추가한 게 없을 때)
+            if ($menulist.find("#empty_menu_list").length > 0) // 이미 추가된 게 있으면
+                $menulist.find("#empty_menu_list").remove(); // 메뉴리스트가 비지 않았다 
 
-            $menulist.find("table tbody").append(list);
-        }
+            $menulist.find("table tbody").append(list); // 리스트를 붙혀 
+        }*/
+        $menulist.find("#empty_menu_list").remove(); // 추가
 
+        $menulist.find("table tbody").append(list); // 추가 (새로운 메뉴 리스트로 )
         $menulist.find("tr.menu_list").each(function(index) {
             $(this).removeClass("bg0 bg1")
                 .addClass("bg" + (index % 2));
         });
-        list = [];
-        //window.close();
+        
+        loacation.replace(location.href);
     }
 </script>
 

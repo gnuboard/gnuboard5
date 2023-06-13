@@ -144,24 +144,21 @@ $sub_menu_info = '';
         });
 
         $(document).on("click", ".btn_del_menu", function() {
-            if (!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제후 메뉴설정의 확인 버튼을 눌러 메뉴를 저장해 주세요."))
+            if (!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제 후 메뉴 설정의 확인 버튼을 눌러 메뉴를 저장해 주세요.")) {
                 return false;
-
-            var $tr = $(this).closest("tr");
-            if ($tr.find("td.sub_menu_class").length > 0) {
-                $tr.remove();
-            } else {
-                var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
-                $("tr.menu_group_" + code).remove();
             }
 
+            var $tr = $(this).closest("tr"); // 변수 정의 (list 값 받아올 때마다 tr 단위로 끊음)
+                $tr.remove(); 
+
+                // 서브 메뉴가 있으면 삭제 없으면 메뉴 그룹을 다 삭제
             if ($("#menulist tr.menu_list").length < 1) {
                 var list = "<tr id=\"empty_menu_list\"><td colspan=\"<?php echo $colspan; ?>\" class=\"empty_table\">자료가 없습니다.</td></tr>\n";
                 $("#menulist table tbody").append(list);
+
             } else {
                 $("#menulist tr.menu_list").each(function(index) {
-                    $(this).removeClass("bg0 bg1")
-                        .addClass("bg" + (index % 2));
+                    $(this).removeClass("bg0 bg1").addClass("bg" + (index % 2));
                 });
             }
         });
