@@ -36,6 +36,8 @@ for ($i = 0; $i < $count; $i++) {
         continue;
     }
 
+    
+
     $sub_code = '';
     if ($group_code == $code) {
         $sql = " select MAX(SUBSTRING(me_code,3,2)) as max_me_code
