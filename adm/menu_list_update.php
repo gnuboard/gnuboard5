@@ -37,7 +37,7 @@ for ($i = 0; $i < $count; $i++) {
     }
 
     $sub_code = '';
-    /*if ($group_code == $code) {
+    if ($group_code == $code) {
         //첫번째 메뉴 항목 아닌 경우 동일한 그룹의 서브 메뉴로 처리
         $sql = " select MAX(SUBSTRING(me_code,3,2)) as max_me_code
                     from {$g5['menu_table']}
@@ -49,7 +49,7 @@ for ($i = 0; $i < $count; $i++) {
         $sub_code = base_convert((string)$sub_code, 10, 36);
 
         $me_code = $primary_code . $sub_code;
-    } else {*/
+    } else {
     $sql = "select MAX(SUBSTRING(me_code,1,2)) as max_me_code
                 from {$g5['menu_table']}
                 where LENGTH(me_code) = '2' ";
@@ -59,9 +59,9 @@ for ($i = 0; $i < $count; $i++) {
     $me_code += 36;
     $me_code = base_convert((string)$me_code, 10, 36);
 
-    //$group_code = $code;
-    //$primary_code = $me_code;
-    
+    $group_code = $code;
+    $primary_code = $me_code;
+    }
 
     // 메뉴 등록
     $sql = " insert into {$g5['menu_table']}

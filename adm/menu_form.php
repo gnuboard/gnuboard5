@@ -12,7 +12,6 @@ require_once G5_PATH . '/head.sub.php';
 $new    = isset($_GET['new']) ? clean_xss_tags($_GET['new'], 1, 1) : '';
 $code   = isset($_GET['code']) ? (string)preg_replace('/[^0-9a-zA-Z]/', '', $_GET['code']) : '';
 
-
 if ($new == 'new' || !$code) {
     $code = (int)base_convert(substr($code, 0, 2), 36, 10);
     $code += 36;
@@ -107,10 +106,12 @@ if ($new == 'new' || !$code) {
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
         });
-
+        
         $(document).on("click", ".add_select", function() {
             var me_name = $.trim($(this).siblings("input[name='subject[]']").val());
             var me_link = $.trim($(this).siblings("input[name='link[]']").val());
+            
+            $new = 'new';
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
         });
