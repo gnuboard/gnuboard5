@@ -12,7 +12,6 @@ require_once G5_PATH . '/head.sub.php';
 $new    = isset($_GET['new']) ? clean_xss_tags($_GET['new'], 1, 1) : '';
 $code   = isset($_GET['code']) ? (string)preg_replace('/[^0-9a-zA-Z]/', '', $_GET['code']) : '';
 
-
 if ($new == 'new' || !$code) {
     $code = (int)base_convert(substr($code, 0, 2), 36, 10);
     $code += 36;
@@ -110,6 +109,8 @@ if ($new == 'new' || !$code) {
         $(document).on("click", ".add_select", function() {
             var me_name = $.trim($(this).siblings("input[name='subject[]']").val());
             var me_link = $.trim($(this).siblings("input[name='link[]']").val());
+            
+            $new = 'new';
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
         });
@@ -179,17 +180,17 @@ if ($new == 'new' || !$code) {
 
         if ($menu_last.length > 0) {
             $menu_last.after(list);
-        } else {
-            if ($menulist.find("#empty_menu_list").length > 0)
-                $menulist.find("#empty_menu_list").remove();
-
-            $menulist.find("table tbody").append(list); 
-
+        } else { // 리스트가 없을 때(추가한 게 없을 때)
+            if ($menulist.find("#empty_menu_list").length > 0) // 이미 추가된 게 있으면
+                $menulist.find("#empty_menu_list").remove(); // 메뉴리스트가 비지 않았다 
+          
+            $menulist.find("table tbody").append(list); // 리스트를 붙혀 
+        }
+        $menulist.find("#empty_menu_list").remove(); // 추가
         $menulist.find("tr.menu_list").each(function(index) {
             $(this).removeClass("bg0 bg1")
                 .addClass("bg" + (index % 2));
         });
-        
         loacation.replace(location.bref);
     }
 </script>
