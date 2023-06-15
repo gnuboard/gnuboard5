@@ -110,9 +110,10 @@ if ($new == 'new' || !$code) {
             var me_name = $.trim($(this).siblings("input[name='subject[]']").val());
             var me_link = $.trim($(this).siblings("input[name='link[]']").val());
             
-            $new = 'new';
+            //$new = 'new';
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
+
         });
     });
 
@@ -191,7 +192,7 @@ if ($new == 'new' || !$code) {
             $(this).removeClass("bg0 bg1")
                 .addClass("bg" + (index % 2));
         });
-        loacation.replace(location.bref);
+        sloacation.replace(location.href);
     }
 </script>
 

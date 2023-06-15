@@ -58,7 +58,24 @@ for ($i = 0; $i < $count; $i++) {
     $me_code += 36;
     $me_code = base_convert((string)$me_code, 10, 36);
 
-    $group_code = $code;
+    /*if (isset($_POST['code']) && in_array($code, $_POST['code'])) {
+        $group_code = $code;
+    } else {
+        $group_code = null;
+    }*/
+
+    if(isset($_POST['btn_add_submenu'])) {
+        $group_code = $code;
+    } else {
+        $group_code = null;
+    }
+
+    /*if(strpos($url, '&new=new') !== false) {
+        $group_code = null;
+    } else {
+        $group_code = $code;
+    }*/
+
     $primary_code = $me_code;
     }
 

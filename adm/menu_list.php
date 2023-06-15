@@ -140,6 +140,11 @@ $sub_menu_info = '';
         $(document).on("click", ".btn_add_submenu", function() {
             var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
             add_submenu(code);
+
+            /*var form = document.getElementById("fmenulist");
+            form.action = "./menu_list_update.php";
+            form.method = "post";
+            form.submit();*/
         });
 
         $(document).on("click", ".btn_del_menu", function() {
@@ -147,14 +152,12 @@ $sub_menu_info = '';
                 return false;
             }
 
-            var $tr = $(this).closest("tr"); // 변수 정의 (list 값 받아올 때마다 tr 단위로 끊음)
-                $tr.remove(); 
+            var $tr = $(this).closest("tr");
+                $tr.remove();
 
-                // 서브 메뉴가 있으면 삭제 없으면 메뉴 그룹을 다 삭제
             if ($("#menulist tr.menu_list").length < 1) {
                 var list = "<tr id=\"empty_menu_list\"><td colspan=\"<?php echo $colspan; ?>\" class=\"empty_table\">자료가 없습니다.</td></tr>\n";
                 $("#menulist table tbody").append(list);
-
             } else {
                 $("#menulist tr.menu_list").each(function(index) {
                     $(this).removeClass("bg0 bg1").addClass("bg" + (index % 2));
