@@ -140,6 +140,14 @@ $sub_menu_info = '';
         $(document).on("click", ".btn_add_submenu", function() {
             var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
             add_submenu(code);
+            
+            var form = document.getElementById("fmenulist");
+            form.action = "./menu_list_update.php";
+            form.method = "post";
+            
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+            });
 
             /*var form = document.getElementById("fmenulist");
             form.action = "./menu_list_update.php";
