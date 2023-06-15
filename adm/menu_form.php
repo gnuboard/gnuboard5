@@ -114,7 +114,7 @@ if ($new == 'new' || !$code) {
             //$new = 'new';
 
             add_menu_list(me_name, me_link, "<?php echo $code; ?>");
-            
+
         });
     });
 
@@ -174,7 +174,7 @@ if ($new == 'new' || !$code) {
         list += "</td>";
         list += "</tr>";
 
-        /*var $menu_last = null;
+        var $menu_last = null;
 
         if (code)
             $menu_last = $menulist.find("tr.menu_group_" + code + ":last");
@@ -188,23 +188,16 @@ if ($new == 'new' || !$code) {
                 $menulist.find("#empty_menu_list").remove(); // 메뉴리스트가 비지 않았다 
 
             $menulist.find("table tbody").append(list); // 리스트를 붙혀 
-<<<<<<< HEAD
         }
         $menulist.find("#empty_menu_list").remove(); // 추가
 
         //$menulist.find("table tbody").append(list); // 추가 (새로운 메뉴 리스트로 )
-=======
-        }*/
-        $menulist.find("#empty_menu_list").remove(); // 추가
-
-        $menulist.find("table tbody").append(list); // 추가 (새로운 메뉴 리스트로 )
->>>>>>> 8cf456f58 (menu_list 개별 삭제 기능)
         $menulist.find("tr.menu_list").each(function(index) {
             $(this).removeClass("bg0 bg1")
                 .addClass("bg" + (index % 2));
         });
         
-        loacation.replace(location.href);
+        sloacation.replace(location.href);
     }
 </script>
 

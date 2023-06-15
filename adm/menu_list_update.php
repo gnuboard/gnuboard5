@@ -65,11 +65,17 @@ for ($i = 0; $i < $count; $i++) {
         $group_code = null;
     }*/
 
-    if(isset($_POST['btn_add_submenu']) && $new != 'new') {
+    if(isset($_POST['btn_add_submenu'])) {
         $group_code = $code;
     } else {
         $group_code = null;
     }
+
+    /*if(strpos($url, '&new=new') !== false) {
+        $group_code = null;
+    } else {
+        $group_code = $code;
+    }*/
 
     $primary_code = $me_code;
     }
