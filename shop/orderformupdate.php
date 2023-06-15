@@ -646,10 +646,18 @@ $sql_card_point = "";
 if ($od_receipt_price > 0 && !$default['de_card_point']) {
     $sql_card_point = " , ct_point = '0' ";
 }
+
+// 회원 아이디 값 변경
+$sql_mb_id = "";
+if ($is_member) {
+    $sql_mb_id = " , mb_id = '{$member['mb_id']}' ";
+}
+
 $sql = "update {$g5['g5_shop_cart_table']}
            set od_id = '$od_id',
                ct_status = '$cart_status'
                $sql_card_point
+               $sql_mb_id
          where od_id = '$tmp_cart_id'
            and ct_select = '1' ";
 $result = sql_query($sql, false);
