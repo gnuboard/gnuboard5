@@ -82,4 +82,6 @@ for($i=0; $i<$count; $i++) {
     sql_query(" delete from {$g5['qa_content_table']} where qa_id = '$qa_id' ");
 }
 
+run_event('qa_delete', $tmp_array);
+
 goto_url(G5_BBS_URL.'/qalist.php'.preg_replace('/^&amp;/', '?', $qstr));
