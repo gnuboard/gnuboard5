@@ -49,9 +49,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>'."\n";
 <channel>
 <title><?php echo specialchars_replace($config['cf_title'].' &gt; '.$subj1.' &gt; '.$subj2); ?></title>
 <link><?php echo specialchars_replace(get_pretty_url($bo_table)); ?></link>
-<description>테스트 버전 0.2 (2004-04-26)</description>
 <language>ko</language>
-
 <?php
 $sql = " select wr_id, wr_subject, wr_content, wr_name, wr_datetime, wr_option
             from {$g5['write_prefix']}$bo_table
@@ -66,6 +64,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         $html = 1;
     else
         $html = 0;
+
+if ($i === 0) {
+    echo '<description>'. specialchars_replace($subj2). ' ('. $row['wr_datetime'] .')</description>'.PHP_EOL;
+}
 ?>
 
 <item>
@@ -76,8 +78,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <?php
 $date = $row['wr_datetime'];
 // rss 리더 스킨으로 호출하면 날짜가 제대로 표시되지 않음
-//$date = substr($date,0,10) . "T" . substr($date,11,8) . "+09:00";
-$date = date('r', strtotime($date));
+$date = substr($date,0,10) . "T" . substr($date,11,8) . "+09:00";
+//$date = date('r', strtotime($date));  // 구글 서치 콘솔에서 오류가 난다
 ?>
 <dc:date><?php echo $date ?></dc:date>
 </item>
