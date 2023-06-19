@@ -602,46 +602,70 @@ function check_html_link_nofollow($type=''){
     return true;
 }
 
-// http://htmlpurifier.org/
-// Standards-Compliant HTML Filtering
-// Safe  : HTML Purifier defeats XSS with an audited whitelist
-// Clean : HTML Purifier ensures standards-compliant output
-// Open  : HTML Purifier is open-source and highly customizable
+/**
+ * HTMLPurifier 필터를 거친 HTML 코드를 반환
+ * 
+ * http://htmlpurifier.org/
+ * Standards-Compliant HTML Filtering
+ * Safe  : HTML Purifier defeats XSS with an audited whitelist
+ * Clean : HTML Purifier ensures standards-compliant output
+ * Open  : HTML Purifier is open-source and highly customizable
+ *
+ * @param string $html
+ * @return string
+ */
 function html_purifier($html)
 {
     global $is_admin, $write;
 
-    $f = file(G5_PLUGIN_PATH.'/htmlpurifier/safeiframe.txt');
+    $f = file(G5_PLUGIN_PATH . '/htmlpurifier/safeiframe.txt');
     $domains = array();
-    foreach($f as $domain){
+    foreach ($f as $domain) {
         // 첫행이 # 이면 주석 처리
         if (!preg_match("/^#/", $domain)) {
             $domain = trim($domain);
-            if ($domain)
+            if ($domain) {
                 array_push($domains, $domain);
+            }
         }
     }
     // 글쓴이가 관리자인 경우에만 현재 사이트 도메인을 허용
-    if (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id'])) array_push($domains, $_SERVER['HTTP_HOST'].'/');
+    if (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id'])) {
+        array_push($domains, $_SERVER['HTTP_HOST'] . '/');
+    }
     $safeiframe = implode('|', run_replace('html_purifier_safeiframes', $domains, $html));
 
-    include_once(G5_PLUGIN_PATH.'/htmlpurifier/HTMLPurifier.standalone.php');
-    include_once(G5_PLUGIN_PATH.'/htmlpurifier/extend.video.php');
+    include_once(G5_PLUGIN_PATH . '/htmlpurifier/HTMLPurifier.standalone.php');
+    include_once(G5_PLUGIN_PATH . '/htmlpurifier/extend.video.php');
+
     $config = HTMLPurifier_Config::createDefault();
     // data/cache 디렉토리에 CSS, HTML, URI 디렉토리 등을 만든다.
-    $config->set('Cache.SerializerPath', G5_DATA_PATH.'/cache');
+    $config->set('Cache.SerializerPath', G5_DATA_PATH . '/cache');
     $config->set('HTML.SafeEmbed', false);
     $config->set('HTML.SafeObject', false);
     $config->set('Output.FlashCompat', false);
     $config->set('HTML.SafeIframe', true);
-    if( (function_exists('check_html_link_nofollow') && check_html_link_nofollow('html_purifier')) ){
-        $config->set('HTML.Nofollow', true);    // rel=nofollow 으로 스팸유입을 줄임
+    if ((function_exists('check_html_link_nofollow') && check_html_link_nofollow('html_purifier'))) {
+        $config->set('HTML.Nofollow', true); // rel=nofollow 으로 스팸유입을 줄임
     }
-    $config->set('URI.SafeIframeRegexp','%^(https?:)?//('.$safeiframe.')%');
+    $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(' . $safeiframe . ')%');
     $config->set('Attr.AllowedFrameTargets', array('_blank'));
     //유튜브, 비메오 전체화면 가능하게 하기
     $config->set('Filter.Custom', array(new HTMLPurifier_Filter_Iframevideo()));
+
+    /*
+     * HTMLPurifier 설정을 변경할 수 있는 Event hook
+     * 리스너에서는 첫번째 인자($config)로 `HTMLPurifier_Config` 객체를 받을 수 있다
+     */
+    run_event('html_purifier_config', $config, array(
+        'html' => $html,
+        'write' => $write,
+        'is_admin' => $is_admin
+    )
+    );
+
     $purifier = new HTMLPurifier($config);
+
     return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
 }
 
