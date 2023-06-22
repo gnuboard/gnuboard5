@@ -21,6 +21,10 @@ if ($w == '') {
                      ma_time = '" . G5_TIME_YMDHIS . "',
                      ma_ip = '{$_SERVER['REMOTE_ADDR']}' ";
     sql_query($sql);
+
+    $ma_id = sql_insert_id();
+    run_event('admin_mail_form_created', $ma_id);
+
 } elseif ($w == 'u') {
     $sql = " update {$g5['mail_table']}
                 set ma_subject = '{$ma_subject}',
@@ -29,6 +33,8 @@ if ($w == '') {
                      ma_ip = '{$_SERVER['REMOTE_ADDR']}'
                 where ma_id = '{$ma_id}' ";
     sql_query($sql);
+    run_event('admin_mail_form_updated', $ma_id);
+
 } elseif ($w == 'd') {
     $sql = " delete from {$g5['mail_table']} where ma_id = '{$ma_id}' ";
     sql_query($sql);

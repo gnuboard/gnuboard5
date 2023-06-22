@@ -30,6 +30,7 @@ if ($w == "")
     sql_query($sql);
 
     $fa_id = sql_insert_id();
+    run_event('admin_faq_item_created', $fa_id, $fm_id);
 }
 else if ($w == "u")
 {
@@ -37,11 +38,14 @@ else if ($w == "u")
                 set $sql_common
               where fa_id = '$fa_id' ";
     sql_query($sql);
+    run_event('admin_faq_item_updated', $fa_id, $fm_id);
+
 }
 else if ($w == "d")
 {
 	$sql = " delete from {$g5['faq_table']} where fa_id = '$fa_id' ";
     sql_query($sql);
+    run_event('admin_faq_item_deleted', $fa_id, $fm_id);
 }
 
 if ($w == 'd')
