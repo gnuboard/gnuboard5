@@ -7,7 +7,10 @@ auth_check_menu($auth, $sub_menu, 'r');
 $g5['title'] = 'DB 업그레이드';
 include_once('./admin.head.php');
 
+/** @var bool $is_check 마이그레이션이 실행되었으면 true */
 $is_check = false;
+/** @var array $upgradedMessage 마이그레이션 된 항목의 설명 */
+$upgradedMessage = array();
 
 //소셜 로그인 관련 필드 및 구글 리챕챠 필드 추가
 if(!isset($config['cf_social_login_use'])) {
@@ -27,6 +30,7 @@ if(!isset($config['cf_social_login_use'])) {
     ", true);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 소셜 로그인 관련 필드 및 구글 리캡챠 필드 추가';
 }
 
 //소셜 로그인 관련 필드 카카오 클라이언트 시크릿 추가
@@ -36,6 +40,7 @@ if(!isset($config['cf_kakao_client_secret'])) {
     ", true);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 소셜 로그인 관련 필드 카카오 클라이언트 시크릿 추가';
 }
 
 // 회원 이미지 관련 필드 추가
@@ -50,6 +55,7 @@ if(!isset($config['cf_member_img_size'])) {
     sql_query($sql, false);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 회원 이미지 관련 필드 추가';
 }
 
 // 소셜 로그인 관리 테이블 없을 경우 생성
@@ -72,6 +78,7 @@ if( isset($g5['social_profile_table']) && !sql_query(" DESC {$g5['social_profile
                 ) ", true);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 소셜 로그인 관리 테이블 없을 경우 생성';
 }
 
 // 게시판 짧은 주소
@@ -91,6 +98,7 @@ while ($row = sql_fetch_array($result)) {
         ", false);
 
         $is_check = true;
+        $upgradedMessage[] = '[G5] 게시판 짧은 주소 필드 추가';
     }
 }
 
@@ -105,6 +113,7 @@ if( !$row ){
     ", false);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 내용 관리 짧은 주소 필드 추가';
 }
 
 $sql = "select * from {$g5['content_table']} limit 100 ";
@@ -137,6 +146,7 @@ if( !$row ){
     ", false);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 메모 테이블 발송자, 타입, 발송자 IP 필드 추가';
 }
 
 // 읽지 않은 메모 수 칼럼
@@ -145,6 +155,7 @@ if(!isset($member['mb_memo_cnt'])) {
                 ADD `mb_memo_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_call`", true);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 메모 읽지 않은 메모 수 칼럼 추가';
 }
 
 // 스크랩 읽은 수 추가
@@ -153,6 +164,7 @@ if(!isset($member['mb_scrap_cnt'])) {
                 ADD `mb_scrap_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_cnt`", true);
 
 	$is_check = true;
+    $upgradedMessage[] = '[G5] 스크랩 읽은 수 추가';
 }
 
 // 짧은 URL 주소를 사용 여부 필드 추가
@@ -161,6 +173,7 @@ if (!isset($config['cf_bbs_rewrite'])) {
                     ADD `cf_bbs_rewrite` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_link_target` ", true);
 
 	$is_check = true;
+    $upgradedMessage[] = '[G5] 짧은 URL 주소를 사용 여부 필드 추가';
 }
 
 // 파일테이블에 추가 칼럼
@@ -175,6 +188,7 @@ if( !$row ) {
                 ADD COLUMN `bf_storage` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bf_thumburl`", true);
 
     $is_check = true;
+    $upgradedMessage[] = '[G5] 파일테이블에 추가 칼럼';
 }
 
 if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
@@ -193,6 +207,7 @@ if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8; ", true);
 
         $is_check = true;
+        $upgradedMessage[] = '[G5] 주문서 임시저장 테이블 생성';
     }
 
     $result = sql_query("describe `{$g5['g5_shop_post_log_table']}`");
@@ -202,12 +217,17 @@ if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
             sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` DROP PRIMARY KEY;", false);
             sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` ADD `log_id` int(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (`log_id`);", false);
             $is_check = true;
+            $upgradedMessage[] = '[G5] 주문 기록 테이블 필드 수정';
             break;
         }
     }
 }
 
-$is_check = run_replace('admin_dbupgrade', $is_check);
+/**
+ * $is_check : 마이그레이션이 실행되었으면 true
+ * $upgradedMessage : 리스너에서 참조로 받아 마이그레이션 한 내용을 배열에 추가하면 화면에 항목을 표시 함
+ */
+$is_check = run_replace('admin_dbupgrade', $is_check, $upgradedMessage);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
 ?>
@@ -215,6 +235,14 @@ $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '
 <div class="local_desc01 local_desc">
     <p>
         <?php echo $db_upgrade_msg; ?>
+
+        <?php if ($is_check && is_array($upgradedMessage) && count($upgradedMessage)) { ?>
+        <ul>
+            <?php foreach ($upgradedMessage as $message) { ?>
+                <li> - <?php echo $message; ?></li>
+            <?php } ?>
+        </ul>
+        <?php } ?>
     </p>
 </div>
 
