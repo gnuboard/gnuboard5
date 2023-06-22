@@ -19,6 +19,7 @@ for ($i = 0; $i < $post_count_chk; $i++) {
 
     $sql = " delete from {$g5['mail_table']} where ma_id = '$ma_id' ";
     sql_query($sql);
+    run_event('admin_mail_deleted', $ma_id);
 }
 
 goto_url('./mail_list.php');
