@@ -126,7 +126,22 @@ try {
 $file_url = SAVE_URL . '/' . $filename;
 
 if (function_exists('run_replace')) {
-    $file_url = run_replace('get_editor_upload_url', $file_url, $savefile, array());
+    $fileInfo = new \stdClass();
+    $fileInfo->name = (string) $filename;
+    $fileInfo->size = (int) $filesize;
+    $fileInfo->url = (string) $file_url;
+
+    if (isset($_POST['origname'])) {
+        $fileInfo->oriname = (string) $_POST['origname'];
+    }
+
+    if ($imgsize) {
+        $fileInfo->width = (int) $imgsize[0];
+        $fileInfo->height = (int) $imgsize[1];
+        $fileInfo->type = (string) $imgsize['mime'];
+    }
+
+    $file_url = run_replace('get_editor_upload_url', $file_url, $savefile, $fileInfo);
 }
 
 $rdata = sprintf(
