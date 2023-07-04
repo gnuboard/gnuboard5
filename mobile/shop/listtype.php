@@ -32,7 +32,7 @@ else
 if (!$skin)
     $skin = $default['de_mobile_listtype_list_skin'];
 else
-    $skin = preg_replace('#\.+[\\\/]#', '', $skin);
+    $skin = preg_replace('#\.+[\\\/]#', '', strip_tags($skin));
 
 define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
 
@@ -65,7 +65,7 @@ if (file_exists($list_file)) {
 }
 else
 {
-    echo '<div align="center">'.$skin.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
+    echo '<div align="center">'.get_text($skin).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
 ?>
 </div>
