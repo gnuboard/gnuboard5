@@ -65,7 +65,7 @@ function run_event($tag, $arg = ''){
     }
 }
 
-function add_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
+function add_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=1){
 
     if( $hook = get_hook_class() ){
         return $hook->addFilter($tag, $func, $priority, $args);
