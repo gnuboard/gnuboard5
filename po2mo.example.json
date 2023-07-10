@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "input": "Locale/kr",
+      "output": "Locale/kr"
+    },
+    {
+      "input": "Locale/fr",
+      "output": "Locale/fr"
+    },
+    {
+      "input": "Locale/jp/before.po",
+      "output": "Locale/jp/after.mo"
+    },
+    {
+      "input": "Locale/en/before.po",
+      "output": "Locale/en/after.mo"
+    }
+  ]
+}
