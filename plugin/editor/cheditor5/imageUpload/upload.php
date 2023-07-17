@@ -145,9 +145,8 @@ if (function_exists('run_replace')) {
 }
 
 $rdata = sprintf(
-    '{"fileUrl": "%s", "filePath": "%s", "fileName": "%s", "fileSize": "%d" }',
+    '{"fileUrl": "%s", "fileName": "%s", "fileSize": "%d" }',
     $file_url,
-    $savefile,
     $filename,
     $filesize
 );
