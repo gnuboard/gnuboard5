@@ -49,9 +49,13 @@ if ($w == "") {
     sql_query($sql);
 
     $fm_id = sql_insert_id();
+    run_event('admin_faq_master_created', $fm_id);
+
 } elseif ($w == "u") {
     $sql = " update {$g5['faq_master_table']} $sql_common where fm_id = '$fm_id' ";
     sql_query($sql);
+    run_event('admin_faq_master_updated', $fm_id);
+
 } elseif ($w == "d") {
     @unlink(G5_DATA_PATH . "/faq/{$fm_id}_h");
     @unlink(G5_DATA_PATH . "/faq/{$fm_id}_t");
@@ -63,6 +67,8 @@ if ($w == "") {
     // FAQ상세삭제
     $sql = " delete from {$g5['faq_table']} where fm_id = '$fm_id' ";
     sql_query($sql);
+
+    run_event('admin_faq_master_deleted', $fm_id);
 }
 
 if ($w == "" || $w == "u") {

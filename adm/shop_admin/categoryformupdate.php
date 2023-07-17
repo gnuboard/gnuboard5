@@ -193,6 +193,7 @@ if ($w == "")
                     ca_name = '$ca_name',
                     $sql_common ";
     sql_query($sql);
+    run_event('shop_admin_category_created', $ca_id);
 }
 else if ($w == "u")
 {
@@ -212,6 +213,7 @@ else if ($w == "u")
             $sql .= " and ca_mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }
+    run_event('shop_admin_category_updated', $ca_id);
 }
 else if ($w == "d")
 {
@@ -243,6 +245,7 @@ else if ($w == "d")
     // 분류 삭제
     $sql = " delete from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
     sql_query($sql);
+    run_event('shop_admin_category_deleted', $ca_id);
 }
 
 if(function_exists('get_admin_captcha_by'))

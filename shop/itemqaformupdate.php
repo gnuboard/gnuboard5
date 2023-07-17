@@ -47,6 +47,8 @@ if ($w == "")
                    iq_time = '".G5_TIME_YMDHIS."',
                    iq_ip = '".$_SERVER['REMOTE_ADDR']."' ";
     sql_query($sql);
+    $iq_id = sql_insert_id();
+    run_event('shop_item_qa_created', $iq_id, $it_id);
 
     $alert_msg = '상품문의가 등록 되었습니다.';
 }
@@ -68,6 +70,7 @@ else if ($w == "u")
                     iq_question = '$iq_question'
               where iq_id = '$iq_id' ";
     sql_query($sql);
+    run_event('shop_item_qa_updated', $iq_id, $it_id);
 
     $alert_msg = '상품문의가 수정 되었습니다.';
 }
@@ -132,6 +135,7 @@ else if ($w == "d")
 
     $sql = " delete from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     sql_query($sql);
+    run_event('shop_item_qa_deleted', $iq_id, $it_id);
 
     $alert_msg = '상품문의가 삭제 되었습니다.';
 }

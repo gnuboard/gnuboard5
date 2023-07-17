@@ -9,11 +9,14 @@ include_once(dirname(__FILE__) .'/pbkdf2.compat.php');
 **
 *************************************************************************/
 
-// 마이크로 타임을 얻어 계산 형식으로 만듦
+/**
+ * 마이크로타임을 반환
+ * @return float
+ * @deprecated use `microtime(true)`
+ */
 function get_microtime()
 {
-    list($usec, $sec) = explode(" ",microtime());
-    return ((float)$usec + (float)$sec);
+    return microtime(true);
 }
 
 

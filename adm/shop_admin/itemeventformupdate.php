@@ -75,6 +75,7 @@ if ($w == "")
                     $sql_common
                   , ev_id = '$ev_id' ";
     sql_query($sql);
+    run_event('shop_admin_event_created', $ev_id);
 }
 else if ($w == "u")
 {
@@ -82,6 +83,7 @@ else if ($w == "u")
                 $sql_common
               where ev_id = '$ev_id' ";
     sql_query($sql);
+    run_event('shop_admin_event_updated', $ev_id);
 }
 else if ($w == "d")
 {
@@ -92,6 +94,7 @@ else if ($w == "d")
     // 이벤트상품삭제
     $sql = " delete from {$g5['g5_shop_event_item_table']} where ev_id = '$ev_id' ";
     sql_query($sql);
+    run_event('shop_admin_event_deleted', $ev_id);
 
     $sql = " delete from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
     sql_query($sql);

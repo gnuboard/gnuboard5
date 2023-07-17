@@ -19,6 +19,7 @@ if ($w == "u")
                    iq_answer = '$iq_answer'
              where iq_id = '$iq_id' ";
     sql_query($sql);
+    run_event('shop_admin_item_qa_updated', $iq_id);
 
     if(trim($iq_answer)) {
         $sql = " select a.iq_email, a.iq_hp, b.it_name
