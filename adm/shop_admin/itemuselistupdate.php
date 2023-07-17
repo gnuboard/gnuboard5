@@ -40,6 +40,7 @@ for ($i=0; $i<$count_post_chk; $i++)
     {
         $sql = "delete from {$g5['g5_shop_item_use_table']} where is_id = '{$iis_id}' ";
         sql_query($sql);
+        run_event('shop_admin_item_use_deleted', $iis_id);
     }
     
     if($iit_id){
