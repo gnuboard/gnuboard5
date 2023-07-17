@@ -32,7 +32,7 @@ if ($member['mb_level'] < $default['de_level_sell'])
 {
     alert('상품을 구입할 수 있는 권한이 없습니다.');
 }
-
+// 장바구니 > 구매
 if($act == "buy")
 {
     if(!count($post_ct_chk))
@@ -79,9 +79,7 @@ if($act == "buy")
                             and ct_select = '1' ";
 
                 $sum = sql_fetch($sql);
-                // $sum['cnt'] 가 null 일때 재고 반영이 제대로 안되는 오류 수정 (그누위즈님,210614)
-                // $sum_qty = $sum['cnt'];
-                $sum_qty = is_int($sum['cnt']) ? $sum['cnt'] : 0;
+                $sum_qty = (int)$sum['cnt'];
 
                 // 재고 구함
                 $ct_qty = $row['ct_qty'];
@@ -136,9 +134,9 @@ else if ($act == "seldelete") // 선택삭제
             }
         }
     }
-}
-else // 장바구니에 담기
-{
+// 장바구니에 담기
+// 바로구매, 위시리스트 구매 - sw_direct 1
+} else {
     $count = count($post_it_ids);
     if ($count < 1)
         alert('장바구니에 담을 상품을 선택하여 주십시오.');
@@ -250,10 +248,10 @@ else // 장바구니에 담기
                             and ct_status = '쇼핑'
                             and ct_select = '1' ";
                 $row = sql_fetch($sql);
-                $sum_qty = $row['cnt'];
+                $sum_qty = (int)$row['cnt'];
 
                 // 재고 구함
-                $ct_qty = isset($_POST['ct_qty'][$it_id][$k]) ? (int) $_POST['ct_qty'][$it_id][$k] : 0;
+                $ct_qty = isset($_POST['ct_qty'][$it_id][$k]) ? (int)$_POST['ct_qty'][$it_id][$k] : 0;
                 if(!$io_id)
                     $it_stock_qty = get_it_stock_qty($it_id);
                 else
@@ -322,7 +320,7 @@ else // 장바구니에 담기
             $row2 = sql_fetch($sql2);
             if(isset($row2['ct_id']) && $row2['ct_id']) {
                 // 재고체크
-                $tmp_ct_qty = $row2['ct_qty'];
+                $tmp_ct_qty = (int)$row2['ct_qty'];
                 if(!$io_id)
                     $tmp_it_stock_qty = get_it_stock_qty($it_id);
                 else

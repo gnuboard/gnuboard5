@@ -155,7 +155,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         $temporary_qty = $row['it_stock_qty'] - $wait_qty;
 
         // 통보수량보다 재고수량이 작을 때
-        $it_stock_qty = number_format($row['it_stock_qty']);
+        $it_stock_qty = number_format((int)$row['it_stock_qty']);
         $it_stock_qty_st = ''; // 스타일 정의
         if($row['it_stock_qty'] <= $row['it_noti_qty']) {
             $it_stock_qty_st = ' sit_stock_qty_alert';
@@ -171,7 +171,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <?php echo $row['it_id']; ?>
         </td>
         <td class="td_left"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo (int)$it_stock_qty; ?></td>
+        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo $it_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format((float)$wait_qty); ?></td>
         <td class="td_num"><?php echo number_format((float)$temporary_qty); ?></td>
         <td class="td_num">
