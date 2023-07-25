@@ -213,7 +213,7 @@
 .memo_from li.memo_view_date {display:block;color:#555;line-height:24px}
 .memo_from li.memo_op_btn {position:absolute}
 .memo_from li.list_btn {right:53px;}
-.memo_from li.del_btn {right:15px;padding}
+.memo_from li.del_btn {right:15px;}
 .memo_from:after {display:block;visibility:hidden;clear:both;content:""}
 
 .memo_btn {width:100%}

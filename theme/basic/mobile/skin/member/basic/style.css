@@ -138,7 +138,7 @@
 #mb_login_notmb {background:#fff;border-bottom:1px solid #ccc;padding:20px}
 #mb_login_notmb .chk_box input[type="checkbox"] + label{padding-left:20px}
 #mb_login_notmb h2 {font-size:1.25em;padding:10px;background:#f3f3f3}
-#mb_login_notmb p {border:0;padding:0;margin:10px;color:#}
+#mb_login_notmb p {border:0;padding:0;margin:10px;}
 #guest_privacy {border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:200px;margin:10px 0;overflow-y:auto}
 #mb_login_notmb .btn_submit {width:100%;display:block;height:40px;line-height:40px}
 
@@ -199,7 +199,7 @@
 .memo_from li.memo_view_date {display:block;color:#555;line-height:24px}
 .memo_from li.memo_op_btn {position:absolute}
 .memo_from li.list_btn {right:53px;}
-.memo_from li.del_btn {right:15px;padding}
+.memo_from li.del_btn {right:15px;}
 .memo_from:after {display:block;visibility:hidden;clear:both;content:""}
 
 .memo_btn {width:100%}
