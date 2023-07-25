@@ -789,7 +789,7 @@ box-shadow: 1px 2px 2px #eee;}
 #od_tot_price strong{font-size:1.5em;color:#ff006c}
 #sod_frm #sod_frm_pt_alert {margin:5px 0;color:#38b2bb }
 #od_pay_sl h3{font-size:1.167em;margin:20px 0 5px}
-#od_pay_sl input[type="radio"]{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left: 0;z-index: -1px;}
+#od_pay_sl input[type="radio"]{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left: 0;z-index: -1;}
 #od_pay_sl .lb_icon {display: inline-block;float:left;width:50%;background:#fff;border:1px solid #eceff4;margin:-1px 0 0 -1px;cursor: pointer;height:60px;position:relative;padding-left:65px;padding-top:20px;z-index:1}
 #od_pay_sl input[type="radio"]:checked+.lb_icon {border:1px solid #ff006c;z-index:3}
 #sod_frm_paysel {}
