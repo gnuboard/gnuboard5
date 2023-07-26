@@ -16,10 +16,10 @@ if( ! $is_admin ){
 	}
 }
 
-run_event('admin_request_handler_'.$call, $arr_query, $token);
-
 $sub_menu = admin_menu_find_by($call, 'sub_menu');
 $g5['title'] = admin_menu_find_by($call, 'title');
+
+run_event('admin_request_handler_'.$call, $arr_query, $token);
 
 include_once ('./admin.head.php');
 
