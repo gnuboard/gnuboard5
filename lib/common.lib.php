@@ -3547,7 +3547,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     }
     $p = @parse_url(trim($url));
 
-    // 리버스 프록시(로드밸런서, 캐시, DDoS 완화 서비스 등) 사용 시
+    // 리버스 프록시(예: CDN, 로드밸런서, 캐시, 프록시 기반 보안서버(SSL), DDoS 완화 서비스) 사용 시
     // 도메인 인식 못하여 'url에 타 도메인을 지정할 수 없습니다.' 메시지 발생 해결
     $host = '';
     $x = array('HTTP_X_FORWARDED_HOST', 'HTTP_HOST'); // 맨 처음 항목이 우선권 높음
