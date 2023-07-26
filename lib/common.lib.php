@@ -3546,7 +3546,18 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         $url = $replace_url;
     }
     $p = @parse_url(trim($url));
-    $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+
+    // 리버스 프록시(로드밸런서, 캐시, DDoS 완화 서비스 등) 사용 시
+    // 도메인 인식 못하여 'url에 타 도메인을 지정할 수 없습니다.' 메시지 발생 해결
+    $host = '';
+    $x = array('HTTP_X_FORWARDED_HOST', 'HTTP_HOST');
+    for($i = count($x) -1; $i > -1; $i--) {
+        $k = $x[$i];
+        if (array_key_exists($k, $_SERVER)) {
+            $host = preg_replace('/:[0-9]+$/', '', $_SERVER[$k]);
+        }
+    }
+
     $is_host_check = false;
     
     // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
