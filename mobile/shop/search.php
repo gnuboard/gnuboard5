@@ -17,10 +17,10 @@ if (isset($_GET['qname']) || isset($_GET['qexplan']) || isset($_GET['qid']) || i
     $search_all = false;
 
 $q       = utf8_strcut(get_search_string(trim($_GET['q'])), 30, "");
-$qname   = isset($_GET['qname']) ? trim($_GET['qname']) : '';
-$qexplan = isset($_GET['qexplan']) ? trim($_GET['qexplan']) : '';
-$qid     = isset($_GET['qid']) ? trim($_GET['qid']) : '';
-$qbasic  = isset($_GET['qbasic']) ? trim($_GET['qbasic']) : '';
+$qname   = isset($_GET['qname']) ? trim(clean_xss_tags($_GET['qname'])) : '';
+$qexplan = isset($_GET['qexplan']) ? trim(clean_xss_tags($_GET['qexplan'])) : '';
+$qid     = isset($_GET['qid']) ? trim(clean_xss_tags($_GET['qid'])) : '';
+$qbasic  = isset($_GET['qbasic']) ? trim(clean_xss_tags($_GET['qbasic'])) : '';
 $qcaid   = isset($_GET['qcaid']) ? preg_replace('#[^a-z0-9]#i', '', trim($_GET['qcaid'])) : '';
 $qfrom   = isset($_GET['qfrom']) ? preg_replace('/[^0-9]/', '', trim($_GET['qfrom'])) : '';
 $qto     = isset($_GET['qto']) ? preg_replace('/[^0-9]/', '', trim($_GET['qto'])) : '';

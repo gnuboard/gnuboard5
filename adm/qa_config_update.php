@@ -108,6 +108,8 @@ $sql = " update {$g5['qa_config_table']}
                 qa_5                    = '{$_POST['qa_5']}' ";
 sql_query($sql);
 
+run_event('admin_qa_config_updated');
+
 if (function_exists('get_admin_captcha_by')) {
     get_admin_captcha_by('remove');
 }

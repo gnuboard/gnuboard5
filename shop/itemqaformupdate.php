@@ -47,6 +47,8 @@ if ($w == "")
                    iq_time = '".G5_TIME_YMDHIS."',
                    iq_ip = '".$_SERVER['REMOTE_ADDR']."' ";
     sql_query($sql);
+    $iq_id = sql_insert_id();
+    run_event('shop_item_qa_created', $iq_id, $it_id);
 
     $alert_msg = '상품문의가 등록 되었습니다.';
 }
@@ -68,6 +70,7 @@ else if ($w == "u")
                     iq_question = '$iq_question'
               where iq_id = '$iq_id' ";
     sql_query($sql);
+    run_event('shop_item_qa_updated', $iq_id, $it_id);
 
     $alert_msg = '상품문의가 수정 되었습니다.';
 }
@@ -84,7 +87,7 @@ else if ($w == "d")
             alert("답변이 있는 상품문의는 삭제하실 수 없습니다.");
     }
 
-    // 에디터로 첨부된 이미지 삭제
+    // 에디터로 첨부된 썸네일 이미지만 삭제
     $sql = " select iq_question, iq_answer from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     $row = sql_fetch($sql);
 
@@ -101,8 +104,10 @@ else if ($w == "d")
 
             $destfile = ( ! preg_match('/\w+\/\.\.\//', $data_path) ) ? G5_PATH.$data_path : '';
 
-            if($destfile && preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
-                @unlink($destfile);
+            if ($destfile && preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile)) {
+                delete_item_thumbnail(dirname($destfile), basename($destfile));
+                //@unlink($destfile);
+            }
         }
     }
 
@@ -121,13 +126,16 @@ else if ($w == "d")
 
             $destfile = ( ! preg_match('/\w+\/\.\.\//', $data_path) ) ? G5_PATH.$data_path : '';
 
-            if($destfile && preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
-                @unlink($destfile);
+            if ($destfile && preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile)) {
+                delete_item_thumbnail(dirname($destfile), basename($destfile));
+                // @unlink($destfile);
+            }
         }
     }
 
     $sql = " delete from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     sql_query($sql);
+    run_event('shop_item_qa_deleted', $iq_id, $it_id);
 
     $alert_msg = '상품문의가 삭제 되었습니다.';
 }

@@ -34,7 +34,7 @@ if ($sort != '')
 else
     $order_by = 'it_order, it_id desc';
 
-$skin = isset($skin) ? $skin : '';
+$skin = isset($skin) ? strip_tags($skin) : '';
 if (!$skin || preg_match('#\.+[\\\/]#', $skin))
     $skin = $default['de_listtype_list_skin'];
 else
@@ -77,7 +77,7 @@ if (file_exists($list_file)) {
 }
 else
 {
-    echo '<div align="center">'.$skin.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
+    echo '<div align="center">'.get_text($skin).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
 
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;

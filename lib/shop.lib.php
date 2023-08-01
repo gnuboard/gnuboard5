@@ -1943,8 +1943,9 @@ function is_soldout($it_id, $is_cache=false)
     // 상품정보
     $it = get_shop_item($it_id, $is_cache);
 
-    if($it['it_soldout'] || $it['it_stock_qty'] <= 0)
+    if ($it['it_soldout']) {
         return true;
+    }
 
     $count = 0;
     $soldout = false;
@@ -1953,7 +1954,7 @@ function is_soldout($it_id, $is_cache=false)
     $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_type = '0' ";
     $row = sql_fetch($sql);
 
-    if($row['cnt']) {
+    if (isset($row['cnt']) && $row['cnt']) {
         $sql = " select io_id, io_type, io_stock_qty
                     from {$g5['g5_shop_item_option_table']}
                     where it_id = '$it_id'
@@ -1972,12 +1973,18 @@ function is_soldout($it_id, $is_cache=false)
         // 모든 선택옵션 품절이면 상품 품절
         if($i == $count)
             $soldout = true;
-    } else {
-        // 상품 재고수량
-        $stock_qty = get_it_stock_qty($it_id);
 
-        if($stock_qty <= 0)
+    } else {
+
+        if ($it['it_stock_qty'] <= 0) {
             $soldout = true;
+        } else {
+            // 상품 재고수량
+            $stock_qty = get_it_stock_qty($it_id);
+
+            if($stock_qty <= 0)
+                $soldout = true;
+        }
     }
     
     $cache[$key] = $soldout;

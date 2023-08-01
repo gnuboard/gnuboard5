@@ -113,17 +113,20 @@ if ($w == "") {
                 set co_id = '$co_id',
                     $sql_common ";
     sql_query($sql);
+    run_event('admin_content_created', $co_id);
 } elseif ($w == "u") {
     $sql = " update {$g5['content_table']}
                 set $sql_common
               where co_id = '$co_id' ";
     sql_query($sql);
+    run_event('admin_content_updated', $co_id);
 } elseif ($w == "d") {
     @unlink(G5_DATA_PATH . "/content/{$co_id}_h");
     @unlink(G5_DATA_PATH . "/content/{$co_id}_t");
 
     $sql = " delete from {$g5['content_table']} where co_id = '$co_id' ";
     sql_query($sql);
+    run_event('admin_content_deleted', $co_id);
 }
 
 if (function_exists('get_admin_captcha_by')) {

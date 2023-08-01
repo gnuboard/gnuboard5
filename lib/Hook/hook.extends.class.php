@@ -19,7 +19,7 @@ Class GML_Hook extends Hook {
 
         $args = $this->getArguments($argsNumber, $args);
 
-        if (! ($class && $method) && function_exists($function)) {
+        if (! ($class && $method) && is_callable($function)) {
             return call_user_func_array($function, $args);
         } elseif ($obj = call_user_func(array($class, $this->singleton))) {
             if ($obj !== false) {

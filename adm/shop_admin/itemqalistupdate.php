@@ -23,6 +23,7 @@ if ($_POST['act_button'] == "선택삭제") {
 
         $sql = "delete from {$g5['g5_shop_item_qa_table']} where iq_id = '{$iiq_id}' ";
         sql_query($sql);
+        run_event('shop_admin_item_qa_deleted', $iiq_id);
     }
 }
 

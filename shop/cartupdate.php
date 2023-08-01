@@ -81,7 +81,7 @@ if($act == "buy")
                 $sum = sql_fetch($sql);
                 // $sum['cnt'] 가 null 일때 재고 반영이 제대로 안되는 오류 수정 (그누위즈님,210614)
                 // $sum_qty = $sum['cnt'];
-                $sum_qty = is_int($sum['cnt']) ? $sum['cnt'] : 0;
+                $sum_qty = isset($sum['cnt']) ? (int) $sum['cnt'] : 0;
 
                 // 재고 구함
                 $ct_qty = $row['ct_qty'];
