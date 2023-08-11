@@ -56,21 +56,22 @@ for($i=0; $i<$count; $i++) {
     delete_editor_thumbnail($row['qa_content']);
 
     // 답변이 있는 질문글이라면 답변글 삭제
-    if(!$row['qa_type'] && $row['qa_status']) {
-        $row2 = sql_fetch(" select qa_content, qa_file1, qa_file2 from {$g5['qa_content_table']} where qa_parent = '$qa_id' ");
+    if (!$row['qa_type'] && $row['qa_status']) {
+        $answer = sql_fetch(" SELECT qa_id, qa_content, qa_file1, qa_file2 from {$g5['qa_content_table']} where qa_type = 1 AND qa_parent = {$qa_id} ");
         // 첨부파일 삭제
-        for($k=1; $k<=2; $k++) {
-            @unlink(G5_DATA_PATH.'/qa/'.clean_relative_paths($row2['qa_file'.$k]));
+        for ($k = 1; $k <= 2; $k++) {
+            @unlink(G5_DATA_PATH . '/qa/' . clean_relative_paths($answer['qa_file' . $k]));
             // 썸네일삭제
-            if(preg_match("/\.({$config['cf_image_extension']})$/i", $row2['qa_file'.$k])) {
-                delete_qa_thumbnail($row2['qa_file'.$k]);
+            if (preg_match("/\.({$config['cf_image_extension']})$/i", $answer['qa_file' . $k])) {
+                delete_qa_thumbnail($answer['qa_file' . $k]);
             }
         }
 
         // 에디터 썸네일 삭제
-        delete_editor_thumbnail($row2['qa_content']);
+        delete_editor_thumbnail($answer['qa_content']);
 
-        sql_query(" delete from {$g5['qa_content_table']} where qa_type = '1' and qa_parent = '$qa_id' ");
+        // 답변글 삭제
+        sql_query(" DELETE from {$g5['qa_content_table']} where qa_type = 1 and qa_parent = {$qa_id} ");
     }
 
     // 답변글 삭제시 질문글의 상태변경
