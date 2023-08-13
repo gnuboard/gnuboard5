@@ -53,7 +53,7 @@ $opt_sql = " insert ignore into {$g5['g5_shop_item_option_table']} ( io_id, io_t
 sql_query($opt_sql);
 
 // html 에디터로 첨부된 이미지 파일 복사
-$copied_editor_images = [];
+$copied_editor_images = array();
 if($cp['it_explan']) {
     $matchs = get_editor_image($cp['it_explan'], false);
     $count_matchs = (isset($matchs[1]) && is_array($matchs[1])) ? count($matchs[1]) : 0;
@@ -152,7 +152,7 @@ function copy_directory($src_dir, $dest_dir)
 }
 
 // 파일복사
-$copied_item_files = [];
+$copied_item_files = array();
 $dest_path = G5_DATA_PATH.'/item/'.$new_it_id;
 @mkdir($dest_path, G5_DIR_PERMISSION);
 @chmod($dest_path, G5_DIR_PERMISSION);
@@ -169,10 +169,10 @@ for($i=1; $i<=10; $i++) {
         @chmod($dstfile, G5_FILE_PERMISSION);
         $new_img = $new_it_id.'/'.basename($file);
 
-        $copied_item_files[] = [
+        $copied_item_files[] = array(
             'original' => $file,
             'new' => $dstfile,
-        ];
+        );
     }
 
     $sql_img .= $comma." it_img{$i} = '$new_img' ";
@@ -192,13 +192,13 @@ sql_query($sql);
  * @var array $copied_item_files 복사한 파일 목록
  * @var array $copied_editor_images 복사한 에디터 이미지 목록
  */
-run_event('shop_admin_itemcopy', [
+run_event('shop_admin_itemcopy', array(
     'it_id' => (string) $it_id,
     'new_it_id' => (string) $new_it_id,
     'cp' => $cp,
     'copied_item_files' => $copied_item_files,
     'copied_editor_images' => $copied_editor_images
-]);
+));
 
 $qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx);
 
