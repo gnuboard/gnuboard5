@@ -112,7 +112,7 @@ function get_max_value($arr)
     return array_pop($arr);
 }
 ?>
-
+<?php if (! auth_check_menu($auth, '400400', 'r', true)) { ?>
 <div class="sidx">
     <section id="anc_sidx_ord">
         <h2>주문현황</h2>
@@ -368,6 +368,66 @@ function get_max_value($arr)
     </div>
 </section>
 
+<script>
+jQuery(function($) {
+    graph_draw();
+
+    $("#sidx_graph_area div").hover(
+        function() {
+            if($(this).is(":animated"))
+                return false;
+
+            var title = $(this).attr("title");
+            if(title && $(this).data("title") == undefined)
+                $(this).data("title", title);
+            var left = parseInt($(this).css("left")) + 10;
+            var bottom = $(this).height() + 5;
+
+            $(this)
+                .attr("title", "")
+                .append("<div id=\"price_tooltip\"><div></div></div>");
+            $("#price_tooltip")
+                .find("div")
+                .html(title)
+                .end()
+//                .css({ left: left+"px", bottom: bottom+"px" })
+                .show(200);
+        },
+        function() {
+            if($(this).is(":animated"))
+                return false;
+
+            $(this).attr("title", $(this).data("title"));
+            $("#price_tooltip").remove();
+        }
+    );
+});
+
+function graph_draw()
+{
+    var g_h1 = new Array("<?php echo implode('", "', $h_val['order']); ?>");
+    var g_h2 = new Array("<?php echo implode('", "', $h_val['cancel']); ?>");
+    var duration = 600;
+
+    var $el = $("#sidx_graph_area li");
+    var h1, h2;
+    var $g1, $g2;
+
+    $el.each(function(index) {
+        h1 = g_h1[index];
+        h2 = g_h2[index];
+
+        $g1 = $(this).find(".order");
+        $g2 = $(this).find(".cancel");
+
+        $g1.animate({ height: h1+"px" }, duration);
+        $g2.animate({ height: h2+"px" }, duration);
+    });
+}
+</script>
+
+<?php } //endif ?>
+<?php if ($is_admin === 'super') { ?>
 <div class="sidx sidx_cs">
     <section id="anc_sidx_oneq">
         <h2>1:1문의</h2>
@@ -480,64 +540,6 @@ function get_max_value($arr)
         </div>
     </section>
 </div>
-
-<script>
-$(function() {
-    graph_draw();
-
-    $("#sidx_graph_area div").hover(
-        function() {
-            if($(this).is(":animated"))
-                return false;
-
-            var title = $(this).attr("title");
-            if(title && $(this).data("title") == undefined)
-                $(this).data("title", title);
-            var left = parseInt($(this).css("left")) + 10;
-            var bottom = $(this).height() + 5;
-
-            $(this)
-                .attr("title", "")
-                .append("<div id=\"price_tooltip\"><div></div></div>");
-            $("#price_tooltip")
-                .find("div")
-                .html(title)
-                .end()
-//                .css({ left: left+"px", bottom: bottom+"px" })
-                .show(200);
-        },
-        function() {
-            if($(this).is(":animated"))
-                return false;
-
-            $(this).attr("title", $(this).data("title"));
-            $("#price_tooltip").remove();
-        }
-    );
-});
-
-function graph_draw()
-{
-    var g_h1 = new Array("<?php echo implode('", "', $h_val['order']); ?>");
-    var g_h2 = new Array("<?php echo implode('", "', $h_val['cancel']); ?>");
-    var duration = 600;
-
-    var $el = $("#sidx_graph_area li");
-    var h1, h2;
-    var $g1, $g2;
-
-    $el.each(function(index) {
-        h1 = g_h1[index];
-        h2 = g_h2[index];
-
-        $g1 = $(this).find(".order");
-        $g2 = $(this).find(".cancel");
-
-        $g1.animate({ height: h1+"px" }, duration);
-        $g2.animate({ height: h2+"px" }, duration);
-    });
-}
-</script>
-
 <?php
+}   //end if
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
