@@ -252,7 +252,9 @@ if ($w == '' || $w == 'r') {
         $wr_num = $write['wr_num'];
         $wr_reply = $reply;
     } else {
-        $wr_num = get_next_num($write_table);
+        // get_next_num 함수는 mysql 지연시 중복이 될수 있는 문제로 더 이상 사용하지 않습니다.
+        // $wr_num = get_next_num($write_table);
+        $wr_num = 0;
         $wr_reply = '';
     }
 
@@ -294,8 +296,10 @@ if ($w == '' || $w == 'r') {
 
     $wr_id = sql_insert_id();
 
+    $add_wr_update_sql = ($wr_num === 0) ? ", wr_num = '-$wr_id' " : "";
+
     // 부모 아이디에 UPDATE
-    sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");
+    sql_query(" update $write_table set wr_parent = '$wr_id' $add_wr_update_sql where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     sql_query(" insert into {$g5['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '{$bo_table}', '{$wr_id}', '{$wr_id}', '".G5_TIME_YMDHIS."', '{$member['mb_id']}' ) ");

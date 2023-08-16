@@ -49,7 +49,9 @@ while ($row = sql_fetch_array($result))
         $count_write = 0;
         $count_comment = 0;
 
-        $next_wr_num = get_next_num($move_write_table);
+        // get_next_num 함수는 mysql 지연시 중복이 될수 있는 문제로 더 이상 사용하지 않습니다.
+        // $next_wr_num = get_next_num($move_write_table);
+        $next_wr_num = 0;
 
         $sql2 = " select * from $write_table where wr_num = '$wr_num' order by wr_parent, wr_is_comment, wr_comment desc, wr_id ";
         $result2 = sql_query($sql2);
@@ -120,6 +122,10 @@ while ($row = sql_fetch_array($result))
             // 코멘트가 아니라면
             if (!$row2['wr_is_comment'])
             {
+                if (! $row2['wr_reply']) {
+                    $next_wr_num = -$insert_id;
+                }
+
                 $save_parent = $insert_id;
 
                 $sql3 = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' order by bf_no ";
@@ -200,7 +206,7 @@ while ($row = sql_fetch_array($result))
                 }
             }
 
-            sql_query(" update $move_write_table set wr_parent = '$save_parent' where wr_id = '$insert_id' ");
+            sql_query(" update $move_write_table set wr_parent = '$save_parent', wr_num = '$next_wr_num' where wr_id = '$insert_id' ");
 
             if ($sw == 'move')
                 $save[$cnt]['wr_id'] = $row2['wr_parent'];
