@@ -3804,7 +3804,7 @@ function check_vaild_callback($callback){
 class str_encrypt
 {
     var $salt;
-    var $lenght;
+    var $length;
 
     function __construct($salt='')
     {
