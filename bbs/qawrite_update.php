@@ -86,6 +86,7 @@ $qa_related = 0;
 $qa_email_recv = (isset($_POST['qa_email_recv']) && $_POST['qa_email_recv']) ? 1 : 0;
 $qa_sms_recv = (isset($_POST['qa_sms_recv']) && $_POST['qa_sms_recv']) ? 1 : 0;
 $qa_status = 0;
+$answer_id = null;
 
 for ($i=1; $i<=5; $i++) {
     $var = "qa_$i";
@@ -301,6 +302,7 @@ if($w == '' || $w == 'a' || $w == 'r') {
     }
 
     if($w == 'a') {
+        $answer_id = (int) sql_insert_id();
         $sql = " update {$g5['qa_content_table']}
                     set qa_status = '1'
                     where qa_id = '{$write['qa_parent']}' ";
@@ -339,7 +341,15 @@ if($w == '' || $w == 'a' || $w == 'r') {
     sql_query($sql);
 }
 
-run_event('qawrite_update', $qa_id, $write, $w, $qaconfig);
+/**
+ * 1:1 문의/답변의 변경 시 Event Hook
+ * @var int $qa_id 삽입/수정 또는 답글/추가질문 대상 글의 ID
+ * @var array $write 삽입/수정 또는 답글/추가질문 대상 글의 데이터
+ * @var string $w 동작 모드 ('': 질문글 작성, 'a': 답변글 작성, 'u': 질문/답변 수정, 'r': 추가(관련) 질문)
+ * @var array $qaconfig 1:1 문의 설정
+ * @var ?int $answer_id 답변글 작성($w = 'a') 시 답변글의 ID
+*/
+run_event('qawrite_update', $qa_id, $write, $w, $qaconfig, ($w === 'a') ? $answer_id : null);
 
 // SMS 알림
 if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
