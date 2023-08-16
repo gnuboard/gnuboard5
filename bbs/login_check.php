@@ -62,6 +62,13 @@ run_event('login_session_before', $mb, $is_social_login);
 
 @include_once($member_skin_path.'/login_check.skin.php');
 
+if (! (defined('SKIP_SESSION_REGENERATE_ID') && SKIP_SESSION_REGENERATE_ID)) {
+    session_regenerate_id(false);
+    if (function_exists('session_start_samesite')) {
+        session_start_samesite();
+    }
+}
+
 // 회원아이디 세션 생성
 set_session('ss_mb_id', $mb['mb_id']);
 // FLASH XSS 공격에 대응하기 위하여 회원의 고유키를 생성해 놓는다. 관리자에서 검사함 - 110106
