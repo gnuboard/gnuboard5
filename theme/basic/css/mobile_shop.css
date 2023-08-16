@@ -82,8 +82,8 @@ input, textarea {
 /*카테고리*/
 .menu {display:none;position:fixed;top:0;height:100%;z-index:99999;-webkit-backface-visibility:hidden;width:100%;background:#efefef}
 .menu .menu_wr{width:100%;height:100%;overflow-y:auto;background:#eee;position:relative;z-index:199919;
- -webkit-box-shadow: 0 0 5px rgba(55,55,5,0.4));
-    -moz-box-shadow: 0 0 5px rgba(55,55,5,0.4));
+ -webkit-box-shadow: 0 0 5px rgba(55,55,5,0.4);
+    -moz-box-shadow: 0 0 5px rgba(55,55,5,0.4);
          box-shadow: 0 0 5px rgba(55,55,5,0.4);}
 .menu .menu_close {position:absolute;top:50%;right:0px;width:40px;height:40px;background:none;color:#fff;font-size:20px;margin-top:-20px;border:0;z-index:199999}
 
@@ -357,7 +357,7 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 #sod_addr .addr_btn:after {display:block;visibility:hidden;clear:both;content:""}
 #sod_addr .sel_address {width:32%;float:left;margin-right:1%;height:30px;background:none;border:1px solid #333;color:#333;padding:0 5px}
 #sod_addr .del_address {display:block;width:32%;text-align:center;float:left;margin-right:1%;border:1px solid #aaa;background:none;color:#888;padding:0 5px;height:30px;line-height:28px;vertical-align:middle}
-#sod_addr input[type="radio"] {position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left:0;z-index:-1px}
+#sod_addr input[type="radio"] {position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left:0;z-index:-1}
 #sod_addr .add_lb {display:inline-block;float:left;width:32%;text-align:center;border:1px solid #4162ff;color:#4162ff;height:30px;line-height:28px}
 #sod_addr input[type="radio"]:checked+.add_lb {z-index:3;background:#4162ff;color:#fff}
 
@@ -577,7 +577,7 @@ a.btn02 {display:inline-block;padding:8px 7px 7px;border:1px solid #3b3c3f;backg
 a.btn02:focus, .btn02:hover {text-decoration:none}
 button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 5px;border:0;background:#3a8afd;border:1px solid #1c70e9;color:#fff;letter-spacing:-0.1em;border-radius:3px}}
+.btn_submit {padding:0 5px;border:0;background:#3a8afd;border:1px solid #1c70e9;color:#fff;letter-spacing:-0.1em;border-radius:3px}
 fieldset .btn_submit {padding:0 7px;height:24px;line-height:1em}
 a.btn_cancel {display:inline-block;padding:8px 7px 7px;border:1px solid #ccc;background:#fff;color:#000;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}
@@ -819,7 +819,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 .sod_right #sod_bsk_tot{margin:10px}
 #sod_frm_taker textarea{width:100%;height:80px}
 
-#od_pay_sl input[type="radio"] {position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left:0;z-index:-1px}
+#od_pay_sl input[type="radio"] {position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left:0;z-index:-1}
 #od_pay_sl .lb_icon {display:inline-block;float:left;width:150px;background:#fff;border:1px solid #eceff4;margin:-1px 0 0 -1px;cursor:pointer;height:60px;position:relative;padding-left:65px;padding-top:20px;z-index:1}
 #od_pay_sl input[type="radio"]:checked+.lb_icon {border:1px solid #ff006c;z-index:3}
 
@@ -898,7 +898,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #od_tot_price span{float:left;font-weight:bold}
 #od_tot_price strong{font-size:1.5em;color:#ff006c}
 #od_pay_sl h3{font-size:1.167em;margin:20px 0 5px}
-#od_pay_sl input[type="radio"]{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left: 0;z-index: -1px;}
+#od_pay_sl input[type="radio"]{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left: 0;z-index: -1;}
 #od_pay_sl .lb_icon {display: inline-block;float:left;width:50%;background:#fff;border:1px solid #eceff4;margin:-1px 0 0 -1px;cursor: pointer;height:60px;position:relative;padding-left:65px;padding-top:20px;z-index:1}
 #od_pay_sl input[type="radio"]:checked+.lb_icon {border:1px solid #ff006c;z-index:3}
 #sod_frm_paysel {}
