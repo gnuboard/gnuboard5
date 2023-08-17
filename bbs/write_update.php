@@ -257,9 +257,10 @@ if ($w == '' || $w == 'r') {
         $wr_num = 0;
         $wr_reply = '';
     }
-
+    
+    // wr_num 서브쿼리 kkigomi 님 제안
     $sql = " insert into $write_table
-                set wr_num = '$wr_num',
+                set wr_num = " . ($w == 'r' ? "'$wr_num'" : "(SELECT IFNULL(MIN(wr_num) - 1, -1) FROM $write_table sq) ") . ",
                      wr_reply = '$wr_reply',
                      wr_comment = 0,
                      ca_name = '$ca_name',
@@ -296,10 +297,8 @@ if ($w == '' || $w == 'r') {
 
     $wr_id = sql_insert_id();
 
-    $add_wr_update_sql = ($wr_num === 0) ? ", wr_num = '-$wr_id' " : "";
-
     // 부모 아이디에 UPDATE
-    sql_query(" update $write_table set wr_parent = '$wr_id' $add_wr_update_sql where wr_id = '$wr_id' ");
+    sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     sql_query(" insert into {$g5['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '{$bo_table}', '{$wr_id}', '{$wr_id}', '".G5_TIME_YMDHIS."', '{$member['mb_id']}' ) ");

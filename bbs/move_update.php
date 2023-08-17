@@ -80,7 +80,7 @@ while ($row = sql_fetch_array($result))
             }
 
             $sql = " insert into $move_write_table
-                        set wr_num = '$next_wr_num',
+                        set wr_num = " . ($next_wr_num ? "'$next_wr_num'" : "(SELECT IFNULL(MIN(wr_num) - 1, -1) FROM $move_write_table sq) ") . ",
                              wr_reply = '{$row2['wr_reply']}',
                              wr_is_comment = '{$row2['wr_is_comment']}',
                              wr_comment = '{$row2['wr_comment']}',
@@ -118,14 +118,15 @@ while ($row = sql_fetch_array($result))
             sql_query($sql);
 
             $insert_id = sql_insert_id();
+            
+            if ($next_wr_num === 0) {
+                $tmp = sql_fetch("select wr_num from $move_write_table where wr_id = '$insert_id'");
+                $next_wr_num = $tmp['wr_num'];
+            }
 
             // 코멘트가 아니라면
             if (!$row2['wr_is_comment'])
             {
-                if (! $row2['wr_reply']) {
-                    $next_wr_num = -$insert_id;
-                }
-
                 $save_parent = $insert_id;
 
                 $sql3 = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' order by bf_no ";
@@ -206,7 +207,7 @@ while ($row = sql_fetch_array($result))
                 }
             }
 
-            sql_query(" update $move_write_table set wr_parent = '$save_parent', wr_num = '$next_wr_num' where wr_id = '$insert_id' ");
+            sql_query(" update $move_write_table set wr_parent = '$save_parent' where wr_id = '$insert_id' ");
 
             if ($sw == 'move')
                 $save[$cnt]['wr_id'] = $row2['wr_parent'];
