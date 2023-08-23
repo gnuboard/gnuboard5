@@ -226,7 +226,12 @@ ini_set("session.gc_maxlifetime", 10800); // session data의 garbage collection 
 ini_set("session.gc_probability", 1); // session.gc_probability는 session.gc_divisor와 연계하여 gc(쓰레기 수거) 루틴의 시작 확률을 관리합니다. 기본값은 1입니다. 자세한 내용은 session.gc_divisor를 참고하십시오.
 ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probability와 결합하여 각 세션 초기화 시에 gc(쓰레기 수거) 프로세스를 시작할 확률을 정의합니다. 확률은 gc_probability/gc_divisor를 사용하여 계산합니다. 즉, 1/100은 각 요청시에 GC 프로세스를 시작할 확률이 1%입니다. session.gc_divisor의 기본값은 100입니다.
 
-session_set_cookie_params(0, '/', null, false, true);
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+    session_set_cookie_params(0, '/', null, true, true);
+} else {
+    session_set_cookie_params(0, '/', null, false, true);
+}
+
 ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 
 function chrome_domain_session_name(){
@@ -381,7 +386,7 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
             $cookie_session_name = method_exists('XenoPostToForm', 'g5_session_name') ? XenoPostToForm::g5_session_name() : 'PHPSESSID'; 
             foreach ($headers as $header) {
                 if (!preg_match('~^Set-Cookie: '.$cookie_session_name.'=~', $header)) continue;
-                $header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
+                $header = preg_replace('~(; secure; HttpOnly)?$~', '; secure; HttpOnly; SameSite=None', $header);
                 header($header, false);
                 $g5['session_cookie_samesite'] = 'none';
                 break;
