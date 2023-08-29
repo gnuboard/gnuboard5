@@ -2464,14 +2464,19 @@ function check_device($device)
 }
 
 
-// 게시판 최신글 캐시 파일 삭제
+/**
+ * 게시판 최신글 캐시 파일 삭제
+ * @param string $bo_table 게시판 ID
+ */
 function delete_cache_latest($bo_table)
 {
     if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) {
         return;
     }
 
-    g5_delete_cache_by_prefix('latest-'.$bo_table.'-');
+    run_event('delete_cache_latest', $bo_table);
+
+    g5_delete_cache_by_prefix('latest-' . $bo_table . '-');
 }
 
 // 게시판 첨부파일 썸네일 삭제
