@@ -2700,6 +2700,26 @@ function section_class($type = 'article', $addtional_class = [])
 }
 
 /**
+ * 지정한 타입에 CSS 클래스를 추가
+ * `g5-`로 시작하는 클래스는 추가할 수 없다
+ * @param string $type
+ * @param string $add_class
+ * @return bool 추가에 성공하면 true, 실패하면 false
+ * @see html_process::add_section_class()
+ */
+function add_section_class($type = 'article', $add_class)
+{
+    /** @var html_process $instance */
+    static $instance = null;
+
+    if (is_null($instance)) {
+        $instance = html_process::getInstance();
+    }
+
+    return $instance->add_section_class($type, $add_class);
+}
+
+/**
  * 다크모드 여부 반환
  * @return bool
  * @see html_process::is_darkmode()
