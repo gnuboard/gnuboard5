@@ -2682,12 +2682,43 @@ function add_javascript($javascript, $order=0)
         get_html_process_cls()->merge_javascript($javascript, $order);
 }
 
+/**
+ * 컨텐츠 영역의 CSS Class 반환
+ * @param string $type article, comment, page
+ * @return string
+ */
+function section_class($type = 'article', $addtional_class = [])
+{
+    /** @var html_process $instance */
+    static $instance = null;
+
+    if (is_null($instance)) {
+        $instance = html_process::getInstance();
+    }
+
+    return $instance->get_section_class($type, $addtional_class);
+}
+
 class html_process {
     protected static $id = '0';
     private static $instances = array();
     protected static $is_end = '0';
     protected static $css = array();
     protected static $js  = array();
+
+    /**
+     * 섹션 별 CSS 클래스 목록
+     * @var array
+     */
+    protected static $section_class = array(
+        'html' => array(),
+        'body' => array(),
+        'article' => array('g5-content', 'g5-article'),
+        'comment' => array('g5-content', 'g5-comment'),
+        'page' => array('g5-content', 'g5-page'),
+        'faq' => array('g5-content', 'g5-faq'),
+        'qna' => array('g5-content', 'g5-qna')
+    );
 
     public static function getInstance($id = '0')
     {
@@ -2729,6 +2760,122 @@ class html_process {
 
         if($is_merge)
             self::$js[] = array($order, $javascript);
+    }
+
+    /**
+     * 지정한 타입의 CSS 클래스를 반환
+     * 지정한 타입이 없으면 빈 문자열을 반환하며, `get_section_class` Hook에 의해 명시적으로 추가하지 않은 class 목록이 추가될 수 있다
+     * @param string $type html, body, article, comment 등
+     * @param array $addtional_class 추가할 클래스 목록
+     * @param bool $editable 편집 모드인지 여부
+     * @return string
+     */
+    public static function get_section_class($type = 'article', $addtional_class = [], $editable = false)
+    {
+        $type = trim((string) $type);
+
+        if (!$type) {
+            return '';
+        }
+
+        // alias
+        $type = ($type === 'write') ? 'article' : $type;
+        $type = ($type === 'content') ? 'page' : $type;
+        $type = ($type === 'qa') ? 'qna' : $type;
+
+        if (!isset(self::$section_class[$type])) {
+            self::$section_class[$type] = array();
+        }
+
+        $class_list = self::$section_class[$type];
+
+        // 편집 모드(에디터 내 컨텐츠 영역)를 구분하는 'g5-content--editable' 클래스를 추가
+        if ($editable && in_array('g5-content', $class_list)) {
+            array_splice($class_list, 1, 0, 'g5-content--editable');
+        }
+
+        // 추가할 클래스 목록
+        // self::add_section_class() 메소드와 달리 임시로 추가되는 클래스
+        if (is_array($addtional_class) && count($addtional_class)) {
+            foreach($addtional_class as $idx => $class) {
+                if (!preg_match('/^[a-zA-Z0-9_:-]+$/', $class)) {
+                    unset($addtional_class[$idx]);
+                }
+            }
+            $class_list = array_merge($class_list, $addtional_class);
+        }
+
+        $class_list = run_replace('get_section_class', $class_list, $type);
+
+        array_unique($class_list);
+
+        return implode(' ', $class_list);
+    }
+
+    /**
+     * 지정한 타입에 CSS 클래스를 추가
+     * `g5-`로 시작하는 클래스는 추가할 수 없다
+     * @param string $type
+     * @param string $add_class
+     * @return bool 추가에 성공하면 true, 실패하면 false
+     */
+    public static function add_section_class($type, $add_class)
+    {
+        $type = trim((string) $type);
+        $add_class = trim((string) $add_class);
+
+        if (!$type || !$add_class) {
+            return false;
+        }
+
+        if (!preg_match('/^[a-zA-Z0-9_:-]+$/', $add_class)) {
+            return false;
+        }
+
+        if (!isset(self::$section_class[$type])) {
+            self::$section_class[$type] = array();
+        }
+
+        self::$section_class[$type][] = $add_class;
+        array_unique(self::$section_class[$type]);
+
+        return true;
+    }
+
+    /**
+     * 지정한 타입에 CSS 클래스를 제거
+     * `g5-`로 시작하는 클래스는 제거할 수 없다
+     * @param string $type
+     * @param string $remove_class
+     * @return bool
+     */
+    public static function remove_section_class($type, $remove_class)
+    {
+        $type = trim((string) $type);
+        $remove_class = trim((string) $remove_class);
+
+        if (!$type || !$remove_class) {
+            return false;
+        }
+
+        // 보호된 클래스는 삭제할 수 없음
+        if (stripos($remove_class, 'g5-') === 0) {
+            return false;
+        }
+
+        if (!isset(self::$section_class[$type])) {
+            self::$section_class[$type] = array();
+        }
+
+        $flipped = self::$section_class[$type];
+
+        if (isset($flipped[$remove_class])) {
+            unset($flipped[$remove_class]);
+        }
+
+        self::$section_class[$type] = $flipped;
+
+        return true;
     }
 
     public static function run()
