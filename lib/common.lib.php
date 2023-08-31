@@ -2686,6 +2686,7 @@ function add_javascript($javascript, $order=0)
  * 컨텐츠 영역의 CSS Class 반환
  * @param string $type article, comment, page
  * @return string
+ * @see html_process::get_section_class()
  */
 function section_class($type = 'article', $addtional_class = [])
 {
@@ -2696,7 +2697,7 @@ function section_class($type = 'article', $addtional_class = [])
         $instance = html_process::getInstance();
     }
 
-    return $instance->get_section_class($type, $addtional_class);
+    return implode(' ', $instance->get_section_class($type, $addtional_class));
 }
 
 /**
@@ -2830,14 +2831,14 @@ class html_process {
      * @param string $type html, body, article, comment 등
      * @param array $addtional_class 추가할 클래스 목록
      * @param bool $editable 편집 모드인지 여부
-     * @return string
+     * @return array
      */
     public static function get_section_class($type = 'article', $addtional_class = [], $editable = false)
     {
         $type = trim((string) $type);
 
         if (!$type) {
-            return '';
+            return array();
         }
 
         // alias
@@ -2878,7 +2879,7 @@ class html_process {
 
         array_unique($class_list);
 
-        return implode(' ', $class_list);
+        return $class_list;
     }
 
     /**
