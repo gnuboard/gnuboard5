@@ -258,7 +258,6 @@ if ($w == '' || $w == 'r') {
         $wr_reply = '';
     }
     
-    // wr_num 서브쿼리 kkigomi 님 제안
     $sql = " insert into $write_table
                 set wr_num = " . ($w == 'r' ? "'$wr_num'" : "(SELECT IFNULL(MIN(wr_num) - 1, -1) FROM $write_table sq) ") . ",
                      wr_reply = '$wr_reply',

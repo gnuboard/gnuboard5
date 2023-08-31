@@ -191,7 +191,6 @@ if ($copy_case == 'schema_data_both') {
     sql_query($sql, false);
 
     // 4.00.01
-    // 위의 코드는 같은 테이블명을 사용하였다는 오류가 발생함. (희한하네 ㅡㅡ;)
     $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' ";
     $result = sql_query($sql, false);
     for ($i = 0; $row = sql_fetch_array($result); $i++) {
