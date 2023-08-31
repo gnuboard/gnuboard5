@@ -64,7 +64,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                 });
                 </script>
             </header>
-            <div class="cmt_contents">
+            <div class="cmt_contents" class="<?php echo section_class('comment') ?>">
                 <!-- 댓글 출력 -->
                 <p>
                     <?php if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">"; ?>
