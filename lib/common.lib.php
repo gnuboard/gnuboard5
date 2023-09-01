@@ -2688,16 +2688,9 @@ function add_javascript($javascript, $order=0)
  * @return string
  * @see html_process::get_section_class()
  */
-function section_class($type = 'article', $addtional_class = [])
+function section_class($type = 'article', $addtional_class = array())
 {
-    /** @var html_process $instance */
-    static $instance = null;
-
-    if (is_null($instance)) {
-        $instance = html_process::getInstance();
-    }
-
-    return implode(' ', $instance->get_section_class($type, $addtional_class));
+    return implode(' ', get_html_process_cls()->get_section_class($type, $addtional_class));
 }
 
 /**
@@ -2710,14 +2703,7 @@ function section_class($type = 'article', $addtional_class = [])
  */
 function add_section_class($type = 'article', $add_class)
 {
-    /** @var html_process $instance */
-    static $instance = null;
-
-    if (is_null($instance)) {
-        $instance = html_process::getInstance();
-    }
-
-    return $instance->add_section_class($type, $add_class);
+    return get_html_process_cls()->add_section_class($type, $add_class);
 }
 
 /**
@@ -2727,14 +2713,7 @@ function add_section_class($type = 'article', $add_class)
  */
 function is_darkmode()
 {
-    /** @var html_process $instance */
-    static $instance = null;
-
-    if (is_null($instance)) {
-        $instance = html_process::getInstance();
-    }
-
-    return $instance->is_darkmode();
+    return get_html_process_cls()->is_darkmode();
 }
 
 /**
@@ -2746,14 +2725,7 @@ function is_darkmode()
  */
 function add_darkmode_class($class)
 {
-    /** @var html_process $instance */
-    static $instance = null;
-
-    if (is_null($instance)) {
-        $instance = html_process::getInstance();
-    }
-
-    return $instance->add_darkmode_class($class);
+    return get_html_process_cls()->add_darkmode_class($class);
 }
 
 class html_process {
@@ -2833,7 +2805,7 @@ class html_process {
      * @param bool $editable 편집 모드인지 여부
      * @return array
      */
-    public static function get_section_class($type = 'article', $addtional_class = [], $editable = false)
+    public static function get_section_class($type = 'article', $addtional_class = array(), $editable = false)
     {
         $type = trim((string) $type);
 
