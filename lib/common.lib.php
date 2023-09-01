@@ -2707,8 +2707,8 @@ function add_section_class($type = 'article', $add_class)
 }
 
 /**
- * 다크모드 여부 반환
- * @return bool
+ * 다크모드 설정 반환
+ * @return bool true: dark, false: light, null: system, auto
  * @see html_process::is_darkmode()
  */
 function is_darkmode()
@@ -2719,13 +2719,22 @@ function is_darkmode()
 /**
  * 다크모드일 때 `html` 섹션에 적용할 클래스를 추가
  * ex) add_darkmode_class('tw-dark');
+ * @param string $mode dark, light
  * @param string $add_class
  * @return bool
  * @see html_process::add_darkmode_class()
  */
-function add_darkmode_class($class)
+function add_darkmode_class($mode, $class)
 {
-    return get_html_process_cls()->add_darkmode_class($class);
+    return get_html_process_cls()->add_darkmode_class($mode, $class);
+}
+
+/**
+ * 다크모드 관련 클래스 반환
+ * @return array
+ */
+function get_darkmode_classes() {
+    return get_html_process_cls()->get_darkmode_classes();
 }
 
 class html_process {
@@ -2753,7 +2762,10 @@ class html_process {
      * 다크모드일 때 추가할 클래스 목록
      * @var array
      */
-    protected static $darkmode_classes = array('dark');
+    protected static $darkmode_classes = array(
+        'dark' => array('dark'),
+        'light' => array('light')
+    );
 
     public static function getInstance($id = '0')
     {
@@ -2827,7 +2839,9 @@ class html_process {
         if ($type === 'html') {
             // 다크모드
             if (self::is_darkmode() === true) {
-                $class_list = array_merge($class_list, self::$darkmode_classes);
+                $class_list = array_merge($class_list, self::$darkmode_classes['dark']);
+            } else if (self::is_darkmode() === false) {
+                $class_list = array_merge($class_list, self::$darkmode_classes['light']);
             }
         }
 
@@ -2921,35 +2935,51 @@ class html_process {
     }
 
     /**
-     * 다크모드 여부 반환
-     * @return bool
+     * 다크모드 설정 반환
+     * @return bool true: dark, false: light, null: system, auto
      */
     public static function is_darkmode()
     {
-        $darkmode = false;
+        $darkmode = null;
 
         $cookie = isset($_COOKIE['darkmode']) ? strtolower(trim($_COOKIE['darkmode'])) : 'system';
 
         if (in_array($cookie, array('dark', 'on', 'y', 'yes', 'true', '1'))) {
             $darkmode = true;
+        } else if (in_array($cookie, array('light', 'off', 'n', 'no', 'false', '0'))) {
+            $darkmode = false;
         }
 
         return $darkmode;
     }
 
     /**
+     * 다크모드 관련 클래스 반환
+     * @return array
+     */
+    public static function get_darkmode_classes()
+    {
+        return self::$darkmode_classes;
+    }
+
+    /**
      * 다크모드일 때 `html` 섹션에 적용할 클래스를 추가
      * ex) self::add_darkmode_class('tw-dark');
+     * @param string $mode dark, light
      * @param string $add_class
      * @return bool
      */
-    public static function add_darkmode_class($add_class)
+    public static function add_darkmode_class($mode, $add_class)
     {
         if (!preg_match('/^[a-zA-Z0-9_:-]+$/', $add_class)) {
             return false;
         }
 
-        array_push(self::$darkmode_classes, $add_class);
+        if (!isset(self::$darkmode_classes[$mode])) {
+            return false;
+        }
+
+        array_push(self::$darkmode_classes[$mode], $add_class);
 
         return true;
     }
