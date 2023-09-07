@@ -2255,6 +2255,49 @@ function check_token()
     return true;
 }
 
+/**
+ * 브라우저 검증을 위한 클라이언트 키 반환 또는 재생성
+ * @param bool $regenerate true 이면 재생성
+ * @return string
+ */
+function mb_client_key($regenerate = false)
+{
+    $client_key = ($regenerate) ? null : get_cookie('mb_client_key');
+
+    if (!$client_key) {
+        $client_key = get_random_token_string(16);
+        set_cookie('mb_client_key', $client_key, 86400 * 30, '/', G5_COOKIE_DOMAIN);
+    }
+
+    return $client_key;
+}
+
+/**
+ * 회원의 클라이언트 검증
+ * @return bool
+ */
+function verify_mb_key($member)
+{
+    $mb_key = md5($member['mb_datetime'] . mb_client_key()) . md5($_SERVER['HTTP_USER_AGENT']);
+
+    $verified = get_session('ss_mb_key') === $mb_key;
+
+    if (!$verified) {
+        mb_client_key(true);
+    }
+
+    return $verified;
+}
+
+/**
+ * 회원의 클라이언트 검증 키 생성
+ * 클라이언트 키를 다시 생성하여 생성된 키는 `ss_mb_key` 세션에 저장됨
+ */
+function generate_mb_key($member)
+{
+    $mb_key = md5($member['mb_datetime'] . mb_client_key(true)) . md5($_SERVER['HTTP_USER_AGENT']);
+    set_session('ss_mb_key', $mb_key);
+}
 
 // 문자열에 utf8 문자가 들어 있는지 검사하는 함수
 // 코드 : http://in2.php.net/manual/en/function.mb-check-encoding.php#95289
