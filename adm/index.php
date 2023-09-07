@@ -3,8 +3,10 @@ $sub_menu = '100000';
 require_once './_common.php';
 
 @require_once './safe_check.php';
+
 if (function_exists('social_log_file_delete')) {
-    social_log_file_delete(86400);      //소셜로그인 디버그 파일 24시간 지난것은 삭제
+    //소셜로그인 디버그 파일 24시간 지난것은 삭제
+    social_log_file_delete(86400);
 }
 
 $g5['title'] = '관리자메인';
@@ -14,8 +16,8 @@ $new_member_rows = 5;
 $new_point_rows = 5;
 $new_write_rows = 5;
 
-if (! auth_check_menu($auth, '200100', 'r', true)) {
 
+if (!auth_check_menu($auth, '200100', 'r', true)) {
     $sql_common = " from {$g5['member_table']} ";
 
     $sql_search = " where (1) ";
@@ -31,7 +33,7 @@ if (! auth_check_menu($auth, '200100', 'r', true)) {
 
     $sql_order = " order by {$sst} {$sod} ";
 
-    $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
+    $sql = " SELECT count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -41,11 +43,11 @@ if (! auth_check_menu($auth, '200100', 'r', true)) {
     $leave_count = $row['cnt'];
 
     // 차단회원수
-    $sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
+    $sql = " SELECT count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
     $row = sql_fetch($sql);
     $intercept_count = $row['cnt'];
 
-    $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_member_rows} ";
+    $sql = " SELECT * {$sql_common} {$sql_search} {$sql_order} limit {$new_member_rows} ";
     $result = sql_query($sql);
 
     $colspan = 12;
@@ -78,7 +80,7 @@ if (! auth_check_menu($auth, '200100', 'r', true)) {
                     <?php
                     for ($i = 0; $row = sql_fetch_array($result); $i++) {
                         // 접근가능한 그룹수
-                        $sql2 = " select count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row['mb_id']}' ";
+                        $sql2 = " SELECT count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row['mb_id']}' ";
                         $row2 = sql_fetch($sql2);
                         $group = "";
                         if ($row2['cnt']) {
@@ -100,7 +102,7 @@ if (! auth_check_menu($auth, '200100', 'r', true)) {
                         $mb_nick = get_sideview($row['mb_id'], get_text($row['mb_nick']), $row['mb_email'], $row['mb_homepage']);
 
                         $mb_id = $row['mb_id'];
-                    ?>
+                        ?>
                         <tr>
                             <td class="td_mbid"><?php echo $mb_id ?></td>
                             <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
@@ -115,7 +117,7 @@ if (! auth_check_menu($auth, '200100', 'r', true)) {
                             <td class="td_boolean"><?php echo $row['mb_intercept_date'] ? '예' : '아니오'; ?></td>
                             <td class="td_category"><?php echo $group ?></td>
                         </tr>
-                    <?php
+                        <?php
                     }
                     if ($i == 0) {
                         echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>';
@@ -128,18 +130,17 @@ if (! auth_check_menu($auth, '200100', 'r', true)) {
         <div class="btn_list03 btn_list">
             <a href="./member_list.php">회원 전체보기</a>
         </div>
-
     </section>
 
-<?php
-}   //endif 최신 회원
+    <?php
+} //endif 최신 회원
 
-if (! auth_check_menu($auth, '300100', 'r', true)) {
+if (!auth_check_menu($auth, '300100', 'r', true)) {
 
     $sql_common = " from {$g5['board_new_table']} a, {$g5['board_table']} b, {$g5['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
 
     if ($gr_id) {
-        $sql_common .= " and b.gr_id = '$gr_id' ";
+        $sql_common .= " and b.gr_id = '{$gr_id}' ";
     }
     if (isset($view) && $view) {
         if ($view == 'w') {
@@ -150,7 +151,7 @@ if (! auth_check_menu($auth, '300100', 'r', true)) {
     }
     $sql_order = " order by a.bn_id desc ";
 
-    $sql = " select count(*) as cnt {$sql_common} ";
+    $sql = " SELECT count(*) as cnt {$sql_common} ";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
@@ -174,16 +175,16 @@ if (! auth_check_menu($auth, '300100', 'r', true)) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id {$sql_common} {$sql_order} limit {$new_write_rows} ";
+                    $sql = " SELECT a.*, b.bo_subject, c.gr_subject, c.gr_id {$sql_common} {$sql_order} limit {$new_write_rows} ";
                     $result = sql_query($sql);
                     for ($i = 0; $row = sql_fetch_array($result); $i++) {
                         $tmp_write_table = $g5['write_prefix'] . $row['bo_table'];
 
-                         // 원글
                         if ($row['wr_id'] == $row['wr_parent']) {
+                            // 원글
                             $comment = "";
                             $comment_link = "";
-                            $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row['wr_id']}' ");
+                            $row2 = sql_fetch(" SELECT * from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
 
                             $name = get_sideview($row2['mb_id'], get_text(cut_str($row2['wr_name'], $config['cf_cut_name'])), $row2['wr_email'], $row2['wr_homepage']);
                             // 당일인 경우 시간으로 표시함
@@ -194,12 +195,12 @@ if (! auth_check_menu($auth, '300100', 'r', true)) {
                             } else {
                                 $datetime2 = substr($datetime2, 5, 5);
                             }
-                        } else // 코멘트
-                        {
+                        } else {
+                            // 코멘트
                             $comment = '댓글. ';
                             $comment_link = '#c_' . $row['wr_id'];
-                            $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
-                            $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
+                            $row2 = sql_fetch(" SELECT * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
+                            $row3 = sql_fetch(" SELECT mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
 
                             $name = get_sideview($row3['mb_id'], get_text(cut_str($row3['wr_name'], $config['cf_cut_name'])), $row3['wr_email'], $row3['wr_homepage']);
                             // 당일인 경우 시간으로 표시함
@@ -211,7 +212,7 @@ if (! auth_check_menu($auth, '300100', 'r', true)) {
                                 $datetime2 = substr($datetime2, 5, 5);
                             }
                         }
-                    ?>
+                        ?>
 
                         <tr>
                             <td class="td_category"><a href="<?php echo G5_BBS_URL ?>/new.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo cut_str($row['gr_subject'], 10) ?></a></td>
@@ -223,7 +224,7 @@ if (! auth_check_menu($auth, '300100', 'r', true)) {
                             <td class="td_datetime"><?php echo $datetime ?></td>
                         </tr>
 
-                    <?php
+                        <?php
                     }
                     if ($i == 0) {
                         echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>';
@@ -239,19 +240,19 @@ if (! auth_check_menu($auth, '300100', 'r', true)) {
     </section>
 
     <?php
-}   //endif 최근게시물
+} //endif 최근게시물
 
-if (! auth_check_menu($auth, '200200', 'r', true)) {
+if (!auth_check_menu($auth, '200200', 'r', true)) {
 
     $sql_common = " from {$g5['point_table']} ";
     $sql_search = " where (1) ";
     $sql_order = " order by po_id desc ";
 
-    $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
+    $sql = " SELECT count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
 
-    $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_point_rows} ";
+    $sql = " SELECT * {$sql_common} {$sql_search} {$sql_order} limit {$new_point_rows} ";
     $result = sql_query($sql);
 
     $colspan = 7;
@@ -282,7 +283,7 @@ if (! auth_check_menu($auth, '200200', 'r', true)) {
                     $row2['mb_id'] = '';
                     for ($i = 0; $row = sql_fetch_array($result); $i++) {
                         if ($row2['mb_id'] != $row['mb_id']) {
-                            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+                            $sql2 = " SELECT mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
                             $row2 = sql_fetch($sql2);
                         }
 
@@ -293,7 +294,7 @@ if (! auth_check_menu($auth, '200200', 'r', true)) {
                             $link1 = '<a href="' . get_pretty_url($row['po_rel_table'], $row['po_rel_id']) . '" target="_blank">';
                             $link2 = '</a>';
                         }
-                    ?>
+                        ?>
 
                         <tr>
                             <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
@@ -307,7 +308,7 @@ if (! auth_check_menu($auth, '200200', 'r', true)) {
                             <td class="td_numbig"><?php echo number_format($row['po_mb_point']) ?></td>
                         </tr>
 
-                    <?php
+                        <?php
                     }
 
                     if ($i == 0) {
@@ -323,6 +324,6 @@ if (! auth_check_menu($auth, '200200', 'r', true)) {
         </div>
     </section>
 
-<?php
-}   //endif
 require_once './admin.tail.php';
+    <?php
+} //endif
