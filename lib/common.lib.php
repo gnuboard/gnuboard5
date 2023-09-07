@@ -2256,11 +2256,12 @@ function check_token()
 }
 
 /**
- * 브라우저 검증을 위한 클라이언트 키 반환 또는 재생성
+ * 브라우저 검증을 위한 세션 반환 및 재생성
+ * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
  * @param bool $regenerate true 이면 재생성
  * @return string
  */
-function mb_client_key($regenerate = false)
+function ss_mb_key($member, $regenerate = false)
 {
     $client_key = ($regenerate) ? null : get_cookie('mb_client_key');
 
@@ -2269,21 +2270,23 @@ function mb_client_key($regenerate = false)
         set_cookie('mb_client_key', $client_key, 86400 * 30, '/', G5_COOKIE_DOMAIN);
     }
 
-    return $client_key;
+    $mb_key = md5($member['mb_datetime'] . $client_key) . md5($_SERVER['HTTP_USER_AGENT']);
+
+    return $mb_key;
 }
 
 /**
  * 회원의 클라이언트 검증
+ * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
  * @return bool
  */
 function verify_mb_key($member)
 {
-    $mb_key = md5($member['mb_datetime'] . mb_client_key()) . md5($_SERVER['HTTP_USER_AGENT']);
-
+    $mb_key = ss_mb_key($member);
     $verified = get_session('ss_mb_key') === $mb_key;
 
     if (!$verified) {
-        mb_client_key(true);
+        ss_mb_key($member, true);
     }
 
     return $verified;
@@ -2292,10 +2295,11 @@ function verify_mb_key($member)
 /**
  * 회원의 클라이언트 검증 키 생성
  * 클라이언트 키를 다시 생성하여 생성된 키는 `ss_mb_key` 세션에 저장됨
+ * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
  */
 function generate_mb_key($member)
 {
-    $mb_key = md5($member['mb_datetime'] . mb_client_key(true)) . md5($_SERVER['HTTP_USER_AGENT']);
+    $mb_key = ss_mb_key($member, true);
     set_session('ss_mb_key', $mb_key);
 }
 
