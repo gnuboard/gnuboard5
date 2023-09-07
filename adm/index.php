@@ -16,6 +16,10 @@ $new_member_rows = 5;
 $new_point_rows = 5;
 $new_write_rows = 5;
 
+$addtional_content_before = run_replace('adm_index_addtional_content_before', '', $is_admin, $auth, $member);
+if ($addtional_content_before) {
+    echo $addtional_content_before;
+}
 
 if (!auth_check_menu($auth, '200100', 'r', true)) {
     $sql_common = " from {$g5['member_table']} ";
@@ -324,6 +328,11 @@ if (!auth_check_menu($auth, '200200', 'r', true)) {
         </div>
     </section>
 
-require_once './admin.tail.php';
     <?php
 } //endif
+
+$addtional_content_after = run_replace('adm_index_addtional_content_after', '', $is_admin, $auth, $member);
+if ($addtional_content_after) {
+    echo $addtional_content_after;
+}
+require_once './admin.tail.php';
