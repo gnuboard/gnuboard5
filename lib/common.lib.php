@@ -2267,7 +2267,7 @@ function ss_mb_key($member, $regenerate = false)
 
     if (!$client_key) {
         $client_key = get_random_token_string(16);
-        set_cookie('mb_client_key', $client_key, 86400 * 30, '/', G5_COOKIE_DOMAIN);
+        set_cookie('mb_client_key', $client_key, G5_SERVER_TIME * -1);
     }
 
     $mb_key = md5($member['mb_datetime'] . $client_key) . md5($_SERVER['HTTP_USER_AGENT']);
