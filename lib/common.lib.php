@@ -2837,9 +2837,10 @@ class html_process {
         if($javascript)
             $nl = "\n";
         $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript{$nl}$1", $buffer);
-        
-        $meta_tag = run_replace('html_process_add_meta', '');
-        
+
+        $meta_tag = '<meta name="generator" content="GNUBOARD 5" />' . PHP_EOL;
+        $meta_tag = run_replace('html_process_add_meta', $meta_tag);
+
         if( $meta_tag ){
             /*
             </title>content<body>
