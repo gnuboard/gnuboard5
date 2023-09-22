@@ -170,44 +170,105 @@ function get_cookie($cookie_name)
         return "";
 }
 
-
-// 경고메세지를 경고창으로
-function alert($msg='', $url='', $error=true, $post=false)
+/**
+ * 경고메세지를 경고창으로
+ * 
+ * @param string $msg 출력메세지
+ * @param string $url 이동할 URL
+ * @param bool $error 오류 여부
+ * @param bool $post
+ * @return never
+ */
+function alert($msg = '', $url = '', $error = true, $post = false)
 {
     global $g5, $config, $member, $is_member, $is_admin, $board;
 
     run_event('alert', $msg, $url, $error, $post);
 
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
+    $msg = str_replace('<br>', ' ', $msg);
+
+    if (stripos($_SERVER['HTTP_ACCEPT'], 'json') !== false) {
+        if (!headers_sent()) {
+            header('Content-Type: application/json; charset=utf-8');
+            if ($error) {
+                header('HTTP/1.1 400 Bad Request');
+            }
+        }
+
+        echo json_encode(
+            array(
+                '_g5_cause' => 'g5_alert',
+                'msg' => $msg,
+                'url' => $url,
+                'error' => $error,
+                'post' => $post
+            ),
+            JSON_PRETTY_PRINT
+        );
+        exit;
+    }
 
     $header = '';
     if (isset($g5['title'])) {
         $header = $g5['title'];
     }
-    include_once(G5_BBS_PATH.'/alert.php');
+    include_once(G5_BBS_PATH . '/alert.php');
     exit;
 }
 
-
-// 경고메세지 출력후 창을 닫음
-function alert_close($msg, $error=true)
+/**
+ * 경고메세지 출력후 창을 닫음
+ * 
+ * @param string $msg 출력메세지
+ * @param bool $error 오류 여부
+ * @return never
+ */
+function alert_close($msg, $error = true)
 {
     global $g5, $config, $member, $is_member, $is_admin, $board;
-    
+
     run_event('alert_close', $msg, $error);
 
     $msg = strip_tags($msg, '<br>');
 
+    if (stripos($_SERVER['HTTP_ACCEPT'], 'json') !== false) {
+        if (!headers_sent()) {
+            header('Content-Type: application/json; charset=utf-8');
+            if ($error) {
+                header('HTTP/1.1 400 Bad Request');
+            }
+        }
+
+        echo json_encode(
+            array(
+                '_g5_cause' => 'g5_alert_close',
+                'msg' => $msg,
+                'error' => $error
+            ),
+            JSON_PRETTY_PRINT
+        );
+        exit;
+    }
+
     $header = '';
     if (isset($g5['title'])) {
         $header = $g5['title'];
     }
-    include_once(G5_BBS_PATH.'/alert_close.php');
+    include_once(G5_BBS_PATH . '/alert_close.php');
     exit;
 }
 
-// confirm 창
-function confirm($msg, $url1='', $url2='', $url3='')
+/**
+ * confirm 창
+ * 
+ * @param string $msg 출력메세지
+ * @param string $url1 확인 URL
+ * @param string $url2 취소 URL
+ * @param string $url3 뒤로가기 URL
+ * @return never
+ */
+function confirm($msg, $url1 = '', $url2 = '', $url3 = '')
 {
     global $g5, $config, $member, $is_member, $is_admin, $board;
 
@@ -216,20 +277,40 @@ function confirm($msg, $url1='', $url2='', $url3='')
         alert($msg);
     }
 
-    if(!trim($url1) || !trim($url2)) {
+    if (!trim($url1) || !trim($url2)) {
         $msg = '$url1 과 $url2 를 지정해 주세요.';
         alert($msg);
     }
 
-    if (!$url3) $url3 = clean_xss_tags($_SERVER['HTTP_REFERER']);
+    if (!$url3) {
+        $url3 = clean_xss_tags($_SERVER['HTTP_REFERER']);
+    }
 
     $msg = str_replace("\\n", "<br>", $msg);
+
+    if (stripos($_SERVER['HTTP_ACCEPT'], 'json') !== false) {
+        if (!headers_sent()) {
+            header('Content-Type: application/json; charset=utf-8');
+        }
+
+        echo json_encode(
+            array(
+                '_g5_cause' => 'g5_confirm',
+                'msg' => $msg,
+                'url1' => $url1,
+                'url2' => $url2,
+                'url3' => $url3
+            ),
+            JSON_PRETTY_PRINT
+        );
+        exit;
+    }
 
     $header = '';
     if (isset($g5['title'])) {
         $header = $g5['title'];
     }
-    include_once(G5_BBS_PATH.'/confirm.php');
+    include_once(G5_BBS_PATH . '/confirm.php');
     exit;
 }
 
