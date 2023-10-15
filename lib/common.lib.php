@@ -1843,11 +1843,22 @@ function sql_free_result($result)
 }
 
 
+/**
+ * MySQL PASSWORD() 함수로 생성된 비밀번호의 hash 값을 반환
+ * 
+ * MySQL 버전에 따라 결과가 다르게 나올 수 있음.
+ * MySQL 8.0.11 버전 이상에서는 오류 발생(PASSWORD 함수가 제거됨)으로 사용할 수 없음.
+ * 
+ * @deprecated 이 함수는 안전하지 않으므로 사용하지 않는 것을 권장 함
+ * @see get_encrypt_string() and check_password()
+ * @param string $value
+ * @return string
+ */
 function sql_password($value)
 {
     // mysql 4.0x 이하 버전에서는 password() 함수의 결과가 16bytes
     // mysql 4.1x 이상 버전에서는 password() 함수의 결과가 41bytes
-    $row = sql_fetch(" select password('$value') as pass ");
+    $row = sql_fetch(" SELECT password('{$value}') as pass ");
 
     return $row['pass'];
 }
