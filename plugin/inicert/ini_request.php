@@ -12,9 +12,9 @@ if($config['cf_cert_use'] == 2) { // 실서비스 일때
     $mTxId ='SIR_'.$max_cr_id;
     certify_count_check($member['mb_id'], 'simple'); // 금일 인증시도 횟수 체크
 } else { // 테스트 일때
-    $mid = "INIiasTest";
-    $apiKey = "TGdxb2l3enJDWFRTbTgvREU3MGYwUT09";
-    $mTxId ='test_'.$max_cr_id;
+    $mid = "SRAiasTest";
+    $apiKey = "43700dfd4c795fe9550853aef3b6aaf1";
+    $mTxId ='SIR_'.$max_cr_id;
 }
 $reqSvcCd ='01';
 
