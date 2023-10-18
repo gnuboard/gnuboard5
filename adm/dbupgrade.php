@@ -207,6 +207,18 @@ if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
     }
 }
 
+// auth.au_menu 컬럼 크기 조정
+$sql = " SHOW COLUMNS FROM `{$g5['auth_table']}` LIKE 'au_menu' ";
+$row = sql_fetch($sql);
+if (
+    stripos($row['Type'], 'varchar') !== false
+    && (int) preg_replace('/[^0-9]/', '', $row['Type']) <= 50
+) {
+    sql_query(" ALTER TABLE `{$g5['auth_table']}` CHANGE `au_menu` `au_menu` VARCHAR(50) NOT NULL; ", true);
+
+    $is_check = true;
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
