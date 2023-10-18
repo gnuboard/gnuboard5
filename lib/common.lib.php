@@ -4173,7 +4173,7 @@ function get_random_token_string($length=6)
     }
 
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    $output = substr(str_shuffle($characters), 0, $length);     // jihan001 님 제안코드로 수정
+    $output = substr(str_shuffle($characters), 0, $length);
 
     return bin2hex($output);
 }
