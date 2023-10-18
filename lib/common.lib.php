@@ -2475,14 +2475,19 @@ function check_device($device)
 }
 
 
-// 게시판 최신글 캐시 파일 삭제
+/**
+ * 게시판 최신글 캐시 파일 삭제
+ * @param string $bo_table 게시판 ID
+ */
 function delete_cache_latest($bo_table)
 {
     if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) {
         return;
     }
 
-    g5_delete_cache_by_prefix('latest-'.$bo_table.'-');
+    run_event('delete_cache_latest', $bo_table);
+
+    g5_delete_cache_by_prefix('latest-' . $bo_table . '-');
 }
 
 // 게시판 첨부파일 썸네일 삭제
@@ -3815,7 +3820,7 @@ function check_vaild_callback($callback){
 class str_encrypt
 {
     var $salt;
-    var $lenght;
+    var $length;
 
     function __construct($salt='')
     {
@@ -4168,7 +4173,7 @@ function get_random_token_string($length=6)
     }
 
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    $output = substr(str_shuffle($characters), 0, $length);     // jihan001 님 제안코드로 수정
+    $output = substr(str_shuffle($characters), 0, $length);
 
     return bin2hex($output);
 }

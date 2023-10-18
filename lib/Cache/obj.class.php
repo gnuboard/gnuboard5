@@ -72,7 +72,6 @@ Class G5_object_cache {
      * @param string $key
      * @param string $group
      * @return bool
-     * kkigomi 님이 고쳐주심
      */
     function delete($type, $key, $group = 'default')
     {
