@@ -10,15 +10,22 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     $filename = $alt = $data_path = '';
     $edt = false;
 
-    $row = get_thumbnail_find_cache($bo_table, $wr_id, 'file');
     $empty_array = array('src'=>'', 'ori'=>'', 'alt'=>'');
 
-    if(isset($row['bf_file']) && $row['bf_file']) {
+    $write = get_thumbnail_find_cache($bo_table, $wr_id, 'content');
+
+    // 비밀글이면 썸네일을 노출하지 않습니다.
+    if (isset($write['wr_option']) && strstr($write['wr_option'], "secret")) {
+        return run_replace('is_secret_list_thumbnail', $empty_array, $bo_table, $write);
+    }
+
+    $row = get_thumbnail_find_cache($bo_table, $wr_id, 'file');
+
+    if (isset($row['bf_file']) && $row['bf_file']) {
         $filename = $row['bf_file'];
         $filepath = G5_DATA_PATH.'/file/'.$bo_table;
         $alt = get_text($row['bf_content']);
     } else {
-        $write = get_thumbnail_find_cache($bo_table, $wr_id, 'content');
         $edt = true;
         
         if( $matches = get_editor_image($write['wr_content'], false) ){

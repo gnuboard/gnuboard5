@@ -104,6 +104,13 @@ if (!$is_search_bbs) {
 
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
+        $list[$i]['list_content'] = $list[$i]['wr_content'];
+
+        // 비밀글인 경우 리스트에서 내용이 출력되지 않게 글 내용을 지웁니다. 
+        if (strstr($list[$i]['wr_option'], "secret")) {
+            $list[$i]['wr_content'] = '';
+        }
+
         $list[$i]['num'] = 0;
         $i++;
         $notice_count++;
@@ -197,6 +204,13 @@ if($page_rows > 0) {
             $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
         }
         $list[$i]['is_notice'] = false;
+        $list[$i]['list_content'] = $list[$i]['wr_content'];
+
+        // 비밀글인 경우 리스트에서 내용이 출력되지 않게 글 내용을 지웁니다. 
+        if (strstr($list[$i]['wr_option'], "secret")) {
+            $list[$i]['wr_content'] = '';
+        }
+
         $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
         $list[$i]['num'] = $list_num - $k;
 
