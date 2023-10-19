@@ -2266,6 +2266,53 @@ function check_token()
     return true;
 }
 
+/**
+ * 브라우저 검증을 위한 세션 반환 및 재생성
+ * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
+ * @param bool $regenerate true 이면 재생성
+ * @return string
+ */
+function ss_mb_key($member, $regenerate = false)
+{
+    $client_key = ($regenerate) ? null : get_cookie('mb_client_key');
+
+    if (!$client_key) {
+        $client_key = get_random_token_string(16);
+        set_cookie('mb_client_key', $client_key, G5_SERVER_TIME * -1);
+    }
+
+    $mb_key = md5($member['mb_datetime'] . $client_key) . md5($_SERVER['HTTP_USER_AGENT']);
+
+    return $mb_key;
+}
+
+/**
+ * 회원의 클라이언트 검증
+ * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
+ * @return bool
+ */
+function verify_mb_key($member)
+{
+    $mb_key = ss_mb_key($member);
+    $verified = get_session('ss_mb_key') === $mb_key;
+
+    if (!$verified) {
+        ss_mb_key($member, true);
+    }
+
+    return $verified;
+}
+
+/**
+ * 회원의 클라이언트 검증 키 생성
+ * 클라이언트 키를 다시 생성하여 생성된 키는 `ss_mb_key` 세션에 저장됨
+ * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
+ */
+function generate_mb_key($member)
+{
+    $mb_key = ss_mb_key($member, true);
+    set_session('ss_mb_key', $mb_key);
+}
 
 // 문자열에 utf8 문자가 들어 있는지 검사하는 함수
 // 코드 : http://in2.php.net/manual/en/function.mb-check-encoding.php#95289
