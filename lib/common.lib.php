@@ -155,6 +155,10 @@ function set_cookie($cookie_name, $value, $expire, $path='/', $domain=G5_COOKIE_
     global $g5;
     
     $c = run_replace('set_cookie_params', array('path'=>$path, 'domain'=>$domain, 'secure'=>$secure, 'httponly'=>$httponly), $cookie_name);
+    
+    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+        $c['secure'] = true;
+    }
 
     setcookie(md5($cookie_name), base64_encode($value), G5_SERVER_TIME + $expire, $c['path'], $c['domain'], $c['secure'], $c['httponly']);
 }
