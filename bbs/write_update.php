@@ -678,8 +678,14 @@ sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
 // 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 비밀번호를 묻지 않기 위함
-if ($secret)
+if ($secret) {
+    if (! $wr_num) {
+        $write = get_write($write_table, $wr_id, true);
+        $wr_num = $write['wr_num'];
+    }
+
     set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
+}
 
 // 메일발송 사용 (수정글은 발송하지 않음)
 if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_email']) {
