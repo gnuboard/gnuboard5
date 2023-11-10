@@ -2285,7 +2285,7 @@ function ss_mb_key($member, $regenerate = false)
         set_cookie('mb_client_key', $client_key, G5_SERVER_TIME * -1);
     }
 
-    $mb_key = md5($member['mb_datetime'] . $client_key) . md5($_SERVER['HTTP_USER_AGENT']);
+    $mb_key = md5($member['mb_datetime'] . $client_key) . run_replace('ss_mb_key_user_agent', md5($_SERVER['HTTP_USER_AGENT']));
 
     return $mb_key;
 }
