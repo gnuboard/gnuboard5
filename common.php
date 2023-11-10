@@ -513,7 +513,7 @@ if (isset($_REQUEST['url'])) {
     if (G5_DOMAIN) {
         $p = @parse_url(G5_DOMAIN);
         $p['path'] = isset($p['path']) ? $p['path'] : '/';
-        $urlencode = G5_DOMAIN.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode));
+        $urlencode = rtrim(G5_DOMAIN, '%2F').'%2F'.ltrim(urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode)), '%2F');
     }
 }
 
