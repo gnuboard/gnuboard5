@@ -23,6 +23,22 @@ if (is_array($files)) {
 
 require_once G5_PATH . '/head.sub.php';
 
+$files = glob(G5_ADMIN_PATH . '/js/admin_extend_*');
+if (is_array($files)) {
+    foreach ((array) $files as $k => $js_file) {
+
+        $fileinfo = pathinfo($js_file);
+        $ext = $fileinfo['extension'];
+
+        if ($ext !== 'js') {
+            continue;
+        }
+
+        $js_file = str_replace(G5_ADMIN_PATH, G5_ADMIN_URL, $js_file);
+        add_javascript('<script src="' . $js_file . '"></script>', $k);
+    }
+}
+
 function print_menu1($key, $no = '')
 {
     global $menu;
