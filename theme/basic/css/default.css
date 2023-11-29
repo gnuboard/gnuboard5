@@ -490,5 +490,23 @@ box-sizing:content-box;
 .dark-mode .ol h2 {color: #fff;}
 .dark-mode .ol .join {background: #151616;}
 
+/* 다크모드 - 회원가입 */
+.dark-mode #container_title span {color: #fff;}
+.dark-mode #fregister section {border: 1px solid #383838;}
+.dark-mode #fregister h2, .dark-mode #fregister textarea {background: #212020;color: #fff;}
+.dark-mode #fregister h2 {border-bottom: 1px solid #383838;}
+.dark-mode #fregister_private div,.dark-mode #fregister_chkall  {background: #212020;border: none;}
+.dark-mode #fregister_private table th, .dark-mode #fregister_private table td {background: none;border: 1px solid #383838;color: #fff;}
+.dark-mode .register .btn_confirm .btn_close {background: #323235;border: none;color: #fff;}
+.dark-mode .fregister_agree input[type="checkbox"]:checked + label {color: #fff;}
+.dark-mode #register_form {background: #151616;}
+.dark-mode #fregisterform .form_01 div {background: #212020;border: 1px solid #383838;}
+.dark-mode #register_form h2 {color: #fff;border-bottom: 1px solid #383838;}
+.dark-mode .register_form_inner label {color: #fff;}
+.dark-mode .chk_li,.dark-mode .form_01 li {color: #fff;}
+
+/* 다크모드 - ID/PW 찾기 */
+.dark-mode #find_info .new_win_con {background: #212020;color: #fff;}
+
 
  
