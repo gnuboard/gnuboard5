@@ -508,5 +508,38 @@ box-sizing:content-box;
 /* 다크모드 - ID/PW 찾기 */
 .dark-mode #find_info .new_win_con {background: #212020;color: #fff;}
 
+/* 다크모드 - 게시판 */
+.dark-mode .tbl_wrap table {background: #212020;border-bottom: 1px solid #383838;border-top: 1px solid #383838;}
+.dark-mode .tbl_head01 td {border-bottom: 1px solid #383838;border-top: 1px solid #383838;}
+.dark-mode .tbl_head01 thead th {border-bottom: 1px solid #383838;color: #fff;}
+.dark-mode .tbl_head01 thead th a {color: #fff;}
+.dark-mode .tbl_head01 tbody tr:hover td {background: #151616;}
+.dark-mode .btn_bo_user li {background: #212020;}
+.dark-mode .btn_b01:hover {color: #4158d1;}
+.dark-mode .bo_sch_bg {background: rgba(0,0,0,0.4);}
+.dark-mode .bo_sch {background: #212020;border: 1px solid #383838;}
+.dark-mode .bo_sch .bo_sch_cls {background: #212020;}
+.dark-mode #captcha #captcha_info {color: #777;}
+.dark-mode .bo_sch h3 {border-bottom: 1px solid #383838;color: #fff;}
+.dark-mode .bo_sch select,.dark-mode .bo_sch .sch_bar,.dark-mode .bo_sch .sch_input {background: #323235;border: none;color: #fff;}
+.dark-mode .pic_li_lt li .pic_li_tit {color: #fff;}
+.dark-mode #bo_v {background: #151616;}
+.dark-mode #bo_v_title .bo_v_tit,.dark-mode #bo_v_info .sv_member {color: #fff;}
+.dark-mode #bo_v_info {border-bottom: 1px solid #383838;}
+.dark-mode a.btn_b03, .dark-mode .btn_b03 {}
+.dark-mode #bo_v_share .btn {background: #212020;border-color: #383838;color: #fff;}
+.dark-mode #bo_v_share .btn:hover {background: #212020;}
+.dark-mode #bo_v_share .btn i {color: #fff;}
+.dark-mode .cmt_btn {background: #151616;border-bottom: 1px solid #383838;}
+.dark-mode .cmt_btn b {color: #fff;}
+.dark-mode .bo_vc_w textarea {background: #323235;border: none;color: #fff;}
+.dark-mode #bo_v_top ul {background: #212020;}
+.dark-mode #bo_v_con {color: #fff;}
+.dark-mode #bo_vc header, .dark-mode #bo_vc .cmt_contents {color: #fff;}
+.dark-mode #bo_vc article {border-bottom: 1px solid #383838;}
 
+/* 다크모드 - 검색 */
+.dark-mode #sch_res_detail {background: #212020;}
+.dark-mode #sch_res_detail .frm_input {border: none;}
+.dark-mode #sch_res_detail select {background: #212020;border: none;color: #fff;}
  
