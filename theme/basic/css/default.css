@@ -178,7 +178,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 .lt_wr:nth-child(3n+1) {clear:both}
 .latest_wr {margin-bottom:20px}
 .latest_wr:after {display:block;visibility:hidden;clear:both;content:""}
-.latest_top_wr {margin:0 -10px 20px}
+.latest_top_wr {margin:0 0px 20px}
 .latest_top_wr:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -196,6 +196,9 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #ft_copy {text-align:center;width:1200px;margin:0 auto;padding:20px 0;color:#5b5b5b;font-size:0.92em;border-top:1px solid #383838}
 #top_btn {position:fixed;bottom:20px;right:20px;width:50px;height:50px;line-height:46px;border:2px solid #333;color:#333;text-align:center;font-size:15px;z-index:90;background:rgba(255,255,255,0.5)}
 #top_btn:hover {border-color:#3059c7;background:#3059c7;color:#fff}
+#darkmode_btn{position:fixed;bottom:20px;right:80px;width:50px;height:50px;border:0;text-align:center;background:#ddd;background:#4158d1;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;}
+#darkmode_btn input {opacity: 0;width: 0;height: 0;}
+#darkmode_btn .visible {width:24px; height:24px; vertical-align:middle;}
 
 /* 게시물 선택복사 선택이동 */
 #copymove {}
@@ -454,3 +457,21 @@ box-sizing:content-box;
 /* Mobile화면으로 */
 #device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
 
+/* 다크모드 설정 */
+#darkmode_btn .visible.bright {display: none;}
+.dark-mode #darkmode_btn .visible.dark {display: none;}
+.dark-mode #darkmode_btn .visible.bright {display: inline-block;}
+
+.dark-mode, .dark-mode #gnb {background: #151616;}
+.dark-mode .pic_li_lt, .dark-mode .pic_lt, .dark-mode .lat {background: #212020;}
+.dark-mode .gnb_wrap .gnb_empty {color: #66656B;}
+.dark-mode .pic_li_lt li, .dark-mode .lat li {border-bottom: none;}
+.dark-mode #gnb #gnb_1dul {border-bottom: 1px solid #383838;}
+.dark-mode .pic_li_lt .lat_title a, .dark-mode .pic_lt .lat_title a, .dark-mode .lat .lat_title a, .dark-mode #ol_after_hd strong {color: #fff;}
+.dark-mode .ol {border: none;background: #212020;}
+.dark-mode #ol_after_logout {border-top: 1px solid #383838;}
+.dark-mode #ol_after_info {border: 1px solid #383838;}
+.dark-mode #gnb_all_bg {background: rgba(0,0,0,0.4);}
+.dark-mode #gnb_all {background: #212020;border: 1px solid #383838;}
+.dark-mode #gnb .gnb_close_btn {background: #212020;}
+.dark-mode #gnb_all h2 {border-bottom: 1px solid #383838;color: #fff;}
