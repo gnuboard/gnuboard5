@@ -8,3 +8,5 @@
 #ctt_con img{max-width:100%;height:auto}
 .ctt_img {text-align:center}
 
+/* 다크모드 설정 */
+.dark-mode #ctt {background: #151616;color: #fff;}
