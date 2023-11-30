@@ -16,3 +16,8 @@
 #current_connect .crt_lct {display:block}
 #current_connect .crt_lct a {color:#797979}
 #current_connect li.empty_li {width:100%;padding:200px 0;border:0;color:#666;text-align:center}
+
+/* 다크모드 설정 */
+.dark-mode #current_connect li:first-child {border-top: 1px solid #383838;}
+.dark-mode #current_connect li {border-bottom: 1px solid #383838;}
+.dark-mode #current_connect .crt_name,.dark-mode #current_connect .crt_lct {color: #fff;}
