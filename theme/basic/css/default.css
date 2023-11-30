@@ -470,7 +470,7 @@ box-sizing:content-box;
 .dark-mode, .dark-mode #gnb {background: #151616;}
 .dark-mode .pic_li_lt, .dark-mode .pic_lt, .dark-mode .lat {background: #151616;}
 .dark-mode .gnb_wrap .gnb_empty {color: #66656B;}
-.dark-mode .pic_li_lt li, .dark-mode .lat li {border-bottom: none;}
+.dark-mode .pic_li_lt li, .dark-mode .lat li {border-bottom: 1px solid #383838;}
 .dark-mode #gnb #gnb_1dul {border-bottom: 1px solid #383838;}
 .dark-mode .pic_li_lt .lat_title a, .dark-mode .pic_lt .lat_title a, .dark-mode .lat .lat_title a, .dark-mode #ol_after_hd strong {color: #fff;}
 .dark-mode .ol {border: 1px solid #383838;background: #212020;}
@@ -489,6 +489,8 @@ box-sizing:content-box;
 .dark-mode #gnb .gnb_menu_btn {background: #323235;}
 .dark-mode .ol h2 {color: #fff;}
 .dark-mode .ol .join {background: #151616;}
+.dark-mode #ol_after_private a {color: #66656B;}
+.dark-mode #ol_after_private li a:hover {background: #151616;}
 
 /* 다크모드 - 회원가입 */
 .dark-mode #container_title span {color: #fff;}
@@ -509,7 +511,7 @@ box-sizing:content-box;
 .dark-mode #find_info .new_win_con {background: #212020;color: #fff;}
 
 /* 다크모드 - 게시판 */
-.dark-mode .tbl_wrap table {background: #212020;border-bottom: 1px solid #383838;border-top: 1px solid #383838;}
+.dark-mode .tbl_wrap table {background: #151616;border-bottom: 1px solid #383838;border-top: 1px solid #383838;}
 .dark-mode .tbl_head01 td {border-bottom: 1px solid #383838;border-top: 1px solid #383838;}
 .dark-mode .tbl_head01 thead th {border-bottom: 1px solid #383838;color: #fff;}
 .dark-mode .tbl_head01 thead th a {color: #fff;}
@@ -526,20 +528,44 @@ box-sizing:content-box;
 .dark-mode #bo_v {background: #151616;}
 .dark-mode #bo_v_title .bo_v_tit,.dark-mode #bo_v_info .sv_member {color: #fff;}
 .dark-mode #bo_v_info {border-bottom: 1px solid #383838;}
-.dark-mode a.btn_b03, .dark-mode .btn_b03 {}
 .dark-mode #bo_v_share .btn {background: #212020;border-color: #383838;color: #fff;}
 .dark-mode #bo_v_share .btn:hover {background: #212020;}
 .dark-mode #bo_v_share .btn i {color: #fff;}
 .dark-mode .cmt_btn {background: #151616;border-bottom: 1px solid #383838;}
 .dark-mode .cmt_btn b {color: #fff;}
 .dark-mode .bo_vc_w textarea {background: #323235;border: none;color: #fff;}
-.dark-mode #bo_v_top ul {background: #212020;}
+.dark-mode #bo_v_top ul {background: #151616;}
 .dark-mode #bo_v_con {color: #fff;}
 .dark-mode #bo_vc header, .dark-mode #bo_vc .cmt_contents {color: #fff;}
 .dark-mode #bo_vc article {border-bottom: 1px solid #383838;}
-
+.dark-mode #bo_list tbody .even td {background: #212020;}
+.dark-mode #bo_list .td_chk {border-bottom: 1px solid #383838;}
+.dark-mode .bo_v_nb li {border-top: 1px solid #383838;}
+.dark-mode .bo_v_nb li:last-child {border-bottom: 1px solid #383838;}
+.dark-mode .bo_v_nb li:hover {background: #212020;}
+.dark-mode .more_opt li:hover a, .dark-mode .more_opt li:hover button {color: #fff;}
+.dark-mode .more_opt li button,.dark-mode .more_opt li a {background: #212020;}
+.dark-mode .more_opt li {border-bottom: 1px solid #383838;}
+.dark-mode .more_opt {border: 1px solid #383838;}
+.dark-mode #bo_gall .bo_tit {color: #fff;}
+.dark-mode #bo_w .bo_w_select select,.dark-mode #bo_w .bo_w_flie .file_wr,.dark-mode .form_01 .bo_w_flie .file_wr {background: #323235;border: none;color: #fff;}
+.dark-mode #bo_v header,.dark-mode #bo_v_info, .dark-mode #bo_v_atc {background: #151616;}
+.dark-mode .more_opt:after {border-color:transparent transparent #212020 transparent}
+.dark-mode .more_opt:before {border-color:transparent transparent #383838 transparent}
+.dark-mode #bo_v_ans_form h2 {color: #fff;}
+.dark-mode #bo_v_title {color: #fff;}
+ 
 /* 다크모드 - 검색 */
 .dark-mode #sch_res_detail {background: #212020;}
 .dark-mode #sch_res_detail .frm_input {border: none;}
 .dark-mode #sch_res_detail select {background: #212020;border: none;color: #fff;}
- 
+
+/* 다크모드 - FAQ */
+.dark-mode #faq_sch {background: #212020;}
+.dark-mode #faq_sch .frm_input {border: none;}
+.dark-mode #faq_wrap li,.dark-mode #faq_wrap li h3 .tit_btn,.dark-mode #faq_con .con_inner .closer_btn,.dark-mode #bo_v_ans,.dark-mode #bo_v_ans #ans_datetime {background: #151616;}
+.dark-mode #faq_wrap li h3 .tit_bg, .dark-mode #faq_con .con_inner p, .dark-mode #bo_v_ans h2, .dark-mode #bo_v_ans #ans_con {color: #fff;}
+.dark-mode #faq_wrap li {border-bottom: 1px solid #383838;}
+.dark-mode #faq_wrap li:first-child {border-top: 1px solid #383838;}
+
+/* 다크모드 - 새글 */
