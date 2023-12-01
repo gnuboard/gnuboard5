@@ -1132,3 +1132,92 @@ input[type="text"]{max-width:200px}
 /* Styles */
 input[type="text"]{max-width:200px}
 }
+
+
+
+/* 다크모드 설정 */
+#darkmode_btn{position:fixed;bottom:10px;right:70px;width:50px;height:50px;border:0;text-align:center;background:#ddd;background:rgba(0,0,0,0.1);color: #000000;}
+#darkmode_btn input {opacity: 0;width: 0;height: 0;}
+#darkmode_btn .visible {width:24px; height:24px; vertical-align:middle;}
+
+#darkmode_btn .visible.bright {display: none;}
+.dark-mode {background: #151616;}
+.dark-mode #darkmode_btn .visible.dark {display: none;}
+.dark-mode #darkmode_btn .visible.bright {display: inline-block; margin: 0px 4px 4px 0px;}
+.dark-mode #container {background: #151616;}
+.dark-mode .scroll_top{background:#ddd;background:rgba(255, 255, 255, 0.4)}
+.dark-mode #darkmode_btn {background:#ddd;background:rgba(255, 255, 255, 0.4)}
+.dark-mode #gnb .gnb_oparea {border-right: #383838;}
+.dark-mode #gnb .gnb_oparea h3 {color: #eeeeee;}
+.dark-mode #container_title {background: #151616;color: #eeeeee;border-bottom: 1px solid #ffffff30;}
+.dark-mode .container_wr section h2, .dark-mode a:link, .dark-mode a:visited {color: #eeeeee;}
+.dark-mode .btn_01, .dark-mode a.btn_01 {color: #fff;}
+.dark-mode .local_desc {background: #151616;color: #eeeeee;border: none}
+.dark-mode .tbl_head01 tbody tr:nth-child(even) {background: #2c2c2c;}
+.dark-mode .tbl_head01 thead th {background: #212020;border: 1px solid #383838;}
+.dark-mode .tbl_head01 tbody td {border: 1px solid #383838;color: #eeeeee;background: #151616;}
+.dark-mode #ft, .dark-mode .anchor a {background: #212020;}
+.dark-mode .anchor a:hover, .dark-mode .anchor .active a {background: #3f51b5;color: #fff;}
+.dark-mode .tbl_frm01 td {color: #eeeeee;border-color: #383838;}
+
+.dark-mode .frm_info {color: #eeeeee;}
+.dark-mode .tbl_frm01 th {background: #212020;color: #eeeeee;border-color: #383838;}
+.dark-mode .anchor li {border: none;}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          .dark-mode .anchor {background: #151616;}                                                                                                                 
+.dark-mode .anchor a {border: 1px solid #ffffff20;}
+.dark-mode .sevice_1 {background: url('../img/service_img2.jpg') no-repeat top center, #ffffff;}
+.dark-mode .svc_sms {background: #ffffff;}
+.dark-mode .session_del {color: #ffffff;}
+.dark-mode #theme_list li .theme_pr {color: #000000;}
+.dark-mode #theme_list li .tmli_tit {color: #eeeeee;background: #151616;border-top: 1px solid #2e2e2e;}
+.dark-mode #theme_list li .tmli_if {border: 1px solid #2e2e2e;}
+.dark-mode #fsendmailtest, .dark-mode .container_wr ul li, .dark-mode .local_sch div {color: #eeeeee;}
+.dark-mode .pg_page {background: #383838;}
+.dark-mode .pg_end {background: url(../img/page_4.png) 50% 50% no-repeat, #383838;}
+.dark-mode .pg_start {background: url(../img/page_1.png) 50% 50% no-repeat, #383838;}
+
+.dark-mode .local_desc01 strong {color: #3f51b5;}
+.dark-mode .service_wrap,.dark-mode #theme_list {background: #212020;}
+.dark-mode #processing {background: #212020;border: none;color: #fff;}
+.dark-mode .frm_input, .dark-mode .required, .dark-mode select, .dark-mode .tbl_frm01 textarea {background: #323235 !important;color: #fff;border: none}
+
+.dark-mode .tbl_frm01 tr{box-shadow: none;}
+
+.dark-mode a.btn_02 {background: #9eacc6;color: #fff !important;}
+.dark-mode .tbl_head01 table .tbl_input {border: 1px solid #ffffff40;}
+
+.dark-mode #gnb .gnb_oparea {background: #151616;}
+.dark-mode #gnb .gnb_ul {background: #323235;}
+
+.dark-mode #gnb .gnb_oparea li a {color: #666;}
+.dark-mode #gnb .gnb_oparea li a:hover,.dark-mode #gnb .gnb_oparea li .on {color: #fff;}
+.dark-mode .local_sch03 {background: #212020;}
+.dark-mode .container_wr {color: #fff;}
+.dark-mode .tbl_head01 tbody th {border: 1px solid #383838;color: #fff;}
+.dark-mode a.kakao_btn {color: #3B1E1E;}
+.dark-mode tfoot th,.dark-mode tfoot td {background: #212020;color: #fff;border-color: #383838;}
+
+.dark-mode #gnb .gnb_li {border-bottom: 1px solid #383838;}
+.dark-mode #gnb .gnb_li .btn_op{background:url(../img/menu_default.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op{background:url(../img/menu_default_on.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .gnb_li .btn_op.menu-100{background:url(../img/menu-1-1.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op.menu-100{background:url(../img/menu-1.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .gnb_li .btn_op.menu-200{background:url(../img/menu-2-1.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op.menu-200{background:url(../img/menu-2.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .gnb_li .btn_op.menu-300{background:url(../img/menu-3-1.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op.menu-300{background:url(../img/menu-3.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .gnb_li .btn_op.menu-400{background:url(../img/menu-7-1.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op.menu-400{background:url(../img/menu-7.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .gnb_li .btn_op.menu-500{background:url(../img/menu-6-1.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op.menu-500{background:url(../img/menu-6.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .gnb_li .btn_op.menu-900{background:url(../img/menu-4-1.png) 50% 50% no-repeat #323235}
+.dark-mode #gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat #151616}
+
+.dark-mode #theme_detail h2,.dark-mode #theme_detail .theme_dt_btn {background: #212020;}
+.dark-mode #theme_detail .theme_dt_btn .close_btn {filter: invert(100%);}
+.dark-mode #theme_detail {background: #151616;}
+.dark-mode #theme_detail h2 {border-bottom: 1px solid #383838;}
+.dark-mode .theme_dt_img img {border: 1px solid #383838;}
+.dark-mode .theme_dt_if table td, .dark-mode .theme_dt_if table th {background: #212020;border-bottom: 1px solid #383838;}
+.dark-mode .new_win h1 {background: #212020;color: #fff;border-bottom: 1px solid #383838;}
+.dark-mode .new_win_con {background: #151616;}
+.dark-mode .new_win_desc {color: #fff;}
