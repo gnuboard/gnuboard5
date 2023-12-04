@@ -1200,17 +1200,17 @@ input[type="text"]{max-width:200px}
 .dark-mode #gnb .gnb_li .btn_op{background:url(../img/menu_default.png) 50% 50% no-repeat #323235}
 .dark-mode #gnb .on .btn_op{background:url(../img/menu_default_on.png) 50% 50% no-repeat #151616}
 .dark-mode #gnb .gnb_li .btn_op.menu-100{background:url(../img/menu-1-1.png) 50% 50% no-repeat #323235}
-.dark-mode #gnb .on .btn_op.menu-100{background:url(../img/menu-1.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .on .btn_op.menu-100{background:url(../img/menu-dm-1.png) 50% 50% no-repeat #151616}
 .dark-mode #gnb .gnb_li .btn_op.menu-200{background:url(../img/menu-2-1.png) 50% 50% no-repeat #323235}
-.dark-mode #gnb .on .btn_op.menu-200{background:url(../img/menu-2.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .on .btn_op.menu-200{background:url(../img/menu-dm-2.png) 50% 50% no-repeat #151616}
 .dark-mode #gnb .gnb_li .btn_op.menu-300{background:url(../img/menu-3-1.png) 50% 50% no-repeat #323235}
-.dark-mode #gnb .on .btn_op.menu-300{background:url(../img/menu-3.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .on .btn_op.menu-300{background:url(../img/menu-dm-3.png) 50% 50% no-repeat #151616}
 .dark-mode #gnb .gnb_li .btn_op.menu-400{background:url(../img/menu-7-1.png) 50% 50% no-repeat #323235}
-.dark-mode #gnb .on .btn_op.menu-400{background:url(../img/menu-7.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .on .btn_op.menu-400{background:url(../img/menu-dm-7.png) 50% 50% no-repeat #151616}
 .dark-mode #gnb .gnb_li .btn_op.menu-500{background:url(../img/menu-6-1.png) 50% 50% no-repeat #323235}
-.dark-mode #gnb .on .btn_op.menu-500{background:url(../img/menu-6.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .on .btn_op.menu-500{background:url(../img/menu-dm-6.png) 50% 50% no-repeat #151616}
 .dark-mode #gnb .gnb_li .btn_op.menu-900{background:url(../img/menu-4-1.png) 50% 50% no-repeat #323235}
-.dark-mode #gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat #151616}
+.dark-mode #gnb .on .btn_op.menu-900{background:url(../img/menu-dm-4.png) 50% 50% no-repeat #151616}
 
 .dark-mode #theme_detail h2,.dark-mode #theme_detail .theme_dt_btn {background: #212020;}
 .dark-mode #theme_detail .theme_dt_btn .close_btn {filter: invert(100%);}
