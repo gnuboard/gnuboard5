@@ -93,7 +93,7 @@ box-shadow: 2px 0 2px rgba(150,150,150,0.1);}
 #container_wr{padding:25px;min-height:500px}
 #container_title{position:fixed;top:50px;left:0;width:100%;line-height:50px;font-size:1.5em;padding:0 20px;padding-left:240px;border-bottom:1px solid #ddd;background:#fff;z-index:99}
 #container.container-small #container_title{padding-left:70px}
-.container_wr{padding:20px}
+.container_wr{padding:20px;min-height: calc(100vh - 150px);}
 
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
