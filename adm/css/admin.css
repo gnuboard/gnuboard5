@@ -1152,7 +1152,7 @@ input[type="text"]{max-width:200px}
 .dark-mode #container_title {background: #151616;color: #eeeeee;border-bottom: 1px solid #ffffff30;}
 .dark-mode .container_wr section h2, .dark-mode a:link, .dark-mode a:visited {color: #eeeeee;}
 .dark-mode .btn_01, .dark-mode a.btn_01 {color: #fff;}
-.dark-mode .local_desc {background: #151616;color: #eeeeee;border: none}
+.dark-mode .local_desc {background: #212020;color: #eeeeee;border: none}
 .dark-mode .tbl_head01 tbody tr:nth-child(even) {background: #2c2c2c;}
 .dark-mode .tbl_head01 thead th {background: #212020;border: 1px solid #383838;}
 .dark-mode .tbl_head01 tbody td {border: 1px solid #383838;color: #eeeeee;background: #151616;}
@@ -1227,3 +1227,12 @@ input[type="text"]{max-width:200px}
 .dark-mode .pg a:focus,.dark-mode .pg a:hover {background: #212020;}
 
 .dark-mode .tbl_head01 table .tbl_input {background: #323235;border: none;color: #fff;}
+.dark-mode #anc_sidx_settle {border-top: 1px solid #383838;border-bottom: 1px solid #383838;}
+.dark-mode #sidx_graph_area, .dark-mode #sidx_graph_date {border: 1px solid #383838;}
+.dark-mode #sidx_graph_price li span,.dark-mode #sidx_graph_date li span {background: #383838;}
+.dark-mode #sidx_graph_area .bg0 {background: #151616;}
+.dark-mode #sidx_graph_area .bg1 {background: #212020;}
+.dark-mode .ul_01 li {border-bottom: 1px solid #383838;}
+
+.dark-mode ul.de_pg_tab li a {color: #74777b;}
+.dark-mode ul.de_pg_tab li.tab-current a {color: #fff;}
