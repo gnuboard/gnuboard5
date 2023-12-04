@@ -339,3 +339,14 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bo_w .bo_w_select select {border:1px solid #d0d3db;width:100%;height:40px;border-radius:3px}
 #bo_w .btn_submit {padding:0 20px;font-size:1.167em}
 #bo_w .btn_cancel {border-radius:3px;font-size:1.167em}
+
+/* 다크모드 설정 */
+.dark-mode .bo_vc_act {background: #212021;border: 1px solid #383838;}
+.dark-mode .bo_vc_act li {border-bottom: 1px solid #383838;} 
+.dark-mode .bo_vc_act:after {border-color: transparent transparent #212021 transparent;}
+.dark-mode .bo_vc_act:before {border-color: transparent transparent #383838 transparent;}
+.dark-mode #autosave_pop {background: #212021;}
+.dark-mode #autosave_pop li {background-color: #323235;border: 1px solid #383838;}
+.dark-mode #autosave_pop ul {border-top: 1px solid #383838;border-bottom: 1px solid #383838;}
+.dark-mode .cmt_btn span.cmt_more {filter: invert(92%);}
+.dark-mode .autosave_close:hover {background: #151616;} 
