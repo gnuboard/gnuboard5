@@ -193,6 +193,25 @@ if ($new == 'new' || !$code) {
 
         window.close();
     }
+      // 다크모드 설정
+
+  // Function to handle dark mode changes
+  function handleDarkModeChange() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  // Check dark mode on page load
+  handleDarkModeChange();
+
+  // Add event listener for changes in localStorage
+  window.addEventListener('storage', function (event) {
+      handleDarkModeChange();
+  });
+
 </script>
 
 <?php
