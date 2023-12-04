@@ -482,6 +482,7 @@ box-sizing:content-box;
 .dark-mode .sv_member {color: #66656B;}
 .dark-mode .lat li a {color: #fff;}
 .dark-mode a {color: #fff;}
+.dark-mode #gnb_all .gnb_al_li {border-left:1px solid #383838}
 
 /* 다크모드 - 로그인 */
 .dark-mode #gnb_all h2 {border-bottom: 1px solid #383838;color: #fff;}
@@ -568,4 +569,14 @@ box-sizing:content-box;
 .dark-mode #faq_wrap li {border-bottom: 1px solid #383838;}
 .dark-mode #faq_wrap li:first-child {border-top: 1px solid #383838;}
 
-/* 다크모드 - 새글 */
+/* 다크모드 - 팝업 */
+.dark-mode .new_win #win_title {background: #212020;color: #fff;}
+.dark-mode #point .point_all {background: #2c2c2c;border: none;}
+.dark-mode #point .point_all .full_li {border-bottom: none;color: #8d8c8c;}
+.dark-mode #point .point_all li:last-child {border-left: none;}
+.dark-mode #point .point_all .full_li span {color: #fff;}
+.dark-mode .point_list li {background: #151616;}
+.dark-mode .point_list li:first-child {border-top: 1px solid #383838;}
+.dark-mode .point_list li {border-bottom: 1px solid #383838;}
+.dark-mode .point_list .point_tit {color: #fff;}
+.dark-mode #point .point_status {background: #2c2c2c;}
