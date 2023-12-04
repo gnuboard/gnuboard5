@@ -1221,3 +1221,9 @@ input[type="text"]{max-width:200px}
 .dark-mode .new_win h1 {background: #212020;color: #fff;border-bottom: 1px solid #383838;}
 .dark-mode .new_win_con {background: #151616;}
 .dark-mode .new_win_desc {color: #fff;}
+
+.dark-mode #chart_wr h5{border:1px solid #383838;}
+.dark-mode .pg_page,.dark-mode .pg_current {border: 1px solid #383838;}
+.dark-mode .pg a:focus,.dark-mode .pg a:hover {background: #212020;}
+
+.dark-mode .tbl_head01 table .tbl_input {background: #323235;border: none;color: #fff;}
