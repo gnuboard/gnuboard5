@@ -38,8 +38,8 @@ $payReqMap = $_SESSION['lgd_certify'];//결제 요청시, Session에 저장했�
 </head>
 <body onload="setLGDResult()">
 <?php
-  $LGD_RESPCODE = isset($_POST['LGD_RESPCODE']) ? $_POST['LGD_RESPCODE'] : '';
-  $LGD_RESPMSG 	= isset($_POST['LGD_RESPMSG']) ? iconv("EUC-KR", "UTF-8", $_POST['LGD_RESPMSG']) : '';
+  $LGD_RESPCODE = isset($_POST['LGD_RESPCODE']) ? clean_xss_tags($_POST['LGD_RESPCODE']) : '';
+  $LGD_RESPMSG 	= isset($_POST['LGD_RESPMSG']) ? clean_xss_tags(iconv("EUC-KR", "UTF-8", $_POST['LGD_RESPMSG'])) : '';
   $LGD_AUTHONLYKEY		= "";	
   $LGD_PAYTYPE			= "";
 
@@ -47,8 +47,8 @@ $payReqMap = $_SESSION['lgd_certify'];//결제 요청시, Session에 저장했�
   $payReqMap['LGD_RESPMSG']	 = $LGD_RESPMSG;
 
   if($LGD_RESPCODE == "0000"){
-	  $payReqMap['LGD_AUTHONLYKEY'] = isset($_POST['LGD_AUTHONLYKEY']) ? $_POST['LGD_AUTHONLYKEY'] : '';
-	  $payReqMap['LGD_PAYTYPE'] 	= isset($_POST['LGD_PAYTYPE']) ? $_POST['LGD_PAYTYPE'] : '';
+	  $payReqMap['LGD_AUTHONLYKEY'] = isset($_POST['LGD_AUTHONLYKEY']) ? clean_xss_tags($_POST['LGD_AUTHONLYKEY']) : '';
+	  $payReqMap['LGD_PAYTYPE'] 	= isset($_POST['LGD_PAYTYPE']) ? clean_xss_tags($_POST['LGD_PAYTYPE']) : '';
   }
   else{
 	  echo "LGD_RESPCODE:" . $LGD_RESPCODE . " ,LGD_RESPMSG:" . $LGD_RESPMSG; //인증 실패에 대한 처리 로직 추가
