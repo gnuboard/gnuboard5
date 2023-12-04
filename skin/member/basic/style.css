@@ -333,3 +333,34 @@
 #profile .my_profile_img img {border-radius:50%}
 #profile .profile_img img {border-radius:50%}
 #profile .profile_name .sv_wrap {font-weight:bold;text-align:left}
+
+/* 다크모드 설정 */
+.dark-mode #reg_result {background: #212020;border: #383838;}
+.dark-mode #reg_result .result_txt {color: #fff;}
+.dark-mode .memo_list li {background: #151616;border-bottom: 1px solid #383838;}
+.dark-mode .memo_list {border-top: 1px solid #383838;}
+.dark-mode .new_win .win_ul li {background: #151616;}
+.dark-mode .new_win .win_ul .selected {border: #3a8afd;background: #3a8afd;}
+.dark-mode .empty_table {color: #fff;}
+.dark-mode .memo_from {background: #212020;border-bottom: 1px solid #383838;}
+.dark-mode #memo_view_contents {border-top: 1px solid #383838;border-bottom: 1px solid #383838;}
+.dark-mode #memo_view_ul {background: #151616;}
+.dark-mode #memo_view p {background: #212020;color: #fff;}
+.dark-mode .btn_close {background: #323235;border: 1px solid #383838;color: #fff;}
+.dark-mode #formmail .formmail_flie .file_wr {background: #323235;color: #fff;border: none;}
+.dark-mode #formmail .lb_icon {background: #323235;}
+.dark-mode .tbl_head02 th,.dark-mode .tbl_head02 td {background: #151616;border-top: 1px solid #383838;border-bottom: 1px solid #383838;color: #fff;}
+.dark-mode .new_win .win_ul li {border: 1px solid #383838;}
+.dark-mode #profile section {background: #151616;border: 1px solid #383838;}
+.dark-mode .new_win .win_total {background: #151616;}
+.dark-mode .memo_list .memo_name .sv_wrap .sv_member {color: #fff;}
+.dark-mode #scrap li {border-bottom: 1px solid #383838;color: #fff;}
+.dark-mode #mb_confirm h1,.dark-mode #mb_confirm_id {color: #fff;}
+.dark-mode #mb_confirm fieldset .frm_input {background: #323235 !important;}
+.dark-mode #mb_confirm p {border-bottom: 1px solid #383838;}
+.dark-mode .mbskin .mbskin_box {background: #212020;border: 1px solid #383838;}
+.dark-mode .mb_log_cate .join {background: #151616;}
+.dark-mode .mb_log_cate h2 {color: #fff;}
+.dark-mode a {color: #676e70;}
+.dark-mode #scrap_do .scrap_tit,.dark-mode #scrap_do textarea {background: #323235;color: #fff;border: none;}
+.dark-mode #scrap_do label,.dark-mode #scrap .scrap_tit {color: #fff;}

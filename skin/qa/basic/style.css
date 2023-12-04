@@ -326,3 +326,5 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .dark-mode #bo_v_ans .more_add:after {border-color:transparent transparent #212020 transparent}
 .dark-mode #bo_v_ans .more_add:before {border-color:transparent transparent #383838 transparent}
 .dark-mode #bo_v_rel h2 {color: #fff;}
+.dark-mode #bo_cate a {border: 1px solid #383838;}
+.dark-mode .bo_v_nb li:first-child {border: none;}
