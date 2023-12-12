@@ -1052,7 +1052,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
   box-shadow:0 0 6px #00000080;}
 .dark-mode #btn_option {background: #212020;}
 .dark-mode #btn_option .btn_close {background: #212020;color: #fff;}
-.dark-mode #sit_opt_added li {background: #151616;border-color: #383838;color: #fff;}
+.dark-mode #sit_opt_added li,.dark-mode #sit_btn_cart,.dark-mode #sit_btn_wish {background: #151616;border-color: #383838;color: #fff;}
 .dark-mode #sit_opt_added button,.dark-mode #sit_opt_added .num_input {background: transparent;color: #fff;border-color: #383838;}
 .dark-mode button.btn01 {background: #212020;color: #fff;border-color: #ffffff40;}
 .dark-mode #sod_bsk_act {background: #151516;}
@@ -1212,3 +1212,6 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 .dark-mode .review_detail_inner h3 {background: #212020;color: #fff;border-color: #383838;}
 .dark-mode .review_tp_cnt {border-color: #383838;}
 .dark-mode .review_summ {background: #212020;border-color: #383838;}
+
+/* 쿠폰 */
+.dark-mode #scp_list .cou_tit {color: #fff;}

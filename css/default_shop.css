@@ -1469,3 +1469,4 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 
 /* 쿠폰존 */
 .dark-mode .couponzone_list h2 {background: #212020;border-color: #383838;color: #fff;}
+.dark-mode #coupon li {color: #fff;}
