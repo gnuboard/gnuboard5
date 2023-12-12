@@ -196,7 +196,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #ft_copy {text-align:center;width:1200px;margin:0 auto;padding:20px 0;color:#5b5b5b;font-size:0.92em;border-top:1px solid #383838}
 #top_btn {position:fixed;bottom:20px;right:20px;width:50px;height:50px;line-height:46px;border:2px solid #333;color:#333;text-align:center;font-size:15px;z-index:90;background:rgba(255,255,255,0.5)}
 #top_btn:hover {border-color:#3059c7;background:#3059c7;color:#fff}
-#darkmode_btn{position:fixed;bottom:20px;right:80px;width:50px;height:50px;border:0;text-align:center;background:#ddd;background:#4158d1;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;}
+#darkmode_btn{position:fixed;bottom:20px;right:80px;width:50px;height:50px;border:0;text-align:center;background:#4158d1;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;}
 #darkmode_btn input {opacity: 0;width: 0;height: 0;}
 #darkmode_btn .visible {width:24px; height:24px; vertical-align:middle;}
 
