@@ -1030,3 +1030,185 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 .chk_box input[type="radio"]:checked + label {color:#305af9}
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#305af9;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
 
+/* 다크모드 설정 */
+/* 스위치버튼 */
+#darkmode_btn{position:fixed;bottom:80px;right:15px;width:50px;height:50px;border:0;text-align:center;background:#f7a423;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 50%;z-index: 99;}
+#darkmode_btn input {opacity: 0;width: 0;height: 0;}
+#darkmode_btn .visible {width:24px; height:24px; vertical-align:middle;}
+#darkmode_btn .visible.bright {display: none;}
+.dark-mode #darkmode_btn .visible.dark {display: none;}
+.dark-mode #darkmode_btn .visible.bright {display: inline-block;}
+
+/* 공통 css */
+.dark-mode #container_title {background: #212020;border-color: #383838;color: #fff;
+  -webkit-box-shadow:0 0 10px #00000080;
+  -moz-box-shadow:0 0 10px #00000080;
+  box-shadow:0 0 10px #00000080;}
+.dark-mode #container_title a {color: #fff;}
+.dark-mode .couponzone_list {background: #212020;}
+.dark-mode .btn_option_wr {background: #151616;
+  -webkit-box-shadow:0 0 6px #00000080;
+  -moz-box-shadow:0 0 6px #00000080;
+  box-shadow:0 0 6px #00000080;}
+.dark-mode #btn_option {background: #212020;}
+.dark-mode #btn_option .btn_close {background: #212020;color: #fff;}
+.dark-mode #sit_opt_added li {background: #151616;border-color: #383838;color: #fff;}
+.dark-mode #sit_opt_added button,.dark-mode #sit_opt_added .num_input {background: transparent;color: #fff;border-color: #383838;}
+.dark-mode button.btn01 {background: #212020;color: #fff;border-color: #ffffff40;}
+.dark-mode #sod_bsk_act {background: #151516;}
+.dark-mode #sod_bsk_act .total {color: #ffffff64;}
+.dark-mode #sod_bsk_act .total strong{color: #fff;}
+.dark-mode #ssch_frm {background: #212020;border-color: #383838;}
+.dark-mode #ssch_frm .sch_submit {color: #fff;}
+.dark-mode #ssch_frm .sch_wr {border-color: #383838;}
+.dark-mode #ssch_frm div,.dark-mode .chk_box input[type="checkbox"]:checked + label {color: #fff;}
+.dark-mode #ssch_cate ul {border-color: #383838;}
+.dark-mode #ssch_cate ul li,.dark-mode #ssch_sort,.dark-mode #ssch_sort button {background: #212020;border-color: #383838;color: #fff;}
+.dark-mode #ssch_sort ul {border-color: #383838;}
+.dark-mode #ssch_sort li {border-color: #383838;}
+.dark-mode #ssch_sort li a {background: #212020;color: #fff;}
+.dark-mode #ssch_sort ul:before {border-color:transparent transparent #383838 transparent}
+.dark-mode #ssch_sort ul:after {border-color:transparent transparent #212020 transparent}
+
+/* 메인 */ 
+.dark-mode {background: #151616;}
+.dark-mode .sct_wrap,.dark-mode .sct_wrap h2 a {color: #fff;}
+.dark-mode .st_30_wr .bx-pager .active {background: #fff;}
+.dark-mode .st_30_wr,.dark-mode .sct_20,.dark-mode .lt {background: #212020;border-color: #383838;}
+.dark-mode .sct .sct_txt,.dark-mode .lt .more_btn,.dark-mode .lt h2,.dark-mode .lt li {border-color: #383838;}
+.dark-mode .sct .sct_txt a,.dark-mode .lt h2 a,.dark-mode .lt li a {color: #fff;}
+
+/* 메뉴 */
+.dark-mode .menu .menu_wr {background: #151616;}
+.dark-mode #ol_after_private a,.dark-mode .cate,.dark-mode #stv,.dark-mode #cate_tnb {background: #212020;border-color: #383838;color: #fff;}
+.dark-mode #ol_after_private li:first-child,.dark-mode #stv h2 {border-color: #383838;}
+.dark-mode .cate a,.dark-mode #cate_tnb li{border-color: #383838;color: #fff;}
+.dark-mode #cate_tnb li a {color: #fff;}
+
+/* 쿠폰팝업 */
+.dark-mode .new_win #win_title {background: #212020;color:#fff;}
+.dark-mode #scp_list {background: #151616;}
+.dark-mode #scp_list li {border-color: #383838;}
+.dark-mode .new_win .btn_close {background: #323235;border: 1px solid #383838;color: #fff;}
+
+/* 상품리스트 */
+.dark-mode #best_item h2 {color: #fff;}
+.dark-mode .bst_silde_btn button.bst_sl {background: #fff;}
+.dark-mode #best_item .sct_best {background: #212020;border-color: #383838;}
+.dark-mode .sct_best .sct_txt .sct_a,.dark-mode .sct_best .sct_cost {color: #fff;}
+.dark-mode #sct_sortlst {background: #212020;border-color: #383838;}
+.dark-mode #sct_sort button {background: #212020;color: #fff;border-color: #383838;}
+.dark-mode #sct_sort ul,.dark-mode #sct_sort li {border-color: #383838;}
+.dark-mode #sct_sort li a {background: #212020;border-color: #383838;}
+.dark-mode #sct_sort ul:before {border-color:transparent transparent #383838 transparent}
+.dark-mode #sct_sort ul:after {border-color:transparent transparent #212020 transparent}
+.dark-mode #sct_lst button {background: #212020;}
+.dark-mode .sct_10_list li {border-color: #383838;}
+
+/* 상품상세 */
+.dark-mode #sit_pvi {background: #151616;border-color: #383838;}  
+.dark-mode #sit_ov {background: #212020;border-color: #383838;}
+.dark-mode #sit_title {color: #fff;}
+.dark-mode .sit_ov_tbl,.dark-mode #sit_ov .sit_ov_wr {border-color: #383838;}
+.dark-mode #sit_siblings {background: #212020;color: #fff;}
+.dark-mode #sit_siblings a {color: #fff;}
+.dark-mode #sit_tab .tab_tit li {border-color: #383838;}
+.dark-mode #sit_tab .tab_tit li button,.dark-mode #sit_tab .tab_tit li .selected,.dark-mode #sit_tab .tab_con {background-color: #212020;}
+.dark-mode #sit_inf_explan {color: #fff;}
+.dark-mode #sit_inf_explan p {filter: invert(100%);}
+.dark-mode #sit_inf_open {border-color: #383838;}
+.dark-mode #sit_inf_open th {background: #151616;color: #fff;border-color: #383838;}
+.dark-mode #sit_inf_open td, .dark-mode #sit_rel .sct_wrap {background: #212020;color: #fff;border-color: #383838;}
+.dark-mode #sit_tab .tab_con {border-color: #383838; color: #fff;}
+.dark-mode .srl_10 .sct_txt,.dark-mode .sit_use_li_title,.dark-mode .sit_qa_li_title,.dark-mode #sit_rel h2 {color: #fff;}
+.dark-mode #sit_use_wbtn .btn01,.dark-mode #sit_qa_wbtn .btn01 {background: #212020;color: #fff;}
+.dark-mode #sit_use_ol,.dark-mode .sit_use_li,.dark-mode #sit_qa_ol,.dark-mode .sit_qa_li {border-color: #383838;}
+.dark-mode .sit_qa_dl dd.sit_qaa_yet,.dark-mode .sit_qa_dl dd.sit_qaa_done {color: #212020;}
+.dark-mode #sit_dvex h3,.dark-mode .sit_use_p,.dark-mode .sit_qa_p {background-color: #151616;color: #fff;}
+.dark-mode .sit_qa_qaa {border-color: #383838;}
+.dark-mode #sps_sch .sch_wr,.dark-mode #sqa_sch .sch_wr,.dark-mode #sps_sch select,.dark-mode #sqa_sch select,.dark-mode #sit_use_write #is_subject {background: #323235;border: none;color: #fff;}
+.dark-mode #sps_sch .sch_btn,.dark-mode #sps_sch .sch_input,.dark-mode #sqa_sch .sch_input,.dark-mode #sqa_sch .sch_btn {color: #fff;}
+.dark-mode #sps>ol,.dark-mode #sqa>ol {border-color: #383838;}
+.dark-mode #sps>ol>li,.dark-mode #sqa>ol>li {background: #212020;border-color: #383838;}
+.dark-mode .review_detail,.dark-mode #sit_use_write li label {color: #fff;}
+.dark-mode #sit_use_write #sit_use_write_star {background: #323235;}
+.dark-mode .sqa_con_btn button {background: #212020;}
+.dark-mode #sqa .sit_qaa_yet,.dark-mode #sqa .sit_qaa_done {color: #212020;}
+.dark-mode .sqa_section h2 {color: #fff;}
+.dark-mode .sqa_con {background: #151616;}
+.dark-mode #sqa .sit_qa_qaq,.dark-mode #sqa .sit_qa_qaa {color: #fff;}
+.dark-mode .form_01 li {color: #fff;}
+.dark-mode .full_input {background: #323235;border: none;color: #fff;}
+.dark-mode #sit_star_sns .sns_area {background: #212020;border-color: #383838;}
+.dark-mode #sit_star_sns .sns_area:before {border-color:transparent transparent #383838 transparent}
+.dark-mode #sit_star_sns .sns_area:after {border-color:transparent transparent #212020 transparent}
+
+/* 주문서 작성 */
+.dark-mode .tbl_head03 thead th {color: #fff;border-color: #383838;}
+.dark-mode .tbl_head03 table {border-color: #383838;}
+.dark-mode .tbl_head03 td {background: #212020;border-color: #383838;}
+.dark-mode .od_prd_list .td_prd .sod_name,.dark-mode .tbl_head03 td {color: #fff;}
+.dark-mode #sod_frm_taker h2,.dark-mode #sod_frm_orderer h2 {color: #fff;}
+.dark-mode #sod_frm_orderer .tbl_frm01,.dark-mode #sod_frm_taker .tbl_frm01 {background: #212020;}
+.dark-mode #sod_frm .tbl_frm01 th {color: #fff;}
+.dark-mode .wr_content textarea,.dark-mode .tbl_frm01 textarea,.dark-mode .form_01 textarea,.dark-mode .frm_input,.dark-mode #sod_addr .ad_subject {background: #323235;border: none;color: #fff;}
+.dark-mode #sod_frm_orderer,.dark-mode #sod_frm_taker,.dark-mode #sod_addr .addr_title,.dark-mode #sod_addr li {border-color: #383838;}
+.dark-mode #sod_frm_taker .order_choice_place {background: #151616;border-color: #383838;color: #fff;}
+.dark-mode .list_01 li {background: #212020;
+  -webkit-box-shadow:0 0 6px #00000080;
+  -moz-box-shadow:0 0 6px #00000080;
+  box-shadow:0 0 6px #00000080;}
+.dark-mode #sod_addr .addr_info,.dark-mode #sod_frm_taker label {color: #fff;}
+.dark-mode #sod_addr .sel_address {color: #fff;border-color: #fff;}
+.dark-mode #forderform .sod_right #sod_bsk_tot,.dark-mode #sod_frm #sod_bsk_tot li {background: #212020;border-color: #383838;color: #fff;}
+.dark-mode #sod_frm #sod_bsk_tot .sod_bsk_coupon:before,.dark-mode #sod_frm #sod_bsk_tot .sod_bsk_dvr:before {background: #212020;border-color: #383838;}
+.dark-mode #sod_frm_pay .pay_tbl th,.dark-mode #sod_frm_pay .pay_tbl td,.dark-mode #forderform .od_pay_buttons_el {background: #323235;border-color: #383838;}
+.dark-mode #sod_frm_pay .pay_tbl td,.dark-mode #forderform .od_pay_buttons_el h3 {color: #fff;}
+.dark-mode #sod_frm_pay {border-color: #383838;}
+.dark-mode .sod_frm_pc #sod_frm_pay .lb_icon {background:url('../img/pay_icon1.png') no-repeat 15px 50% #323235}
+.dark-mode .sod_frm_pc #sod_frm_pay .lb_icon:before{display: block;content: "";position: absolute;left: 15px;top: 16px;width: 37px;height: 26px;backdrop-filter: invert(80%);}
+.dark-mode #od_pay_sl .lb_icon {color: #fff;border-color: #ffffff40;}
+.dark-mode #settle_bank {background: #323235;border-color: #ff006c;color: #fff;}
+.dark-mode .sod_list .sod_li {background: #212020;color: #fff;border-color: #383838;}
+.dark-mode .sod_list .li_name a,.dark-mode #sod_fin_tot h2 {color: #fff;}
+.dark-mode .sod_list .li_prqty {border-color: #383838;}
+.dark-mode .sod_list .prqty_sc,.dark-mode .sod_list .prqty_price {border-color: #383838;}
+.dark-mode .sod_list .total_price,.dark-mode #sod_fin_legend {background: #323235;border: none;color: #fff;}
+.dark-mode #sod_sts_wrap .btn_wr,.dark-mode #sod_sts_explan_open {border-color: #383838;color: #fff;}
+.dark-mode #sod_fin_pay,.dark-mode #sod_fin_orderer,.dark-mode #sod_fin_receiver,.dark-mode #sod_fin_receiver,.dark-mode #sod_fin_dvr {background: #212020;border-color: #383838;color: #fff;}
+.dark-mode #sod_fin_view h3 {border-color: #383838;}
+.dark-mode #sod_fin_view table {background: #212020;}
+.dark-mode #sod_fin_tot ul {background: #212020;color: #fff;}
+.dark-mode #sod_fin_tot #alrdy {background: #323235;border-color: #383838;}
+
+/* 쿠폰존 */
+.dark-mode .couponzone_list {border-color: #383838;}
+.dark-mode .couponzone_list h2 {color: #fff;border-color: #383838;}
+
+/* 공유 팝업 */
+.dark-mode .sct_10 .sct_sns,.dark-mode .sct_10_list .sct_sns {background: #151616;border-color: #383838;}
+.dark-mode .sct_10 .sct_sns h3,.dark-mode .sct_10 .sct_sns_cls,.dark-mode .sct_10_list .sct_sns h3,.dark-mode .sct_10_list .sct_sns_cls {background: #212020;color: #fff;}
+.dark-mode .sct_10 .sct_sns h3,.dark-mode .sct_10_list .sct_sns h3 {border-color: #383838;}
+
+/* 마이페이지 */
+.dark-mode #smb_my {background: #151616;}
+.dark-mode #smb_my_ov,.dark-mode #smb_my_ov .my_name,.dark-mode #smb_my_ov .my_pocou,.dark-mode #smb_my_ov .my_ov_btn button {background: #212020;}
+.dark-mode #smb_my_ov .my_ov_btn,.dark-mode #smb_my_ov .my_ov_btn button,.dark-mode #smb_my_ov .my_pocou li {border-color: #383838;}
+.dark-mode #smb_my_ov .my_name {color: #fff;border-color: #383838;}
+.dark-mode #smb_my_ov .my_pocou li,.dark-mode #smb_my_ov .my_cou a,.dark-mode #smb_my_ov .my_info_wr span {color: #fff;}
+.dark-mode #smb_my_ov .my_info {background: #212020;}
+.dark-mode #smb_my_ov .my_info_wr,.dark-mode #smb_my_ov .my_info,.dark-mode #sod_inquiry {border-color: #383838;}
+.dark-mode #smb_my_ov .my_ov_btn button,.dark-mode #smb_my_od h2 a,.dark-mode #sod_inquiry li .idtime_link,.dark-mode #sod_inquiry li .inquiry_name {color: #fff;}
+.dark-mode #sod_inquiry li {background: #212020;border-color: #383838;}
+.dark-mode #smb_my_ov .smb_my_act li .btn01 {color: #fff;border-color: #ffffff40;background: #212020;}
+.dark-mode #smb_my .btn_more {background: #302e2e;color: #afafaf;}
+.dark-mode #sod_ws li {background: #212020;border-color: #383838;}
+.dark-mode .wishlist li .info_link,.dark-mode #sod_ws .wish_prd,.dark-mode #sod_ws .info_price {color: #fff;}
+.dark-mode #sod_ws_act .btn01 {background: transparent;color: #fff;}
+.dark-mode #sct_pv {color: #fff;}
+
+/* 사용후기 */
+.dark-mode .review_detail_inner {background: #151616;color: #fff;border-color: #383838;}
+.dark-mode .review_detail_inner h3 {background: #212020;color: #fff;border-color: #383838;}
+.dark-mode .review_tp_cnt {border-color: #383838;}
+.dark-mode .review_summ {background: #212020;border-color: #383838;}

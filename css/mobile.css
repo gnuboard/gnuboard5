@@ -360,7 +360,7 @@ box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
 
 /* 다크모드 설정 */
 /* 스위치버튼 */
-#darkmode_btn{position:fixed;bottom:10px;right:70px;width:50px;height:50px;border:0;text-align:center;background:#ddd;background:#4158d1;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 50%;z-index: 99;}
+#darkmode_btn{position:fixed;bottom:10px;right:70px;width:50px;height:50px;border:0;text-align:center;background:#4158d1;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 50%;z-index: 99;}
 #darkmode_btn input {opacity: 0;width: 0;height: 0;}
 #darkmode_btn .visible {width:24px; height:24px; vertical-align:middle;}
 #darkmode_btn .visible.bright {display: none;}
@@ -402,6 +402,7 @@ box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
 .dark-mode #gnb_1dul a {border-bottom: 1px solid #383838;color: #fff;}
 .dark-mode #hd_nb {background: #212020;border-bottom: 1px solid #383838;}
 .dark-mode #hd_nb li {border-color: #383838;}
+.dark-mode #hd_nb li a {color: #fff;}
 
 /* 검색 */
 .dark-mode #user_menu {background: #151616;}
@@ -544,5 +545,5 @@ box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
 .dark-mode #copymove td {background: #212020;}
 .dark-mode .new_win .btn_close {background: #323235;border: 1px solid #383838;color: #fff;}
 .dark-mode .pg_page {background: #383838;border: 0;}
-.dark-mode .pg_end {background: url(../img/btn_end.gif) no-repeat 50% 50% #383838;}
+.dark-mode .pg_end {background: url('../img/btn_end.gif') no-repeat 50% 50% #383838;}
 .dark-mode .pg_start {background:url('../img/btn_first.gif') no-repeat 50% 50% #383838;}
