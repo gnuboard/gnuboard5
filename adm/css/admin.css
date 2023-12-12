@@ -1236,3 +1236,7 @@ input[type="text"]{max-width:200px}
 
 .dark-mode ul.de_pg_tab li a {color: #74777b;}
 .dark-mode ul.de_pg_tab li.tab-current a {color: #fff;}
+.dark-mode .sit_option {background:#151616;border: 1px solid #383838;}
+.dark-mode #sit_compact {background: #212020;border: 1px solid #383838;}
+.dark-mode .srel section ul,.dark-mode .srel .srel_list,.dark-mode .srel .srel_sel,.dark-mode .srel section li {background: #212020;border-color: #383838;}
+ 
