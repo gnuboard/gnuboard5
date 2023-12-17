@@ -79,23 +79,22 @@ function get_board_db($bo_table, $is_cache = false)
         return $cache[$key];
     }
 
-    if (!($cache[$key] = run_replace('get_board_db', array(), $bo_table))) {
-        $sql = " SELECT * from {$g5['board_table']} where bo_table = '{$bo_table}' ";
+    $sql = " SELECT * from {$g5['board_table']} where bo_table = '{$bo_table}' ";
 
-        $board = sql_fetch($sql);
+    $board = sql_fetch($sql);
 
-        $board_defaults = array(
-            'bo_table' => '',
-            'bo_skin' => '',
-            'bo_mobile_skin' => '',
-            'bo_upload_count' => 0,
-            'bo_use_dhtml_editor' => '',
-            'bo_subject' => '',
-            'bo_image_width' => 0
-        );
+    $board_defaults = array(
+        'bo_table' => '',
+        'bo_skin' => '',
+        'bo_mobile_skin' => '',
+        'bo_upload_count' => 0,
+        'bo_use_dhtml_editor' => '',
+        'bo_subject' => '',
+        'bo_image_width' => 0
+    );
 
-        $cache[$key] = array_merge($board_defaults, (array) $board);
-    }
+    $cache[$key] = array_merge($board_defaults, (array) $board);
+    $cache[$key] = run_replace('get_board_db', $cache[$key], $bo_table);
 
     return $cache[$key];
 }
