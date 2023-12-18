@@ -145,8 +145,12 @@ function get_content_by_field($write_table, $type='bbs', $where_field='', $where
 {
     global $g5, $g5_object;
 
+    $order_key = 'wr_id';
+
     if( $type === 'content' ){
         $check_array = array('co_id', 'co_html', 'co_subject', 'co_content', 'co_seo_title', 'co_mobile_content', 'co_skin', 'co_mobile_skin', 'co_tag_filter_use', 'co_hit', 'co_include_head', 'co_include_tail');
+
+        $order_key = 'co_id';
     } else {
         $check_array = array('wr_id', 'wr_num', 'wr_reply', 'wr_parent', 'wr_is_comment', 'ca_name', 'wr_option', 'wr_subject', 'wr_content', 'wr_seo_title', 'wr_link1', 'wr_link2', 'wr_hit', 'wr_good', 'wr_nogood', 'mb_id', 'wr_name', 'wr_email', 'wr_homepage', 'wr_datetime', 'wr_ip', 'wr_1', 'wr_2', 'wr_3', 'wr_4', 'wr_5', 'wr_6', 'wr_7', 'wr_8', 'wr_9', 'wr_10');
     }
@@ -162,7 +166,7 @@ function get_content_by_field($write_table, $type='bbs', $where_field='', $where
         return $cache[$key];
     }
 
-    $sql = " select * from {$write_table} where $where_field = '".sql_real_escape_string($where_value)."' ";
+    $sql = " select * from {$write_table} where $where_field = '".sql_real_escape_string($where_value)."' order by $order_key desc limit 1 ";
 
     $cache[$key] = sql_fetch($sql);
 

@@ -16,6 +16,8 @@ if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
     shop_seo_title_update($row['it_id']);
 }
 
+if (function_exists('check_case_exist_title')) check_case_exist_title($it, G5_SHOP_DIR, true);
+
 if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
         alert('판매가능한 상품이 아닙니다.');

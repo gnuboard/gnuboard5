@@ -112,6 +112,8 @@ else if ($w == "u")
 
     if(!$it)
         alert('상품정보가 존재하지 않습니다.');
+    
+    if (function_exists('check_case_exist_title')) check_case_exist_title($it, G5_SHOP_DIR, false);
 
     if (! (isset($ca_id) && $ca_id))
         $ca_id = $it['ca_id'];

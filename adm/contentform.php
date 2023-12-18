@@ -57,6 +57,9 @@ if ($w == "u") {
     if (!$co['co_id']) {
         alert('등록된 자료가 없습니다.');
     }
+
+    if (function_exists('check_case_exist_title')) check_case_exist_title($co, G5_CONTENT_DIR, false);
+
 } else {
     $html_title .= ' 입력';
     $co = array(
