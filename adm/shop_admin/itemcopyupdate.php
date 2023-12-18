@@ -184,6 +184,8 @@ $sql = " update {$g5['g5_shop_item_table']}
             where it_id = '$new_it_id' ";
 sql_query($sql);
 
+if( function_exists('shop_seo_title_update') ) shop_seo_title_update($new_it_id, true);
+
 /**
  * 아이템 복사 처리 후 Event Hook
  * @var string $it_id 원본 아이템 ID
