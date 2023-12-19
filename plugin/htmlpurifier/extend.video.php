@@ -61,9 +61,9 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		protected function postFilterCallback($matches)
 		{
 			// Domain Whitelist
-			$youTubeMatch = preg_match('#src="https?://www.youtube(-nocookie)?.com/#i', $matches[1]);
-			$vimeoMatch = preg_match('#src="https?://player.vimeo.com/#i', $matches[1]);
-            $fackbookMatch = preg_match('#src="https?://www.facebook.com/#i', $matches[1]);
+			$youTubeMatch = preg_match('#src="https?://www\.youtube(-nocookie)?\.com/#i', $matches[1]);
+			$vimeoMatch = preg_match('#src="https?://player\.vimeo\.com/#i', $matches[1]);
+            $fackbookMatch = preg_match('#src="https?://www\.facebook\.com/#i', $matches[1]);
 			if ($youTubeMatch || $vimeoMatch || $fackbookMatch) {
 				$extra = ' frameborder="0"';
 				if ($youTubeMatch || $fackbookMatch) {
