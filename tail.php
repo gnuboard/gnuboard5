@@ -73,31 +73,36 @@ if (G5_IS_MOBILE) {
             return false;
         });
     });
-    
-     // 다크모드 설정
-     if (localStorage.getItem('darkMode') === 'enabled') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('dark-mode-toggle').checked = true;
-    }
+    </script>
+    <script>
+      // 다크모드 설정
+      const $checkbox = document.querySelector('#dark-mode-toggle');
 
-    document.getElementById('dark-mode-toggle').addEventListener('change', function () {
-        if (this.checked) {
-            enableDarkMode();
+      const isUserColorTheme = localStorage.getItem('color-theme');
+      const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+      const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme);
+
+      document.addEventListener('DOMContentLoaded', function () {
+      const initialTheme = getUserTheme();
+        if (initialTheme === 'dark') {
+          localStorage.setItem('color-theme', 'dark');
+          document.documentElement.setAttribute('color-theme', 'dark');
         } else {
-            disableDarkMode();
+          localStorage.setItem('color-theme', 'light');
+          document.documentElement.setAttribute('color-theme', 'light');
         }
-    });
+      }); 
 
-    function enableDarkMode() {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-    }
-
-    function disableDarkMode() {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-    }
-
+      $checkbox.addEventListener('click', e => {
+        if (e.target.checked) {
+          localStorage.setItem('color-theme', 'dark');
+          document.documentElement.setAttribute('color-theme', 'dark');
+        } else {
+          localStorage.setItem('color-theme', 'light');
+          document.documentElement.setAttribute('color-theme', 'light');
+        }
+      });
     </script>
 </div>
 

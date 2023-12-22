@@ -8,21 +8,27 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 </body>
 <script>
+
   // 다크모드 설정
   function handleDarkModeChange() {
-    if (localStorage.getItem('darkMode') === 'enabled') {
-      document.body.classList.add('dark-mode');
+    const isUserColorTheme = localStorage.getItem('color-theme');
+    const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme);
+    
+    const initialTheme = getUserTheme();
+    if (initialTheme === 'dark') {
+      document.documentElement.setAttribute('color-theme', 'dark');
     } else {
-      document.body.classList.remove('dark-mode');
+      document.documentElement.setAttribute('color-theme', 'light');
     }
-  }
+  }; 
+ 
+  document.addEventListener('DOMContentLoaded', handleDarkModeChange)
 
-  handleDarkModeChange();
-
+  // 로컬스토리지 데이터에따라 실시간 변경
   window.addEventListener('storage', function (event) {
       handleDarkModeChange();
   });
-
 
 </script>
 </html>

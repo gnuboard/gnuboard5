@@ -37,31 +37,36 @@ $print_version = ($is_admin == 'super') ? 'Version ' . G5_GNUBOARD_VER : '';
             scrollTop: 0
         }, 400);
     })
-
+</script>
+<script>
     // 다크모드 설정
-    if (localStorage.getItem('darkMode') === 'enabled') {
-            $('body').addClass('dark-mode');
-            $('#dark-mode-toggle').prop('checked', true);
-        }
+    const $checkbox = document.querySelector('#dark-mode-toggle');
 
-        $('#dark-mode-toggle').change(function() {
-            if (this.checked) {
-                enableDarkMode();
-            } else {
-                disableDarkMode();
-            }
-        });
+    const isUserColorTheme = localStorage.getItem('color-theme');
+    const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
-        function enableDarkMode() {
-            $('body').addClass('dark-mode');
-            localStorage.setItem('darkMode', 'enabled');
-        }
+    const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme);
 
-        function disableDarkMode() {
-            $('body').removeClass('dark-mode');
-            localStorage.setItem('darkMode', 'disabled');
-        }
+    document.addEventListener('DOMContentLoaded', function () {
+    const initialTheme = getUserTheme();
+      if (initialTheme === 'dark') {
+        localStorage.setItem('color-theme', 'dark');
+        document.documentElement.setAttribute('color-theme', 'dark');
+      } else {
+        localStorage.setItem('color-theme', 'light');
+        document.documentElement.setAttribute('color-theme', 'light');
+      }
+    }); 
 
+    $checkbox.addEventListener('click', e => {
+      if (e.target.checked) {
+        localStorage.setItem('color-theme', 'dark');
+        document.documentElement.setAttribute('color-theme', 'dark');
+      } else {
+        localStorage.setItem('color-theme', 'light');
+        document.documentElement.setAttribute('color-theme', 'light');
+      }
+    });
 </script>
 
 <!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->

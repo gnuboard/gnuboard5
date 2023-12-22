@@ -62,30 +62,33 @@ if ($config['cf_analytics']) {
 }
 ?>
 <script>
-          // 다크모드 설정
-          if (localStorage.getItem('darkMode') === 'enabled') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('dark-mode-toggle').checked = true;
+ // 다크모드 설정
+  const $checkbox = document.querySelector('#dark-mode-toggle');
+  const isUserColorTheme = localStorage.getItem('color-theme');
+  const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme);
+
+  document.addEventListener('DOMContentLoaded', function () {
+  const initialTheme = getUserTheme();
+    if (initialTheme === 'dark') {
+      localStorage.setItem('color-theme', 'dark');
+      document.documentElement.setAttribute('color-theme', 'dark');
+    } else {
+      localStorage.setItem('color-theme', 'light');
+      document.documentElement.setAttribute('color-theme', 'light');
     }
+  }); 
 
-    document.getElementById('dark-mode-toggle').addEventListener('change', function () {
-        if (this.checked) {
-            enableDarkMode();
-        } else {
-            disableDarkMode();
-        }
-    });
-
-    function enableDarkMode() {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
+  $checkbox.addEventListener('click', e => {
+    if (e.target.checked) {
+      localStorage.setItem('color-theme', 'dark');
+      document.documentElement.setAttribute('color-theme', 'dark');
+    } else {
+      localStorage.setItem('color-theme', 'light');
+      document.documentElement.setAttribute('color-theme', 'light');
     }
-
-    function disableDarkMode() {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-    }
-
+  });
 </script>
 
 <script src="<?php echo G5_JS_URL; ?>/sns.js"></script>
