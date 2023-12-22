@@ -20,8 +20,8 @@
 #ol_after_private {margin:10px 0 ;padding:0;list-style:none;}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {position:relative;float:left;width:50%;}
-#ol_after_private li:first-child{border-right:1px solid #efefef}
-#ol_after_private a {color:#333;line-height:43px;background:#fff;display:block;border-bottom:1px solid #ddd;text-align:center;padding:0 10px 0 40px;text-align:left}
+#ol_after_private li:first-child{border-right:var(--contBorder)}
+#ol_after_private a {color:var(--btnFontColor);line-height:43px;background:var(--btnBg);display:block;border-bottom:var(--sideBorder);text-align:center;padding:0 10px 0 40px;text-align:left}
 #ol_after_private i{position:absolute;top:0;left:0;font-size:15px;line-height:43px;width:40px;text-align:center;color:#a5a8ac}
 #ol_after_private strong{position:absolute;top:12px;right:10px;font-size:0.846em;padding:0 5px;background:#37bc9b;color:#fff;line-height:20px;border-radius:35px}
 #ol_after_private .win_coupon strong{background:#a352c1}
