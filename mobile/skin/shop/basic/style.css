@@ -371,7 +371,7 @@
 #sit_tab {margin:20px 0}
 #sit_tab .tab_tit:after {display:block;visibility:hidden;clear:both;content:""}
 #sit_tab .tab_tit li {float:left;width:25%;text-align:center;border-bottom:var(--sschBorder)}
-#sit_tab .tab_tit li button {display:block;width:100%;position:relative;height:40px;background:var(--btnBg);border:0;color:#666;line-height:38px;text-align:center;z-index:1}
+#sit_tab .tab_tit li button {display:block;width:100%;position:relative;height:40px;background:var(--btnBg);border:0;color:var(--sitColor);line-height:38px;text-align:center;z-index:1}
 #sit_tab .tab_tit li .selected {background:var(--btnBg);z-index:2;color:#3a8afd;font-weight:bold;position:relative}
 #sit_tab .tab_tit li .selected:before {content:'';position:absolute;bottom:-1px;left:0;width:100%;background:#3a8afd;height:3px}
 

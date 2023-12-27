@@ -629,7 +629,7 @@ background:url('img/select_arrow.png') no-repeat 96% 50%/* 화살표 아이콘 �
 #sit_tab .tab_tit {border-bottom:var(--gnbBorder);background:var(--btnBg);padding:0 10px;color: var(--fontColor);}
 #sit_tab .tab_tit:after {display:block;visibility:hidden;clear:both;content:""}
 #sit_tab .tab_tit li {display:inline-block;float:left}
-#sit_tab .tab_tit li button {display:block;width:100%;position:relative;font-size:1.2em;padding:10px 15px;border:0;color:#666;background:var(--btnBg);line-height:38px;text-align:center;z-index:1}
+#sit_tab .tab_tit li button {display:block;width:100%;position:relative;font-size:1.2em;padding:10px 15px;border:0;color:var(--sitColor);background:var(--btnBg);line-height:38px;text-align:center;z-index:1}
 #sit_tab .tab_tit li .selected {background:var(--gnbBorder);z-index:2;border-bottom-color:#fff;color:var(--fontColor);font-weight:bold}
 #sit_tab .tab_tit li .selected:after {content:"";position:absolute;left:0;bottom:0;width:100%;height:3px;background:#3a8afd;display:inline-block}
 #sit_tab .tab_con {background:var(--btnBg);padding:15px}

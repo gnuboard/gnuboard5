@@ -38,6 +38,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --localBg: #eaeaea;
   --evenBg: #eff3f9;
   --thBg: #6f809a;
+  --tdBg: #f3f3f3;
   --gnbBg: rgba(0,0,0,0.1);
   --menuBg: #4158d1;
   --joinBg: #f7f7f7;
@@ -54,6 +55,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --prFontColor: #465168;
   --btnColor: #000;
   --bovColor: #666;
+  --gnbColor: #666;
   --shareColor: #555;
   --iconColor: #4b5259;
   --ptStatusColor: #737373;
@@ -78,6 +80,13 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --anchoreBorder: 1px solid #c8ced1;
   --tblBorder: 1px solid #e6e6e6;
   --themeBorder: 1px solid #d1dee2;
+  /* icon */
+  --menu100 : url(../img/menu-1-1.png);
+  --menu200 : url(../img/menu-2-1.png);
+  --menu300 : url(../img/menu-3-1.png);
+  --menu400 : url(../img/menu-4-1.png);
+  --menu600 : url(../img/menu-6-1.png);
+  --menu700 : url(../img/menu-7-1.png);
 }
 :root[color-theme='dark'] {
   /* 스위치 버튼 */
@@ -90,6 +99,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --localBg: #212020;
   --evenBg: #eff3f9;
   --thBg: #212020;
+  --tdBg: #323235;
   --gnbBg: rgba(0,0,0,0.4);
   --menuBg: #323235;
   --joinBg: #151616;
@@ -106,6 +116,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --prFontColor: #66656B;
   --btnColor: #4158d1;
   --bovColor: #FFF;
+  --gnbColor: #b1b1b1;
   --shareColor: #fff;
   --iconColor: #fff;
   --ptAllColor: #8d8c8c;
@@ -124,7 +135,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --gnbBorder: 1px solid #383838;
   --inputBorder: none;
   --theadBorder: 1px solid #383838;
-  --tbodyBorder: 1px solid #383838;
+  --tbodyBorder: 1px solid #4b4b4b;
   --olBorder: 1px solid #383838;
   --afterBorder: transparent transparent #212020 transparent;
   --beforeBorder: transparent transparent #383838 transparent;
@@ -133,7 +144,14 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --themeBorder: 1px solid #2e2e2e;
   /* filter */
   --invert: invert(92%);
-}
+  /* icon */
+  --menu100 : url(../img/menu-dm-1.png);
+  --menu200 : url(../img/menu-dm-2.png);
+  --menu300 : url(../img/menu-dm-3.png);
+  --menu400 : url(../img/menu-dm-4.png);
+  --menu600 : url(../img/menu-dm-6.png);
+  --menu700 : url(../img/menu-dm-7.png);
+} 
 
 #wrapper {min-height:480px}
 /* 레이아웃 */
@@ -169,17 +187,17 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 #gnb .gnb_li button{background-color: #ebebeb;border:0;width:50px;height:50px;text-indent:-999px;overflow:hidden;}
 #gnb .gnb_li .btn_op{background:url(../img/menu_default.png) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op{background:url(../img/menu_default_on.png) 50% 50% no-repeat var(--contBg)}
-#gnb .gnb_li .btn_op.menu-100{background:url(../img/menu-1-1.png) 50% 50% no-repeat var(--gnbUlBg)}
+#gnb .gnb_li .btn_op.menu-100{background:var(--menu100) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-100{background:url(../img/menu-1.png) 50% 50% no-repeat var(--contBg)}
-#gnb .gnb_li .btn_op.menu-200{background:url(../img/menu-2-1.png) 50% 50% no-repeat var(--gnbUlBg)}
+#gnb .gnb_li .btn_op.menu-200{background:var(--menu200) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-200{background:url(../img/menu-2.png) 50% 50% no-repeat var(--contBg)}
-#gnb .gnb_li .btn_op.menu-300{background:url(../img/menu-3-1.png) 50% 50% no-repeat var(--gnbUlBg)}
+#gnb .gnb_li .btn_op.menu-300{background:var(--menu300) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-300{background:url(../img/menu-3.png) 50% 50% no-repeat var(--contBg)}
-#gnb .gnb_li .btn_op.menu-400{background:url(../img/menu-7-1.png) 50% 50% no-repeat var(--gnbUlBg)}
+#gnb .gnb_li .btn_op.menu-400{background:var(--menu700) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-400{background:url(../img/menu-7.png) 50% 50% no-repeat var(--contBg)}
-#gnb .gnb_li .btn_op.menu-500{background:url(../img/menu-6-1.png) 50% 50% no-repeat var(--gnbUlBg)}
+#gnb .gnb_li .btn_op.menu-500{background:var(--menu600) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-500{background:url(../img/menu-6.png) 50% 50% no-repeat var(--contBg)}
-#gnb .gnb_li .btn_op.menu-900{background:url(../img/menu-4-1.png) 50% 50% no-repeat var(--gnbUlBg)}
+#gnb .gnb_li .btn_op.menu-900{background:var(--menu400) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat var(--contBg)}
 #gnb .gnb_li button:hover{background-color:#f3f3f3}
 #gnb .gnb_oparea{display:none;position:absolute;top:0;left:50px;background:var(--bodyBg);height:100%;width:170px;padding:20px;border-right:var(--border);
@@ -189,7 +207,7 @@ box-shadow: 2px 0 2px rgba(150,150,150,0.1);}
 #gnb .on .gnb_oparea{display:block}
 #gnb .gnb_oparea h3{margin-bottom:10px;line-height:18px;font-size:1.17em;color: var(--gnbFontColor);}
 #gnb .gnb_oparea li{line-height:28px}
-#gnb .gnb_oparea li a{color:#666}
+#gnb .gnb_oparea li a{color:var(--gnbColor)}
 #gnb .gnb_oparea li a:hover,#gnb .gnb_oparea li .on{color:#435ffe;}
 #gnb.gnb_small .gnb_oparea{display:none;}
 #gnb.gnb_small .gnb_li:hover .gnb_oparea{display:block;}
@@ -435,8 +453,8 @@ tfoot th {}
 .tbl_head01 thead th a{color:#fff}
 .tbl_head01 thead input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .tbl_head01 thead a {color:#383838;text-decoration:underline}
-.tbl_head01 tbody th{border:var(--tbodyBorder);background: var(--bodyBg);padding:5px;text-align:center}
-.tbl_head01 tbody td{border:var(--tbodyBorder);background: var(--bodyBg);color: var(--gnbFontColor);padding:5px;text-align:center}
+.tbl_head01 tbody th{border:var(--tbodyBorder);background: var(--tdBg);padding:5px;text-align:center}
+.tbl_head01 tbody td{border:var(--tbodyBorder);background: var(--tdBg);color: var(--gnbFontColor);padding:5px;text-align:center}
 .tbl_head01 tbody tr:nth-child(even){background:var(--evenBg)}
 .tbl_head01 tbody td .frm_input{width:100%;}
 .tbl_head01 tbody td select{width:100%}

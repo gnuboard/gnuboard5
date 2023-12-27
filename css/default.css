@@ -13,20 +13,24 @@
   --joinBg: #f7f7f7;
   --prHover: #f7f7f7;
   --pointBg: #edf3fc;
+  --bovHover: #f7f7f7;
   /* 폰트색상 */
   --fontColor: #000;
   --gnbFontColor: #080808;
   --prFontColor: #465168;
   --btnColor: #000;
   --bovColor: #666;
+  --tdColor: #666;
   --shareColor: #555;
   --iconColor: #4b5259;
   --ptStatusColor: #737373;
+  --moreOptColor: #6b757c;
   /* border */
   --border: 1px solid #e5ecee;
   --inputBorder: 1px solid #d0d3db;
   --gnbBorder: 1px solid #e0e2e5;
   --olBorder: 1px solid #d5d9dd;
+  --scrabBorder: 1px solid #e5ecee;
   --afterBorder: transparent transparent #fff transparent;
   --beforeBorder: transparent transparent #e5ecee transparent;
 }
@@ -43,21 +47,25 @@
   --joinBg: #151616;
   --prHover: #151616;
   --pointBg: #2c2c2c;
+  --bovHover: #212020;
   /* 폰트색상 */
   --fontColor: #fff;
-  --gnbFontColor: #66656B;
-  --prFontColor: #66656B;
+  --gnbFontColor: #a0a0a0;
+  --prFontColor: #a0a0a0;
   --btnColor: #4158d1;
-  --bovColor: #FFF;
+  --bovColor: #b9b9b9;
+  --tdColor: #a0a0a0;
   --shareColor: #fff;
   --iconColor: #fff;
   --ptAllColor: #8d8c8c;
   --ptStatusColor: #2c2c2c;
+  --moreOptColor: #a0a0a0;
   /* border */
   --border: 1px solid #383838;
   --inputBorder: none;
   --gnbBorder: 1px solid #383838;
   --olBorder: 1px solid #383838;
+  --scrabBorder: 1px solid #616161;
   --afterBorder: transparent transparent #212020 transparent;
   --beforeBorder: transparent transparent #383838 transparent;
   /* filter */
@@ -257,7 +265,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #ft_company h2 {font-size:1.2em;margin-bottom:20px}
 #ft_company {font-weight:normal;color:#e3e3e3;line-height:2em}
 #ft_catch {margin:20px 0 10px}
-#ft_copy {text-align:center;width:1200px;margin:0 auto;padding:20px 0;color:#5b5b5b;font-size:0.92em;border-top:1px solid #383838}
+#ft_copy {text-align:center;width:1200px;margin:0 auto;padding:20px 0;color:#a0a0a0;font-size:0.92em;border-top:1px solid #383838}
 #top_btn {position:fixed;bottom:20px;right:20px;width:50px;height:50px;line-height:46px;border:2px solid #333;color:#333;text-align:center;font-size:15px;z-index:90;background:rgba(255,255,255,0.5)}
 #top_btn:hover {border-color:#3059c7;background:#3059c7;color:#fff}
 #darkmode_btn{position:fixed;bottom:20px;right:80px;width:50px;height:50px;border:0;text-align:center;background:#4158d1;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;}
@@ -367,7 +375,7 @@ a.btn_admin,.btn_admin {display:inline-block;color:#d13f4a;text-decoration:none;
 .tbl_head01 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .tbl_head01 tfoot th, .tbl_head01 tfoot td {padding:10px 0;border-top:1px solid #c1d1d5;border-bottom:1px solid #c1d1d5;background:#d7e0e2;text-align:center}
 .tbl_head01 tbody th {padding:8px 0;border-bottom:1px solid #e8e8e8}
-.tbl_head01 td {color:#666;padding:10px 5px;border-top:var(--border);border-bottom:var(--border);line-height:1.4em;height:60px;word-break:break-all}
+.tbl_head01 td {color:var(--tdColor);padding:10px 5px;border-top:var(--border);border-bottom:var(--border);line-height:1.4em;height:60px;word-break:break-all}
 .tbl_head01 tbody tr:hover td {background:var(--bodyBg)}
 .tbl_head01 a:hover {text-decoration:underline}
 
@@ -526,7 +534,5 @@ box-sizing:content-box;
 /* 다크모드 - 스위치버튼 */
 #darkmode_btn .visible.dark {display: var(--darkVisible);}
 #darkmode_btn .visible.bright {display: var(--lightVisible);}
-
- 
 
 

@@ -196,7 +196,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .bo_v_nb {display:inline-block;width:100%}
 .bo_v_nb li {margin:10px 0;float:left;width:49.5%;text-align:right;color:#b3b3b3;font-size:0.75em}
 .bo_v_nb li:first-child {margin-right:1%;text-align:left}
-.bo_v_nb li:hover {background:var(--bodyBg)}
+.bo_v_nb li:hover {background:var(--bovHover)}
     
 .bo_v_com {float:right}
 .bo_v_com > li {position:relative;float:left;margin-left:5px}
