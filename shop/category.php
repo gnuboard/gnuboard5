@@ -15,7 +15,7 @@ function get_mshop_category($ca_id, $len)
 }
 ?>
 <div id="category">
-    <button type="button" class="close_btn"><i class="fa fa-times" aria-hidden="true"></i> 카테고리<span class="sound_only">닫기</span></button>
+    <button type="button" class="close_btn"><i class="fa fa-times" aria-hidden="true"></i> <span class="sound_only">카테고리 닫기</span></button>
 
     <div class="ct_wr">
         <?php

@@ -18,13 +18,15 @@ function error_field(fld, msg)
     if (msg != "")
         errmsg += msg + "\n";
     if (!errfld) errfld = fld;
-    fld.style.background = "#BDDEF7";
+    fld.classList.remove("clear")
+    fld.classList.add("error")
 }
 
 // 필드를 깨끗하게
 function clear_field(fld)
 {
-    fld.style.background = "#FFFFFF";
+    fld.classList.remove("error")
+    fld.classList.add("clear")
 }
 
 function trim(s)

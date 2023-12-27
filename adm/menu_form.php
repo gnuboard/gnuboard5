@@ -193,6 +193,28 @@ if ($new == 'new' || !$code) {
 
         window.close();
     }
+    
+  // 다크모드 설정
+  function handleDarkModeChange() {
+    const isUserColorTheme = localStorage.getItem('color-theme');
+    const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme);
+    
+    const initialTheme = getUserTheme();
+    if (initialTheme === 'dark') {
+      document.documentElement.setAttribute('color-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('color-theme', 'light');
+    }
+  }; 
+ 
+  document.addEventListener('DOMContentLoaded', handleDarkModeChange)
+
+  // 로컬스토리지 데이터에따라 실시간 변경
+  window.addEventListener('storage', function (event) {
+      handleDarkModeChange();
+  });
+
 </script>
 
 <?php
