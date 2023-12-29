@@ -32,7 +32,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
 <!doctype html>
-<html lang="ko" class="<?php echo section_class('html') ?>">
+<html lang="ko" class="<?php echo section_class('html'); ?>" color-theme="<?php echo get_color_theme('light') ?>">
 <head>
 <meta charset="utf-8">
 <?php

@@ -4482,6 +4482,13 @@ function get_random_token_string($length=6)
     return bin2hex($output);
 }
 
+function get_color_theme($default='')
+{
+    $html_class = section_class('html');
+
+    return $html_class ? $html_class : $default;
+}
+
 function filter_input_include_path($path){
     return str_replace('//', '/', strip_tags($path));
 }

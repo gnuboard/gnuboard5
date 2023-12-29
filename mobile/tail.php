@@ -77,38 +77,17 @@ jQuery(function($) {
             $("html, body").animate({scrollTop:0}, '500');
             return false;
         });
-      });
+
+        $('#darkmode_btn').on("click", function(e) {
+            if ($("#dark-mode-toggle").is(':checked')) {
+                set_darkmode('dark');
+            } else {
+                set_darkmode('light');
+            }
+        });
+
     });
-
-   // 다크모드 설정
-      const $checkbox = document.querySelector('#dark-mode-toggle');
-
-      const isUserColorTheme = localStorage.getItem('color-theme');
-      const isOsColorTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-      const getUserTheme = () => (isUserColorTheme ? isUserColorTheme : isOsColorTheme);
-
-      document.addEventListener('DOMContentLoaded', function () {
-      const initialTheme = getUserTheme();
-        if (initialTheme === 'dark') {
-          localStorage.setItem('color-theme', 'dark');
-          document.documentElement.setAttribute('color-theme', 'dark');
-        } else {
-          localStorage.setItem('color-theme', 'light');
-          document.documentElement.setAttribute('color-theme', 'light');
-        }
-      }); 
-
-      $checkbox.addEventListener('click', e => {
-        if (e.target.checked) {
-          localStorage.setItem('color-theme', 'dark');
-          document.documentElement.setAttribute('color-theme', 'dark');
-        } else {
-          localStorage.setItem('color-theme', 'light');
-          document.documentElement.setAttribute('color-theme', 'light');
-        }
-      });
-
+});
 
 //상단고정
 $( document ).ready( function() {

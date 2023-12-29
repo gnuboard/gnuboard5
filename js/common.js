@@ -702,6 +702,25 @@ $(function(){
     });
 });
 
+/**
+ * 다크모드 설정
+ * @param string mode 
+ */
+function set_darkmode(mode = 'dark') {
+    if (mode === '' || mode === null) {
+        delete_cookie('darkmode');
+    } else if (mode === 'dark' || mode === 'light') {
+        set_cookie('darkmode', mode);
+    }
+
+    window.g5_darkmode_classes?.dark?.forEach(function (classname) {
+        $('html').toggleClass(classname, mode === 'dark').attr('color-theme', mode === 'dark' ? 'dark' : 'light');
+    });
+    window.g5_darkmode_classes?.light?.forEach(function (classname) {
+        $('html').toggleClass(classname, mode === 'light').attr('color-theme', mode === 'light' ? 'light' : 'dark');
+    });
+}
+
 function get_write_token(bo_table)
 {
     var token = "";

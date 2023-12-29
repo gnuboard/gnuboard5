@@ -1,13 +1,13 @@
 @charset "utf-8";
 
 /* 전체검색결과 스킨 */
-#sch_res_detail {margin:10px 0;padding:15px;border-top:1px solid #f1f1f1;border-bottom:1px solid #ddd;background:#fff;text-align:left}
+#sch_res_detail {margin:10px 0;padding:15px;border-top:var(--contBorder);border-bottom:var(--contBorder);background:var(--btnBg);text-align:left}
 #sch_res_detail legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sch_res_detail .sch_wr {position:relative;background:#fff;margin:0 0 5px}
-#sch_res_detail select {width:49.5%;height:40px;float:left;border:1px solid #d0d3db}
+#sch_res_detail .sch_wr {position:relative;background:var(--btnBg);margin:0 0 5px}
+#sch_res_detail select {width:49.5%;height:40px;float:left;border:var(--sqaBorder);background: var(--inputBg);color: var(--fontColor);}
 #sch_res_detail select#gr_id {margin-right:1%}
-#sch_res_detail .frm_input {position:relative;width:100%;border:1px solid #d0d3db;margin-top:5px;border-radius:0;clear:both}
-#sch_res_detail .btn_submit {position:absolute;bottom:0;right:0;width:40px;height:40px;background:none;color:#000;font-size:15px}
+#sch_res_detail .frm_input {position:relative;width:100%;background:var(--inputBg);border:var(--sqaBorder);color: var(--fontColor);margin-top:5px;border-radius:0;clear:both}
+#sch_res_detail .btn_submit {position:absolute;bottom:0;right:0;width:40px;height:40px;background:none;color:var(--fontColor);font-size:15px}
 
 #sch_res_ov {margin:15px;padding:15px;background:#edf3fc;text-align:center;border-radius:5px;border:1px solid #d6e2f4;color:#5977a4;zoom:1}
 #sch_res_ov:after {display:block;visibility:hidden;clear:both;content:""}
