@@ -11,11 +11,10 @@ add_javascript('<script src="'.G5_THEME_JS_URL.'/theme.shop.list.js"></script>',
 <script src="<?php echo G5_JS_URL ?>/jquery.fancylist.js"></script>
 <?php if($config['cf_kakao_js_apikey']) { ?>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js" async></script>
-<script src="<?php echo G5_JS_URL; ?>/kakaolink.js"></script>
 <script>
-    // 사용할 앱의 Javascript 키를 설정해 주세요.
-    Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
+var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
 </script>
+<script src="<?php echo G5_JS_URL; ?>/kakaolink.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 
 <!-- 메인상품진열 20 시작 { -->

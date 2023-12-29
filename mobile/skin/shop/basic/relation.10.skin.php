@@ -8,11 +8,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 <script src="<?php echo G5_JS_URL ?>/jquery.fancylist.js"></script>
 <?php if($config['cf_kakao_js_apikey']) { ?>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js" async></script>
-<script src="<?php echo G5_JS_URL; ?>/kakaolink.js"></script>
 <script>
-    // 사용할 앱의 Javascript 키를 설정해 주세요.
-    Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
+var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
 </script>
+<script src="<?php echo G5_JS_URL; ?>/kakaolink.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 
 <!-- 상품진열 10 시작 { -->
