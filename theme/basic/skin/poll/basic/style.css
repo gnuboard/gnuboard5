@@ -7,12 +7,12 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 설문조사 스킨 */
-#poll {border:1px solid #dde7e9;background:#f7f7f7;position:relative;border-radius:3px;margin-bottom:15px}
-#poll header {position:relative;border-bottom:1px solid #e8e8e8;padding:15px}
+#poll {border:var(--border);background:var(--contBg);position:relative;border-radius:3px;margin-bottom:15px}
+#poll header {position:relative;border-bottom:var(--border);padding:15px}
 #poll header:after {display:block;visibility:hidden;clear:both;content:""}
-#poll header h2 {display:inline-block;float:left;font-size:1.167em;color:#000;line-height:28px}
+#poll header h2 {display:inline-block;float:left;font-size:1.167em;color:var(--fontColor);line-height:28px}
 #poll header h2:after {display:block;visibility:hidden;clear:both;content:""}
-#poll header .btn_result {float:right;display:inline-block;line-height:20px;height:28px;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;background:#fff}
+#poll header .btn_result {float:right;display:inline-block;line-height:20px;height:28px;border:var(--olBorder);color:#3a8afd;border-radius:2px;padding:2px 5px;}
 #poll header .btn_admin {float:right;margin-left:5px;line-height:28px;font-size:1.4em}
 #poll ul {padding:0 20px;list-style:none}
 #poll li {padding:5px 0}
@@ -26,7 +26,7 @@
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#305af9;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
 
 #poll .poll_con {}
-#poll .poll_con p {font-weight:bold;padding:15px 20px;color:#000;font-size:1.167em}
+#poll .poll_con p {font-weight:bold;padding:15px 20px;color:var(--fontColor);font-size:1.167em}
 #poll_btn {padding:10px 20px 20px;text-align:center}
 #poll_btn:after {display:block;visibility:hidden;clear:both;content:""}
 #poll_btn .btn_poll {display:block;width:100%;height:40px;line-height:40px;padding:0 10px;border:0;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}

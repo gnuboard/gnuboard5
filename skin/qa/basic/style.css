@@ -70,7 +70,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .btn_bo_adm input {padding:0 8px;border:0;background:#d4d4d4;color:#666;text-decoration:none;vertical-align:middle}
-.bo_notice td {background:#f5f6fa}
+.bo_notice td {background:var(--boNoticeBg)}
 .bo_notice td a {font-weight:bold}
 
 .more_opt {display:none;position:absolute;top:45px;right:0;background:var(--bodyBg);border:var(--border);z-index:999}

@@ -14,6 +14,7 @@
   --prHover: #f7f7f7;
   --pointBg: #edf3fc;
   --bovHover: #f7f7f7;
+  --boNoticeBg: #fff6fa;
   /* 폰트색상 */
   --fontColor: #000;
   --gnbFontColor: #080808;
@@ -48,6 +49,7 @@
   --prHover: #151616;
   --pointBg: #2c2c2c;
   --bovHover: #212020;
+  --boNoticeBg: #2b2528;
   /* 폰트색상 */
   --fontColor: #fff;
   --gnbFontColor: #a0a0a0;

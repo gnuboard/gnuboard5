@@ -7,7 +7,7 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 설문조사 스킨 */
-#poll {border:1px solid #dde7e9;background:#f7f7f7;position:relative;border-radius:3px;margin-bottom:15px}
+#poll {border:var(--border);background:var(--contBg);position:relative;border-radius:3px;margin-bottom:15px}
 #poll header {position:relative;border-bottom:1px solid #e8e8e8;padding:15px}
 #poll header:after {display:block;visibility:hidden;clear:both;content:""}
 #poll header h2 {display:inline-block;float:left;font-size:1.167em;color:#000;line-height:28px}
