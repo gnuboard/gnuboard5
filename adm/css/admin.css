@@ -38,7 +38,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --localBg: #eaeaea;
   --evenBg: #eff3f9;
   --thBg: #6f809a;
-  --tdBg: #f3f3f3;
+  --tdBg: #ffffff;
   --gnbBg: rgba(0,0,0,0.1);
   --menuBg: #4158d1;
   --joinBg: #f7f7f7;
@@ -72,8 +72,8 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --border: 1px solid #dbdbdb;
   --gnbBorder: 1px solid #dddddd;
   --inputBorder: 1px solid #d0d3db;
-  --theadBorder: #60718b;
-  --tbodyBorder: #d6dce7;
+  --theadBorder: 1px solid #60718b;
+  --tbodyBorder: 1px solid #d6dce7;
   --olBorder: 1px solid #d5d9dd;
   --afterBorder: transparent transparent #fff transparent;
   --beforeBorder: transparent transparent #e5ecee transparent;
@@ -97,7 +97,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --bodyBg: #151616;
   --contBg: #151616;
   --localBg: #212020;
-  --evenBg: #eff3f9;
+  --evenBg: #2b2b2b;
   --thBg: #212020;
   --tdBg: #323235;
   --gnbBg: rgba(0,0,0,0.4);
@@ -200,7 +200,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 #gnb .gnb_li .btn_op.menu-900{background:var(--menu400) 50% 50% no-repeat var(--gnbUlBg)}
 #gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat var(--contBg)}
 #gnb .gnb_li button:hover{background-color:#f3f3f3}
-#gnb .gnb_oparea{display:none;position:absolute;top:0;left:50px;background:var(--bodyBg);height:100%;width:170px;padding:20px;border-right:var(--border);
+#gnb .gnb_oparea{display:none;position:absolute;top:0;left:50px;background:var(--contBg);height:100%;width:170px;padding:20px;border-right:var(--border);
 -webkit-box-shadow: 2px 0 2px rgba(150,150,150,100.1);
 -moz-box-shadow: 2px 0 2px rgba(150,150,150,0.1);
 box-shadow: 2px 0 2px rgba(150,150,150,0.1);}
@@ -511,7 +511,7 @@ tfoot th {}
 
 /* 목록 홀짝 배경색 */
 .tbl_head01 tbody .bg0{background:#fff !important}
-.tbl_head01 tbody .bg1{background:#eff3f9 !important}
+.tbl_head01 tbody .bg1 td{background:var(--evenBg) !important}
 .tbl_head01 tbody .bg0cancel {background:#fdebf3 !important}
 .tbl_head01 tbody .bg0cancel td {border-color:#f9d8e6 !important}
 .tbl_head01 tbody .bg1cancel {background:#fdebf3 !important}
