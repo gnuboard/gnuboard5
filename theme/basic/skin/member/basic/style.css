@@ -38,7 +38,7 @@
 #fregister_private table {width:100%;border-collapse:collapse;font-size:1em;}
 #fregister_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #fregister_private table th {background:var(--contBg);width:33.33%;color:#000;padding:10px;border:var(--border);color: var(--fontColor);}
-#fregister_private table td {background:var(--contBg);border:1px solid #e7e9ec;padding:10px;border:var(--border);border-top:0;color: var(--fontColor);}
+#fregister_private table td {background:var(--contBg);padding:10px;border:var(--border);border-top:0;color: var(--fontColor);}
 
 .fregister_agree {position:absolute;top:0;right:0}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}

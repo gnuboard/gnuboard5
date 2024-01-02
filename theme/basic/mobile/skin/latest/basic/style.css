@@ -38,9 +38,9 @@
 .tooltipster-sidetip.tooltipster-sir .tooltipster-box{border:0 none;background:#333;border-radius:0}
 .tooltipster-sidetip.tooltipster-sir.tooltipster-bottom .tooltipster-arrow-border, .tooltipster-sidetip.tooltipster-sir.tooltipster-bottom .tooltipster-arrow-background{border-bottom-color:#333}
 
-.lt_page {background:#fff;text-align:center;padding:10px 15px;line-height:25px;border-bottom:1px solid #e5ecee}
-.lt_page button {display:inline-block;background:#fff;width:25px;height:25px;border:1px solid #dbdee6;text-align:center;color:#cdcdce}
-.lt_page span {color:#6e6e6e}
-.lt_page b {color:#000}
+.lt_page {background:var(--btnBg);text-align:center;padding:10px 15px;line-height:25px;border-bottom:var(--ltContBorder)}
+.lt_page button {display:inline-block;background:var(--btnBg);width:25px;height:25px;border:var(--ltContBorder);text-align:center;color:#cdcdce}
+.lt_page span {color:var(--pageFontColor)}
+.lt_page b {color:var(--fontColor)}
 .lt_page_prev {float:left}
 .lt_page_next {float:right}

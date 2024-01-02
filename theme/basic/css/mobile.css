@@ -45,6 +45,7 @@
   --snsColor: #b5b8bb;
   --pointAllColor: #485172;
   --newSchColor: #434a54;
+  --pageFontColor: #6e6e6e;
   /* border */
   --ltBorder: 1px solid #e5ecee;
   --ltContBorder: 1px solid #e5ecee;
@@ -119,6 +120,7 @@
   --snsColor: #ffffff;
   --pointAllColor: #8d8c8c;
   --newSchColor: #ffffff;
+  --pageFontColor: #9e9e9e;
   /* border */
   --ltBorder: 0;
   --ltContBorder: 1px solid #383838;

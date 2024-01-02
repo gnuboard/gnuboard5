@@ -206,7 +206,7 @@ transition:background-color 0.3s ease-out}
 -webkit-box-shadow:0px 1px 5px rgba(97, 97, 97, 0.2);
 -moz-box-shadow:0px 1px 5px rgba(97, 97, 97, 0.2);
 box-shadow:0px 1px 5px rgba(97, 97, 97, 0.2)}
-.gnb_2da {display:block;padding:0 10px;line-height:40px;background:#fff;color:#080808;text-align:left;text-decoration:none}
+.gnb_2da {display:block;padding:0 10px;line-height:40px;background:var(--contBg);color:var(--fontColor);text-align:left;text-decoration:none}
 a.gnb_2da:hover {color:#3a8afd;background:#f7f7f8;
 -moz-transition:all 0.3s ease-out;
 -o-transition:all 0.3s ease-out;

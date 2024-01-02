@@ -123,7 +123,7 @@
 #bo_sch .sch_btn {height:38px;position:absolute;top:0;right:0;border:0;width:40px;background:none;font-size:15px;color: var(--fontColor);}
 
 .view_is_list.btn_top {position:relative;z-index:auto;top:0;left:0}
-.view_is_list {margin:8px 10px 0;height:50px;padding:10px;line-height:30px;border-radius:3px;border-bottom:1px solid #ccc;background:#fff;color:#333;text-align:right}
+.view_is_list {margin:8px 10px 0;height:50px;padding:10px;line-height:30px;border-radius:3px;border-bottom:1px solid #ccc;background:var(--btnBg);color:#333;text-align:right}
 .view_is_list li {display:inline-block}
 
 /* 게시판 쓰기 */

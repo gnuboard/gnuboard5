@@ -49,6 +49,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --frmInfoBg: #f6f6f6; 
   --gnbUlBg: #ebebeb;
   --graphBg: #e9e9e9;
+  --smsBg: #fbec99;
   /* 폰트색상 */
   --fontColor: #000;
   --gnbFontColor: #000000;
@@ -110,6 +111,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
   --frmInfoBg: #212020;
   --gnbUlBg: #323235;
   --graphBg: #383838;
+  --smsBg: #b8a74a;
   /* 폰트색상 */
   --fontColor: #fff;
   --gnbFontColor: #eeeeee;
@@ -510,10 +512,10 @@ tfoot th {}
 .grid_18 {width:900px}
 
 /* 목록 홀짝 배경색 */
-.tbl_head01 tbody .bg0{background:#fff !important}
+.tbl_head01 tbody .bg0{background:var(--tdBg) !important}
 .tbl_head01 tbody .bg1 td{background:var(--evenBg) !important}
 .tbl_head01 tbody .bg0cancel {background:#fdebf3 !important}
-.tbl_head01 tbody .bg0cancel td {border-color:#f9d8e6 !important}
+.tbl_head01 tbody .bg0cancel td {border-color:var(--tbodyBorder) !important}
 .tbl_head01 tbody .bg1cancel {background:#fdebf3 !important}
 .tbl_head01 tbody .bg1cancel td {border-color:#f9d8e6 !important}
 
@@ -839,7 +841,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_request_list p {position:relative;padding:5px 0;border-bottom:1px solid #e9e9e9}
 
 #anc_sodr_chk .dvr_link {color:#ff3061;text-decoration:underline}
-.od_test_caution{line-height: 1.7em;padding: 10px 15px;background: #f7ecea;border: 2px solid #ffb6c1;color: #ff0000;font-weight: bold;margin:10px 0 20px}
+.od_test_caution{line-height: 1.7em;padding: 10px 15px;background: var(--bodyBg);border: 2px solid #ffb6c1;color: #ff0000;font-weight: bold;margin:10px 0 20px}
 
 /* 주문통합내역 */
 #sodr_sort {margin:0 20px 20px;padding:0;list-style:none;zoom:1}
@@ -1067,7 +1069,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .pg a:focus, .pg a:hover {background-color:var(--localBg)}
 .pg a:first-child{border-top-left-radius:5px;border-bottom-left-radius:5px;}
 .pg a:last-child{border-top-right-radius:5px;border-bottom-right-radius:5px;}
-.pg_page {background:var(--);text-decoration:none}
+.pg_page {background:#fafafa;text-decoration:none}
 .pg_start {background:url(../img/page_1.png) 50% 50% no-repeat;width:32px;text-indent:-999px;overflow:hidden}
 .pg_prev {background:url(../img/page_2.png) 50% 50% no-repeat;width:32px;text-indent:-999px;overflow:hidden}
 .pg_next {background:url(../img/page_3.png) 50% 50% no-repeat;width:32px;text-indent:-999px;overflow:hidden}

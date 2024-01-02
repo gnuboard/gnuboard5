@@ -1,12 +1,12 @@
 @charset "utf-8";
 
 /* 설문조사 스킨 */
-#poll {background:#fff;border:1px solid #dde7e9;margin:15px 10px}
-#poll header {position:relative;padding:15px;border-bottom:1px solid #dde7e9}
+#poll {background:var(--btnBg);border:var(--sideBorder);color: var(--fontColor);margin:15px 10px}
+#poll header {position:relative;padding:15px;border-bottom:var(--sideBorder)}
 #poll header:after {display:block;visibility:hidden;clear:both;content:""}
 #poll header h2 {display:inline-block;float:left;line-height:24px;font-size:1.2em}
 #poll header h2:after {display:block;visibility:hidden;clear:both;content:""}
-#poll header .btn_result {float:right;display:inline-block;line-height:20px;height:28px;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;background:#fff}
+#poll header .btn_result {float:right;display:inline-block;line-height:20px;height:28px;border:var(--moreBtnBorder);color:#3a8afd;border-radius:2px;padding:2px 5px;background:var(--inputBg)}
 #poll header .btn_admin {float:right;height:28px;margin-right:5px;line-height:28px;font-size:1.4em}
 #poll ul {padding:10px 20px}
 #poll li {padding:5px 0}
@@ -21,7 +21,7 @@
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
 
 #poll .poll_con {}
-#poll .poll_con p {font-weight:bold;padding:20px 20px 5px;color:#000;font-size:1.167em}
+#poll .poll_con p {font-weight:bold;padding:20px 20px 5px;color:var(--fontColor);font-size:1.167em}
 #poll_btn {padding:0 20px 20px;text-align:center}
 #poll_btn:after {display:block;visibility:hidden;clear:both;content:""}
 #poll_btn .btn_poll {display:block;width:100%;height:40px;line-height:40px;padding:0 10px;border:0;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}

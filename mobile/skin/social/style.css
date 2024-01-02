@@ -63,7 +63,7 @@
 #sns_outlogin .sns-icon .ico {width:30px;height:30px}
 
 /*로그인 */
-#sns_login {border:0;margin-top:15px;padding:0; border-top:1px solid #edeaea}
+#sns_login {border:0;margin-top:15px;padding:0; border-top:var(--border)}
 #sns_login h3 {padding:0;font-weight:bold;color:#888;text-align:center}
 #sns_login .sns-icon {position:relative;display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
 #sns_login .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
