@@ -99,7 +99,7 @@ class PayService extends  SoapClient
     var   $resMsg;
 
 
-    public  function  PayService( $wsdl = "", $options = array() )
+    public function __construct( $wsdl = "", $options = array() )
     {
         foreach( self::$classmap as $key => $value )
         {
