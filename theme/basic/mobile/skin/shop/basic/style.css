@@ -11,7 +11,7 @@
 .stv_item {display:none;padding:3px;word-break:break-all}
 #up {position:absolute;top:0px;right:30px;height:50px;width:30px;border:0;background:none;color:#ccc}
 #down {position:absolute;top:0px;right:0px;height:50px;width:30px;border:0;background:none;color:#ccc}
-#stv .li_empty {text-align:center;padding:50px 0;color:#666}
+#stv .li_empty {text-align:center;padding:50px 0;color:var(--fontColor)}
 
 /*메인배너*/
 #main_bn {position:relative;text-align:center}
@@ -342,9 +342,9 @@
 #sit_ov h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sit_ov h3 {margin:0 0 10px;color:#5772d5}
 #sit_ov .sit_ov_wr {margin:0 0 10px;border-bottom:var(--memberBorder)}
-.sit_option {margin:10px 0}
+.sit_option {margin:10px 0;color: var(--fontColor);}
 .sit_option label {display:block;margin:0 0 5px}
-.sit_option select {width:100%;height:40px;border:1px solid #d4d4d4;margin:0 0 5px;padding:0 10px}
+.sit_option select {width:100%;height:40px;border:var(--btnBorder);margin:0 0 5px;padding:0 10px;color: var(--fontColor);}
 
 #sit_title {display:block;margin:0 0 10px;font-size:1.5em;line-height:1.3em;color: var(--fontColor);}
 #sit_desc {margin:0 0 10px;color:#666;line-height:1.25em}

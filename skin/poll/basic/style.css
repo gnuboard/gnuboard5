@@ -26,7 +26,7 @@
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#305af9;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
 
 #poll .poll_con {}
-#poll .poll_con p {font-weight:bold;padding:15px 20px;color:#000;font-size:1.167em}
+#poll .poll_con p {font-weight:bold;padding:15px 20px;color:var(--fontColor);font-size:1.167em}
 #poll_btn {padding:10px 20px 20px;text-align:center}
 #poll_btn:after {display:block;visibility:hidden;clear:both;content:""}
 #poll_btn .btn_poll {display:block;width:100%;height:40px;line-height:40px;padding:0 10px;border:0;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}

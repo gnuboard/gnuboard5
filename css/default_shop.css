@@ -7,6 +7,7 @@
   /* background */
   --bodyBg: #ffffff;
   --btnBg: #ffffff;
+  --contBg: #fff;
   --inputBg: #fff;
   --wrapperBg:#f6f6f6;
   --hoverBg:#f6f7f9;
@@ -22,7 +23,10 @@
   --btnFontColor:#444;
   --sitColor: #474747;
   --tableColor: #383838;
+  --prHover: #f7f7f7;
+  --prFontColor: #465168;
   /* border */
+  --border: 1px solid #e5ecee;
   --inputBorder: 1px solid #d0d3db;
   --btnBorder: 1px solid #bababa;
   --memberBorder: 1px solid #f8f8f8;
@@ -44,6 +48,7 @@
   /* background */
   --bodyBg: #151616;
   --btnBg: #212020;
+  --contBg: #212020;
   --inputBg: #323235;
   --wrapperBg:#151616;
   --hoverBg:#000;
@@ -60,7 +65,10 @@
   --inputFontColor: #fff;
   --sitColor: #a0a0a0;
   --tableColor: #ffffff;
+  --prHover: #151616;
+  --prFontColor: #a0a0a0;
   /* border */
+  --border: 1px solid #383838;
   --btnBorder: 1px solid #ffffff40;
   --inputBorder: none;
   --memberBorder:1px solid #383838;
@@ -215,7 +223,7 @@ box-shadow:0 1px 5px var(--sideShadowBg)}
 .btn_sm_on i {color:#3a8afd}
 
 .qk_con {display:none;position:relative;width:230px;height:100%;background:var(--inputBg);border-left:var(--btnBorder)}
-.qk_con h2.s_h2 {position:relative;margin:0;font-size:1.25em;padding:15px;border-bottom:1px solid #e5e7ea}
+.qk_con h2.s_h2 {position:relative;margin:0;font-size:1.25em;padding:15px;border-bottom:var(--border);color: var(--fontColor);}
 .qk_con h2.s_h2 span {display:inline-block;min-width:20px;padding:2px 8px;border-radius:30px;text-align:center;background:#eff5ff;color:#3b8afc;font-size:0.7em;font-weight:normal;vertical-align:text-bottom}
 .qk_con_wr {padding:0;height:100%;overflow-y:auto}
 .qk_con_wr .btn_side_shop {position:relative;width:100%;height:30px;background:none;border:0;text-align:left;font-weight:bold}
@@ -223,13 +231,13 @@ box-shadow:0 1px 5px var(--sideShadowBg)}
 .qk_con_wr .con_close {position:fixed;top:0;right:230px;width:50px;height:50px;border:0;background:none;font-size:25px;color:#dedede}
 .qk_con_wr .con_close:hover {color:rgba(0,0,0,0.8)}
 .qk_con_wr .side_tnb {padding:25px}
-.qk_con_wr .side_tnb li a {display:block;line-height:28px;color:#465168;padding:5px 0}
+.qk_con_wr .side_tnb li a {display:block;line-height:28px;color:var(--fontColor);padding:5px 0}
 .qk_con_wr .side_tnb li:hover a {color:#3a8afd}
 
 #category {display:none;position:absolute;border:var(--sschBorder);width:100%;background:var(--inputBg);z-index:1000;-webkit-box-shadow:0 2px 5px rgba(0,0,0,0.2);
 -moz-box-shadow:0 2px 5px rgba(0,0,0,0.2);
 box-shadow:0 2px 5px rgba(0,0,0,0.2)}
-#category h2 {font-size:1.3em;padding:15px 20px;border-bottom:var(--sschBorder)}
+#category h2 {font-size:1.3em;padding:15px 20px;border-bottom:var(--sschBorder);color: var(--fontColor);}
 #category ul:after {display:block;visibility:hidden;clear:both;content:""}
 #category ul li:nth-child(5n+1) {border-left:0}
 #category .cate_li_1 {float:left;width:20%;min-height:150px;padding:20px;border-left:var(--sschBorder)}
@@ -308,7 +316,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #mb_login_od_wr .btn_submit {width:100%;margin:10px 0 0;height:45px;font-weight:bold;font-size:1.25em}
 #mb_login_od_wr p {background:#f3f3f3;margin:20px 0 0;padding:15px 20px;line-height:1.5em}
 
-#mb_login #sns_login {margin-top:0;border-color:#edeaea;padding:25px}
+#mb_login #sns_login {margin-top:0;border-bottom: var(--border);padding:25px}
 #mb_login #sns_login:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_login #sns_login h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #mb_login #sns_login .sns-wrap {margin:0 !important}
@@ -801,12 +809,12 @@ margin-top:-150px;border:var(--sschBorder);border-radius:3px;background:var(--bt
 #sod_list {position:relative}
 #sod_list #cp_frm {z-index:10000;position:absolute;top:50%;left:50%;width:540px;height:auto !important;height:500px;max-height:500px;margin-left:-270px;margin-top:-150px;border:1px solid #dde7e9;border-radius:3px;background:#fff;overflow-y:auto;overflow-x:inherit}
 
-.od_coupon h3{border-bottom: 1px solid #cdcdcd;padding: 0 20px;line-height: 50px;margin: 0 0 15px;font-size: 1.25em;text-align:left;
--webkit-box-shadow: 1px 2px 2px #eee;
--moz-box-shadow: 1px 2px 2px #eee;
-box-shadow: 1px 2px 2px #eee;}
-.od_coupon .btn_close {position: absolute;top: 0;right: 0;width: 50px;height: 50px;border: 0;background: none;border-left: 1px solid #cdcdcd;font-size: 1.25em;}
-.od_coupon .btn_close:hover{background:#f3f3f3}
+.od_coupon h3{border-bottom: var(--border);padding: 0 20px;line-height: 50px;margin: 0 0 15px;font-size: 1.25em;text-align:left;
+-webkit-box-shadow: 1px 2px 2px var(--sideShadowBg);
+-moz-box-shadow: 1px 2px 2px var(--sideShadowBg);
+box-shadow: 1px 2px 2px var(--sideShadowBg);}
+.od_coupon .btn_close {position: absolute;top: 0;right: 0;width: 50px;height: 50px;border: 0;background: none;border-left: var(--border);font-size: 1.25em;color: var(--fontColor);}
+.od_coupon .btn_close:hover{background:var(--hoverBg)}
 .od_coupon .tbl_head02{margin:20px}
 .od_coupon .cp_apply{padding: 0 5px;border: 1px solid #38b2b9;color: #38b2b9;background: #fff;height: 23px;line-height: 21px;}
 .od_coupon td,#sod_frm_pay .od_coupon td{text-align:left;border-left:0;padding:7px}
@@ -877,31 +885,35 @@ box-shadow: 1px 2px 2px #eee;}
 #sod_frm_pay .pay_tbl th{text-align:left;padding:10px;width:80px;border-bottom:var(--sschBorder);background:var(--btnBg);font-weight:bold;color:var(--btnFontColor)}
 #sod_frm_pay .pay_tbl td{text-align:right;padding: 10px;height:30px;border-bottom:var(--sschBorder);background:var(--btnBg);color:var(--btnFontColor)}
 #sod_frm_pay .pay_tbl td .cp_cancel{margin:0 0 0 2px}
-#sod_frm_pay .pay_tbl td .btn_frmline{padding: 0 7px;border: 1px solid #38b2b9;color: #38b2b9;background: #fff;height: 23px;line-height: 21px;margin: 0;}
+#sod_frm_pay .pay_tbl td .btn_frmline{padding: 0 7px;border: 1px solid #38b2b9;color: #38b2b9;background: var(--inputBg);height: 23px;line-height: 21px;margin: 0;}
 #od_tot_price{margin:10px 0;background:#fff;line-height:40px;text-align:right;padding:0 10px}
 #od_tot_price span{float:left;font-weight:bold}
 #od_tot_price strong{font-size:1.5em;color:#ff006c}
 #sod_frm #sod_frm_pt_alert {margin:5px 0;color:#38b2bb }
 #od_pay_sl h3{font-size:1.167em;margin:20px 0 5px}
 #od_pay_sl input[type="radio"]{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left: 0;z-index: -1;}
-#od_pay_sl .lb_icon {display: inline-block;float:left;width:50%;background:#fff;border:var(--sschBorder);margin:-1px 0 0 -1px;cursor: pointer;height:60px;position:relative;padding-left:65px;padding-top:20px;z-index:1;color: var(--fontColor);}
+#od_pay_sl .lb_icon {display: inline-block;float:left;width:50%;background:var(--iconBg);border:var(--sschBorder);margin:-1px 0 0 -1px;cursor: pointer;height:60px;position:relative;padding-left:65px;padding-top:20px;z-index:1;color: var(--fontColor);}
 #od_pay_sl input[type="radio"]:checked+.lb_icon {border:1px solid #ff006c;z-index:3}
 #sod_frm_paysel {}
 #sod_frm_paysel legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sod_frm_paysel .KPAY{background:url('../img/kpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .PAYNOW{background:url('../img/paynow.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .PAYCO{background:url('../img/payco.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .inicis_lpay{background:url('../img/lpay_logo.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .KPAY{background:url('../img/kpay.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .PAYNOW{background:url('../img/paynow.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .PAYCO{background:url('../img/payco.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .inicis_lpay{background:url('../img/lpay_logo.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .inicis_kakaopay{position:relative;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .inicis_kakaopay em{position:absolute;top:15px;left:45px;width:70px;height:30px;background:url('../img/kakao.png') no-repeat 50% 50% #ffeb00;overflow:hidden;text-indent:-999px;border-radius:30px}
-#sod_frm_paysel .kakaopay_icon{background:url('../img/kakao.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .naverpay_icon{background:url('../img/ico-default-naverpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .kakaopay_icon{background:url('../img/kakao.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .naverpay_icon{background:url('../img/ico-default-naverpay.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .bank_icon{background:url('../img/pay_icon1.png') no-repeat 15px 50% var(--iconBg)}
-#sod_frm_paysel .bank_icon:before  {display: block;content: "";position: absolute;left: 15px;top: 16px;width: 37px;height: 26px;backdrop-filter: var(--invert);}
-#sod_frm_paysel .vbank_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
-#sod_frm_paysel .iche_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
-#sod_frm_paysel .hp_icon{background:url('../img/pay_icon3.png') no-repeat 24px 50% #fff}
-#sod_frm_paysel .card_icon{background:url('../img/pay_icon4.png') no-repeat 17px 50% #fff}
+#sod_frm_paysel .bank_icon:before {display: block;content: "";position: absolute;left: 15px;top: 16px;width: 37px;height: 26px;backdrop-filter: var(--invert);}
+#sod_frm_paysel .vbank_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% var(--iconBg);padding-top:13px}
+#sod_frm_paysel .vbank_icon:before {display: block;content: "";position: absolute;left: 15px;top: 16px;width: 37px;height: 26px;backdrop-filter: var(--invert);}
+#sod_frm_paysel .iche_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% var(--iconBg);padding-top:13px}
+#sod_frm_paysel .iche_icon:before {display: block;content: "";position: absolute;left: 15px;top: 16px;width: 37px;height: 26px;backdrop-filter: var(--invert);}
+#sod_frm_paysel .hp_icon{background:url('../img/pay_icon3.png') no-repeat 24px 50% var(--iconBg)}
+#sod_frm_paysel .hp_icon:before {display: block;content: "";position: absolute;left: 24px;top: 50%;margin-top: -14px;width: 18px;height: 28px;backdrop-filter: var(--invert);}
+#sod_frm_paysel .card_icon{background:url('../img/pay_icon4.png') no-repeat 17px 50% var(--iconBg)}
+#sod_frm_paysel .card_icon:before {display: block;content: "";position: absolute;left: 17px;top: 50%;margin-top: -9px;width: 30px;height: 19px;backdrop-filter: var(--invert);}
 #forderform .sod_right #sod_bsk_tot {border:var(--sschBorder)}
 #forderform .od_pay_buttons_el{margin-top:20px;border:var(--sschBorder);background:var(--btnBg);padding:10px}
 #forderform .od_pay_buttons_el h3{font-size:1.167em;margin:0px 0 5px;color: var(--fontColor);}
@@ -910,8 +922,8 @@ box-shadow: 1px 2px 2px #eee;}
 .sod_right .pay_tbl{border:var(--sschBorder);border-bottom:0 none}
 .sod_right #od_tot_price{border:1px solid #e3e5e8}
 #sod_frm_pay .od_pay_buttons_el:after{display:block;visibility:hidden;clear:both;content:""}
-#sod_frm_pay .sod_frm_point{margin-top:20px;border:1px solid #e3e5e8}
-#sod_frm_pay .sod_frm_point div{background:#fff;padding:10px;text-align:left;text-align:right}
+#sod_frm_pay .sod_frm_point{margin-top:20px;border:var(--border)}
+#sod_frm_pay .sod_frm_point div{background:var(--iconBg);color: var(--fontColor);padding:10px;text-align:left;text-align:right}
 #sod_frm_pay .sod_frm_point div:after {display:block;visibility:hidden;clear:both;content:''}
 #sod_frm_pay .sod_frm_point div label{float:left;line-height:30px;font-weight:bold}
 #sod_frm_pay .sod_frm_point div span{display:block}
@@ -1028,7 +1040,7 @@ box-shadow: 1px 2px 2px #eee;}
 #od_tot_price strong {font-size:1.5em;color:#ff006c}
 #sod_frm_pay_info {margin:0 0 10px}
 
-#sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;right:0;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#fff;overflow-y:auto}
+#sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;right:0;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:var(--bodyBg);overflow-y:auto}
 #sod_frm_deli {position:relative;line-height:2em}
 
 #sod_frm_escrow {margin:30px 0 0}

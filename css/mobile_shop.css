@@ -1003,7 +1003,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #sod_frm_pay .pay_tbl th{text-align:left;padding:10px;width:80px;border-bottom:1px solid #e7ebf1;background:#fff;font-weight:bold;color:#777}
 #sod_frm_pay .pay_tbl td{text-align:right;padding: 10px;height:30px;border-bottom:1px solid #e7ebf1;background:#fff;color: var(--fontColor);}
 #sod_frm_pay .pay_tbl td .cp_cancel{margin:0 0 0 2px}
-#sod_frm_pay .pay_tbl td .btn_frmline{padding: 0 7px;border: 1px solid #38b2b9;color: #38b2b9;background: #fff;height: 23px;line-height: 21px;margin: 0;}
+#sod_frm_pay .pay_tbl td .btn_frmline{padding: 0 7px;border: 1px solid #38b2b9;color: #38b2b9;background: var(--inputBg);height: 23px;line-height: 21px;margin: 0;}
 #od_tot_price{margin:10px 0;background:#fff;line-height:40px;text-align:right;padding:0 10px}
 #od_tot_price span{float:left;font-weight:bold}
 #od_tot_price strong{font-size:1.5em;color:#ff006c}
@@ -1013,18 +1013,18 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #od_pay_sl input[type="radio"]:checked+.lb_icon {border:1px solid #ff006c;z-index:3}
 #sod_frm_paysel {}
 #sod_frm_paysel legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sod_frm_paysel .KPAY{background:url('../img/kpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .PAYNOW{background:url('../img/paynow.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .PAYCO{background:url('../img/payco.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .inicis_lpay{background:url('../img/lpay_logo.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .KPAY{background:url('../img/kpay.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .PAYNOW{background:url('../img/paynow.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .PAYCO{background:url('../img/payco.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .inicis_lpay{background:url('../img/lpay_logo.png') no-repeat 50% 50% var(--iconBg);overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .inicis_kakaopay{background:url('../img/kakao.png') no-repeat 50% 50% #f4dc34;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .kakaopay_icon{background:url('../img/kakao.png') no-repeat 50% 50% #f4dc34;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .bank_icon{background:url('../img/pay_icon1.png') no-repeat 15px 50% var(--iconBg)}
 #sod_frm_paysel .bank_icon:before  {display: block;content: "";position: absolute;left: 15px;top: 16px;width: 37px;height: 26px;backdrop-filter: var(--invert);}
-#sod_frm_paysel .vbank_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
-#sod_frm_paysel .iche_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
-#sod_frm_paysel .hp_icon{background:url('../img/pay_icon3.png') no-repeat 24px 50% #fff}
-#sod_frm_paysel .card_icon{background:url('../img/pay_icon4.png') no-repeat 17px 50% #fff}
+#sod_frm_paysel .vbank_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% var(--iconBg);padding-top:13px}
+#sod_frm_paysel .iche_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% var(--iconBg);padding-top:13px}
+#sod_frm_paysel .hp_icon{background:url('../img/pay_icon3.png') no-repeat 24px 50% var(--iconBg)}
+#sod_frm_paysel .card_icon{background:url('../img/pay_icon4.png') no-repeat 17px 50% var(--iconBg)}
 #forderform .sod_right #sod_bsk_tot {background: var(--btnBg);border:var(--sschBorder);color: var(--fontColor);}
 #forderform .od_pay_buttons_el{margin-top:20px;border:var(--sschBorder);background:var(--btnBg);padding:10px}
 #forderform .od_pay_buttons_el h3{font-size:1.167em;margin:0px 0 5px;color: var(--fontColor);}
@@ -1047,7 +1047,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #sod_frm_pay .pay_tbl th{text-align:left;padding:10px;width:90px;border-bottom:var(--sschBorder);background:var(--btnBg);font-weight:bold;color:#777}
 #sod_frm_pay .pay_tbl td{text-align:right;padding: 10px;height:30px;border-bottom:var(--sschBorder);background:var(--btnBg);}
 #sod_frm_pay .pay_tbl td .cp_cancel{margin:0 0 0 2px}
-#sod_frm_pay .pay_tbl td .btn_frmline{padding: 0 7px;border: 1px solid #38b2b9;color: #38b2b9;background: #fff;height: 23px;line-height: 21px;margin: 0;}
+#sod_frm_pay .pay_tbl td .btn_frmline{padding: 0 7px;border: 1px solid #38b2b9;color: #38b2b9;background: var(--inputBg);height: 23px;line-height: 21px;margin: 0;}
 #od_tot_price{margin:10px 0;background:#fff;line-height:40px;text-align:right;padding:0 10px}
 #od_tot_price span{float:left;font-weight:bold}
 #od_tot_price strong{font-size:1.5em;color:#ff006c}

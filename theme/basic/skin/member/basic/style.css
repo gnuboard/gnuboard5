@@ -165,7 +165,7 @@
 #mb_login_od_wr .frm_input {margin:10px 0 0}
 #mb_login_od_wr p {background:#f3f3f3;margin:20px 0 0;padding:15px 20px;line-height:1.5em}
 
-#mb_login #sns_login {margin-top:0;border-color:#edeaea;padding:25px}
+#mb_login #sns_login {margin-top:0;border-bottom: var(--border);padding:25px}
 #mb_login #sns_login:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_login #sns_login h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #mb_login #sns_login .sns-wrap {margin:0 !important}

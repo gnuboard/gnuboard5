@@ -911,13 +911,13 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #add_span img, #sel_span img {margin:5px 0}
 
 .sit_option {margin:0 0 10px;padding:10px 10px 0;border:var(--border);background:var(--joinBg)}
-.sit_option .frm_input {background:#fff !important;color:#000}
-.sit_option_frm_wrapper {margin:0 0 10px;height:auto !important;height:500px;max-height:500px;border:1px solid #ccc;overflow-y:scroll}
+.sit_option .frm_input {background:var(--localBg) !important;color:var(--fontColor)}
+.sit_option_frm_wrapper {margin:0 0 10px;height:auto !important;height:500px;max-height:500px;border:var(--border);overflow-y:scroll}
 .sit_option_frm_wrapper th {padding:5px 0 !important;text-align:center !important;width:auto !important}
 
 #sit_option_frm .btn_list {margin:0 0 10px}
-#sit_option_frm fieldset {padding:10px;border:1px solid #e9e9e9;background:#f7f7f7;text-align:center}
-#sit_option_frm fieldset .frm_input {margin:0 10px 0 5px;background:#fff !important;color:#000}
+#sit_option_frm fieldset {padding:10px;border:var(--border);background:var(--localBg);text-align:center}
+#sit_option_frm fieldset .frm_input {margin:0 10px 0 5px;background:var(--inputBg) !important;color:var(--fontColor)}
 
 #sit_option_addfrm_btn {position:relative}
 #sit_option_addfrm_btn button {position:absolute;top:-45px;right:0}

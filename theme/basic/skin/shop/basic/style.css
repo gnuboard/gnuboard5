@@ -30,7 +30,7 @@
 
 .gnb_1dli_on .gnb_1dam {text-decoration:none}
 .gnb_2dul {display:none;z-index:1000;position:absolute;border:1px solid #e8e8e8;padding:10px}
-.gnb_1dli_over .gnb_2dul, .gnb_1dli_over2 .gnb_2dul {display:inline-block;top:0;left:263px;width:200px;background:#fff}
+.gnb_1dli_over .gnb_2dul, .gnb_1dli_over2 .gnb_2dul {display:inline-block;top:0;left:263px;width:200px;background:var(--bodyBg)}
 .gnb_1dli_over .gnb_2dul:after, .gnb_1dli_over2 .gnb_2dul:after {content:"";position:absolute;top:10px;left:-6px;display:inline-block;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:6px solid #fff}
 .gnb_1dli_over .gnb_2dul:before, .gnb_1dli_over2 .gnb_2dul:before {content:"";position:absolute;top:9px;left:-7px;display:inline-block;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:7px solid #e8e8e8}
 
@@ -40,9 +40,9 @@
 
 /* 오늘 본 상품 */
 #stv {position:relative;height:100%}
-#stv .li_empty {text-align:center;line-height:100px}
+#stv .li_empty {text-align:center;line-height:100px;color: var(--fontColor);}
 #stv_pg {display:block;position:fixed;right:0;bottom:0;width:229px;text-align:center;margin:10px 0 0;padding:15px;line-height:20px;background:var(--inputBg);color: var(--fontColor);}
-.stv_item {display:none;padding:15px;word-break:break-all;border-bottom:1px solid #f6f6f6}
+.stv_item {display:none;padding:15px;word-break:break-all;border-bottom:var(--border);color: var(--fontColor);}
 .stv_item:after {display:block;visibility:hidden;clear:both;content:""}
 .stv_item .prd_img {display:inline-block;float:left;margin-right:10px}
 .stv_item .prd_cnt {display:inline-block;float:left}
@@ -116,12 +116,12 @@
 
 /*장바구니*/
 #sbsk {position:relative}
-#sbsk li {position:relative;border-bottom:1px solid #f6f6f6;padding:15px}
+#sbsk li {position:relative;border-bottom:var(--fontColor);padding:15px}
 #sbsk li:after {display:block;visibility:hidden;clear:both;content:""}
 #sbsk .go_cart {position:absolute;top:11px;right:15px;display:inline-block;height:28px;line-height:22px;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;background:#fff;padding:2px 5px}
 #sbsk .btn_buy {padding:15px;font-weight:bold;text-align:center}
 #sbsk .btn_buy .btn_submit {width:100%;height:40px}
-#sbsk .li_empty {text-align:center;line-height:100px}
+#sbsk .li_empty {text-align:center;line-height:100px;color: var(--fontColor);}
 #sbsk .prd_img {display:inline-block;float:left;margin-right:10px}
 #sbsk .prd_cnt {display:inline-block;float:left}
 #sbsk .prd_cnt a, #sbsk .prd_cnt span {display:block;max-width:105px}
@@ -130,9 +130,9 @@
 
 /*위시리스트*/
 #wish {}	
-#wish li {position:relative;border-bottom:1px solid #f6f6f6;padding:15px}
+#wish li {position:relative;border-bottom:var(--border);padding:15px}
 #wish li:after {display:block;visibility:hidden;clear:both;content:""}
-#wish .li_empty {text-align:center;line-height:100px}
+#wish .li_empty {text-align:center;line-height:100px;color: var(--fontColor);}
 #wish .prd_img {display:inline-block;float:left;margin-right:10px}
 #wish .prd_cnt {display:inline-block;float:left}
 #wish .prd_cnt a {display:block;max-width:105px}
@@ -576,14 +576,14 @@
 .sit_ov_input {margin:0 1px 0 0;padding:2px 2px 3px;border:1px solid #b8c9c2;background:transparent;vertical-align:middle}
 #sit_ov_tbl button {margin:0 1px 0 0}
 
-.sit_option {padding:10px 0;margin:10px 0 0}
+.sit_option {padding:10px 0;margin:10px 0 0;color: var(--fontColor);}
 .sit_option label {display:block;margin:0 0 5px;color:#666}
 .sit_option label.label-title{display:none}
-.sit_option select {width:100%;margin:0 0 10px;height:50px;padding:0 10px;border:1px solid #cdcdcd;
+.sit_option select {width:100%;margin:0 0 10px;height:50px;padding:0 10px;border:var(--btnBorder);color: var(--fontColor);
 -webkit-appearance:none; /* 화살표 없애기 for chrome*/
 -moz-appearance:none;    /* 화살표 없애기 for firefox*/
 appearance:none;         /* 화살표 없애기 공통*/
-background:url('img/select_arrow.png') no-repeat 96% 50%/* 화살표 아이콘 추가 */
+background:url('img/select_arrow.png') no-repeat 96% 50%, var(--btnBg)/* 화살표 아이콘 추가 */
 }
 .sit_option select::-ms-expand {display:none/* 화살표 없애기 for IE10, 11*/}
 
@@ -641,11 +641,11 @@ background:url('img/select_arrow.png') no-repeat 96% 50%/* 화살표 아이콘 �
 .sit_side_option h3 {margin-bottom:10px}
 .sit_side_option label {display:block;margin:0 0 5px;color:#666}
 .sit_side_option label.label-title{display:none}
-.sit_side_option select {width:100%;margin:0 0 10px;height:50px;padding:0 10px;border:1px solid #cdcdcd;
+.sit_side_option select {width:100%;margin:0 0 10px;height:50px;padding:0 10px;border:var(--btnBorder);color: var(--fontColor);
 -webkit-appearance:none; /* 화살표 없애기 for chrome*/
 -moz-appearance:none;    /* 화살표 없애기 for firefox*/
 appearance:none;         /* 화살표 없애기 공통*/
-background:url('img/select_arrow.png') no-repeat 96% 50%/* 화살표 아이콘 추가 */}
+background:url('img/select_arrow.png') no-repeat 96% 50%, var(--btnBg)/* 화살표 아이콘 추가 */}
 .sit_side_option select::-ms-expand {display:none/* 화살표 없애기 for IE10, 11*/}
 
 .sit_sel_option {overflow-y:auto;height:300px}
