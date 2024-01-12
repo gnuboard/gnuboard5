@@ -554,7 +554,7 @@ function admin_check_xss_params($params)
 
         if (is_array($value)) {
             admin_check_xss_params($value);
-        } else if ((preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && (preg_match('/script.*?\/script/ius', $value) || preg_match('/[onload|onerror]=.*/ius', $value))) || preg_match('/^(?=.*token\()(?=.*xmlhttprequest\()(?=.*send\().*$/im', $value) || (preg_match('/[onload|onerror|focus]=.*/ius', $value) && preg_match('/(eval|expression|exec|prompt)(\s*)\((.*)\)/ius', $value))) {
+        } else if ((preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && (preg_match('/script.*?\/script/ius', $value) || preg_match('/(onload|onerror)\s*=\s*["\'][^"\']*["\']/ius', $value))) || preg_match('/^(?=.*token\()(?=.*xmlhttprequest\()(?=.*send\().*$/im', $value) || (preg_match('/[onload|onerror|focus]=.*/ius', $value) && preg_match('/(eval|expression|exec|prompt)(\s*)\((.*)\)/ius', $value))) {
             alert('요청 쿼리에 잘못된 스크립트문장이 있습니다.\\nXSS 공격일수도 있습니다.', G5_URL);
             die();
         }
