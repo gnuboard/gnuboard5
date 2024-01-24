@@ -42,7 +42,7 @@ function escrow_foot_check()
 
     var newForm = jQuery("<form>", {
         "id": "nhnkcp_escrow_form_popup",
-        "action": "http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp?site_cd=SR001",
+        "action": "http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp?site_cd="+jQuery("#sod_frm_escrow .nhnkcp_escrow_popup").attr("data-sitecd"),
         "target": "escrow_foot_pop",
         "method": "post"
     }).append(jQuery("<input>", {
