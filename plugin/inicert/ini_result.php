@@ -1,8 +1,12 @@
 <?php
 include_once('./_common.php');
+require_once (dirname(__FILE__) .'/libs/KISA_SEED_CBC.php');
+require_once (dirname(__FILE__) .'/libs/INILib.php');
 
 $txId = isset($_POST['txId']) ? clean_xss_tags($_POST['txId'], 1, 1) : '';
 $mid  = substr($txId, 6, 10);
+$SEEDKEY = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
+$SEEDIV  = "SASKGINICIS00000";
 
 if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
@@ -14,8 +18,15 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
     $post_data = json_encode($data);
 
     $authRequestUrl = isset($_POST["authRequestUrl"]) ? is_inicis_url_return($_POST["authRequestUrl"]) : '';
-    if(!$authRequestUrl){
+
+    // SaSample 에 나와있는대로 url을 검증합니다.
+    if (!(strpos($authRequestUrl,"https://kssa.inicis.com") == 0 || strpos($authRequestUrl,"https://fcsa.inicis.com") == 0)) {
+        $authRequestUrl = '';
+    }
+
+    if (! $authRequestUrl) {
         alert('잘못된 요청입니다.', G5_URL);
+        exit;
     }
 
     // curl 통신 시작 
@@ -42,6 +53,12 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
         $user_name      = $res_data['userName'];                // 이름
         $birth_day      = $res_data['userBirthday'];            // 생년월일
         $ci             = $res_data['userCi'];                  // CI
+        
+        // 개인정보SEED 암호화 된것을 복호화 합니다.
+        $user_name = decrypt_SEED($user_name, $SEEDKEY, $SEEDIV);
+        $phone_no = decrypt_SEED($phone_no, $SEEDKEY, $SEEDIV);
+        $birth_day = decrypt_SEED($birth_day, $SEEDKEY, $SEEDIV);
+        $ci = decrypt_SEED($ci, $SEEDKEY, $SEEDIV);
 
         @insert_cert_history($member['mb_id'], 'inicis', $cert_type); // 인증성공 시 내역 기록
 

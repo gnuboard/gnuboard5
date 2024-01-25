@@ -16,7 +16,8 @@ if($config['cf_cert_use'] == 2) { // 실서비스 일때
     $apiKey = "43700dfd4c795fe9550853aef3b6aaf1";
     $mTxId ='SIR_'.$max_cr_id;
 }
-$reqSvcCd ='01';
+$reqSvcCd ='01';    // 요청구분코드 ["01":간편인증, "02":전자서명]
+$reservedMsg ='isUseToken=Y';   // 결과조회 응답시 개인정보SEED 암호화 처리 요청
 
 // 등록가맹점 확인
 $plainText1 = hash("sha256",(string)$mid.(string)$mTxId.(string)$apiKey);
@@ -66,7 +67,8 @@ include_once(G5_PATH.'/head.sub.php');
         <input type="hidden" name="userPhone" value="<?php echo $userPhone ?>">
         <input type="hidden" name="userBirth" value="<?php echo $userBirth ?>">
         <input type="hidden" name="userHash" value="<?php echo $userHash ?>">
-        <input type="hidden" name="mbId" value="<?php echo $member['mb_id'] ?>">
+        <input type="hidden" name="reservedMsg" value="<?php echo $reservedMsg; ?>">
+        <input type="hidden" name="mbId" value="<?php echo $member['mb_id']; ?>">
         <input type="hidden" name="directAgency" value="<?php echo isset($_GET['directAgency']) ? clean_xss_tags($_GET['directAgency'], 1, 1) : ''; ?>">
 
         <input type="hidden" name="successUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->
