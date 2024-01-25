@@ -19,7 +19,7 @@ if ($url) {
     if ( substr($url, 0, 2) == '//' )
         $url = 'http:' . $url;
 
-    $p = @parse_url(urldecode($url));
+    $p = @parse_url(urldecode(str_replace('\\', '', $url)));
     /*
         // OpenRediect 취약점관련, PHP 5.3 이하버전에서는 parse_url 버그가 있음 ( Safflower 님 제보 ) 아래 url 예제
         // http://localhost/bbs/logout.php?url=http://sir.kr%23@/

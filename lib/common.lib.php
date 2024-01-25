@@ -3612,7 +3612,8 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     while ( ( $replace_url = preg_replace(array('/\/{2,}/', '/\\@/'), array('//', ''), urldecode($url)) ) != $url ) {
         $url = $replace_url;
     }
-    $p = @parse_url(trim($url));
+
+    $p = @parse_url(trim(str_replace('\\', '', $url)));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
     
