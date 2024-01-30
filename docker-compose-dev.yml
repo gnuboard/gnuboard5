@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     volumes:
-      - gnuboard5-data-dev:/g6/data
+      - gnuboard5-data-dev:/var/www/html
     ports:
       - "9876:80"
 
