@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  gnuboard-g5:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - gnuboard5-data-dev:/g6/data
+    ports:
+      - "9876:80"
+
+  gnuboard-db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+      - db_socket:/var/lib/mysqld
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-password}
+      MYSQL_DATABASE: ${DB_NAME:-g5-dev}
+      MYSQL_USER: ${DB_USER:-g5-dev}
+      MYSQL_PASSWORD: ${DB_PASS:-password}
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$${DB_ROOT_PASSWORD:-password}
+      interval: 5s
+      retries: 10
+
+volumes:
+  gnuboard5-data-dev:
+  db_data:
+  db_socket:
