@@ -3605,7 +3605,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     }
 
     // KVE-2021-1277 Open Redirect 취약점 해결
-    if (preg_match('#\\\0#', $url)) {
+    if (preg_match('#\\\0#', $url) || preg_match('/^\/{1,}\\\/', $url)) {
         alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
     }
 

@@ -19,6 +19,10 @@ if ($url) {
     if ( substr($url, 0, 2) == '//' )
         $url = 'http:' . $url;
 
+    if (preg_match('#\\\0#', $url) || preg_match('/^\/{1,}\\\/', $url)) {
+        alert('url 에 올바르지 않은 값이 포함되어 있습니다.', G5_URL);
+    }
+
     $p = @parse_url(urldecode(str_replace('\\', '', $url)));
     /*
         // OpenRediect 취약점관련, PHP 5.3 이하버전에서는 parse_url 버그가 있음 ( Safflower 님 제보 ) 아래 url 예제
