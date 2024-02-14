@@ -41,8 +41,8 @@ if ($ev_mimg_del)  @unlink(G5_DATA_PATH."/event/{$ev_id}_m");
 if ($ev_himg_del)  @unlink(G5_DATA_PATH."/event/{$ev_id}_h");
 if ($ev_timg_del)  @unlink(G5_DATA_PATH."/event/{$ev_id}_t");
 
-$ev_skin = preg_replace('#\.+(\/|\\\)#', '', $ev_skin);
-$ev_mobile_skin = preg_replace('#\.+(\/|\\\)#', '', $ev_mobile_skin);
+$ev_skin = preg_replace(array('#\.+(\/|\\\)#', '#[\'\"]#'), array('', ''), $ev_skin);
+$ev_mobile_skin = preg_replace(array('#\.+(\/|\\\)#', '#[\'\"]#'), array('', ''), $ev_mobile_skin);
 
 $skin_regex_patten = "^list.[0-9]+\.skin\.php";
 

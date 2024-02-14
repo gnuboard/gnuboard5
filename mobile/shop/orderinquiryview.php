@@ -1,5 +1,7 @@
 <?php
-include_once('./_common.php');
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
 
 // 테마에 orderinquiryview.php 있으면 include
 if(defined('G5_THEME_MSHOP_PATH')) {

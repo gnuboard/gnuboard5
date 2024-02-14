@@ -28,8 +28,8 @@ if ($_FILES['mobile_logo_img2']['name']) upload_file($_FILES['mobile_logo_img2']
 $de_kcp_mid = isset($_POST['de_kcp_mid']) ? substr($_POST['de_kcp_mid'], 0, 3) : '';
 $cf_icode_server_port = isset($cf_icode_server_port) ? preg_replace('/[^0-9]/', '', $cf_icode_server_port) : '7295';
 
-$de_shop_skin = isset($_POST['de_shop_skin']) ? preg_replace('#\.+(\/|\\\)#', '', $_POST['de_shop_skin']) : 'basic';
-$de_shop_mobile_skin = isset($_POST['de_shop_mobile_skin']) ? preg_replace('#\.+(\/|\\\)#', '', $_POST['de_shop_mobile_skin']) : 'basic';
+$de_shop_skin = isset($_POST['de_shop_skin']) ? preg_replace(array('#\.+(\/|\\\)#', '#[\'\"]#'), array('', ''), $_POST['de_shop_skin']) : 'basic';
+$de_shop_mobile_skin = isset($_POST['de_shop_mobile_skin']) ? preg_replace(array('#\.+(\/|\\\)#', '#[\'\"]#'), array('', ''), $_POST['de_shop_mobile_skin']) : 'basic';
 
 $skins = get_skin_dir('shop');
 
@@ -59,7 +59,7 @@ $de_shop_mobile_skin = in_array($de_shop_mobile_skin, $mobile_skins) ? $de_shop_
 $check_skin_keys = array('de_type1_list_skin', 'de_type2_list_skin', 'de_type3_list_skin', 'de_type4_list_skin', 'de_type5_list_skin', 'de_mobile_type1_list_skin', 'de_mobile_type2_list_skin', 'de_mobile_type3_list_skin', 'de_mobile_type4_list_skin', 'de_mobile_type5_list_skin', 'de_rel_list_skin', 'de_mobile_rel_list_skin', 'de_search_list_skin', 'de_mobile_search_list_skin', 'de_listtype_list_skin', 'de_mobile_listtype_list_skin');
 
 foreach($check_skin_keys as $key){
-    $$key = $_POST[$key] = isset($_POST[$key]) ? preg_replace('#\.+(\/|\\\)#', '', strip_tags($_POST[$key])) : '';
+    $$key = $_POST[$key] = isset($_POST[$key]) ? preg_replace(array('#\.+(\/|\\\)#', '#[\'\"]#'), array('', ''), strip_tags($_POST[$key])) : '';
 
     if( isset($_POST[$key]) && preg_match('#\.+(\/|\\\)#', $_POST[$key]) ){
         alert('스킨설정에 유효하지 문자가 포함되어 있습니다.');

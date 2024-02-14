@@ -8,7 +8,7 @@ auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
-$bo_table       = isset($_POST['bo_table']) ? $_POST['bo_table'] : null;
+$bo_table       = isset($_POST['bo_table']) ? substr(preg_replace('/[^a-z0-9_]/i', '', $_POST['bo_table']), 0, 20) : null;
 $target_table   = isset($_POST['target_table']) ? trim($_POST['target_table']) : '';
 $target_subject = isset($_POST['target_subject']) ? trim($_POST['target_subject']) : '';
 
@@ -23,6 +23,8 @@ if (empty($bo_table)) {
 if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table)) {
     alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)');
 }
+
+$target_table = substr(preg_replace('/[^a-z0-9_]/i', '', $target_table), 0, 20);
 
 // 게시판명이 금지된 단어로 되어 있으면
 if ($w == '' && in_array($target_table, get_bo_table_banned_word())) {

@@ -50,7 +50,7 @@ else
     $order_by = 'b.it_order, b.it_id desc';
 
 if ($skin) {
-    $skin = preg_replace('#\.+(\/|\\\)#', '', $skin);
+    $skin = preg_replace(array('#\.+(\/|\\\)#', '#[\'\"]#'), array('', ''), $skin);
     $ev['ev_skin'] = $skin;
 }
 
