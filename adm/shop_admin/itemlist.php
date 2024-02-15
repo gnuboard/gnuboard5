@@ -4,6 +4,10 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
 
+if (isset($sfl) && $sfl && !in_array($sfl, array('it_name','it_id','it_maker','it_brand','it_model','it_origin','it_sell_email'))) {
+    $sfl = '';
+}
+
 $g5['title'] = '상품관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 

@@ -4,6 +4,10 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
 
+if (isset($sfl) && $sfl && !in_array($sfl, array('it_name','a.it_id','is_name'))) {
+    $sfl = '';
+}
+
 $g5['title'] = '사용후기';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
