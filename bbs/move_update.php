@@ -133,6 +133,8 @@ while ($row = sql_fetch_array($result))
                 $result3 = sql_query($sql3);
                 for ($k=0; $row3 = sql_fetch_array($result3); $k++)
                 {
+                    $copy_file_name = '';
+                    
                     if ($row3['bf_file'])
                     {
                         // 원본파일을 복사하고 퍼미션을 변경
