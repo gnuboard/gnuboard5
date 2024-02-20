@@ -38,7 +38,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="<?php echo section_class('html') ?>">
 <head>
 <meta charset="utf-8">
 <?php
@@ -78,6 +78,8 @@ var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";
 var g5_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
+var g5_darkmode  = <?php echo json_encode(is_darkmode()) ?>;
+var g5_darkmode_classes  = <?php echo json_encode(get_darkmode_classes()) ?>;
 var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 <?php if(defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
 var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
@@ -108,7 +110,8 @@ if(!defined('G5_IS_ADMIN'))
     echo $config['cf_add_script'];
 ?>
 </head>
-<body<?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>
+
+<body class="<?php echo section_class('body') ?>" <?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>
 <?php
 if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력해준다.
     $sr_admin_msg = '';

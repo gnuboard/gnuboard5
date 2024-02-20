@@ -10,7 +10,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	        <i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $answer['qa_datetime']; ?>
 	    </div>
     </h2>
-    <div id="ans_con">
+    <div id="ans_con" class="<?php echo section_class('qna', array('g5-qna--answer')) ?>">
         <?php
         // 파일 출력
         if(isset($answer['img_count']) && $answer['img_count']) {

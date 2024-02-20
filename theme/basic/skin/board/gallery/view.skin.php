@@ -102,7 +102,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
+        <div id="bo_v_con" class="<?php echo section_class('article') ?>">
+            <?php echo get_view_thumbnail($view['content']); ?>
+        </div>
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
 
