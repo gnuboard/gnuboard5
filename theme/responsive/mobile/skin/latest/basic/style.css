@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+/* 최근게시물 스킨 (latest) */
+.lt {position:relative;margin:10px 0;background:#fff}
+.lt .lt_title {display:block;font-size:1.3em;padding:15px 15px 0;line-height:24px;background:#fff}
+.lt ul {list-style:none;padding:0 15px;background:#fff;border-bottom:1px solid #e5ecee}
+.lt ul li {padding:15px 0;border-bottom:1px solid #e5ecee}
+.lt ul li:last-child {border-bottom:0}
+.lt ul li:after {display:block;visibility:hidden;clear:both;content:""}
+.lt ul li:hover a.lt_tit {color:#3a8afd}
+.lt .lt_thumb {display:inline-block;float:left;margin-right:10px}
+.lt .lt_thumb img, .lt .lt_thumb video {width:138px !important;height:auto;overflow:hidden}
+.lt .lt_tit {display:block;font-size:1.2em;font-weight:bold;max-height:60px;overflow:hidden;padding-bottom:10px}
+.lt .lt_info {display:inline-block;position:relative;line-height:20px;color:#828282;font-size:0.925em;vertical-align:top}
+.lt .lt_date {color:#828282}
+.lt .latest-sel{margin-top:1px}
+
+.lt .lt_more {position:absolute;top:15px;right:15px;color:#3a8afd;background:#fff;border:1px solid #d1d7e5;font-size:0.925em;border-radius:3px;padding:4px 5px;z-index:1}
+.lt .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
+
+.lt .profile_img img {border-radius:50%;vertical-align:top}
+.lt li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+.lt li .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;vertical-align:middle}
+.lt li .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
+.lt li .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
+.lt li .fa-heart {color:#ff0000}
+.lt li .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.75em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
+.lt .lt_tit .fa-heart {color:#fe4560;margin-left:5px}
+
+.lt .comment_icon {background:url('./img/icon_comment.png') no-repeat 50% 50%;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
+.lt .empty_li {text-align:center;padding:40px 0;color:#777}
+
+.lt .owl-carousel .owl-item .profile_img img{width:auto;display:inline}
+
+.tooltipster-content .sv a{display:block;padding:0 10px;line-height:30px;font-weight:normal;color:#bbb}
+.tooltipster-content .sv a:hover{background:#000;color:#fff}
+.tooltipster-sidetip.tooltipster-sir .tooltipster-content{padding:0}
+.tooltipster-sidetip.tooltipster-sir .tooltipster-box{border:0 none;background:#333;border-radius:0}
+.tooltipster-sidetip.tooltipster-sir.tooltipster-bottom .tooltipster-arrow-border, .tooltipster-sidetip.tooltipster-sir.tooltipster-bottom .tooltipster-arrow-background{border-bottom-color:#333}
+
+.lt_page {background:#fff;text-align:center;padding:10px 15px;line-height:25px;border-bottom:1px solid #e5ecee}
+.lt_page button {display:inline-block;background:#fff;width:25px;height:25px;border:1px solid #dbdee6;text-align:center;color:#cdcdce}
+.lt_page span {color:#6e6e6e}
+.lt_page b {color:#000}
+.lt_page_prev {float:left}
+.lt_page_next {float:right}

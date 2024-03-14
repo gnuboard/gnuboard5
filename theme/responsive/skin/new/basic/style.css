@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/* 최근게시물 스킨 (new) */
+#new_sch {background:#f7f7f7;padding:30px;text-align:center;margin:0 0 10px}
+#new_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#new_sch select {border:1px solid #d0d3db;width:175px;height:45px;padding:0 5px;border-radius:3px}
+#new_sch .frm_input {border:1px solid #d0d3db;width:300px;height:45px;border-radius:0;border-radius:3px}
+#new_sch .sch_wr {position:relative;display:inline-block}
+#new_sch .btn_submit {padding:0 10px;height:45px;width:88px;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}
+#new_sch p {padding:10px 0 0;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
+
+#fnewlist .profile_img img {border-radius:50%}
+#fnewlist .td_group a {background:#edfbde;color:#8cc152;padding:3px 4px;border-radius:5px;font-weight:normal}
+#fnewlist .td_board a {background:#eeeaf8;color:#ac92ec;padding:3px 4px;border-radius:5px;font-weight:normal}
+
+.admin_new_btn {float:right;margin-bottom:10px}
+
+.selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box input[type="checkbox"] + label {position:relative;padding-left:20px;color:#676e70}
+.chk_box input[type="checkbox"] + label:hover {color:#2172f8}
+.chk_box input[type="checkbox"] + label span {position:absolute;top:2px;left:0;width:15px;height:15px;display:block;margin:0;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.chk_box input[type="checkbox"]:checked + label {color:#000}
+.chk_box input[type="checkbox"]:checked + label span {background:url(../../../img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
