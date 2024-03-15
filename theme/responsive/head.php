@@ -183,6 +183,11 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
               });
 
+              $(".btn_gnb_op").click(function(){
+                $(this).toggleClass("btn_gnb_cl").next(".gnb_2dul").slideToggle(300);
+                
+            });
+
           });
         </script>
 
