@@ -505,4 +505,6 @@ box-sizing:content-box;
   .gnb_2dul {display:none;background:#fafafa}
   .gnb_2da {padding-left:30px}
 
+  #gnb a.btn_b01,.btn_b01 {display:inline-block;background:#3a8afd;color:#fff;border-radius:3px;padding:10px;border:0;text-decoration:none;vertical-align:middle}
+  #gnb a.btn_b02, .btn_b02 {display:inline-block;background:transparent;color:#fff;border:0;border-radius:3px;padding:10px;text-decoration:none;vertical-align:middle}
 }
