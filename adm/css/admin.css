@@ -1076,10 +1076,10 @@ box-shadow: 1px 2px 5px rgba(150,150,150,0.5);z-index:1000}
 #theme_detail .theme_dt_btn .btn_03{line-height:28px;display:inline-block;vertical-align:top;margin-top:6px;padding:0 6px;border-radius:5px}
 
 /*글,댓글현황*/
-#wr_cont{position:relative;margin:10px 0}
+#wr_cont{position:relative;margin:10px 0;display: flex;justify-content: space-between;}
 #wr_cont input[type="submit"]{background:#ff3061;border:none;color:#fff;padding: 0 5px;height: 24px;}
 #wr_cont select{height: 24px;}
-#grp_color{border:2px solid #ddd;position:absolute;top:0;right:0;list-style:none;padding: 5px 5px; margin:0;}
+#grp_color{border:2px solid #ddd;list-style:none;padding: 5px 5px; margin:0;}
 #grp_color li{padding:5px 10px;}
 #grp_color li span{width:10px;height:10px; display:inline-block;background:rgb(75, 178, 197);margin-right:5px;}
 #grp_color li.color2 span{background:rgb(234, 162, 40);}
@@ -1169,5 +1169,8 @@ input[type="text"]{max-width:200px}
   /* 메일 테스트 */
   .email.frm_input {width: 100%;}
 
+  /* 글,댓글 현황 */
+  #wr_cont {flex-direction: column;}
+  #grp_color {margin: 20px 0 0 0;}
 }
 
