@@ -1038,13 +1038,11 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 
 /*테마*/
 .theme_p{margin:0 0 10px }
-#theme_list{padding:0;margin:0;list-style:none; width: 1000px;position:relative}
-#theme_list:after{display:block;visibility:hidden;clear:both;content:""}
-#theme_list li{margin:10px 10px 10px 0;float:left}
+#theme_list{padding:0;margin:0;list-style:none;position:relative;display: flex;max-width:930px;width: 100%;}
+#theme_list li{margin:10px 10px 10px 0;width: calc((100% / 3) - 10px);}
 
-#theme_list li:after{display:block;visibility:hidden;clear:both;content:""}
-#theme_list li .tmli_if{border: 1px solid #d1dee2;width:302px;}
-#theme_list li .tmli_if>img{width:300px;height:225px;}
+#theme_list li .tmli_if{border: 1px solid #d1dee2;width:100%;}
+#theme_list li .tmli_if>img{width:100%;height:225px;}
 #theme_list li .tmli_if:hover>img{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}
 #theme_list li .tmli_tit{position:relative; border-top: 1px solid #d1dee2; background: #e5ecef;}
 #theme_list li .tmli_tit p{height:40px;line-height:40px;padding:0 10px 0;font-weight:bold;text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
@@ -1136,15 +1134,20 @@ input[type="text"]{max-width:200px}
 }
 
 @media (max-width:1024px) {
+  /* gnb */
   #gnb {position: static;padding: 0px;height: auto;max-width: 100%;width: 100%;padding-top: 100px;}
   #gnb .gnb_ul {display: flex;width: 100%;}
   #gnb .gnb_li {border-bottom: none}
   #gnb .gnb_oparea_wr {width: 100%;height: 300px;}
   #gnb .gnb_oparea {position: absolute;top: 50px;left: 0;width: 100%;height: 100%;overflow-y: scroll;}
+  #gnb.gnb_small .gnb_li.on .gnb_oparea {display: block;}
+
+  /* 상단배너 */
   #container {padding: 0;}
   #container_title, #container.container-small #container_title {padding-left: 20px;}
   #container.container-small {padding-left: 0;}
-  #gnb.gnb_small .gnb_li.on .gnb_oparea {display: block;}
+
+  /* table */
   .tbl_wrap {overflow-x: auto;}
   .tbl_head01 table {min-width: 1100px;}
   .new_win .tbl_head01 table {min-width:auto}
@@ -1152,4 +1155,9 @@ input[type="text"]{max-width:200px}
   .tbl_frm01.tbl_wrap table tr {display: grid;grid-template-columns: 25% 75%;margin-bottom: 10px;}
   .tbl_frm01.tbl_wrap table th, .tbl_frm01.tbl_wrap table td {width: 100%;}
   .tbl_frm01.tbl_wrap table .frm_input, .tbl_frm01.tbl_wrap table select {width: 100%;}
+
+  /* 테마 */
+  #theme_list {flex-wrap: wrap;}
+  #theme_list li {margin: 0 0 20px 0;width: 100%;}
+  #theme_list li .tmli_if>img {height: auto;}
 }
