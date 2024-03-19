@@ -1145,5 +1145,11 @@ input[type="text"]{max-width:200px}
   #container_title, #container.container-small #container_title {padding-left: 20px;}
   #container.container-small {padding-left: 0;}
   #gnb.gnb_small .gnb_li.on .gnb_oparea {display: block;}
-  
+  .tbl_wrap {overflow-x: auto;}
+  .tbl_head01 table {min-width: 1100px;}
+  .new_win .tbl_head01 table {min-width:auto}
+  .tbl_frm01.tbl_wrap table {display: grid;table-layout: fixed;}
+  .tbl_frm01.tbl_wrap table tr {display: grid;grid-template-columns: 25% 75%;margin-bottom: 10px;}
+  .tbl_frm01.tbl_wrap table th, .tbl_frm01.tbl_wrap table td {width: 100%;}
+  .tbl_frm01.tbl_wrap table .frm_input, .tbl_frm01.tbl_wrap table select {width: 100%;}
 }
