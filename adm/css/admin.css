@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic',"맑은 고딕
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 
 ul{margin:0;padding:0;list-style:none}
-li,dt,dd,ol{margin:0;padding:0}
+li,dt,dd,ol{margin:0;padding:0;word-break: break-all;}
 ol{list-style-position:inside}
 legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
@@ -986,7 +986,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 
 /*부가서비스*/
 .lnb_svc{color:#ff3061;font-weight:bold}
-.service_wrap{ width:965px;margin:0 0 10px;overflow:hidden}
+.service_wrap{ width:100%;margin:0 0 10px;overflow:hidden}
 .sevice_1{border:1px solid #ebe8e8;width:310px;float:left;border-radius:5px;text-align:center;margin-right:6px;}
 .sevice_1 .svc_img{padding:30px 0 0;}
 .sevice_1 h3{font-size:16px;margin:190px 0 10px;min-height:45px;color:#525252}
@@ -1022,10 +1022,9 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .svc_keyword .svc_btn{margin:40px 0 0 ;}
 .svc_keyword .svc_btn a{width:160px;}
 
-.svc_sms{border:1px solid #ebe8e8;position:relative;height:93px}
-.svc_sms:after{display:block;visibility:hidden;clear:both;content:""}
-.svc_sms .svc_btn2{position:absolute;top:0;right:0}
-.svc_sms .svc_btn2 a{display:inline-block; width:220px; height:91px; background:#fbfbfb; text-align:center; padding:20px 0 0;}
+.svc_sms{border:1px solid #ebe8e8;position:relative;height:93px;display: flex;justify-content: space-between;}
+.svc_sms .svc_btn2 a{display:inline-block; width:220px; height:91px; background:#fbfbfb; text-align:center;position: relative;}
+.svc_sms .svc_btn2 a img {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);}
 
 /* 캡챠 */
 #captcha {display:inline-block;position:relative}
@@ -1148,7 +1147,7 @@ input[type="text"]{max-width:200px}
   #container.container-small {padding-left: 0;}
 
   /* table */
-  .tbl_wrap {overflow-x: auto;}
+  .tbl_wrap {overflow-x: auto;border: 1px solid #eee;}
   .tbl_head01 table {min-width: 1100px;}
   .new_win .tbl_head01 table {min-width:auto}
   .tbl_frm01.tbl_wrap table {display: grid;table-layout: fixed;}
@@ -1160,4 +1159,15 @@ input[type="text"]{max-width:200px}
   #theme_list {flex-wrap: wrap;}
   #theme_list li {margin: 0 0 20px 0;width: 100%;}
   #theme_list li .tmli_if>img {height: auto;}
+
+  /* 부가서비스 */
+  .sevice_1 {width: 100%;margin-right: 0;margin-bottom: 20px;}
+  .service_2 .svc_ri .svc_a {padding: 10px;}
+  .svc_sms {height: auto;}
+  .svc_sms .svc_btn2 a {height: 100%;}
+
+  /* 메일 테스트 */
+  .email.frm_input {width: 100%;}
+
 }
+
