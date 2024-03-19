@@ -240,7 +240,7 @@ $pg_anchor = '<ul class="anchor">
             <col class="grid_3">
         </colgroup>
         <tbody>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="bo_table">TABLE<?php echo $sound_only ?></label></th>
             <td colspan="2">
                 <input type="text" name="bo_table" value="<?php echo $board['bo_table'] ?>" id="bo_table" <?php echo $required ?> <?php echo $readonly ?> class="frm_input <?php echo $readonly ?> <?php echo $required ?> <?php echo $required_valid ?>" maxlength="20">
@@ -252,7 +252,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php } ?>
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
             <td colspan="2">
                 <?php echo get_group_select('gr_id', $board['gr_id'], 'required'); ?>
@@ -261,13 +261,13 @@ $pg_anchor = '<ul class="anchor">
                 <?php } ?>
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="bo_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
             <td colspan="2">
                 <input type="text" name="bo_subject" value="<?php echo get_text($board['bo_subject']) ?>" id="bo_subject" required class="required frm_input" size="80" maxlength="120">
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="bo_mobile_subject">모바일 게시판 제목</label></th>
             <td colspan="2">
                 <?php echo help("모바일에서 보여지는 게시판 제목이 다른 경우에 입력합니다. 입력이 없으면 기본 게시판 제목이 출력됩니다.") ?>
@@ -1244,7 +1244,7 @@ $pg_anchor = '<ul class="anchor">
             <col class="grid_3">
         </colgroup>
         <tbody>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="chk_grp_point">기본값으로 설정</label></th>
             <td colspan="2">
                 <?php echo help('환경설정에 입력된 포인트로 설정') ?>
