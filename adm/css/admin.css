@@ -1161,7 +1161,11 @@ input[type="text"]{max-width:200px}
   #theme_list {flex-wrap: wrap;}
   #theme_list li {margin: 0 0 20px 0;width: 100%;}
   #theme_list li .tmli_if>img {height: auto;}
-
+  #theme_detail, #plugin_detail {left: 50%;transform: translateX(-50%);width: 96% !important;height: auto !important;}
+  .theme_dt_img, .plugin_dt_img {float: none;}
+  .theme_dt_if, .plugin_dt_if {float: none;padding: 20px !important;width: 100% !important;}
+  .theme_dt_img img, .plugin_dt_img img {width: 100%;}
+  
   /* 부가서비스 */
   .sevice_1 {width: 100%;margin-right: 0;margin-bottom: 20px;}
   .service_2 .svc_ri .svc_a {padding: 10px;}
