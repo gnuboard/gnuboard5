@@ -48,9 +48,91 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 		</div>
 	</div>
     <div id="hd_wrapper">
-        <div id="logo">
-        	<a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a>
-        </div>
+    
+    <div class="sch_wrapper">
+      <div>
+        <button type="button" id="btn_hdcate"><i class="fa fa-bars"></i><span class="sound_only">분류</span></button>
+        <button type="button" id="btn_hdsch"><i class="fa fa-search"></i><span class="sound_only">검색열기</span></button>
+      </div>
+      <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
+        <aside id="hd_sch" class="mo_sch">
+            <div class="sch_inner">
+                <h2>상품 검색</h2>
+                <label for="sch_str" class="sound_only">상품명<strong class="sound_only"> 필수</strong></label>
+                <input type="text" name="q" value="<?php echo stripslashes(get_text(get_search_string($q))); ?>" id="sch_str" required class="frm_input" placeholder="검색어를 입력해주세요">
+                <button type="submit" value="검색" class="sch_submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+            <button type="button" class="btn_close"><i class="fa fa-times"></i><span class="sound_only">닫기</span></button>
+        </aside>
+      </form>
+    </div>
+
+    <script>
+    function search_submit(f) {
+        if (f.q.value.length < 2) {
+            alert("검색어는 두글자 이상 입력하십시오.");
+            f.q.select();
+            f.q.focus();
+            return false;
+        }
+
+        return true;
+    }
+    </script>     
+
+    <script>
+    jQuery(function($){
+        $( document ).ready( function() {
+            
+            function catetory_menu_fn( is_open ){
+                var $cagegory = $("#category");
+
+                if( is_open ){
+                    $cagegory.show();
+                    $("body").addClass("is_hidden");
+                } else {
+                    $cagegory.hide();
+                    $("body").removeClass("is_hidden");
+                }
+            }
+
+            $(document).on("click", "#btn_hdcate", function(e) {
+                // 오픈
+                catetory_menu_fn(1);
+            }).on("click", ".menu_close", function(e) {
+                // 숨김
+                catetory_menu_fn(0);
+            }).on("click", ".cate_bg", function(e) {
+                // 숨김
+                catetory_menu_fn(0);
+            });
+
+            $("#btn_hdsch").on("click", function() {
+                $(".mo_sch").addClass("active");
+            });
+
+            $("#hd_sch .btn_close").on("click", function() {
+                $(".mo_sch").removeClass("active");
+            });
+            
+            //타이틀 영역고정
+            var jbOffset = $( '#container').offset();
+            $( window ).scroll( function() {
+                if ( $( document ).scrollTop() > jbOffset.top ) {
+                    $( '#container').addClass( 'fixed' );
+                }
+                else {
+                    $( '#container').removeClass( 'fixed' );
+                }
+            });
+        });
+    });
+   </script>
+
+    
+    <div id="logo">
+      <a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a>
+    </div>
 		
 		<div class="hd_sch_wr">
 	        <fieldset id="hd_sch">
@@ -82,13 +164,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 			<li class="shop_login">
 				<?php echo outlogin('theme/shop_basic'); // 아웃로그인 ?>	
 			</li>
+			<li class="mo_mypage"> <a href="<?php echo G5_SHOP_URL; ?>/mypage.php" id="btn_hduser"><i class="fa fa-user"></i><span class="sound_only">마이페이지</span></a></li>
 			<li class="shop_cart"><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="sound_only">장바구니</span><span class="count"><?php echo get_boxcart_datas_count(); ?></span></a></li>
             <?php } else { ?>
             <li class="login"><a href="<?php echo G5_BBS_URL ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
             <?php }  ?>
         </ul>
     </div>
-
+    
     <div id="hd_menu">
     	<button type="button" id="menu_open"><i class="fa fa-bars" aria-hidden="true"></i> 카테고리</button>
 		<?php include_once(G5_THEME_SHOP_PATH.'/category.php'); // 분류 ?>
