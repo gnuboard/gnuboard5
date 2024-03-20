@@ -1142,8 +1142,15 @@ input[type="text"]{max-width:200px}
 
   /* 상단배너 */
   #container {padding: 0;}
+  #container_title {height: 100px;}
   #container_title, #container.container-small #container_title {padding-left: 20px;}
+  #container_title, #container.container-small #container_title {top: 100px;}
+  #btn_gnb.btn_gnb_open {display: none;}
   #container.container-small {padding-left: 0;}
+  #hd_top {display: flex;flex-direction: column;height: auto;}
+  #gnb {padding-top: 200px;}
+  #logo {background: transparent;height: 50px;padding: 15px 0;width: 180px;}
+  .btn_fixed_top {top: 155px;left: 20px;}
 
   /* table */
   .tbl_wrap {overflow-x: auto;}
