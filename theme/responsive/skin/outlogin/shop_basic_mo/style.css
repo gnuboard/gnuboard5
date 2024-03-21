@@ -1,0 +1,33 @@
+@charset "utf-8";
+.ol {position:relative;margin:0 0 10px;position:relative}
+#ol_before h2 {width:0;height:0;overflow:hidden}
+#ol_after h2 {width:0;height:0;overflow:hidden}
+
+#ol_before{background:#212020;;color:#fff;padding-left:10px;}
+#ol_before .ol_before_link{display:inline-block;margin:10px 3px;}
+#ol_before .ol_before_link a{display:inline-block;padding:0 10px;line-height:33px;border-radius:3px}
+#ol_before .ol_before_link .login{color:#fff;background:#3a8afd;line-height:35px}
+#ol_before .ol_before_link .join{color:#fff;border:1px solid #787878}
+
+#ol_after_hd{background:#212020;margin-bottom:10px;padding:15px 10px 15px 70px;text-align:left;position:relative;color:#fff;line-height:20px;}
+#ol_after_hd .nickname{color:#fff;display:block}
+#ol_after_hd strong {color:#3a8afd}
+#ol_after_hd .point{color:#c7d4e6;font-size:0.92em}
+#ol_after_hd .profile_img{display:inline-block;position:absolute;top:15px;left:15px}
+#ol_after_hd .profile_img img{border-radius:50%;width:40px;height:40px}
+#ol_after_info{position:absolute;bottom:0;right:-5px;text-align:center;background:#212020;width:20px;height:20px;line-height:20px;color:#fff;font-size:13px;border-radius:50%}
+
+#ol_after_private {margin:10px 0 ;padding:0;list-style:none;}
+#ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_after_private li {position:relative;float:left;width:50%;}
+#ol_after_private li:first-child{border-right:1px solid #efefef}
+#ol_after_private a {color:#333;line-height:43px;background:#fff;display:block;border-bottom:1px solid #ddd;text-align:center;padding:0 10px 0 40px;text-align:left}
+#ol_after_private i{position:absolute;top:0;left:0;font-size:15px;line-height:43px;width:40px;text-align:center;color:#a5a8ac}
+#ol_after_private strong{position:absolute;top:12px;right:10px;font-size:0.846em;padding:0 5px;background:#37bc9b;color:#fff;line-height:20px;border-radius:35px}
+#ol_after_private .win_coupon strong{background:#a352c1}
+
+#ol_after_btn {position:absolute;top:20px;right:40px}
+#ol_after_btn a{display:inline-block;padding:0 10px;line-height:28px;font-weight:bold;border:1px solid #787878;background:none;color:#fff;vertical-align:top;border-radius:3px}
+#ol_after_btn .btn_admin {display:inline-block;padding:0 10px;border:0;text-align:center;margin:0;line-height:30px;background:#ff0000}
+
+#ol_after_logout{background:#fff;color:#555} 
