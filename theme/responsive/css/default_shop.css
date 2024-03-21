@@ -1367,4 +1367,11 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   #up {position:absolute;top:0px;right:30px;height:50px;width:30px;border:0;background:none;color:#ccc}
   #down {position:absolute;top:0px;right:0px;height:50px;width:30px;border:0;background:none;color:#ccc}
   #stv .li_empty {text-align:center;padding: 50px 0;color:#666}
+
+  /* 마이페이지 */
+  #smb_my_ov {width: 100%;margin-bottom: 20px;}
+  #container .shop-content {margin: 0 20px;}
+  #smb_my_list {width: 100%;}
+  .tbl_head03.tbl_wrap {width: 100%;overflow-x: scroll;}
+  .tbl_head03 table {width: 915px;}
 }
