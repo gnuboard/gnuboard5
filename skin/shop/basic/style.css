@@ -39,19 +39,22 @@
 .gnb_2da:focus, .gnb_2da:hover {text-decoration:none;color:#3a8afd}
 
 /* 오늘 본 상품 */
-#stv {position:relative;height:100%}
-#stv .li_empty {text-align:center;line-height:100px}
-#stv_pg {display:block;position:fixed;right:0;bottom:0;width:229px;text-align:center;margin:10px 0 0;padding:15px;line-height:20px;background:#fff}
-.stv_item {display:none;padding:15px;word-break:break-all;border-bottom:1px solid #f6f6f6}
-.stv_item:after {display:block;visibility:hidden;clear:both;content:""}
-.stv_item .prd_img {display:inline-block;float:left;margin-right:10px}
-.stv_item .prd_cnt {display:inline-block;float:left}
-.stv_item .prd_cnt span {display:block;max-width:105px}
-.stv_item .prd_cnt .prd_name {font-weight:bold;margin-bottom:3px}
+@media (min-width:1024px) {
+  #stv {position:relative;height:100%}
+  #stv .li_empty {text-align:center;line-height:100px}
+  #stv_pg {display:block;position:fixed;right:0;bottom:0;width:229px;text-align:center;margin:10px 0 0;padding:15px;line-height:20px;background:#fff}
+  .stv_item {display:none;padding:15px;word-break:break-all;border-bottom:1px solid #f6f6f6}
+  .stv_item:after {display:block;visibility:hidden;clear:both;content:""}
+  .stv_item .prd_img {display:inline-block;float:left;margin-right:10px}
+  .stv_item .prd_cnt {display:inline-block;float:left}
+  .stv_item .prd_cnt span {display:block;max-width:105px}
+  .stv_item .prd_cnt .prd_name {font-weight:bold;margin-bottom:3px}
+  
+  #stv_btn {position:absolute;top:10px;right:10px;width:60px;height:50px}
+  #up {position:absolute;top:0;left:0;background:url('img/btn_sb_prev.png') no-repeat 50% 50%;width:30px;height:30px;text-indent:-999px;overflow:hidden;border:0}
+  #down {position:absolute;top:0;right:0;background:url('img/btn_sb_next.png') no-repeat 50% 50%;width:30px;height:30px;text-indent:-999px;overflow:hidden;border:0}
+}
 
-#stv_btn {position:absolute;top:10px;right:10px;width:60px;height:50px}
-#up {position:absolute;top:0;left:0;background:url('img/btn_sb_prev.png') no-repeat 50% 50%;width:30px;height:30px;text-indent:-999px;overflow:hidden;border:0}
-#down {position:absolute;top:0;right:0;background:url('img/btn_sb_next.png') no-repeat 50% 50%;width:30px;height:30px;text-indent:-999px;overflow:hidden;border:0}
 
 /* 이벤트 링크 */
 #sev {margin:20px 0;text-align:center}
