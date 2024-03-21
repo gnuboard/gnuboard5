@@ -80,32 +80,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
     }
     </script>     
 
-    <script>
+
+  <script>
     jQuery(function($){
         $( document ).ready( function() {
-            
-            function catetory_menu_fn( is_open ){
-                var $cagegory = $("#category");
-
-                if( is_open ){
-                    $cagegory.show();
-                    $("body").addClass("is_hidden");
-                } else {
-                    $cagegory.hide();
-                    $("body").removeClass("is_hidden");
-                }
-            }
-
-            $(document).on("click", "#btn_hdcate", function(e) {
-                // 오픈
-                catetory_menu_fn(1);
-            }).on("click", ".menu_close", function(e) {
-                // 숨김
-                catetory_menu_fn(0);
-            }).on("click", ".cate_bg", function(e) {
-                // 숨김
-                catetory_menu_fn(0);
-            });
 
             $("#btn_hdsch").on("click", function() {
                 $(".mo_sch").addClass("active");
@@ -114,22 +92,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
             $("#hd_sch .btn_close").on("click", function() {
                 $(".mo_sch").removeClass("active");
             });
-            
-            //타이틀 영역고정
-            var jbOffset = $( '#container').offset();
-            $( window ).scroll( function() {
-                if ( $( document ).scrollTop() > jbOffset.top ) {
-                    $( '#container').addClass( 'fixed' );
-                }
-                else {
-                    $( '#container').removeClass( 'fixed' );
-                }
-            });
+           
         });
     });
    </script>
 
-    
+  <?php include_once(G5_THEME_SHOP_PATH.'/category_mo.php'); // 분류 ?>
+
     <div id="logo">
       <a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a>
     </div>
@@ -154,7 +123,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 	            }
 	            </script>
 	        </fieldset>
-		</div>
+      </div>
         <!-- 쇼핑몰 배너 시작 { -->
         <?php // echo display_banner('왼쪽'); ?>
         <!-- } 쇼핑몰 배너 끝 -->
