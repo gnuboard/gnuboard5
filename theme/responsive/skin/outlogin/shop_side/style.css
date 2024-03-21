@@ -52,7 +52,6 @@
 
 #s_ol_after_logout {display:inline-block;height:28px;line-height:22px;border:1px solid #d5d9dd;color:#8a8a8a;border-radius:2px;padding:2px 5px}
 #s_ol_after_logout:hover {color:#3c8bfd}
-#ol_after_memo {margin-right:1px}
 #ol_after_pt {margin-right:1px}
 
 .selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
