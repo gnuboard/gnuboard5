@@ -41,13 +41,6 @@ $admin = get_admin("super");
 			</p>
 	    </div>
 	    
-	    <!-- 커뮤니티 최신글 시작 { -->
-        <section id="sidx_lat">
-            <?php echo latest('theme/notice', 'notice', 5, 30); ?>
-        </section>
-        <!-- } 커뮤니티 최신글 끝 -->
-
-		<?php echo visit('theme/shop_basic'); // 접속자 ?>
     </div>
 
     <div id="ft_copy">Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.</div>

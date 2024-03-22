@@ -49,7 +49,7 @@ border:1px solid #558ab7 !important;
 
 #gnb .gnb_wrap,
 #container_wr,
-#ft_wr {max-width:1200px}
+#ft_wr {max-width:1200px;width: 100%;}
 
 /* 팝업레이어 */
 #hd_pop {z-index:1000;position:relative;margin:0 auto;width:1200px;height:0}
@@ -1370,8 +1370,14 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 
   /* 마이페이지 */
   #smb_my_ov {width: 100%;margin-bottom: 20px;}
-  #container .shop-content {margin: 0 20px;}
   #smb_my_list {width: 100%;}
   .tbl_head03.tbl_wrap {width: 100%;overflow-x: scroll;}
   .tbl_head03 table {width: 915px;}
+
+  /* 푸터 */
+  #ft_wr .ft_cnt {width:100%;display: flex;justify-content: center;text-align: center;}
+  #ft_wr #ft_company {margin-top: 20px;}
+  #ft_link a {padding: 0 10px;}
+  #ft_company h2 {display: none;}
+
 }
