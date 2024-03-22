@@ -1160,9 +1160,9 @@ input[type="text"]{max-width:200px}
   .tbl_frm01.tbl_wrap table tr {display: grid;grid-template-columns: 25% 75%;margin-bottom: 10px;}
   .tbl_frm01.tbl_wrap table th, .tbl_frm01.tbl_wrap table td {width: 100%;}
   .tbl_frm01.tbl_wrap table .frm_input, .tbl_frm01.tbl_wrap table select {width: 100%;}
-  form[name="fboardform"] .tbl_frm01 tr:not(.no_grpset) {grid-template-columns: 25% 50% 25%;}   
+  form[name="fboardform"] .tbl_frm01 tr:not(.no_grpset),form[name="fitemform"] .tbl_frm01 tr:not(.no_grpset) {grid-template-columns: 25% 50% 25%;}   
   .td_extra input {width: 100% !important;}
-  #fsendmailtest .frm_input {width: calc(100% - 140px)}
+  #fsendmailtest .frm_input, #anc_sitfrm_extra .frm_input {width: calc(100% - 140px)}
 
   /* 테마 */
   #theme_list {flex-wrap: wrap;}

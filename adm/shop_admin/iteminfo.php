@@ -48,7 +48,7 @@ if(isset($it['it_id']) && $it['it_id']) {
                 $el_value = $info_value[$key];
     ?>
 
-    <tr>
+    <tr <?php if ($el_no !== 0) { echo 'class="no_grpset"'; } ?>>
         <th scope="row"><label for="ii_article_<?php echo $el_name; ?>"><?php echo $el_title; ?></label></th>
         <td>
             <input type="hidden" name="ii_article[]" value="<?php echo $el_name; ?>">

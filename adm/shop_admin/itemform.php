@@ -235,7 +235,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <col>
         </colgroup>
         <tbody>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="ca_id">기본분류</label></th>
             <td>
                 <?php if ($w == "") echo help("기본분류를 선택하면, 판매/재고/HTML사용/판매자 E-mail 등을, 선택한 분류의 기본값으로 설정합니다."); ?>
@@ -259,7 +259,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             </td>
         </tr>
         <?php for ($i=2; $i<=3; $i++) { ?>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="ca_id<?php echo $i; ?>"><?php echo $i; ?>차 분류</label></th>
             <td>
                 <?php echo help($i.'차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.'); ?>
@@ -330,7 +330,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <col class="grid_3">
         </colgroup>
         <tbody>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row">상품코드</th>
             <td colspan="2">
                 <?php if ($w == '') { // 추가 ?>
@@ -345,7 +345,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <?php } ?>
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="it_name">상품명</label></th>
             <td colspan="2">
                 <?php echo help("HTML 입력이 불가합니다."); ?>
@@ -491,18 +491,18 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_all_it_nocoupon">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="ec_mall_pid">네이버쇼핑 상품ID</label></th>
             <td colspan="2">
                 <?php echo help("네이버쇼핑에 입점한 경우 네이버쇼핑 상품ID를 입력하시면 네이버페이와 연동됩니다.<br>일부 쇼핑몰의 경우 네이버쇼핑 상품ID 대신 쇼핑몰 상품ID를 입력해야 하는 경우가 있습니다.<br>네이버페이 연동과정에서 이 부분에 대한 안내가 이뤄지니 안내받은 대로 값을 입력하시면 됩니다."); ?>
                 <input type="text" name="ec_mall_pid" value="<?php echo get_text($it['ec_mall_pid']); ?>" id="ec_mall_pid" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row">상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_explan', get_text(html_purifier($it['it_explan']), 0)); ?></td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row">모바일 상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_mobile_explan', get_text(html_purifier($it['it_mobile_explan']), 0)); ?></td>
         </tr>
@@ -679,7 +679,7 @@ $(function(){
                 <label for="chk_all_it_soldout">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="it_stock_sms">재입고SMS 알림</label></th>
             <td colspan="2">
                 <?php echo help("상품이 품절인 경우에 체크해 놓으면 상품상세보기에서 고객이 재입고SMS 알림을 신청할 수 있게 됩니다."); ?>
@@ -757,7 +757,7 @@ $(function(){
         <?php
         $opt_subject = explode(',', $it['it_option_subject']);
         ?>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row">상품선택옵션</th>
             <td colspan="2">
                 <div class="sit_option tbl_frm01">
@@ -769,7 +769,7 @@ $(function(){
                         <col>
                     </colgroup>
                     <tbody>
-                    <tr>
+                    <tr class="no_grpset">
                         <th scope="row">
                             <label for="opt1_subject">옵션1</label>
                             <input type="text" name="opt1_subject" value="<?php echo isset($opt_subject[0]) ? $opt_subject[0] : ''; ?>" id="opt1_subject" class="frm_input" size="15">
@@ -779,7 +779,7 @@ $(function(){
                             <input type="text" name="opt1" value="" id="opt1" class="frm_input" size="50">
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="no_grpset">
                         <th scope="row">
                             <label for="opt2_subject">옵션2</label>
                             <input type="text" name="opt2_subject" value="<?php echo isset($opt_subject[1]) ? $opt_subject[1] : ''; ?>" id="opt2_subject" class="frm_input" size="15">
@@ -789,7 +789,7 @@ $(function(){
                             <input type="text" name="opt2" value="" id="opt2" class="frm_input" size="50">
                         </td>
                     </tr>
-                     <tr>
+                     <tr class="no_grpset">
                         <th scope="row">
                             <label for="opt3_subject">옵션3</label>
                             <input type="text" name="opt3_subject" value="<?php echo isset($opt_subject[2]) ? $opt_subject[2] : ''; ?>" id="opt3_subject" class="frm_input" size="15">
@@ -936,7 +936,7 @@ $(function(){
         $spl_subject = explode(',', $it['it_supply_subject']);
         $spl_count = count($spl_subject);
         ?>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row">상품추가옵션</th>
             <td colspan="2">
                 <div id="sit_supply_frm" class="sit_option tbl_frm01">
@@ -1329,7 +1329,7 @@ $(function(){
         </colgroup>
         <tbody>
         <?php for($i=1; $i<=10; $i++) { ?>
-        <tr>
+        <tr class="no_grpset">
             <th scope="row"><label for="it_img<?php echo $i; ?>">이미지 <?php echo $i; ?></label></th>
             <td>
                 <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
