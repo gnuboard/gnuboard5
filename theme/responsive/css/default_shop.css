@@ -663,8 +663,8 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .btn_cart_del button {height:30px;padding:0 10px;border:1px solid #d4d6db;border-radius:5px;background:#fff;color:#666}
 #sod_bsk_list {position:relative}
 #sod_bsk #sod_bsk_tot {border:1px solid #212a37;margin:20px 0}
-#sod_bsk #sod_bsk_tot ul:after {display:block;visibility:hidden;clear:both;content:""}
-#sod_bsk #sod_bsk_tot li {float:left;width:33.333%;background:#4a505a;color:#fff;border-left:1px solid #212a37;text-align:right;padding:25px;font-size:1.167em}
+#sod_bsk #sod_bsk_tot ul {display: flex;flex-wrap: wrap;}
+#sod_bsk #sod_bsk_tot li {width:33.333%;background:#4a505a;color:#fff;border-left:1px solid #212a37;text-align:right;padding:25px;font-size:1.167em}
 #sod_bsk #sod_bsk_tot li:first-child {border:0}
 #sod_bsk #sod_bsk_tot li span {display:inline-block;float:left}
 #sod_bsk #sod_bsk_tot .sod_bsk_cnt {width:33.335%;background:#212a37}
@@ -1380,4 +1380,8 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   #ft_link a {padding: 0 10px;}
   #ft_company h2 {display: none;}
 
+  /* 장바구니 */
+  #container .shop-content {padding: 1px 10px;}
+  #sod_bsk #sod_bsk_tot li:nth-child(-n+2) {width: 50%;}
+  #sod_bsk #sod_bsk_tot li:last-child {width: 100%;}
 }
