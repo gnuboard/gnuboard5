@@ -1327,7 +1327,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   /* 컨텐츠 */
   #container .is_index {margin-left: 0;}
   #btn_hdcate, #btn_hdsch {display: inline-block;}
-  .sct_wrap {padding: 0 20px;}
+  .sct_wrap {padding: 0;}
 
   /*카테고리*/
   .menu.active {display: block;}

@@ -41,7 +41,11 @@
 /* 오늘 본 상품 */
 #stv {position:relative;}
 #stv .li_empty {text-align:center;line-height:100px}
-#stv_pg {display:block;position:fixed;right:0;bottom:0;width:229px;text-align:center;margin:10px 0 0;padding:15px;line-height:20px;background:#fff}
+
+@media (min-width:1200px) {
+  #stv_pg {display:block;position:fixed;right:0;bottom:0;width:229px;text-align:center;margin:10px 0 0;padding:15px;line-height:20px;background:#fff}
+}
+
 .stv_item {display:none;padding:15px;word-break:break-all;border-bottom:1px solid #f6f6f6}
 .stv_item:after {display:block;visibility:hidden;clear:both;content:""}
 .stv_item .prd_img {display:inline-block;float:left;margin-right:10px}
@@ -993,5 +997,6 @@ box-shadow:0px 1px 6px 0 #dedede
   #sps_sch .sch_input, #sqa_sch .sch_input {width: calc(100% - 40px);}
   .sit_qa_li_title, .sit_qa_dl {width: 100%;}
   #sit_tab .tab_tit li {width: 50%;}
+  .sct img {width: 100%;object-fit: contain;}
   }
 
