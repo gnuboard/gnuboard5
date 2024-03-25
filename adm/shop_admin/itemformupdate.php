@@ -285,8 +285,8 @@ if($supply_count) {
 $value_array = array();
 $count_ii_article = (isset($_POST['ii_article']) && is_array($_POST['ii_article'])) ? count($_POST['ii_article']) : 0;
 for($i=0; $i<$count_ii_article; $i++) {
-    $key = isset($_POST['ii_article'][$i]) ? strip_tags($_POST['ii_article'][$i], '<br><span><strong><b>') : '';
-    $val = isset($_POST['ii_value'][$i]) ? strip_tags($_POST['ii_value'][$i], '<br><span><strong><b>') : '';
+    $key = isset($_POST['ii_article'][$i]) ? html_purifier($_POST['ii_article'][$i]) : '';
+    $val = isset($_POST['ii_value'][$i]) ? html_purifier($_POST['ii_value'][$i]) : '';
     $value_array[$key] = $val;
 }
 $it_info_value = addslashes(serialize($value_array));
