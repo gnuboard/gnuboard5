@@ -727,7 +727,7 @@ box-shadow: 1px 2px 2px #eee;}
 .od_coupon .td_mngsmall{width:60px}
 
 /* 주문서 작성 - 왼쪽 */
-.sod_left {display:inline-block;float:left;width:840px;margin-right:20px;vertical-align:top}
+.sod_left {display:inline-block;float:left;width:calc(100% - 360px);margin-right:20px;vertical-align:top}
 
 /* 주문서 작성 - 주문하시는 분 */
 #sod_frm .tbl_frm01 {padding:20px 10px}
@@ -1372,7 +1372,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   #smb_my_ov {width: 100%;margin-bottom: 20px;}
   #smb_my_list {width: 100%;}
   .tbl_head03.tbl_wrap {width: 100%;overflow-x: scroll;}
-  .tbl_head03 table {width: 915px;}
+  .tbl_head03 table {width: 1000px}
 
   /* 푸터 */
   #ft_wr .ft_cnt {width:100%;display: flex;justify-content: center;text-align: center;}
@@ -1384,5 +1384,9 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   #container .shop-content {padding: 1px 10px;}
   #sod_bsk #sod_bsk_tot li:nth-child(-n+2) {width: 50%;}
   #sod_bsk #sod_bsk_tot li:last-child {width: 100%;}
+
+  /* 주문서 작성 */
+  .sod_left, .sod_right {width: 100%;}
+  #sod_frm_taker .tbl_frm01 .btn_frmline {position: static;vertical-align: middle;}
 
 }
