@@ -39,7 +39,7 @@
 .gnb_2da:focus, .gnb_2da:hover {text-decoration:none;color:#3a8afd}
 
 /* 오늘 본 상품 */
-#stv {position:relative;height:100%}
+#stv {position:relative;}
 #stv .li_empty {text-align:center;line-height:100px}
 #stv_pg {display:block;position:fixed;right:0;bottom:0;width:229px;text-align:center;margin:10px 0 0;padding:15px;line-height:20px;background:#fff}
 .stv_item {display:none;padding:15px;word-break:break-all;border-bottom:1px solid #f6f6f6}
@@ -510,18 +510,16 @@
 
 /* 상품 상세보기 - 개요 */
 #sit_ov_from {background:#fff;border-bottom:1px solid #e3e3e3;clear:both}
-#sit_ov_wrap {width:1200px;margin:0 auto;padding:45px;border-top:1px solid #e3e3e3}
-#sit_ov_wrap:after {display:block;visibility:hidden;clear:both;content:""}
+#sit_ov_wrap {width:1200px;margin:0 auto;padding:45px;border-top:1px solid #e3e3e3;display: flex;justify-content: space-between;flex-wrap: wrap;}
 
 /* 상품 상세보기 - 이미지 미리보기 */
-#sit_pvi {float:left;position:relative}
-#sit_pvi_big {float:right;text-align:center}
+#sit_pvi {position:relative;display: flex;flex-direction: row-reverse;justify-content: center;}
+#sit_pvi_big {text-align:center}
 #sit_pvi_big a {display:none}
 #sit_pvi_big a.visible {display:block}
 #sit_pvi_big #popup_item_image {display:inline-block;position:absolute;bottom:0;right:0;width:43px;height:43px;line-height:43px;background:#fff;color:#8c9195;border:1px solid #e0e0e0;font-size:1.4em}
 #sit_pvi_big img {width:500px;height:auto}
-#sit_pvi_thumb {float:left;margin:0;padding:0;list-style:none;text-align:center}
-#sit_pvi_thumb:after {display:block;visibility:hidden;clear:both;content:""}
+#sit_pvi_thumb {margin:0;padding:0;list-style:none;text-align:center}
 #sit_pvi_thumb li {margin:0 15px 15px 0}
 #sit_pvi_thumb img {border:1px solid #dbdbdb}
 #sit_pvi_thumb img:hover {border:1px solid #010101}
@@ -535,7 +533,7 @@
 #sit_pvi_nw li img {width:60px;height:60px}
 
 /* 상품 상세보기 - 간략정보 및 구매기능 */
-#sit_ov {position:relative;float:right;width:448px;height:auto !important;height:355px;min-height:355px;padding-bottom:20px}
+#sit_ov {position:relative;width:448px;height:auto !important;height:355px;min-height:355px;padding-bottom:20px;}
 #sit_ov h3 {margin:0 0 10px}
 
 #sit_title {margin:0 0 10px;font-size:2.4em}
@@ -740,9 +738,9 @@ background:url('img/select_arrow.png') no-repeat 96% 50%/* 화살표 아이콘 �
 #sit_qa_ol {margin:0 0 5px;padding:0;border-top:1px solid #f0f0f0;list-style:none}
 .sit_qa_li:after {display:block;visibility:hidden;clear:both;content:""}
 .sit_qa_li {position:relative;border-bottom:1px solid #f0f0f0;padding:15px 10px}
-.sit_qa_li_title {display:block;float:left;width:80%;text-align:left;background:none;border:0;line-height:25px;font-weight:bold;font-size:1.167em}
+.sit_qa_li_title {display:block;float:left;width:calc(100% - 180px);text-align:left;background:none;border:0;line-height:25px;font-weight:bold;font-size:1.167em}
 
-.sit_qa_dl {float:right;width:20%;line-height:30px;color:#7f7f7f;text-align:right;margin:0}
+.sit_qa_dl {float:right;width:170px;line-height:30px;color:#7f7f7f;text-align:right;margin:0}
 .sit_qa_dl:after {display:block;visibility:hidden;clear:both;content:""}
 .sit_qa_dl dt {position:absolute;font-size:0;line-height:0;content:""}
 .sit_qa_dl dd {display:inline-block;margin-left:10px}
@@ -797,7 +795,7 @@ background:url('img/select_arrow.png') no-repeat 96% 50%/* 화살표 아이콘 �
 .sps_img .prd_detail:hover {opacity:1}
 
 .review_detail_cnt {display:none;position:fixed;width:100%;height:100%;top:0;left:0;z-index:999;background:rgba(0,0,0,0.1)}
-.review_detail_in {position:absolute;top:50%;left:50%;width:590px;max-height:450px;background:#fff;text-align:left;margin-left:-300px;margin-top:-180px;overflow-y:auto;border-radius:3px;border:1px solid #dde7e9;background:#fff;border-radius:3px}
+.review_detail_in {position:absolute;top:50%;left:50%;max-width:590px;width: 100%;max-height:450px;background:#fff;text-align:left;margin-top:-180px;transform: translateX(-50%); overflow-y:auto;border-radius:3px;border:1px solid #dde7e9;background:#fff;border-radius:3px}
 .review_detail_in h3 {padding:15px;border-bottom:1px solid #e8e8e8;font-size:1.4em}
 .review_cnt {padding:25px}
 .rd_cls {position:absolute;top:0;right:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
@@ -969,8 +967,30 @@ box-shadow:0px 1px 6px 0 #dedede
   .smt_10 .sct_li, .smt_20 .sct_li, .smt_30 .sct_li {width:calc((100% / 2) - 7.5px);}
   .smt_10 .sct_last, .smt_20 .sct_last, .smt_30 .sct_last {margin-right: 15px;}
   .smt_10 .sct_li:nth-child(2n), .smt_20 .sct_li:nth-child(2n), .smt_30 .sct_li:nth-child(2n) {margin-right: 0;}
-}
-
-@media (max-width:600px) {
+  
+  #sit_ov_wrap {max-width: 1200px;width: 100%;flex-direction: column;}
+  #sit_ov {width:100%;}
+  #sit_pvi_big {width: calc(100% - 90px);height: auto;}
+  #sit_pvi_big a {width: 100%;height: 100%;}
+  #sit_pvi_big img {width: 100%;height: 100%;object-fit: contain;}
+  #sit_info {display: flex;flex-direction: column;}
+  #sit_tab, #sit_buy {width: 100%;}
+  .sqa_section {width: 100%;}
+  }
+  
+  @media (max-width:600px) {
   .smt_10 .sct_img a img {width: 100%;object-fit: contain;}
-}
+  #sit_pvi {width: 100%;flex-direction: column;}
+  #sit_ov_wrap {padding: 45px 20px;}
+  #sit_pvi_big {width: 100%;}
+  #sit_pvi_thumb {display: flex;width: 100%;overflow-x: auto;}
+  #sit_pvi_big #popup_item_image {top: 0;}
+  #sit_ov_btn button {width: 100px;}
+  #sit_use_wbtn, .sit_use_li_title {position: static;margin-top: 20px;}
+  .sps_con_btn button.review_detail {float: none;}
+  #sps_sch select, #sqa_sch select {width: 100%; margin-right: 0;margin-bottom: 10px;}
+  #sps_sch .sch_wr, #sqa_sch .sch_wr {width: calc(100% - 70px);}
+  #sps_sch .sch_input, #sqa_sch .sch_input {width: calc(100% - 40px);}
+  .sit_qa_li_title, .sit_qa_dl {width: 100%;}
+  }
+
