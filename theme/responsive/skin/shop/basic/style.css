@@ -304,7 +304,9 @@
 
 
 /* 개인결제 목록 */
-.sct_pv .sct_li {position:relative;float:left;margin:0 18px 15px 0}
+.sct_pv {display: flex;flex-wrap: wrap;}
+.sct_pv .sct_li {position:relative;margin:0 18px 15px 0;width: calc(25% - 14px) !important;}
+.sct_pv .sct_li:nth-child(4n) {margin-right: 0;}
 .sct_pv .sct_last {margin:0 0 15px !important}
 .sct_pv .sct_clear {clear:both}
 .sct_pv .sct_a {display:inline-block;position:relative;text-decoration:none;font-size:1.1em}
@@ -990,6 +992,10 @@ box-shadow:0px 1px 6px 0 #dedede
     /* 상품 리스트 */
     .sct_10.lists-row {display: flex;flex-wrap: wrap;}
     .sct_10 .sct_li {float: none;width: 33.3333%;}
+
+     /* 개인결제 리스트 */
+    .sct_pv .sct_li {width: calc(50% - 9px) !important;}
+    .sct_pv .sct_li:nth-child(2n) {margin-right: 0;}
   }
   
   @media (max-width:600px) {
