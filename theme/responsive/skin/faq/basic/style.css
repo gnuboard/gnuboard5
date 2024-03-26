@@ -31,3 +31,8 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #faq_sch .sch_tit {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #faq_sch .frm_input {border:1px solid #d0d3db;width:300px;height:45px;border-radius:0;border-radius:3px}
 #faq_sch .btn_submit {padding:0 10px;height:45px;width:88px;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}
+
+@media (max-width:600px) {
+  #faq_sch .frm_input {width: calc(100% - 93px);}
+  #faq_sch {padding: 15px;}
+}
