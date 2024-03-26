@@ -1375,10 +1375,12 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   .tbl_head03 table {width: 1000px}
 
   /* 푸터 */
-  #ft_wr .ft_cnt {width:100%;display: flex;justify-content: center;text-align: center;}
+  #ft_wr .ft_cnt {width:100%;display: flex;flex-wrap: wrap;justify-content: center;text-align: center;}
   #ft_wr #ft_company {margin-top: 20px;}
   #ft_link a {padding: 0 10px;}
   #ft_company h2 {display: none;}
+  #ft_wr .ft_cnt li {width: 50%;}
+  #ft_link a {padding: 5px 10px;}
 
   /* 장바구니 */
   #container .shop-content {padding: 1px 10px;}
