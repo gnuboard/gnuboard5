@@ -897,8 +897,8 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 #ssch_frm p {padding:15px;color:#737373;border-bottom:1px solid #e3e5e8}
 
 #ssch_cate {background:#fff;border-bottom:1px solid #e3e5e8;padding:15px}
-#ssch_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
-#ssch_cate li {float:left;width:20%;border-right:1px solid #f6f6f6}
+#ssch_cate ul {display:flex;flex-wrap: wrap;}
+#ssch_cate li {width:20%;border-right:1px solid #f6f6f6}
 #ssch_cate li:nth-child(5n) {border-right:0}
 #ssch_cate li span {font-weight:normal}
 #ssch_cate a {display:block;padding:0 10px;line-height:40px}
@@ -916,8 +916,8 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 #ssch_sort li:first-child a {border:0}
 
 #ssch_sort_all {margin:0;padding:0 15px;list-style:none}
-#ssch_sort_all:after {display:block;visibility:hidden;clear:both;content:""}
-#ssch_sort_all li {float:left;position:relative;margin-left:-1px;height:45px;padding:15px 0;line-height:15px}
+#ssch_sort_all {display:flex;flex-wrap: wrap;}
+#ssch_sort_all li {position:relative;margin-left:-1px;width: 33.3333%;height:45px;padding:15px 0;line-height:15px}
 #ssch_sort_all li a {display:block;padding:0 10px}
 #ssch_sort_all li:hover:after {content:"";position:absolute;left:0;bottom:-1px;width:100%;height:2px;background:#3a8afd}
 #ssch_sort_all li:hover a {color:#3a8afd}
@@ -968,43 +968,55 @@ box-shadow:0px 1px 6px 0 #dedede
 
 
 @media (max-width:1200px) {
-  .smt_10 .sct_li, .smt_20 .sct_li, .smt_30 .sct_li {width:calc((100% / 2) - 7.5px);}
-  .smt_10 .sct_last, .smt_20 .sct_last, .smt_30 .sct_last {margin-right: 15px;}
-  .smt_10 .sct_li:nth-child(2n), .smt_20 .sct_li:nth-child(2n), .smt_30 .sct_li:nth-child(2n) {margin-right: 0;}
-  
-  #sit_ov_wrap {max-width: 1200px;width: 100%;flex-direction: column;}
-  #sit_ov {width:100%;}
-  #sit_pvi_big {width: calc(100% - 90px);height: auto;}
-  #sit_pvi_big a {width: 100%;height: 100%;}
-  #sit_pvi_big img {width: 100%;height: 100%;object-fit: contain;}
-  #sit_info {display: flex;flex-direction: column;}
-  #sit_tab, #sit_buy {width: 100%;}
-  .sqa_section {width: 100%;}
+    /* 상품 상세보기 */
+    .smt_10 .sct_li, .smt_20 .sct_li, .smt_30 .sct_li {width:calc((100% / 2) - 7.5px);}
+    .smt_10 .sct_last, .smt_20 .sct_last, .smt_30 .sct_last {margin-right: 15px;}
+    .smt_10 .sct_li:nth-child(2n), .smt_20 .sct_li:nth-child(2n), .smt_30 .sct_li:nth-child(2n) {margin-right: 0;}
+    #sit_ov_wrap {max-width: 1200px;width: 100%;flex-direction: column;}
+    #sit_ov {width:100%;}
+    #sit_pvi_big {width: calc(100% - 90px);height: auto;}
+    #sit_pvi_big a {width: 100%;height: 100%;}
+    #sit_pvi_big img {width: 100%;height: 100%;object-fit: contain;}
+    #sit_info {display: flex;flex-direction: column;}
+    #sit_tab, #sit_buy {width: 100%;}
+    .sqa_section {width: 100%;}
   }
 
   @media (max-width:1000px) {
+    /* 쿠폰존 */
     .couponzone_list ul li {width: calc(50% - 15px);}
     .couponzone_list ul li:nth-child(2n+1) {margin-left: 0;}
   }
   
   @media (max-width:600px) {
-  .smt_10 .sct_img a img {width: 100%;object-fit: contain;}
-  #sit_pvi {width: 100%;flex-direction: column;}
-  #sit_ov_wrap {padding: 45px 20px;}
-  #sit_pvi_big {width: 100%;}
-  #sit_pvi_thumb {display: flex;width: 100%;overflow-x: auto;}
-  #sit_pvi_big #popup_item_image {top: 0;}
-  #sit_ov_btn button {width: 100px;}
-  #sit_use_wbtn, .sit_use_li_title {position: static;margin-top: 20px;}
-  .sps_con_btn button.review_detail {float: none;}
-  #sps_sch select, #sqa_sch select {width: 100%; margin-right: 0;margin-bottom: 10px;}
-  #sps_sch .sch_wr, #sqa_sch .sch_wr {width: calc(100% - 70px);}
-  #sps_sch .sch_input, #sqa_sch .sch_input {width: calc(100% - 40px);}
-  .sit_qa_li_title, .sit_qa_dl {width: 100%;}
-  #sit_tab .tab_tit li {width: 50%;}
-  .sct img {width: 100%;object-fit: contain;}
-  .couponzone_list ul li {margin-left: 0;width: 100%;}
-  .couponzone_list .couponzone_tit {flex-direction: column;align-items: flex-start;}
-  .couponzone_list .couponzone_tit p {margin-top: 4px;}
+    /* 상품 상세보기 */
+    .smt_10 .sct_img a img {width: 100%;object-fit: contain;}
+    #sit_pvi {width: 100%;flex-direction: column;}
+    #sit_ov_wrap {padding: 45px 20px;}
+    #sit_pvi_big {width: 100%;}
+    #sit_pvi_thumb {display: flex;width: 100%;overflow-x: auto;}
+    #sit_pvi_big #popup_item_image {top: 0;}
+    #sit_ov_btn button {width: 100px;}
+    #sit_use_wbtn, .sit_use_li_title {position: static;margin-top: 20px;}
+    .sps_con_btn button.review_detail {float: none;}
+    #sps_sch select, #sqa_sch select {width: 100%; margin-right: 0;margin-bottom: 10px;}
+    #sps_sch .sch_wr, #sqa_sch .sch_wr {width: calc(100% - 70px);}
+    #sps_sch .sch_input, #sqa_sch .sch_input {width: calc(100% - 40px);}
+    .sit_qa_li_title, .sit_qa_dl {width: 100%;}
+    #sit_tab .tab_tit li {width: 50%;}
+    .sct img {width: 100%;object-fit: contain;}
+    
+    /* 쿠폰존 */
+    .couponzone_list ul li {margin-left: 0;width: 100%;}
+    .couponzone_list .couponzone_tit {flex-direction: column;align-items: flex-start;}
+    .couponzone_list .couponzone_tit p {margin-top: 4px;}
+
+    /* 검색결과 */
+    #ssch_frm .ssch_scharea .ssch_input {width: calc(100% - 123px);}
+    #ssch_frm .ssch_option .ssch_br {display: block;margin-bottom: 10px;}
+    #ssch_cate li {width: 50%;}
+    #ssch_sort_all {padding: 0;}
+    #ssch_sort_all li a {text-align: center;}
+    .is_search .lists-row .col-row-5 {width: 50%; height: 400px !important;}
   }
 
