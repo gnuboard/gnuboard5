@@ -986,6 +986,10 @@ box-shadow:0px 1px 6px 0 #dedede
     /* 쿠폰존 */
     .couponzone_list ul li {width: calc(50% - 15px);}
     .couponzone_list ul li:nth-child(2n+1) {margin-left: 0;}
+
+    /* 상품 리스트 */
+    .sct_10.lists-row {display: flex;flex-wrap: wrap;}
+    .sct_10 .sct_li {float: none;width: 33.3333%;}
   }
   
   @media (max-width:600px) {
@@ -1017,6 +1021,8 @@ box-shadow:0px 1px 6px 0 #dedede
     #ssch_cate li {width: 50%;}
     #ssch_sort_all {padding: 0;}
     #ssch_sort_all li a {text-align: center;}
-    .is_search .lists-row .col-row-5 {width: 50%; height: 400px !important;}
+
+     /* 상품 리스트 */
+    .sct_10 .sct_li {width: 50%;}
   }
 
