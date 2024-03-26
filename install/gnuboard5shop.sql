@@ -209,6 +209,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_coupon_zone` (
 
 DROP TABLE IF EXISTS `g5_shop_default`;
 CREATE TABLE IF NOT EXISTS `g5_shop_default` (
+  `de_id` int(11) NOT NULL auto_increment,
   `de_admin_company_owner` varchar(255) NOT NULL DEFAULT '',
   `de_admin_company_name` varchar(255) NOT NULL DEFAULT '',
   `de_admin_company_saupja_no` varchar(255) NOT NULL DEFAULT '',
@@ -386,7 +387,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_member_reg_coupon_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_member_reg_coupon_term` int(11) NOT NULL DEFAULT '0',
   `de_member_reg_coupon_price` int(11) NOT NULL DEFAULT '0',
-  `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0'
+  `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`de_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
