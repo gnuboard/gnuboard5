@@ -996,6 +996,8 @@ box-shadow:0px 1px 6px 0 #dedede
      /* 개인결제 리스트 */
     .sct_pv .sct_li {width: calc(50% - 9px) !important;}
     .sct_pv .sct_li:nth-child(2n) {margin-right: 0;}
+    .sct_pv .sct_img a {width: 100%;}
+    .sct_pv .sct_img img {width: 100%;height: auto;}
   }
   
   @media (max-width:600px) {
@@ -1030,5 +1032,7 @@ box-shadow:0px 1px 6px 0 #dedede
 
      /* 상품 리스트 */
     .sct_10 .sct_li {width: 50%;}
+    #sct_sort, #ssch_sort {width: 100%;}
+    #ssch_sort li {width: 33.3333%;text-align: center;}
   }
 
