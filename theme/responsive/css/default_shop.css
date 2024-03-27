@@ -952,7 +952,7 @@ box-shadow: 1px 2px 2px #eee;}
 #sod_ws_act .btn02 {border:1px solid #1c70e9;background:#3a8afd}
 
 #sod_ws li .info_link {display:block;margin:10px 0 5px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;color:#646464;font-weight:bold}
-#sod_ws li .info_date {color:#646464;font-size:0.92em}
+#sod_ws li .info_date {color:#646464;font-size:0.92em;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 #sod_ws li .wish_chk {position:absolute;top:0;left:0;width:30px;text-align:center;line-height:35px;color:#f00}
 #sod_ws li .wish_info {padding:0 35px 10px 30px;position:relative;border-bottom:1px solid #e0e0e0;margin-top:10px;height:45px}
 #sod_ws li .wish_del {position:absolute;top:0;right:0;width:35px;height:35px;line-height:35px;text-align:center;background:#e6e6e6;display:block;font-size:1.25em;color:#777}
@@ -1403,4 +1403,6 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   .list_02 li {width: calc(50% - 9px);}
   .list_02 li:nth-child(3n+1) {margin-left: 18px;}
   .list_02 li:nth-child(2n+1) {margin-left: 0px;}
+  #smb_ws_act .btn01, #sod_ws_act .btn01, #sod_ws_act .btn02, #smb_ws_act .btn02 {width: 100%;}
+  #smb_ws_act .btn01, #sod_ws_act .btn01 {margin-bottom: 10px;}
 }
