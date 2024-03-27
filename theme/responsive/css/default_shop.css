@@ -419,8 +419,8 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 .list_01 li:after {display:block;visibility:hidden;clear:both;content:""}
 .list_01 li:hover {background:#f9f9f9}
 
-.list_02 ul:after {display:block;visibility:hidden;clear:both;content:""}
-.list_02 li {float:left;width:225px;margin:10px 0 20px 18px}
+.list_02 ul {display:flex;flex-wrap: wrap;}
+.list_02 li {width:calc(20% - 15px);margin:10px 0 20px 18px}
 .list_02 li:nth-child(5n+1) {clear:both;margin-left:0}
 
 /*폼 리스트*/
@@ -604,7 +604,7 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .withdrawal {display:block;padding:10px 20px;border-top:1px solid #e8e8e8;color:#c7c7c7}
 
 /* 마이페이지 list */
-#smb_my_list {float:left;width:915px}
+#smb_my_list {float:left;width:calc(100% - 285px)}
 
 #smb_my_od h2 {margin:0 0 10px;font-size:1.25em}
 #smb_my_od {position:relative;margin:0 0 50px}
@@ -944,7 +944,8 @@ box-shadow: 1px 2px 2px #eee;}
 #display_pay_process {padding:20px;text-align:center}
 /* 위시리스트 */
 #sod_ws {}
-.sod_ws_img {width:90px;text-align:center}
+.sod_ws_img {width:100%;text-align:center}
+.sod_ws_img img {width:100%;height: auto;}
 #sod_ws_act {text-align:center;margin:20px 0 30px}
 #sod_ws_act button {height:50px;width:180px;font-weight:bold;font-size:1.167em;border-radius:3px}
 #sod_ws_act .btn01 {border:1px solid #98a3b3}
@@ -1297,9 +1298,13 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 
 @media (max-width:1250px) {
 
-    /* 사이드 메뉴 */
+  /* 사이드 메뉴 */
   #side_menu {display: none;}
 
+  /* 위시리스트 */
+  .list_02 li {width:calc(33.3333% - 12px);}
+  .list_02 li:nth-child(5n+1) {clear:both;margin-left:18px}
+  .list_02 li:nth-child(3n+1) {clear:both;margin-left:0}
 }
 
 
@@ -1390,5 +1395,12 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
   /* 주문서 작성 */
   .sod_left, .sod_right {width: 100%;}
   #sod_frm_taker .tbl_frm01 .btn_frmline {position: static;vertical-align: middle;}
+  #sod_fin_cancel {margin-bottom: 20px;}
 
+}
+
+@media (max-width:600px) {
+  .list_02 li {width: calc(50% - 9px);}
+  .list_02 li:nth-child(3n+1) {margin-left: 18px;}
+  .list_02 li:nth-child(2n+1) {margin-left: 0px;}
 }
