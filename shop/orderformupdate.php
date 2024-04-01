@@ -308,6 +308,11 @@ $order_price = $tot_od_price + $send_cost + $send_cost2 - $tot_sc_cp_price - $od
 
 $od_status = '주문';
 $od_tno    = '';
+
+if (function_exists('check_payment_method')) {
+    check_payment_method($od_settle_case);
+}
+
 if ($od_settle_case == "무통장")
 {
     $od_receipt_point   = $i_temp_point;

@@ -2752,6 +2752,39 @@ function get_item_images_info($it, $size=array(), $image_width, $image_height){
     return $images; 
 }
 
+function check_payment_method($od_settle_case) {
+    global $default;
+
+    $is_block = 0;
+
+    if ($od_settle_case === '무통장') {
+        if (! $default['de_bank_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '계좌이체') {
+        if (! $default['de_iche_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '가상계좌') {
+        if (! $default['de_vbank_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '휴대폰') {
+        if (! $default['de_hp_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '신용카드') {
+        if (! $default['de_card_use']) {
+            $is_block = 1;
+        }
+    }
+
+    if ($is_block) {
+        alert($od_settle_case.' 은 결제수단에서 사용이 금지되어 있습니다.', G5_SHOP_URL);
+        die('');
+    }
+}
+
 //결제방식 이름을 체크하여 치환 대상인 문자열은 따로 리턴합니다.
 function check_pay_name_replace($payname, $od=array(), $is_client=0){
 
