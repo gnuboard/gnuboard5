@@ -21,8 +21,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 <!-- 상단 시작 { -->
-<div id="hd">
-    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
+<div id="hd" class="bg-header">
+    <h1 id="hd_h1" class="blind"><?php echo $g5['title'] ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
     <?php
@@ -30,39 +30,38 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
     }
     ?>
-    <div id="tnb">
-    	<div class="inner">
+    <div id="tnb" class="border-b border-solid border-mainborder mx-auto px-3">
+    	<div class="inner max-w-screen-xl w-full mx-auto flex justify-between">
             <?php if(G5_COMMUNITY_USE) { ?>
-    		<ul id="hd_define">
-    			<li class="active"><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
+    		<ul id="hd_define" class="flex text-xs">
+    			<li class="active border-r border-gray-600 my-3.5 pr-2.5"><a href="<?php echo G5_URL ?>/" class="text-gray-400">커뮤니티</a></li>
                 <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
-    			<li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
+    			<li class="my-3.5 pl-2.5"><a href="<?php echo G5_SHOP_URL ?>/" class="text-gray-400">쇼핑몰</a></li>
                 <?php } ?>
     		</ul>
             <?php } ?>
-			<ul id="hd_qnb">
-	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">Q&A</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit">접속자<strong class="visit-num"><?php echo connect('theme/basic'); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></strong></a></li>
+			<ul id="hd_qnb" class="flex">
+	            <li class="text-xs border-r border-gray-600 my-3.5 mr-2.5 pr-2.5"><a href="<?php echo G5_BBS_URL ?>/faq.php" class="text-gray-400">FAQ</a></li>
+	            <li class="text-xs border-r border-gray-600 my-3.5 mr-2.5 pr-2.5"><a href="<?php echo G5_BBS_URL ?>/qalist.php" class="text-gray-400">Q&A</a></li>
+	            <li class="text-xs border-r border-gray-600 my-3.5 mr-2.5 pr-2.5"><a href="<?php echo G5_BBS_URL ?>/new.php" class="text-gray-400">새글</a></li>
+	            <li class="text-xs my-3.5"><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit text-gray-400">접속자<strong class="visit-num inline-block rounded-xl bg-fuchsia-600 text-white text-xs ml-2 px-1"><?php echo connect('theme/basic'); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></strong></a></li>
 	        </ul>
 		</div>
     </div>
-    <div id="hd_wrapper">
-
-        <div id="logo">
+    <div id="hd_wrapper" class="max-w-screen-xl w-full relative m-0 h-140 flex justify-between items-center mx-auto xl:px-0 px-3">
+        <div id="logo" class="grow-0 shrink-0">
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
     
-        <div class="hd_sch_wr">
+        <div class="hd_sch_wr grow w-full ms-16">
             <fieldset id="hd_sch">
                 <legend>사이트 내 전체검색</legend>
-                <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
+                <form name="fsearchbox" method="get" class="flex" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
                 <label for="sch_stx" class="sound_only">검색어 필수</label>
-                <input type="text" name="stx" id="sch_stx" maxlength="20" placeholder="검색어를 입력해주세요">
-                <button type="submit" id="sch_submit" value="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                <input type="text" name="stx" id="sch_stx" class="max-w-sm w-full h-11 ps-2.5 bg-schbg border-0 text-white text-sm rounded-l-3xl overflow-hidden" maxlength="20" placeholder="검색어를 입력해주세요">
+                <button type="submit" id="sch_submit" class="w-14 h-11 border-0 bg-schbg text-white rounded-e-3xl corsor-pointer text-base" value="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
                 </form>
 
                 <script>
@@ -99,25 +98,24 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 
             <?php echo popular('theme/basic'); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
         </div>
-        <ul class="hd_login">        
+        <ul class="hd_login flex grow-0 shrink-0 text-white">        
             <?php if ($is_member) {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
+            <li class="mx-1"><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
+            <li class="border-l border-gray-600 pl-2.5 mx-1"><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
             <?php if ($is_admin) {  ?>
-            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
+            <li class="tnb_admin border-l border-gray-600 pl-2.5 mx-1"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
             <?php }  ?>
             <?php } else {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
+            <li class="pl-2.5 mx-1"><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
+            <li class="border-l border-gray-600 pl-2.5 mx-1"><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
             <?php }  ?>
-
         </ul>
     </div>
     
-    <nav id="gnb">
-        <h2>메인메뉴</h2>
-        <div class="gnb_wrap">
-            <ul id="gnb_1dul">
+    <nav id="gnb" class="bg-white">
+        <h2 class="blind">메인메뉴</h2>
+        <div class="gnb_wrap relative max-w-screen-xl w-full mx-auto hover:z-10 active:z-10 focus:z-10">
+            <ul id="gnb_1dul" class="flex flex-row-reverse justify-between text-xs border-b border-gray-200 p-0">
                 <li class="gnb_1dli gnb_mnal"><button type="button" class="gnb_menu_btn" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
                 <?php
 				$menu_datas = get_menu_db(0, true);
@@ -127,8 +125,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     if( empty($row) ) continue;
                     $add_class = (isset($row['sub']) && $row['sub']) ? 'gnb_al_li_plus' : '';
                 ?>
-                <li class="gnb_1dli <?php echo $add_class; ?>" style="z-index:<?php echo $gnb_zindex--; ?>">
-                    <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a>
+                <li class="gnb_1dli <?php echo $add_class; ?> relative leading-11 group" style="z-index:<?php echo $gnb_zindex--; ?>">
+                    <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da block font-bold px-3.5 text-black no-underline group-hover:text-blue-400 transition ease-out duration-200"><?php echo $row['me_name'] ?></a>
                     <?php
                     $k = 0;
                     foreach( (array) $row['sub'] as $row2 ){
@@ -136,9 +134,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         if( empty($row2) ) continue; 
 
                         if($k == 0)
-                            echo '<span class="bg">하위분류</span><div class="gnb_2dul"><ul class="gnb_2dul_box">'.PHP_EOL;
+                            echo '<span class="bg absolute top-6 right-2 inline-block w-2.5 h-2.5 overflow-hidden">하위분류</span><div class="gnb_2dul hidden absolute top-13 min-w-36"><ul class="gnb_2dul_box border border-gray-200 shadow-md shadow-gray-300/50">'.PHP_EOL;
                     ?>
-                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><?php echo $row2['me_name'] ?></a></li>
+                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da block px-2.5 bg-white text-black text-left no-underline leading-10 hover:text-blue-400 hover:bg-gray-100 transition ease-out duration-200"><?php echo $row2['me_name'] ?></a></li>
                     <?php
                     $k++;
                     }   //end foreach $row2
@@ -213,7 +211,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
-    <div id="container_wr">
+    <div id="container_wr" class="max-w-screen-xl w-full">
    
     <div id="container">
         <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
