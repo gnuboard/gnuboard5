@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         header: '#212020',
         mainborder: '#383838',
-        schbg: '#2c2c2c'
+        schbg: '#2c2c2c',
+        gnbmenu: '#4158d1'
       },
       height: {
         140: "140px",
@@ -16,6 +17,10 @@ module.exports = {
       },
       top: {
         13: "54px",
+      },
+      zIndex: {
+        '1000': '1000',
+        '999': '999'
       }
     }
   },
