@@ -115,8 +115,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <nav id="gnb" class="bg-white">
         <h2 class="blind">메인메뉴</h2>
         <div class="gnb_wrap relative max-w-screen-xl w-full mx-auto hover:z-10 active:z-10 focus:z-10">
-            <ul id="gnb_1dul" class="flex flex-row-reverse justify-between text-xs border-b border-gray-200 p-0">
-                <li class="gnb_1dli gnb_mnal"><button type="button" class="gnb_menu_btn" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
+            <ul id="gnb_1dul" class="flex flex-row-reverse text-xs border-b border-solid border-gray-200 p-0">
+                <li class="gnb_1dli gnb_mnal ml-auto"><button type="button" class="gnb_menu_btn bg-gnbmenu text-white w-14 h-14 border-0 align-top text-lg" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
                 <?php
 				$menu_datas = get_menu_db(0, true);
 				$gnb_zindex = 999; // gnb_1dli z-index 값 설정용
@@ -150,26 +150,26 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 }   //end foreach $row
 
                 if ($i == 0) {  ?>
-                    <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
+                    <li class="gnb_empty py-2.5 w-full text-center text-black">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php" class="text-blue-400 no-underline">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
                 <?php } ?>
             </ul>
-            <div id="gnb_all">
-                <h2>전체메뉴</h2>
-                <ul class="gnb_al_ul">
+            <div id="gnb_all" class="hidden absolute border border-gray-200 w-full bg-white z-1000 shadow-md shadow-gray-600/50">
+                <h2 class="flex items-center text-sm border-b border-solid border-gray-200 h-14 px-5">전체메뉴</h2>
+                <ul class="gnb_al_ul flex flex-wrap">
                     <?php
                     
                     $i = 0;
                     foreach( $menu_datas as $row ){
                     ?>
-                    <li class="gnb_al_li">
-                        <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_al_a"><?php echo $row['me_name'] ?></a>
+                    <li class="gnb_al_li w-1/5 min-h-40 border-l border-solid border-gray-200 p-5">
+                        <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_al_a text-sm block relative mb-2.5 font-bold text-blue-400"><?php echo $row['me_name'] ?></a>
                         <?php
                         $k = 0;
                         foreach( (array) $row['sub'] as $row2 ){
                             if($k == 0)
                                 echo '<ul>'.PHP_EOL;
                         ?>
-                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>"><?php echo $row2['me_name'] ?></a></li>
+                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="text-gray-700 leading-relaxed"><?php echo $row2['me_name'] ?></a></li>
                         <?php
                         $k++;
                         }   //end foreach $row2
@@ -183,12 +183,12 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     }   //end foreach $row
 
                     if ($i == 0) {  ?>
-                        <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
+                        <li class="gnb_empty text-gray-800">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
                     <?php } ?>
                 </ul>
-                <button type="button" class="gnb_close_btn"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button type="button" class="gnb_close_btn bg-transparent text-gray-400 w-14 h-14 border-0 align-top text-lg absolute top-0 right-0"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
-            <div id="gnb_all_bg"></div>
+            <div id="gnb_all_bg" class="hidden bg-black bg-opacity-20 w-full h-full fixed left-0 top-0 z-999"></div>
         </div>
     </nav>
     <script>
