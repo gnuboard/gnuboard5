@@ -63,6 +63,9 @@ border:1px solid #558ab7 !important;
   .gnb_1dli .bg {background:url('../img/gnb_bg2.gif') no-repeat 50% 50%;text-indent:-999px}
   .gnb_1dli.gnb_al_li_plus .gnb_1da{padding-right:25px}
   .gnb_2dli:first-child {border:0}
+  .gnb_1dli_over .gnb_2dul {display:block;left:0}
+  .gnb_1dli_over2 .gnb_2dul {display:block;right:0}
+  #gnb_all .gnb_al_ul > li:nth-child(5n+1) {border-left:0}
   
   /* 팝업 */
   #hd_pop {max-width:1200px}
