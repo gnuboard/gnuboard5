@@ -27,7 +27,7 @@ if(G5_COMMUNITY_USE === false) {
 <!-- 하단 시작 { -->
 <div id="ft">
 
-    <div id="ft_wr">
+    <div id="ft_wr" class="max-w-screen-xl w-full">
         <div id="ft_link" class="ft_cnt">
             <a href="<?php echo get_pretty_url('content', 'company'); ?>">회사소개</a>
             <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보처리방침</a>
