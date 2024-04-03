@@ -13,7 +13,7 @@ if(G5_COMMUNITY_USE === false) {
 ?>
 
     </div>
-    <div id="aside">
+    <div id="aside" class="w-60 h-full p-0 my-5 ml-5">
         <?php echo outlogin('theme/basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
         <?php echo poll('theme/basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
     </div>
@@ -25,17 +25,16 @@ if(G5_COMMUNITY_USE === false) {
 <hr>
 
 <!-- 하단 시작 { -->
-<div id="ft">
-
-    <div id="ft_wr" class="max-w-screen-xl w-full">
-        <div id="ft_link" class="ft_cnt">
-            <a href="<?php echo get_pretty_url('content', 'company'); ?>">회사소개</a>
-            <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보처리방침</a>
-            <a href="<?php echo get_pretty_url('content', 'provision'); ?>">서비스이용약관</a>
-            <a href="<?php echo get_device_change_url(); ?>">모바일버전</a>
+<div id="ft" class="bg-mainbg mx-auto text-center">
+    <div id="ft_wr" class="relative flex max-w-screen-xl w-full text-left py-10 mx-auto">
+        <div id="ft_link" class="ft_cnt w-1/4 px-5 text-left">
+            <a href="<?php echo get_pretty_url('content', 'company'); ?>" class="block text-white leading-loose font-bold">회사소개</a>
+            <a href="<?php echo get_pretty_url('content', 'privacy'); ?>" class="block text-white leading-loose font-bold">개인정보처리방침</a>
+            <a href="<?php echo get_pretty_url('content', 'provision'); ?>" class="block text-white leading-loose font-bold">서비스이용약관</a>
+            <a href="<?php echo get_device_change_url(); ?>" class="block text-white leading-loose font-bold">모바일버전</a>
         </div>
-        <div id="ft_company" class="ft_cnt">
-        	<h2>사이트 정보</h2>
+        <div id="ft_company" class="ft_cnt w-1/4 px-5">
+        	<h2 class="text-sm mb-5">사이트 정보</h2>
 	        <p class="ft_info">
 	        	회사명 : 회사명 / 대표 : 대표자명<br>
 				주소  : OO도 OO시 OO구 OO동 123-45<br>

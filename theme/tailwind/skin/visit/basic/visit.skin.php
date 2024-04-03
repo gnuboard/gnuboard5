@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$visit_skin_url.'/style.css">', 0
 ?>
 
 <!-- 접속자집계 시작 { -->
-<section id="visit" class="ft_cnt">
+<section id="visit" class="ft_cnt w-1/4 px-5">
     <h2>접속자집계</h2>
     <dl>
         <dt><span></span> 오늘</dt>
