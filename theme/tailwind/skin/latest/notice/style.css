@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* 새글 스킨 (latest) */
-.notice {position:relative;padding:15px 50px}
+.notice {position:relative;}
 .notice h2 {margin-bottom:20px}
 .notice h2 a {font-size:1.2em;color:#fff}
 .notice li {text-overflow:ellipsis;overflow:hidden;white-space:nowrap;border-bottom:1px solid #343434}

@@ -771,6 +771,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   position: relative;
 }
 
+.left-0 {
+  left: 0px;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -785,10 +789,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .top-6 {
   top: 1.5rem;
-}
-
-.left-0 {
-  left: 0px;
 }
 
 .z-1000 {
@@ -823,8 +823,33 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   margin-bottom: 0.875rem;
 }
 
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-2\.5 {
+  margin-bottom: 0.625rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
 
 .mr-2 {
@@ -837,18 +862,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .ms-16 {
   margin-inline-start: 4rem;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-2\.5 {
-  margin-bottom: 0.625rem;
 }
 
 .block {
@@ -869,10 +882,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .table {
   display: table;
-}
-
-.grid {
-  display: grid;
 }
 
 .hidden {
@@ -899,12 +908,20 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   height: 0.625rem;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .h-full {
   height: 100%;
 }
 
 .min-h-40 {
   min-height: 10rem;
+}
+
+.min-h-500 {
+  min-height: 500px;
 }
 
 .w-1\/5 {
@@ -923,8 +940,24 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   width: 0.625rem;
 }
 
+.w-60 {
+  width: 15rem;
+}
+
+.w-container {
+  width: calc(100% - 260px);
+}
+
 .w-full {
   width: 100%;
+}
+
+.w-ltwr {
+  width: 32%;
+}
+
+.w-1\/4 {
+  width: 25%;
 }
 
 .min-w-36 {
@@ -967,20 +1000,8 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   align-items: center;
 }
 
-.justify-start {
-  justify-content: flex-start;
-}
-
 .justify-between {
   justify-content: space-between;
-}
-
-.justify-items-start {
-  justify-items: start;
-}
-
-.justify-self-start {
-  justify-self: start;
 }
 
 .overflow-hidden {
@@ -1040,6 +1061,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   border-color: rgb(56 56 56 / var(--tw-border-opacity));
 }
 
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
 .bg-fuchsia-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(192 38 211 / var(--tw-bg-opacity));
@@ -1048,11 +1074,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .bg-gnbmenu {
   --tw-bg-opacity: 1;
   background-color: rgb(65 88 209 / var(--tw-bg-opacity));
-}
-
-.bg-header {
-  --tw-bg-opacity: 1;
-  background-color: rgb(33 32 32 / var(--tw-bg-opacity));
 }
 
 .bg-schbg {
@@ -1069,13 +1090,9 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-black {
+.bg-mainbg {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-opacity-10 {
-  --tw-bg-opacity: 0.1;
+  background-color: rgb(33 32 32 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-20 {
@@ -1128,6 +1145,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .pl-2 {
@@ -1198,10 +1220,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   line-height: 55px;
 }
 
-.leading-normal {
-  line-height: 1.5;
-}
-
 .leading-relaxed {
   line-height: 1.625;
 }
@@ -1225,6 +1243,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
 .text-gray-800 {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
@@ -1233,16 +1256,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-600 {
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
-}
-
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .no-underline {
