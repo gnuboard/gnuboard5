@@ -17,7 +17,7 @@ include_once(G5_THEME_PATH.'/head.php');
 
 <h2 class="sound_only">최신글</h2>
 
-<div class="latest_top_wr">
+<div class="latest_top_wr mb-5">
     <?php
     // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
     // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
@@ -27,7 +27,7 @@ include_once(G5_THEME_PATH.'/head.php');
 	echo latest('theme/pic_list', 'notice', 4, 23);		// 최소설치시 자동생성되는 공지사항게시판
     ?>
 </div>
-<div class="latest_wr">
+<div class="latest_wr mb-5">
     <!-- 사진 최신글2 { -->
     <?php
     // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
@@ -38,7 +38,7 @@ include_once(G5_THEME_PATH.'/head.php');
     <!-- } 사진 최신글2 끝 -->
 </div>
 
-<div class="latest_wr">
+<div class="latest_wr mb-5">
 <!-- 최신글 시작 { -->
     <?php
     //  최신글
@@ -54,7 +54,7 @@ include_once(G5_THEME_PATH.'/head.php');
 		$lt_style = '';
     	if ($i%3 !== 0 ) $lt_style = "margin-left:2%";
     ?>
-    <div style="float:left;<?php echo $lt_style ?>" class="lt_wr">
+    <div style="float:left;<?php echo $lt_style ?>" class="lt_wr w-ltwr">
         <?php
         // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
         // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
