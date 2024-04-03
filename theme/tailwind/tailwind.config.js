@@ -4,13 +4,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        header: '#212020',
+        mainbg: '#212020',
         mainborder: '#383838',
         schbg: '#2c2c2c',
         gnbmenu: '#4158d1'
       },
+      width: {
+        'container': 'calc(100% - 260px)',
+        'ltwr': '32%',
+      },
       height: {
         140: "140px",
+      },
+      minHeight: {
+        '500': '500px',
       },
       lineHeight: {
         11: "55px",

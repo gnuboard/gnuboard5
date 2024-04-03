@@ -21,7 +21,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 <!-- 상단 시작 { -->
-<div id="hd" class="bg-header">
+<div id="hd" class="bg-mainbg">
     <h1 id="hd_h1" class="blind"><?php echo $g5['title'] ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
@@ -211,7 +211,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
-    <div id="container_wr" class="max-w-screen-xl w-full">
-   
-    <div id="container">
-        <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
+    <div id="container_wr" class="flex max-w-screen-xl w-full mx-auto">
+      <div id="container" class="relative w-container min-h-500 my-5 h-auto">
+        <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="text-base mx-auto font-bold"><span class="block leading-relaxed mx-auto mb-2.5" title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
