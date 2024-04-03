@@ -10,10 +10,10 @@ $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id'
 $pp = sql_fetch($sql);
 
 if(! (isset($pp['pp_id']) && $pp['pp_id']))
-    alert('개인결제 정보가 존재하지 않습니다.');
+    alert('개인결제 정보가 존재하지 않습니다.', G5_SHOP_URL);
 
 if($pp['pp_tno'])
-    alert('이미 결제하신 개인결제 내역입니다.');
+    alert('이미 결제하신 개인결제 내역입니다.', G5_SHOP_URL);
 
 $pp['pp_name'] = strip_tags($pp['pp_name']);
 

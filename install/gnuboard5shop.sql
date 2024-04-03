@@ -360,6 +360,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_inicis_lpay_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_inicis_kakaopay_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_inicis_cartpoint_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_nicepay_mid` varchar(30) NOT NULL DEFAULT '',
+  `de_nicepay_key` varchar(255) NOT NULL DEFAULT '',
   `de_item_use_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_use_write` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',

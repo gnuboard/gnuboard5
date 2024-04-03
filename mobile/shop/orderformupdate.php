@@ -360,6 +360,9 @@ else if ($od_settle_case == "계좌이체")
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $bank_name  = iconv("cp949", "utf-8", $bank_name);
@@ -385,6 +388,9 @@ else if ($od_settle_case == "가상계좌")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -412,6 +418,9 @@ else if ($od_settle_case == "휴대폰")
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
@@ -435,6 +444,9 @@ else if ($od_settle_case == "신용카드")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -461,6 +473,9 @@ else if ($od_settle_case == "간편결제")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -529,6 +544,10 @@ if($tno) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                $cancelAmt = (int)$pg_price;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
                 break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;

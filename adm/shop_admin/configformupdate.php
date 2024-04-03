@@ -167,6 +167,8 @@ $check_sanitize_keys = array(
 'de_inicis_lpay_use',           //KG이니시스 Lpay 사용
 'de_inicis_kakaopay_use',       //KG이니시스 카카오페이 사용
 'de_inicis_cartpoint_use',      //KG이니시스 신용카드 포인트 결제
+'de_nicepay_mid',               //NICEPAY 상점아이디
+'de_nicepay_key',               //NICEPAY 상점키
 'de_kakaopay_mid',              //카카오페이 상점MID
 'de_kakaopay_key',              //카카오페이 상점키
 'de_kakaopay_enckey',           //카카오페이 상점 EncKey
@@ -377,6 +379,8 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_inicis_lpay_use            = '{$de_inicis_lpay_use}',
                 de_inicis_kakaopay_use        = '{$de_inicis_kakaopay_use}',
                 de_inicis_cartpoint_use       = '{$de_inicis_cartpoint_use}',
+                de_nicepay_mid                = '{$de_nicepay_mid}',
+                de_nicepay_key                = '{$de_nicepay_key}',
                 de_card_noint_use             = '{$de_card_noint_use}',
                 de_card_point                 = '{$de_card_point}',
                 de_settle_min_point           = '{$de_settle_min_point}',

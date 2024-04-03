@@ -206,6 +206,52 @@ function pay_approval()
     <?php } ?>
     f.P_RETURN_URL.value = "<?php echo $return_url.$pp_id; ?>";
     f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
+    <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
+
+    f.Amt.value       = f.good_mny.value;
+    f.BuyerName.value   = pf.pp_name.value;
+    f.BuyerEmail.value  = pf.pp_email.value;
+    f.BuyerTel.value    = pf.pp_hp.value;
+
+    f.DirectShowOpt.value = "";     // 간편결제 요청 값 초기화
+    f.DirectEasyPay.value = "";     // 간편결제 요청 값 초기화
+    f.NicepayReserved.value = "";   // 간편결제 요청 값 초기화
+    f.EasyPayMethod.value = "";   // 간편결제 요청 값 초기화
+
+        <?php if ($default['de_escrow_use']) {  // 간편결제시 에스크로값이 0이 되므로 기본설정값을 지정 ?>
+        f.TransType.value = "1";
+        <?php } ?>
+
+    switch(settle_method) {
+        case "계좌이체":
+            paymethod = "BANK";
+            break;
+        case "가상계좌":
+            paymethod = "VBANK";
+            break;
+        case "휴대폰":
+            paymethod = "CELLPHONE";
+            break;
+        case "신용카드":
+            paymethod = "CARD";
+            break;
+        default:
+            paymethod = "무통장";
+            break;
+    }
+    
+    f.PayMethod.value = paymethod;
+
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.SupplyAmt.value = pf.comm_tax_mny.value;
+    f.GoodsVat.value = pf.comm_vat_mny.value;
+    f.TaxFreeAmt.value = pf.comm_free_mny.value;
+    <?php } ?>
+
+    if (! nicepay_create_signdata(f)) {
+        return false;
+    }
+
     <?php } ?>
 
     //var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
@@ -229,7 +275,12 @@ function pay_approval()
         alert(save_result);
         return false;
     }
+    
+    <?php if($default['de_pg_service'] == 'nicepay') { ?>
+        nicepayStart(f);
 
+        return;
+    <?php } ?>
     f.submit();
 }
 

@@ -806,12 +806,15 @@ box-shadow: 1px 2px 2px #eee;}
 #sod_frm_paysel legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sod_frm_paysel .KPAY{background:url('../img/kpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .PAYNOW{background:url('../img/paynow.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .PAYCO{background:url('../img/payco.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .inicis_lpay{background:url('../img/lpay_logo.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .PAYCO, #sod_frm_paysel .paycopay_icon{background:url('../img/payco.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .inicis_lpay, #sod_frm_paysel .lpay_icon{background:url('../img/lpay_logo.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .inicis_kakaopay{position:relative;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .inicis_kakaopay em{position:absolute;top:15px;left:45px;width:70px;height:30px;background:url('../img/kakao.png') no-repeat 50% 50% #ffeb00;overflow:hidden;text-indent:-999px;border-radius:30px}
 #sod_frm_paysel .kakaopay_icon{background:url('../img/kakao.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .naverpay_icon{background:url('../img/ico-default-naverpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .samsungpay_icon{background:url('../img/samsungpay.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .ssgpay_icon{background:url('../img/ssgpay_icon.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .skpay_icon{background:url('../img/skpay11_icon.png') no-repeat 50% 50% #fff; background-size: 70px;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .bank_icon{background:url('../img/pay_icon1.png') no-repeat 15px 50% #fff}
 #sod_frm_paysel .vbank_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
 #sod_frm_paysel .iche_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}

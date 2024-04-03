@@ -107,6 +107,12 @@ if($od['od_pg'] == 'lg') {
     }
 }
 
+$print_od_deposit_name = $od['od_deposit_name'];
+// nicepay 로 주문하고 가상계좌인 경우
+if ($od['od_pg'] === 'nicepay' && $od['od_settle_case'] === '가상계좌' && $od['od_deposit_name']){
+    $print_od_deposit_name .= '_NICE';
+}
+
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 ?>
@@ -408,7 +414,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </tr>
                 <tr>
                     <th scope="row">입금자</th>
-                    <td><?php echo get_text($od['od_deposit_name']); ?></td>
+                    <td><?php echo get_text($print_od_deposit_name); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">입금확인일시</th>
@@ -519,6 +525,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                     $pg_url  = 'https://mms.cnspay.co.kr';
                                     $pg_test = 'KAKAOPAY';
                                     break;
+                                case 'nicepay':
+                                    $pg_url  = 'https://npg.nicepay.co.kr/';
+                                    $pg_test = 'NICEPAY';
+                                    break;
                                 default:
                                     $pg_url  = 'http://admin8.kcp.co.kr';
                                     $pg_test = 'KCP';
@@ -623,6 +633,18 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         } else if($od['od_pg'] == 'inicis') {
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
+                        } else if($od['od_pg'] == 'nicepay') {
+                            
+                            $od_tid = $od['od_tno'];
+                            $cash_type = 0;
+
+                            if (! $od_tid) {
+                                $cash = unserialize($od['od_cash_info']);
+                                $od_tid = isset($cash['TID']) ? $cash['TID'] : '';
+                                $cash_type = $od_tid ? 1 : 0;
+                            }
+
+                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type='.$cash_type.'&TID='.$od_tid.'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                         } else {
                             require G5_SHOP_PATH.'/settle_kcp.inc.php';
 
@@ -1075,7 +1097,7 @@ function form_submit(f)
 
     var msg = "";
 
-    <?php if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == 'KAKAOPAY' || $od['od_settle_case'] == '간편결제' || ($od['od_pg'] == 'inicis' && is_inicis_order_pay($od['od_settle_case']) )) { ?>
+    <?php if (is_cancel_shop_pg_order($od)) { ?>
     if(status == "취소" || status == "반품" || status == "품절") {
         var $ct_chk = $("input[name^=ct_chk]");
         var chk_cnt = $ct_chk.length;
