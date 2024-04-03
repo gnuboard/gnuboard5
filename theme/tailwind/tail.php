@@ -58,7 +58,7 @@ if(G5_COMMUNITY_USE === false) {
         <div id="ft_copy" class="text-center max-w-screen-xl w-full mx-auto py-5 text-gray-600 text-xs border-t border-mainborder">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
     
     
-    <button type="button" id="top_btn" class="fixed bottom-5 right-5 w-14 leading-11 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
+    <button type="button" id="top_btn" class="fixed bottom-5 right-5 w-14 leading-52 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
     	<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span>
     </button>
     <script>
