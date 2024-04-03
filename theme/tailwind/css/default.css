@@ -3,13 +3,6 @@
 /* 중간 레이아웃 */
 .latest_top_wr:after {display:block;visibility:hidden;clear:both;content:""}
 
-/* 하단 레이아웃 */
-#ft_company {font-weight:normal;color:#e3e3e3;line-height:2em}
-#ft_catch {margin:20px 0 10px}
-#ft_copy {text-align:center;width:1200px;margin:0 auto;padding:20px 0;color:#5b5b5b;font-size:0.92em;border-top:1px solid #383838}
-#top_btn {position:fixed;bottom:20px;right:20px;width:50px;height:50px;line-height:46px;border:2px solid #333;color:#333;text-align:center;font-size:15px;z-index:90;background:rgba(255,255,255,0.5)}
-#top_btn:hover {border-color:#3059c7;background:#3059c7;color:#fff}
-
 /* 게시물 선택복사 선택이동 */
 #copymove {}
 #copymove .win_desc {text-align:center;display:block}

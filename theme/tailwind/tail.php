@@ -33,7 +33,7 @@ if(G5_COMMUNITY_USE === false) {
             <a href="<?php echo get_pretty_url('content', 'provision'); ?>" class="block text-white leading-loose font-bold">서비스이용약관</a>
             <a href="<?php echo get_device_change_url(); ?>" class="block text-white leading-loose font-bold">모바일버전</a>
         </div>
-        <div id="ft_company" class="ft_cnt w-1/4 px-5">
+        <div id="ft_company" class="ft_cnt w-1/4 px-5 font-normal text-white leading-loose">
         	<h2 class="text-sm mb-5">사이트 정보</h2>
 	        <p class="ft_info">
 	        	회사명 : 회사명 / 대표 : 대표자명<br>
@@ -55,10 +55,10 @@ if(G5_COMMUNITY_USE === false) {
 		<?php echo visit('theme/basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
 	</div>      
         <!-- <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.png" alt="<?php echo G5_VERSION ?>"></div> -->
-        <div id="ft_copy">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
+        <div id="ft_copy" class="text-center max-w-screen-xl w-full mx-auto py-5 text-gray-600 text-xs border-t border-mainborder">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
     
     
-    <button type="button" id="top_btn">
+    <button type="button" id="top_btn" class="fixed bottom-5 right-5 w-14 leading-11 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
     	<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span>
     </button>
     <script>
