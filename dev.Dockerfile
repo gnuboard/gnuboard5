@@ -18,7 +18,7 @@ ENV PKG_RELEASE     1~bookworm
 RUN curl -sSLf -o /usr/local/bin/install-php-extensions \
         https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
     chmod +x /usr/local/bin/install-php-extensions; \
-        install-php-extensions gd imagick apcu opcache redis pdo_mysql intl exif zip; \
+        install-php-extensions gd imagick apcu opcache redis mysqli pdo_mysql intl exif zip; \
     set -eux; \
     # set recommended PHP.ini settings
     # see https://secure.php.net/manual/en/opcache.installation.php
