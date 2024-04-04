@@ -312,6 +312,11 @@ box-sizing:content-box;
 .latest_wr .empty_li, .latest_top_wr .empty_li {line-height:145px;color:#666;text-align:center;padding:0}
 .latest_wr .empty_li:before, .latest_top_wr .empty_li:before {background:none;padding:0}
 
+.notice li .lock_icon {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size: 12px;border:1px solid #a2c6ce;vertical-align:baseline}
+.notice li .new_icon {display:inline-block;line-height:16px;width:16px;font-size:0.833em;color:#ffff00;background:#6db142;text-align:center;margin-right:3px;border-radius:2px;vertical-align:baseline}
+.notice .cnt_cm {background:#5c85c1;color:#fff;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;white-space:nowrap;margin-left:5px}
+
+.notice li.empty_li {border-bottom:0;line-height:120px}
 }
 
 @layer components {
