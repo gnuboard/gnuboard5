@@ -48,6 +48,12 @@ if($tx == 'personalpay') {
     $amt_sup = (int)$od['od_tax_mny'] + (int)$od['od_free_mny'];
     $amt_tax = (int)$od['od_vat_mny'];
     $amt_svc = 0;
+    $amt_free = 0;
+
+    if ($od['od_pg'] === 'nicepay') {
+        $amt_sup = (int)$od['od_tax_mny'];
+        $amt_free = (int)$od['od_free_mny'];
+    }
 }
 
 $trad_time = date("YmdHis");

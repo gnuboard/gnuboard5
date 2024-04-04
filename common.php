@@ -426,7 +426,7 @@ if (isset($_REQUEST['sca']))  {
 
 if (isset($_REQUEST['sfl']))  {
     $sfl = trim($_REQUEST['sfl']);
-    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sfl);
+    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s\#]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {

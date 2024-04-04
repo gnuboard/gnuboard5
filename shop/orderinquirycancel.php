@@ -92,6 +92,36 @@ if($od['od_tno']) {
                 alert($res_msg.' 코드 : '.$res_cd);
             }
             break;
+        case 'nicepay':
+            include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
+            $cancel_msg = '주문자 본인 취소-'.$cancel_memo;
+
+            $tno = $od['od_tno'];
+
+            $cancelAmt = $od['od_receipt_price'];
+
+            // 0:전체 취소, 1:부분 취소(별도 계약 필요)
+            $partialCancelCode = 0;
+
+            include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+
+            $res_cd = '';
+            $res_msg = 'curl 로 데이터를 받지 못하거나 통신에 실패했습니다.';
+            
+            if (isset($result['ResultCode'])) {
+
+                $res_cd = $result['ResultCode'];
+
+                // 실패했다면
+                if ($result['ResultCode'] !== '2001') {
+                    $res_msg = $result['ResultMsg'];
+                }
+            }
+
+            if($res_cd != '2001') {
+                alert($res_msg.' 코드 : '.$res_cd);
+            }
+            break;
         default:
             require_once('./settle_kcp.inc.php');
 

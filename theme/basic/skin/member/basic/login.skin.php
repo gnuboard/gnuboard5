@@ -39,7 +39,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </div>
 
     <?php // 쇼핑몰 사용시 여기부터 ?>
-    <?php if ($default['de_level_sell'] == 1) { // 상품구입 권한 ?>
+    <?php if (isset($default['de_level_sell']) && $default['de_level_sell'] == 1) { // 상품구입 권한 ?>
 
 	<!-- 주문하기, 신청하기 -->
 	<?php if (preg_match("/orderform.php/", $url)) { ?>

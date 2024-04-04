@@ -168,7 +168,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 
     <?php
     $qstr1 = '';
-    if($i > 0 && $total_count > $items) {
+    if($total_count > $items) {
         $qstr1 .= 'ca_id='.$ca_id;
         $qstr1 .='&sort='.$sort.'&sortodr='.$sortodr;
         $ajax_url = G5_SHOP_URL.'/ajax.list.php?'.$qstr1.'&use_sns=1';

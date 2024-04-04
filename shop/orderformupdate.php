@@ -306,8 +306,20 @@ if ($od_temp_point)
 $i_price = $i_price + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_coupon;
 $order_price = $tot_od_price + $send_cost + $send_cost2 - $tot_sc_cp_price - $od_temp_point;
 
+// PG사의 가상계좌 또는 계좌이체의 자동 현금영수증 초기배열값
+$pg_receipt_infos = array(
+    'od_cash' => 0,
+    'od_cash_no' => '',
+    'od_cash_info' => '',
+);
+
 $od_status = '주문';
 $od_tno    = '';
+
+if (function_exists('check_payment_method')) {
+    check_payment_method($od_settle_case);
+}
+
 if ($od_settle_case == "무통장")
 {
     $od_receipt_point   = $i_temp_point;
@@ -326,6 +338,9 @@ else if ($od_settle_case == "계좌이체")
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -355,6 +370,9 @@ else if ($od_settle_case == "가상계좌")
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             $od_app_no = $app_no;
             break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             $bankname   = iconv("cp949", "utf-8", $bankname);
@@ -379,6 +397,9 @@ else if ($od_settle_case == "휴대폰")
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
@@ -402,6 +423,9 @@ else if ($od_settle_case == "신용카드")
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -428,6 +452,9 @@ else if ($od_settle_case == "간편결제" || (($od_settle_case == "lpay" || $od
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -484,6 +511,10 @@ if($tno) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                $cancelAmt = (int)$pg_price;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
                 break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;
@@ -599,6 +630,9 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case',
                 od_other_pay_type = '$od_other_pay_type',
+                od_cash           = '{$pg_receipt_infos['od_cash']}',
+                od_cash_no        = '{$pg_receipt_infos['od_cash_no']}',
+                od_cash_info      = '{$pg_receipt_infos['od_cash_info']}',
                 od_test           = '{$default['de_card_test']}'
                 ";
 $result = sql_query($sql, false);
