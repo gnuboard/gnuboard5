@@ -1488,6 +1488,113 @@ a.btn_admin,.btn_admin {
   text-align:center
 }
 
+.latest_wr .fa-heart, .latest_top_wr .fa-heart {
+  color:#ff0000
+}
+
+.latest_wr .fa-lock, , .latest_top_wr .fa-lock {
+  display:inline-block;
+  line-height:14px;
+  width:16px;
+  font-size:0.833em;
+  color:#4f818c;
+  background:#cbe3e8;
+  text-align:center;
+  border-radius:2px;
+  font-size:12px;
+  border:1px solid #cbe3e8;
+  vertical-align:middle
+}
+
+.latest_wr .new_icon, .latest_top_wr .new_icon {
+  display:inline-block;
+  width:16px;
+  line-height:16px;
+  font-size:0.833em;
+  color:#23db79;
+  background:#b9ffda;
+  text-align:center;
+  border-radius:2px;
+  margin-left:2px;
+  font-weight:bold;
+  vertical-align:middle
+}
+
+.latest_wr .hot_icon, .latest_top_wr .hot_icon {
+  display:inline-block;
+  width:16px;
+  line-height:16px;
+  font-size:0.833em;
+  color:#ff0000;
+  background:#ffb9b9;
+  text-align:center;
+  border-radius:2px;
+  vertical-align:middle
+}
+
+.latest_wr .fa-caret-right, .latest_top_wr .fa-caret-right {
+  color:#bbb
+}
+
+.latest_wr .fa-download, .latest_top_wr .fa-download {
+  display:inline-block;
+  width:16px;
+  line-height:16px;
+  font-size:0.833em;
+  color:#daae37;
+  background:#ffefb9;
+  text-align:center;
+  border-radius:2px;
+  vertical-align:middle
+}
+
+.latest_wr .fa-link, .latest_top_wr .fa-link {
+  display:inline-block;
+  width:16px;
+  line-height:16px;
+  font-size:0.833em;
+  color:#b451fd;
+  background:#edd3fd;
+  text-align:center;
+  border-radius:2px;
+  vertical-align:middle
+}
+
+.latest_wr .lt_cmt, .latest_top_wr .lt_cmt {
+  background:#e9eff5;
+  color:#3a8afd;
+  font-size:11px;
+  height:16px;
+  line-height:16px;
+  padding:0 5px;
+  border-radius:3px;
+  vertical-align:middle
+}
+
+/* 새글 스킨 (latest) */
+
+.pic_li_lt li:first-child .lt_img img, .pic_li_lt li .lt_img video {
+  width:100%;
+  height:auto
+}
+
+.pic_lt li .lt_img img, .pic_lt li .lt_img video{
+  width:100%;
+  height:auto
+}
+
+.latest_wr .empty_li, .latest_top_wr .empty_li {
+  line-height:145px;
+  color:#666;
+  text-align:center;
+  padding:0
+}
+
+.latest_wr .empty_li:before, .latest_top_wr .empty_li:before {
+  background:none;
+  padding:0
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -1727,20 +1834,16 @@ a.btn_admin,.btn_admin {
   right: 0.5rem;
 }
 
+.right-2\.5 {
+  right: 0.625rem;
+}
+
 .right-5 {
   right: 1.25rem;
 }
 
 .top-0 {
   top: 0px;
-}
-
-.top-6 {
-  top: 1.5rem;
-}
-
-.top-11 {
-  top: 2.75rem;
 }
 
 .top-2 {
@@ -1751,8 +1854,8 @@ a.btn_admin,.btn_admin {
   top: 0.625rem;
 }
 
-.right-2\.5 {
-  right: 0.625rem;
+.top-6 {
+  top: 1.5rem;
 }
 
 .z-1000 {
@@ -1779,6 +1882,11 @@ a.btn_admin,.btn_admin {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .my-3 {
@@ -1830,10 +1938,6 @@ a.btn_admin,.btn_admin {
 
 .ms-16 {
   margin-inline-start: 4rem;
-}
-
-.mb-10 {
-  margin-bottom: 2.5rem;
 }
 
 .block {
@@ -1936,10 +2040,6 @@ a.btn_admin,.btn_admin {
   width: 32%;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
 .min-w-36 {
   min-width: 9rem;
 }
@@ -1990,10 +2090,6 @@ a.btn_admin,.btn_admin {
 
 .rounded-xl {
   border-radius: 0.75rem;
-}
-
-.rounded {
-  border-radius: 0.25rem;
 }
 
 .rounded-e-3xl {
@@ -2056,11 +2152,6 @@ a.btn_admin,.btn_admin {
 .border-mainborder {
   --tw-border-opacity: 1;
   border-color: rgb(56 56 56 / var(--tw-border-opacity));
-}
-
-.border-blue-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(191 219 254 / var(--tw-border-opacity));
 }
 
 .bg-black {
@@ -2235,6 +2326,14 @@ a.btn_admin,.btn_admin {
   line-height: 2.5rem;
 }
 
+.leading-45 {
+  line-height: 45px;
+}
+
+.leading-5 {
+  line-height: 1.25rem;
+}
+
 .leading-52 {
   line-height: 52px;
 }
@@ -2243,20 +2342,16 @@ a.btn_admin,.btn_admin {
   line-height: 55px;
 }
 
+.leading-6 {
+  line-height: 1.5rem;
+}
+
 .leading-loose {
   line-height: 2;
 }
 
 .leading-relaxed {
   line-height: 1.625;
-}
-
-.leading-45 {
-  line-height: 45px;
-}
-
-.leading-6 {
-  line-height: 1.5rem;
 }
 
 .text-black {
@@ -2363,14 +2458,19 @@ a.btn_admin,.btn_admin {
   color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
-.hover\:text-white:hover {
+.hover\:text-blue-500:hover {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
 .hover\:text-blue-950:hover {
   --tw-text-opacity: 1;
   color: rgb(23 37 84 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .focus\:z-10:focus {

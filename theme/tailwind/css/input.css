@@ -296,6 +296,22 @@ box-sizing:content-box;
 /* Mobile화면으로 */
 #device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
 
+.latest_wr .fa-heart, .latest_top_wr .fa-heart {color:#ff0000}
+.latest_wr .fa-lock, , .latest_top_wr .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+.latest_wr .new_icon, .latest_top_wr .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
+.latest_wr .hot_icon, .latest_top_wr .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
+.latest_wr .fa-caret-right, .latest_top_wr .fa-caret-right {color:#bbb}
+.latest_wr .fa-download, .latest_top_wr .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;vertical-align:middle}
+.latest_wr .fa-link, .latest_top_wr .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
+.latest_wr .lt_cmt, .latest_top_wr .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle} 
+
+/* 새글 스킨 (latest) */
+.pic_li_lt li:first-child .lt_img img, .pic_li_lt li .lt_img video {width:100%;height:auto}
+.pic_lt li .lt_img img, .pic_lt li .lt_img video{width:100%;height:auto}
+
+.latest_wr .empty_li, .latest_top_wr .empty_li {line-height:145px;color:#666;text-align:center;padding:0}
+.latest_wr .empty_li:before, .latest_top_wr .empty_li:before {background:none;padding:0}
+
 }
 
 @layer components {
