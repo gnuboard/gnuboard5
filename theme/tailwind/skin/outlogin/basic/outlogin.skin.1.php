@@ -2,32 +2,31 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 로그인 전 아웃로그인 시작 { -->
-<section id="ol_before" class="ol">
-	<div id="ol_be_cate">
-    	<h2><span class="sound_only">회원</span>로그인</h2>
-    	<a href="<?php echo G5_BBS_URL ?>/register.php" class="join">회원가입</a>
+<section id="ol_before" class="ol relative border border-solid border-gray-200 rounded mb-3.5">
+	<div id="ol_be_cate" class="flex">
+    	<h2 class="w-1/2 text-center py-3.5"><span class="sound_only">회원</span>로그인</h2>
+    	<a href="<?php echo G5_BBS_URL ?>/register.php" class="join w-1/2 text-center bg-gray-100 text-gray-500 py-3.5">회원가입</a>
     </div>
-    <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
+    <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off" class="p-5">
     <fieldset>
-        <div class="ol_wr">
+        <div class="ol_wr relative mb-1.5">
             <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
             <label for="ol_id" id="ol_idlabel" class="sound_only">회원아이디<strong>필수</strong></label>
-            <input type="text" id="ol_id" name="mb_id" required maxlength="20" placeholder="아이디">
+            <input type="text" id="ol_id" name="mb_id" required maxlength="20" placeholder="아이디" class="block w-full border border-solid border-gray-300 h-9 rounded px-2.5 mb-1.5">
             <label for="ol_pw" id="ol_pwlabel" class="sound_only">비밀번호<strong>필수</strong></label>
-            <input type="password" name="mb_password" id="ol_pw" required maxlength="20" placeholder="비밀번호">
-            <input type="submit" id="ol_submit" value="로그인" class="btn_b02">
+            <input type="password" name="mb_password" id="ol_pw" required maxlength="20" placeholder="비밀번호" class="block w-full border border-solid border-gray-300 h-9 rounded px-2.5 mb-1.5">
+            <input type="submit" id="ol_submit" value="로그인" class="w-full h-9 bg-blue-500 text-white font-bold text-sm rounded">
         </div>
-        <div class="ol_auto_wr"> 
-            <div id="ol_auto" class="chk_box">
-                <input type="checkbox" name="auto_login" value="1" id="auto_login" class="selec_chk">
-                <label for="auto_login" id="auto_login_label"><span></span>자동로그인</label>
+        <div class="ol_auto_wr flex justify-between"> 
+            <div id="ol_auto" class="chk_box relative leading-5 mt-1">
+                <input type="checkbox" name="auto_login" value="1" id="auto_login" class="selec_chk absolute top-0 left-0 w-0 h-0 opacity-0 outline-0 -z-10 overflow-hidden">
+                <label for="auto_login" id="auto_login_label" class="text-gray-600 align-baseline pl-5 hover:text-blue-500 group checked:text-black"><span class="absolute top-0.5 left-0 block w-3.5 h-3.5 bg-white border border-gray-300 rounded-sm m-0"></span>자동로그인</label>
             </div>
-            <div id="ol_svc">
-                <a href="<?php echo G5_BBS_URL ?>/password_lost.php">ID/PW 찾기</a>
+            <div id="ol_svc" class="leading-5">
+                <a href="<?php echo G5_BBS_URL ?>/password_lost.php" class="inline-block border border-solid border-gray-300 text-blue-500 rounded px-1 py-0.5">ID/PW 찾기</a>
             </div>
         </div>
         <?php
