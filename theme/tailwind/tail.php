@@ -55,13 +55,13 @@ if(G5_COMMUNITY_USE === false) {
 		<?php echo visit('theme/basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
 	</div>      
         <!-- <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.png" alt="<?php echo G5_VERSION ?>"></div> -->
-        <div id="ft_copy" class="text-center max-w-screen-xl w-full mx-auto py-5 text-gray-600 text-xs border-t border-mainborder">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
+        <div id="ft_copy" class="text-center max-w-screen-xl w-full mx-auto py-5 text-gray-500 text-xs border-t border-mainborder">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
     
     
-    <button type="button" id="top_btn" class="fixed bottom-5 right-5 w-14 leading-52 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
+    <button type="button" id="top_btn" class="fixed bottom-5 right-5 w-14 leading-52 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
     	<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span>
     </button>
-    <button type="button" id="darkmode-toggle-switch" class="group fixed bottom-5 right-20 flex justify-center items-center w-14 h-14 border-2 border-solid border-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600">
+    <button type="button" id="darkmode-toggle-switch" class="group fixed bottom-5 right-20 flex justify-center items-center w-14 h-14 border-2 border-solid border-gray-700 text-center text-sm bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600">
       <svg class="dark:hidden" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
         <path class="fill-gray-500 group-hover:fill-white" d="M7 0h2v2H7zM12.88 1.637l1.414 1.415-1.415 1.413-1.413-1.414zM14 7h2v2h-2zM12.95 14.433l-1.414-1.413 1.413-1.415 1.415 1.414zM7 14h2v2H7zM2.98 14.364l-1.413-1.415 1.414-1.414 1.414 1.415zM0 7h2v2H0zM3.05 1.706 4.463 3.12 3.05 4.535 1.636 3.12z" />
         <path class="fill-gray-700 group-hover:fill-white" d="M8 4C5.8 4 4 5.8 4 8s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Z" />
