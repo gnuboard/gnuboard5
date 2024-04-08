@@ -2,12 +2,11 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 현재접속자 목록 시작 { -->
 <div id="current_connect">
-    <ul>
+    <ul class="list-none m-0 p-0 border-t border-gray-200">
     <?php
     for ($i=0; $i<count($list); $i++) {
         //$location = conv_content($list[$i]['lo_location'], 0);
@@ -17,18 +16,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">',
         if ($list[$i]['lo_url'] && $is_admin == 'super') $display_location = "<a href=\"".$list[$i]['lo_url']."\">".$location."</a>";
         else $display_location = $location;
     ?>
-        <li>
-            <span class="crt_num"><?php echo $list[$i]['num'] ?></span>
-            <span class="crt_profile"><?php echo get_member_profile_img($list[$i]['mb_id']); ?></span>
-            <div class="crt_info">
-            	<span class="crt_name"><?php echo $list[$i]['name'] ?></span>
-            	<span class="crt_lct"><?php echo $display_location ?></span>  
+        <li class="relative flex border-b border-gray-200 box-border p-4">
+            <span class="crt_num leading-45 text-gray-500 font-bold mr-5"><?php echo $list[$i]['num'] ?></span>
+            <span class="crt_profile leading-45 mr-5"><?php echo get_member_profile_img($list[$i]['mb_id']); ?></span>
+            <div class="crt_info mt-1">
+            	<span class="crt_name block"><?php echo $list[$i]['name'] ?></span>
+            	<span class="crt_lct block"><?php echo $display_location ?></span>  
             </div>
         </li>
     <?php
     }
     if ($i == 0)
-        echo "<li class=\"empty_li\">현재 접속자가 없습니다.</li>";
+        echo "<li class=\"empty_li w-full border-0 text-gray-600 text-center py-48\">현재 접속자가 없습니다.</li>";
     ?>
     </ul>
 </div>
