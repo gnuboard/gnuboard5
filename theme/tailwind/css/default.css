@@ -819,6 +819,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   right: 0px;
 }
 
+.right-10 {
+  right: 2.5rem;
+}
+
 .right-2 {
   right: 0.5rem;
 }
@@ -853,6 +857,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .top-6 {
   top: 1.5rem;
+}
+
+.right-20 {
+  right: 5rem;
 }
 
 .-z-10 {
@@ -2893,4 +2901,17 @@ a.btn_admin,.btn_admin {
     padding-left: 0px;
     padding-right: 0px;
   }
+}
+
+.dark\:block:where(.dark, .dark *) {
+  display: block;
+}
+
+.dark\:hidden:where(.dark, .dark *) {
+  display: none;
+}
+
+.dark\:bg-white:where(.dark, .dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }

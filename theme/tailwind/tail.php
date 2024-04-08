@@ -61,6 +61,10 @@ if(G5_COMMUNITY_USE === false) {
     <button type="button" id="top_btn" class="fixed bottom-5 right-5 w-14 leading-52 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
     	<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span>
     </button>
+    <button type="button" id="darkmode-toggle-switch" class="fixed bottom-5 right-20 w-14 leading-52 border-2 border-solid border-gray-700 text-gray-700 text-center text-sm z-50 bg-white bg-opacity-50 hover:border-blue-600 hover:bg-blue-600 hover:text-white">
+      <i class="fa-solid fa-moon"></i>
+      <i class="fa-solid fa-sun hidden dark:block"></i>
+    </button>
     <script>
     $(function() {
         $("#top_btn").on("click", function() {
@@ -88,6 +92,32 @@ $(function() {
     // 폰트 리사이즈 쿠키있으면 실행
     font_resize("container", get_cookie("ck_font_resize_rmv_class"), get_cookie("ck_font_resize_add_class"));
 });
+
+// 다크모드 설정
+// Dark mode 상태 확인 함수
+function isDarkModeEnabled() {
+  const isUserColorTheme = localStorage.getItem('theme');
+  if (isUserColorTheme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark')
+} else {
+  document.documentElement.classList.remove('dark')
+}
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  isDarkModeEnabled();
+  const darkmodeBtn = document.querySelector('#darkmode-toggle-switch');
+  darkmodeBtn?.addEventListener('click', function () {
+    const currentTheme = localStorage.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', currentTheme);
+    if(currentTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else if(currentTheme === 'light'){
+      document.documentElement.classList.remove('dark')
+    }
+  });
+});
+
 </script>
 
 <?php
