@@ -112,10 +112,10 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </ul>
     </div>
     
-    <nav id="gnb" class="bg-white">
+    <nav id="gnb" class="bg-white dark:bg-zinc-900">
         <h2 class="blind">메인메뉴</h2>
         <div class="gnb_wrap relative max-w-screen-xl w-full mx-auto hover:z-10 active:z-10 focus:z-10">
-            <ul id="gnb_1dul" class="flex flex-row-reverse text-xs border-b border-solid border-gray-200 p-0">
+            <ul id="gnb_1dul" class="flex flex-row-reverse text-xs border-b border-solid border-gray-200 p-0 dark:border-mainborder">
                 <li class="gnb_1dli gnb_mnal ml-auto"><button type="button" class="gnb_menu_btn bg-gnbmenu text-white w-14 h-14 border-0 align-top text-lg" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
                 <?php
 				$menu_datas = get_menu_db(0, true);
@@ -126,7 +126,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     $add_class = (isset($row['sub']) && $row['sub']) ? 'gnb_al_li_plus' : '';
                 ?>
                 <li class="gnb_1dli <?php echo $add_class; ?> relative leading-55 group" style="z-index:<?php echo $gnb_zindex--; ?>">
-                    <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da block font-bold px-3.5 text-black no-underline group-hover:text-blue-400 transition ease-out duration-200"><?php echo $row['me_name'] ?></a>
+                    <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da block font-bold px-3.5 text-black no-underline group-hover:text-blue-400 transition ease-out duration-200 dark:text-white"><?php echo $row['me_name'] ?></a>
                     <?php
                     $k = 0;
                     foreach( (array) $row['sub'] as $row2 ){
@@ -134,9 +134,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         if( empty($row2) ) continue; 
 
                         if($k == 0)
-                            echo '<span class="bg absolute top-6 right-2 inline-block w-2.5 h-2.5 overflow-hidden">하위분류</span><div class="gnb_2dul hidden absolute top-13 min-w-36"><ul class="gnb_2dul_box border border-gray-200 shadow-md shadow-gray-300/50">'.PHP_EOL;
+                            echo '<span class="bg absolute top-6 right-2 inline-block w-2.5 h-2.5 overflow-hidden">하위분류</span><div class="gnb_2dul hidden absolute top-13 min-w-36"><ul class="gnb_2dul_box border border-gray-200 shadow-md shadow-gray-300/5 dark:border-mainborder">'.PHP_EOL;
                     ?>
-                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da block px-2.5 bg-white text-black text-left no-underline leading-10 hover:text-blue-400 hover:bg-gray-100 transition ease-out duration-200"><?php echo $row2['me_name'] ?></a></li>
+                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da block px-2.5 bg-white text-black text-left no-underline leading-10 hover:text-blue-400 hover:bg-gray-100 transition ease-out duration-200 dark:bg-zinc-800 dark:text-white"><?php echo $row2['me_name'] ?></a></li>
                     <?php
                     $k++;
                     }   //end foreach $row2
@@ -153,15 +153,15 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     <li class="gnb_empty py-2.5 w-full text-center text-black">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php" class="text-blue-400 no-underline">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
                 <?php } ?>
             </ul>
-            <div id="gnb_all" class="hidden absolute border border-gray-200 w-full bg-white z-1000 shadow-md shadow-gray-600/50">
-                <h2 class="flex items-center text-sm border-b border-solid border-gray-200 h-14 px-5">전체메뉴</h2>
+            <div id="gnb_all" class="hidden absolute border border-gray-200 w-full bg-white z-1000 shadow-md shadow-gray-600/50 dark:bg-zinc-800 dark:border-mainborder">
+                <h2 class="flex items-center text-sm border-b border-solid border-gray-200 h-14 px-5 dark:border-mainborder dark:text-white">전체메뉴</h2>
                 <ul class="gnb_al_ul flex flex-wrap">
                     <?php
                     
                     $i = 0;
                     foreach( $menu_datas as $row ){
                     ?>
-                    <li class="gnb_al_li w-1/5 min-h-40 border-l border-solid border-gray-200 p-5">
+                    <li class="gnb_al_li w-1/5 min-h-40 border-l border-solid border-gray-200 p-5 dark:border-mainborder">
                         <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_al_a text-sm block relative mb-2.5 font-bold text-blue-400"><?php echo $row['me_name'] ?></a>
                         <?php
                         $k = 0;
@@ -169,7 +169,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                             if($k == 0)
                                 echo '<ul>'.PHP_EOL;
                         ?>
-                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="text-gray-700 leading-relaxed"><?php echo $row2['me_name'] ?></a></li>
+                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="text-gray-700 leading-relaxed dark:text-white"><?php echo $row2['me_name'] ?></a></li>
                         <?php
                         $k++;
                         }   //end foreach $row2
@@ -210,7 +210,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <hr>
 
 <!-- 콘텐츠 시작 { -->
-<div id="wrapper">
+<div id="wrapper" class="dark:bg-zinc-900">
     <div id="container_wr" class="flex max-w-screen-xl w-full mx-auto">
       <div id="container" class="relative w-container min-h-500 my-5 h-auto">
         <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="text-base mx-auto font-bold"><span class="block leading-relaxed mx-auto mb-2.5" title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }

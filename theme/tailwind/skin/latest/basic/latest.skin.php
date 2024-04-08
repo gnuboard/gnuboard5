@@ -5,15 +5,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $list_count = (is_array($list) && $list) ? count($list) : 0;
 ?>
 
-<div class="lat relative bg-white mb-5">
-    <h2 class="lat_title block leading-45 text-sm font-bold text-black"><a href="<?php echo get_pretty_url($bo_table); ?>" class="relative inline-block"><?php echo $bo_subject ?></a></h2>
+<div class="lat relative bg-white mb-5 dark:bg-zinc-900">
+    <h2 class="lat_title block leading-45 text-sm font-bold text-black dark:text-white"><a href="<?php echo get_pretty_url($bo_table); ?>" class="relative inline-block"><?php echo $bo_subject ?></a></h2>
     <ul class="py-2.5">
     <?php for ($i=0; $i<$list_count; $i++) {  ?>
-        <li class="basic_li relative border-b border-solid border-gray-200 mb-2.5">
+        <li class="basic_li relative border-b border-solid border-gray-200 mb-2.5 dark:border-mainborder">
             <?php
             if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i><span class=\"sound_only\">비밀글</span> ";
 
-            echo "<a href=\"".get_pretty_url($bo_table, $list[$i]['wr_id'])."\" class=\"font-bold text-sm leading-5 align-middle hover:text-blue-500\"> ";
+            echo "<a href=\"".get_pretty_url($bo_table, $list[$i]['wr_id'])."\" class=\"font-bold text-sm leading-5 align-middle hover:text-blue-500 dark:text-white\"> ";
             if ($list[$i]['is_notice'])
                 echo "<strong>".$list[$i]['subject']."</strong>";
             else
@@ -35,7 +35,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
 
             ?>
             <div class="lt_info py-2.5">
-				<span class="lt_nick"><?php echo $list[$i]['name'] ?></span>
+				<span class="lt_nick dark:text-white"><?php echo $list[$i]['name'] ?></span>
             	<span class="lt_date text-gray-400"><?php echo $list[$i]['datetime2'] ?></span>              
             </div>
         </li>
