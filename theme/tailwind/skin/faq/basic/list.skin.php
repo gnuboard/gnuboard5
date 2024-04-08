@@ -2,7 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.$faq_skin_url.'/style.css">', 0);
 ?>
 
 <!-- FAQ 시작 { -->
@@ -14,13 +13,13 @@ if ($himg_src)
 echo '<div id="faq_hhtml">'.conv_content($fm['fm_head_html'], 1).'</div>';
 ?>
 
-<fieldset id="faq_sch">
+<fieldset id="faq_sch" class="bg-gray-100 text-center mb-2 p-7">
     <legend>FAQ 검색</legend>
     <form name="faq_search_form" method="get">
-    <span class="sch_tit">FAQ 검색</span>
+    <span class="sch_tit blind">FAQ 검색</span>
     <input type="hidden" name="fm_id" value="<?php echo $fm_id;?>">
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx;?>" required id="stx" class="frm_input" size="15" maxlength="15">
+    <input type="text" name="stx" value="<?php echo $stx;?>" required id="stx" class="frm_input border-b border-gray-200 w-80 h-11 rounded-sm" size="15" maxlength="15">
     <button type="submit" value="검색" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
     </form>
 </fieldset>
@@ -48,26 +47,26 @@ if( count($faq_master_list) ){
 </nav>
 <?php } ?>
 
-<div id="faq_wrap" class="faq_<?php echo $fm_id; ?>">
+<div id="faq_wrap" class="faq_<?php echo $fm_id; ?> mt-2 mb-7">
     <?php // FAQ 내용
     if( count($faq_list) ){
     ?>
     <section id="faq_con">
-        <h2><?php echo $g5['title']; ?> 목록</h2>
-        <ol>
+        <h2 class="blind"><?php echo $g5['title']; ?> 목록</h2>
+        <ol class="list-none m-0 p-0 border-t border-gray-200">
             <?php
             foreach($faq_list as $key=>$v){
                 if(empty($v))
                     continue;
             ?>
-            <li>
-                <h3>
-                	<span class="tit_bg">Q</span><a href="#none" onclick="return faq_open(this);"><?php echo conv_content($v['fa_subject'], 1); ?></a>
-                	<button class="tit_btn" onclick="return faq_open(this);"><i class="fa fa-plus" aria-hidden="true"></i><span class="sound_only">열기</span></button>
+            <li class="relative border-b border-gray-200 bg-white">
+                <h3 class="relative min-h-12 leading-7 p-4 pl-12">
+                	<span class="tit_bg inline-block absolute top-4 left-4 text-center text-black text-xl">Q</span><a href="#none" onclick="return faq_open(this);"><?php echo conv_content($v['fa_subject'], 1); ?></a>
+                	<button class="tit_btn absolute right-4 top-4 border-0 w-7 h-7 bg-white text-gray-300 text-sm" onclick="return faq_open(this);"><i class="fa fa-plus" aria-hidden="true"></i><span class="sound_only">열기</span></button>
                 </h3>
-                <div class="con_inner">
+                <div class="con_inner d-none pt-1 pl-1 pb-5 pr-12">
                     <?php echo conv_content($v['fa_content'], 1); ?>
-                    <button type="button" class="closer_btn"><i class="fa fa-minus" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+                    <button type="button" class="closer_btn absolute right-4 top-4 border-0 w-7 h-7 bg-white text-blue-500 text-sm"><i class="fa fa-minus" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
                 </div>
             </li>
             <?php
@@ -105,7 +104,7 @@ if ($timg_src)
 
 <?php
 if ($admin_href)
-    echo '<div class="faq_admin"><a href="'.$admin_href.'" class="btn_admin btn" title="FAQ 수정"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">FAQ 수정</span></a></div>';
+    echo '<div class="faq_admin text-right"><a href="'.$admin_href.'" class="btn_admin btn" title="FAQ 수정"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">FAQ 수정</span></a></div>';
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
