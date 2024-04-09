@@ -10,7 +10,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 
 <!-- 회원정보 입력/수정 시작 { -->
 
-<div class="register">
+<div class="register mx-auto">
 	<form id="fregisterform" name="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
 	<input type="hidden" name="w" value="<?php echo $w ?>">
 	<input type="hidden" name="url" value="<?php echo $urlencode ?>">
@@ -24,12 +24,12 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
 	
-	<div id="register_form" class="form_01">   
-	    <div class="register_form_inner">
-	        <h2>사이트 이용정보 입력</h2>
-	        <ul>
+	<div id="register_form" class="form_01 bg-white mb-5">   
+	    <div class="register_form_inner bg-gray-100 border border-gray-200 rounded">
+	        <h2 class="border-b border-solid border-gray-200 p-5">사이트 이용정보 입력</h2>
+	        <ul class="p-5">
 	            <li>
-	                <label for="reg_mb_id">
+	                <label for="reg_mb_id" class="block leading-6 mb-3">
 	                	아이디 (필수)
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 						<span class="tooltip">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
@@ -38,26 +38,26 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	                <span id="msg_mb_id"></span>
 	            </li>
 	            <li class="half_input left_input margin_input">
-	                <label for="reg_mb_password">비밀번호 (필수)</label>
+	                <label for="reg_mb_password" class="block leading-6 mb-3">비밀번호 (필수)</label>
 	                <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호">
 				</li>
 	            <li class="half_input left_input">
-	                <label for="reg_mb_password_re">비밀번호 확인 (필수)</label>
+	                <label for="reg_mb_password_re" class="block leading-6 mb-3">비밀번호 확인 (필수)</label>
 	                <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호 확인">
 	            </li>
 	        </ul>
 	    </div>
 	
-	    <div class="tbl_frm01 tbl_wrap register_form_inner">
-	        <h2>개인정보 입력</h2>
-	        <ul>
+	    <div class="tbl_frm01 tbl_wrap register_form_inner bg-gray-100 border border-gray-200 rounded">
+	        <h2 class="border-b border-solid border-gray-200 p-5">개인정보 입력</h2>
+	        <ul class="p-5">
 				<li>
                     <?php 
 					$desc_name = '';
 					$desc_phone = '';
 					if ($config['cf_cert_use']) {
-                        $desc_name = '<span class="cert_desc"> 본인확인 시 자동입력</span>';
-                        $desc_phone = '<span class="cert_desc"> 본인확인 시 자동입력</span>';
+                        $desc_name = '<span class="cert_desc text-blue-500"> 본인확인 시 자동입력</span>';
+                        $desc_phone = '<span class="cert_desc text-blue-500"> 본인확인 시 자동입력</span>';
     
                         if (!$config['cf_cert_simple'] && !$config['cf_cert_hp'] && $config['cf_cert_ipin']) {
                             $desc_phone = '';
@@ -71,7 +71,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 						if ($config['cf_cert_ipin'])
 							echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>'.PHP_EOL;
 	
-                        echo '<span class="cert_req">(필수)</span>';
+                        echo '<span class="cert_req ml-1 leading-9">(필수)</span>';
 	                    echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
 	                }
 	                ?>
@@ -89,18 +89,18 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 								break;
 						}                 
 	                ?>
-	                <div id="msg_certify">
+	                <div id="msg_certify" class="border border-gray-200 bg-gray-100 text-center my-1 p-1">
 	                    <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	                </div>
 				<?php } ?>
 				</li>
 	            <li>
-	                <label for="reg_mb_name">이름 (필수)<?php echo $desc_name ?></label>
+	                <label for="reg_mb_name" class="block leading-6 mb-3">이름 (필수)<?php echo $desc_name ?></label>
 	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" size="10" placeholder="이름">
 	            </li>
 	            <?php if ($req_nick) {  ?>
 	            <li>
-	                <label for="reg_mb_nick">
+	                <label for="reg_mb_nick" class="block leading-6 mb-3">
 	                	닉네임 (필수)
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 						<span class="tooltip">공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br> 닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.</span>
@@ -113,7 +113,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	            <?php }  ?>
 	
 	            <li>
-	                <label for="reg_mb_email">E-mail (필수)
+	                <label for="reg_mb_email" class="block leading-6 mb-3">E-mail (필수)
 	                
 	                <?php if ($config['cf_use_email_certify']) {  ?>
 	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
@@ -160,12 +160,12 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	                <label for="reg_mb_zip" class="sound_only">우편번호<?php echo $config['cf_req_addr']?' (필수)':''; ?></label>
 	                <input type="text" name="mb_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="reg_mb_zip" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input twopart_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="5" maxlength="6"  placeholder="우편번호">
 	                <button type="button" class="btn_frmline" onclick="win_zip('fregisterform', 'mb_zip', 'mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_addr_jibeon');">주소 검색</button><br>
-	                <input type="text" name="mb_addr1" value="<?php echo get_text($member['mb_addr1']) ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address full_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="50"  placeholder="기본주소">
+	                <input type="text" name="mb_addr1" value="<?php echo get_text($member['mb_addr1']) ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address mt-1 full_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="50"  placeholder="기본주소">
 	                <label for="reg_mb_addr1" class="sound_only">기본주소<?php echo $config['cf_req_addr']?' (필수)':''; ?></label><br>
-	                <input type="text" name="mb_addr2" value="<?php echo get_text($member['mb_addr2']) ?>" id="reg_mb_addr2" class="frm_input frm_address full_input" size="50" placeholder="상세주소">
+	                <input type="text" name="mb_addr2" value="<?php echo get_text($member['mb_addr2']) ?>" id="reg_mb_addr2" class="frm_input frm_address mt-1 full_input" size="50" placeholder="상세주소">
 	                <label for="reg_mb_addr2" class="sound_only">상세주소</label>
 	                <br>
-	                <input type="text" name="mb_addr3" value="<?php echo get_text($member['mb_addr3']) ?>" id="reg_mb_addr3" class="frm_input frm_address full_input" size="50" readonly="readonly" placeholder="참고항목">
+	                <input type="text" name="mb_addr3" value="<?php echo get_text($member['mb_addr3']) ?>" id="reg_mb_addr3" class="frm_input frm_address mt-1 full_input" size="50" readonly="readonly" placeholder="참고항목">
 	                <label for="reg_mb_addr3" class="sound_only">참고항목</label>
 	                <input type="hidden" name="mb_addr_jibeon" value="<?php echo get_text($member['mb_addr_jibeon']); ?>">
 	            </li>
@@ -173,9 +173,9 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	        </ul>
 	    </div>
 	
-	    <div class="tbl_frm01 tbl_wrap register_form_inner">
-	        <h2>기타 개인설정</h2>
-	        <ul>
+	    <div class="tbl_frm01 tbl_wrap register_form_inner bg-gray-100 border border-gray-200 rounded">
+	        <h2 class="border-b border-solid border-gray-200 p-5">기타 개인설정</h2>
+	        <ul class="p-5"s>
 	            <?php if ($config['cf_use_signature']) {  ?>
 	            <li>
 	                <label for="reg_mb_signature">서명<?php if ($config['cf_req_signature']){ ?> (필수)<?php } ?></label>
@@ -198,7 +198,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	                	<span class="tooltip">이미지 크기는 가로 <?php echo $config['cf_member_icon_width'] ?>픽셀, 세로 <?php echo $config['cf_member_icon_height'] ?>픽셀 이하로 해주세요.<br>
 gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_icon_size']) ?>바이트 이하만 등록됩니다.</span>
 	                </label>
-	                <input type="file" name="mb_icon" id="reg_mb_icon">
+	                <input type="file" name="mb_icon" id="reg_mb_icon" class="float-right">
 	
 	                <?php if ($w == 'u' && file_exists($mb_icon_path)) {  ?>
 	                <img src="<?php echo $mb_icon_url ?>" alt="회원아이콘">
@@ -217,10 +217,10 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	                	<span class="tooltip">이미지 크기는 가로 <?php echo $config['cf_member_img_width'] ?>픽셀, 세로 <?php echo $config['cf_member_img_height'] ?>픽셀 이하로 해주세요.<br>
 	                    gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.</span>
 	                </label>
-	                <input type="file" name="mb_img" id="reg_mb_img">
+	                <input type="file" name="mb_img" id="reg_mb_img" class="float-right">
 	
 	                <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
-	                <img src="<?php echo $mb_img_url ?>" alt="회원이미지">
+	                <img src="<?php echo $mb_img_url ?>" alt="회원이미지" class="max-w-full h-auto">
 	                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">
 	                <label for="del_mb_img" class="inline">삭제</label>
 	                <?php }  ?>
@@ -234,7 +234,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		            	<span></span>
 		            	<b class="sound_only">메일링서비스</b>
 		            </label>
-		            <span class="chk_li">정보 메일을 받겠습니다.</span>
+		            <span class="chk_li pl-5">정보 메일을 받겠습니다.</span>
 		        </li>
 	
 				<?php if ($config['cf_use_hp']) { ?>
@@ -244,7 +244,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		            	<span></span>
 		            	<b class="sound_only">SMS 수신여부</b>
 		            </label>        
-		            <span class="chk_li">휴대폰 문자메세지를 받겠습니다.</span>
+		            <span class="chk_li pl-5">휴대폰 문자메세지를 받겠습니다.</span>
 		        </li>
 		        <?php } ?>
 	
@@ -255,7 +255,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		      			<span></span>
 		      			<b class="sound_only">정보공개</b>
 		      		</label>      
-		            <span class="chk_li">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
+		            <span class="chk_li pl-5">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
 		            <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 		            <span class="tooltip">
 		                정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
@@ -296,9 +296,9 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	        </ul>
 	    </div>
 	</div>
-	<div class="btn_confirm">
-	    <a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
-	    <button type="submit" id="btn_submit" class="btn_submit" accesskey="s"><?php echo $w==''?'회원가입':'정보수정'; ?></button>
+	<div class="btn_confirm flex text-center">
+    <a href="<?php echo G5_URL ?>" class="btn_close w-1/2 h-12 font-bold text-sm">취소</a>
+    <button type="submit" id="btn_submit" class="btn_submit w-1/2 h-12 font-bold text-sm ml-2" accesskey="s"><?php echo $w==''?'회원가입':'정보수정'; ?></button>
 	</div>
 	</form>
 </div>

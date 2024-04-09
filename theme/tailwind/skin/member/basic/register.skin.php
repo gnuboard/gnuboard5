@@ -6,30 +6,30 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <!-- 회원가입약관 동의 시작 { -->
-<div class="register">
+<div class="register mx-auto">
 
     <form  name="fregister" id="fregister" action="<?php echo $register_action_url ?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
 
-    <p><i class="fa fa-check-circle" aria-hidden="true"></i> 회원가입약관 및 개인정보 수집 및 이용의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
+    <p class="relative text-center text-whtie text-sm text-white bg-rose-400 rounded font-bold mb-2 py-4 before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:rounded-s before:bg-rose-500"><i class="fa fa-check-circle text-sm align-middle" aria-hidden="true"></i> 회원가입약관 및 개인정보 수집 및 이용의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
     
     <?php
     // 소셜로그인 사용시 소셜로그인 버튼
     @include_once(get_social_skin_path().'/social_register.skin.php');
     ?>
-    <section id="fregister_term">
-        <h2>회원가입약관</h2>
-        <textarea readonly><?php echo get_text($config['cf_stipulation']) ?></textarea>
-        <fieldset class="fregister_agree">
+    <section id="fregister_term" class="relative border border-gray-200 rounded my-2 mx-auto">
+        <h2 class="text-left border-b border-solid border-gray-200 text-sm p-5">회원가입약관</h2>
+        <textarea class="block w-full h-40 bg-white border-0 leading-relaxed p-5" readonly><?php echo get_text($config['cf_stipulation']) ?></textarea>
+        <fieldset class="fregister_agree absolute top-0 right-0">
             <input type="checkbox" name="agree" value="1" id="agree11" class="selec_chk">
-            <label for="agree11"><span></span><b class="sound_only">회원가입약관의 내용에 동의합니다.</b></label>
+            <label for="agree11" class="text-gray-600 hover:text-blue-500"><span class="absolute top-5 right-4 w-4 h-4 block bg-white border border-gray-200 rounded"></span><b class="sound_only">회원가입약관의 내용에 동의합니다.</b></label>
         </fieldset>
     </section>
 
-    <section id="fregister_private">
-        <h2>개인정보 수집 및 이용</h2>
-        <div>
-            <table>
-                <caption>개인정보 수집 및 이용</caption>
+    <section id="fregister_private" class="relative border border-gray-200 rounded my-2 mx-auto">
+        <h2 class="text-left border-b border-solid border-gray-200 text-sm p-5">개인정보 수집 및 이용</h2>
+        <div class="bg-white p-5">
+            <table class="w-full border-collapse text-xs">
+                <caption class="blind">개인정보 수집 및 이용</caption>
                 <thead>
                 <tr>
                     <th>목적</th>
@@ -52,20 +52,20 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             </table>
         </div>
 
-        <fieldset class="fregister_agree">
+        <fieldset class="fregister_agree absolute top-0 right-0">
             <input type="checkbox" name="agree2" value="1" id="agree21" class="selec_chk">
-            <label for="agree21"><span></span><b class="sound_only">개인정보 수집 및 이용의 내용에 동의합니다.</b></label>
+            <label for="agree21" class="text-gray-600 hover:text-blue-500"><span class="absolute top-5 right-4 w-4 h-4 block bg-white border border-gray-200 rounded"></span><b class="sound_only">개인정보 수집 및 이용의 내용에 동의합니다.</b></label>
        </fieldset>
     </section>
 	
-	<div id="fregister_chkall" class="chk_all fregister_agree">
-        <input type="checkbox" name="chk_all" id="chk_all" class="selec_chk">
-        <label for="chk_all"><span></span>회원가입 약관에 모두 동의합니다</label>
+    <div id="fregister_chkall" class="chk_all fregister_agree relative text-center bg-gray-100 border border-gray-200 rounded mb-4 py-4">
+      <input type="checkbox" name="chk_all" id="chk_all" class="selec_chk">
+      <label for="chk_all" class="text-gray-600 hover:text-blue-500"><span class="absolute top-5 right-4 w-4 h-4 block bg-white border border-gray-200 rounded"></span>회원가입 약관에 모두 동의합니다</label>
     </div>
 	    
-    <div class="btn_confirm">
-    	<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
-        <button type="submit" class="btn_submit">회원가입</button>
+    <div class="btn_confirm flex">
+    	<a href="<?php echo G5_URL ?>" class="btn_close w-1/2 h-12 font-bold text-sm">취소</a>
+      <button type="submit" class="btn_submit w-1/2 h-12 font-bold text-sm ml-2">회원가입</button>
     </div>
 
     </form>
