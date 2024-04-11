@@ -13,8 +13,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 <div id="bo_list">
 	<?php if ($category_option) { ?>
     <!-- 카테고리 시작 { -->
-    <nav id="bo_cate">
-        <h2><?php echo $qaconfig['qa_title'] ?> 카테고리</h2>
+    <nav id="bo_cate" class="my-6">
+        <h2 class="blind"><?php echo $qaconfig['qa_title'] ?> 카테고리</h2>
         <ul id="bo_cate_ul">
             <?php echo $category_option ?>
         </ul>

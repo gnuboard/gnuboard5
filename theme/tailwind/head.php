@@ -23,7 +23,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <!-- 상단 시작 { -->
 <div id="hd" class="bg-mainbg">
     <h1 id="hd_h1" class="blind"><?php echo $g5['title'] ?></h1>
-    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
+    <div id="skip_to_container"><a href="#container" class="absolute top-0 left-0 w-px h-px overflow-hidden opacity-0 z-1000 focus:w-full focus:h-20 focus:bg-gray-900 focus:text-white focus:text-sm focus:font-bold focus:text-center focus:no-underline focus:leading-loose active:w-full active:h-20 active:bg-gray-900 active:text-white active:text-sm active:font-bold active:text-center active:no-underline active:leading-loose">본문 바로가기</a></div>
 
     <?php
     if(defined('_INDEX_')) { // index에서만 실행

@@ -580,6 +580,8 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   overflow:hidden !important
 }
 
+/* ie6 이미지 너비 지정 */
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -922,6 +924,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   margin-bottom: 1.25rem;
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1098,6 +1105,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   height: 100%;
 }
 
+.h-px {
+  height: 1px;
+}
+
 .min-h-12 {
   min-height: 3rem;
 }
@@ -1180,6 +1191,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .w-ltwr {
   width: 32%;
+}
+
+.w-px {
+  width: 1px;
 }
 
 .min-w-36 {
@@ -1801,34 +1816,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-
-/* 본문 바로가기 */
-
-#skip_to_container a {
-  z-index:100000;
-  position:absolute;
-  top:0;
-  left:0;
-  width:1px;
-  height:1px;
-  font-size:0;
-  line-height:0;
-  overflow:hidden
-}
-
-#skip_to_container a:focus, #skip_to_container a:active {
-  width:100%;
-  height:75px;
-  background:#21272e;
-  color:#fff;
-  font-size:2em;
-  font-weight:bold;
-  text-align:center;
-  text-decoration:none;
-  line-height:3.3em
-}
-
-/* ie6 이미지 너비 지정 */
 
 /* 캡챠 자동등록(입력)방지 기본 -pc */
 
@@ -2971,28 +2958,6 @@ a.btn_admin,.btn_admin {
 }
 
 /* 게시판 목록 */
-
-#bo_cate {
-  margin:25px 0
-}
-
-#bo_cate h2 {
-  position:absolute;
-  font-size:0;
-  line-height:0;
-  overflow:hidden
-}
-
-#bo_cate ul {
-  zoom:1
-}
-
-#bo_cate ul:after {
-  display:block;
-  visibility:hidden;
-  clear:both;
-  content:""
-}
 
 #bo_cate li {
   display:inline-block;
@@ -7406,8 +7371,86 @@ a.btn_admin,.btn_admin {
   z-index: 10;
 }
 
+.focus\:h-20:focus {
+  height: 5rem;
+}
+
+.focus\:w-full:focus {
+  width: 100%;
+}
+
+.focus\:bg-gray-900:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.focus\:text-center:focus {
+  text-align: center;
+}
+
+.focus\:text-sm:focus {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.focus\:font-bold:focus {
+  font-weight: 700;
+}
+
+.focus\:leading-loose:focus {
+  line-height: 2;
+}
+
+.focus\:text-white:focus {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.focus\:no-underline:focus {
+  text-decoration-line: none;
+}
+
 .active\:z-10:active {
   z-index: 10;
+}
+
+.active\:h-20:active {
+  height: 5rem;
+}
+
+.active\:w-full:active {
+  width: 100%;
+}
+
+.active\:bg-gray-900:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.active\:text-center:active {
+  text-align: center;
+}
+
+.active\:text-sm:active {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.active\:font-bold:active {
+  font-weight: 700;
+}
+
+.active\:leading-loose:active {
+  line-height: 2;
+}
+
+.active\:text-white:active {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.active\:no-underline:active {
+  text-decoration-line: none;
 }
 
 .group:hover .group-hover\:bg-emerald-500 {
@@ -7482,19 +7525,9 @@ a.btn_admin,.btn_admin {
   color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 
-.dark\:hover\:bg-slate-100:hover:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
-}
-
 .dark\:hover\:bg-zinc-800:hover:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(39 39 42 / var(--tw-bg-opacity));
-}
-
-.dark\:hover\:bg-zinc-700:hover:is(.dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(63 63 70 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 1280px) {

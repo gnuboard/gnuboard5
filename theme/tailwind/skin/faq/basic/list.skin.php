@@ -27,8 +27,8 @@ echo '<div id="faq_hhtml">'.conv_content($fm['fm_head_html'], 1).'</div>';
 <?php
 if( count($faq_master_list) ){
 ?>
-<nav id="bo_cate">
-    <h2>자주하시는질문 분류</h2>
+<nav id="bo_cate" class="my-6">
+    <h2 class="blind">자주하시는질문 분류</h2>
     <ul id="bo_cate_ul">
         <?php
         foreach( $faq_master_list as $v ){

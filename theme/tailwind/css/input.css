@@ -50,7 +50,9 @@ border:1px solid #558ab7 !important;
  /* 화면낭독기 사용자용 */
 .blind {position: absolute;font-size: 0;line-height: 0;overflow: hidden;}
 .msg_sound_only, .sound_only {display:inline-block !important;position:absolute;top:0;left:0;width:0;height:0;margin:0 !important;padding:0 !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
-
+  
+/* ie6 이미지 너비 지정 */
+  .img_fix {width:100%;height:auto}
 }
 
 @layer components {
@@ -87,12 +89,7 @@ border:1px solid #558ab7 !important;
 }
 
 @layer utilities {
-  /* 본문 바로가기 */
-  #skip_to_container a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
-  #skip_to_container a:focus, #skip_to_container a:active {width:100%;height:75px;background:#21272e;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
 
-  /* ie6 이미지 너비 지정 */
-  .img_fix {width:100%;height:auto}
 
   /* 캡챠 자동등록(입력)방지 기본 -pc */
   #captcha {display:inline-block;position:relative}
@@ -166,7 +163,6 @@ border:1px solid #558ab7 !important;
   a.btn_b04:hover, .btn_b04:hover {color:#333;background:#f9f9f9}
   a.btn_admin,.btn_admin {display:inline-block;color:#d13f4a;text-decoration:none;vertical-align:middle} /* 관리자 전용 버튼 */
   .btn_admin:hover, a.btn_admin:hover {color:#ff3746}
-
 
   /* 기본테이블 */
   .tbl_wrap table {width:100%;border-collapse:collapse;border-spacing:0 5px;background:#fff;border-top:1px solid #ececec;border-bottom:1px solid #ececec} 
@@ -383,10 +379,6 @@ border:1px solid #558ab7 !important;
   #bo_list tbody .even td {background:#fbfbfb}
   
   /* 게시판 목록 */
-  #bo_cate {margin:25px 0}
-  #bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-  #bo_cate ul {zoom:1}
-  #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
   #bo_cate li {display:inline-block;padding:2px}
   #bo_cate a {display:block;line-height:28px;padding:5px 15px;border-radius:30px;border:1px solid #d6e9ff;color:#6794d3}
   #bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none;background:#3a8afd;color:#fff}

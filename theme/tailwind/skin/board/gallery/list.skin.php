@@ -9,8 +9,8 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 <div id="bo_gall" style="width:<?php echo $width; ?>">
 
     <?php if ($is_category) { ?>
-    <nav id="bo_cate">
-        <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
+    <nav id="bo_cate" class="my-6">
+        <h2 class="blind"><?php echo $board['bo_subject'] ?> 카테고리</h2>
         <ul id="bo_cate_ul">
             <?php echo $category_option ?>
         </ul>
