@@ -395,12 +395,9 @@ border:1px solid #558ab7 !important;
   #bo_list .txt_rdy, #bo_v_rel .txt_rdy {display:inline-block;height:30px;line-height:28px;padding:0 10px;border-radius:3px;color:#fff;font-size:1em;background:#ccd1d9;font-weight:bold}
   #bo_list .txt_rdy i, #bo_v_rel .txt_rdy i {font-size:13px}
 
-
   /* 갤러리 목록 */
-  #bo_gall h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
   #bo_gall #gall_ul {margin:10px -10px 0;padding:0;list-style:none;zoom:1}
   #bo_gall #gall_ul:after {display:block;visibility:hidden;clear:both;content:""}
-  #bo_gall .gall_li {}
   #bo_gall .gall_li .gall_chk {position:absolute;top:0;left:0;padding:5px;z-index:1}
   #bo_gall .gall_box {position:relative;margin:0 0 50px 0;border-radius:0 0 2px 2px}
   #bo_gall .gall_con {position:relative}
@@ -502,57 +499,21 @@ border:1px solid #558ab7 !important;
   
   #bo_list .bo_tit .title_icon {margin-right:2px}
   
-  .bo_sch_wrap {display:none;width:100%;height:100%;position:fixed;top:0;left:0;z-index:999}
-  .bo_sch {position:absolute;top:50%;left:50%;background:#fff;text-align:left;width:330px;max-height:300px;margin-left:-125px;margin-top:-180px;overflow-y:auto;border-radius:5px;-webkit-box-shadow:1px 1px 18px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 18px rgba(0,0,0,0.2);box-shadow:1px 1px 18px rgba(0,0,0,0.2);border:1px solid #dde7e9;background:#fff;border-radius:3px}
-  .bo_sch:after {display:block;visibility:hidden;clear:both;content:""}
-  .bo_sch h3 {padding:15px;border-bottom:1px solid #e8e8e8}
   .bo_sch legend {background:red}
-  .bo_sch form {padding:15px;display:block}
-  .bo_sch select {border:0;width:100%;height:40px;border:1px solid #d0d3db;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
-  -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
-  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
-  .bo_sch .sch_bar {display:inline-block;width:100%;clear:both;margin-top:15px;border:1px solid #d0d3db;border-radius:2px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
-  -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
-  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
-  .bo_sch .sch_input {width:250px;height:38px;border:0;padding:0;background-color:transparent;float:left}
-  .bo_sch .sch_btn {height:38px;float:right;color:#656565;background:none;border:0;width:40px;font-size:15px}
-  .bo_sch .bo_sch_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff}
-  .bo_sch_bg {background:#000;background:rgba(0,0,0,0.1);width:100%;height:100%}
 
   /* 게시판 쓰기 */
-  #char_count_desc {display:block;margin:0 0 5px;padding:0}
-  #char_count_wrap {margin:5px 0 0;text-align:right}
-  #char_count {font-weight:bold}
-
-  #autosave_wrapper {position:relative}
-  #autosave_pop {display:none;z-index:10;position:absolute !important;top:34px;right:0;width:350px;height:auto !important;height:180px;max-height:180px;border:1px solid #565656;background:#fff;
-  -webkit-box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2);
-  box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
   #autosave_pop:before {content:"";position:absolute;top:-8px;right:45px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #000 transparent}
   #autosave_pop:after {content:"";position:absolute;top:-7px;right:45px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
   html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
-  #autosave_pop strong {position:absolute;font-size:0;line-height:0;overflow:hidden}
-  #autosave_pop div {text-align:center;margin:0 !important}
-  #autosave_pop button {margin:0;padding:0;border:0}
-  #autosave_pop ul {padding:15px;border-top:1px solid #e9e9e9;list-style:none;overflow-y:scroll;height:130px;border-bottom:1px solid #e8e8e8}
   #autosave_pop li {padding:8px 5px;border-bottom:1px solid #fff;background:#eee;zoom:1}
   #autosave_pop li:after {display:block;visibility:hidden;clear:both;content:""}
   #autosave_pop a {display:block;float:left}
   #autosave_pop span {display:block;float:right;font-size:0.92em;font-style:italic;color:#999}
-  .autosave_close {cursor:pointer;width:100%;height:30px;background:none;color:#888;font-weight:bold;font-size:0.92em}
-  .autosave_close:hover {background:#f3f3f3;color:#3597d9}
   .autosave_content {display:none}
   .autosave_del {background:url(./img/close_btn.png) no-repeat 50% 50%;text-indent:-999px;overflow:hidden;height:20px;width:20px}
 
   /* 게시판 읽기 */
-  #bo_v {margin-bottom:20px;background:#fff;box-sizing:border-box}
-
   #bo_v_table {position:absolute;top:0;right:16px;margin:0;padding:0 5px;height:25px;background:#ff3061;color:#fff;font-weight:bold;line-height:2.2em}
-
-  #bo_v_title {}
-  #bo_v_title .bo_v_cate {display:inline-block;line-height:20px;background:#e2eaf6;color:#3a8afd;padding:0 10px;border-radius:3px;}
-  #bo_v_title .bo_v_tit {display:block;font-size:2em;margin:5px 0 0;word-break:break-all}
 
   #bo_v_info {margin:0;border-bottom:1px solid #f1f1f1;color:#666}
   #bo_v_info:after {display:block;visibility:hidden;clear:both;content:""} 

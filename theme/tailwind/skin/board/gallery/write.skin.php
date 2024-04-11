@@ -93,16 +93,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <div class="bo_w_tit write_div">
         <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
         
-        <div id="autosave_wrapper" class="write_div">
+        <div id="autosave_wrapper" class="write_div relative">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
             <?php if ($is_member) { // 임시 저장된 글 기능 ?>
             <script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
             <?php if($editor_content_js) echo $editor_content_js; ?>
             <button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
-            <div id="autosave_pop">
-                <strong>임시 저장된 글 목록</strong>
-                <ul></ul>
-                <div><button type="button" class="autosave_close">닫기</button></div>
+            <div id="autosave_pop" class="hidden z-10 absolute top-8 right-0 w-80 h-auto max-h-44 border border-gray-200 bg-white shadow-md shadow-gray-600/50">
+                <strong class="blind">임시 저장된 글 목록</strong>
+                <ul class="border-b border-solid border-gray-200 list-none overflow-y-scroll h-32 p-4"></ul>
+                <div class="text-center m-0"><button type="button" class="autosave_close w-full h-7 bg-none text-gray-500 font-bold text-xs border-0 m-0 p-0 hover:bg-gray-100 hover:text-blue-400">닫기</button></div>
             </div>
             <?php } ?>
         </div>
@@ -113,12 +113,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
             <?php if($write_min || $write_max) { ?>
             <!-- 최소/최대 글자 수 사용 시 -->
-            <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
+            <p id="char_count_desc" class="block p-0 mb-1">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
             <?php } ?>
             <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
             <?php if($write_min || $write_max) { ?>
             <!-- 최소/최대 글자 수 사용 시 -->
-            <div id="char_count_wrap"><span id="char_count"></span>글자</div>
+            <div id="char_count_wrap" class="text-right mt-1"><span id="char_count" class="font-bold"></span>글자</div>
             <?php } ?>
         </div>
         
