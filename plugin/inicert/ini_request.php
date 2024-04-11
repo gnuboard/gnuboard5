@@ -17,7 +17,7 @@ if($config['cf_cert_use'] == 2) { // 실서비스 일때
     $mTxId ='SIR_'.$max_cr_id;
 }
 $reqSvcCd ='01';    // 요청구분코드 ["01":간편인증, "02":전자서명]
-$reservedMsg ='isUseToken=Y';   // 결과조회 응답시 개인정보SEED 암호화 처리 요청
+$reservedMsg = (defined('KGINICIS_USE_CERT_SEED') && KGINICIS_USE_CERT_SEED) ? 'isUseToken=Y' : '';   // 결과조회 응답시 개인정보SEED 암호화 처리 요청
 
 // 등록가맹점 확인
 $plainText1 = hash("sha256",(string)$mid.(string)$mTxId.(string)$apiKey);

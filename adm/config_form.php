@@ -409,6 +409,11 @@ if (!isset($config['cf_cert_kg_mid'])) {
             ADD COLUMN `cf_cert_kg_mid` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kg_cd`; ";
     sql_query($sql, false);
 }
+if (!isset($config['cf_cert_use_seed'])) {
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_cert_use_seed` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_cert_kg_mid`; ";
+    sql_query($sql, false);
+}
 if (!$config['cf_faq_skin']) {
     $config['cf_faq_skin'] = "basic";
 }
@@ -1000,6 +1005,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <select name="cf_cert_simple" id="cf_cert_simple">
                                 <?php echo option_selected("", $config['cf_cert_simple'], "사용안함"); ?>
                                 <?php echo option_selected("inicis", $config['cf_cert_simple'], "KG이니시스 통합인증(간편인증)"); ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="cf_cert_service"><label for="cf_cert_use_seed">통합인증 암호화 적용</label></th>
+                        <td class="cf_cert_service">
+                            <?php echo help('KG이니시스 통합인증서비스에 암호화를 적용합니다. 만일 글자가 깨지는 문제가 발생하면 사용안함으로 적용해 주세요.') ?>
+                            <select name="cf_cert_use_seed" id="cf_cert_use_seed">
+                                <?php echo option_selected("0", $config['cf_cert_use_seed'], "사용안함"); ?>
+                                <?php echo option_selected("1", $config['cf_cert_use_seed'], "사용함"); ?>
                             </select>
                         </td>
                     </tr>
