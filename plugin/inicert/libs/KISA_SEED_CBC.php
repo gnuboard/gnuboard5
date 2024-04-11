@@ -782,6 +782,7 @@ class KISA_SEED_CBC {
         $pbszCipherText = array_pad(array(), $message_length, 0);
         Common::arraycopy_system($message, $message_offset, $pbszCipherText, 0, $message_length);
         $nCipherTextLen = count($pbszCipherText);
+        $result = null;
 
         if ($nCipherTextLen % KISA_SEED_CBC::BLOCK_SIZE_SEED) {
             return $result;
