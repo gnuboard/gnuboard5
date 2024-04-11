@@ -67,10 +67,11 @@ function decrypt_SEED($str, $bszUser_key, $bszIV) {
     $pdwRoundKey = array_pad(array(), 32, 0);
 
     $bszPlainText = null;
+    $planBytresMessage = array();
 
     // 방법 1
     $bszPlainText = KISA_SEED_CBC::SEED_CBC_Decrypt($keyBytes, $IVBytes, $planBytes, 0, count($planBytes));
-    for ($i = 0; $i < sizeof($bszPlainText); $i++) {
+    for ($i = 0; $i < sizeof((array) $bszPlainText); $i++) {
         $planBytresMessage[] = sprintf("%02X", $bszPlainText[$i]);
     }
     return Hex2String($planBytresMessage);

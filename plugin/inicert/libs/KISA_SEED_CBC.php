@@ -171,7 +171,7 @@ if (!defined('_KISA_SEED_KEY_')) {
 
         var $key_data = null;
 
-        function KISA_SEED_KEY() {
+        function __construct() {
             $this->key_data = array_pad(array(), 32, 0);
         }
 
@@ -192,7 +192,7 @@ if (!defined('_KISA_SEED_INFO_')) {
         var $cbc_last_block = null;
         var $last_block_flag = 0;
 
-        function KISA_SEED_INFO() {
+        function __construct() {
             $this->ivec = array_pad(array(), 4, 0);
             $this->seed_key = new KISA_SEED_KEY();
             $this->cbc_buffer = array_pad(array(), 4, 0);
