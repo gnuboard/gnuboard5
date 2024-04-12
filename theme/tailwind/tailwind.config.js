@@ -34,6 +34,9 @@ module.exports = {
       },
       backgroundImage: {
         'chk-cheked': "url('./img/chk.png')",
+      },
+      fontSize: {
+        'icon': "3em !important",
       }
     }
   },
