@@ -213,4 +213,4 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <div id="wrapper" class="dark:bg-zinc-900">
     <div id="container_wr" class="flex max-w-screen-xl w-full mx-auto">
       <div id="container" class="relative w-container min-h-500 my-5 h-auto">
-        <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="text-base mx-auto font-bold"><span class="block leading-relaxed mx-auto mb-2.5" title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
+        <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="text-base mx-auto font-bold"><span class="block leading-relaxed mx-auto mb-2.5 dark:text-white" title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }

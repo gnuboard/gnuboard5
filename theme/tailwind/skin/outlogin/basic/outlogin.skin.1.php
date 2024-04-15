@@ -15,9 +15,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <div class="ol_wr relative mb-1.5">
             <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
             <label for="ol_id" id="ol_idlabel" class="sound_only">회원아이디<strong>필수</strong></label>
-            <input type="text" id="ol_id" name="mb_id" required maxlength="20" placeholder="아이디" class="block w-full border border-solid border-gray-300 h-9 rounded px-2.5 mb-1.5 dark:bg-zinc-800 dark:border-mainborder">
+            <input type="text" id="ol_id" name="mb_id" required maxlength="20" placeholder="아이디" class="block w-full border border-solid border-gray-300 h-9 rounded px-2.5 mb-1.5 dark:bg-zinc-900 dark:border-mainborder">
             <label for="ol_pw" id="ol_pwlabel" class="sound_only">비밀번호<strong>필수</strong></label>
-            <input type="password" name="mb_password" id="ol_pw" required maxlength="20" placeholder="비밀번호" class="block w-full border border-solid border-gray-300 h-9 rounded px-2.5 mb-1.5 dark:bg-zinc-800 dark:border-mainborder">
+            <input type="password" name="mb_password" id="ol_pw" required maxlength="20" placeholder="비밀번호" class="block w-full border border-solid border-gray-300 h-9 rounded px-2.5 mb-1.5 dark:bg-zinc-900 dark:border-mainborder">
             <input type="submit" id="ol_submit" value="로그인" class="w-full h-9 bg-blue-500 text-white font-bold text-sm rounded">
         </div>
         <div class="ol_auto_wr flex justify-between"> 
