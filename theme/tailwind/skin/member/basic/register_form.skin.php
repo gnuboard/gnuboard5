@@ -24,32 +24,32 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
 	
-	<div id="register_form" class="form_01 bg-white mb-5">   
-	    <div class="register_form_inner bg-gray-100 border border-gray-200 rounded">
-	        <h2 class="border-b border-solid border-gray-200 p-5">사이트 이용정보 입력</h2>
+	<div id="register_form" class="form_01 bg-white dark:bg-zinc-900">   
+	    <div class="register_form_inner bg-gray-100 border border-gray-200 rounded mb-5 dark:bg-zinc-800 dark:border-mainborder">
+	        <h2 class="border-b border-solid border-gray-200 p-5 dark:border-mainborder dark:text-white">사이트 이용정보 입력</h2>
 	        <ul class="p-5">
 	            <li>
-	                <label for="reg_mb_id" class="block leading-6 mb-3">
+	                <label for="reg_mb_id" class="block leading-6 mb-3 dark:text-white">
 	                	아이디 (필수)
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 						<span class="tooltip">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
 	                </label>
-	                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" <?php echo $required ?> <?php echo $readonly ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" minlength="3" maxlength="20" placeholder="아이디">
+	                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" <?php echo $required ?> <?php echo $readonly ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?> dark:bg-zinc-900 dark:border-mainborder dark:text-white" minlength="3" maxlength="20" placeholder="아이디">
 	                <span id="msg_mb_id"></span>
 	            </li>
 	            <li class="half_input left_input margin_input">
-	                <label for="reg_mb_password" class="block leading-6 mb-3">비밀번호 (필수)</label>
-	                <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호">
-				</li>
+	                <label for="reg_mb_password" class="block leading-6 mb-3 dark:text-white dark:border-mainborder">비밀번호 (필수)</label>
+	                <input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="frm_input full_input <?php echo $required ?> dark:bg-zinc-900 dark:border-mainborder dark:text-white" minlength="3" maxlength="20" placeholder="비밀번호">
+              </li>
 	            <li class="half_input left_input">
-	                <label for="reg_mb_password_re" class="block leading-6 mb-3">비밀번호 확인 (필수)</label>
-	                <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" placeholder="비밀번호 확인">
+	                <label for="reg_mb_password_re" class="block leading-6 mb-3 dark:text-white">비밀번호 확인 (필수)</label>
+	                <input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="frm_input full_input <?php echo $required ?> dark:bg-zinc-900 dark:border-mainborder dark:text-white" minlength="3" maxlength="20" placeholder="비밀번호 확인">
 	            </li>
 	        </ul>
 	    </div>
 	
-	    <div class="tbl_frm01 tbl_wrap register_form_inner bg-gray-100 border border-gray-200 rounded">
-	        <h2 class="border-b border-solid border-gray-200 p-5">개인정보 입력</h2>
+	    <div class="tbl_frm01 tbl_wrap register_form_inner bg-gray-100 border border-gray-200 rounded dark:bg-zinc-800 dark:border-mainborder">
+	        <h2 class="border-b border-solid border-gray-200 p-5 dark:bg-zinc-800 dark:text-white dark:border-mainborder">개인정보 입력</h2>
 	        <ul class="p-5">
 				<li>
                     <?php 
@@ -95,25 +95,25 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 				<?php } ?>
 				</li>
 	            <li>
-	                <label for="reg_mb_name" class="block leading-6 mb-3">이름 (필수)<?php echo $desc_name ?></label>
-	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" size="10" placeholder="이름">
+	                <label for="reg_mb_name" class="block leading-6 mb-3 dark:text-white">이름 (필수)<?php echo $desc_name ?></label>
+	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?> dark:bg-zinc-900 dark:border-mainborder dark:text-white" size="10" placeholder="이름">
 	            </li>
 	            <?php if ($req_nick) {  ?>
 	            <li>
-	                <label for="reg_mb_nick" class="block leading-6 mb-3">
+	                <label for="reg_mb_nick" class="block leading-6 mb-3 dark:text-white">
 	                	닉네임 (필수)
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 						<span class="tooltip">공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br> 닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.</span>
 	                </label>
 	                
                     <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
-                    <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임">
+                    <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input dark:bg-zinc-900 dark:border-mainborder dark:text-white" size="10" maxlength="20" placeholder="닉네임">
                     <span id="msg_mb_nick"></span>	                
 	            </li>
 	            <?php }  ?>
 	
 	            <li>
-	                <label for="reg_mb_email" class="block leading-6 mb-3">E-mail (필수)
+	                <label for="reg_mb_email" class="block leading-6 mb-3 dark:text-white">E-mail (필수)
 	                
 	                <?php if ($config['cf_use_email_certify']) {  ?>
 	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
@@ -125,7 +125,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 					</label>
 
 	                <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
-	                <input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
+	                <input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email full_input required dark:bg-zinc-900 dark:border-mainborder dark:text-white" size="70" maxlength="100" placeholder="E-mail">
 	            </li>
 	
 	            <?php if ($config['cf_use_homepage']) {  ?>
@@ -173,8 +173,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	        </ul>
 	    </div>
 	
-	    <div class="tbl_frm01 tbl_wrap register_form_inner bg-gray-100 border border-gray-200 rounded">
-	        <h2 class="border-b border-solid border-gray-200 p-5">기타 개인설정</h2>
+	    <div class="tbl_frm01 tbl_wrap register_form_inner bg-gray-100 border border-gray-200 rounded dark:bg-zinc-800 dark:border-mainborder">
+	        <h2 class="border-b border-solid border-gray-200 p-5 dark:bg-zinc-800 dark:text-white dark:border-mainborder">기타 개인설정</h2>
 	        <ul class="p-5"s>
 	            <?php if ($config['cf_use_signature']) {  ?>
 	            <li>
@@ -234,7 +234,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		            	<span></span>
 		            	<b class="sound_only">메일링서비스</b>
 		            </label>
-		            <span class="chk_li pl-5">정보 메일을 받겠습니다.</span>
+		            <span class="chk_li pl-5 dark:text-white">정보 메일을 받겠습니다.</span>
 		        </li>
 	
 				<?php if ($config['cf_use_hp']) { ?>
@@ -244,7 +244,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		            	<span></span>
 		            	<b class="sound_only">SMS 수신여부</b>
 		            </label>        
-		            <span class="chk_li pl-5">휴대폰 문자메세지를 받겠습니다.</span>
+		            <span class="chk_li pl-5 dark:text-white">휴대폰 문자메세지를 받겠습니다.</span>
 		        </li>
 		        <?php } ?>
 	
@@ -255,7 +255,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		      			<span></span>
 		      			<b class="sound_only">정보공개</b>
 		      		</label>      
-		            <span class="chk_li pl-5">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
+		            <span class="chk_li pl-5 dark:text-white">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
 		            <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
 		            <span class="tooltip">
 		                정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
@@ -290,14 +290,14 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	            <?php }  ?>
 	
 	            <li class="is_captcha_use">
-	                자동등록방지
+                  <span class="block dark:text-white">자동등록방지</span>
 	                <?php echo captcha_html(); ?>
 	            </li>
 	        </ul>
 	    </div>
 	</div>
 	<div class="btn_confirm flex text-center">
-    <a href="<?php echo G5_URL ?>" class="btn_close w-1/2 h-12 font-bold text-sm">취소</a>
+    <a href="<?php echo G5_URL ?>" class="btn_close w-1/2 h-12 font-bold text-sm dark:bg-zinc-900 dark:border-mainborder dark:text-white">취소</a>
     <button type="submit" id="btn_submit" class="btn_submit w-1/2 h-12 font-bold text-sm ml-2" accesskey="s"><?php echo $w==''?'회원가입':'정보수정'; ?></button>
 	</div>
 	</form>
