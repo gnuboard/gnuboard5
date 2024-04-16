@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     if($is_admin) // 관리자이면 답변등록
     {
     ?>
-    <h2>답변등록</h2>
+    <h2 class="dark:text-white">답변등록</h2>
 
     <form name="fanswer" method="post" action="./qawrite_update.php" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off">
     <input type="hidden" name="qa_id" value="<?php echo $view['qa_id']; ?>">
@@ -40,7 +40,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <?php } ?>
             <li>
                 <label for="qa_subject" class="sound_only">제목</label>
-                <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required full_input" size="50" maxlength="255" placeholder="제목">
+                <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required full_input dark:bg-zinc-800 dark:border-mainborder dark:text-white" size="50" maxlength="255" placeholder="제목">
             </li>
             <li class="qa_content_wrap <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
                 <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
@@ -50,14 +50,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </li>
 
             <li class="bo_w_flie">
-                <div class="file_wr">
+                <div class="file_wr dark:!bg-zinc-800 dark:!border-mainborder dark:!text-white">
                     <label for="bf_file_1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #1</span></label>
                     <input type="file" name="bf_file[1]" id="bf_file_1" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
                 </div>
             </li>
 
             <li class="bo_w_flie">
-                <div class="file_wr">
+                <div class="file_wr dark:!bg-zinc-800 dark:!border-mainborder dark:!text-white">
                     <label for="bf_file_2" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #2</span></label>
                     <input type="file" name="bf_file[2]" id="bf_file_2" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
                 </div>

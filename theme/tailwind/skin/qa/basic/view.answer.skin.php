@@ -2,22 +2,22 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<section id="bo_v_ans">
-    <h2><span class="bo_v_reply">답변</span> <?php echo get_text($answer['qa_subject']); ?></h2>
+<section id="bo_v_ans" class="dark:!bg-zinc-900 dark:!border-mainborder">
+    <h2 class="dark:text-white"><span class="bo_v_reply">답변</span> <?php echo get_text($answer['qa_subject']); ?></h2>
     <header>
-	    <div id="ans_datetime">
+	    <div id="ans_datetime" class="dark:!bg-zinc-900 dark:!border-mainborder">
 	        <i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $answer['qa_datetime']; ?>
 	    </div>
 	    
         <?php if ( $answer_update_href || $answer_delete_href ){ ?>
 	    <div id="ans_add">
-	    	<button type="button" class="btn_more_add btn_more_opt btn_b01 btn" title="답변 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">답변 옵션</span></button>
-			<ul class="more_add">
+	    	<button type="button" class="btn_more_add btn_more_opt btn_b01 btn dark:hover:text-white" title="답변 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">답변 옵션</span></button>
+			<ul class="more_add dark:!bg-zinc-800 dark:!border-mainborder">
 				<?php if($answer_update_href) { ?>
-				<li><a href="<?php echo $answer_update_href; ?>" class="btn_b01 btn" title="답변수정">답변수정</a></li>
+				<li class="group dark:!border-mainborder"><a href="<?php echo $answer_update_href; ?>" class="btn_b01 btn dark:group-hover:text-white" title="답변수정">답변수정</a></li>
 				<?php } ?>
 				<?php if($answer_delete_href) { ?>
-				<li><a href="<?php echo $answer_delete_href; ?>" class="btn_b01 btn" onclick="del(this.href); return false;" title="답변삭제">답변삭제</a></li>
+				<li class="group"><a href="<?php echo $answer_delete_href; ?>" class="btn_b01 btn dark:group-hover:text-white" onclick="del(this.href); return false;" title="답변삭제">답변삭제</a></li>
 				<?php } ?>	
 			</ul>
 			<script>
@@ -30,7 +30,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?php } ?>
 	</header>
 	
-    <div id="ans_con">
+    <div id="ans_con" class="dark:text-white">
         <?php
         // 파일 출력
         if(isset($answer['img_count']) && $answer['img_count']) {
