@@ -31,9 +31,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
         <?php if ($admin_href || $write_href) { ?>
         <ul class="btn_bo_user">
-        	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-        	<li>
-        		<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+        	<?php if ($admin_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+        	<li class="dark:bg-zinc-900">
+        		<button type="button" class="btn_bo_sch btn_b01 btn dark:hover:text-white" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
 				<!-- 게시판 검색 시작 { -->
 			    <div class="bo_sch_wrap hidden w-full h-full fixed top-0 left-0 z-999">
 				    <fieldset class="bo_sch absolute top-1/2 left-1/2 bg-white text-left w-80 max-h-80 overflow-y-auto rounded-md shadow-lg shadow-zinc-500/50 transform -translate-x-1/2 -translate-y-1/2">
@@ -67,7 +67,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 				</script>
 			    <!-- } 게시판 검색 끝 -->
 			</li>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="문의등록"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">문의등록</span></a></li><?php } ?>
+            <?php if ($write_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $write_href ?>" class="btn_b01 btn dark:hover:text-white" title="문의등록"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">문의등록</span></a></li><?php } ?>
         </ul>
         <?php } ?>
     </div>
@@ -80,7 +80,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <input type="hidden" name="token" value="<?php echo get_text($token); ?>">
             
     <div class="tbl_head01 tbl_wrap">
-        <table>
+        <table class="w-full border-collapse border-spacing-x-2 bg-white border-y border-solid border-gray-200 dark:bg-zinc-900 dark:border-mainborder dark:text-white">
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
@@ -143,10 +143,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <div class="bo_fx">
         <ul class="btn_bo_user">
         	<?php if ($is_checkbox) { ?>
-            <li><button type="submit" name="btn_submit" value="선택삭제" title="선택삭제" onclick="document.pressed=this.value" class="btn btn_b01 btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button></li>
+            <li class="dark:bg-zinc-900"><button type="submit" name="btn_submit" value="선택삭제" title="선택삭제" onclick="document.pressed=this.value" class="btn btn_b01 btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button></li>
             <?php } ?>
-            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01 btn" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="문의등록"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">문의등록</span></a></li><?php } ?>
+            <?php if ($list_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $list_href ?>" class="btn_b01 btn dark:hover:text-white" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li><?php } ?>
+            <?php if ($write_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $write_href ?>" class="btn_b01 btn dark:hover:text-white" title="문의등록"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">문의등록</span></a></li><?php } ?>
         </ul>
     </div>
     </form>

@@ -45,20 +45,20 @@ if ($is_nogood) $colspan++;
         </div>
 
         <ul class="btn_bo_user">
-        	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
-            <li>
-            	<button type="button" class="btn_bo_sch btn_b01 btn" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+            <?php if ($admin_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+            <?php if ($rss_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $rss_href ?>" class="btn_b01 btn dark:hover:text-white" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+            <li class="dark:bg-zinc-900">
+            	<button type="button" class="btn_bo_sch btn_b01 btn dark:hover:text-white" title="게시판 검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
             </li>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
-        	<?php if ($is_admin == 'super' || $is_auth) {  ?>
-        	<li>
-        		<button type="button" class="btn_more_opt is_list_btn btn_b01 btn" title="게시판 리스트 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+            <?php if ($write_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $write_href ?>" class="btn_b01 btn dark:hover:text-white" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+            <?php if ($is_admin == 'super' || $is_auth) {  ?>
+        	<li class="dark:bg-zinc-900">
+        		<button type="button" class="btn_more_opt is_list_btn btn_b01 btn dark:hover:text-white" title="게시판 리스트 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
         		<?php if ($is_checkbox) { ?>	
-		        <ul class="more_opt is_list_btn">  
-		            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
-		            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
-		            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
+		        <ul class="more_opt is_list_btn dark:border-mainborder">  
+		            <li class="group dark:bg-zinc-800 dark:border-mainborder"><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
+		            <li class="group dark:bg-zinc-800 dark:border-mainborder"><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
+		            <li class="group dark:bg-zinc-800 dark:border-mainborder"><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
 		        </ul>
 		        <?php } ?>
         	</li>
@@ -68,7 +68,7 @@ if ($is_nogood) $colspan++;
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
         	
     <div class="tbl_head01 tbl_wrap">
-        <table>
+        <table class="w-full border-collapse border-spacing-x-2 bg-white border-y border-solid border-gray-200 dark:bg-zinc-900 dark:border-mainborder dark:text-white">
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
@@ -161,9 +161,9 @@ if ($is_nogood) $colspan++;
     <div class="bo_fx">
         <?php if ($list_href || $write_href) { ?>
         <ul class="btn_bo_user">
-        	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+        	<?php if ($admin_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+            <?php if ($rss_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $rss_href ?>" class="btn_b01 btn dark:hover:text-white" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+            <?php if ($write_href) { ?><li class="dark:bg-zinc-900"><a href="<?php echo $write_href ?>" class="btn_b01 btn dark:hover:text-white" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
         </ul>	
         <?php } ?>
     </div>
