@@ -9,24 +9,24 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 <!-- 게시물 읽기 시작 { -->
 
-<article id="bo_v" class="bg-white box-border mb-5" style="width:<?php echo $width; ?>">
+<article id="bo_v" class="bg-white box-border mb-5 dark:bg-zinc-900" style="width:<?php echo $width; ?>">
     <header>
         <h2 id="bo_v_title">
             <?php if ($category_name) { ?>
             <span class="bo_v_cate inline-block leading-5 bg-blue-100 text-blue-500 rounded px-2"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span> 
             <?php } ?>
-            <span class="bo_v_tit block text-2xl break-all mt-1">
+            <span class="bo_v_tit block text-2xl break-all mt-1 dark:text-white">
             <?php
             echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력
             ?></span>
         </h2>
     </header>
 
-    <section id="bo_v_info" class="flex justify-between items-center border-b border-solid border-gray-200 text-gray-600 m-0">
+    <section id="bo_v_info" class="flex justify-between items-center border-b border-solid border-gray-200 text-gray-600 m-0 dark:border-mainborder">
         <h2 class="blind">페이지 정보</h2>
         <div class="profile_info mt-5 mb-3 inline-flex">
         	<div class="pf_img mr-3"><?php echo get_member_profile_img($view['mb_id']) ?></div>
-        	<div class="profile_info_ct leading-5 py-1">
+        	<div class="profile_info_ct leading-5 py-1 dark:text-gray-300">
         		<span class="sound_only">작성자</span> <strong class="inline-block font-normal mr-2"><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong><br>
        		 	<span class="sound_only">댓글</span><strong class="inline-block font-normal mr-2"><a href="#bo_vc"> <i class="fa fa-commenting-o" aria-hidden="true"></i> <?php echo number_format($view['wr_comment']) ?>건</a></strong>
         		<span class="sound_only">조회</span><strong class="inline-block font-normal mr-2"><i class="fa fa-eye" aria-hidden="true"></i> <?php echo number_format($view['wr_hit']) ?>회</strong>
@@ -38,19 +38,19 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 	    <div id="bo_v_top">
 	        <?php ob_start(); ?>
 
-	        <ul class="btn_bo_user bo_v_com flex list-none break-all bg-white my-5">
-            <li><a href="<?php echo $list_href ?>" class="btn_b01 btn" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
-	            <?php if ($reply_href) { ?><li class="ml-1"><a href="<?php echo $reply_href ?>" class="btn_b01 btn" title="답변"><i class="fa fa-reply" aria-hidden="true"></i><span class="sound_only">답변</span></a></li><?php } ?>
-	            <?php if ($write_href) { ?><li class="ml-1"><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+	        <ul class="btn_bo_user bo_v_com flex list-none break-all bg-white my-5 dark:bg-zinc-900">
+            <li class="dark:bg-zinc-900"><a href="<?php echo $list_href ?>" class="btn_b01 btn dark:hover:text-white" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
+	            <?php if ($reply_href) { ?><li class="ml-1 dark:bg-zinc-900"><a href="<?php echo $reply_href ?>" class="btn_b01 btn dark:hover:text-white" title="답변"><i class="fa fa-reply" aria-hidden="true"></i><span class="sound_only">답변</span></a></li><?php } ?>
+	            <?php if ($write_href) { ?><li class="ml-1 dark:bg-zinc-900"><a href="<?php echo $write_href ?>" class="btn_b01 btn dark:hover:text-white" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
 	        	<?php if($update_href || $delete_href || $copy_href || $move_href || $search_href) { ?>
-	        	<li class="relative ml-1">
-	        		<button type="button" class="btn_more_opt is_view_btn btn_b01 btn" title="게시판 리스트 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
-		        	<ul class="more_opt is_view_btn"> 
-			            <?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>">수정<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></li><?php } ?>
-			            <?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" onclick="del(this.href); return false;">삭제<i class="fa fa-trash-o" aria-hidden="true"></i></a></li><?php } ?>
-			            <?php if ($copy_href) { ?><li><a href="<?php echo $copy_href ?>" onclick="board_move(this.href); return false;">복사<i class="fa fa-files-o" aria-hidden="true"></i></a></li><?php } ?>
-			            <?php if ($move_href) { ?><li><a href="<?php echo $move_href ?>" onclick="board_move(this.href); return false;">이동<i class="fa fa-arrows" aria-hidden="true"></i></a></li><?php } ?>
-			            <?php if ($search_href) { ?><li><a href="<?php echo $search_href ?>">검색<i class="fa fa-search" aria-hidden="true"></i></a></li><?php } ?>
+	        	<li class="relative ml-1 dark:bg-zinc-900">
+	        		<button type="button" class="btn_more_opt is_view_btn btn_b01 btn dark:hover:text-white" title="게시판 리스트 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+		        	<ul class="more_opt is_view_btn dark:border-mainborder"> 
+			            <?php if ($update_href) { ?><li class="group dark:bg-zinc-800 dark:border-mainborder"><a href="<?php echo $update_href ?>" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white">수정<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></li><?php } ?>
+			            <?php if ($delete_href) { ?><li class="group dark:bg-zinc-800 dark:border-mainborder"><a href="<?php echo $delete_href ?>" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white" onclick="del(this.href); return false;">삭제<i class="fa fa-trash-o" aria-hidden="true"></i></a></li><?php } ?>
+			            <?php if ($copy_href) { ?><li class="group dark:bg-zinc-800 dark:border-mainborder"><a href="<?php echo $copy_href ?>" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white" onclick="board_move(this.href); return false;">복사<i class="fa fa-files-o" aria-hidden="true"></i></a></li><?php } ?>
+			            <?php if ($move_href) { ?><li class="group dark:bg-zinc-800 dark:border-mainborder"><a href="<?php echo $move_href ?>" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white" onclick="board_move(this.href); return false;">이동<i class="fa fa-arrows" aria-hidden="true"></i></a></li><?php } ?>
+			            <?php if ($search_href) { ?><li class="group dark:bg-zinc-800 dark:border-mainborder"><a href="<?php echo $search_href ?>" class="dark:bg-zinc-800 dark:text-gray-400 dark:group-hover:text-white">검색<i class="fa fa-search" aria-hidden="true"></i></a></li><?php } ?>
 			        </ul> 
 	        	</li>
 	        	<?php } ?>
@@ -83,7 +83,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
         <h2 id="bo_v_atc_title" class="blind">본문</h2>
         <div id="bo_v_share" class="relative py-5">
         	<?php include_once(G5_SNS_PATH."/view.sns.skin.php"); ?>
-	        <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn btn_b03" onclick="win_scrap(this.href); return false;"><i class="fa fa-bookmark" aria-hidden="true"></i> 스크랩</a><?php } ?>
+	        <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn btn_b03 dark:bg-zinc-800 dark:!text-white dark:!border-mainborder dark:hover:!bg-zinc-950" onclick="win_scrap(this.href); return false;"><i class="fa fa-bookmark" aria-hidden="true"></i> 스크랩</a><?php } ?>
 	    </div>
 
         <?php
@@ -101,7 +101,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
          ?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con" class="w-full leading-relaxed min-h-48 break-all overflow-hidden mt-3 mb-8"><?php echo get_view_thumbnail($view['content']); ?></div>
+        <div id="bo_v_con" class="w-full leading-relaxed min-h-48 break-all overflow-hidden mt-3 mb-8 dark:text-white"><?php echo get_view_thumbnail($view['content']); ?></div>
         <?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
         <!-- } 본문 내용 끝 -->
 
@@ -158,10 +158,10 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
          ?>
-            <li class="relative group border border-gray-200 rounded shadow-sm my-3 p-4 hover:border-blue-400 hover:text-blue-400">
+            <li class="relative group border border-gray-200 rounded shadow-sm my-3 p-4 hover:border-blue-400 hover:text-blue-400 dark:border-mainborder dark:hover:border-blue-500">
                	<i class="fa fa-folder-open float-left text-gray-200 text-icon mr-5 group-hover:text-blue-400" aria-hidden="true"></i>
-                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download float-left block no-underline break-words text-black group-focus:text-blue-500 group-hover:text-blue-500 group-active:text-blue-500">
-                    <strong><?php echo $view['file'][$i]['source'] ?></strong> <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
+                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download float-left block no-underline break-words text-black group-focus:text-blue-500 group-hover:text-blue-500 group-active:text-blue-500 dark:text-white">
+                    <strong class="dark:text-white dark:group-hover:text-blue-500"><?php echo $view['file'][$i]['source'] ?></strong> <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
                 </a>
                 <br>
                 <span class="bo_v_file_cnt text-gray-400 text-xs group-hover:text-blue-400"><?php echo $view['file'][$i]['download'] ?>회 다운로드 | DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
@@ -188,10 +188,10 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                 $cnt++;
                 $link = cut_str($view['link'][$i], 70);
             ?>
-            <li class="relative group border border-gray-200 rounded shadow-sm p-4 my-3 hover:border-blue-400 hover:text-blue-400">
+            <li class="relative group border border-gray-200 rounded shadow-sm p-4 my-3 hover:border-blue-400 hover:text-blue-400 dark:border-mainborder dark:hover:border-blue-500">
                 <i class="fa fa-link float-left text-gray-200 text-icon mr-5 group-hover:text-blue-400" aria-hidden="true"></i>
                 <a href="<?php echo $view['link_href'][$i] ?>" class="float-left block no-underline break-words text-black group-focus:text-blue-500 group-hover:text-blue-500 group-active:text-blue-500" target="_blank">
-                    <strong><?php echo $link ?></strong>
+                    <strong class="dark:text-white dark:group-hover:text-blue-500"><?php echo $link ?></strong>
                 </a>
                 <br>
                 <span class="bo_v_link_cnt text-gray-400 text-xs group-hover:text-blue-400"><?php echo $view['link_hit'][$i] ?>회 연결</span>
@@ -206,9 +206,9 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <?php } ?>
     
     <?php if ($prev_href || $next_href) { ?>
-    <ul class="bo_v_nb relative text-left border-b border-solid border-gray-200 my-5">
-        <?php if ($prev_href) { ?><li class="btn_prv border-t border-solid border-gray-200 p-3 hover:bg-gray-100"><span class="nb_tit inline-block text-gray-400 pr-5"><i class="fa fa-chevron-up text-gray-400 text-xs" aria-hidden="true"></i> 이전글</span><a href="<?php echo $prev_href ?>"><?php echo $prev_wr_subject;?></a> <span class="nb_date float-right text-gray-400"><?php echo str_replace('-', '.', substr($prev_wr_date, '2', '8')); ?></span></li><?php } ?>
-        <?php if ($next_href) { ?><li class="btn_next border-t border-solid border-gray-200 p-3 hover:bg-gray-100"><span class="nb_tit inline-block text-gray-400 pr-5"><i class="fa fa-chevron-down text-gray-400 text-xs" aria-hidden="true"></i> 다음글</span><a href="<?php echo $next_href ?>"><?php echo $next_wr_subject;?></a>  <span class="nb_date float-right text-gray-400"><?php echo str_replace('-', '.', substr($next_wr_date, '2', '8')); ?></span></li><?php } ?>
+    <ul class="bo_v_nb relative text-left border-b border-solid border-gray-200 my-5 dark:text-white dark:border-mainborder">
+        <?php if ($prev_href) { ?><li class="btn_prv border-t border-solid border-gray-200 p-3 hover:bg-gray-100 dark:border-mainborder dark:hover:bg-zinc-800"><span class="nb_tit inline-block text-gray-400 pr-5"><i class="fa fa-chevron-up text-gray-400 text-xs" aria-hidden="true"></i> 이전글</span><a href="<?php echo $prev_href ?>"><?php echo $prev_wr_subject;?></a> <span class="nb_date float-right text-gray-400"><?php echo str_replace('-', '.', substr($prev_wr_date, '2', '8')); ?></span></li><?php } ?>
+        <?php if ($next_href) { ?><li class="btn_next border-t border-solid border-gray-200 p-3 hover:bg-gray-100 dark:border-mainborder dark:hover:bg-zinc-800"><span class="nb_tit inline-block text-gray-400 pr-5"><i class="fa fa-chevron-down text-gray-400 text-xs" aria-hidden="true"></i> 다음글</span><a href="<?php echo $next_href ?>"><?php echo $next_wr_subject;?></a>  <span class="nb_date float-right text-gray-400"><?php echo str_replace('-', '.', substr($next_wr_date, '2', '8')); ?></span></li><?php } ?>
     </ul>
     <?php } ?>
 

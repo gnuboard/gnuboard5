@@ -11,8 +11,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 <!-- 게시물 읽기 시작 { -->
 
 <article id="bo_v">
-    <header>
-        <h2 id="bo_v_title">
+    <header class="dark:!bg-zinc-900 dark:!border-mainborder">
+        <h2 id="bo_v_title" class="dark:text-white">
             <?php
             echo '<span class="bo_v_cate">'.$view['category'].'</span> '; // 분류 출력 끝
             ?>
@@ -22,7 +22,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         </h2>
     </header>
 
-    <section id="bo_v_info">
+    <section id="bo_v_info" class="dark:!bg-zinc-900 dark:!border-mainborder">
         <h2>페이지 정보</h2>
         <span class="sound_only">작성자</span><strong><?php echo $view['name'] ?></strong>
         <span class="sound_only">작성일</span><strong class="bo_date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $view['datetime']; ?></strong>
@@ -43,15 +43,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 	        ob_start();
 			?>
 
-	        <ul class="bo_v_com">
-				<li><a href="<?php echo $list_href ?>" class="btn_b01 btn" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
-	            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+	        <ul class="bo_v_com dark:!bg-zinc-900">
+				<li><a href="<?php echo $list_href ?>" class="btn_b01 btn dark:hover:text-white" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
+	            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn dark:hover:text-white" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
                 <?php if ($update_href || $delete_href) { ?>
 	        	<li>
 	        		<button type="button" class="btn_more_opt btn_b01 btn" title="게시판 읽기 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 읽기 옵션</span></button>
-	        		<ul class="more_opt">
-	        			<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b01 btn" title="수정">수정<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></li><?php } ?>
-	            		<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b01 btn" onclick="del(this.href); return false;" title="삭제">삭제<i class="fa fa-trash-o" aria-hidden="true"></i></a></li><?php } ?>
+	        		<ul class="more_opt dark:border-mainborder">
+	        			<?php if ($update_href) { ?><li class="border-b border-solid dark:border-mainborder !p-0"><a href="<?php echo $update_href ?>" class="btn_b01 btn hover:!text-white dark:!bg-zinc-800 dark:!text-gray-400 dark:hover:!text-white" title="수정">수정<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></li><?php } ?>
+	            		<?php if ($delete_href) { ?><li class="!p-0"><a href="<?php echo $delete_href ?>" class="btn_b01 btn hover:!text-white dark:!bg-zinc-800 dark:!text-gray-400 dark:hover:!text-white" onclick="del(this.href); return false;" title="삭제">삭제<i class="fa fa-trash-o" aria-hidden="true"></i></a></li><?php } ?>
 	        		</ul>
 	        	</li>
                 <?php } ?>
@@ -70,7 +70,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 	    <!-- } 게시물 상단 버튼 끝 -->
 	</section>
 
-    <section id="bo_v_atc">
+    <section id="bo_v_atc" class="dark:!bg-zinc-900 dark:!border-mainborder">
         <h2 id="bo_v_atc_title">본문</h2>
 
         <?php
@@ -88,7 +88,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
          ?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?></div>
+        <div id="bo_v_con" class="dark:text-white"><?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?></div>
         <!-- } 본문 내용 끝 -->
 
         <?php if($view['qa_type']) { ?>
@@ -122,8 +122,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     
     <?php if ($prev_href || $next_href) { ?>
     <ul class="bo_v_nb">
-        <?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>" class="btn_b01 btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> 이전글</a></li><?php } ?>
-        <?php if ($next_href) { ?><li><a href="<?php echo $next_href ?>" class="btn_b01 btn">다음글 <i class="fa fa-chevron-right" aria-hidden="true"></i></a></li><?php } ?>
+        <?php if ($prev_href) { ?><li class="dark:hover:bg-zinc-800"><a href="<?php echo $prev_href ?>" class="btn_b01 btn dark:hover:text-white"><i class="fa fa-chevron-left" aria-hidden="true"></i> 이전글</a></li><?php } ?>
+        <?php if ($next_href) { ?><li class="dark:hover:bg-zinc-800"><a href="<?php echo $next_href ?>" class="btn_b01 btn dark:hover:text-white">다음글 <i class="fa fa-chevron-right" aria-hidden="true"></i></a></li><?php } ?>
     </ul>
     <?php } ?>
 
