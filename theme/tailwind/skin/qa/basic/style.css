@@ -224,6 +224,9 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_ans .more_add a {font-size:1em}
 #ans_msg {padding:40px 0;background:#f2f5f9;text-align:center}
 
+.dark #bo_v_ans .more_add:before {border-color:transparent transparent #383838 transparent}
+.dark #bo_v_ans .more_add:after {border-color:transparent transparent #27272a transparent}
+
 .bo_v_btn {text-align:center}
 .bo_v_btn .add_qa {display:inline-block;background:#3a8afd;color:#fff;text-align:center;border-radius:3px;width:280px;height:57px;line-height:57px;font-size:1.2em;margin:0 auto;font-weight:bold}
 

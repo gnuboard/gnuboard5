@@ -166,7 +166,6 @@ border:1px solid #558ab7 !important;
   .btn_admin:hover, a.btn_admin:hover {color:#ff3746}
 
   /* 기본테이블 */
-  .tbl_wrap table {width:100%;border-collapse:collapse;border-spacing:0 5px;background:#fff;border-top:1px solid #ececec;border-bottom:1px solid #ececec} 
   .tbl_wrap caption {padding:10px 0;font-weight:bold;text-align:left}
   .tbl_head01 {margin:0 0 10px}
   .tbl_head01 caption {padding:0;font-size:0;line-height:0;overflow:hidden}
@@ -177,6 +176,9 @@ border:1px solid #558ab7 !important;
   .tbl_head01 td {color:#666;padding:10px 5px;border-top:1px solid #ecf0f1;border-bottom:1px solid #ecf0f1;line-height:1.4em;height:60px;word-break:break-all}
   .tbl_head01 tbody tr:hover td {background:#fafafa}
   .tbl_head01 a:hover {text-decoration:underline}
+  .dark .tbl_head01 thead th {border-bottom:1px solid #383838;}
+  .dark .tbl_head01 td {border-top:1px solid #383838;border-bottom:1px solid #383838;}
+  .dark .tbl_head01 tbody tr:hover td {background:#27272a}
 
   .tbl_head02 {margin:0 0 10px}
   .tbl_head02 caption {padding:0;font-size:0;line-height:0;overflow:hidden}
@@ -198,6 +200,7 @@ border:1px solid #558ab7 !important;
   -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
   box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
   }
+  .dark .wr_content textarea {background: #27272a;color: #ffffff;border: 1px solid #383838;}
   .tbl_frm01 textarea {padding:2px 2px 3px}
   .frm_input {height:40px}
 
@@ -378,6 +381,8 @@ border:1px solid #558ab7 !important;
   #bo_list tbody tr {border-left:2px solid transparent}
   #bo_list tbody tr:hover {border-left:2px solid #253dbe}
   #bo_list tbody .even td {background:#fbfbfb}
+  .dark #bo_list .td_chk {border-top:1px solid #383838;border-bottom:1px solid #383838}
+  .dark #bo_list tbody .even td {background:#27272a}
   
   /* 게시판 목록 */
   #bo_cate li {display:inline-block;padding:2px}
@@ -430,6 +435,8 @@ border:1px solid #558ab7 !important;
   #bo_gall .gall_text_href img {margin:0 0 0 4px}
   #bo_gall .bo_tit {display:block;line-height:30px;font-weight:bold;color:#000;font-size:1.2em}
   #bo_gall .bo_tit .cnt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
+  .dark #bo_gall .bo_tit {color:#ffffff;}
+  .dark #bo_gall .sv_member {color:#ffffff;}
 
   #bo_gall .bo_cnt {color:#acacac;line-height:18px}
   #bo_gall .profile_img img {border-radius:50%}
@@ -489,11 +496,14 @@ border:1px solid #558ab7 !important;
   .more_opt li:hover a,
   .more_opt li:hover button {color:#000}
   .more_opt li i {float:right;line-height:20px}
-  
+  .dark .more_opt:before {border-color:transparent transparent #383838 transparent}
+  .dark .more_opt:after {border-color:transparent transparent #27272a transparent}
+
   .td_num strong {color:#000}
   .bo_cate_link {float:left;display:inline-block;margin-right:10px;background:#e2eaf6;color:#3a8afd;font-weight:normal !important;height:20px;line-height:10px;padding:5px 8px;border-radius:5px;font-size:0.95em} /* 글제목줄 분류스타일 */
   .bo_cate_link:hover {text-decoration:none}
   .bo_tit {display:block;color:#000;font-weight:bold}
+  .dark .bo_tit {color:#ffffff;}
   .bo_current {color:#e8180c}
   #bo_list .profile_img img {border-radius:50%}
   #bo_list .cnt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
@@ -580,6 +590,8 @@ border:1px solid #558ab7 !important;
 
   .bo_vc_act:before {content:"";position:absolute;top:-8px;right:5px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #b8bfc4 transparent}
   .bo_vc_act:after {content:"";position:absolute;top:-6px;right:5px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
+  .dark .bo_vc_act:before {border-color:transparent transparent #383838 transparent}
+  .dark .bo_vc_act:after {border-color:transparent transparent #27272a transparent}
 
   .bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
   .bo_vc_w_info:after {display:block;visibility:hidden;clear:both;content:""}
@@ -635,6 +647,7 @@ border:1px solid #558ab7 !important;
   #ctt_con {padding:10px 0;line-height:1.6em}
   #ctt_con img{max-width:100%;height:auto}
   .ctt_img {text-align:center}
+  .dark #ctt {background: #18181b;color: #ffffff;}
 
   /* FAQ */
   #faq_wrap li h3.faq_li_open a {color:#3a8afd}

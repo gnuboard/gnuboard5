@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 </div>
 <?php } ?>
 <div class="tbl_head01 tbl_wrap">
-    <table>
+    <table class="w-full border-collapse border-spacing-x-2 bg-white border-y border-solid border-gray-200">
     <thead>
     <tr>
         <?php if ($is_admin) { ?>

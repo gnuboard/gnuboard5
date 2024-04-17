@@ -20,7 +20,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
             <h2>(필수) 추가 개인정보처리방침 안내</h2>
             <div>
                 <div class="tbl_head01 tbl_wrap">
-                    <table>
+                    <table class="w-full border-collapse border-spacing-x-2 bg-white border-y border-solid border-gray-200">
                         <caption>추가 개인정보처리방침 안내</caption>
                         <thead>
                             <tr>
