@@ -321,6 +321,13 @@ border:1px solid #558ab7 !important;
 
   .pg_current {display:inline-block;background:#3a8afd;border:1px solid #3a8afd;color:#fff;font-weight:bold;height:30px;line-height:30px;padding:0 10px;min-width:30px;border-radius:3px}
 
+  .dark .pg_page {background: #27272a;border: 1px solid #383838;color: #ffffff;}
+  .dark .pg_page.pg_start {background:url('../img/btn_first.gif') no-repeat 50% 50% #27272a;}
+  .dark .pg_page.pg_prev {background:url('../img/btn_prev.gif') no-repeat 50% 50% #27272a;}
+  .dark .pg_page.pg_end {background:url('../img/btn_end.gif') no-repeat 50% 50% #27272a;}
+  .dark .pg_page.pg_next {background:url('../img/btn_next.gif') no-repeat 50% 50% #27272a;}
+  .dark .pg_page:hover, .dark .pg_page.pg_start:hover,.dark .pg .pg_prev:hover,.dark .pg .pg_end:hover,.dark .pg .pg_next:hover {background-color:#18181b}
+
   /* cheditor 이슈 */
   .cheditor-popup-window *, .cheditor-popup-window :after, .cheditor-popup-window :before {
   -webkit-box-sizing:content-box;
