@@ -144,9 +144,9 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <div class="bo_vc_w_info float-left my-3">
             <?php if ($is_guest) { ?>
             <label for="wr_name" class="sound_only">이름<strong> 필수</strong></label>
-            <input type="text" name="wr_name" value="<?php echo get_cookie("ck_sns_name"); ?>" id="wr_name" required class="frm_input required" size="25" placeholder="이름">
+            <input type="text" name="wr_name" value="<?php echo get_cookie("ck_sns_name"); ?>" id="wr_name" required class="frm_input dark:bg-zinc-800 dark:border-mainborder dark:text-white required" size="25" placeholder="이름">
             <label for="wr_password" class="sound_only">비밀번호<strong> 필수</strong></label>
-            <input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="25" placeholder="비밀번호">
+            <input type="password" name="wr_password" id="wr_password" required class="frm_input dark:bg-zinc-800 dark:border-mainborder dark:text-white required" size="25" placeholder="비밀번호">
             <?php
             }
             ?>

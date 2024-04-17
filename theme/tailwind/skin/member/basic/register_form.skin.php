@@ -191,7 +191,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	            <?php }  ?>
 	
 	            <?php if ($config['cf_use_member_icon'] && $member['mb_level'] >= $config['cf_icon_level']) {  ?>
-	            <li>
+	            <li class="dark:!text-white">
 	                <label for="reg_mb_icon" class="frm_label">
 	                	회원아이콘
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
@@ -210,7 +210,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	            <?php }  ?>
 	
 	            <?php if ($member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
-	            <li class="reg_mb_img_file">
+	            <li class="reg_mb_img_file dark:!text-white">
 	                <label for="reg_mb_img" class="frm_label">
 	                	회원이미지
 	                	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
