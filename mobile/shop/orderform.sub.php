@@ -1548,7 +1548,12 @@ function pay_approval()
             return false;
         }
 
+        <?php if ($default['de_pg_service'] == 'nicepay') { ?>
         nicepayStart(f);
+        return false;
+        <?php } ?>
+
+        f.submit();
     }
 
     return false;
