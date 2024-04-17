@@ -146,7 +146,22 @@ if ( $req_tx == "pay" )
 {
         /* 1004원은 실제로 업체에서 결제하셔야 될 원 금액을 넣어주셔야 합니다. 결제금액 유효성 검증 */
         $c_PayPlus->mf_set_ordr_data( "ordr_mony",  $good_mny );
-        
+
+        $kcp_pay_type = '';   // 결제수단 검증 파라미터 pay_type (신용카드 : PACA, 계좌이체 : PABK, 가상계좌 : PAVC, 휴대폰 : PAMC)
+
+        if ($use_pay_method == "100000000000") {  // 신용카드
+            $kcp_pay_type = 'PACA';
+        } else if ($use_pay_method == "010000000000") {   // 계좌이체
+            $kcp_pay_type = 'PABK';
+        } else if ($use_pay_method == "001000000000") {   // 가상계좌
+            $kcp_pay_type = 'PAVC';
+        } else if ($use_pay_method == "000010000000") {   // 휴대폰
+            $kcp_pay_type = 'PAMC';
+        }
+
+        $c_PayPlus->mf_set_ordr_data( "pay_type",  $kcp_pay_type );
+        $c_PayPlus->mf_set_ordr_data( "ordr_no",  $ordr_idxx );
+
         $post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
         $post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
 
