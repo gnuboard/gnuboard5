@@ -302,10 +302,8 @@ border:1px solid #558ab7 !important;
   .crt_info .sv_wrap .sv:before, .tbl_head01 .sv_wrap .sv:before {content:"";position:absolute;top:-6px;left:15px;width:0;height:0;border-style:solid;border-width:0 6px 6px 6px;border-color:transparent transparent #333 transparent}
   .crt_info .sv_wrap .sv a, .tbl_head01 .sv_wrap .sv a {display:inline-block;margin:0;padding:0 10px;line-height:30px;width:100px;font-weight:normal;color:#bbb}
   .crt_info .sv_wrap .sv a:hover, .tbl_head01 .sv_wrap .sv a:hover {background:#000;color:#fff}
-  .crt_info .sv_member, .tbl_head01 .sv_member {color:#333}
   .crt_info .sv_on, .tbl_head01 .sv_on {display:block !important;position:absolute;top:23px;left:0px;width:auto;height:auto}
   .crt_info .sv_nojs .sv, .tbl_head01 .sv_nojs .sv {display:block}
-  .dark .crt_info .sv_member,.dark .tbl_head01 .sv_member {color:#a1a1a1}
 
   /* 페이징 */
   .pg_wrap {clear:both;float:left;display:inline-block}
