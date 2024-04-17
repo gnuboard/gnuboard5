@@ -13,13 +13,13 @@ if ($himg_src)
 echo '<div id="faq_hhtml">'.conv_content($fm['fm_head_html'], 1).'</div>';
 ?>
 
-<fieldset id="faq_sch" class="bg-gray-100 text-center mb-2 p-7">
+<fieldset id="faq_sch" class="bg-gray-100 text-center mb-2 p-7 dark:bg-zinc-800">
     <legend>FAQ 검색</legend>
     <form name="faq_search_form" method="get">
     <span class="sch_tit blind">FAQ 검색</span>
     <input type="hidden" name="fm_id" value="<?php echo $fm_id;?>">
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx;?>" required id="stx" class="frm_input border-b border-gray-200 w-80 h-11 rounded-sm" size="15" maxlength="15">
+    <input type="text" name="stx" value="<?php echo $stx;?>" required id="stx" class="frm_input border-b border-gray-200 w-80 h-11 rounded-sm dark:bg-zinc-900 dark:border-mainborder dark:text-white" size="15" maxlength="15">
     <button type="submit" value="검색" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
     </form>
 </fieldset>
@@ -53,20 +53,20 @@ if( count($faq_master_list) ){
     ?>
     <section id="faq_con">
         <h2 class="blind"><?php echo $g5['title']; ?> 목록</h2>
-        <ol class="list-none m-0 p-0 border-t border-gray-200">
+        <ol class="list-none m-0 p-0 border-t border-gray-200 dark:border-mainborder">
             <?php
             foreach($faq_list as $key=>$v){
                 if(empty($v))
                     continue;
             ?>
-            <li class="relative border-b border-gray-200 bg-white">
+            <li class="relative border-b border-gray-200 bg-white dark:bg-zinc-900 dark:border-mainborder dark:text-white">
                 <h3 class="relative min-h-12 leading-7 p-4 pl-12">
-                	<span class="tit_bg inline-block absolute top-4 left-4 text-center text-black text-xl">Q</span><a href="#none" onclick="return faq_open(this);"><?php echo conv_content($v['fa_subject'], 1); ?></a>
-                	<button class="tit_btn absolute right-4 top-4 border-0 w-7 h-7 bg-white text-gray-300 text-sm" onclick="return faq_open(this);"><i class="fa fa-plus" aria-hidden="true"></i><span class="sound_only">열기</span></button>
+                	<span class="tit_bg inline-block absolute top-4 left-4 text-center text-black text-xl dark:text-white">Q</span><a href="#none" onclick="return faq_open(this);"><?php echo conv_content($v['fa_subject'], 1); ?></a>
+                	<button class="tit_btn absolute right-4 top-4 border-0 w-7 h-7 bg-white text-gray-300 text-sm dark:bg-zinc-900" onclick="return faq_open(this);"><i class="fa fa-plus" aria-hidden="true"></i><span class="sound_only">열기</span></button>
                 </h3>
                 <div class="con_inner hidden pt-1 pl-1 pb-5 pr-12">
                     <?php echo conv_content($v['fa_content'], 1); ?>
-                    <button type="button" class="closer_btn absolute right-4 top-4 border-0 w-7 h-7 bg-white text-blue-500 text-sm"><i class="fa fa-minus" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+                    <button type="button" class="closer_btn absolute right-4 top-4 border-0 w-7 h-7 bg-white text-blue-500 text-sm dark:bg-zinc-900"><i class="fa fa-minus" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
                 </div>
             </li>
             <?php
