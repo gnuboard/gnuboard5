@@ -11,20 +11,20 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 전체게시물 검색 시작 { -->
-<fieldset id="new_sch">
-    <legend>상세검색</legend>
+<fieldset id="new_sch" class="bg-gray-100 text-center mb-3 p-8 dark:bg-zinc-800">
+    <legend class="blind">상세검색</legend>
     <form name="fnew" method="get">
     <?php echo $group_select ?>
     <label for="view" class="sound_only">검색대상</label>
-    <select name="view" id="view">
+    <select name="view" id="view" class="dark:bg-zinc-900 dark:!border-mainborder dark:text-white">
         <option value="">전체게시물
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
     <label for="mb_id" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input" size="40">
+    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input dark:bg-zinc-900 dark:!border-mainborder dark:text-white" size="40">
     <button type="submit" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
-    <p>회원 아이디만 검색 가능</p>
+    <p class="dark:text-white">회원 아이디만 검색 가능</p>
     </form>
     <script>
     /* 셀렉트 박스에서 자동 이동 해제
@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 </div>
 <?php } ?>
 <div class="tbl_head01 tbl_wrap">
-    <table class="w-full border-collapse border-spacing-x-2 bg-white border-y border-solid border-gray-200">
+    <table class="w-full border-collapse border-spacing-x-2 bg-white border-y border-solid border-gray-200 dark:bg-zinc-900 dark:border-mainborder dark:text-white">
     <thead>
     <tr>
         <?php if ($is_admin) { ?>
