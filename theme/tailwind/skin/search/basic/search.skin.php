@@ -8,13 +8,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
 <!-- 전체검색 시작 { -->
 <form name="fsearch" onsubmit="return fsearch_submit(this);" method="get">
 <input type="hidden" name="srows" value="<?php echo $srows ?>">
-<fieldset id="sch_res_detail">
+<fieldset id="sch_res_detail" class="dark:!bg-zinc-800">
     <legend>상세검색</legend>
     <?php echo $group_select ?>
     <script>document.getElementById("gr_id").value = "<?php echo $gr_id ?>";</script>
 
     <label for="sfl" class="sound_only">검색조건</label>
-    <select name="sfl" id="sfl">
+    <select name="sfl" id="sfl" class="dark:bg-zinc-900 dark:!border-mainborder dark:text-white">
         <option value="wr_subject||wr_content"<?php echo get_selected($sfl, "wr_subject||wr_content") ?>>제목+내용</option>
         <option value="wr_subject"<?php echo get_selected($sfl, "wr_subject") ?>>제목</option>
         <option value="wr_content"<?php echo get_selected($sfl, "wr_content") ?>>내용</option>
@@ -24,7 +24,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <span class="sch_wr">
-        <input type="text" name="stx" value="<?php echo $text_stx ?>" id="stx" required class="frm_input" size="40">
+        <input type="text" name="stx" value="<?php echo $text_stx ?>" id="stx" required class="frm_input dark:bg-zinc-900 dark:!border-mainborder dark:text-white" size="40">
         <button type="submit" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
     </span>
 
@@ -73,8 +73,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     if ($stx) {
         if ($board_count) {
     ?>
-    <section id="sch_res_ov">
-        <h2><strong><?php echo $stx ?></strong> 전체검색 결과</h2>
+    <section id="sch_res_ov" class="dark:!bg-zinc-800 dark:!border-mainborder">
+        <h2 class="dark:!text-white"><strong><?php echo $stx ?></strong> 전체검색 결과</h2>
         <ul>
             <li>게시판 <?php echo $board_count ?>개</li>
             <li>게시물 <?php echo number_format($total_count) ?>개</li>
@@ -108,9 +108,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
      ?>
 		<div class="search_board_result">
-        <h2><a href="<?php echo get_pretty_url($search_table[$idx], '', $search_query); ?>"><?php echo $bo_subject[$idx] ?> 게시판 내 결과</a></h2>
+        <h2 class="dark:!text-white"><a href="<?php echo get_pretty_url($search_table[$idx], '', $search_query); ?>"><?php echo $bo_subject[$idx] ?> 게시판 내 결과</a></h2>
 		<a href="<?php echo get_pretty_url($search_table[$idx], '', $search_query); ?>" class="sch_more">더보기</a>
-        <ul>
+        <ul class="dark:!border-mainborder">
         <?php
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
             if ($list[$idx][$i]['wr_is_comment'])
@@ -125,9 +125,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
             }
          ?>
 
-            <li>
+            <li class="dark:!bg-zinc-900 dark:!border-mainborder">
                 <div class="sch_tit">
-                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
+                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title dark:!text-white"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
                     <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="pop_a"><i class="fa fa-window-restore" aria-hidden="true"></i><span class="sound_only">새창</span></a>
                 </div>
                 <p><?php echo $list[$idx][$i]['content'] ?></p>
