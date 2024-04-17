@@ -309,15 +309,15 @@ border:1px solid #558ab7 !important;
   .pg_wrap {clear:both;float:left;display:inline-block}
   .pg_wrap:after {display:block;visibility:hidden;clear:both;content:""} 
   .pg {text-align:center}
-  .pg_page, .pg_current {display:inline-block;vertical-align:middle;background:#eee;border:1px solid #eee}
+  .pg_page, .pg_current {display:inline-block;text-align: center; vertical-align:middle;background:#eee;border:1px solid #eee}
   .pg a:focus, .pg a:hover {text-decoration:none}
   .pg_page {color:#959595;font-size:1.083em;height:30px;line-height:28px;padding:0 5px;min-width:30px;text-decoration:none;border-radius:3px}
   .pg_page:hover {background-color:#fafafa}
-  .pg_start {text-indent:-999px;overflow:hidden;background:url('../img/btn_first.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
-  .pg_prev {text-indent:-999px;overflow:hidden;background:url('../img/btn_prev.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
-  .pg_end {text-indent:-999px;overflow:hidden;background:url('../img/btn_end.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
-  .pg_next {text-indent:-999px;overflow:hidden;background:url('../img/btn_next.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
-  .pg_start:hover,.pg_prev:hover,.pg_end:hover,.pg_next:hover {background-color:#fafafa}
+  .pg_page.pg_start {text-indent:-999px;overflow:hidden;background:url('../img/btn_first.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
+  .pg_page.pg_prev {text-indent:-999px;overflow:hidden;background:url('../img/btn_prev.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
+  .pg_page.pg_end {text-indent:-999px;overflow:hidden;background:url('../img/btn_end.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
+  .pg_page.pg_next {text-indent:-999px;overflow:hidden;background:url('../img/btn_next.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
+  .pg_page.pg_start:hover,.pg .pg_prev:hover,.pg .pg_end:hover,.pg .pg_next:hover {background-color:#fafafa}
 
   .pg_current {display:inline-block;background:#3a8afd;border:1px solid #3a8afd;color:#fff;font-weight:bold;height:30px;line-height:30px;padding:0 10px;min-width:30px;border-radius:3px}
 
@@ -1064,6 +1064,7 @@ border:1px solid #558ab7 !important;
 #sch_res_detail .frm_input {border:1px solid #d0d3db;width:300px;height:45px;border-radius:0;border-radius:3px}
 #sch_res_detail .sch_wr {position:relative;display:inline-block}
 #sch_res_detail .btn_submit {padding:0 10px;height:45px;width:88px;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}
+.dark #sch_res_detail select {border:1px solid #383838;background: #18181b;color: #ffffff !important;}
 
 /* 검색 OR+ADN 버튼 */
 .switch_field {display:inline-block;vertical-align:middle;padding:10px 5px}
