@@ -319,7 +319,7 @@ border:1px solid #558ab7 !important;
   .pg_page.pg_next {text-indent:-999px;overflow:hidden;background:url('../img/btn_next.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
   .pg_page.pg_start:hover,.pg .pg_prev:hover,.pg .pg_end:hover,.pg .pg_next:hover {background-color:#fafafa}
 
-  .pg_current {display:inline-block;background:#3a8afd;border:1px solid #3a8afd;color:#fff;font-weight:bold;height:30px;line-height:30px;padding:0 10px;min-width:30px;border-radius:3px}
+  .pg_current, .dark .pg_current {display:inline-block;background:#3a8afd;border:1px solid #3a8afd;color:#fff;font-weight:bold;height:30px;line-height:30px;padding:0 10px;min-width:30px;border-radius:3px}
 
   .dark .pg_page {background: #27272a;border: 1px solid #383838;color: #ffffff;}
   .dark .pg_page.pg_start {background:url('../img/btn_first.gif') no-repeat 50% 50% #27272a;}
@@ -542,6 +542,7 @@ border:1px solid #558ab7 !important;
   #bo_v_info .profile_img {display:none}
   #bo_v_info .sv_member {color:#000}
   #bo_v_info .if_date {margin:0;color:#888}
+  .dark #bo_v_info .sv_member {color:#fff}
 
   #bo_v_file img {float:left;margin:0 10px 0 0}
 
