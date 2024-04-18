@@ -269,8 +269,8 @@ border:1px solid #558ab7 !important;
   .new_win .win_ul li {float:left;background:#fff;text-align:center;padding:0 10px;border:1px solid #d6e9ff;border-radius:30px;margin-left:5px}
   .new_win .win_ul li:first-child {margin-left:0}
   .new_win .win_ul li a {display:block;padding:8px 0;color:#6794d3}
-  .new_win .win_ul .selected {background:#3a8afd;border-color:#3a8afd;position:relative;z-index:5}
-  .new_win .win_ul .selected a {color:#fff;font-weight:bold}
+  .new_win .win_ul .selected, .dark .new_win .win_ul .selected {background:#3a8afd;border-color:#3a8afd;position:relative;z-index:5}
+  .new_win .win_ul .selected a, .dark .new_win .win_ul .selected a {color:#fff;font-weight:bold}
   .new_win .win_desc {position:relative;margin:10px;border-radius:5px;font-size:1em;background:#f2838f;color:#fff;line-height:50px;text-align:left;padding:0 20px}
   .new_win .win_desc i {font-size:1.2em;vertical-align:baseline}
   .new_win .win_desc:after {content:"";position:absolute;left:0;top:0;width:4px;height:50px;background:#da4453;border-radius:3px 0 0 3px}
@@ -278,7 +278,7 @@ border:1px solid #558ab7 !important;
   .new_win .win_total {float:right;display:inline-block;line-height:30px;font-weight:normal;font-size:0.75em;color:#3a8afd;background:#f6f6f6;padding:0 10px;border-radius:5px}
   .new_win .new_win_con {margin:20px 0;}
   .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
-  .new_win .new_win_con2 {margin:20px 0}
+  .new_win .new_win_con2 {padding:20px 0}
   .new_win .btn_confirm:after {display:block;visibility:hidden;clear:both;content:""}
   .new_win .win_btn {text-align:center}
   .new_win .cert_btn {margin-bottom:30px;text-align:center}

@@ -1331,10 +1331,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   height: auto;
 }
 
-.h-dvh {
-  height: 100dvh;
-}
-
 .h-full {
   height: 100%;
 }
@@ -1369,6 +1365,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .min-h-52 {
   min-height: 13rem;
+}
+
+.min-h-screen {
+  min-height: 100vh;
 }
 
 .w-0 {
@@ -4360,14 +4360,14 @@ a.btn_admin,.btn_admin {
   color:#6794d3
 }
 
-.new_win .win_ul .selected {
+.new_win .win_ul .selected, .dark .new_win .win_ul .selected {
   background:#3a8afd;
   border-color:#3a8afd;
   position:relative;
   z-index:5
 }
 
-.new_win .win_ul .selected a {
+.new_win .win_ul .selected a, .dark .new_win .win_ul .selected a {
   color:#fff;
   font-weight:bold
 }
@@ -4429,7 +4429,7 @@ a.btn_admin,.btn_admin {
 }
 
 .new_win .new_win_con2 {
-  margin:20px 0
+  padding:20px 0
 }
 
 .new_win .btn_confirm:after {
