@@ -903,7 +903,7 @@ border:1px solid #558ab7 !important;
 #mb_confirm p {padding:0 20px 40px;border-bottom:1px solid #e9e9e9;font-size:1.083em;line-height:1.4em;color:#656565}
 #mb_confirm p strong {display:block;color:#3ca1ff;font-size:1.167em;margin:0 0 5px}
 #mb_confirm fieldset {padding:50px;text-align:left}
-#mb_confirm fieldset .frm_input {background-color:#fff !important}
+#mb_confirm fieldset .frm_input {background-color:#fff}
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:block;margin:5px 0 10px;font-weight:bold}
 #mb_confirm .confirm_id {font-size:0.92em;color:#666}
