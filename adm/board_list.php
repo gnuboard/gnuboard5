@@ -182,6 +182,7 @@ $colspan = 15;
                         <td class="td_mng td_mng_m">
                             <?php echo $one_update ?>
                             <?php echo $one_copy ?>
+                            <a href="<?php echo G5_BBS_URL."/post.php?bo_table={$row['bo_table']}" ?>" class="btn btn_02">포스트</a>
                         </td>
                     </tr>
                 <?php
