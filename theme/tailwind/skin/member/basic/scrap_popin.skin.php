@@ -6,21 +6,21 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <!-- 스크랩 시작 { -->
-<div id="scrap_do" class="new_win">
-    <h1 id="win_title">스크랩하기</h1>
+<div id="scrap_do" class="new_win min-h-screen dark:bg-zinc-900">
+    <h1 id="win_title" class="dark:!bg-zinc-800 dark:!text-white">스크랩하기</h1>
     <form name="f_scrap_popin" action="./scrap_popin_update.php" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
     <div class="new_win_con">
 	    <h2 class="sound_only">제목 확인 및 댓글 쓰기</h2>
 	    <ul>
-	        <li class="scrap_tit">
+	        <li class="scrap_tit dark:!bg-zinc-800 dark:text-white">
 	            <span class="sound_only">제목</span>
 	            <?php echo get_text(cut_str($write['wr_subject'], 255)) ?>
 	        </li>
 	        <li>
 	            <label for="wr_content">댓글작성</label>
-	            <textarea name="wr_content" id="wr_content"></textarea>
+	            <textarea name="wr_content" id="wr_content" class="dark:bg-zinc-800 dark:border-mainborder dark:text-white"></textarea>
 	        </li>
 	    </ul>
 	</div>
