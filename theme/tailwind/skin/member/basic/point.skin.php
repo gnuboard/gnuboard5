@@ -5,14 +5,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
-<div id="point" class="new_win">
-    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
+<div id="point" class="new_win dark:bg-zinc-900">
+    <h1 id="win_title" class="dark:!bg-zinc-800 dark:!text-white"><?php echo $g5['title'] ?></h1>
 
     <div class="new_win_con2">
-        <ul class="point_all">
-        	<li class="full_li">
+        <ul class="point_all dark:!bg-zinc-800 dark:!border-mainborder">
+        	<li class="full_li dark:!border-0 dark:text-blue-500">
         		보유포인트
-        		<span><?php echo number_format($member['mb_point']); ?></span>
+        		<span class="dark:!text-white"><?php echo number_format($member['mb_point']); ?></span>
         	</li>
 		</ul>
         <ul class="point_list">
@@ -38,9 +38,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 if($row['po_expired'] == 1)
                     $expr = ' txt_expired';
             ?>
-            <li class="<?php echo $point_use_class; ?>">
+            <li class="<?php echo $point_use_class; ?> dark:bg-zinc-900 dark:!border-mainborder">
                 <div class="point_top">
-                    <span class="point_tit"><?php echo $po_content; ?></span>
+                    <span class="point_tit dark:text-white"><?php echo $po_content; ?></span>
                     <span class="point_num"><?php if ($point1) echo $point1; else echo $point2; ?></span>
                 </div>
                 <span class="point_date1"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $row['po_datetime']; ?></span>
@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             }   // end foreach
 
             if ($i == 0)
-                echo '<li class="empty_li">자료가 없습니다.</li>';
+                echo '<li class="empty_li dark:!bg-zinc-900 dark:!border-mainborder dark:!text-white">자료가 없습니다.</li>';
             else {
                 if ($sum_point1 > 0)
                     $sum_point1 = "+" . number_format($sum_point1);
@@ -73,5 +73,5 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page='); ?>
 
-    <button type="button" onclick="javascript:window.close();" class="btn_close">창닫기</button>
+    <button type="button" onclick="javascript:window.close();" class="btn_close dark:bg-zinc-800 dark:border-mainborder dark:text-white">창닫기</button>
 </div>
