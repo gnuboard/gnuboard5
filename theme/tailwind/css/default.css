@@ -2868,6 +2868,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   padding-bottom: 1.25rem;
 }
 
+.\!pl-5 {
+  padding-left: 1.25rem !important;
+}
+
 .\!pl-6 {
   padding-left: 1.5rem !important;
 }
@@ -5335,6 +5339,10 @@ a.btn_admin,.btn_admin {
   background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;
   border-color:#1471f6;
   border-radius:3px
+}
+
+.dark .chk_box input[type="checkbox"]:checked + label {
+  color:#fff
 }
 
 #bo_btn_top {
