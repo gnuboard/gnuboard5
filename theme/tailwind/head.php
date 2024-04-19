@@ -53,7 +53,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
     
-        <div class="hd_sch_wr grow w-full ms-16">
+        <div class="xl:block hidden hd_sch_wr grow w-full ms-16">
             <fieldset id="hd_sch">
                 <legend>사이트 내 전체검색</legend>
                 <form name="fsearchbox" method="get" class="flex" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
@@ -210,7 +210,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <hr>
 
 <!-- 콘텐츠 시작 { -->
-<div id="wrapper" class="dark:bg-zinc-900">
+<div id="wrapper" class="xl:px-0 px-2 dark:bg-zinc-900">
     <div id="container_wr" class="flex max-w-screen-xl w-full mx-auto">
-      <div id="container" class="relative w-container min-h-500 my-5 h-auto">
+      <div id="container" class="xl:w-container w-full relative min-h-500 my-5 h-auto">
         <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="text-base mx-auto font-bold"><span class="block leading-relaxed mx-auto mb-2.5 dark:text-white" title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }
