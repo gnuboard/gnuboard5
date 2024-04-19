@@ -52,7 +52,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <?php if ($is_category) { ?>
     <div class="bo_w_select write_div">
         <label for="ca_name" class="sound_only">분류<strong>필수</strong></label>
-        <select name="ca_name" id="ca_name" required>
+        <select name="ca_name" id="ca_name" class="dark:bg-zinc-800 dark:!border-mainborder dark:text-white" required>
             <option value="">분류를 선택하세요</option>
             <?php echo $category_option ?>
         </select>
