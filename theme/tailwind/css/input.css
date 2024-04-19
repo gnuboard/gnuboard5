@@ -307,8 +307,7 @@ border:1px solid #558ab7 !important;
   .sv_nojs .sv, .dark .sv_nojs .sv {display:block}
 
   /* 페이징 */
-  .pg_wrap {clear:both;float:left;display:inline-block}
-  .pg_wrap:after {display:block;visibility:hidden;clear:both;content:""} 
+  .pg_wrap, .dark .pg_wrap {display: flex;justify-content: center;margin: 20px 0;}
   .pg {text-align:center}
   .pg_page, .pg_current {display:inline-block;text-align: center; vertical-align:middle;background:#eee;border:1px solid #eee}
   .pg a:focus, .pg a:hover {text-decoration:none}

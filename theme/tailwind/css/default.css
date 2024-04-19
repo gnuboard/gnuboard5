@@ -1447,10 +1447,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   width: weird-and-invalid;
 }
 
-.w-container {
-  width: calc(100% - 260px);
-}
-
 .w-full {
   width: 100%;
 }
@@ -4548,6 +4544,12 @@ a.btn_admin,.btn_admin {
 }
 
 /* 페이징 */
+
+.pg_wrap, .dark .pg_wrap {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
 
 .pg_page, .pg_current {
   display:inline-block;
@@ -8576,11 +8578,6 @@ a.btn_admin,.btn_admin {
   color:#fff
 }
 
-.gnb_1dli .dark\:bg:is(.dark *) {
-  background:url('../img/gnb_bg2.gif') no-repeat 50% 50%;
-  text-indent:-999px
-}
-
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -9069,12 +9066,48 @@ a.btn_admin,.btn_admin {
 }
 
 @media (min-width: 1024px) {
+  .lg\:block {
+    display: block;
+  }
+
   .dark\:lg\:hover\:\[paint-order\:markers\]:hover:is(.dark *) {
     paint-order: markers;
   }
 }
 
 @media (min-width: 1280px) {
+  .xl\:block {
+    display: block;
+  }
+
+  .xl\:w-1\/3 {
+    width: 33.333333%;
+  }
+
+  .xl\:w-1\/4 {
+    width: 25%;
+  }
+
+  .xl\:w-container {
+    width: calc(100% - 260px);
+  }
+
+  .xl\:flex-row {
+    flex-direction: row;
+  }
+
+  .xl\:flex-col {
+    flex-direction: column;
+  }
+
+  .xl\:justify-normal {
+    justify-content: normal;
+  }
+
+  .xl\:justify-start {
+    justify-content: flex-start;
+  }
+
   .xl\:px-0 {
     padding-left: 0px;
     padding-right: 0px;

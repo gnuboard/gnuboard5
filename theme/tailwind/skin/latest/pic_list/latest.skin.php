@@ -9,7 +9,7 @@ $thumb_height = 212;
 $list_count = (is_array($list) && $list) ? count($list) : 0;
 ?>
 
-<div class="pic_li_lt relative w-1/3 px-2.5 bg-white dark:bg-zinc-900">
+<div class="pic_li_lt relative xl:w-1/3 w-full px-2.5 bg-white dark:bg-zinc-900">
     <h2 class="lat_title block leading-45 text-sm font-bold text-black dark:text-white"><a href="<?php echo get_pretty_url($bo_table); ?>" class="relative inline-block"><?php echo $bo_subject ?></a></h2>
     <ul>
     <?php
