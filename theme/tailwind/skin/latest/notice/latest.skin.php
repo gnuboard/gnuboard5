@@ -6,7 +6,7 @@ add_javascript('<script src="'.G5_JS_URL.'/jquery.bxslider.js"></script>', 10);
 $list_count = (is_array($list) && $list) ? count($list) : 0;
 ?>
 
-<div class="notice relative ft_cnt w-1/4 px-5">
+<div class="notice relative ft_cnt w-1/4 px-5 xl:block hidden">
     <h2 class="mb-5"><a href="<?php echo get_pretty_url($bo_table); ?>" class="text-sm text-white"><?php echo $bo_subject ?></a></h2>
     <ul>
     <?php for ($i=0; $i<$list_count; $i++) {  ?>
