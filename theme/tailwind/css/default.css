@@ -8576,6 +8576,11 @@ a.btn_admin,.btn_admin {
   color:#fff
 }
 
+.gnb_1dli .dark\:bg:is(.dark *) {
+  background:url('../img/gnb_bg2.gif') no-repeat 50% 50%;
+  text-indent:-999px
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -9010,6 +9015,11 @@ a.btn_admin,.btn_admin {
 .dark\:text-zinc-500:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+
+.dark\:shadow-zinc-950:is(.dark *) {
+  --tw-shadow-color: #09090b;
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .dark\:hover\:border-blue-500:hover:is(.dark *) {

@@ -172,22 +172,22 @@ if ($is_nogood) $colspan++;
 
     <!-- 게시판 검색 시작 { -->
     <div class="bo_sch_wrap hidden w-full h-full fixed top-0 left-0 z-999">
-        <fieldset class="bo_sch absolute top-1/2 left-1/2 bg-white text-left w-80 max-h-80 overflow-y-auto rounded-md shadow-lg shadow-zinc-500/50 transform -translate-x-1/2 -translate-y-1/2">
-            <h3 class="border-b border-solid border-gray-200 font-bold p-4">검색</h3>
+        <fieldset class="bo_sch absolute top-1/2 left-1/2 bg-white text-left w-80 max-h-80 overflow-y-auto rounded-md shadow-lg shadow-zinc-500/50 transform -translate-x-1/2 -translate-y-1/2 dark:bg-zinc-900 dark:shadow-zinc-950">
+            <h3 class="border-b border-solid border-gray-200 font-bold p-4 dark:text-white dark:border-mainborder">검색</h3>
             <form name="fsearch" method="get" class="block p-4">
             <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
             <input type="hidden" name="sca" value="<?php echo $sca ?>">
             <input type="hidden" name="sop" value="and">
             <label for="sfl" class="sound_only">검색대상</label>
-            <select name="sfl" id="sfl" class="w-full h-10 border border-gray-300 rounded shadow-inner">
+            <select name="sfl" id="sfl" class="w-full h-10 border border-gray-300 rounded shadow-inner dark:bg-zinc-800 dark:border-mainborder dark:text-white">
                 <?php echo get_board_sfl_select_options($sfl); ?>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <div class="sch_bar inline-block w-full mt-4 border border-gray-300 rounded shadow-inner">
+            <div class="sch_bar inline-block w-full mt-4 border border-gray-300 rounded shadow-inner dark:bg-zinc-800 dark:border-mainborder dark:text-white">
                 <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input w-60 h-10 border-0 p-0 bg-transparent float-left" size="25" maxlength="20" placeholder=" 검색어를 입력해주세요">
-                <button type="submit" value="검색" class="sch_btn w-10 h-10 float-right text-gray-600 bg-none border-0 text-base"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                <button type="submit" value="검색" class="sch_btn w-10 h-10 float-right text-gray-600 bg-none border-0 text-base dark:text-gray-300"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
             </div>
-            <button type="button" class="bo_sch_cls absolute right-0 top-0 text-gray-400 border-0 text-base bg-white py-3 px-4" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+            <button type="button" class="bo_sch_cls absolute right-0 top-0 text-gray-400 border-0 text-base bg-white py-3 px-4 dark:bg-zinc-900" title="닫기"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
             </form>
         </fieldset>
         <div class="bo_sch_bg w-full h-full bg-black bg-opacity-20"></div>
