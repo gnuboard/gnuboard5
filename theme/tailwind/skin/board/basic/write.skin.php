@@ -100,10 +100,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
             <?php if($editor_content_js) echo $editor_content_js; ?>
             <button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
-            <div id="autosave_pop" class="hidden z-10 absolute top-8 right-0 w-80 h-auto max-h-44 border border-gray-200 bg-white shadow-md shadow-gray-600/50">
+            <div id="autosave_pop" class="hidden z-10 absolute top-8 right-0 w-80 h-auto max-h-44 border border-gray-200 bg-white shadow-md shadow-gray-600/50 dark:border-mainborder">
                 <strong class="blind">임시 저장된 글 목록</strong>
-                <ul class="border-b border-solid border-gray-200 list-none overflow-y-scroll h-32 p-4"></ul>
-                <div class="text-center m-0"><button type="button" class="autosave_close w-full h-7 bg-none text-gray-500 font-bold text-xs border-0 m-0 p-0 hover:bg-gray-100 hover:text-blue-400">닫기</button></div>
+                <ul class="border-b border-solid border-gray-200 list-none overflow-y-scroll h-32 p-4 dark:bg-zinc-900 dark:border-mainborder"></ul>
+                <div class="text-center m-0"><button type="button" class="autosave_close w-full h-7 bg-none text-gray-500 font-bold text-xs border-0 m-0 p-0 hover:bg-gray-100 hover:text-blue-400 dark:bg-zinc-800">닫기</button></div>
             </div>
             <?php } ?>
         </div>
