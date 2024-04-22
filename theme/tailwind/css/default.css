@@ -9092,6 +9092,10 @@ a.btn_admin,.btn_admin {
     width: calc(100% - 260px);
   }
 
+  .xl\:w-full {
+    width: 100%;
+  }
+
   .xl\:flex-row {
     flex-direction: row;
   }
