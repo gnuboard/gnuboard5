@@ -49,9 +49,68 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 		</div>
     </div>
     <div id="hd_wrapper" class="max-w-screen-xl w-full relative m-0 h-140 flex justify-between items-center mx-auto xl:px-0 px-3">
+    
+        <button type="button" id="opener_aside" class="xl:hidden block w-12 h-12 text-white/70 text-2xl">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+            <span class="blind">열기</span>
+        </button>
+
+        <div id="gnb_mo" class="hidden bg-gray-100 fixed top-0 left-0 z-1000 w-full max-w-96 h-full bg-none shadow-black/40 shadow-md dark:bg-zinc-900">
+            <button type="button" id="gnb_close" class="hd_closer block absolute right-2 top-2 font-bold w-10 h-10 z-999 text-gray-400 text-2xl m-0 dark:text-white"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
+            <?php echo outlogin('theme/basic_mo'); // 외부 로그인 ?>
+            <ul id="gnb_1dul" class="bg-gray-100 dark:bg-zinc-900">
+              <?php
+            $menu_datas = get_menu_db(1, true);
+                $i = 0;
+                foreach( $menu_datas as $row ){
+                  if( empty($row) ) continue;
+                      ?>
+                          <li class="gnb_1dli relative">
+                              <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da block leading-10 bg-white border-b border-solid border-gray-200 text-sm font-bold text-black px-5 py-1 dark:bg-zinc-800 dark:border-mainborder dark:text-white"><?php echo $row['me_name'] ?></a>
+                              <?php
+                              $k = 0;
+                              foreach( (array) $row['sub'] as $row2 ){
+                      if( empty($row2) ) continue;
+                                  if($k == 0)
+                                      echo '<button type="button" class="btn_gnb_op"><span class="sound_only">하위분류</span></button><ul class="gnb_2dul hidden bg-gray-100 dark:bg-zinc-900">'.PHP_EOL;
+                              ?>
+                                  <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da block text-black pl-5 py-2.5 dark:text-white"><span></span><?php echo $row2['me_name'] ?></a></li>
+                              <?php
+                    $k++;
+                              }	//end foreach $row2
+          
+                              if($k > 0)
+                                  echo '</ul>'.PHP_EOL;
+                              ?>
+                          </li>
+                      <?php
+                $i++;
+                      }	//end foreach $row
+
+                      if ($i == 0) {  ?>
+                        <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하세요.<?php } ?></li>
+                    <?php } ?>
+                    <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
+                        <li class="gnb_1dli relative"><a href="<?php echo G5_SHOP_URL ?>" class="gnb_1da block leading-10 bg-white border-b border-solid border-gray-200 text-sm font-bold text-black px-5 py-1 dark:bg-zinc-800 dark:border-mainborder dark:text-white"> 쇼핑몰</a></li>
+                    <?php } ?>
+            </ul>
+
+            <ul id="hd_nb" class="flex flex-wrap bg-white border border-b border-gray-200 mt-3">
+            	<li class="hd_nb1 w-1/2 text-left text-sm font-bold border-b border-r border-gray-200"><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq" class="block text-gray-600 p-3"><i class="fa fa-question text-gray-400 mr-2" aria-hidden="true"></i>FAQ</a></li>
+              <li class="hd_nb2 w-1/2 text-left text-sm font-bold border-b border-gray-200"><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_qa" class="block text-gray-600 p-3"><i class="fa fa-comments text-gray-400 mr-2" aria-hidden="true"></i>1:1문의</a></li>
+              <li class="hd_nb3 w-1/2 text-left text-sm font-bold border-r border-gray-200"><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt" class="block text-gray-600 p-3"><i class="fa fa-users text-gray-400 mr-2" aria-hidden="true"></i>접속자</a></li>
+              <li class="hd_nb4 w-1/2 text-left text-sm font-bold"><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new" class="block text-gray-600 p-3"><i class="fa fa-history text-gray-400 mr-2" aria-hidden="true"></i>새글</a></li>   
+            </ul>
+        </div>
+
         <div id="logo" class="grow-0 shrink-0">
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
+
+        <button type="button" id="opener_search" class="xl:hidden block w-12 h-12 text-white/70 text-2xl">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span class="blind">사용자메뉴</span>
+        </button>
     
         <div class="xl:block hidden hd_sch_wr grow w-full ms-16">
             <fieldset id="hd_sch">
@@ -65,40 +124,55 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </form>
 
                 <script>
+
+                $(function() {
+                    var openerAside = $("#opener_aside");
+                    var closerAside = $("#gnb_close");
+                    var aside = $("#gnb_mo");
+
+                    openerAside.on("click", function() {
+                        aside.show();
+                    });
+
+                    closerAside.on("click", function() {
+                        aside.hide();
+                    });
+                });
+                
                 function fsearchbox_submit(f)
-                {
-                    var stx = f.stx.value.trim();
-                    if (stx.length < 2) {
-                        alert("검색어는 두글자 이상 입력하십시오.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
+                  {
+                      var stx = f.stx.value.trim();
+                      if (stx.length < 2) {
+                          alert("검색어는 두글자 이상 입력하십시오.");
+                          f.stx.select();
+                          f.stx.focus();
+                          return false;
+                      }
 
-                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
-                    var cnt = 0;
-                    for (var i = 0; i < stx.length; i++) {
-                        if (stx.charAt(i) == ' ')
-                            cnt++;
-                    }
+                      // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
+                      var cnt = 0;
+                      for (var i = 0; i < stx.length; i++) {
+                          if (stx.charAt(i) == ' ')
+                              cnt++;
+                      }
 
-                    if (cnt > 1) {
-                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-                    f.stx.value = stx;
+                      if (cnt > 1) {
+                          alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
+                          f.stx.select();
+                          f.stx.focus();
+                          return false;
+                      }
+                      f.stx.value = stx;
 
-                    return true;
-                }
+                      return true;
+                  }
+                  
                 </script>
-
             </fieldset>
                 
             <?php echo popular('theme/basic'); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
         </div>
-        <ul class="hd_login flex grow-0 shrink-0 text-white">        
+        <ul class="hd_login xl:flex hidden grow-0 shrink-0 text-white">        
             <?php if ($is_member) {  ?>
             <li class="mx-1"><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
             <li class="border-l border-gray-600 pl-2.5 mx-1"><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
