@@ -55,8 +55,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <span class="blind">열기</span>
         </button>
 
-        <div id="gnb_mo" class="hidden bg-gray-100 fixed top-0 left-0 z-1000 w-full max-w-96 h-full bg-none shadow-black/40 shadow-md dark:bg-zinc-900">
-            <button type="button" id="gnb_close" class="hd_closer block absolute right-2 top-2 font-bold w-10 h-10 z-999 text-gray-400 text-2xl m-0 dark:text-white"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
+        <div id="gnb_mo_wrap" class="hidden bg-gray-100 fixed top-0 left-0 z-1000 w-full max-w-96 h-full bg-none shadow-black/40 shadow-md dark:bg-zinc-900">
+            <button type="button" id="gnb_close" class="hd_closer block absolute right-2 top-4 font-bold w-10 h-10 z-999 text-gray-400 text-2xl m-0 dark:text-white"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
             <?php echo outlogin('theme/basic_mo'); // 외부 로그인 ?>
             <ul id="gnb_1dul" class="bg-gray-100 dark:bg-zinc-900">
               <?php
@@ -95,11 +95,11 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     <?php } ?>
             </ul>
 
-            <ul id="hd_nb" class="flex flex-wrap bg-white border border-b border-gray-200 mt-3">
-            	<li class="hd_nb1 w-1/2 text-left text-sm font-bold border-b border-r border-gray-200"><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq" class="block text-gray-600 p-3"><i class="fa fa-question text-gray-400 mr-2" aria-hidden="true"></i>FAQ</a></li>
-              <li class="hd_nb2 w-1/2 text-left text-sm font-bold border-b border-gray-200"><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_qa" class="block text-gray-600 p-3"><i class="fa fa-comments text-gray-400 mr-2" aria-hidden="true"></i>1:1문의</a></li>
-              <li class="hd_nb3 w-1/2 text-left text-sm font-bold border-r border-gray-200"><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt" class="block text-gray-600 p-3"><i class="fa fa-users text-gray-400 mr-2" aria-hidden="true"></i>접속자</a></li>
-              <li class="hd_nb4 w-1/2 text-left text-sm font-bold"><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new" class="block text-gray-600 p-3"><i class="fa fa-history text-gray-400 mr-2" aria-hidden="true"></i>새글</a></li>   
+            <ul id="hd_nb" class="flex flex-wrap bg-white border border-b border-gray-200 mt-3 dark:bg-zinc-800 dark:border-mainborder">
+            	<li class="hd_nb1 w-1/2 text-left text-sm font-bold border-b border-r border-gray-200 dark:border-mainborder"><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq" class="block text-gray-600 p-3 dark:text-white"><i class="fa fa-question text-gray-400 mr-2" aria-hidden="true"></i>FAQ</a></li>
+              <li class="hd_nb2 w-1/2 text-left text-sm font-bold border-b border-gray-200 dark:border-mainborder"><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_qa" class="block text-gray-600 p-3 dark:text-white"><i class="fa fa-comments text-gray-400 mr-2" aria-hidden="true"></i>1:1문의</a></li>
+              <li class="hd_nb3 w-1/2 text-left text-sm font-bold border-r border-gray-200 dark:border-mainborder"><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt" class="block text-gray-600 p-3 dark:text-white"><i class="fa fa-users text-gray-400 mr-2" aria-hidden="true"></i>접속자</a></li>
+              <li class="hd_nb4 w-1/2 text-left text-sm font-bold"><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new" class="block text-gray-600 p-3 dark:text-white"><i class="fa fa-history text-gray-400 mr-2" aria-hidden="true"></i>새글</a></li>   
             </ul>
         </div>
 
@@ -111,7 +111,51 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <i class="fa fa-search" aria-hidden="true"></i>
             <span class="blind">사용자메뉴</span>
         </button>
-    
+
+        <div id="search_mo_wrap" class="hd_div hidden">
+            <button type="button" id="user_close" class="hd_closer"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div id="hd_sch">
+                <h2>사이트 내 전체검색</h2>
+                <form name="fsearchbox" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
+                <input type="hidden" name="sfl" value="wr_subject||wr_content">
+                <input type="hidden" name="sop" value="and">
+                <input type="text" name="stx" id="sch_stx" placeholder="검색어를 입력해주세요" required maxlength="20">
+                <button type="submit" value="검색" id="sch_submit"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                </form>
+
+                <script>
+                function fsearchbox_submit(f)
+                {
+                    var stx = f.stx.value.trim();
+                    if (stx.length < 2) {
+                        alert("검색어는 두글자 이상 입력하십시오.");
+                        f.stx.select();
+                        f.stx.focus();
+                        return false;
+                    }
+
+                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
+                    var cnt = 0;
+                    for (var i = 0; i < stx.length; i++) {
+                        if (stx.charAt(i) == ' ')
+                            cnt++;
+                    }
+
+                    if (cnt > 1) {
+                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
+                        f.stx.select();
+                        f.stx.focus();
+                        return false;
+                    }
+                    f.stx.value = stx;
+
+                    return true;
+                }
+                </script>
+            </div>
+            <?php echo popular('theme/basic_mo'); // 인기검색어 ?>
+        </div>
+
         <div class="xl:block hidden hd_sch_wr grow w-full ms-16">
             <fieldset id="hd_sch">
                 <legend>사이트 내 전체검색</legend>
@@ -128,20 +172,31 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 $(function() {
                     var openerAside = $("#opener_aside");
                     var closerAside = $("#gnb_close");
-                    var aside = $("#gnb_mo");
+                    var openerSearch = $("#opener_search");
+                    var closerSearch = $("#user_close");
+                    var aside = $("#gnb_mo_wrap");
+                    var asideSearch = $("#search_mo_wrap");
 
                     openerAside.on("click", function() {
                         aside.show();
+                    });
+
+                    openerSearch.on("click", function() {
+                        asideSearch.show();
                     });
 
                     closerAside.on("click", function() {
                         aside.hide();
                     });
 
+                    closerSearch.on("click", function() {
+                        asideSearch.hide();
+                    });
+
                     $(".btn_gnb_op").click(function(){
                       $(this).toggleClass("btn_gnb_cl").next(".gnb_2dul").slideToggle(300); 
                     });
-                });
+                });                
                 
                 function fsearchbox_submit(f)
                   {
@@ -176,6 +231,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 
             <?php echo popular('theme/basic'); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
         </div>
+        
         <ul class="hd_login xl:flex hidden grow-0 shrink-0 text-white">        
             <?php if ($is_member) {  ?>
             <li class="mx-1"><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
