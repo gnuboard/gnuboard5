@@ -137,6 +137,10 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     closerAside.on("click", function() {
                         aside.hide();
                     });
+
+                    $(".btn_gnb_op").click(function(){
+                      $(this).toggleClass("btn_gnb_cl").next(".gnb_2dul").slideToggle(300); 
+                    });
                 });
                 
                 function fsearchbox_submit(f)

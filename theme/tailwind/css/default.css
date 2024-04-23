@@ -730,25 +730,25 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   color:#fff
 }
 
-.gnb_1dli .bg {
+#gnb .gnb_1dli .bg {
   background:url('../img/gnb_bg2.gif') no-repeat 50% 50%;
   text-indent:-999px
 }
 
-.gnb_1dli.gnb_al_li_plus .gnb_1da{
+#gnb .gnb_1dli.gnb_al_li_plus .gnb_1da{
   padding-right:25px
 }
 
-.gnb_2dli:first-child {
+#gnb .gnb_2dli:first-child {
   border:0
 }
 
-.gnb_1dli_over .gnb_2dul {
+#gnb .gnb_1dli_over .gnb_2dul {
   display:block;
   left:0
 }
 
-.gnb_1dli_over2 .gnb_2dul {
+#gnb .gnb_1dli_over2 .gnb_2dul {
   display:block;
   right:0
 }
@@ -769,6 +769,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   background:#fff;
   background:url(../img/mobile/gnb_bg2.png) no-repeat 50% 50%;
   text-indent:-9999px
+}
+
+#gnb_mo .gnb_1dli button.btn_gnb_cl {
+  background:url(../img/mobile/gnb_bg.png) no-repeat 50% 50%
 }
 
 /* 팝업 */
@@ -4906,7 +4910,7 @@ qq
   text-align:left
 }
 
-#gnb_mo #ol_before input[type=text], #ol_before input[type=password] {
+#gnb_mo #ol_before input[type=text],#gnb_mo #ol_before input[type=password] {
   width:100%;
   border:0;
   border-bottom:1px solid #434242;
