@@ -8,15 +8,15 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 ?>
 
 <!-- 인기검색어 시작 { -->
-<section id="popular">
-    <h2>인기검색어</h2>
-    <div class="popular_inner">
-	    <ul>
+<section id="popular" class="relative mt-4">
+    <h2 class="blind">인기검색어</h2>
+    <div class="popular_inner overflow-hidden w-96 h-5">
+	    <ul class="flex p-0 m-0">
 	    <?php
 	    if( isset($list) && is_array($list) ){
 	        for ($i=0; $i<count($list); $i++) {
 	        ?>
-	        <li class="item"><a href="<?php echo G5_BBS_URL ?>/search.php?sfl=wr_subject&amp;sop=and&amp;stx=<?php echo urlencode($list[$i]['pp_word']) ?>"><?php echo get_text($list[$i]['pp_word']); ?></a></li>
+	        <li class="item w-auto h-5 leading-5 pr-5"><a href="<?php echo G5_BBS_URL ?>/search.php?sfl=wr_subject&amp;sop=and&amp;stx=<?php echo urlencode($list[$i]['pp_word']) ?>" class="text-gray-300 hover:underline"><?php echo get_text($list[$i]['pp_word']); ?></a></li>
 	        <?php
 	        }   //end for
 	    }   //end if
