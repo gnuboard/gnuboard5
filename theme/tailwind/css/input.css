@@ -574,7 +574,8 @@ border:1px solid #558ab7 !important;
   #autosave_pop span {display:block;float:right;font-size:0.92em;font-style:italic;color:#999}
   .autosave_content {display:none}
   .autosave_del {background:url(./img/close_btn.png) no-repeat 50% 50%;text-indent:-999px;overflow:hidden;height:20px;width:20px}
-
+  .dark #autosave_pop li {border-bottom:1px solid #383838;background:#27272a;color: #fff;}
+  
   /* 게시판 읽기 */
   #bo_v_table {position:absolute;top:0;right:16px;margin:0;padding:0 5px;height:25px;background:#ff3061;color:#fff;font-weight:bold;line-height:2.2em}
 

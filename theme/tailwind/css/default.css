@@ -5934,6 +5934,12 @@ qq
   color:#999
 }
 
+.dark #autosave_pop li {
+  border-bottom:1px solid #383838;
+  background:#27272a;
+  color: #fff;
+}
+
 /* 게시판 읽기 */
 
 #bo_v_table {
