@@ -878,6 +878,14 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   inset: -0.25rem;
 }
 
+.-bottom-1 {
+  bottom: -0.25rem;
+}
+
+.-right-1 {
+  right: -0.25rem;
+}
+
 .bottom-5 {
   bottom: 1.25rem;
 }
@@ -902,6 +910,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   right: 0px;
 }
 
+.right-14 {
+  right: 3.5rem;
+}
+
 .right-2 {
   right: 0.5rem;
 }
@@ -912,6 +924,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .right-20 {
   right: 5rem;
+}
+
+.right-3 {
+  right: 0.75rem;
 }
 
 .right-4 {
@@ -1445,6 +1461,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   width: 1rem;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -1455,6 +1475,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .w-7 {
   width: 1.75rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .w-80 {
@@ -2378,6 +2402,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   border-radius: 1rem;
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .rounded-md {
   border-radius: 0.375rem;
 }
@@ -2616,6 +2644,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .bg-mainbg {
   --tw-bg-opacity: 1;
   background-color: rgb(33 32 32 / var(--tw-bg-opacity));
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .bg-rose-400 {
@@ -2870,6 +2903,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+.py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
 }
 
 .py-10 {
@@ -3176,6 +3214,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .leading-7 {
   line-height: 1.75rem;
+}
+
+.leading-8 {
+  line-height: 2rem;
 }
 
 .leading-9 {
@@ -4897,7 +4939,7 @@ qq
   height:50px
 }
 
-#ol_after_hd .profile_img a {
+#aside #ol_after_hd .profile_img a {
   text-align:center;
   font-size:17px;
   width:30px;
@@ -4923,133 +4965,10 @@ qq
   border-radius:3px
 }
 
-#gnb_mo_wrap #ol_before input[type=text],#gnb_mo_wrap #ol_before input[type=password] {
-  width:100%;
-  border:0;
-  border-bottom:1px solid #434242;
-  background:none;
-  height:40px;;margin:0 0 10px;
-  color:#fff
-}
-
-#gnb_mo_wrap #ol_svc {
-  text-align:left;
-  color:#dadada;
-  font-size:0.92em;
-  margin:5px 0 20px
-}
-
-#gnb_mo_wrap #ol_submit {
-  width:100%;
-  height:40px;
-  border-radius:23px;
-  font-weight:bold;
-  font-size:1.083em;
-}
-
-#gnb_mo_wrap #ol_password_lost {
-  border-left:1px solid #777
-}
-
-#gnb_mo_wrap #ol_after_hd {
-  position:relative;
-  background:#212020;
-  padding:10px 15px
-}
-
-#gnb_mo_wrap #ol_after_hd:after {
-  display:block;
-  visibility:hidden;
-  clear:both;
-  content:""
-}
-
-#gnb_mo_wrap #ol_after_hd strong {
-  display:block;
-  float:left;
-  color:#fff;
-  padding:0 0 0 15px;
-  line-height:40px
-}
-
-#gnb_mo_wrap #ol_after_hd .btn_admin {
-  float:left;
-  display:block;
-  padding:0 !important;
-  text-align:center;
-  color:#fff;
-  margin-right:10px;
-  background:#d13f4a;
-  width:30px
-}
-
-#gnb_mo_wrap #ol_after_hd .profile_img {
-  position:relative;
-  float:left;
-  display:inline-block
-}
-
 #gnb_mo_wrap #ol_after_hd .profile_img img {
   width:37px;
   height:37px;
   border-radius:50%
-}
-
-#gnb_mo_wrap #ol_after_info {
-  position:absolute;
-  bottom:-5px;
-  right:-5px;
-  width:20px;
-  height:20px;
-  line-height:18px;
-  text-align:center;
-  border-radius:50%;
-  background:#212020
-}
-
-#gnb_mo_wrap #ol_after_info i {
-  color:#fff;
-  font-size:1em
-}
-
-#gnb_mo_wrap #ol_after_private {
-  clear:both;
-  margin-top:15px;
-  background:#fff;
-  padding:0;
-  list-style:none;
-  border-bottom:1px solid #e1e1e1
-}
-
-#gnb_mo_wrap #ol_after_private:after {
-  display:block;
-  visibility:hidden;
-  clear:both;
-  content:""
-}
-
-#gnb_mo_wrap #ol_after_private li {
-  position:relative;
-  float:left;
-  width:33.333%;
-  text-align:left;
-  border-right:1px solid #efefef
-}
-
-#gnb_mo_wrap #ol_after_private li a {
-  color:#000
-}
-
-#gnb_mo_wrap #ol_after_private i {
-  margin:0 5px 0 0;
-  color:#b9bcbf;
-  font-size:1.2em
-}
-
-#gnb_mo_wrap #ol_after_private strong {
-  position:absolute;
-  top:16px;
-  right:10px
 }
 
 #gnb_mo_wrap #ol_after_memo strong {
@@ -5067,36 +4986,6 @@ qq
   border-radius:15px;
   font-size:0.92em;
   font-weight:normal
-}
-
-#gnb_mo_wrap #ol_after_private li#ol_after_scrap {
-  border-right:0;
-  text-align:center
-}
-
-#gnb_mo_wrap #ol_after_private a {
-  display:inline-block;
-  padding:15px 10px
-}
-
-#gnb_mo_wrap #ol_after_btn {
-  position:absolute;
-  top:15px;
-  right:55px
-}
-
-#gnb_mo_wrap #ol_after_btn a {
-  display:inline-block;
-  padding:0 10px;
-  line-height:30px;
-  color:#fff;
-  border-radius:3px;
-  font-weight:bold
-}
-
-#gnb_mo_wrap #ol_after_logout {
-  background:#3a8afd;
-  color:#fff
 }
 
 /* 모바일 검색창 */
@@ -8930,6 +8819,11 @@ qq
   background-color: rgb(244 63 94 / var(--tw-bg-opacity));
 }
 
+.after\:invisible::after {
+  content: var(--tw-content);
+  visibility: hidden;
+}
+
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
@@ -8943,6 +8837,16 @@ qq
 .after\:left-0::after {
   content: var(--tw-content);
   left: 0px;
+}
+
+.after\:clear-both::after {
+  content: var(--tw-content);
+  clear: both;
+}
+
+.after\:block::after {
+  content: var(--tw-content);
+  display: block;
 }
 
 .after\:h-0::after {
