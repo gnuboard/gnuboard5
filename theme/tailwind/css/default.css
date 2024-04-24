@@ -962,10 +962,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   top: 2rem;
 }
 
-.top-3 {
-  top: 0.75rem;
-}
-
 .isolate {
   isolation: isolate;
 }
@@ -2571,11 +2567,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .border-transparent {
   border-color: transparent;
-}
-
-.border-gray-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 
 .\!bg-blue-500 {
