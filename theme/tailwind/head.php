@@ -56,7 +56,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </button>
 
         <div id="gnb_mo_wrap" class="hidden bg-gray-100 fixed top-0 left-0 z-1000 w-full max-w-96 h-full bg-none shadow-black/40 shadow-md dark:bg-zinc-900">
-            <button type="button" id="gnb_close" class="hd_closer block absolute right-2 top-4 font-bold w-10 h-10 z-999 text-gray-400 text-2xl m-0 dark:text-white"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
+            <button type="button" id="gnb_close" class="hd_closer block absolute right-2 top-2 font-bold w-10 h-10 z-999 text-gray-400 text-2xl m-0 dark:text-white"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
             <?php echo outlogin('theme/basic_mo'); // 외부 로그인 ?>
             <ul id="gnb_1dul" class="bg-gray-100 dark:bg-zinc-900">
               <?php
