@@ -112,15 +112,15 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <span class="blind">사용자메뉴</span>
         </button>
 
-        <div id="search_mo_wrap" class="hd_div hidden">
-            <button type="button" id="user_close" class="hd_closer"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
-            <div id="hd_sch">
-                <h2>사이트 내 전체검색</h2>
-                <form name="fsearchbox" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
+        <div id="search_mo_wrap" class="hd_div hidden fixed top-0 right-0 w-full h-full overflow-y-auto z-1000 bg-gray-100">
+            <button type="button" id="user_close" class="hd_closer block absolute w-10 h-10 right-2 top-2 z-50 font-bold m-0"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div id="hd_sch" class="text-center bg-zinc-800 py-3 pr-14 pl-4">
+                <h2 class="blind">사이트 내 전체검색</h2>
+                <form name="fsearchbox" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get" class="relative pr-10">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
-                <input type="text" name="stx" id="sch_stx" placeholder="검색어를 입력해주세요" required maxlength="20">
-                <button type="submit" value="검색" id="sch_submit"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                <input type="text" name="stx" id="sch_stx" class="w-full h-10 bg-neutral-700 text-white rounded-e-sm ml-10" placeholder="검색어를 입력해주세요" required maxlength="20">
+                <button type="submit" value="검색" id="sch_submit" class="absolute top-0 left-0 w-10 h-10 rounded-s-sm cursor-pointer text-gray-200 bg-neutral-700 text-sm"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
                 </form>
 
                 <script>
