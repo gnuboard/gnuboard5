@@ -14,25 +14,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 ?>
 
 <!-- 설문조사 결과 시작 { -->
-<div id="poll_result" class="new_win">
-    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
+<div id="poll_result" class="new_win dark:bg-zinc-900">
+    <h1 id="win_title" class="dark:!bg-zinc-800 dark:!text-white"><?php echo $g5['title'] ?></h1>
     <div class="new_win_con2">
         <!-- 설문조사 결과 그래프 시작 { -->
-        <span class="poll_all">전체 <?php echo $nf_total_po_cnt ?>표</span>
-        <section id="poll_result_list">
-            <h2><?php echo $po_subject ?> 결과</h2>
-            <ol>
+        <span class="poll_all dark:!bg-zinc-900">전체 <?php echo $nf_total_po_cnt ?>표</span>
+        <section id="poll_result_list" class="clear-both border border-gray-200 border-t-0 bg-white rounded m-5 dark:bg-zinc-900 dark:border-mainborder">
+            <h2 class="text-sm border-y border-solid border-gray-200 text-center bg-slate-100 text-slate-700 rounded p-4 m-0 dark:bg-slate-800 dark:border-mainborder dark:text-white"><?php echo $po_subject ?> 결과</h2>
+            <ol class="m-0 px-5">
             	<?php
                 for ($i=1; $i<=count($list); $i++) {
                     // 가장 높은 투표수와 같으면 li 태그에 poll_1st 클래스가 붙습니다.
                     $poll_1st_class = ($get_max_cnt && ((int) $list[$i]['cnt'] === (int) $get_max_cnt)) ? 'poll_1st' : '';
                 ?>
-                <li class="<?php echo $poll_1st_class; ?>">
-                    <span><?php echo $list[$i]['content'] ?></span>   
-                    <div class="poll_result_graph">
+                <li class="<?php echo $poll_1st_class; ?> relative list-inside my-5">
+                    <span class="dark:!text-white"><?php echo $list[$i]['content'] ?></span>   
+                    <div class="poll_result_graph dark:bg-zinc-900 dark:!shadow-slate-700 dark:shadow-none dark:border dark:border-zinc-500">
                         <span style="width:<?php echo number_format($list[$i]['rate'], 1) ?>%"></span>
                     </div>
-                    <div class="poll_numerical">
+                    <div class="poll_numerical inline-block absolute top-0 right-0 text-center">
                     	<strong class="poll_cnt"><?php echo $list[$i]['cnt'] ?> 표</strong>
                     	<span class="poll_percent"><?php echo number_format($list[$i]['rate'], 1) ?> %</span>
                     </div>
@@ -91,17 +91,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 
         <!-- 설문조사 다른 결과 보기 시작 { -->
         <aside id="poll_result_oth">
-            <h2>다른 투표 결과 보기</h2>
-            <ul>
+            <h2 class="dark:text-white">다른 투표 결과 보기</h2>
+            <ul class="dark:!bg-zinc-900 dark:!border-mainborder">
                 <?php for ($i=0; $i<count($list3); $i++) {  ?>
-                <li><a href="./poll_result.php?po_id=<?php echo $list3[$i]['po_id'] ?>&amp;skin_dir=<?php echo urlencode($skin_dir); ?>"> <?php echo $list3[$i]['subject'] ?> </a><span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list3[$i]['date'] ?></span></li>
+                <li class="dark:!border-mainborder "><a href="./poll_result.php?po_id=<?php echo $list3[$i]['po_id'] ?>&amp;skin_dir=<?php echo urlencode($skin_dir); ?>" class="dark:text-white"> <?php echo $list3[$i]['subject'] ?> </a><span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list3[$i]['date'] ?></span></li>
                 <?php }  ?>
             </ul>
         </aside>
         <!-- } 설문조사 다른 결과 보기 끝 -->
 
         <div class="win_btn">
-            <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
+            <button type="button" onclick="window.close();" class="btn_close dark:bg-zinc-800 dark:border-mainborder dark:text-white">창닫기</button>
         </div>
     </div>
 </div>

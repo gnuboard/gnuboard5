@@ -1054,6 +1054,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   margin: 0px;
 }
 
+.m-5 {
+  margin: 1.25rem;
+}
+
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -2701,6 +2705,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   background-color: rgb(44 44 44 / var(--tw-bg-opacity));
 }
 
+.bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
 .bg-transparent {
   background-color: transparent;
 }
@@ -2990,6 +2999,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
   padding-bottom: 1.25rem;
 }
 
+.py-px {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
 .\!pl-5 {
   padding-left: 1.25rem !important;
 }
@@ -3064,6 +3078,10 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 
 .pt-1 {
   padding-top: 0.25rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
 }
 
 .text-left {
@@ -3347,6 +3365,11 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus,select:focus {
 .text-gray-800 {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
+.text-slate-700 {
+  --tw-text-opacity: 1;
+  color: rgb(51 65 85 / var(--tw-text-opacity));
 }
 
 .text-slate-800 {
@@ -7909,72 +7932,6 @@ qq
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
-/* 설문조사 스킨 */
-
-#poll {
-  border:1px solid #dde7e9;
-  background:#f7f7f7;
-  position:relative;
-  border-radius:3px;
-  margin-bottom:15px
-}
-
-#poll header {
-  position:relative;
-  border-bottom:1px solid #e8e8e8;
-  padding:15px
-}
-
-#poll header:after {
-  display:block;
-  visibility:hidden;
-  clear:both;
-  content:""
-}
-
-#poll header h2 {
-  display:inline-block;
-  float:left;
-  font-size:1.167em;
-  color:#000;
-  line-height:28px
-}
-
-#poll header h2:after {
-  display:block;
-  visibility:hidden;
-  clear:both;
-  content:""
-}
-
-#poll header .btn_result {
-  float:right;
-  display:inline-block;
-  line-height:20px;
-  height:28px;
-  border:1px solid #d5d9dd;
-  color:#3a8afd;
-  border-radius:2px;
-  padding:2px 5px;
-  background:#fff
-}
-
-#poll header .btn_admin {
-  float:right;
-  margin-left:5px;
-  line-height:28px;
-  font-size:1.4em
-}
-
-#poll ul {
-  padding:0 20px;
-  list-style:none
-}
-
-#poll li {
-  padding:5px 0
-}
-
 .selec_chk {
   position:absolute;
   top:0;
@@ -8037,48 +7994,7 @@ qq
   border-radius:50%
 }
 
-#poll .poll_con {
-}
-
-#poll .poll_con p {
-  font-weight:bold;
-  padding:15px 20px;
-  color:#000;
-  font-size:1.167em
-}
-
-#poll_btn {
-  padding:10px 20px 20px;
-  text-align:center
-}
-
-#poll_btn:after {
-  display:block;
-  visibility:hidden;
-  clear:both;
-  content:""
-}
-
-#poll_btn .btn_poll {
-  display:block;
-  width:100%;
-  height:40px;
-  line-height:40px;
-  padding:0 10px;
-  border:0;
-  font-weight:bold;
-  background:#3a8afd;
-  color:#fff;
-  border-radius:3px
-}
-
 /* 설문조사 결과 (새창) */
-
-#poll_result {
-}
-
-#poll_result section {
-}
 
 #poll_result .tbl_wrap {
   margin:0
@@ -8100,28 +8016,6 @@ qq
   color:#3a8afd;
   background:#f6f6f6;
   padding:0 10px;
-  border-radius:5px
-}
-
-#poll_result_list {
-  clear:both;
-  margin:20px;
-  border:1px solid #d6e2f4;
-  border-top:0;
-  background:#fff;
-  border-radius:5px
-}
-
-#poll_result_list h2 {
-  margin:0;
-  font-size:1.25em;
-  padding:15px;
-  margin:0 0 15px;
-  border-top:1px solid #d6e2f4;
-  border-bottom:1px solid #d6e2f4;
-  text-align:center;
-  background:#edf3fc;
-  color:#375582;
   border-radius:5px
 }
 
@@ -9052,6 +8946,10 @@ qq
   border-width: 0px !important;
 }
 
+.dark\:border:is(.dark *) {
+  border-width: 1px;
+}
+
 .dark\:\!border-mainborder:is(.dark *) {
   --tw-border-opacity: 1 !important;
   border-color: rgb(56 56 56 / var(--tw-border-opacity)) !important;
@@ -9062,6 +8960,11 @@ qq
   border-color: rgb(56 56 56 / var(--tw-border-opacity));
 }
 
+.dark\:border-zinc-500:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(113 113 122 / var(--tw-border-opacity));
+}
+
 .dark\:\!bg-zinc-800:is(.dark *) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(39 39 42 / var(--tw-bg-opacity)) !important;
@@ -9070,6 +8973,11 @@ qq
 .dark\:\!bg-zinc-900:is(.dark *) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(24 24 27 / var(--tw-bg-opacity)) !important;
+}
+
+.dark\:bg-slate-800:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 .dark\:bg-zinc-800:is(.dark *) {
@@ -9120,6 +9028,17 @@ qq
 .dark\:text-zinc-500:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+
+.dark\:shadow-none:is(.dark *) {
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.dark\:\!shadow-slate-700:is(.dark *) {
+  --tw-shadow-color: #334155 !important;
+  --tw-shadow: var(--tw-shadow-colored) !important;
 }
 
 .dark\:shadow-zinc-950:is(.dark *) {

@@ -9,17 +9,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 <form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
 <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
-<section id="poll">
-    <header>
-        <h2>설문조사</h2>
-		<?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin" title="설문관리"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">설문관리</span></a><?php }  ?>
-    	<a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn_result">결과보기</a>
+<section id="poll" class="relative border border-gray-200 bg-white rounded mb-4 dark:bg-zinc-900 dark:border-mainborder">
+    <header class="relative border-b border-gray-200 px-4 py-3 after:block after:invisible after:clear-both after:content-[''] dark:border-mainborder">
+        <h2 class="inline-block float-left text-sm text-black leading-7 after:block after:invisible after:clear-both after:content-[''] dark:text-white">설문조사</h2>
+		<?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin float-right leading-7 text-sm ml-1" title="설문관리"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">설문관리</span></a><?php }  ?>
+    	<a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn_result float-right inline-block leading-7 h-7 border border-gray-200 text-blue-500 rounded px-1 py-px bg-white dark:bg-zinc-900 dark:border-mainborder">결과보기</a>
     </header>
     <div class="poll_con">
-        <p><?php echo $po['po_subject'] ?></p>
-        <ul>
+        <p class="font-bold text-black text-xs py-4 px-5 dark:text-white"><?php echo $po['po_subject'] ?></p>
+        <ul class="list-none px-5">
             <?php for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) {  ?>
-            <li class="chk_box">
+            <li class="chk_box py-1">
 	        	<input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>">
 	        	<label for="gb_poll_<?php echo $i ?>">
 	        		<span></span>
@@ -28,8 +28,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 	        </li>
             <?php }  ?>
         </ul>
-        <div id="poll_btn">
-            <button type="submit" class="btn_poll">투표하기</button>
+        <div id="poll_btn" class="text-center pt-3 px-5 pb-5 after:block after:invisible after:clear-both after:content-['']">
+            <button type="submit" class="btn_poll block w-full h-10 leading-10 border-0 font-bold text-white bg-blue-500 rounded px-3">투표하기</button>
         </div>
     </div>
 </section>
