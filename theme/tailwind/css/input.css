@@ -325,7 +325,7 @@ border:1px solid #558ab7 !important;
 
   .dark .pg_page {background: #27272a;border: 1px solid #383838;color: #ffffff;}
   .dark .pg_page.pg_start {background:url('../img/btn_first.gif') no-repeat 50% 50% #27272a;}
-  .dark .pg_page.pg_prev {background:url('../img/btn_prev.gif') no-repeat 50% 50% #27272a;}qq
+  .dark .pg_page.pg_prev {background:url('../img/btn_prev.gif') no-repeat 50% 50% #27272a;}
   .dark .pg_page.pg_end {background:url('../img/btn_end.gif') no-repeat 50% 50% #27272a;}
   .dark .pg_page.pg_next {background:url('../img/btn_next.gif') no-repeat 50% 50% #27272a;}
   .dark .pg_page:hover, .dark .pg_page.pg_start:hover,.dark .pg .pg_prev:hover,.dark .pg .pg_end:hover,.dark .pg .pg_next:hover {background-color:#18181b}
