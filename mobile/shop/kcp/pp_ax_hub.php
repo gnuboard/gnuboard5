@@ -114,13 +114,13 @@
 
         $kcp_pay_type = '';   // 결제수단 검증 파라미터 pay_type (신용카드 : PACA, 계좌이체 : PABK, 가상계좌 : PAVC, 휴대폰 : PAMC)
 
-        if ($use_pay_method == "100000000000") {  // 신용카드
+        if ($use_pay_method == "100000000000" && (in_array($od_settle_case, array('신용카드', '간편결제')))) {  // 신용카드
             $kcp_pay_type = 'PACA';
-        } else if ($use_pay_method == "010000000000") {   // 계좌이체
+        } else if ($use_pay_method == "010000000000" && $od_settle_case === '계좌이체') {   // 계좌이체
             $kcp_pay_type = 'PABK';
-        } else if ($use_pay_method == "001000000000") {   // 가상계좌
+        } else if ($use_pay_method == "001000000000" && $od_settle_case === '가상계좌') {   // 가상계좌
             $kcp_pay_type = 'PAVC';
-        } else if ($use_pay_method == "000010000000") {   // 휴대폰
+        } else if ($use_pay_method == "000010000000" && $od_settle_case === '휴대폰') {   // 휴대폰
             $kcp_pay_type = 'PAMC';
         }
 
