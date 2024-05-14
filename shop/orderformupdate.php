@@ -785,7 +785,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
             $sms_content = str_replace("{보낸분}", $od_name, $sms_content);
             $sms_content = str_replace("{받는분}", $od_b_name, $sms_content);
             $sms_content = str_replace("{주문번호}", $od_id, $sms_content);
-            $sms_content = str_replace("{주문금액}", number_format($tot_ct_price + $od_send_cost + $od_send_cost2), $sms_content);
+            $sms_content = str_replace("{주문금액}", number_format($tot_ct_price + $od_send_cost + (int) $od_send_cost2), $sms_content);
             $sms_content = str_replace("{회원아이디}", $member['mb_id'], $sms_content);
             $sms_content = str_replace("{회사명}", $default['de_admin_company_name'], $sms_content);
 
