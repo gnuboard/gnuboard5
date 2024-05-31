@@ -292,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_simple` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kg_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kg_mid` varchar(255) NOT NULL DEFAULT '',
-  `cf_cert_use_seed` tinyint(4) NOT NULL DEFAULT '0',
+  `cf_cert_use_seed` tinyint(4) NOT NULL DEFAULT '1',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_lg_mid` varchar(100) NOT NULL DEFAULT '',

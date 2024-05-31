@@ -411,7 +411,7 @@ if (!isset($config['cf_cert_kg_mid'])) {
 }
 if (!isset($config['cf_cert_use_seed'])) {
     $sql = "ALTER TABLE `{$g5['config_table']}` 
-            ADD COLUMN `cf_cert_use_seed` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_cert_kg_mid`; ";
+            ADD COLUMN `cf_cert_use_seed` TINYINT(4) NOT NULL DEFAULT '1' AFTER `cf_cert_kg_mid`; ";
     sql_query($sql, false);
 }
 if (!$config['cf_faq_skin']) {
