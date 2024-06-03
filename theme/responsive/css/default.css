@@ -455,9 +455,9 @@ box-sizing:content-box;
   #container {width: 100%;}
   .lt_wr {width: 100%; margin-left: 0 !important;}
   #logo {margin: 0 auto;}
-  #ft_wr .ft_cnt {width:100%;display: flex;justify-content: center;text-align: center;}
+  #ft_wr .ft_cnt {width:100%;display: flex;justify-content: center;text-align: center;flex-wrap: wrap;}
   #ft_wr #ft_company {margin-top: 20px;}
-  #ft_link a {padding: 0 10px;}
+  #ft_link a {padding: 5px 10px;width: 50%;}
   .hd_opener, .sch_opener, .hd_sch_wr.mo_active, #text_size {display: block;}
 
   /* 모바일 메뉴 */
