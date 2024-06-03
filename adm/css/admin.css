@@ -90,7 +90,7 @@ box-shadow: 2px 0 2px rgba(150,150,150,0.1);}
 }
 
 /*중간*/
-#container{padding:0 0 0 220px;margin-top:100px;height:100%;background:#fff;max-width:1200px;width: 100%;}
+#container{padding:0 0 0 220px;margin-top:100px;height:100%;background:#fff;width: 100%;}
 #container.container-small{padding-left:50px}
 #container_wr{padding:25px;min-height:500px}
 #container_title{position:fixed;top:50px;left:0;width:100%;line-height:50px;font-size:1.5em;padding:0 20px;padding-left:240px;border-bottom:1px solid #ddd;background:#fff;z-index:99}
