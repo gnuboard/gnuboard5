@@ -205,7 +205,7 @@ if (isset($mb_id) && $mb_id) {
 if ($mb['mb_intercept_date']) {
     $g5['title'] = "차단된 ";
 } else {
-    $g5['title'] .= "";
+    $g5['title'] = "";
 }
 $g5['title'] .= '회원 ' . $html_title;
 require_once './admin.head.php';
