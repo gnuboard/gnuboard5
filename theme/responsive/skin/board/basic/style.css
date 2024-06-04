@@ -343,12 +343,12 @@ box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 
 @media (max-width:501px) {
  
-  .tbl_head01 thead th:nth-last-child(-n+3) {
+  .tbl_head01 thead th:nth-last-child(-n+2) {
     display: none;
     visibility: hidden;
     width: 0%;
   }
-  .tbl_head01 tbody td:nth-last-child(-n+3) {
+  .tbl_head01 tbody td:nth-last-child(-n+2) {
     display: none;
     visibility: hidden;
     width: 0%;
