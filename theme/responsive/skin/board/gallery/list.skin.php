@@ -107,7 +107,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     </span>
                 </div>
                 <div class="gall_con">
-                    <div class="gall_img" style="<?php if ($board['bo_gallery_height'] > 0) echo 'height:'.$board['bo_gallery_height'].'px;max-height:'.$board['bo_gallery_height'].'px'; ?>">
+                    <div class="gall_img">
                         <a href="<?php echo $list[$i]['href'] ?>">
                         <?php
                         if ($list[$i]['is_notice']) { // 공지사항  ?>
@@ -118,7 +118,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             if($thumb['src']) {
                                 $img_content = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" >';
                             } else {
-                                $img_content = '<span class="no_image" style="'.$line_height_style.'">no image</span>';
+                                $img_content = '<span class="no_image" style="display:flex;justify-content:center;align-items:center;height: 100%">no image</span>';
                             }
 
                             echo run_replace('thumb_image_tag', $img_content, $thumb);

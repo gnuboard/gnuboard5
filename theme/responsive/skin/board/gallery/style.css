@@ -52,8 +52,8 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #bo_gall .gall_now .gall_text_href a {color:#ff3061}
 
 #bo_gall .gall_href a:link, #bo_gall .gall_href a:focus, #bo_gall .gall_href a:hover {text-decoration:none}
-#bo_gall .gall_img {border-bottom:1px solid #eee;text-align:center;overflow:hidden}
-#bo_gall .gall_img a {width: 100%;height: 100%;}
+#bo_gall .gall_img {position: relative;padding-top: 70%;border-bottom:1px solid #eee;text-align:center;overflow:hidden}
+#bo_gall .gall_img a {position: absolute;left: 0;top: 0; width: 100%;height: 100%;}
 #bo_gall .gall_img a,#bo_gall .gall_img .no_image,#bo_gall .gall_img .is_notice {display:block}
 #bo_gall .gall_img img, #bo_gall .gall_img video {max-width:100%;width: 100%; height:100% !important; object-fit: cover;}
 #bo_gall .gall_img span {display:inline-block;background:#eaeaea;text-align:center;text-transform:uppercase;font-weight:bold;font-size:1.25em;color:#777}
