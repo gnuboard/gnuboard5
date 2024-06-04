@@ -35,7 +35,7 @@ $sql_common .= $sql_search;
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = isset($row['cnt']) ? $row['cnt'] : 0;
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
@@ -171,7 +171,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <?php echo $row['it_id']; ?>
         </td>
         <td class="td_left"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo (int)$it_stock_qty; ?></td>
+        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo get_text($it_stock_qty); ?></td>
         <td class="td_num"><?php echo number_format((float)$wait_qty); ?></td>
         <td class="td_num"><?php echo number_format((float)$temporary_qty); ?></td>
         <td class="td_num">
