@@ -31,6 +31,10 @@ if($url){
     if( preg_match('#^/{3,}#', $url) ){
         $url = preg_replace('#^/{3,}#', '/', $url);
     }
+
+    if (function_exists('safe_filter_url_host')) {
+        $url = safe_filter_url_host($url);
+    }
 }
 
 $url = get_text($url);

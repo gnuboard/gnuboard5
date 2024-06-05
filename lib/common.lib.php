@@ -102,6 +102,10 @@ function goto_url($url)
 {
     run_event('goto_url', $url);
 
+    if (function_exists('safe_filter_url_host')) {
+        $url = safe_filter_url_host($url);
+    }
+
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
 
@@ -182,6 +186,10 @@ function alert($msg='', $url='', $error=true, $post=false)
 
     run_event('alert', $msg, $url, $error, $post);
 
+    if (function_exists('safe_filter_url_host')) {
+        $url = safe_filter_url_host($url);
+    }
+
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
 
     $header = '';
@@ -218,6 +226,12 @@ function confirm($msg, $url1='', $url2='', $url3='')
     if (!$msg) {
         $msg = '올바른 방법으로 이용해 주십시오.';
         alert($msg);
+    }
+
+    if (function_exists('safe_filter_url_host')) {
+        $url1 = safe_filter_url_host($url1);
+        $url2 = safe_filter_url_host($url2);
+        $url3 = safe_filter_url_host($url3);
     }
 
     if(!trim($url1) || !trim($url2)) {
@@ -3596,6 +3610,13 @@ function login_password_check($mb, $pass, $hash)
     }
 
     return check_password($pass, $hash);
+}
+
+function safe_filter_url_host($url) {
+
+    $regex = run_replace('safe_filter_url_regex', '\\', $url);
+
+    return $regex ? preg_replace('#'. preg_quote($regex, '#') .'#iu', '', $url) : '';
 }
 
 // 동일한 host url 인지
