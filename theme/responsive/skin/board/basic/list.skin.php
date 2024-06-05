@@ -82,7 +82,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 				</label>
             </th>
             <?php } ?>
-            <th scope="col">번호</th>
+            <th scope="col" class="list_num">번호</th>
             <th scope="col">제목</th>
             <th scope="col">글쓴이</th>
             <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 </a></th>
