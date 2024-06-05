@@ -90,7 +90,7 @@ box-shadow: 2px 0 2px rgba(150,150,150,0.1);}
 }
 
 /*중간*/
-#container{padding:0 0 0 220px;margin-top:100px;height:100%;background:#fff;width: 100%;}
+#container{padding:0 0 0 220px;margin-top:70px;height:100%;background:#fff;width: 100%;}
 #container.container-small{padding-left:50px}
 #container_wr{padding:25px;min-height:500px}
 #container_title{position:fixed;top:50px;left:0;width:100%;line-height:50px;font-size:1.5em;padding:0 20px;padding-left:240px;border-bottom:1px solid #ddd;background:#fff;z-index:99}
@@ -1133,24 +1133,27 @@ input[type="text"]{max-width:200px}
 
 @media (max-width:1024px) {
   /* gnb */
-  #gnb {position: static;padding: 0px;height: auto;max-width: 100%;width: 100%;padding-top: 100px;}
+  #gnb {position: static;padding: 0px;height: auto;max-width: 100%;width: 100%;padding-top: 150px;}
   #gnb .gnb_ul {display: flex;width: 100%;}
   #gnb .gnb_li {border-bottom: none}
-  #gnb .gnb_oparea_wr {width: 100%;height: 300px;}
-  #gnb .gnb_oparea {position: absolute;top: 50px;left: 0;width: 100%;height: 100%;overflow-y: scroll;}
+  #gnb .gnb_oparea_wr {width: 100%;height: 240px;}
+  #gnb .gnb_oparea {position: absolute;top: 50px;left: 0;width: 100%;height: 100%;}
   #gnb.gnb_small .gnb_li.on .gnb_oparea {display: block;}
+  #gnb .gnb_oparea ul {display: flex;flex-wrap: wrap;align-items: center;}
+  #gnb .gnb_oparea li {width: 33.3333%;}
+  #gnb .gnb_oparea li a {display: block;padding: 5px 0;word-break: keep-all;}
 
   /* 상단배너 */
   #container {padding: 0;}
-  #container_title {height: 100px;}
   #container_title, #container.container-small #container_title {padding-left: 20px;}
   #container_title, #container.container-small #container_title {top: 100px;}
   #btn_gnb, #btn_gnb.btn_gnb_open {display: none;}
   #container.container-small {padding-left: 0;}
   #hd_top {display: flex;flex-direction: column;height: auto;}
-  #gnb {padding-top: 200px;}
   #logo {background: transparent;height: 50px;padding: 15px 0;width: 180px;}
-  .btn_fixed_top {top: 155px;left: 20px;}
+  .btn_fixed_top {top: auto;bottom: 10px;right: 70px;z-index: 9999;}
+  .btn_fixed_top .btn {height: 50px;line-height: 50px;}
+  .btn_confirm {margin: 0;}
 
   /* table */
   .tbl_wrap {overflow-x: auto;}
