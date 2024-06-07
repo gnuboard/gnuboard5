@@ -849,23 +849,33 @@ function get_group($gr_id, $is_cache=false)
 }
 
 
-// 회원 정보를 얻는다.
-function get_member($mb_id, $fields='*', $is_cache=false)
+/**
+ * 회원 정보를 얻는다
+ * 
+ * @param string $mb_id
+ * @param ?string $fields
+ * @param ?bool $is_cache
+ * 
+ * @return array
+ */
+function get_member($mb_id, $fields = '*', $is_cache = false)
 {
     global $g5;
-    
-    if (preg_match("/[^0-9a-z_]+/i", $mb_id))
+
+    $mb_id = trim($mb_id);
+    if (preg_match("/[^0-9a-z_]+/i", $mb_id)) {
         return array();
+    }
 
     static $cache = array();
 
     $key = md5($fields);
 
-    if( $is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key]) ){
+    if ($is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key])) {
         return $cache[$mb_id][$key];
     }
 
-    $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
+    $sql = " SELECT {$fields} from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 
     $cache[$mb_id][$key] = run_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
 
