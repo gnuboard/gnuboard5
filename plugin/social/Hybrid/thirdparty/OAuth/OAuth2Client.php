@@ -26,8 +26,8 @@ class OAuth2Client
   //--
 
   public $sign_token_name          = "access_token";
-  public $curl_time_out            = 30;
-  public $curl_connect_time_out    = 30;
+  public $curl_time_out            = 10;
+  public $curl_connect_time_out    = 15;
   public $curl_ssl_verifypeer      = false;
   public $curl_ssl_verifyhost      = false;
   public $curl_header              = array();
@@ -221,6 +221,7 @@ class OAuth2Client
     curl_setopt($ch, CURLOPT_TIMEOUT        , $this->curl_time_out );
     curl_setopt($ch, CURLOPT_USERAGENT      , $this->curl_useragent );
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out );
+    curl_setopt($ch, CURLOPT_MAXREDIRS , 10);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , $this->curl_ssl_verifypeer );
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST , $this->curl_ssl_verifyhost );
     curl_setopt($ch, CURLOPT_HTTPHEADER     , $this->curl_header );
