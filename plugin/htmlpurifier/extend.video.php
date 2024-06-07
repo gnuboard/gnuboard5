@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
  */
 
 if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
-	class HTMLPurifier_Filter_iframevideo extends HTMLPurifier_Filter
+	class HTMLPurifier_Filter_Iframevideo extends HTMLPurifier_Filter
 	{
 		public $name = 'Iframevideo';
 
