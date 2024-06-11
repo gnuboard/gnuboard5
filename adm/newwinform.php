@@ -136,7 +136,7 @@ require_once G5_ADMIN_PATH . '/admin.head.php';
                         <input type="text" name="nw_subject" value="<?php echo get_sanitize_input($nw['nw_subject']); ?>" id="nw_subject" required class="frm_input required" size="80">
                     </td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row"><label for="nw_content">내용</label></th>
                     <td><?php echo editor_html('nw_content', get_text(html_purifier($nw['nw_content']), 0)); ?></td>
                 </tr>

@@ -1161,9 +1161,11 @@ input[type="text"]{max-width:200px}
   .new_win .tbl_head01 table {min-width:auto}
   .tbl_frm01.tbl_wrap table {display: grid;table-layout: fixed;}
   .tbl_frm01.tbl_wrap table tr {display: grid;grid-template-columns: 25% 75%;margin-bottom: 10px;}
+  .tbl_frm01.tbl_wrap table tr.editor_area {grid-template-columns: 1fr;}
   .tbl_frm01.tbl_wrap table th, .tbl_frm01.tbl_wrap table td {width: 100%;}
   .tbl_frm01.tbl_wrap table .frm_input, .tbl_frm01.tbl_wrap table select {width: 100%;}
   form[name="fboardform"] .tbl_frm01 tr:not(.no_grpset),form[name="fitemform"] .tbl_frm01 tr:not(.no_grpset) {grid-template-columns: 25% 50% 25%;}   
+  form[name="fboardform"] .tbl_frm01 tr.editor_area, form[name="fitemform"] .tbl_frm01 tr.editor_area {grid-template-columns: 1fr;}  
   .td_extra input {width: 100% !important;}
   #fsendmailtest .frm_input, #anc_sitfrm_extra .frm_input {width: calc(100% - 140px)}
 

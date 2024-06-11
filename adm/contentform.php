@@ -104,11 +104,11 @@ require_once G5_ADMIN_PATH . '/admin.head.php';
                     <th scope="row"><label for="co_subject">제목</label></th>
                     <td><input type="text" name="co_subject" value="<?php echo htmlspecialchars2($co['co_subject']); ?>" id="co_subject" required class="frm_input required" size="90"></td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row">내용</th>
                     <td><?php echo editor_html('co_content', get_text(html_purifier($co['co_content']), 0)); ?></td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row">모바일 내용</th>
                     <td><?php echo editor_html('co_mobile_content', get_text(html_purifier($co['co_mobile_content']), 0)); ?></td>
                 </tr>

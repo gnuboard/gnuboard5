@@ -951,7 +951,7 @@ $pg_anchor = '<ul class="anchor">
                 </script>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row"><label for="bo_content_head">상단 내용</label></th>
             <td>
                 <?php echo editor_html("bo_content_head", get_text(html_purifier($board['bo_content_head']), 0)); ?>
@@ -963,7 +963,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_content_head">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row"><label for="bo_content_tail">하단 내용</label></th>
             <td>
                 <?php echo editor_html("bo_content_tail", get_text(html_purifier($board['bo_content_tail']), 0)); ?>
@@ -975,7 +975,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_content_tail">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row"><label for="bo_mobile_content_head">모바일 상단 내용</label></th>
             <td>
                 <?php echo editor_html("bo_mobile_content_head", get_text(html_purifier($board['bo_mobile_content_head']), 0)); ?>
@@ -987,7 +987,7 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_all_mobile_content_head">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row"><label for="bo_mobile_content_tail">모바일 하단 내용</label></th>
             <td>
                 <?php echo editor_html("bo_mobile_content_tail", get_text(html_purifier($board['bo_mobile_content_tail']), 0)); ?>

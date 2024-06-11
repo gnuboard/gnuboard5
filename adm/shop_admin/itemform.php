@@ -498,11 +498,11 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <input type="text" name="ec_mall_pid" value="<?php echo get_text($it['ec_mall_pid']); ?>" id="ec_mall_pid" class="frm_input" size="20">
             </td>
         </tr>
-        <tr class="no_grpset">
+        <tr class="no_grpset editor_area">
             <th scope="row">상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_explan', get_text(html_purifier($it['it_explan']), 0)); ?></td>
         </tr>
-        <tr class="no_grpset">
+        <tr class="no_grpset editor_area">
             <th scope="row">모바일 상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_mobile_explan', get_text(html_purifier($it['it_mobile_explan']), 0)); ?></td>
         </tr>
@@ -1638,7 +1638,7 @@ $(function(){
             <col class="grid_3">
         </colgroup>
         <tbody>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">상품상단내용</th>
             <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', get_text(html_purifier($it['it_head_html']), 0)); ?></td>
             <td class="td_grpset">
@@ -1648,7 +1648,7 @@ $(function(){
                 <label for="chk_all_it_head_html">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">상품하단내용</th>
             <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', get_text(html_purifier($it['it_tail_html']), 0)); ?></td>
             <td class="td_grpset">
@@ -1658,7 +1658,7 @@ $(function(){
                 <label for="chk_all_it_tail_html">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">모바일 상품상단내용</th>
             <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', get_text(html_purifier($it['it_mobile_head_html']), 0)); ?></td>
             <td class="td_grpset">
@@ -1668,7 +1668,7 @@ $(function(){
                 <label for="chk_all_it_mobile_head_html">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">모바일 상품하단내용</th>
             <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', get_text(html_purifier($it['it_mobile_tail_html']), 0)); ?></td>
             <td class="td_grpset">

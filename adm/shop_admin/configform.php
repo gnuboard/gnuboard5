@@ -1136,11 +1136,11 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="text" name="de_hope_date_after" value="<?php echo get_sanitize_input($default['de_hope_date_after']); ?>" id="de_hope_date_after" class="frm_input" size="5"> 일
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">배송정보</th>
             <td><?php echo editor_html('de_baesong_content', get_text(html_purifier($default['de_baesong_content']), 0)); ?></td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">교환/반품</th>
             <td><?php echo editor_html('de_change_content', get_text(html_purifier($default['de_change_content']), 0)); ?></td>
         </tr>
@@ -1439,7 +1439,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="text" name="de_member_reg_coupon_term" value="<?php echo get_sanitize_input($default['de_member_reg_coupon_term']); ?>" id="de_member_reg_coupon_term" class="frm_input" size="5"> 일
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">비회원에 대한<br/>개인정보수집 내용</th>
             <td><?php echo editor_html('de_guest_privacy', get_text(html_purifier($default['de_guest_privacy']), 0)); ?></td>
         </tr>

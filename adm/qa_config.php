@@ -291,25 +291,25 @@ if (!isset($qaconfig['qa_include_head'])) {
                             </script>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="editor_area">
                         <th scope="row"><label for="qa_content_head">상단 내용</label></th>
                         <td>
                             <?php echo editor_html("qa_content_head", get_text(html_purifier($qaconfig['qa_content_head']), 0)); ?>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="editor_area">
                         <th scope="row"><label for="qa_content_tail">하단 내용</label></th>
                         <td>
                             <?php echo editor_html("qa_content_tail", get_text(html_purifier($qaconfig['qa_content_tail']), 0)); ?>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="editor_area">
                         <th scope="row"><label for="qa_mobile_content_head">모바일 상단 내용</label></th>
                         <td>
                             <?php echo editor_html("qa_mobile_content_head", get_text(html_purifier($qaconfig['qa_mobile_content_head']), 0)); ?>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="editor_area">
                         <th scope="row"><label for="qa_mobile_content_tail">모바일 하단 내용</label></th>
                         <td>
                             <?php echo editor_html("qa_mobile_content_tail", get_text(html_purifier($qaconfig['qa_mobile_content_tail']), 0)); ?>
