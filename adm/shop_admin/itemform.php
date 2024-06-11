@@ -210,7 +210,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
 }
 ?>
 
-<form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
+<form name="fitemform" id="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
 
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="sca" value="<?php echo $sca; ?>">

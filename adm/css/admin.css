@@ -1166,6 +1166,11 @@ input[type="text"]{max-width:200px}
   .tbl_frm01.tbl_wrap table .frm_input, .tbl_frm01.tbl_wrap table select {width: 100%;}
   form[name="fboardform"] .tbl_frm01 tr:not(.no_grpset),form[name="fitemform"] .tbl_frm01 tr:not(.no_grpset) {grid-template-columns: 25% 50% 25%;}   
   form[name="fboardform"] .tbl_frm01 tr.editor_area, form[name="fitemform"] .tbl_frm01 tr.editor_area {grid-template-columns: 1fr;}  
+  #fboardform .tbl_frm01 tr.editor_area th, #fitemform .tbl_frm01 tr.editor_area th {grid-column: 1 / span 3;grid-row: 1 / span 1;}
+  #fboardform .tbl_frm01 tr.editor_area td, #fitemform .tbl_frm01 tr.editor_area td {grid-column: 1 / span 2;}
+  #fboardform .tbl_frm01 tr th, #fitemform .tbl_frm01 tr th {grid-column: 1 / span 1;grid-row: 1 / span 2;}  
+  #fboardform .tbl_frm01 tr td, #fitemform .tbl_frm01 tr td {grid-column: 2 / span 2;}
+  #fboardform .tbl_frm01 tr td.td_grpset, #fitemform .tbl_frm01 tr td.td_grpset {border-left: none;border-top: none;} 
   .td_extra input {width: 100% !important;}
   #fsendmailtest .frm_input, #anc_sitfrm_extra .frm_input {width: calc(100% - 140px)}
 
