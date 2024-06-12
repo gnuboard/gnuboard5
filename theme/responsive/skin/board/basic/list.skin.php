@@ -82,13 +82,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 				</label>
             </th>
             <?php } ?>
-            <th scope="col" class="list_num">번호</th>
+            <th scope="col" class="list_num md_none">번호</th>
             <th scope="col">제목</th>
             <th scope="col">글쓴이</th>
-            <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 </a></th>
-            <?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천 </a></th><?php } ?>
-            <?php if ($is_nogood) { ?><th scope="col"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천 </a></th><?php } ?>
-            <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜  </a></th>
+            <th scope="col" class="md_none"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 </a></th>
+            <?php if ($is_good) { ?><th scope="col" class="md_none"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천 </a></th><?php } ?>
+            <?php if ($is_nogood) { ?><th scope="col" class="md_none"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천 </a></th><?php } ?>
+            <th scope="col" class="md_none"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜  </a></th>
         </tr>
         </thead>
         <tbody>
@@ -107,7 +107,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             	</label>
             </td>
             <?php } ?>
-            <td class="td_num2">
+            <td class="td_num2 md_none">
             <?php
             if ($list[$i]['is_notice']) // 공지사항
                 echo '<strong class="notice_icon">공지</strong>';
@@ -143,10 +143,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 </div>
             </td>
             <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
-            <td class="td_num"><?php echo $list[$i]['wr_hit'] ?></td>
-            <?php if ($is_good) { ?><td class="td_num"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
-            <?php if ($is_nogood) { ?><td class="td_num"><?php echo $list[$i]['wr_nogood'] ?></td><?php } ?>
-            <td class="td_datetime"><?php echo $list[$i]['datetime2'] ?></td>
+            <td class="td_num md_none"><?php echo $list[$i]['wr_hit'] ?></td>
+            <?php if ($is_good) { ?><td class="td_num md_none"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
+            <?php if ($is_nogood) { ?><td class="td_num md_none"><?php echo $list[$i]['wr_nogood'] ?></td><?php } ?>
+            <td class="td_datetime md_none"><?php echo $list[$i]['datetime2'] ?></td>
 
         </tr>
         <?php } ?>
