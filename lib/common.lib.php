@@ -853,8 +853,8 @@ function get_group($gr_id, $is_cache=false)
  * 회원 정보를 얻는다
  * 
  * @param string $mb_id
- * @param ?string $fields
- * @param ?bool $is_cache
+ * @param string $fields
+ * @param bool $is_cache
  * 
  * @return array
  */
