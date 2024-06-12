@@ -1206,5 +1206,7 @@ input[type="text"]{max-width:200px}
   .sidx_cs #anc_sidx_ps .ul_wrap {padding: 0;}
   .sidx_cs #anc_sidx_ps .btn_list03 {margin: 0;}
 
+  .coupon_img img {width: 100% !important;}
+
 }
 
