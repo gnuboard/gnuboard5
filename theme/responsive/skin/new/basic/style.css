@@ -26,3 +26,13 @@
   #new_sch select {width: calc((100%/2) - 5px);margin-bottom: 10px;}
   #new_sch .frm_input {width: calc(100% - 98px);}
 }
+
+@media (max-width:501px) {
+ 
+  .md_none {
+    display: none;
+    visibility: hidden;
+    width: 0%;
+  }
+  
+}
