@@ -2454,8 +2454,8 @@ function abs_ip2long($ip='')
 
 function get_selected($field, $value)
 {
-    if( is_int($value) ){
-        return ((int) $field===$value) ? ' selected="selected"' : '';
+    if(is_numeric($value)){
+        return ($field==$value) ? ' selected="selected"' : '';
     }
 
     return ($field===$value) ? ' selected="selected"' : '';
