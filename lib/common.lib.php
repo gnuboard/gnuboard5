@@ -2749,12 +2749,90 @@ function add_javascript($javascript, $order=0)
         get_html_process_cls()->merge_javascript($javascript, $order);
 }
 
+/**
+ * 컨텐츠 영역의 CSS Class 반환
+ * @param string $type article, comment, page
+ * @return string
+ * @see html_process::get_section_class()
+ */
+function section_class($type = 'article', $addtional_class = array())
+{
+    return implode(' ', get_html_process_cls()->get_section_class($type, $addtional_class));
+}
+
+/**
+ * 지정한 타입에 CSS 클래스를 추가
+ * `g5-`로 시작하는 클래스는 추가할 수 없다
+ * @param string $type
+ * @param string $add_class
+ * @return bool 추가에 성공하면 true, 실패하면 false
+ * @see html_process::add_section_class()
+ */
+function add_section_class($type = 'article', $add_class)
+{
+    return get_html_process_cls()->add_section_class($type, $add_class);
+}
+
+/**
+ * 다크모드 설정 반환
+ * @return bool true: dark, false: light, null: system, auto
+ * @see html_process::is_darkmode()
+ */
+function is_darkmode()
+{
+    return get_html_process_cls()->is_darkmode();
+}
+
+/**
+ * 다크모드일 때 `html` 섹션에 적용할 클래스를 추가
+ * ex) add_darkmode_class('tw-dark');
+ * @param string $mode dark, light
+ * @param string $add_class
+ * @return bool
+ * @see html_process::add_darkmode_class()
+ */
+function add_darkmode_class($mode, $class)
+{
+    return get_html_process_cls()->add_darkmode_class($mode, $class);
+}
+
+/**
+ * 다크모드 관련 클래스 반환
+ * @return array
+ */
+function get_darkmode_classes() {
+    return get_html_process_cls()->get_darkmode_classes();
+}
+
 class html_process {
     protected static $id = '0';
     private static $instances = array();
     protected static $is_end = '0';
     protected static $css = array();
     protected static $js  = array();
+
+    /**
+     * 섹션 별 CSS 클래스 목록
+     * @var array
+     */
+    protected static $section_class = array(
+        'html' => array(),
+        'body' => array(),
+        'article' => array('g5-content', 'g5-article'),
+        'comment' => array('g5-content', 'g5-comment'),
+        'page' => array('g5-content', 'g5-page'),
+        'faq' => array('g5-content', 'g5-faq'),
+        'qna' => array('g5-content', 'g5-qna')
+    );
+
+    /**
+     * 다크모드일 때 추가할 클래스 목록
+     * @var array
+     */
+    protected static $darkmode_classes = array(
+        'dark' => array('dark'),
+        'light' => array('light')
+    );
 
     public static function getInstance($id = '0')
     {
@@ -2796,6 +2874,181 @@ class html_process {
 
         if($is_merge)
             self::$js[] = array($order, $javascript);
+    }
+
+    /**
+     * 지정한 타입의 CSS 클래스를 반환
+     * 지정한 타입이 없으면 빈 문자열을 반환하며, `get_section_class` Hook에 의해 명시적으로 추가하지 않은 class 목록이 추가될 수 있다
+     * @param string $type html, body, article, comment 등
+     * @param array $addtional_class 추가할 클래스 목록
+     * @param bool $editable 편집 모드인지 여부
+     * @return array
+     */
+    public static function get_section_class($type = 'article', $addtional_class = array(), $editable = false)
+    {
+        $type = trim((string) $type);
+
+        if (!$type) {
+            return array();
+        }
+
+        // alias
+        $type = ($type === 'write') ? 'article' : $type;
+        $type = ($type === 'content') ? 'page' : $type;
+        $type = ($type === 'qa') ? 'qna' : $type;
+
+        if (!isset(self::$section_class[$type])) {
+            self::$section_class[$type] = array();
+        }
+
+        $class_list = self::$section_class[$type];
+
+        if ($type === 'html') {
+            // 다크모드
+            if (self::is_darkmode() === true) {
+                $class_list = array_merge($class_list, self::$darkmode_classes['dark']);
+            } else if (self::is_darkmode() === false) {
+                $class_list = array_merge($class_list, self::$darkmode_classes['light']);
+            }
+        }
+
+        // 편집 모드(에디터 내 컨텐츠 영역)를 구분하는 'g5-content--editable' 클래스를 추가
+        if ($editable && in_array('g5-content', $class_list)) {
+            array_splice($class_list, 1, 0, 'g5-content--editable');
+        }
+
+        // 추가할 클래스 목록
+        // self::add_section_class() 메소드와 달리 임시로 추가되는 클래스
+        if (is_array($addtional_class) && count($addtional_class)) {
+            foreach($addtional_class as $idx => $class) {
+                if (!preg_match('/^[a-zA-Z0-9_:-]+$/', $class)) {
+                    unset($addtional_class[$idx]);
+                }
+            }
+            $class_list = array_merge($class_list, $addtional_class);
+        }
+
+        $class_list = run_replace('get_section_class', $class_list, $type);
+
+        array_unique($class_list);
+
+        return $class_list;
+    }
+
+    /**
+     * 지정한 타입에 CSS 클래스를 추가
+     * `g5-`로 시작하는 클래스는 추가할 수 없다
+     * @param string $type
+     * @param string $add_class
+     * @return bool 추가에 성공하면 true, 실패하면 false
+     */
+    public static function add_section_class($type, $add_class)
+    {
+        $type = trim((string) $type);
+        $add_class = trim((string) $add_class);
+
+        if (!$type || !$add_class) {
+            return false;
+        }
+
+        if (!preg_match('/^[a-zA-Z0-9_:-]+$/', $add_class)) {
+            return false;
+        }
+
+        if (!isset(self::$section_class[$type])) {
+            self::$section_class[$type] = array();
+        }
+
+        self::$section_class[$type][] = $add_class;
+        array_unique(self::$section_class[$type]);
+
+        return true;
+    }
+
+    /**
+     * 지정한 타입에 CSS 클래스를 제거
+     * `g5-`로 시작하는 클래스는 제거할 수 없다
+     * @param string $type
+     * @param string $remove_class
+     * @return bool
+     */
+    public static function remove_section_class($type, $remove_class)
+    {
+        $type = trim((string) $type);
+        $remove_class = trim((string) $remove_class);
+
+        if (!$type || !$remove_class) {
+            return false;
+        }
+
+        // 보호된 클래스는 삭제할 수 없음
+        if (stripos($remove_class, 'g5-') === 0) {
+            return false;
+        }
+
+        if (!isset(self::$section_class[$type])) {
+            self::$section_class[$type] = array();
+        }
+
+        $flipped = self::$section_class[$type];
+
+        if (isset($flipped[$remove_class])) {
+            unset($flipped[$remove_class]);
+        }
+
+        self::$section_class[$type] = $flipped;
+
+        return true;
+    }
+
+    /**
+     * 다크모드 설정 반환
+     * @return bool true: dark, false: light, null: system, auto
+     */
+    public static function is_darkmode()
+    {
+        $darkmode = null;
+
+        $cookie = isset($_COOKIE['darkmode']) ? strtolower(trim($_COOKIE['darkmode'])) : 'system';
+
+        if (in_array($cookie, array('dark', 'on', 'y', 'yes', 'true', '1'))) {
+            $darkmode = true;
+        } else if (in_array($cookie, array('light', 'off', 'n', 'no', 'false', '0'))) {
+            $darkmode = false;
+        }
+
+        return $darkmode;
+    }
+
+    /**
+     * 다크모드 관련 클래스 반환
+     * @return array
+     */
+    public static function get_darkmode_classes()
+    {
+        return self::$darkmode_classes;
+    }
+
+    /**
+     * 다크모드일 때 `html` 섹션에 적용할 클래스를 추가
+     * ex) self::add_darkmode_class('tw-dark');
+     * @param string $mode dark, light
+     * @param string $add_class
+     * @return bool
+     */
+    public static function add_darkmode_class($mode, $add_class)
+    {
+        if (!preg_match('/^[a-zA-Z0-9_:-]+$/', $add_class)) {
+            return false;
+        }
+
+        if (!isset(self::$darkmode_classes[$mode])) {
+            return false;
+        }
+
+        array_push(self::$darkmode_classes[$mode], $add_class);
+
+        return true;
     }
 
     public static function run()
@@ -4228,6 +4481,13 @@ function get_random_token_string($length=6)
     $output = substr(str_shuffle($characters), 0, $length);
 
     return bin2hex($output);
+}
+
+function get_color_theme($default='')
+{
+    $html_class = section_class('html');
+
+    return $html_class ? $html_class : $default;
 }
 
 function filter_input_include_path($path){

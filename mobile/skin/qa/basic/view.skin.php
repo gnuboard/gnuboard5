@@ -75,7 +75,9 @@ $(".btn_more_opt").on("click", function() {
 		?>
 
         <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?></div>
+        <div id="bo_v_con" class="<?php echo section_class('qna') ?>">
+            <?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?>
+        </div>
         <!-- } 본문 내용 끝 -->
 
         <?php if($view['qa_type']) { ?>

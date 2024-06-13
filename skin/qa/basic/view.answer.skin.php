@@ -30,7 +30,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?php } ?>
 	</header>
 	
-    <div id="ans_con">
+    <div id="ans_con" class="<?php echo section_class('qna', array('g5-qna--answer')) ?>">
         <?php
         // 파일 출력
         if(isset($answer['img_count']) && $answer['img_count']) {

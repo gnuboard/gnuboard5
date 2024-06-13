@@ -63,7 +63,7 @@
 #sns_outlogin .sns-icon .ico {width:30px;height:30px}
 
 /*로그인 */
-#sns_login {border:0;margin-top:15px;padding:0; border-top:1px solid #edeaea}
+#sns_login {border:0;margin-top:15px;padding:0; border-top:var(--border)}
 #sns_login h3 {padding:0;font-weight:bold;color:#888;text-align:center}
 #sns_login .sns-icon {position:relative;display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
 #sns_login .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
@@ -99,7 +99,7 @@
 
 /* 회원가입 약관 */
 #fregisterform section {position:relative;background:#fff;border-bottom:1px solid #e5e9f0;padding:15px}
-#fregister_chkall {position:relative;font-size:bold;text-align:left;background:#fff;padding:15px;border-top:1px solid #e5e9f0;border-bottom:1px solid #e5e9f0;border-radius:3px}
+#fregister_chkall {position:relative;font-weight:bold;text-align:left;background:var(--btnBg);padding:15px;border-top:var(--freBorder);border-bottom:var(--freBorder);border-radius:3px}
 #fregisterform h2 {text-align:left;padding-bottom:15px;line-height:1.7em;font-size:1.4em}
 #fregisterform textarea {display:block;width:100%;height:180px;padding:10px;background:#fbfbfb;border:1px solid #d1d7d8;line-height:1.5em;color:#555}
 #fregisterform p {position:relative;text-align:left;color:#fff;line-height:18px;padding:15px;font-size:1.1em;background:#f2838f;margin:15px;border-radius:5px}

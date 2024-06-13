@@ -7,7 +7,7 @@
 .bg-warning3 {background:#fff8dc;border:1px solid #f1e4b2}
 
 /* SNS LOGIN */
-.login-sns {padding-bottom:10px;margin-top:5px;border:1px solid #dde7e9;border-bottom:1px solid #dde7e9;clear:both;background:#fff}
+.login-sns {padding-bottom:10px;margin-top:5px;border:var(--border);border-bottom:1px solid #dde7e9;clear:both;background:var(--contBg)}
 .login-sns h3 {padding-top:10px;text-align:center;color:#777;font-weight:normal}
 .sns-wrap {margin:10px 0 0;text-align:center}
 .sns-icon {display:inline-block;vertical-align:middle;text-decoration:none}
@@ -65,7 +65,7 @@
 #sns_outlogin .sns-icon .ico {width:30px;height:30px}
 
 /*로그인 */
-#sns_login {border:0;margin-top:15px;border-top:1px solid #edeaea}
+#sns_login {border:0;margin-top:15px;border-top:var(--border)}
 #sns_login h3 {padding:10px 0 0;text-align:left;font-weight:bold}
 #sns_login .sns-icon {position:relative;display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
 #sns_login .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
@@ -108,15 +108,15 @@
 #fregisterform p:before {content:"";position:absolute;top:0;left:0;width:5px;height:50px;border-radius:5px 0 0 5px;background:#da4453}
 #fregisterform p i {font-size:1.2em;vertical-align:middle}
 #fregisterform section {margin:10px auto 15px;border:1px solid #dde7e9;position:relative;border-radius:3px}
-#fregister_chkall {position:relative;text-align:center;background:#f5f7fa;line-height:50px;border:1px solid #e5e9f0;border-radius:3px;margin-bottom:15px}
+#fregister_chkall {position:relative;text-align:center;background:var(--contBg);line-height:50px;border:var(--inputBorder);border-radius:3px;margin-bottom:15px}
 #fregisterform h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
 #fregisterform textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
 #fregister_private {position:relative}
-#fregister_private div {padding:20px;background:#fff}
+#fregister_private div {padding:20px;background:var(--contBg);}
 #fregister_private table {width:100%;border-collapse:collapse;font-size:1em;}
 #fregister_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#fregister_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf}
-#fregister_private table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
+#fregister_private table th {background:var(--contBg);width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf}
+#fregister_private table td {border:var(--border);padding:10px;border-top:0}
 
 .fregister_agree {position:absolute;top:0;right:0}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}
@@ -132,8 +132,8 @@
 #sns_register h2 {border:0 !important}
 
 /* 회원가입 입력 */
-#register_form {background:#fff;margin-bottom:20px}
-#register_form h2 {padding:20px;border-bottom:1px solid #dde7e9}
+#register_form {background:var(--bodyBg);margin-bottom:20px}
+#register_form h2 {padding:20px;border-bottom:var(--border)}
 .register_form_inner {background:#f7f7f7;border:1px solid #dde7e9;border-radius:3px}
 .register_form_inner ul {padding:20px}
 .register_form_inner label {display:block;margin-bottom:10px;line-height:24px}

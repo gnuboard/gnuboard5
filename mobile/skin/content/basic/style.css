@@ -1,10 +1,10 @@
 @charset "utf-8";
 
 /* 내용관리 */
-#ctt {margin:10px ;padding:10px;background:#fff;min-height:200px;
-webkit-box-shadow: 0 1px 4px #cbd1df;
-  -moz-box-shadow: 0 1px 4px #cbd1df;
-       box-shadow: 0 1px 4px #cbd1df;}
+#ctt {margin:10px ;padding:10px;background:var(--btnBg);color: var(--fontColor);min-height:200px;
+webkit-box-shadow: 0 1px 4px var(--listShadowBg);
+  -moz-box-shadow: 0 1px 4px var(--listShadowBg);
+       box-shadow: 0 1px 4px var(--listShadowBg);}
 .ctt_admin {margin:0 5px;text-align:right}
 #ctt header h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #ctt_con {padding:10px 0}
