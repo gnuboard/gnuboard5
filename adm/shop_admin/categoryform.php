@@ -396,28 +396,28 @@ else {
                 </script>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">상단내용</th>
             <td>
                 <?php echo help("상품리스트 페이지 상단에 출력하는 HTML 내용입니다."); ?>
                 <?php echo editor_html('ca_head_html', get_text(html_purifier($ca['ca_head_html']), 0)); ?>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">하단내용</th>
             <td>
                 <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다."); ?>
                 <?php echo editor_html('ca_tail_html', get_text(html_purifier($ca['ca_tail_html']), 0)); ?>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">모바일 상단내용</th>
             <td>
                 <?php echo help("상품리스트 페이지 상단에 출력하는 HTML 내용입니다."); ?>
                 <?php echo editor_html('ca_mobile_head_html', get_text(html_purifier($ca['ca_mobile_head_html']), 0)); ?>
             </td>
         </tr>
-        <tr>
+        <tr class="editor_area">
             <th scope="row">모바일 하단내용</th>
             <td>
                 <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다."); ?>

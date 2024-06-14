@@ -48,7 +48,7 @@ require_once './admin.head.php';
                     <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
                     <td><input type="text" name="ma_subject" value="<?php echo get_sanitize_input($ma['ma_subject']); ?>" id="ma_subject" required class="required frm_input" size="100"></td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
                     <td><?php echo editor_html("ma_content", get_text(html_purifier($ma['ma_content']), 0)); ?></td>
                 </tr>

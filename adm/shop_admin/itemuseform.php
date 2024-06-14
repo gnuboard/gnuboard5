@@ -75,7 +75,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
         <td><input type="text" name="is_subject" required class="required frm_input" id="is_subject" size="100"
         value="<?php echo get_text($is['is_subject']); ?>"></td>
     </tr>
-    <tr>
+    <tr class="editor_area">
         <th scope="row">내용</th>
         <td><?php echo editor_html('is_content', get_text(html_purifier($is['is_content']), 0)); ?></td>
     </tr>
@@ -84,7 +84,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
         <td><input type="text" name="is_reply_subject" class="frm_input" id="is_reply_subject" size="100"
         value="<?php echo get_text($is['is_reply_subject']); ?>"></td>
     </tr>
-    <tr>
+    <tr class="editor_area">
         <th scope="row">답변 내용</th>
         <td><?php echo editor_html('is_reply_content', get_text(html_purifier($is['is_reply_content']), 0)); ?></td>
     </tr>

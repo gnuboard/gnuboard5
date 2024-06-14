@@ -3,6 +3,7 @@
 /* COMMON */
 body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 ul,#smart_editor2 ol,#smart_editor2 li,#smart_editor2 dl,#smart_editor2 dt,#smart_editor2 dd,#smart_editor2 table,#smart_editor2 th,#smart_editor2 td,#smart_editor2 form,#smart_editor2 fieldset,#smart_editor2 legend,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 button,#smart_editor2 select{margin:0;padding:0}
 #smart_editor2,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 select,#smart_editor2 table,#smart_editor2 button{font-family:'돋움',Dotum,Helvetica,sans-serif;font-size:12px;color:#666}
+#smart_editor2{margin-right: 1px !important;min-width: 100px !important;}
 #smart_editor2 span,#smart_editor2 em{font-size:12px}
 #smart_editor2 em,#smart_editor2 address{font-style:normal}
 #smart_editor2 img,#smart_editor2 fieldset{border:0}
@@ -191,3 +192,29 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
 #smart_editor2 .se2_text_tool .se2_text_tool_more span.tool_bg{background:none}
 #smart_editor2 .se2_text_tool .hover .se2_text_tool_more{background-position:-13px -41px}
 #smart_editor2 .se2_text_tool .active .se2_text_tool_more{background-position:-26px -41px}
+
+@media screen and (max-width: 640px){
+  #smart_editor2 .se2_text_tool ul:nth-child(4n){clear:both;}
+  #smart_editor2 .se2_text_tool ul{margin-bottom:4px}
+  #smart_editor2 .se2_text_tool ul:nth-child(n+4){margin-bottom:0}
+  #smart_editor2 .se2_text_tool .se2_multy,#smart_editor2 .se2_text_tool .se2_multy button, #smart_editor2 .se2_text_tool .se2_multy button span{height:54px}
+  #smart_editor2 .se2_input_area {height: 100% !important;} 
+}
+ @media screen and (max-width: 515px){
+  #smart_editor2 .se2_text_tool ul:nth-child(3n){clear:both;margin-left:4px}
+  #smart_editor2 .se2_text_tool ul:nth-child(6n),#smart_editor2 .se2_text_tool ul:nth-child(4n){clear:none;margin-left:0}
+  #smart_editor2 .se2_text_tool ul:nth-child(n+3){margin-bottom:0}
+ }
+ @media screen and (max-width: 370px){
+  #smart_editor2 .se2_text_tool ul:nth-child(2n){clear:both;margin-left:4px}
+  #smart_editor2 .se2_text_tool ul:nth-child(3n){clear:both;margin-left:4px}
+  #smart_editor2 .se2_text_tool ul:nth-child(6n),#smart_editor2 .se2_text_tool ul:nth-child(4n){clear:none;margin-left:0}
+  #smart_editor2 .se2_text_tool ul:nth-child(n+3){margin-bottom:0}
+  #smart_editor2 .se2_text_tool .se2_multy,#smart_editor2 .se2_text_tool .se2_multy button, #smart_editor2 .se2_text_tool .se2_multy button span{height:79px}
+ }
+ @media screen and (max-width: 325px){
+  #smart_editor2 .se2_text_tool .se2_multy,#smart_editor2 .se2_text_tool .se2_multy button, #smart_editor2 .se2_text_tool .se2_multy button span{height:29px;}
+  #smart_editor2 .se2_text_tool .se2_multy{border-bottom:1px solid #e0dedf}
+ }
+ 
+  

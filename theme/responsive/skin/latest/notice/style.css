@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/* 새글 스킨 (latest) */
+.notice {position:relative;padding:15px 50px}
+.notice h2 {margin-bottom:20px}
+.notice h2 a {font-size:1.2em;color:#fff}
+.notice li {text-overflow:ellipsis;overflow:hidden;white-space:nowrap;border-bottom:1px solid #343434}
+.notice li a, .notice li.empty_li {color:#e3e3e3;padding:11px 0;display:inline-block}
+.notice li .lock_icon {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size: 12px;border:1px solid #a2c6ce;vertical-align:baseline}
+.notice li .new_icon {display:inline-block;line-height:16px;width:16px;font-size:0.833em;color:#ffff00;background:#6db142;text-align:center;margin-right:3px;border-radius:2px;vertical-align:baseline}
+.notice .cnt_cm {background:#5c85c1;color:#fff;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;white-space:nowrap;margin-left:5px}
+.notice li.empty_li {border-bottom:0;line-height:120px}

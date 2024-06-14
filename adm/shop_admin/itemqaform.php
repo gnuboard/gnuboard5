@@ -64,11 +64,11 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
         <th scope="row"><label for="iq_subject">제목</label></th>
         <td><input type="text" name="iq_subject" value="<?php echo conv_subject($iq['iq_subject'],120); ?>" id="iq_subject" required class="frm_input required" size="95"></td>
     </tr>
-    <tr>
+    <tr class="editor_area">
         <th scope="row"><label for="iq_question">질문</label></th>
         <td><?php echo editor_html('iq_question', get_text(html_purifier($iq['iq_question']), 0)); ?></td>
     </tr>
-    <tr>
+    <tr class="editor_area">
         <th scope="row"><label for="iq_answer">답변</label></th>
         <td><?php echo editor_html('iq_answer', get_text(html_purifier($iq['iq_answer']), 0)); ?></td>
         <!-- <td><textarea name="iq_answer" id="iq_answer" rows="7"><?php echo get_text($iq['iq_answer']); ?></textarea></td> -->

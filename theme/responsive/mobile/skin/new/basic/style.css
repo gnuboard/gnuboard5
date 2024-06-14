@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+/* 최근게시물 스킨 (new) */
+#new_sch {background:#fff;text-align:center;margin:10px 0;border-bottom:1px solid #ddd}
+#new_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#new_sch form {padding:15px}
+#new_sch select {float:left;border:1px solid #d0d3db;width:49.5%;height:45px;padding:0 5px;border-radius:0}
+#new_sch select#gr_id {margin-right:1%}
+#new_sch .ipt_sch {clear:both;position:relative;padding-top:10px}
+#new_sch .frm_input {border:1px solid #d0d3db;width:100%;height:45px;border-radius:0}
+#new_sch .sch_wr {position:relative;display:inline-block}
+#new_sch .btn_submit {position:absolute;top:10px;right:0;padding:0 10px;height:45px;width:45px;font-size:1.4em;font-weight:bold;color:#434a54;background:transparent}
+#new_sch p {padding:12px 0;font-size:0.95em;text-align:center;background:#f9fbfc;color:#3a8afd;letter-spacing:-0.1em}
+
+.new_list li {padding:15px;background:#fff;border-bottom:1px solid #e8eaee}
+.new_list .new_tit {display:block;line-height:24px;margin:5px 0;font-weight:bold;font-size:1.2em}
+.new_list .profile_img img {border-radius:50%}
+.new_list .new_info {color:#646464;font-weight:normal}
+.new_list .new_date {margin-left:5px}
+.new_list .new_board {background:#eeeaf8;color:#ac92ec;padding:3px 4px;border-radius:5px;font-weight:normal}

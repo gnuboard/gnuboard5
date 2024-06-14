@@ -125,25 +125,25 @@ require_once G5_ADMIN_PATH . '/admin.head.php';
                         ?>
                     </td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row">상단 내용</th>
                     <td>
                         <?php echo editor_html('fm_head_html', get_text(html_purifier($fm['fm_head_html']), 0)); ?>
                     </td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row">하단 내용</th>
                     <td>
                         <?php echo editor_html('fm_tail_html', get_text(html_purifier($fm['fm_tail_html']), 0)); ?>
                     </td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row">모바일상단 내용</th>
                     <td>
                         <?php echo editor_html('fm_mobile_head_html', get_text(html_purifier($fm['fm_mobile_head_html']), 0)); ?>
                     </td>
                 </tr>
-                <tr>
+                <tr class="editor_area">
                     <th scope="row">모바일하단 내용</th>
                     <td>
                         <?php echo editor_html('fm_mobile_tail_html', get_text(html_purifier($fm['fm_mobile_tail_html']), 0)); ?>
