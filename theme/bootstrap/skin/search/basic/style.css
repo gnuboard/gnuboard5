@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+/* 전체검색결과 스킨 */
+#sch_res_detail {background:#f7f7f7;padding:30px;text-align:center;margin:0 0 10px}
+#sch_res_detail legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#sch_res_detail select {border:1px solid #d0d3db;width:175px;height:45px;padding:0 5px;border-radius:3px}
+#sch_res_detail .frm_input {border:1px solid #d0d3db;width:300px;height:45px;border-radius:0;border-radius:3px}
+#sch_res_detail .sch_wr {position:relative;display:inline-block}
+#sch_res_detail .btn_submit {padding:0 10px;height:45px;width:88px;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}
+
+/* 검색 OR+ADN 버튼 */
+.switch_field {display:inline-block;vertical-align:middle;padding:10px 5px}
+.switch_field input {position:absolute !important;clip:rect(0, 0, 0, 0);height:1px;width:1px;border:0;overflow:hidden}
+.switch_field label {float:left}
+.switch_field label {display:inline-block;width:50px;background-color:#fff;color:rgba(0, 0, 0, 0.6);font-size:1em;font-weight:normal;text-align:center;text-shadow:none;padding:6px 14px;border:1px solid #bbc0c6;
+-webkit-box-shadow:inset 0 5px 8px rgb(234, 234, 234), 0 1px rgba(255, 255, 255, 0.1);
+box-shadow:inset 0 5px 8px rgb(234, 234, 234), 0 1px rgba(255, 255, 255, 0.1);
+-webkit-transition:all 0.1s ease-in-out;
+-moz-transition:all 0.1s ease-in-out;
+-ms-transition:all 0.1s ease-in-out;
+-o-transition:all 0.1s ease-in-out;
+transition:all 0.1s ease-in-out}
+.switch_field label:hover {cursor:pointer}
+.switch_field input:checked + label {background-color:#3a8afd;border:1px solid #3a8afd;color:#fff;-webkit-box-shadow:none;box-shadow:none}
+.switch_field label:first-of-type {border-radius:4px 0 0 4px;border-right:0}
+.switch_field label:last-of-type {border-radius:0 4px 4px 0}
+
+#sch_res_ov {text-align:center;zoom:1;height:55px;line-height:55px;background:#edf3fc;border-radius:5px;border:1px solid #d6e2f4;margin-bottom:15px;padding:0 20px}
+#sch_res_ov:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_res_ov h2 {float:left;display:inline-block;font-size:1.25em;color:#293d58;font-weight:normal}
+#sch_res_ov h2 strong {color:#ff005a}
+#sch_res_ov ul {display:inline-block;float:right;line-height:12px;font-size:0.92em;color:#5977a4;margin-top:20px}
+#sch_res_ov ul:after {display:block;visibility:hidden;clear:both;content:""} 
+#sch_res_ov li {float:left;margin-right:5px;padding-right:5px;border-right:1px solid #5977a4}
+#sch_res_ov li:last-child {margin:0;padding:0;border:0}
+
+#sch_res_board {margin-bottom:28px}
+#sch_res_board h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sch_res_board ul {zoom:1}
+#sch_res_board ul:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_res_board li {display:inline-block;padding:2px}
+#sch_res_board a {display:block;line-height:28px;padding:5px 15px;border-radius:30px;border:1px solid #d6e9ff;color:#6794d3}
+#sch_res_board a:focus, #sch_res_board a:hover {text-decoration:none;background:#3a8afd;color:#fff}
+#sch_res_board .cnt_cmt {font-weight:normal !important;display:inline-block;margin-left:3px;color:#3497d9;line-height:18px;font-size:0.92em}
+#sch_res_board a:hover .cnt_cmt {color:#fff}
+#sch_res_board .sch_on {z-index:2;background:#3a8afd;color:#fff;font-weight:bold;border:1px solid #3a8afd;
+-webkit-box-shadow: inset 0 2px 5px rgb(33, 135, 202);
+-moz-box-shadow: inset 0 2px 5px rgb(33, 135, 202);
+box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
+
+.sch_res_list {position:relative;margin-bottom:10px}
+.sch_res_list .search_board_result{position:relative}
+.sch_res_list h2 {margin:0 0 15px;font-size:1.2em}
+.sch_res_list ul {margin:0 0 20px 0;padding:0;list-style:none;border-top:1px solid #ececec}
+.sch_res_list li {border-bottom:1px solid #ececec;background:#fff;position:relative}
+.sch_res_list .sch_tit {display:block;padding:20px 0 10px}
+.sch_res_list .pop_a {display:inline-block;background:#e8eeef;color:#6f777f;border-radius:50%;text-align:center;width:26px;height:26px;line-height:26px}
+.sch_res_title {display:inline-block;margin:0 0 5px;font-size:1.2em}
+.sch_res_list p {padding-bottom:10px;color:#666;line-height:1.5em}
+.sch_res_list .sch_info {padding:10px 0;color:#777}
+.sch_res_list .sch_info:after {display:block;visibility:hidden;clear:both;content:""}
+.sch_res_list .profile_img img {border-radius:50%}
+.sch_res_list .sch_datetime {margin-left:5px}
+.sch_more {position:absolute;right:0;top:5px;text-align:right;font-weight:normal;color:#3a8afd}

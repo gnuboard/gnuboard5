@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+#visit {position:relative;margin:15px 10px;background:#fff;border:1px solid #dde7e9}
+#visit h2 {line-height:24px;font-size:1.2em;margin:0 0 10px;padding:15px;border-bottom:1px solid #dde7e9}
+#visit dl{background:#fff;padding:15px 20px;border-radius:3px;line-height:20px}
+#visit dl:after {display:block;visibility:hidden;clear:both;content:""}
+#visit dt {float:left;width:50%;position:relative;line-height:32px;padding-left:15px}
+#visit dt:after {position:absolute;left:0;top:13px;width:5px;height:5px;background:#3a8afd;content:"";border-radius:5px}
+#visit dd {float:left;width:50%;text-align:right;line-height:32px;color:#3a8afd}
+#visit a {display:inline-block;padding:10px 3px;text-decoration:none}
+#visit .btn_admin {position:absolute;top:0;right:15px}
