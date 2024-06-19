@@ -46,15 +46,16 @@ $(function(){
         hit_smt_val = 5;
     }
 
-	$('#idx_hit .smt_40').owlCarousel({
-	    loop:true,
-	    nav:true,
-	    autoplay:true,
-        autoplayHoverPause:true,
-	    responsive:{
-	        1000:{items: hit_smt_val}
-	    }
-	})
+    $('#idx_hit .smt_40').owlCarousel({
+    loop:true,
+    nav:false,
+    autoplay:true,
+    autoplayHoverPause:true,
+    items: 2,
+    responsive:{
+        1000:{items: hit_smt_val},
+    }
+});
 });
 </script>
 <?php } ?>

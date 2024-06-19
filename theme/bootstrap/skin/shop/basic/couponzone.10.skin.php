@@ -6,8 +6,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 ?>
 
 <section class="couponzone_list">
-    <h2>다운로드 쿠폰</h2>
-    <p><?php echo $default['de_admin_company_name']; ?> 회원이시라면 쿠폰 다운로드 후 바로 사용하실 수 있습니다.</p>
+    <div class="couponzone_tit">
+      <h2>포인트 쿠폰</h2>
+      <p>보유하신 <?php echo $default['de_admin_company_name']; ?> 회원 포인트를 쿠폰으로 교환하실 수 있습니다.</p>
+    </div>
 
     <?php
     $sql = " select * $sql_common and cz_type = '0' $sql_order ";
@@ -98,9 +100,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 </section>
 
 <section class="couponzone_list" id="point_coupon">
+  <div class="couponzone_tit">
     <h2>포인트 쿠폰</h2>
     <p>보유하신 <?php echo $default['de_admin_company_name']; ?> 회원 포인트를 쿠폰으로 교환하실 수 있습니다.</p>
-
+  </div>
+    
     <?php
     $sql = " select * $sql_common and cz_type = '1' $sql_order ";
     $result = sql_query($sql);

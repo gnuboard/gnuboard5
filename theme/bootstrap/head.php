@@ -31,8 +31,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     }
     ?>
     <div id="tnb">
-    	<div class="inner container-xl d-flex justify-content-between">
-        <?php if(G5_COMMUNITY_USE) { ?>
+    	<div class="container-xl d-flex justify-content-between mx-auto">
+            <?php if(G5_COMMUNITY_USE) { ?>
     		<ul id="hd_define">
     			<li class="active"><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
                 <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
@@ -48,13 +48,64 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 	        </ul>
 		</div>
     </div>
-    <div id="hd_wrapper" class="container-xl d-flex align-items-center">
+    <div id="hd_wrapper" class="container-xl">
 
+    
+    <button type="button" id="gnb_open" class="hd_opener"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only"> 메뉴열기</span></button>
+
+    <div id="gnb" class="hd_div">
+    <button type="button" id="gnb_close" class="hd_closer"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
+    <?php echo outlogin('theme/mobile'); // 외부 로그인 ?>
+          <ul id="gnb_1dul">
+          <?php
+          $menu_datas = get_menu_db(1, true);
+    $i = 0;
+    foreach( $menu_datas as $row ){
+      if( empty($row) ) continue;
+          ?>
+              <li class="gnb_1dli">
+                  <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a>
+                  <?php
+                  $k = 0;
+                  foreach( (array) $row['sub'] as $row2 ){
+          if( empty($row2) ) continue;
+                      if($k == 0)
+                          echo '<button type="button" class="btn_gnb_op"><span class="sound_only">하위분류</span></button><ul class="gnb_2dul">'.PHP_EOL;
+                  ?>
+                      <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><span></span><?php echo $row2['me_name'] ?></a></li>
+                  <?php
+        $k++;
+                  }	//end foreach $row2
+
+                  if($k > 0)
+                      echo '</ul>'.PHP_EOL;
+                  ?>
+              </li>
+          <?php
+    $i++;
+          }	//end foreach $row
+
+    if ($i == 0) {  ?>
+        <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하세요.<?php } ?></li>
+    <?php } ?>
+    <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
+        <li class="gnb_1dli"><a href="<?php echo G5_SHOP_URL ?>" class="gnb_1da"> 쇼핑몰</a></li>
+    <?php } ?>
+    </ul>
+    <ul id="hd_nb">
+      <li class="hd_nb1"><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq"><i class="fa fa-question" aria-hidden="true"></i>FAQ</a></li>
+        <li class="hd_nb2"><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_qa"><i class="fa fa-comments" aria-hidden="true"></i>1:1문의</a></li>
+        <li class="hd_nb3"><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt"><i class="fa fa-users" aria-hidden="true"></i>접속자 </a></li>
+        <li class="hd_nb4"><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new"><i class="fa fa-history" aria-hidden="true"></i>새글</a></li>   
+    </ul>
+</div>
         <div id="logo">
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
-    
+
+        <button type="button" id="user_btn" class="sch_opener"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">사용자메뉴</span></button>
         <div class="hd_sch_wr">
+            <button type="button" id="user_close" class="sch_closer"><span class="sound_only">메뉴 닫기</span><i class="fa fa-times" aria-hidden="true"></i></button>
             <fieldset id="hd_sch">
                 <legend>사이트 내 전체검색</legend>
                 <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
@@ -99,6 +150,45 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 
             <?php echo popular('theme/basic'); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
         </div>
+
+        <script>
+          $(function () {
+
+              let $sch_layer = document.querySelector(".hd_sch_wr");
+              let $hd_layer = document.querySelector(".hd_div");
+
+              $(".sch_opener").on("click", function() {
+
+                $sch_layer.classList.toggle("mo_active")
+
+              });
+
+              $(".hd_opener").on("click", function() {
+
+                $hd_layer.classList.toggle("mo_active")
+
+              });
+
+              $(".sch_closer").on("click", function() {
+                
+                $sch_layer.classList.remove("mo_active");
+
+              });
+
+              $(".hd_closer").on("click", function() {
+                
+                $hd_layer.classList.remove("mo_active");
+
+              });
+
+              $(".btn_gnb_op").click(function(){
+                $(this).toggleClass("btn_gnb_cl").next(".gnb_2dul").slideToggle(300);
+                
+            });
+
+          });
+        </script>
+
         <ul class="hd_login">        
             <?php if ($is_member) {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
@@ -116,7 +206,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     
     <nav id="gnb">
         <h2>메인메뉴</h2>
-        <div class="gnb_wrap">
+        <div class="container-xl px-0">
             <ul id="gnb_1dul">
                 <li class="gnb_1dli gnb_mnal"><button type="button" class="gnb_menu_btn" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
                 <?php
@@ -213,7 +303,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
-    <div id="container_wr">
+    <div id="container_wr" class="container-xl">
    
     <div id="container">
         <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }

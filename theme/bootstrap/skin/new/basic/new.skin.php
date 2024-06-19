@@ -67,11 +67,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
             </label>
         </th>
         <?php } ?>
-        <th scope="col">그룹</th>
+        <th scope="col" class="md_none">그룹</th>
         <th scope="col">게시판</th>
         <th scope="col">제목</th>
         <th scope="col">이름</th>
-        <th scope="col">일시</th>
+        <th scope="col" class="md_none">일시</th>
     </tr>
     </thead>
     <tbody>
@@ -95,11 +95,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
             <input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
         </td>
         <?php } ?>
-        <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
+        <td class="td_group md_none"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
         <td class="td_board"><a href="<?php echo get_pretty_url($list[$i]['bo_table']); ?>"><?php echo $bo_subject ?></a></td>
         <td><a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
         <td class="td_name"><?php echo $list[$i]['name'] ?></td>
-        <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
+        <td class="td_date md_none"><?php echo $list[$i]['datetime2'] ?></td>
     </tr>
     <?php } ?>
 

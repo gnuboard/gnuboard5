@@ -94,9 +94,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </th>
             <?php } ?>
             <th scope="col">번호</th>
-            <th scope="col">제목</th>
+            <th scope="col" class="md_none">제목</th>
             <th scope="col">글쓴이</th>
-            <th scope="col">등록일</th>
+            <th scope="col" class="md_none">등록일</th>
             <th scope="col">상태</th>
         </tr>
         </thead>
@@ -116,7 +116,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             	</label>
             </td>
             <?php } ?>
-            <td class="td_num"><?php echo $list[$i]['num']; ?></td>
+            <td class="td_num md_none"><?php echo $list[$i]['num']; ?></td>
             <td class="td_subject">
                 <span class="bo_cate_link"><?php echo $list[$i]['category']; ?></span>
                 <a href="<?php echo $list[$i]['view_href']; ?>" class="bo_tit">
@@ -125,7 +125,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 </a>
             </td>
             <td class="td_name"><?php echo $list[$i]['name']; ?></td>
-            <td class="td_date"><?php echo $list[$i]['date']; ?></td>
+            <td class="td_date md_none"><?php echo $list[$i]['date']; ?></td>
             <td class="td_stat"><span class=" <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></span></td>
         </tr>
         <?php

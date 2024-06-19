@@ -4,7 +4,7 @@
 #new_sch {background:#f7f7f7;padding:30px;text-align:center;margin:0 0 10px}
 #new_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #new_sch select {border:1px solid #d0d3db;width:175px;height:45px;padding:0 5px;border-radius:3px}
-#new_sch .frm_input {border:1px solid #d0d3db;width:300px;height:45px;border-radius:0;border-radius:3px}
+#new_sch .frm_input {border:1px solid #d0d3db;width:calc(100% - 460px);height:45px;border-radius:0;border-radius:3px}
 #new_sch .sch_wr {position:relative;display:inline-block}
 #new_sch .btn_submit {padding:0 10px;height:45px;width:88px;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}
 #new_sch p {padding:10px 0 0;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
@@ -21,3 +21,18 @@
 .chk_box input[type="checkbox"] + label span {position:absolute;top:2px;left:0;width:15px;height:15px;display:block;margin:0;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
 .chk_box input[type="checkbox"]:checked + label span {background:url(../../../img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+
+@media (max-width:1024px) {
+  #new_sch select {width: calc((100%/2) - 5px);margin-bottom: 10px;}
+  #new_sch .frm_input {width: calc(100% - 98px);}
+}
+
+@media (max-width:501px) {
+ 
+  .md_none {
+    display: none;
+    visibility: hidden;
+    width: 0%;
+  }
+  
+}

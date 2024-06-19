@@ -35,6 +35,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <?php
 if (G5_IS_MOBILE) {
     echo '<meta name="viewport" id="meta_viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10">'.PHP_EOL;
@@ -93,7 +94,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/font-awesome/css/font
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/bootstrap/bootstrap.min.css">', 0);
 add_stylesheet('<link href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css" rel="stylesheet">', 0);
 
-
 if(G5_IS_MOBILE) {
     add_javascript('<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>', 1); // overflow scroll 감지
 }
@@ -103,31 +103,31 @@ if(!defined('G5_IS_ADMIN'))
 
 <style>
   /* 초기화 */
-html {overflow-y:scroll}
-body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif;background:#fff}
-html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic', dotum, sans-serif}
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+  html {overflow-y:scroll}
+  body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif;background:#fff}
+  html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+  h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic', dotum, sans-serif}
+  article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 
-ul, dl,dt,dd {margin:0;padding:0;list-style:none}
-legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
-label, input, button, select, img {vertical-align:middle;font-size:1em}
-input, button {margin:0;padding:0;font-family:'Malgun Gothic', dotum, sans-serif;font-size:1em}
-input[type="submit"] {cursor:pointer}
-button {cursor:pointer}
+  ul, dl,dt,dd {margin:0;padding:0;list-style:none}
+  legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+  label, input, button, select, img {vertical-align:middle;font-size:1em}
+  input, button {margin:0;padding:0;font-family:'Malgun Gothic', dotum, sans-serif;font-size:1em}
+  input[type="submit"] {cursor:pointer}
+  button {cursor:pointer}
 
-textarea, select {font-family:'Malgun Gothic', dotum, sans-serif;font-size:1em}
-select {margin:0}
-p {margin:0;padding:0;word-break:break-all}
-hr {display:none}
-pre {overflow-x:scroll;font-size:1.1em}
-a {color:#000;text-decoration:none}
+  textarea, select {font-family:'Malgun Gothic', dotum, sans-serif;font-size:1em}
+  select {margin:0}
+  p {margin:0;padding:0;word-break:break-all}
+  hr {display:none}
+  pre {overflow-x:scroll;font-size:1.1em}
+  a {color:#000;text-decoration:none}
 
-*, :after, :before {
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box;
-}
+  *, :after, :before {
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+  }
 </style>
 
 </head>
