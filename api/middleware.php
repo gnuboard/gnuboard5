@@ -36,6 +36,22 @@ class JsonBodyParserMiddleware implements MiddlewareInterface
     }
 }
 
+
+/**
+ * Custom Middleware
+ */
+$config_mw = function (Request $request, RequestHandler $handler) {
+    global $g5;
+
+    $sql = "SELECT * FROM {$g5['config_table']}";
+    $config = sql_fetch($sql);
+
+    $request = $request->withAttribute('config', $config);
+    $response = $handler->handle($request);
+
+    return $response;
+};
+
 /**
   * The routing middleware should be added earlier than the ErrorMiddleware
   * Otherwise exceptions thrown from it will not be handled by the middleware

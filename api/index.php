@@ -10,6 +10,7 @@ use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/_common.php';
+require __DIR__ . '/functions.php';
 
 /**
  * Instantiate App
