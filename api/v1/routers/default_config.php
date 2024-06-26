@@ -33,7 +33,7 @@ $app->group('/config', function (RouteCollectorProxy $group) {
         $select = array(
             'cf_use_email_certify', 'cf_use_homepage', 'cf_req_homepage', 'cf_use_tel', 'cf_req_tel',
             'cf_use_hp', 'cf_req_hp', 'cf_use_addr', 'cf_req_addr', 'cf_use_signature', 'cf_use_profile',
-            'cf_icon_level', 'cf_member_img_width', 'cf_member_img_height', 'cf_member_img_size, cf_member_icon_width',
+            'cf_icon_level', 'cf_member_img_width', 'cf_member_img_height', 'cf_member_img_size', 'cf_member_icon_width',
             'cf_member_icon_height', 'cf_member_icon_size', 'cf_open_modify', 'cf_use_recommend');
         $policy_config = generate_select_array($config, $select);
 
