@@ -14,10 +14,15 @@ use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/_common.php';
+require __DIR__ . '/Auth/jwt.php';
 require __DIR__ . '/functions.php';
-require __DIR__ . '/middleware.php';
 require __DIR__ . '/Handlers/HttpErrorHandler.php';
 require __DIR__ . '/Handlers/ShutdownHandler.php';
+require __DIR__ . '/middleware.php';
+
+
+// Create refresh token table
+create_refresh_token_table();
 
 // Set error display settings
 // - Should be set to false in production
