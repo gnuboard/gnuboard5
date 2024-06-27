@@ -65,4 +65,4 @@ $app->group('/config', function (RouteCollectorProxy $group) {
 
         return api_response_json($response, $board_config);
     });
-})->add($config_mw);
+})->add($config_mw)->add($get_member_mw)->add(new AccessTokenAuthMiddleware());

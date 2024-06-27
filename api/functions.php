@@ -8,10 +8,11 @@ use Psr\Http\Message\ResponseInterface as Response;
  * @param array $data
  * @return Response
  */
-function api_response_json(Response $response, array $data)
+function api_response_json(Response $response, array $data, int $status = 200)
 {
     $json = json_encode($data, JSON_UNESCAPED_UNICODE);
     $response->getBody()->write($json);
+    $response = $response->withStatus($status);
     return $response->withAddedHeader('Content-Type', 'application/json');
 }
 

@@ -195,7 +195,13 @@ $app->group('/members', function (RouteCollectorProxy $group) {
     $group->get('/me', function (Request $request, Response $response) {
         global $g5;
 
-        $mb_id = 'admin';  // TODO: 로그인한 회원 아이디로 변경
+        $access_token = $request->getHeaderLine('Authorization');
+        $access_token = str_replace('Bearer ', '', $access_token);
+        
+        // JWT 디코딩
+        $access_token_decode = decode_token('access', $access_token);
+        $mb_id = $access_token_decode->sub;
+
         $sql = "SELECT * FROM {$g5['member_table']} WHERE mb_id = '{$mb_id}'";
         $member = sql_fetch($sql);
 
