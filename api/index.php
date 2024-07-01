@@ -9,6 +9,7 @@
 
 use API\Handlers\HttpErrorHandler;
 use API\Handlers\ShutdownHandler;
+use API\ResponseEmitter\ResponseEmitter;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -19,6 +20,7 @@ require __DIR__ . '/functions.php';
 require __DIR__ . '/Handlers/HttpErrorHandler.php';
 require __DIR__ . '/Handlers/ShutdownHandler.php';
 require __DIR__ . '/middleware.php';
+require __DIR__ . '/ResponseEmitter/ResponseEmitter.php';
 
 
 // Create refresh token table
@@ -91,5 +93,7 @@ $routeCollector = $app->getRouteCollector();
 $routeCollector->setCacheFile("{$cache_dir}/router-cache.php");
 */
 
-// Run app
-$app->run();
+// Run App & Custom Emit Response
+$response = $app->handle($request);
+$responseEmitter = new ResponseEmitter();
+$responseEmitter->emit($response);
