@@ -1,6 +1,9 @@
 <?php
 namespace API\Handlers;
 
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
@@ -10,8 +13,11 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Exception\HttpNotImplementedException;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
+use DomainException;
 use Exception;
+use InvalidArgumentException;
 use Throwable;
+use UnexpectedValueException;
 
 class HttpErrorHandler extends SlimErrorHandler
 {
@@ -57,6 +63,18 @@ class HttpErrorHandler extends SlimErrorHandler
             $description = $exception->getMessage();
         }
 
+        // Add JWT exceptions
+        if ($exception instanceof InvalidArgumentException 
+                || $exception instanceof DomainException
+                || $exception instanceof UnexpectedValueException
+                || $exception instanceof SignatureInvalidException
+                || $exception instanceof BeforeValidException
+                || $exception instanceof ExpiredException) {
+            $statusCode = 401;
+            $type = self::UNAUTHENTICATED;
+            $description = $exception->getMessage();
+        }
+
         $error = [
             'statusCode' => $statusCode,
             'error' => [
@@ -69,7 +87,7 @@ class HttpErrorHandler extends SlimErrorHandler
         
         $response = $this->responseFactory->createResponse($statusCode);        
         $response->getBody()->write($payload);
-        
-        return $response;
+
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

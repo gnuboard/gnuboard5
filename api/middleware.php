@@ -6,6 +6,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Exception\HttpUnauthorizedException;
+use Slim\Exception\HttpNotFoundException;
 
 /**
  * JSON Body Parser Middleware
@@ -41,6 +43,9 @@ class JsonBodyParserMiddleware implements MiddlewareInterface
 
 /**
  * Access Token Authentication Middleware
+ * 
+ * Add this middleware to routes that require access token authentication
+ * Append member information to the request as an attribute
  */
 class AccessTokenAuthMiddleware
 {
@@ -57,34 +62,42 @@ class AccessTokenAuthMiddleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $token = $request->getHeaderLine('Authorization');
-
-        if (empty($token)) {
-            return api_response_json($handler->handle($request), array(
-                'error' => 'No token provided'
-            ), 401);
-        }
-
-        $token = str_replace('Bearer ', '', $token);
-
-        try {
-            $decode = JWT::decode($token, new Key($this->secretKey, $this->algorithm));
-            // mb_id를 request attribute에 추가
-            $request = $request->withAttribute('mb_id', $decode->sub);
-
-        } catch (\Exception $e) {
-            return api_response_json($handler->handle($request), array(
-                'error' => 'Invalid token'
-            ), 401);
-        }
+        $token = $this->extract_token($request);
+        $decode = JWT::decode($token, new Key($this->secretKey, $this->algorithm));
+        $request = $request->withAttribute('member', $this->get_member($request, $decode->sub));
 
         return $handler->handle($request);
     }
+
+    private function extract_token(Request $request): string
+    {
+        $token = $request->getHeaderLine('Authorization');
+        $token = str_replace('Bearer', '', $token);
+
+        if (!$token) {
+            throw new HttpUnauthorizedException($request, 'Authorization header not found.');
+        }
+
+        return trim($token);
+    }
+
+    private function get_member(Request $request, string $mb_id): array
+    {
+        global $g5;
+
+        $sql = "SELECT * FROM {$g5['member_table']} WHERE mb_id = '{$mb_id}'";
+        $member = sql_fetch($sql);
+
+        if (!$member) {
+            throw new HttpNotFoundException($request, 'Member not found.');
+        }
+
+        return $member;
+    }
 }
 
-
 /**
- * Custom Middleware
+ * Config Middleware
  */
 $config_mw = function (Request $request, RequestHandler $handler) {
     global $g5;
@@ -92,21 +105,11 @@ $config_mw = function (Request $request, RequestHandler $handler) {
     $sql = "SELECT * FROM {$g5['config_table']}";
     $config = sql_fetch($sql);
 
+    if (!$config) {
+        throw new HttpNotFoundException($request, 'Config not found.');
+    }
+
     $request = $request->withAttribute('config', $config);
-
-    return $handler->handle($request);
-};
-
-$get_member_mw = function (Request $request, RequestHandler $handler) {
-    global $g5;
-    // $auth = new AccessTokenAuthMiddleware();
-
-    // $mb_id = $request->getAttribute('mb_id');
-
-    // $sql = "SELECT * FROM {$g5['member_table']} WHERE mb_id = '{$mb_id}'";
-    // $member = sql_fetch($sql);
-
-    // $request = $request->withAttribute('member', $member);
 
     return $handler->handle($request);
 };

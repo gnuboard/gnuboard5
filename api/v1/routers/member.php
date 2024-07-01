@@ -115,7 +115,7 @@ $app->group('/members', function (RouteCollectorProxy $group) {
         );
 
         return api_response_json($response, $result);
-    });
+    })->add(new AccessTokenAuthMiddleware());
 
     /**
      * 회원탈퇴
@@ -130,7 +130,7 @@ $app->group('/members', function (RouteCollectorProxy $group) {
         // 회원탈퇴 처리
 
         return api_response_json($response, array("message" => "회원탈퇴가 완료되었습니다."));
-    });
+    })->add(new AccessTokenAuthMiddleware());
 
     /**
      * 회원 아이콘&이미지 수정
@@ -146,7 +146,7 @@ $app->group('/members', function (RouteCollectorProxy $group) {
         // 이미지 경로 저장
 
         return api_response_json($response, array("message" => "회원 이미지가 수정되었습니다."));
-    });
+    })->add(new AccessTokenAuthMiddleware());
 
 
     // 이메일 인증
@@ -215,7 +215,7 @@ $app->group('/members', function (RouteCollectorProxy $group) {
         $member_response['mb_image_path'] = G5_DATA_PATH . '/member_image/' . $mb_dir . '/' . get_mb_icon_name($mb_id) . '.gif';
 
         return api_response_json($response, $member_response);
-    });
+    })->add(new AccessTokenAuthMiddleware());
 
     /**
      * 회원정보 조회
@@ -238,6 +238,6 @@ $app->group('/members', function (RouteCollectorProxy $group) {
         $member_response['mb_image_path'] = G5_DATA_PATH . '/member_image/' . $mb_dir . '/' . get_mb_icon_name($mb_id) . '.gif';
 
         return api_response_json($response, $member_response);
-    });
+    })->add(new AccessTokenAuthMiddleware());
 
 });
