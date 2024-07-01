@@ -74,5 +74,22 @@ foreach ($routerFiles as $routerFile) {
     include $routerFile;
 }
 
+/**
+ * Route Cache (Optional)
+ * To generate the route cache data, you need to set the file to one that does not exist in a writable directory.
+ * After the file is generated on first run, only read permissions for the file are required.
+ *
+ * You may need to generate this file in a development environment and committing it to your project before deploying
+ * if you don't have write permissions for the directory where the cache file resides on the server it is being deployed to
+ */
+/*
+$cache_dir = G5_DATA_PATH . "/cache/API";
+if (!is_dir($cache_dir)) {
+    @mkdir($cache_dir, G5_DIR_PERMISSION);
+}
+$routeCollector = $app->getRouteCollector();
+$routeCollector->setCacheFile("{$cache_dir}/router-cache.php");
+*/
+
 // Run app
 $app->run();

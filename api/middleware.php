@@ -72,13 +72,13 @@ class AccessTokenAuthMiddleware
     private function extract_token(Request $request): string
     {
         $token = $request->getHeaderLine('Authorization');
-        $token = str_replace('Bearer', '', $token);
+        $token = trim(str_replace('Bearer', '', $token));
 
         if (!$token) {
             throw new HttpUnauthorizedException($request, 'Authorization header not found.');
         }
 
-        return trim($token);
+        return $token;
     }
 
     private function get_member(Request $request, string $mb_id): array
