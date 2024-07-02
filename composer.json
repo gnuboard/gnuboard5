@@ -1,10 +1,11 @@
 {
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "slim/slim": "^4.14.0",
         "slim/psr7": "^1.6.1",
         "firebase/php-jwt": "^6.10",
-        "paragonie/sodium_compat": "^1.21.1"
+        "paragonie/sodium_compat": "^1.21.1",
+        "vlucas/phpdotenv": "^5.6.0"
     },
     "autoload": {
         "psr-4": {

@@ -3,6 +3,7 @@
 namespace API\Middleware;
 
 use API\Auth\JwtTokenManager;
+use API\Setting;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -25,7 +26,10 @@ class AccessTokenAuthMiddleware
 
     public function __construct()
     {
-        $token_manager = new JwtTokenManager();
+        $setting = new Setting();
+        print_r($setting);
+        exit;
+        $token_manager = new JwtTokenManager($setting);
 
         $this->secretKey = $token_manager->secret_key();
         $this->algorithm = $token_manager->algorithm;

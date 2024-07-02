@@ -21,3 +21,4 @@ pma/
 vendor/
 api/.htaccess
 composer.lock
+.env

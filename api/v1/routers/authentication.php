@@ -4,15 +4,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteCollectorProxy;
 
-// Define JWT variables
-// - ACCESS_TOKEN_SECRET_KEY
-// - REFRESH_TOKEN_SECRET_KEY
-// - ACCESS_TOKEN_EXPIRE_MINUTES
-// - REFRESH_TOKEN_EXPIRE_MINUTES
-// - AUTH_ISSUER
-// - AUTH_AUDIENCE
-require_once __DIR__ . '/../../config.php';
-
 
 $app->group('/token', function (RouteCollectorProxy $group) {
     /**
@@ -21,12 +12,12 @@ $app->group('/token', function (RouteCollectorProxy $group) {
     $group->post('', function (Request $request, Response $response) {
 
         global $g5;
-        
+
         # 로그인 인증
         $data = $request->getParsedBody();
         $username = $data['username'] ?? null;
         $password = $data['password'] ?? null;
-        
+
         if (!(isset($username) && isset($password))) {
             return api_response_json($response, array(
                 'message' => '아이디 또는 비밀번호가 입력되지 않았습니다.'
@@ -42,19 +33,20 @@ $app->group('/token', function (RouteCollectorProxy $group) {
 
         // 탈퇴 또는 차단된 아이디인가?
         if (($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
-            || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))) {
+            || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
+        ) {
             return api_response_json($response, array(
                 'message' => '현재 로그인 회원은 탈퇴 또는 차단된 회원입니다.'
             ), 403);
         }
 
         // 메일인증 설정이 되어 있다면
-        if ( is_use_email_certify() && !preg_match("/[1-9]/", $member['mb_email_certify'])) {
+        if (is_use_email_certify() && !preg_match("/[1-9]/", $member['mb_email_certify'])) {
             return api_response_json($response, array(
                 'message' => "{$member['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다."
             ), 403);
         }
-        
+
         // 토큰 생성
         $claim = array('sub' => $member['mb_id']);
         $access_token = create_token('access', $claim);
@@ -63,7 +55,7 @@ $app->group('/token', function (RouteCollectorProxy $group) {
         // 토큰 디코딩
         $access_token_decode = decode_token('access', $access_token);
         $refresh_token_decode = decode_token('refresh', $refresh_token);
-        
+
         # 기존 토큰 삭제
         $sql = "DELETE FROM {$g5['member_refresh_token_table']} WHERE mb_id = '{$member['mb_id']}'";
         sql_query($sql);
@@ -92,7 +84,7 @@ $app->group('/token', function (RouteCollectorProxy $group) {
     $group->post('/refresh', function (Request $request, Response $response) {
 
         global $g5;
-        
+
         $data = $request->getParsedBody();
         $refresh_token = $data['refresh_token'] ?? null;
         $refresh_token_decode = decode_token('refresh', $refresh_token);
@@ -128,5 +120,4 @@ $app->group('/token', function (RouteCollectorProxy $group) {
             'token_type' => 'Bearer',
         ));
     });
-
 });
