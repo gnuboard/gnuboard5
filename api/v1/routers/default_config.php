@@ -1,5 +1,6 @@
 <?php
 
+use API\Middleware\ConfigMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteCollectorProxy;
@@ -65,4 +66,4 @@ $app->group('/config', function (RouteCollectorProxy $group) {
 
         return api_response_json($response, $board_config);
     });
-})->add($config_mw);
+})->add(new ConfigMiddleware());

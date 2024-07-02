@@ -1,4 +1,5 @@
 <?php
+
 /**
  * GnuBoard5 API with Slim Framework
  * 
@@ -9,19 +10,13 @@
 
 use API\Handlers\HttpErrorHandler;
 use API\Handlers\ShutdownHandler;
+use API\Middleware\JsonBodyParserMiddleware;
 use API\ResponseEmitter\ResponseEmitter;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/_common.php';
-require __DIR__ . '/Auth/jwt.php';
-require __DIR__ . '/functions.php';
-require __DIR__ . '/Handlers/HttpErrorHandler.php';
-require __DIR__ . '/Handlers/ShutdownHandler.php';
-require __DIR__ . '/middleware.php';
-require __DIR__ . '/ResponseEmitter/ResponseEmitter.php';
-
 
 // Create refresh token table
 create_refresh_token_table();

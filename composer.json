@@ -1,8 +1,17 @@
 {
     "require": {
-        "slim/slim": "4.*",
-        "slim/psr7": "^1.7",
+        "php": "^7.4",
+        "slim/slim": "^4.14.0",
+        "slim/psr7": "^1.6.1",
         "firebase/php-jwt": "^6.10",
-        "paragonie/sodium_compat": "^2.0"
+        "paragonie/sodium_compat": "^1.21.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "API\\": "api/"
+        },
+        "files": [
+            "api/functions.php"
+        ]
     }
 }

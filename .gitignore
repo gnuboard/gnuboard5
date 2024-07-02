@@ -20,3 +20,4 @@ config.php
 pma/
 vendor/
 api/.htaccess
+composer.lock

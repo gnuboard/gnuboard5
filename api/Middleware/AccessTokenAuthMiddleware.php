@@ -1,45 +1,16 @@
 <?php
 
+namespace API\Middleware;
+
+use API\Auth\JwtTokenManager;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Exception\HttpNotFoundException;
 
-/**
- * JSON Body Parser Middleware
- * 
- * This middleware parses JSON request body and attaches it to the request as a `parsedBody` attribute
- * 
- * @see https://www.slimframework.com/docs/v4/objects/request.html#the-request-body
- */
-class JsonBodyParserMiddleware implements MiddlewareInterface
-{
-    /**
-     * Parse JSON request body and attach it to the request as a `parsedBody` attribute
-     *
-     * @param Request $request PSR-7 request
-     * @param RequestHandler $handler PSR-15 request handler
-     *
-     * @return Response
-     */
-    public function process(Request $request, RequestHandler $handler): Response
-    {
-        $contentType = $request->getHeaderLine('Content-Type');
-
-        if (strstr($contentType, 'application/json')) {
-            $contents = json_decode(file_get_contents('php://input'), true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                $request = $request->withParsedBody($contents);
-            }
-        }
-
-        return $handler->handle($request);
-    }
-}
 
 /**
  * Access Token Authentication Middleware
@@ -95,21 +66,3 @@ class AccessTokenAuthMiddleware
         return $member;
     }
 }
-
-/**
- * Config Middleware
- */
-$config_mw = function (Request $request, RequestHandler $handler) {
-    global $g5;
-
-    $sql = "SELECT * FROM {$g5['config_table']}";
-    $config = sql_fetch($sql);
-
-    if (!$config) {
-        throw new HttpNotFoundException($request, 'Config not found.');
-    }
-
-    $request = $request->withAttribute('config', $config);
-
-    return $handler->handle($request);
-};
