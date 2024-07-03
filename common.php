@@ -505,7 +505,7 @@ if (isset($_REQUEST['bo_table']) && ! is_array($_REQUEST['bo_table'])) {
 
 // URL ENCODING
 if (isset($_REQUEST['url'])) {
-    $url = strip_tags(trim($_REQUEST['url']));
+    $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', trim($_REQUEST['url']));
     $urlencode = urlencode($url);
 } else {
     $url = '';
