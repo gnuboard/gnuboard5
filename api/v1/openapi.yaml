@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: 'GnuBoard5 API Test Documentation'
+  description: 'Swagger OpenApi description Test'
+  contact:
+    email: admin@admin.com
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+paths:
+  /api/users:
+    get:
+      operationId: 4ad2356a95b94bf32411c74d93e75fa2
+      responses:
+        '200':
+          description: 'An example endpoint'
+tags:
+  -
+    name: Projects
+    description: 'API Endpoints of Projects'
