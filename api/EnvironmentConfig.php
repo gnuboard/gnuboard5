@@ -5,7 +5,7 @@ namespace API;
 use Dotenv\Dotenv;
 use Exception;
 
-class Setting
+class EnvironmentConfig
 {
     public const DEFAULT_API_VERSION = 'v1';
     public const DEFAULT_ACCESS_TOKEN_SECRET_KEY = 'secret_key';

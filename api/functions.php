@@ -1,7 +1,7 @@
 <?php
 
 use API\Auth\JwtTokenManager;
-use API\Setting;
+use API\EnvironmentConfig;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -69,12 +69,12 @@ function create_refresh_token_table()
  */
 function create_token(string $type, array $add_claim = array())
 {
-    $setting = new Setting();
-    $token_info = new JwtTokenManager($setting, $type);
+    $env_config = new EnvironmentConfig();
+    $token_info = new JwtTokenManager($env_config, $type);
 
     $payload = [
-        'iss' => $setting->auth_issuer,
-        'aud' => $setting->auth_audience,
+        'iss' => $env_config->auth_issuer,
+        'aud' => $env_config->auth_audience,
         'iat' => time(),
         'nbf' => time(),
         'exp' => time() + (60 * $token_info->expire_minutes()),
@@ -88,7 +88,7 @@ function create_token(string $type, array $add_claim = array())
  */
 function decode_token(string $type, string $token, stdClass $headers = null)
 {
-    $token_info = new JwtTokenManager(new Setting(), $type);
+    $token_info = new JwtTokenManager(new EnvironmentConfig(), $type);
 
     /**
      * You can add a leeway to account for when there is a clock skew times between

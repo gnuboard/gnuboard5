@@ -2,20 +2,20 @@
 
 namespace API\Auth;
 
-use API\Setting;
+use API\EnvironmentConfig;
 
 /**
  * JWT Token Manager
  */
 class JwtTokenManager
 {
-    public Setting $setting;
+    public EnvironmentConfig $env_config;
     public string $algorithm;
     public string $type;
 
-    public function __construct(Setting $setting, string $type = 'access')
+    public function __construct(EnvironmentConfig $env_config, string $type = 'access')
     {
-        $this->setting = $setting;
+        $this->env_config = $env_config;
         $this->type = $type;
         $this->algorithm = 'HS256';
     }
@@ -23,14 +23,14 @@ class JwtTokenManager
     public function secret_key()
     {
         return $this->type == 'refresh'
-            ? $this->setting->refresh_token_secret_key
-            : $this->setting->access_token_secret_key;
+            ? $this->env_config->refresh_token_secret_key
+            : $this->env_config->access_token_secret_key;
     }
 
     public function expire_minutes()
     {
         return $this->type == 'refresh'
-            ? $this->setting->refresh_token_expire_minutes
-            : $this->setting->access_token_expire_minutes;
+            ? $this->env_config->refresh_token_expire_minutes
+            : $this->env_config->access_token_expire_minutes;
     }
 }
