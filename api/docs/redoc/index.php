@@ -1,33 +1,14 @@
 <?php
 
-/**
- * Swagger UI Test
- */
-
-use OpenApi\Generator;
-use API\EnvironmentConfig;
+use API\OASGenerator;
 
 require_once '../../../vendor/autoload.php';
-include_once '../../../common.php';
+require_once '../../../common.php';
 
-/**
- * .env 설정 값으로 OpenAPI 문서를 생성
- * TODO: 별도의 코드로 분리 필요
- */
-$env_config = new EnvironmentConfig();
-$api_dir = "../../../api/{$env_config->api_version}";
-$openapi = Generator::scan([$api_dir]);
-file_put_contents("{$api_dir}/openapi.yaml", $openapi->toYaml());
-
-
-
-/**
- * API 경로
- * TODO: 비슷한 코드가 api/index.php에 있음. 중복 제거 필요
- */
-$api_path = str_replace('/docs/redoc/index.php', '', $_SERVER['SCRIPT_NAME']);
-
-$swagger_ui_path = $api_path . "/" . $env_config->api_version . "/openapi.yaml";
+$version = isset($_GET['version']) ? $_GET['version'] : null;
+$open_api = new OASGenerator($version);
+$open_api->generate();
+$swagger_url = $open_api->getOASUrl();
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,7 +32,7 @@ $swagger_ui_path = $api_path . "/" . $env_config->api_version . "/openapi.yaml";
 </head>
 
 <body>
-    <redoc spec-url="<?php echo $swagger_ui_path ?>"
+    <redoc spec-url="<?php echo $swagger_url ?>"
         required-props-first=true
         >
     </redoc>
