@@ -223,6 +223,11 @@ class Db
         return $stmt->rowCount();
     }
 
+    /**
+     * 배열이 일반 배열(연관배열이 아닌)인지 확인.
+     * @param array $array
+     * @return bool
+     */
     private static function is_list(array $array)
     {
         if ([] === $array || $array === array_values($array)) {
