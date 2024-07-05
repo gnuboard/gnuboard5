@@ -43,25 +43,25 @@ class MemberController
 
         // 아이디 유효성 검사
         if ($msg = empty_mb_id($data['mb_id'])) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = valid_mb_id($data['mb_id'])) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = count_mb_id($data['mb_id'])) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = reserve_mb_id($data['mb_id'])) {
-            api_response_json($response, array("message" => $msg), 403);
+            return api_response_json($response, array("message" => $msg), 403);
         }
         if ($msg = exist_mb_id($data['mb_id'])) {
-            api_response_json($response, array("message" => $msg), 409);
+            return api_response_json($response, array("message" => $msg), 409);
         }
         $data['mb_id'] = $mb_id = strtolower($data['mb_id']);
 
         // 비밀번호 유효성 검사 및 암호화
         if ($data['mb_password'] != $data['mb_password_re']) {
-            api_response_json($response, array("message" => "비밀번호가 일치하지 않습니다."), 422);
+            return api_response_json($response, array("message" => "비밀번호가 일치하지 않습니다."), 422);
         }
         $data['mb_password'] = get_encrypt_string($data['mb_password']);
         unset($data['mb_password_re']);
@@ -69,43 +69,43 @@ class MemberController
         // 이름 유효성 검사
         $tmp_mb_name = iconv('UTF-8', 'UTF-8//IGNORE', $data['mb_name']);
         if ($tmp_mb_name != $data['mb_name']) {
-            api_response_json($response, array("message" => "이름을 올바르게 입력해 주십시오."), 422);
+            return api_response_json($response, array("message" => "이름을 올바르게 입력해 주십시오."), 422);
         }
         if ($msg = empty_mb_name($data['mb_name'])) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
 
         // 닉네임 유효성 검사
         $tmp_mb_nick = iconv('UTF-8', 'UTF-8//IGNORE', $data['mb_nick']);
         if ($tmp_mb_nick != $data['mb_nick']) {
-            api_response_json($response, array("message" => "닉네임을 올바르게 입력해 주십시오."), 422);
+            return api_response_json($response, array("message" => "닉네임을 올바르게 입력해 주십시오."), 422);
         }
         if ($msg = empty_mb_nick($data['mb_nick'])) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = valid_mb_nick($data['mb_nick'])) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = reserve_mb_nick($data['mb_nick'])) {
-            api_response_json($response, array("message" => $msg), 403);
+            return api_response_json($response, array("message" => $msg), 403);
         }
         if ($msg = exist_mb_nick($data['mb_nick'], $mb_id)) {
-            api_response_json($response, array("message" => $msg), 409);
+            return api_response_json($response, array("message" => $msg), 409);
         }
 
         // 이메일 유효성 검사
         $mb_email = get_email_address($data['mb_email']);
         if ($msg = valid_mb_email($mb_email)) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = empty_mb_email($mb_email)) {
-            api_response_json($response, array("message" => $msg), 422);
+            return api_response_json($response, array("message" => $msg), 422);
         }
         if ($msg = prohibit_mb_email($mb_email)) {
-            api_response_json($response, array("message" => $msg), 403);
+            return api_response_json($response, array("message" => $msg), 403);
         }
         if ($msg = exist_mb_email($mb_email, $mb_id)) {
-            api_response_json($response, array("message" => $msg), 409);
+            return api_response_json($response, array("message" => $msg), 409);
         }
         $data['mb_email'] = $mb_email;
 
@@ -113,17 +113,17 @@ class MemberController
         if ($config['cf_use_recommend']) {
             $data['mb_recommend'] = $recommand = strtolower($data['mb_recommend']);
             if (!exist_mb_id($recommand)) {
-                api_response_json($response, array("message" => "추천인이 존재하지 않습니다."), 404);
+                return api_response_json($response, array("message" => "추천인이 존재하지 않습니다."), 404);
             }
             if ($mb_id == strtolower($recommand)) {
-                api_response_json($response, array("message" => "본인을 추천인으로 등록할 수 없습니다."), 403);
+                return api_response_json($response, array("message" => "본인을 추천인으로 등록할 수 없습니다."), 403);
             }
         }
 
         // 휴대폰 번호 유효성 검사
         if ($config['cf_req_hp'] && ($config['cf_use_hp'] || $config['cf_cert_hp'] || $config['cf_cert_simple'])) {
             if ($msg = valid_mb_hp($data['mb_hp'])) {
-                api_response_json($response, array("message" => $msg), 422);
+                return api_response_json($response, array("message" => $msg), 422);
             }
         }
         $data['mb_hp'] = hyphen_hp_number($data['mb_hp']);
@@ -136,7 +136,7 @@ class MemberController
             if ($config['cf_cert_req']) {
                 $post_cert_no = isset($_POST['cert_no']) ? trim($_POST['cert_no']) : '';
                 if($post_cert_no !== get_session('ss_cert_no') || ! get_session('ss_cert_no'))
-                    api_response_json($response, array("message" => "회원가입을 위해서는 본인확인을 해주셔야 합니다."), 403);
+                    return api_response_json($response, array("message" => "회원가입을 위해서는 본인확인을 해주셔야 합니다."), 403);
             }
             // 중복체크
             if (get_session('ss_cert_type') && get_session('ss_cert_dupinfo')) {
@@ -144,7 +144,7 @@ class MemberController
                 $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$data['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
                 $row = sql_fetch($sql);
                 if (!empty($row['mb_id'])) {
-                    api_response_json($response, array("message" => "입력하신 본인확인 정보로 가입된 내역이 존재합니다."), 404);
+                    return api_response_json($response, array("message" => "입력하신 본인확인 정보로 가입된 내역이 존재합니다."), 404);
                 }
             }
             */
@@ -245,44 +245,65 @@ class MemberController
     {
         global $g5;
 
-        $mb_id = 'test';  // TODO: JWT 토큰에서 추출해야함
+        $member = $request->getAttribute('member');
         $data = $request->getParsedBody();
+        unset($data['mb_id']);
+        unset($data['name']);
 
-        // 유효성 검사
-        // 아이디
-        // 이름
-        // 닉네임
-        // 이메일
-        // 추천인
+        // 닉네임 유효성 검사
+        $tmp_mb_nick = iconv('UTF-8', 'UTF-8//IGNORE', $data['mb_nick']);
+        if ($tmp_mb_nick != $data['mb_nick']) {
+            api_response_json($response, array("message" => "닉네임을 올바르게 입력해 주십시오."), 422);
+        }
+        if ($msg = empty_mb_nick($data['mb_nick'])) {
+            api_response_json($response, array("message" => $msg), 422);
+        }
+        if ($msg = valid_mb_nick($data['mb_nick'])) {
+            api_response_json($response, array("message" => $msg), 422);
+        }
+        if ($msg = reserve_mb_nick($data['mb_nick'])) {
+            api_response_json($response, array("message" => $msg), 403);
+        }
+        if ($msg = exist_mb_nick($data['mb_nick'], $member['mb_id'])) {
+            api_response_json($response, array("message" => $msg), 409);
+        }
+
+        // 이메일 유효성 검사
+        $mb_email = get_email_address($data['mb_email']);
+        if ($msg = valid_mb_email($mb_email)) {
+            api_response_json($response, array("message" => $msg), 422);
+        }
+        if ($msg = empty_mb_email($mb_email)) {
+            api_response_json($response, array("message" => $msg), 422);
+        }
+        if ($msg = prohibit_mb_email($mb_email)) {
+            api_response_json($response, array("message" => $msg), 403);
+        }
+        if ($msg = exist_mb_email($mb_email, $member['mb_id'])) {
+            api_response_json($response, array("message" => $msg), 409);
+        }
+        $data['mb_email'] = $mb_email;
 
         // 비밀번호 확인 및 암호화
-        if ($data['mb_password'] != $data['mb_password_re']) {
-            $result = array(
-                "message" => "비밀번호가 일치하지 않습니다."
-            );
-            $result_json = json_encode($result, JSON_UNESCAPED_UNICODE);
-
-            $response->getBody()->write($result_json);
-            return $response->withStatus(422)->withAddedHeader('Content-Type', 'application/json');
+        if (isset($data['mb_password'])) {
+            if ($data['mb_password'] != $data['mb_password_re']) {
+                return api_response_json($response, array("message" => "비밀번호가 일치하지 않습니다."), 422);
+            }
+            $data['mb_password'] = get_encrypt_string($data['mb_password']);
+            unset($data['mb_password_re']);
         }
-        $data['mb_password'] = get_encrypt_string($data['mb_password']);
-        unset($data['mb_password_re']);
 
         // 우편번호 분리
         $data['mb_zip1'] = substr($data['mb_zip'], 0, 3);
         $data['mb_zip2'] = substr($data['mb_zip'], 4, 3);
         unset($data['mb_zip']);
 
-        // 기타 기본 가입정보 설정
-        $data['mb_ip'] = $_SERVER['REMOTE_ADDR'];
-        $data['mb_level'] = 1;  // 설정에서 불러와야 함.
-
         $query = "";
         foreach ($data as $key => $value) {
             $query .= "{$key} = '{$value}', ";
         }
 
-        $sql = "UPDATE {$g5['member_table']} SET {$query} mb_datetime = NOW() WHERE mb_id = '{$mb_id}'";
+        $sql = "UPDATE {$g5['member_table']} SET {$query} mb_datetime = NOW() WHERE mb_id = '{$member['mb_id']}'";
         sql_query($sql);
 
         $result = array(
@@ -295,14 +316,44 @@ class MemberController
         return api_response_json($response, $result);
     }
 
-    // 회원 이미지 수정
+    /**
+     * 회원 아이콘/이미지 수정
+     * TODO: 이미지파일 검증 필요
+     * TODO: 경로 생성 및 삭제 처리는 함수화 필요
+     */
     public function updateMemberImages(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $member = $request->getAttribute('member');
         $data = $request->getParsedBody();
+        $uploadedFiles = $request->getUploadedFiles();
+        $mb_img = $uploadedFiles['mb_img'];
+        $mb_icon = $uploadedFiles['mb_icon'];
+        
+        $directory_img = G5_DATA_PATH . '/member_image/' . substr($member['mb_id'], 0, 2);
+        $directory_icon = G5_DATA_PATH . '/member_image/' . substr($member['mb_id'], 0, 2);
+        if (!is_dir($directory_img)) {
+            @mkdir($directory_img, G5_DIR_PERMISSION);
+            @chmod($directory_img, G5_DIR_PERMISSION);
+        }
+        if (!is_dir($directory_icon)) {
+            @mkdir($directory_icon, G5_DIR_PERMISSION);
+            @chmod($directory_icon, G5_DIR_PERMISSION);
+        }
 
-        // 이미지 파일 업로드
-        // 이미지 경로 저장
+        if ($data['del_mb_img']) {
+            @unlink($directory_img . '/' . get_mb_icon_name($member['mb_id']) . '.gif');
+        }
+        if ($data['del_mb_icon']) {
+            @unlink($directory_icon . '/' . get_mb_icon_name($member['mb_id']) . '.gif');
+        }
+
+        if ($mb_img->getError() === UPLOAD_ERR_OK) {
+            moveUploadedFile($directory_img, $mb_img);
+        }
+        
+        if ($mb_icon->getError() === UPLOAD_ERR_OK) {
+            moveUploadedFile($directory_icon, $mb_icon);
+        }
 
         return api_response_json($response, array("message" => "회원 이미지가 수정되었습니다."));
     }
