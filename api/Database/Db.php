@@ -60,6 +60,11 @@ class Db
         }
         return self::$instance;
     }
+    
+    public static function makeWhereInPlaceHolder($data)
+    {
+        return str_repeat('?,', count($data) - 1) . '?';
+    }
 
 
     /**
@@ -128,18 +133,18 @@ class Db
     }
 
     /**
-     * 업데이트 쿼리
+     * 업데이트 쿼리   SQL 쿼리순으로 테이블 where value
      * @param string $table
-     * @param array $data [column => value]
-     * @param array $where [column => value]
+     * @param array $where  [column => value]
+     * @param array $updateData [column => value]
      * @return int
      */
-    public function update($table, array $data, $where)
+    public function update($table, $where, $updateData)
     {
         $values = [];
 
         $fields = null;
-        foreach ($data as $key => $value) {
+        foreach ($updateData as $key => $value) {
             $key = '`' . trim($key, '`') . '`';
             $fields .= "$key = ?,";
             $values[] = $value;
