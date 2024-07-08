@@ -9,13 +9,150 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
 paths:
-  /api/users:
-    get:
-      operationId: 4ad2356a95b94bf32411c74d93e75fa2
+  /api/v1/token:
+    post:
+      tags:
+        - 인증
+      summary: 'Access/Refresh Token 발급'
+      description: 'Access Token & Refresh Token을 발급합니다.'
+      operationId: 8e03e8c7922c70f6e5fbdad4202d66cc
       responses:
         '200':
-          description: 'An example endpoint'
+          description: ''
+  /api/v1/token/refresh:
+    post:
+      tags:
+        - 인증
+      summary: 'Refresh Token 재발급'
+      description: 'Refresh Token을 이용하여 Access Token을 재발급합니다.'
+      operationId: f1f53bb425188289820fcda4ab79ac1b
+      responses:
+        '200':
+          description: ''
+  /api/v1/config/html:
+    get:
+      tags:
+        - 환경설정
+      summary: 'HTML 설정 조회'
+      description: 'HTML을 구성하는데 필요한 설정 정보를 조회합니다.'
+      operationId: 5d1063d78abd2d407baa4a7d34a0abd0
+      responses:
+        '200':
+          description: 'Successful Response'
+          content:
+            application/json:
+              schema:
+                properties:
+                  cf_title: { description: '사이트 제목', type: string }
+                  cf_add_meta: { description: '추가 메타태그', type: string }
+                  cf_add_script: { description: '추가 스크립트', type: string }
+                  cf_analytics: { description: 분석코드, type: string }
+                type: object
+              examples:
+                result:
+                  value: { cf_title: string, cf_add_meta: string, cf_add_script: string, cf_analytics: string }
+        '500':
+          description: '서버 오류'
+  /api/v1/config/policy:
+    get:
+      tags:
+        - 환경설정
+      summary: '회원가입약관 조회'
+      description: '회원가입 약관을 조회합니다.<br> - 회원가입 약관 <br> - 개인정보 수집 및 허용 약관'
+      operationId: 07c46bfd244961b88286addf0c64d58e
+      responses:
+        '200':
+          description: ''
+  /api/v1/config/member:
+    get:
+      tags:
+        - 환경설정
+      summary: '회원가입 설정 조회'
+      description: '회원가입에 필요한 환경설정 정보를 조회합니다.'
+      operationId: 259da4e5e14ed20e7ed5c35132b7f139
+      responses:
+        '200':
+          description: ''
+  /api/v1/config/memo:
+    get:
+      tags:
+        - 환경설정
+      summary: '쪽지 발송 소진 포인트 조회'
+      description: '쪽지 발송 시, 1건당 소모되는 포인트 설정 정보를 조회합니다.'
+      operationId: 8c2614e4159a0f8ad89fa3cfb4d25b9f
+      responses:
+        '200':
+          description: ''
+  /api/v1/config/board:
+    get:
+      tags:
+        - 환경설정
+      summary: '게시판 설정 조회'
+      description: '게시판에 사용되는 설정 정보를 조회합니다.'
+      operationId: 8c900e31ff563290d83040baa6c38c09
+      responses:
+        '200':
+          description: ''
+  /api/v1/members:
+    post:
+      tags:
+        - 회원
+      summary: 회원가입
+      description: '회원가입을 진행합니다.'
+      operationId: 0e80e12223f56d817ee88232f74d50c4
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                mb_id:
+                  description: 아이디
+                  type: string
+                  example: test
+                mb_password:
+                  description: 비밀번호
+                  type: string
+                  example: test1234
+                mb_password_re:
+                  description: '비밀번호 확인'
+                  type: string
+                  example: test1234
+                mb_name:
+                  description: 이름
+                  type: string
+                  example: 홍길동
+                mb_nick:
+                  description: 닉네임
+                  type: string
+                  example: 홍길동
+                mb_email:
+                  description: 이메일
+                  type: string
+                  example: ''
+                mb_recommend:
+                  description: 추천인
+                  type: string
+                  example: ''
+                mb_hp:
+                  description: '휴대폰 번호'
+                  type: string
+                  example: ''
+                mb_zip:
+                  description: 우편번호
+                  type: string
+                  example: ''
+              type: object
+      responses:
+        '200':
+          description: ''
 tags:
   -
-    name: Projects
-    description: 'API Endpoints of Projects'
+    name: 환경설정
+    description: '기능별 환경설정정보 API'
+  -
+    name: 인증
+    description: '인증 API'
+  -
+    name: 회원
+    description: '회원 API'

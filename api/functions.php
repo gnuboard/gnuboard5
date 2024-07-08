@@ -5,6 +5,7 @@ use API\EnvironmentConfig;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * API Response JSON
@@ -99,4 +100,27 @@ function decode_token(string $type, string $token, stdClass $headers = null)
      */
     // JWT::$leeway = 60; // $leeway in seconds
     return JWT::decode($token, new Key($token_info->secret_key(), $token_info->algorithm), $headers);
+}
+
+
+/**
+ * Moves the uploaded file to the upload directory and assigns it a unique name
+ * to avoid overwriting an existing uploaded file.
+ *
+ * @param string $directory The directory to which the file is moved
+ * @param UploadedFileInterface $uploadedFile The file uploaded file to move
+ *
+ * @return string The filename of moved file
+ */
+function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile)
+{
+    $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+
+    // see http://php.net/manual/en/function.random-bytes.php
+    $basename = bin2hex(random_bytes(8));
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+    return $filename;
 }
