@@ -2747,7 +2747,7 @@ function is_inicis_order_pay($type){
     return false;
 }
 
-function get_item_images_info($it, $size=array(), $image_width, $image_height){
+function get_item_images_info($it, $size=array(), $image_width=0, $image_height=0){
     
     if( !(is_array($it) && $it) ) return array();
     $images = array();
