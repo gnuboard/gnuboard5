@@ -6,24 +6,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 
-/**
- * @OA\Tag(name="환경설정", description="기능별 환경설정정보 API")
- * @OA\Tag(name="인증", description="인증 API")
- * @OA\Tag(name="회원", description="회원 API")
- * @OA\Info(
- *      version="1.0.0",
- *      title="GnuBoard5 API Test Documentation",
- *      description="Swagger OpenApi description Test",
- *      @OA\Contact(
- *          email="admin@admin.com"
- *      ),
- *      @OA\License(
- *          name="Apache 2.0",
- *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
- *      )
- * )
-*/
-
 class ConfigController
 {
     /**
@@ -72,7 +54,7 @@ class ConfigController
      * @OA\Get(
      *     path="/api/v1/config/policy",
      *     summary="회원가입약관 조회",
-     *     tags={"환경설정"},
+     *     tags={"환경설정", "회원"},
      *     description="회원가입 약관을 조회합니다.<br> - 회원가입 약관 <br> - 개인정보 수집 및 허용 약관",
      *     @OA\Response(response="200", description="")
      * )
@@ -91,7 +73,7 @@ class ConfigController
      * @OA\Get(
      *     path="/api/v1/config/member",
      *     summary="회원가입 설정 조회",
-     *     tags={"환경설정"},
+     *     tags={"환경설정", "회원"},
      *     description="회원가입에 필요한 환경설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="")
      * )

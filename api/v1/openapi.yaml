@@ -57,6 +57,7 @@ paths:
     get:
       tags:
         - 환경설정
+        - 회원
       summary: '회원가입약관 조회'
       description: '회원가입 약관을 조회합니다.<br> - 회원가입 약관 <br> - 개인정보 수집 및 허용 약관'
       operationId: 07c46bfd244961b88286addf0c64d58e
@@ -67,6 +68,7 @@ paths:
     get:
       tags:
         - 환경설정
+        - 회원
       summary: '회원가입 설정 조회'
       description: '회원가입에 필요한 환경설정 정보를 조회합니다.'
       operationId: 259da4e5e14ed20e7ed5c35132b7f139
@@ -142,6 +144,104 @@ paths:
                   description: 우편번호
                   type: string
                   example: ''
+              type: object
+      responses:
+        '200':
+          description: ''
+  '/api/v1/members/{mb_id}/email-certification/change':
+    put:
+      tags:
+        - 회원
+      summary: '인증 이메일 변경'
+      description: '메일인증을 처리하지 않은 회원의 메일을 변경하고 인증메일을 재전송합니다.'
+      operationId: d41a3675dfd37a03e30f6b226b8c42a2
+      parameters:
+        -
+          name: mb_id
+          in: path
+          description: '회원 ID'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  description: '변경 이메일'
+                  type: string
+                password:
+                  description: '회원 비밀번호'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/v1/members/me:
+    get:
+      tags:
+        - 회원
+      summary: '현재 로그인 회원정보 조회'
+      description: 'JWT 토큰을 통해 인증된 회원 정보를 조회합니다.'
+      operationId: c36d9f57d1576b356a131deab6278550
+  '/api/v1/members/{mb_id}':
+    get:
+      tags:
+        - 회원
+      summary: '회원정보 조회'
+      description: '회원 정보를 조회합니다.'
+      operationId: 341380afdb3856663bba53c8148842ce
+      parameters:
+        -
+          name: mb_id
+          in: path
+          description: '회원 ID'
+          required: true
+          schema:
+            type: string
+  /api/v1/member:
+    put:
+      tags:
+        - 회원
+      summary: '회원정보 수정'
+      description: 'JWT 토큰을 통해 인증된 회원 정보를 수정합니다.'
+      operationId: e7a371b8b809ea949af9400f8bd88efa
+    delete:
+      tags:
+        - 회원
+      summary: 회원탈퇴
+      description: 'JWT 토큰을 통해 인증된 회원을 탈퇴합니다.'
+      operationId: 7478967c7d59be68a9d55fa1468ffe17
+      responses:
+        '200':
+          description: ''
+  /api/v1/member/images:
+    put:
+      tags:
+        - 회원
+      summary: '회원 아이콘&이미지 수정'
+      description: 'JWT 토큰을 통해 인증된 회원의 아이콘 & 이미지를 수정합니다.'
+      operationId: bdb6532e2ad7753e50a631f2f26efb85
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                mb_img:
+                  description: '회원 이미지'
+                  type: string($binary)
+                mb_icon:
+                  description: '회원 아이콘'
+                  type: string($binary)
+                del_mb_img:
+                  description: '회원 이미지 삭제여부'
+                  type: integer
+                del_mb_icon:
+                  description: '회원 아이콘 삭제여부'
+                  type: integer
               type: object
       responses:
         '200':
