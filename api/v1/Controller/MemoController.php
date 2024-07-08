@@ -56,7 +56,7 @@ class MemoController
         //request 검사.
 
         //메모 리스트 가져오기
-        $memo_service = new MemoService();
+        $memo_service = new MemoService($request);
         //count
         $totalRecords = $memo_service->fetchTotalRecords($meType, $memberId);
         $memo_data = $memo_service->fetchMemos($meType, $memberId, $page, $perPage);
