@@ -88,10 +88,6 @@ class Db
      */
     public function run($query, $params = [])
     {
-        if (!$params) {
-            return $this->pdo->query($query);
-        }
-
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($params);
         if (G5_DEBUG) {
