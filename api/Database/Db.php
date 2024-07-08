@@ -35,11 +35,9 @@ class Db
                 "{$db_settings['driver']}:host={$db_settings['host']};dbname={$db_settings['dbname']}",
                 $db_settings['user'],
                 $db_settings['password'],
-
-                // PHP 7.1 이상이므로 에뮬레이팅 필요없음
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_EMULATE_PREPARES => false,
+                    PDO::ATTR_EMULATE_PREPARES => 0, // PHP 8.4 부터는 bool 타입이나. 암시적 형변환되어 0이면 false로 인식됨.
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                 ]
             );
@@ -60,7 +58,7 @@ class Db
         }
         return self::$instance;
     }
-    
+
     public static function makeWhereInPlaceHolder($data)
     {
         return str_repeat('?,', count($data) - 1) . '?';
@@ -94,24 +92,9 @@ class Db
             return $this->pdo->query($query);
         }
 
-        $is_list = self::is_list($params);
-        if ($is_list) {
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute($params);
-            return $stmt;
-        }
-
         $stmt = $this->pdo->prepare($query);
-        foreach ($params as $key => $value) {
-            if (is_int($value)) {
-                $stmt->bindParam($key, $value, PDO::PARAM_INT);
-            } else {
-                $stmt->bindParam($key, $value);
-            }
-        }
-
         $stmt->execute($params);
-        if(G5_DEBUG) {
+        if (G5_DEBUG) {
             $this->logging_last_stmt($stmt);
         }
         return $stmt;
@@ -133,9 +116,9 @@ class Db
     }
 
     /**
-     * 업데이트 쿼리   SQL 쿼리순으로 테이블 where value
+     * 업데이트 쿼리 SQL 쿼리순으로 테이블 where value
      * @param string $table
-     * @param array $where  [column => value]
+     * @param array $where [column => value]
      * @param array $updateData [column => value]
      * @return int
      */
@@ -226,28 +209,6 @@ class Db
     {
         $stmt = $this->run("DELETE FROM {$table}");
         return $stmt->rowCount();
-    }
-
-    /**
-     * 배열이 일반 배열(연관배열이 아닌)인지 확인.
-     * @param array $array
-     * @return bool
-     */
-    private static function is_list(array $array)
-    {
-        if ([] === $array || $array === array_values($array)) {
-            return true;
-        }
-
-        $nextKey = -1;
-
-        foreach ($array as $k => $v) {
-            if ($k !== ++$nextKey) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 

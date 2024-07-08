@@ -1,6 +1,6 @@
 <?php
 
-namespace Sir\Database;
+namespace API\Database;
 
 use RuntimeException;
 
