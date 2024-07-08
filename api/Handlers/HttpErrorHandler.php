@@ -36,6 +36,7 @@ class HttpErrorHandler extends SlimErrorHandler
         $type = self::SERVER_ERROR;
         $description = 'An internal error has occurred while processing your request.';
 
+        
         if ($exception instanceof HttpException) {
             $statusCode = $exception->getCode();
             $description = $exception->getMessage();
@@ -61,6 +62,16 @@ class HttpErrorHandler extends SlimErrorHandler
             && $this->displayErrorDetails
         ) {
             $description = $exception->getMessage();
+        }
+
+        if ($exception instanceof \DbConnectException) {
+            $statusCode = 500;
+            $description = 'DB connect error';
+        }
+        
+        if ($exception instanceof \PDOException) {
+            $statusCode = 500;
+            $description = 'DB operator error';
         }
 
         // Add JWT exceptions
