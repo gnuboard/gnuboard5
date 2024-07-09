@@ -30,61 +30,11 @@ class MemberController
      *              @OA\Schema(ref="#/components/schemas/Member"),
      *          )
      *      ),
-     *     @OA\Response(
-     *          response="201",
-     *          description="Successful Response",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="message", type="string", description="응답 메시지"),
-     *              @OA\Property(property="mb_id", type="string", description="회원 아이디"),
-     *              @OA\Property(property="mb_name", type="string", description="회원 이름"),
-     *              @OA\Property(property="mb_nick", type="string", description="회원 닉네임"),
-     *              @OA\Examples(
-     *                  value={
-     *                      "message": "string",
-     *                      "mb_id": "string",
-     *                      "mb_name": "string",
-     *                      "mb_nick": "string"
-     *                  }
-     *              ),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="403",
-     *          description="권한 없음",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="message", type="string", description="응답 메시지"),
-     *              @OA\Examples(value={"message": "string"}),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="409",
-     *          description="중복된 데이터",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="message", type="string", description="응답 메시지"),
-     *              @OA\Examples(value={"message": "string"}),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="422",
-     *          description="입력값 오류",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="message", type="string", description="응답 메시지"),
-     *              @OA\Examples(value={"message": "string"}),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="500",
-     *          description="서버 오류",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="message", type="string", description="응답 메시지"),
-     *              @OA\Examples(value={"message": "string"}),
-     *          )
-     *     ),
+     *     @OA\Response(response="201", description="회원가입 성공", @OA\JsonContent(ref="#/components/schemas/CreateMemberResponse")),
+     *     @OA\Response(response="403", ref="#/components/responses/403"),
+     *     @OA\Response(response="409", ref="#/components/responses/409"),
+     *     @OA\Response(response="422", ref="#/components/responses/422"),
+     *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
     public function createMember(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface

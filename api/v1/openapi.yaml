@@ -151,53 +151,19 @@ paths:
               $ref: '#/components/schemas/Member'
       responses:
         '201':
-          description: 'Successful Response'
+          description: '회원가입 성공'
           content:
             application/json:
               schema:
-                properties:
-                  message: { description: '응답 메시지', type: string }
-                  mb_id: { description: '회원 아이디', type: string }
-                  mb_name: { description: '회원 이름', type: string }
-                  mb_nick: { description: '회원 닉네임', type: string }
-                type: object
-              examples: {  }
+                $ref: '#/components/schemas/CreateMemberResponse'
         '403':
-          description: '권한 없음'
-          content:
-            application/json:
-              schema:
-                properties:
-                  message: { description: '응답 메시지', type: string }
-                type: object
-              examples: {  }
+          $ref: '#/components/responses/403'
         '409':
-          description: '중복된 데이터'
-          content:
-            application/json:
-              schema:
-                properties:
-                  message: { description: '응답 메시지', type: string }
-                type: object
-              examples: {  }
+          $ref: '#/components/responses/409'
         '422':
-          description: '입력값 오류'
-          content:
-            application/json:
-              schema:
-                properties:
-                  message: { description: '응답 메시지', type: string }
-                type: object
-              examples: {  }
+          $ref: '#/components/responses/422'
         '500':
-          description: '서버 오류'
-          content:
-            application/json:
-              schema:
-                properties:
-                  message: { description: '응답 메시지', type: string }
-                type: object
-              examples: {  }
+          $ref: '#/components/responses/500'
   '/api/v1/members/{mb_id}/email-certification/change':
     put:
       tags:
@@ -384,6 +350,12 @@ components:
           description: 추천인
           type: string
           example: test
+        mb_datetime:
+          description: 가입일
+          type: string
+          format: date-time
+          readOnly: true
+          example: '2021-01-01 00:00:00'
         mb_mailling:
           description: '메일 수신여부'
           type: integer
@@ -453,6 +425,77 @@ components:
           type: string
           example: test
       type: object
+    BaseResponseModel:
+      description: '응답 메시지를 포함하는 기본 모델 클래스'
+      properties:
+        message:
+          description: '응답 메시지'
+          type: string
+          example: string
+      type: object
+    CreateMemberResponse:
+      description: '회원가입 응답 모델'
+      properties:
+        message:
+          description: '응답 메시지'
+          type: string
+          example: string
+        mb_id:
+          description: '회원 아이디'
+          type: string
+          example: string
+        mb_name:
+          description: '회원 이름'
+          type: string
+          example: string
+        mb_nick:
+          description: '회원 닉네임'
+          type: string
+          example: string
+      type: object
+  responses:
+    '400':
+      description: '잘못된 요청'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
+    '409':
+      description: '중복된 데이터'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
+    '403':
+      description: '권한 없음'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
+    '422':
+      description: '입력값 오류'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
+    '404':
+      description: '리소스를 찾을 수 없음'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
+    '500':
+      description: '서버 오류'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
+    '401':
+      description: '인증 실패'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponseModel'
 tags:
   -
     name: 환경설정
