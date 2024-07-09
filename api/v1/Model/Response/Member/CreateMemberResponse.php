@@ -42,12 +42,12 @@ class CreateMemberResponse
      * @param string $mb_name 회원 이름
      * @param string $mb_nick 회원 닉네임
      */
-    public function __construct(string $message, string $mb_id, string $mb_name, string $mb_nick)
+    public function __construct(string $message, object $data)
     {
         $this->message = $message;
-        $this->mb_id = $mb_id;
-        $this->mb_name = $mb_name;
-        $this->mb_nick = $mb_nick;
+        $this->mb_id = $data->mb_id;
+        $this->mb_name = $data->mb_name;
+        $this->mb_nick = $data->mb_nick;
     }
 
     /**

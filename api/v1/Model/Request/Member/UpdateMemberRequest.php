@@ -1,52 +1,45 @@
 <?php
 
-namespace API\v1\Model;
+namespace API\v1\Model\Request\Member;
 
 use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
  *     type="object",
- *     title="Member",
- *     description="회원정보 모델",
+ *     title="UpdateMemberRequest",
+ *     description="회원정보 갱신 모델",
  * )
  */
-class Member
+class UpdateMemberRequest
 {
-    /**
-     * 회원 아이디
-     * @var string
-     * @OA\Property(example="test")
-     */
-    public $mb_id = '';
-
     /**
      * 비밀번호
      * @var string
      * @OA\Property(example="test1234")
      */
-    public $mb_password = '';
+    public $mb_password;
 
     /**
      * 비밀번호 확인
      * @var string
      * @OA\Property(example="test1234")
      */
-    public $mb_password_re = '';
+    public $mb_password_re;
 
     /**
      * 닉네임
      * @var string
      * @OA\Property(example="테스트")
      */
-    public $mb_nick = '';
+    public $mb_nick;
 
     /**
-     * 이름
-     * @var string
-     * @OA\Property(example="홍길동")
+     * 닉네임 변경일
+     * @var datetime
+     * @OA\Property(example="2021-01-01", readOnly=true)
      */
-    public $mb_name = '';
+    public $mb_nick_date;
 
     /**
      * 성별
@@ -56,9 +49,9 @@ class Member
     public $mb_sex = '';
 
     /**
-     * 생년월일
+     * 이메일
      * @var string
-     * @OA\Property(example="1990-01-01")
+     * @OA\Property(example="test@test.com")
      */
     public $mb_email = '';
 
@@ -147,21 +140,6 @@ class Member
     public $mb_profile = '';
 
     /**
-     * 추천인
-     * @var string
-     * @OA\Property(example="test")
-     */
-    public $mb_recommend = '';
-
-
-    /**
-     * 가입일
-     * @var datetime
-     * @OA\Property(example="2021-01-01 00:00:00", readOnly=true)
-     */
-    public $mb_datetime = '0000-00-00 00:00:00';
-
-    /**
      * 메일 수신여부
      * @var int
      * @OA\Property(example=1)
@@ -183,25 +161,11 @@ class Member
     public $mb_ip = '';
 
     /**
-     * 회원 레벨
-     * @var int
-     * @OA\Property(example=2, readOnly=true)
-     */
-    public $mb_level = 0;
-
-    /**
      * 정보공개여부
      * @var int
      * @OA\Property(example=1)
      */
     public $mb_open = 0;
-
-    /**
-     * 메일인증 여부
-     * @var datetime
-     * @OA\Property(example="2021-01-01 00:00:00", readOnly=true)
-     */
-    public $mb_email_certify = '0000-00-00 00:00:00';
 
     /**
      * 여분필드1

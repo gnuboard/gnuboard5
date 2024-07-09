@@ -8,7 +8,7 @@ namespace API\v1\Model\Response;
  *      description="응답 메시지를 포함하는 기본 모델 클래스",
  * )
  */
-class BaseResponseModel
+class BaseResponse
 {
     /**
      * @var string 응답 메시지

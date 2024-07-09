@@ -17,7 +17,7 @@ $app->group('/members', function (RouteCollectorProxy $group) {
 $app->group('/member', function (RouteCollectorProxy $group) {
     $group->put('', [MemberController::class, 'updateMember']);
     $group->post('/images', [MemberController::class, 'updateMemberImages']);
-    $group->delete('', [MemberController::class, 'deleteMember']);
+    $group->delete('', [MemberController::class, 'leaveMember']);
 })
 ->add(new ConfigMiddleware())
 ->add(new AccessTokenAuthMiddleware());

@@ -109,15 +109,16 @@ function decode_token(string $type, string $token, stdClass $headers = null)
  *
  * @param string $directory The directory to which the file is moved
  * @param UploadedFileInterface $uploadedFile The file uploaded file to move
+ * @param string|null $basename The basename of the file to use
  *
  * @return string The filename of moved file
  */
-function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile)
+function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile, string $basename = null)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 
     // see http://php.net/manual/en/function.random-bytes.php
-    $basename = bin2hex(random_bytes(8));
+    $basename = $basename ?: bin2hex(random_bytes(8));
     $filename = sprintf('%s.%0.8s', $basename, $extension);
 
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);

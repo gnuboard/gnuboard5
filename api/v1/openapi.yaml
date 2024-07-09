@@ -148,7 +148,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Member'
+              $ref: '#/components/schemas/CreateMemberRequest'
       responses:
         '201':
           description: '회원가입 성공'
@@ -169,13 +169,13 @@ paths:
       tags:
         - 회원
       summary: '인증 이메일 변경'
-      description: '메일인증을 처리하지 않은 회원의 메일을 변경하고 인증메일을 재전송합니다.'
+      description: "\r\n메일인증을 처리하지 않은 회원의 메일을 변경하고 인증메일을 재전송합니다.\r\n#### Request Body\r\n- email: 변경할 이메일 주소\r\n- password: 회원 비밀번호\r\n"
       operationId: d41a3675dfd37a03e30f6b226b8c42a2
       parameters:
         -
           name: mb_id
           in: path
-          description: '회원 ID'
+          description: '회원 아이디'
           required: true
           schema:
             type: string
@@ -184,39 +184,76 @@ paths:
         content:
           application/json:
             schema:
-              properties:
-                email:
-                  description: '변경 이메일'
-                  type: string
-                password:
-                  description: '회원 비밀번호'
-                  type: string
-              type: object
+              $ref: '#/components/schemas/ChangeCertificationEmailRequest'
       responses:
         '200':
-          description: ''
+          description: '이메일 갱신 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '403':
+          $ref: '#/components/responses/403'
+        '409':
+          $ref: '#/components/responses/409'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/members/me:
     get:
       tags:
         - 회원
       summary: '현재 로그인 회원정보 조회'
-      description: 'JWT 토큰을 통해 인증된 회원 정보를 조회합니다.'
+      description: "\r\nJWT 토큰을 통해 인증된 회원 정보를 조회합니다.\r\n- 탈퇴 또는 차단된 회원은 조회할 수 없습니다.\r\n- 이메일 인증이 완료되지 않은 회원은 조회할 수 없습니다.\r\n            "
       operationId: c36d9f57d1576b356a131deab6278550
+      responses:
+        '200':
+          description: '로그인 회원정보 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMemberMeResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
   '/api/v1/members/{mb_id}':
     get:
       tags:
         - 회원
       summary: '회원정보 조회'
-      description: '회원 정보를 조회합니다.'
+      description: "\r\n회원 정보를 조회합니다.\r\n- 자신&상대방의 정보가 공개 설정된 경우 조회 가능합니다.\r\n            "
       operationId: 341380afdb3856663bba53c8148842ce
       parameters:
         -
           name: mb_id
           in: path
-          description: '회원 ID'
+          description: '회원 아이디'
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: '회원정보 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMemberResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/member:
     put:
       tags:
@@ -224,15 +261,46 @@ paths:
       summary: '회원정보 수정'
       description: 'JWT 토큰을 통해 인증된 회원 정보를 수정합니다.'
       operationId: e7a371b8b809ea949af9400f8bd88efa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMemberRequest'
+      responses:
+        '200':
+          description: '회원정보 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/409'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
     delete:
       tags:
         - 회원
       summary: 회원탈퇴
-      description: 'JWT 토큰을 통해 인증된 회원을 탈퇴합니다.'
-      operationId: 7478967c7d59be68a9d55fa1468ffe17
+      description: "JWT 토큰을 통해 인증된 회원을 탈퇴합니다.\r\n- 실제로 데이터가 삭제되지 않고, 탈퇴 처리만 진행됩니다.\r\n"
+      operationId: 1612cdee9bd5e85e5583d91d629d5c51
       responses:
         '200':
-          description: ''
+          description: '회원탈퇴 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
   /api/v1/member/images:
     put:
       tags:
@@ -248,10 +316,10 @@ paths:
               properties:
                 mb_img:
                   description: '회원 이미지'
-                  type: string($binary)
+                  type: file
                 mb_icon:
                   description: '회원 아이콘'
-                  type: string($binary)
+                  type: file
                 del_mb_img:
                   description: '회원 이미지 삭제여부'
                   type: integer
@@ -261,10 +329,35 @@ paths:
               type: object
       responses:
         '200':
-          description: ''
+          description: '회원 아이콘/이미지 수정 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   schemas:
-    Member:
+    ChangeCertificationEmailRequest:
+      title: ChangeCertificationEmailRequest
+      description: '인증 이메일 변경 요청 모델'
+      properties:
+        email:
+          description: 이메일
+          type: string
+          example: test@test.com
+        password:
+          description: 비밀번호
+          type: string
+          example: test1234
+      type: object
+    CreateMemberRequest:
       title: Member
       description: '회원정보 모델'
       properties:
@@ -365,7 +458,7 @@ components:
           type: integer
           example: 1
         mb_ip:
-          description: '메일 수신여부'
+          description: '회원가입 IP'
           type: string
           readOnly: true
           example: 127.0.0.1
@@ -425,7 +518,145 @@ components:
           type: string
           example: test
       type: object
-    BaseResponseModel:
+    UpdateMemberRequest:
+      title: UpdateMemberRequest
+      description: '회원정보 갱신 모델'
+      properties:
+        mb_password:
+          description: 비밀번호
+          type: string
+          example: test1234
+        mb_password_re:
+          description: '비밀번호 확인'
+          type: string
+          example: test1234
+        mb_nick:
+          description: 닉네임
+          type: string
+          example: 테스트
+        mb_nick_date:
+          description: '닉네임 변경일'
+          type: string
+          format: date-time
+          readOnly: true
+          example: '2021-01-01'
+        mb_sex:
+          description: 성별
+          type: string
+          example: m
+        mb_email:
+          description: 이메일
+          type: string
+          example: test@test.com
+        mb_homepage:
+          description: 홈페이지
+          type: string
+          example: 'http://test.com'
+        mb_zip:
+          description: 우편번호
+          type: string
+          example: '12345'
+        mb_zip1:
+          description: 우편번호1
+          type: string
+          readOnly: true
+          example: '123'
+        mb_zip2:
+          description: 우편번호2
+          type: string
+          readOnly: true
+          example: '45'
+        mb_addr_jibeon:
+          description: 지번주소
+          type: string
+          example: '서울시 강남구'
+        mb_addr1:
+          description: '기본 주소'
+          type: string
+          example: '서울시 강남구 역삼동 123-45'
+        mb_addr2:
+          description: '나머지 주소'
+          type: string
+          example: 123호
+        mb_addr3:
+          description: '기타 주소'
+          type: string
+          example: 456호
+        mb_tel:
+          description: 전화번호
+          type: string
+          example: 02-1234-5678
+        mb_hp:
+          description: 휴대폰번호
+          type: string
+          example: 010-1234-5678
+        mb_signature:
+          description: 서명
+          type: string
+          example: test
+        mb_profile:
+          description: 자기소개
+          type: string
+          example: '안녕하세요. 반갑습니다.'
+        mb_mailling:
+          description: '메일 수신여부'
+          type: integer
+          example: 1
+        mb_sms:
+          description: 'SMS 수신여부'
+          type: integer
+          example: 1
+        mb_ip:
+          description: '메일 수신여부'
+          type: string
+          readOnly: true
+          example: 127.0.0.1
+        mb_open:
+          description: 정보공개여부
+          type: integer
+          example: 1
+        mb_1:
+          description: 여분필드1
+          type: string
+          example: test
+        mb_2:
+          description: 여분필드2
+          type: string
+          example: test
+        mb_3:
+          description: 여분필드3
+          type: string
+          example: test
+        mb_4:
+          description: 여분필드4
+          type: string
+          example: test
+        mb_5:
+          description: 여분필드5
+          type: string
+          example: test
+        mb_6:
+          description: 여분필드6
+          type: string
+          example: test
+        mb_7:
+          description: 여분필드7
+          type: string
+          example: test
+        mb_8:
+          description: 여분필드8
+          type: string
+          example: test
+        mb_9:
+          description: 여분필드9
+          type: string
+          example: test
+        mb_10:
+          description: 여분필드10
+          type: string
+          example: test
+      type: object
+    BaseResponse:
       description: '응답 메시지를 포함하는 기본 모델 클래스'
       properties:
         message:
@@ -453,49 +684,142 @@ components:
           type: string
           example: string
       type: object
+    GetMemberMeResponse:
+      description: '현재 로그인 회원정보 조회 응답 모델'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/GetMemberResponse'
+        -
+          properties:
+            mb_name:
+              description: '회원 이름'
+              type: string
+              example: 홍길동
+            mb_memo_cnt:
+              description: '회원 메모 갯수'
+              type: integer
+              example: 10
+            mb_scrap_cnt:
+              description: '회원 스크랩 갯수'
+              type: integer
+              example: 10
+          type: object
+    GetMemberResponse:
+      description: '회원정보 조회 응답 모델'
+      properties:
+        mb_id:
+          description: '회원 아이디'
+          type: string
+          example: test
+        mb_nick:
+          description: '회원 닉네임'
+          type: string
+          example: 테스트
+        mb_email:
+          description: '회원 이메일'
+          type: string
+          example: test@test.com
+        mb_point:
+          description: '회원 포인트'
+          type: integer
+          example: 100
+        mb_profile:
+          description: '회원 자기소개'
+          type: string
+          example: '안녕하세요?'
+        mb_icon_path:
+          description: '회원 아이콘 경로'
+          type: string
+          example: /member/test/icon.jpg
+        mb_image_path:
+          description: '회원 이미지 경로'
+          type: string
+          example: /member/test/image.jpg
+        mb_1:
+          description: 여분필드1
+          type: string
+          example: test
+        mb_2:
+          description: 여분필드2
+          type: string
+          example: test
+        mb_3:
+          description: 여분필드3
+          type: string
+          example: test
+        mb_4:
+          description: 여분필드4
+          type: string
+          example: test
+        mb_5:
+          description: 여분필드5
+          type: string
+          example: test
+        mb_6:
+          description: 여분필드6
+          type: string
+          example: test
+        mb_7:
+          description: 여분필드7
+          type: string
+          example: test
+        mb_8:
+          description: 여분필드8
+          type: string
+          example: test
+        mb_9:
+          description: 여분필드9
+          type: string
+          example: test
+        mb_10:
+          description: 여분필드10
+          type: string
+          example: test
+      type: object
   responses:
     '400':
       description: '잘못된 요청'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
     '409':
       description: '중복된 데이터'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
     '403':
       description: '권한 없음'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
     '422':
       description: '입력값 오류'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
     '404':
       description: '리소스를 찾을 수 없음'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
     '500':
       description: '서버 오류'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
     '401':
       description: '인증 실패'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponseModel'
+            $ref: '#/components/schemas/BaseResponse'
 tags:
   -
     name: 환경설정
