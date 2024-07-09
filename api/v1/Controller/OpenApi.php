@@ -18,7 +18,8 @@ namespace API\v1\Controller;
  *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
  *      )
  * )
+ * @OA\Server(url=G5_URL)
 */
-class InitController
+class OpenApi
 {
 }

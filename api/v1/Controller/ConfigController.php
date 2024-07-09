@@ -24,7 +24,6 @@ class ConfigController
      *              @OA\Property(property="cf_add_script", type="string", description="추가 스크립트"),
      *              @OA\Property(property="cf_analytics", type="string", description="분석코드"),
      *              @OA\Examples(
-     *                  example="result",
      *                  value={
      *                      "cf_title": "string",
      *                      "cf_add_meta": "string",
@@ -53,10 +52,31 @@ class ConfigController
     /**
      * @OA\Get(
      *     path="/api/v1/config/policy",
-     *     summary="회원가입약관 조회",
+     *     summary="회원가입 약관 조회",
      *     tags={"환경설정", "회원"},
-     *     description="회원가입 약관을 조회합니다.<br> - 회원가입 약관 <br> - 개인정보 수집 및 허용 약관",
-     *     @OA\Response(response="200", description="")
+     *     description="회원가입 약관을 조회합니다.   
+- 회원가입 약관
+- 개인정보 수집 및 허용 약관
+",
+     *     @OA\Response(
+     *          response="200",
+     *          description="Successful Response",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="cf_stipulation", type="string", description="회원가입 약관"),
+     *              @OA\Property(property="cf_privacy", type="string", description="개인정보 수집 및 허용 약관"),
+     *              @OA\Examples(
+     *                  value={
+     *                      "cf_stipulation": "string",
+     *                      "cf_privacy": "string",
+     *                  }
+     *              ),
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response="500",
+     *          description="서버 오류",
+     *     ),
      * )
      */
     public function getPolicyConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -74,8 +94,66 @@ class ConfigController
      *     path="/api/v1/config/member",
      *     summary="회원가입 설정 조회",
      *     tags={"환경설정", "회원"},
-     *     description="회원가입에 필요한 환경설정 정보를 조회합니다.",
-     *     @OA\Response(response="200", description="")
+     *     description="회원가입에 필요한 기본환경설정 정보를 조회합니다.",
+     *     @OA\Response(
+     *          response="200",
+     *          description="Successful Response",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="cf_use_email_certify", type="int", description="메일인증 사용 여부"),
+     *              @OA\Property(property="cf_use_homepage", type="int", description="홈페이지 입력 사용 여부"),
+     *              @OA\Property(property="cf_req_homepage", type="int", description="홈페이지 입력 필수 여부"),
+     *              @OA\Property(property="cf_use_tel", type="int", description="전화번호 입력 사용 여부"),
+     *              @OA\Property(property="cf_req_tel", type="int", description="전화번호 입력 필수 여부"),
+     *              @OA\Property(property="cf_use_hp", type="int", description="휴대폰번호 입력 사용 여부"),
+     *              @OA\Property(property="cf_req_hp", type="int", description="휴대폰번호 입력 필수 여부"),
+     *              @OA\Property(property="cf_use_addr", type="int", description="주소 입력 사용 여부"),
+     *              @OA\Property(property="cf_req_addr", type="int", description="주소 입력 필수 여부"),
+     *              @OA\Property(property="cf_use_signature", type="int", description="서명 입력 사용 여부"),
+     *              @OA\Property(property="cf_req_signature", type="int", description="서명 입력 필수 여부"),
+     *              @OA\Property(property="cf_use_profile", type="int", description="자기소개 입력 사용 여부"),
+     *              @OA\Property(property="cf_req_profile", type="int", description="자기소개 입력 필수 여부"),
+     *              @OA\Property(property="cf_icon_level", type="int", description="	회원아이콘 업로드 권한 제한"),
+     *              @OA\Property(property="cf_member_img_width", type="int", description="회원 이미지 너비"),
+     *              @OA\Property(property="cf_member_img_height", type="int", description="회원 이미지 높이"),
+     *              @OA\Property(property="cf_member_img_size", type="int", description="회원 이미지 크기"),
+     *              @OA\Property(property="cf_member_icon_width", type="int", description="회원 아이콘 너비"),
+     *              @OA\Property(property="cf_member_icon_height", type="int", description="회원 아이콘 높이"),
+     *              @OA\Property(property="cf_member_icon_size", type="int", description="회원 아이콘 크기"),
+     *              @OA\Property(property="cf_open_modify", type="int", description="	회원 정보공개 제한 일"),
+     *              @OA\Property(property="cf_use_recommend", type="int", description="추천인 사용 여부"),
+     *              @OA\Examples(
+     *                  value={
+     *                      "cf_use_email_certify": 0,
+     *                      "cf_use_homepage": 0,
+     *                      "cf_req_homepage": 0,
+     *                      "cf_use_tel": 0,
+     *                      "cf_req_tel": 0,
+     *                      "cf_use_hp": 0,
+     *                      "cf_req_hp": 0,
+     *                      "cf_use_addr": 0,
+     *                      "cf_req_addr": 0,
+     *                      "cf_use_signature": 0,
+     *                      "cf_req_signature": 0,
+     *                      "cf_use_profile": 0,
+     *                      "cf_req_profile": 0,
+     *                      "cf_icon_level": 0,
+     *                      "cf_member_img_width": 0,
+     *                      "cf_member_img_height": 0,
+     *                      "cf_member_img_size": 0,
+     *                      "cf_member_icon_width": 0,
+     *                      "cf_member_icon_height": 0,
+     *                      "cf_member_icon_size": 0,
+     *                      "cf_open_modify": 0,
+     *                      "cf_use_recommend": 0
+     *                  }
+     *              ),
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response="500",
+     *          description="서버 오류",
+     *     ),
      * )
      */
     public function getMemberConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -84,9 +162,10 @@ class ConfigController
 
         $select = array(
             'cf_use_email_certify', 'cf_use_homepage', 'cf_req_homepage', 'cf_use_tel', 'cf_req_tel',
-            'cf_use_hp', 'cf_req_hp', 'cf_use_addr', 'cf_req_addr', 'cf_use_signature', 'cf_use_profile',
-            'cf_icon_level', 'cf_member_img_width', 'cf_member_img_height', 'cf_member_img_size', 'cf_member_icon_width',
-            'cf_member_icon_height', 'cf_member_icon_size', 'cf_open_modify', 'cf_use_recommend'
+            'cf_use_hp', 'cf_req_hp', 'cf_use_addr', 'cf_req_addr', 'cf_use_signature', 'cf_req_signature',
+            'cf_use_profile', 'cf_req_profile', 'cf_icon_level', 'cf_member_img_width', 'cf_member_img_height',
+            'cf_member_img_size', 'cf_member_icon_width', 'cf_member_icon_height', 'cf_member_icon_size',
+            'cf_open_modify', 'cf_use_recommend'
         );
         $policy_config = generate_select_array($config, $select);
 

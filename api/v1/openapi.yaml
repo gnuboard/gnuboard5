@@ -8,6 +8,9 @@ info:
     name: 'Apache 2.0'
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
+servers:
+  -
+    url: 'http://127.0.0.1/g5-update'
 paths:
   /api/v1/token:
     post:
@@ -48,9 +51,7 @@ paths:
                   cf_add_script: { description: '추가 스크립트', type: string }
                   cf_analytics: { description: 분석코드, type: string }
                 type: object
-              examples:
-                result:
-                  value: { cf_title: string, cf_add_meta: string, cf_add_script: string, cf_analytics: string }
+              examples: {  }
         '500':
           description: '서버 오류'
   /api/v1/config/policy:
@@ -58,23 +59,63 @@ paths:
       tags:
         - 환경설정
         - 회원
-      summary: '회원가입약관 조회'
-      description: '회원가입 약관을 조회합니다.<br> - 회원가입 약관 <br> - 개인정보 수집 및 허용 약관'
+      summary: '회원가입 약관 조회'
+      description: "회원가입 약관을 조회합니다.   \r\n- 회원가입 약관\r\n- 개인정보 수집 및 허용 약관\r\n"
       operationId: 07c46bfd244961b88286addf0c64d58e
       responses:
         '200':
-          description: ''
+          description: 'Successful Response'
+          content:
+            application/json:
+              schema:
+                properties:
+                  cf_stipulation: { description: '회원가입 약관', type: string }
+                  cf_privacy: { description: '개인정보 수집 및 허용 약관', type: string }
+                type: object
+              examples: {  }
+        '500':
+          description: '서버 오류'
   /api/v1/config/member:
     get:
       tags:
         - 환경설정
         - 회원
       summary: '회원가입 설정 조회'
-      description: '회원가입에 필요한 환경설정 정보를 조회합니다.'
+      description: '회원가입에 필요한 기본환경설정 정보를 조회합니다.'
       operationId: 259da4e5e14ed20e7ed5c35132b7f139
       responses:
         '200':
-          description: ''
+          description: 'Successful Response'
+          content:
+            application/json:
+              schema:
+                properties:
+                  cf_use_email_certify: { description: '메일인증 사용 여부', type: integer }
+                  cf_use_homepage: { description: '홈페이지 입력 사용 여부', type: integer }
+                  cf_req_homepage: { description: '홈페이지 입력 필수 여부', type: integer }
+                  cf_use_tel: { description: '전화번호 입력 사용 여부', type: integer }
+                  cf_req_tel: { description: '전화번호 입력 필수 여부', type: integer }
+                  cf_use_hp: { description: '휴대폰번호 입력 사용 여부', type: integer }
+                  cf_req_hp: { description: '휴대폰번호 입력 필수 여부', type: integer }
+                  cf_use_addr: { description: '주소 입력 사용 여부', type: integer }
+                  cf_req_addr: { description: '주소 입력 필수 여부', type: integer }
+                  cf_use_signature: { description: '서명 입력 사용 여부', type: integer }
+                  cf_req_signature: { description: '서명 입력 필수 여부', type: integer }
+                  cf_use_profile: { description: '자기소개 입력 사용 여부', type: integer }
+                  cf_req_profile: { description: '자기소개 입력 필수 여부', type: integer }
+                  cf_icon_level: { description: "\t회원아이콘 업로드 권한 제한", type: integer }
+                  cf_member_img_width: { description: '회원 이미지 너비', type: integer }
+                  cf_member_img_height: { description: '회원 이미지 높이', type: integer }
+                  cf_member_img_size: { description: '회원 이미지 크기', type: integer }
+                  cf_member_icon_width: { description: '회원 아이콘 너비', type: integer }
+                  cf_member_icon_height: { description: '회원 아이콘 높이', type: integer }
+                  cf_member_icon_size: { description: '회원 아이콘 크기', type: integer }
+                  cf_open_modify: { description: "\t회원 정보공개 제한 일", type: integer }
+                  cf_use_recommend: { description: '추천인 사용 여부', type: integer }
+                type: object
+              examples: {  }
+        '500':
+          description: '서버 오류'
   /api/v1/config/memo:
     get:
       tags:
@@ -100,54 +141,63 @@ paths:
       tags:
         - 회원
       summary: 회원가입
-      description: '회원가입을 진행합니다.'
+      description: "회원 가입을 처리합니다.\r\n#### 회원가입과 함께 처리되는 작업\r\n- 회원가입 & 추천인 포인트 지급\r\n- 회원가입 메일 발송 (메일발송 설정 시)\r\n- 관리자에게 회원가입 메일 발송 (메일발송 설정 시)"
       operationId: 0e80e12223f56d817ee88232f74d50c4
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              properties:
-                mb_id:
-                  description: 아이디
-                  type: string
-                  example: test
-                mb_password:
-                  description: 비밀번호
-                  type: string
-                  example: test1234
-                mb_password_re:
-                  description: '비밀번호 확인'
-                  type: string
-                  example: test1234
-                mb_name:
-                  description: 이름
-                  type: string
-                  example: 홍길동
-                mb_nick:
-                  description: 닉네임
-                  type: string
-                  example: 홍길동
-                mb_email:
-                  description: 이메일
-                  type: string
-                  example: ''
-                mb_recommend:
-                  description: 추천인
-                  type: string
-                  example: ''
-                mb_hp:
-                  description: '휴대폰 번호'
-                  type: string
-                  example: ''
-                mb_zip:
-                  description: 우편번호
-                  type: string
-                  example: ''
-              type: object
+              $ref: '#/components/schemas/Member'
       responses:
-        '200':
-          description: ''
+        '201':
+          description: 'Successful Response'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: '응답 메시지', type: string }
+                  mb_id: { description: '회원 아이디', type: string }
+                  mb_name: { description: '회원 이름', type: string }
+                  mb_nick: { description: '회원 닉네임', type: string }
+                type: object
+              examples: {  }
+        '403':
+          description: '권한 없음'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: '응답 메시지', type: string }
+                type: object
+              examples: {  }
+        '409':
+          description: '중복된 데이터'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: '응답 메시지', type: string }
+                type: object
+              examples: {  }
+        '422':
+          description: '입력값 오류'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: '응답 메시지', type: string }
+                type: object
+              examples: {  }
+        '500':
+          description: '서버 오류'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { description: '응답 메시지', type: string }
+                type: object
+              examples: {  }
   '/api/v1/members/{mb_id}/email-certification/change':
     put:
       tags:
@@ -246,6 +296,163 @@ paths:
       responses:
         '200':
           description: ''
+components:
+  schemas:
+    Member:
+      title: Member
+      description: '회원정보 모델'
+      properties:
+        mb_id:
+          description: '회원 아이디'
+          type: string
+          example: test
+        mb_password:
+          description: 비밀번호
+          type: string
+          example: test1234
+        mb_password_re:
+          description: '비밀번호 확인'
+          type: string
+          example: test1234
+        mb_nick:
+          description: 닉네임
+          type: string
+          example: 테스트
+        mb_name:
+          description: 이름
+          type: string
+          example: 홍길동
+        mb_sex:
+          description: 성별
+          type: string
+          example: m
+        mb_email:
+          description: 생년월일
+          type: string
+          example: '1990-01-01'
+        mb_homepage:
+          description: 홈페이지
+          type: string
+          example: 'http://test.com'
+        mb_zip:
+          description: 우편번호
+          type: string
+          example: '12345'
+        mb_zip1:
+          description: 우편번호1
+          type: string
+          readOnly: true
+          example: '123'
+        mb_zip2:
+          description: 우편번호2
+          type: string
+          readOnly: true
+          example: '45'
+        mb_addr_jibeon:
+          description: 지번주소
+          type: string
+          example: '서울시 강남구'
+        mb_addr1:
+          description: '기본 주소'
+          type: string
+          example: '서울시 강남구 역삼동 123-45'
+        mb_addr2:
+          description: '나머지 주소'
+          type: string
+          example: 123호
+        mb_addr3:
+          description: '기타 주소'
+          type: string
+          example: 456호
+        mb_tel:
+          description: 전화번호
+          type: string
+          example: 02-1234-5678
+        mb_hp:
+          description: 휴대폰번호
+          type: string
+          example: 010-1234-5678
+        mb_signature:
+          description: 서명
+          type: string
+          example: test
+        mb_profile:
+          description: 자기소개
+          type: string
+          example: '안녕하세요. 반갑습니다.'
+        mb_recommend:
+          description: 추천인
+          type: string
+          example: test
+        mb_mailling:
+          description: '메일 수신여부'
+          type: integer
+          example: 1
+        mb_sms:
+          description: 'SMS 수신여부'
+          type: integer
+          example: 1
+        mb_ip:
+          description: '메일 수신여부'
+          type: string
+          readOnly: true
+          example: 127.0.0.1
+        mb_level:
+          description: '회원 레벨'
+          type: integer
+          readOnly: true
+          example: 2
+        mb_open:
+          description: 정보공개여부
+          type: integer
+          example: 1
+        mb_email_certify:
+          description: '메일인증 여부'
+          type: string
+          format: date-time
+          readOnly: true
+          example: '2021-01-01 00:00:00'
+        mb_1:
+          description: 여분필드1
+          type: string
+          example: test
+        mb_2:
+          description: 여분필드2
+          type: string
+          example: test
+        mb_3:
+          description: 여분필드3
+          type: string
+          example: test
+        mb_4:
+          description: 여분필드4
+          type: string
+          example: test
+        mb_5:
+          description: 여분필드5
+          type: string
+          example: test
+        mb_6:
+          description: 여분필드6
+          type: string
+          example: test
+        mb_7:
+          description: 여분필드7
+          type: string
+          example: test
+        mb_8:
+          description: 여분필드8
+          type: string
+          example: test
+        mb_9:
+          description: 여분필드9
+          type: string
+          example: test
+        mb_10:
+          description: 여분필드10
+          type: string
+          example: test
+      type: object
 tags:
   -
     name: 환경설정
