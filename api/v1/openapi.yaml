@@ -358,7 +358,7 @@ components:
           example: test1234
       type: object
     CreateMemberRequest:
-      title: Member
+      title: CreateMemberRequest
       description: '회원정보 모델'
       properties:
         mb_id:
@@ -377,6 +377,12 @@ components:
           description: 닉네임
           type: string
           example: 테스트
+        mb_nick_date:
+          description: '닉네임 변경일'
+          type: string
+          format: date-time
+          readOnly: true
+          example: '2021-01-01'
         mb_name:
           description: 이름
           type: string

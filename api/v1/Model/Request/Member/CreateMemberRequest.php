@@ -7,7 +7,7 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Schema(
  *     type="object",
- *     title="Member",
+ *     title="CreateMemberRequest",
  *     description="회원정보 모델",
  * )
  */

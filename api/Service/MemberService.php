@@ -15,9 +15,9 @@ class MemberService
     private $allowed_media_types = ['image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/x-png', 'image/png'];
 
 
-    public function __construct($request)
+    public function __construct($config)
     {
-        $this->config = $request->getAttribute('config');
+        $this->config = $config;
     }
 
     /**

@@ -46,6 +46,8 @@ class MemberController
     public function createMember(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $member_service = new MemberService($config);
+
         $request_body = $request->getParsedBody();
         $data = new CreateMemberRequest($request_body);
 
@@ -173,7 +175,6 @@ class MemberController
         }
 
         // 회원가입 처리
-        $member_service = new MemberService($request);
         $member_service->insertMember($data);
         
         // 회원가입 포인트 부여
@@ -267,6 +268,8 @@ class MemberController
     public function changeCertificationEmail(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $member_service = new MemberService($config);
+
         $data = new ChangeCertificationEmailRequest($request->getParsedBody());
 
         if (empty($args['mb_id']) || empty($data->email) || empty($data->password)) {
@@ -275,8 +278,6 @@ class MemberController
 
         $mb_id = substr(clean_xss_tags($args['mb_id']), 0, 20);
         $mb_email = get_email_address(trim($data->email));
-        $member_service = new MemberService($request);
-
 
         $member = $member_service->fetchMemberById($mb_id);
         if (!check_password($data->password, $member['mb_password'])) {
@@ -317,7 +318,6 @@ class MemberController
 
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 
-        $member_service = new MemberService($request);
         $member_service->updateMember($mb_id, ["mb_email" => $mb_email, "mb_email_certify2" => $mb_md5]);
 
         return api_response_json($response, array("message" => "{$mb_email}주소로 인증메일이 재전송되었습니다."));
@@ -342,8 +342,9 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      */
     public function getMe(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
-        $member_service = new MemberService($request);
+        $member_service = new MemberService($config);
         
         $member['mb_icon_path'] = $member_service->getMemberImagePath($member['mb_id'], 'icon');
         $member['mb_image_path'] = $member_service->getMemberImagePath($member['mb_id'], 'image');
@@ -373,10 +374,11 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      */
     public function getMember(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+        $config = $request->getAttribute('config');
         $login_member = $request->getAttribute('member');
         $mb_id = $args['mb_id'];
 
-        $member_service = new MemberService($request);
+        $member_service = new MemberService($config);
         $member = $member_service->fetchMemberById($mb_id);
         if (!$member) {
             return api_response_json($response, array("message" => "회원정보가 존재하지 않습니다."), 404);
@@ -424,6 +426,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
     {
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
+        $member_service = new MemberService($config);
 
         $request_body = $request->getParsedBody();
         $data = new UpdateMemberRequest($request_body);
@@ -483,7 +486,6 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
         $data->mb_zip2 = substr($data->mb_zip, 4, 3);
         unset($data->mb_zip);
 
-        $member_service = new MemberService($request);
         $member_service->updateMember($member['mb_id'], (array)$data);
 
         $result = array(
@@ -522,8 +524,9 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      */
     public function updateMemberImages(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
-        $member_service = new MemberService($request);
+        $member_service = new MemberService($config);
 
         $data = $request->getParsedBody();
         $uploadedFiles = $request->getUploadedFiles();
@@ -559,8 +562,9 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      */
     public function leaveMember(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
-        $member_service = new MemberService($request);
+        $member_service = new MemberService($config);
 
         try {
             $member_service->leaveMember($member);
