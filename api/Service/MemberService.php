@@ -163,6 +163,17 @@ class MemberService
         return $stmt->fetch();
     }
 
+    public function fetchAllMemberByEmail(string $mb_email)
+    {
+        global $g5;
+
+        $query = "SELECT * FROM {$g5['member_table']} WHERE mb_email = :mb_email";
+
+        $stmt = Db::getInstance()->run($query, ["mb_email" => $mb_email]);
+
+        return $stmt->fetchAll();
+    }
+
     public function insertMember(object $data)
     {
         global $g5;

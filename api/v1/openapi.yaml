@@ -320,10 +320,35 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+  /api/v1/members/search/password:
+    post:
+      tags:
+        - 회원
+      summary: '임시비밀번호 메일 발송'
+      description: '임시비밀번호로 재설정할 수 있는 링크를 메일로 발송합니다.'
+      operationId: e8452c80177239e8baada0f14f540c38
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchPasswordResetMailReqeust'
+      responses:
+        '200':
+          description: '임시비밀번호 메일 발송 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
 components:
   schemas:
     ChangeCertificationEmailRequest:
-      title: ChangeCertificationEmailRequest
       description: '인증 이메일 변경 요청 모델'
       properties:
         email:
@@ -501,6 +526,14 @@ components:
           description: 여분필드10
           type: string
           example: test
+      type: object
+    SearchPasswordResetMailReqeust:
+      description: '임시비밀번호 메일 발송 요청 모델'
+      properties:
+        mb_email:
+          description: 이메일
+          type: string
+          example: test@test.com
       type: object
     UpdateMemberRequest:
       title: UpdateMemberRequest

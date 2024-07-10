@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response;
 
+use API\v1\Model\Response\BaseResponse;
+
 /**
  * @OA\Response(
  *    response="400",

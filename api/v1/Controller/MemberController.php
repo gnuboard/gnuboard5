@@ -573,4 +573,70 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
             return api_response_json($response, array("message" => $e->getMessage()), 403);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/members/search/password",
+     *      summary="임시비밀번호 메일 발송",
+     *      tags={"회원"},
+     *      description="임시비밀번호로 재설정할 수 있는 링크를 메일로 발송합니다.",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/SearchPasswordResetMailReqeust"),
+     *          )
+     *      ),
+     *      @OA\Response(response="200", description="임시비밀번호 메일 발송 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function searchPasswordResetMail(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        // TODO: 비로그인 체크
+
+        $config = $request->getAttribute('config');
+        $member_service = new MemberService($config);
+
+        $request_body = $request->getParsedBody();
+
+        // 이메일 주소 유효성 검사
+        $email = get_email_address(trim($request_body['mb_email']));
+        if (!$email) {
+            return api_response_json($response, array("message" => '메일주소 오류입니다.'), 422);
+        }
+
+        // 메일주소로 회원정보 조회 및 체크
+        $members = $member_service->fetchAllMemberByEmail($email);
+
+        switch (count($members)) {
+            case 0:
+                return api_response_json($response, ["message" => "존재하지 않는 회원입니다."], 404);
+            case 1:
+                $member = $members[0];
+                break;
+            default:
+                return api_response_json($response, ["message" => "동일한 메일주소가 2개 이상 존재합니다. 관리자에게 문의하여 주십시오."], 409);
+        }
+        if (is_admin($member['mb_id'])) {
+            return api_response_json($response, ["message" => '관리자 아이디는 접근 불가합니다.'], 403);
+        }
+
+        // 임시비밀번호 발급
+        $change_password = rand(100000, 999999);
+        $mb_lost_certify = get_encrypt_string($change_password);
+        $mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));  // 일회용 난수 생성
+
+        $member_service->updateMember($member['mb_id'], ["mb_lost_certify" => "{$mb_nonce} {$mb_lost_certify}"]);
+
+        // TODO: 메일발송 테스트 필요함.
+        send_reset_password_mail($config, $member, $mb_nonce, $change_password);
+
+        run_event('password_lost2_after', $member, $mb_nonce, $mb_lost_certify);
+
+        return api_response_json($response, ["message" => '비밀번호를 변경할 수 있는 링크가 '.$email.' 메일로 발송되었습니다.']);
+    }
 }
