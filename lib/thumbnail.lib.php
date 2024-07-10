@@ -276,10 +276,11 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     // $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.".$ext[$size[2]];
     $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.".$file_ext;
     
-    $thumb_time = @filemtime($thumb_file);
-    $source_time = @filemtime($source_file);
-
+    
     if (file_exists($thumb_file)) {
+        $thumb_time = @filemtime($thumb_file);
+        $source_time = @filemtime($source_file);
+
         if ($is_create == false && $source_time < $thumb_time) {
             return basename($thumb_file);
         }
