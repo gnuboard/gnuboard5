@@ -41,40 +41,30 @@ paths:
       operationId: 5d1063d78abd2d407baa4a7d34a0abd0
       responses:
         '200':
-          description: 'Successful Response'
+          description: '기본환경설정 조회 성공'
           content:
             application/json:
               schema:
-                properties:
-                  cf_title: { description: '사이트 제목', type: string }
-                  cf_add_meta: { description: '추가 메타태그', type: string }
-                  cf_add_script: { description: '추가 스크립트', type: string }
-                  cf_analytics: { description: 분석코드, type: string }
-                type: object
-              examples: {  }
+                $ref: '#/components/schemas/HtmlConfigResponse'
         '500':
-          description: '서버 오류'
+          $ref: '#/components/responses/500'
   /api/v1/config/policy:
     get:
       tags:
         - 환경설정
         - 회원
       summary: '회원가입 약관 조회'
-      description: "회원가입 약관을 조회합니다.   \r\n- 회원가입 약관\r\n- 개인정보 수집 및 허용 약관\r\n"
+      description: '회원가입 약관을 조회합니다.'
       operationId: 07c46bfd244961b88286addf0c64d58e
       responses:
         '200':
-          description: 'Successful Response'
+          description: '약관 조회 성공'
           content:
             application/json:
               schema:
-                properties:
-                  cf_stipulation: { description: '회원가입 약관', type: string }
-                  cf_privacy: { description: '개인정보 수집 및 허용 약관', type: string }
-                type: object
-              examples: {  }
+                $ref: '#/components/schemas/PolicyConfigResponse'
         '500':
-          description: '서버 오류'
+          $ref: '#/components/responses/500'
   /api/v1/config/member:
     get:
       tags:
@@ -85,37 +75,13 @@ paths:
       operationId: 259da4e5e14ed20e7ed5c35132b7f139
       responses:
         '200':
-          description: 'Successful Response'
+          description: '회원가입 설정 조회 성공'
           content:
             application/json:
               schema:
-                properties:
-                  cf_use_email_certify: { description: '메일인증 사용 여부', type: integer }
-                  cf_use_homepage: { description: '홈페이지 입력 사용 여부', type: integer }
-                  cf_req_homepage: { description: '홈페이지 입력 필수 여부', type: integer }
-                  cf_use_tel: { description: '전화번호 입력 사용 여부', type: integer }
-                  cf_req_tel: { description: '전화번호 입력 필수 여부', type: integer }
-                  cf_use_hp: { description: '휴대폰번호 입력 사용 여부', type: integer }
-                  cf_req_hp: { description: '휴대폰번호 입력 필수 여부', type: integer }
-                  cf_use_addr: { description: '주소 입력 사용 여부', type: integer }
-                  cf_req_addr: { description: '주소 입력 필수 여부', type: integer }
-                  cf_use_signature: { description: '서명 입력 사용 여부', type: integer }
-                  cf_req_signature: { description: '서명 입력 필수 여부', type: integer }
-                  cf_use_profile: { description: '자기소개 입력 사용 여부', type: integer }
-                  cf_req_profile: { description: '자기소개 입력 필수 여부', type: integer }
-                  cf_icon_level: { description: "\t회원아이콘 업로드 권한 제한", type: integer }
-                  cf_member_img_width: { description: '회원 이미지 너비', type: integer }
-                  cf_member_img_height: { description: '회원 이미지 높이', type: integer }
-                  cf_member_img_size: { description: '회원 이미지 크기', type: integer }
-                  cf_member_icon_width: { description: '회원 아이콘 너비', type: integer }
-                  cf_member_icon_height: { description: '회원 아이콘 높이', type: integer }
-                  cf_member_icon_size: { description: '회원 아이콘 크기', type: integer }
-                  cf_open_modify: { description: "\t회원 정보공개 제한 일", type: integer }
-                  cf_use_recommend: { description: '추천인 사용 여부', type: integer }
-                type: object
-              examples: {  }
+                $ref: '#/components/schemas/MemberConfigResponse'
         '500':
-          description: '서버 오류'
+          $ref: '#/components/responses/500'
   /api/v1/config/memo:
     get:
       tags:
@@ -125,7 +91,13 @@ paths:
       operationId: 8c2614e4159a0f8ad89fa3cfb4d25b9f
       responses:
         '200':
-          description: ''
+          description: '소진 포인트 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoConfigResponse'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/config/board:
     get:
       tags:
@@ -135,7 +107,13 @@ paths:
       operationId: 8c900e31ff563290d83040baa6c38c09
       responses:
         '200':
-          description: ''
+          description: '게시판설정 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardConfigResponse'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/members:
     post:
       tags:
@@ -669,6 +647,210 @@ components:
           description: '응답 메시지'
           type: string
           example: string
+      type: object
+    BoardConfigResponse:
+      description: '기본환경설정 > 게시판 설정 응답 모델'
+      properties:
+        cf_use_point:
+          description: '포인트 사용 여부'
+          type: integer
+          example: 1
+        cf_point_term:
+          description: '포인트 유효 기간 (일)'
+          type: integer
+          example: 0
+        cf_use_copy_log:
+          description: '게시글복사 로그 사용여부'
+          type: integer
+          example: 1
+        cf_cut_name:
+          description: '표시할 이름(닉네임)자리 수'
+          type: integer
+          example: 15
+        cf_new_rows:
+          description: '최근 게시물 표시할 목록 수'
+          type: integer
+          example: 15
+        cf_read_point:
+          description: '게시글읽기 포인트'
+          type: integer
+          example: 1
+        cf_write_point:
+          description: '게시글쓰기 포인트'
+          type: integer
+          example: 5
+        cf_comment_point:
+          description: '댓글쓰기 포인트'
+          type: integer
+          example: 2
+        cf_download_point:
+          description: '파일 다운로드 포인트'
+          type: integer
+          example: 10
+        cf_write_pages:
+          description: '페이징 번호 표시 수'
+          type: integer
+          example: 10
+        cf_mobile_pages:
+          description: '페이징 번호 표시 수 (모바일)'
+          type: integer
+          example: 5
+        cf_link_target:
+          description: '새창 링크 (_self, _blank 등)'
+          type: string
+          example: _blank
+        cf_bbs_rewrite:
+          description: '짧은주소 사용 여부'
+          type: integer
+          example: 0
+        cf_delay_sec:
+          description: '게시글 작성 간격(초)'
+          type: integer
+          example: 30
+        cf_filter:
+          description: '필터할 단어 (, 구분자)'
+          type: string
+          example: '금지어,욕설'
+        cf_possible_ip:
+          description: '접근 가능 IP'
+          type: string
+          example: 192.168.0.1
+        cf_intercept_ip:
+          description: '접근 차단 IP'
+          type: string
+          example: 192.168.0.2
+      type: object
+    HtmlConfigResponse:
+      description: '기본환경설정 > HTML 설정 조회 응답 모델'
+      properties:
+        cf_title:
+          description: '홈페이지 제목'
+          type: string
+          example: 그누보드5
+        cf_add_meta:
+          description: '추가 메타태그'
+          type: string
+          example: "<meta name='description' content='그누보드5'>"
+        cf_add_script:
+          description: '추가 스크립트'
+          type: string
+          example: "<script src='http://example.com/script.js'></script>"
+        cf_analytics:
+          description: 분석코드
+          type: string
+          example: UA-12345678-1
+      type: object
+    MemberConfigResponse:
+      description: '기본환경설정 > 회원가입 설정 조회 응답 모델'
+      properties:
+        cf_use_email_certify:
+          description: '메일인증 사용 여부'
+          type: integer
+          example: 0
+        cf_use_homepage:
+          description: '홈페이지 입력 사용 여부'
+          type: integer
+          example: 0
+        cf_req_homepage:
+          description: '홈페이지 필수'
+          type: integer
+          example: 0
+        cf_use_tel:
+          description: '전화번호 입력 사용 여부'
+          type: integer
+          example: 0
+        cf_req_tel:
+          description: '전화번호 입력 필수 여부'
+          type: integer
+          example: 0
+        cf_use_hp:
+          description: '휴대폰 번호 입력 사용 여부'
+          type: integer
+          example: 0
+        cf_req_hp:
+          description: '휴대폰 번호 입력 필수 여부'
+          type: integer
+          example: 0
+        cf_use_addr:
+          description: '주소 입력 사용 여부'
+          type: integer
+          example: 0
+        cf_req_addr:
+          description: '주소 입력 필수 여부'
+          type: integer
+          example: 0
+        cf_use_signature:
+          description: '서명 입력 사용 여부'
+          type: integer
+          example: 0
+        cf_req_signature:
+          description: '서명 입력 필수 여부'
+          type: integer
+          example: 0
+        cf_use_profile:
+          description: '자기소개 입력 사용 여부'
+          type: integer
+          example: 0
+        cf_req_profile:
+          description: '자기소개 입력 필수 여부'
+          type: integer
+          example: 0
+        cf_icon_level:
+          description: '회원아이콘 업로드 권한 제한'
+          type: integer
+          example: 2
+        cf_member_img_width:
+          description: '회원 이미지 너비'
+          type: integer
+          example: 60
+        cf_member_img_height:
+          description: '회원 이미지 높이'
+          type: integer
+          example: 60
+        cf_member_img_size:
+          description: '회원 이미지 크기'
+          type: integer
+          example: 50000
+        cf_member_icon_width:
+          description: '회원 아이콘 너비'
+          type: integer
+          example: 22
+        cf_member_icon_height:
+          description: '회원 아이콘 높이'
+          type: integer
+          example: 22
+        cf_member_icon_size:
+          description: '회원 아이콘 크기'
+          type: integer
+          example: 5000
+        cf_open_modify:
+          description: '회원 정보공개 제한 일'
+          type: integer
+          example: 0
+        cf_use_recommend:
+          description: '추천인 사용 여부'
+          type: integer
+          example: 0
+      type: object
+    MemoConfigResponse:
+      description: '기본환경설정 > 쪽지발송 포인트 조회 응답 모델'
+      properties:
+        cf_memo_send_point:
+          description: '쪽지발송 1건당 소진 포인트'
+          type: integer
+          example: 500
+      type: object
+    PolicyConfigResponse:
+      description: '기본환경설정 > 회원가입 약관 조회 응답 모델'
+      properties:
+        cf_stipulation:
+          description: 이용약관
+          type: string
+          example: '이용약관 내용...'
+        cf_privacy:
+          description: '개인정보 처리방침'
+          type: string
+          example: '개인정보 처리방침 내용...'
       type: object
     CreateMemberResponse:
       description: '회원가입 응답 모델'

@@ -2,12 +2,9 @@
 
 namespace API\v1\Model\Request\Member;
 
-use OpenApi\Annotations as OA;
-
 /**
  * @OA\Schema(
  *     type="object",
- *     title="ChangeCertificationEmailRequest",
  *     description="인증 이메일 변경 요청 모델",
  * )
  */
@@ -27,10 +24,10 @@ class ChangeCertificationEmailRequest
      */
     public string $password = '';
 
-
-    public function __construct($data = []) {
+    public function __construct($data = [])
+    {
         foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
+            if (property_exists($this, $key) && $value) {
                 $this->$key = $value;
             }
         }

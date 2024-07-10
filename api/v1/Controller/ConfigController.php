@@ -4,7 +4,11 @@ namespace API\v1\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
+use API\v1\Model\Response\Config\BoardConfigResponse;
+use API\v1\Model\Response\Config\HtmlConfigResponse;
+use API\v1\Model\Response\Config\MemberConfigResponse;
+use API\v1\Model\Response\Config\MemoConfigResponse;
+use API\v1\Model\Response\Config\PolicyConfigResponse;
 
 class ConfigController
 {
@@ -14,39 +18,16 @@ class ConfigController
      *     summary="HTML 설정 조회",
      *     tags={"환경설정"},
      *     description="HTML을 구성하는데 필요한 설정 정보를 조회합니다.",
-     *     @OA\Response(
-     *          response="200",
-     *          description="Successful Response",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="cf_title", type="string", description="사이트 제목"),
-     *              @OA\Property(property="cf_add_meta", type="string", description="추가 메타태그"),
-     *              @OA\Property(property="cf_add_script", type="string", description="추가 스크립트"),
-     *              @OA\Property(property="cf_analytics", type="string", description="분석코드"),
-     *              @OA\Examples(
-     *                  value={
-     *                      "cf_title": "string",
-     *                      "cf_add_meta": "string",
-     *                      "cf_add_script": "string",
-     *                      "cf_analytics": "string"
-     *                  }
-     *              ),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="500",
-     *          description="서버 오류",
-     *     ),
+     *     @OA\Response(response="200", description="기본환경설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/HtmlConfigResponse")),
+     *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
     public function getHtmlConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $data = new HtmlConfigResponse($config);
 
-        $select = array('cf_title', 'cf_add_meta', 'cf_add_script', 'cf_analytics');
-        $html_config = generate_select_array($config, $select);
-
-        return api_response_json($response, $html_config);
+        return api_response_json($response, (array)$data);
     }
 
     /**
@@ -54,39 +35,17 @@ class ConfigController
      *     path="/api/v1/config/policy",
      *     summary="회원가입 약관 조회",
      *     tags={"환경설정", "회원"},
-     *     description="회원가입 약관을 조회합니다.   
-- 회원가입 약관
-- 개인정보 수집 및 허용 약관
-",
-     *     @OA\Response(
-     *          response="200",
-     *          description="Successful Response",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="cf_stipulation", type="string", description="회원가입 약관"),
-     *              @OA\Property(property="cf_privacy", type="string", description="개인정보 수집 및 허용 약관"),
-     *              @OA\Examples(
-     *                  value={
-     *                      "cf_stipulation": "string",
-     *                      "cf_privacy": "string",
-     *                  }
-     *              ),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="500",
-     *          description="서버 오류",
-     *     ),
+     *     description="회원가입 약관을 조회합니다.",
+     *     @OA\Response(response="200", description="약관 조회 성공", @OA\JsonContent(ref="#/components/schemas/PolicyConfigResponse")),
+     *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
     public function getPolicyConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $data = new PolicyConfigResponse($config);
 
-        $select = array('cf_stipulation', 'cf_privacy');
-        $policy_config = generate_select_array($config, $select);
-
-        return api_response_json($response, $policy_config);
+        return api_response_json($response, (array)$data);
     }
 
     /**
@@ -95,81 +54,16 @@ class ConfigController
      *     summary="회원가입 설정 조회",
      *     tags={"환경설정", "회원"},
      *     description="회원가입에 필요한 기본환경설정 정보를 조회합니다.",
-     *     @OA\Response(
-     *          response="200",
-     *          description="Successful Response",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="cf_use_email_certify", type="int", description="메일인증 사용 여부"),
-     *              @OA\Property(property="cf_use_homepage", type="int", description="홈페이지 입력 사용 여부"),
-     *              @OA\Property(property="cf_req_homepage", type="int", description="홈페이지 입력 필수 여부"),
-     *              @OA\Property(property="cf_use_tel", type="int", description="전화번호 입력 사용 여부"),
-     *              @OA\Property(property="cf_req_tel", type="int", description="전화번호 입력 필수 여부"),
-     *              @OA\Property(property="cf_use_hp", type="int", description="휴대폰번호 입력 사용 여부"),
-     *              @OA\Property(property="cf_req_hp", type="int", description="휴대폰번호 입력 필수 여부"),
-     *              @OA\Property(property="cf_use_addr", type="int", description="주소 입력 사용 여부"),
-     *              @OA\Property(property="cf_req_addr", type="int", description="주소 입력 필수 여부"),
-     *              @OA\Property(property="cf_use_signature", type="int", description="서명 입력 사용 여부"),
-     *              @OA\Property(property="cf_req_signature", type="int", description="서명 입력 필수 여부"),
-     *              @OA\Property(property="cf_use_profile", type="int", description="자기소개 입력 사용 여부"),
-     *              @OA\Property(property="cf_req_profile", type="int", description="자기소개 입력 필수 여부"),
-     *              @OA\Property(property="cf_icon_level", type="int", description="	회원아이콘 업로드 권한 제한"),
-     *              @OA\Property(property="cf_member_img_width", type="int", description="회원 이미지 너비"),
-     *              @OA\Property(property="cf_member_img_height", type="int", description="회원 이미지 높이"),
-     *              @OA\Property(property="cf_member_img_size", type="int", description="회원 이미지 크기"),
-     *              @OA\Property(property="cf_member_icon_width", type="int", description="회원 아이콘 너비"),
-     *              @OA\Property(property="cf_member_icon_height", type="int", description="회원 아이콘 높이"),
-     *              @OA\Property(property="cf_member_icon_size", type="int", description="회원 아이콘 크기"),
-     *              @OA\Property(property="cf_open_modify", type="int", description="	회원 정보공개 제한 일"),
-     *              @OA\Property(property="cf_use_recommend", type="int", description="추천인 사용 여부"),
-     *              @OA\Examples(
-     *                  value={
-     *                      "cf_use_email_certify": 0,
-     *                      "cf_use_homepage": 0,
-     *                      "cf_req_homepage": 0,
-     *                      "cf_use_tel": 0,
-     *                      "cf_req_tel": 0,
-     *                      "cf_use_hp": 0,
-     *                      "cf_req_hp": 0,
-     *                      "cf_use_addr": 0,
-     *                      "cf_req_addr": 0,
-     *                      "cf_use_signature": 0,
-     *                      "cf_req_signature": 0,
-     *                      "cf_use_profile": 0,
-     *                      "cf_req_profile": 0,
-     *                      "cf_icon_level": 0,
-     *                      "cf_member_img_width": 0,
-     *                      "cf_member_img_height": 0,
-     *                      "cf_member_img_size": 0,
-     *                      "cf_member_icon_width": 0,
-     *                      "cf_member_icon_height": 0,
-     *                      "cf_member_icon_size": 0,
-     *                      "cf_open_modify": 0,
-     *                      "cf_use_recommend": 0
-     *                  }
-     *              ),
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response="500",
-     *          description="서버 오류",
-     *     ),
+     *     @OA\Response(response="200", description="회원가입 설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/MemberConfigResponse")),
+     *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
     public function getMemberConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $data = new MemberConfigResponse($config);
 
-        $select = array(
-            'cf_use_email_certify', 'cf_use_homepage', 'cf_req_homepage', 'cf_use_tel', 'cf_req_tel',
-            'cf_use_hp', 'cf_req_hp', 'cf_use_addr', 'cf_req_addr', 'cf_use_signature', 'cf_req_signature',
-            'cf_use_profile', 'cf_req_profile', 'cf_icon_level', 'cf_member_img_width', 'cf_member_img_height',
-            'cf_member_img_size', 'cf_member_icon_width', 'cf_member_icon_height', 'cf_member_icon_size',
-            'cf_open_modify', 'cf_use_recommend'
-        );
-        $policy_config = generate_select_array($config, $select);
-
-        return api_response_json($response, $policy_config);
+        return api_response_json($response, (array)$data);
     }
 
     /**
@@ -178,17 +72,16 @@ class ConfigController
      *     summary="쪽지 발송 소진 포인트 조회",
      *     tags={"환경설정"},
      *     description="쪽지 발송 시, 1건당 소모되는 포인트 설정 정보를 조회합니다.",
-     *     @OA\Response(response="200", description="")
+     *     @OA\Response(response="200", description="소진 포인트 조회 성공", @OA\JsonContent(ref="#/components/schemas/MemoConfigResponse")),
+     *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
     public function getMemoConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $data = new MemoConfigResponse($config);
 
-        $select = array('cf_memo_send_point');
-        $memo_config = generate_select_array($config, $select);
-
-        return api_response_json($response, $memo_config);
+        return api_response_json($response, (array)$data);
     }
 
     /**
@@ -197,21 +90,15 @@ class ConfigController
      *     summary="게시판 설정 조회",
      *     tags={"환경설정"},
      *     description="게시판에 사용되는 설정 정보를 조회합니다.",
-     *     @OA\Response(response="200", description="")
+     *     @OA\Response(response="200", description="게시판설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/BoardConfigResponse")),
+     *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
     public function getBoardConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
+        $data = new BoardConfigResponse($config);
 
-        $select = array(
-            'cf_use_point', 'cf_point_term', 'cf_use_copy_log', 'cf_cut_name', 'cf_new_rows',
-            'cf_read_point', 'cf_write_point', 'cf_comment_point', 'cf_download_point',
-            'cf_write_pages', 'cf_mobile_pages', 'cf_link_target', 'cf_bbs_rewrite',
-            'cf_delay_sec', 'cf_filter', 'cf_possible_ip', 'cf_intercept_ip'
-        );
-        $board_config = generate_select_array($config, $select);
-
-        return api_response_json($response, $board_config);
+        return api_response_json($response, (array)$data);
     }
 }
