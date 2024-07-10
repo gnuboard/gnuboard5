@@ -64,20 +64,54 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
-  '/api/v1/boards/{bo_table}/writes':
+  '/api/v1/boards/{bo_table}':
     get:
       tags:
         - 게시판
       summary: '게시판 조회'
       description: '게시판 정보 1건을 조회합니다.'
-      operationId: 14e548cc7453ad9c29f9c8e3d4db9081
+      operationId: 43b548f85f219b07c5b029be83b4070c
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: '게시판 조회 성공'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HtmlConfigResponse'
+                $ref: '#/components/schemas/GetBoardResponse'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes':
+    get:
+      tags:
+        - 게시판
+      summary: '게시판 글 목록 조회'
+      description: '게시판 글 목록을 조회합니다.'
+      operationId: d3b7d5197d87c91f60adbe4cc55b411e
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '게시판 글 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWritesResponse'
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -422,6 +456,14 @@ components:
       properties:
         refresh_token:
           description: '리프레시 토큰'
+          type: string
+          example: ''
+      type: object
+    GetWritesRequest:
+      description: '게시판 글 목록 조회 요청 모델'
+      properties:
+        sst:
+          description: 정렬필드
           type: string
           example: ''
       type: object
@@ -781,6 +823,105 @@ components:
           description: '응답 메시지'
           type: string
           example: string
+      type: object
+    GetBoardResponse:
+      description: '게시판 정보 응답 모델'
+      properties:
+        bo_table:
+          description: '게시판 코드'
+          type: string
+          example: string
+        gr_id:
+          description: '게시판 그룹 ID'
+          type: string
+          example: string
+        bo_subject:
+          description: '게시판 제목'
+          type: string
+          example: string
+        bo_mobile_subject:
+          description: '모바일 게시판 제목'
+          type: string
+          example: string
+        bo_device:
+          description: '게시판 접속 허용 디바이스'
+          type: string
+          example: string
+        bo_admin:
+          description: '게시판 관리자'
+          type: string
+          example: string
+        bo_list_level:
+          description: '목록 보기 권한 레벨'
+          type: integer
+          example: 0
+        bo_read_level:
+          description: '읽기 권한 레벨'
+          type: integer
+          example: 0
+        bo_write_level:
+          description: '쓰기 권한 레벨'
+          type: integer
+          example: 0
+        bo_reply_level:
+          description: '답글 쓰기 권한 레벨'
+          type: integer
+          example: 0
+        bo_comment_level:
+          description: '댓글 쓰기 권한 레벨'
+          type: integer
+          example: 0
+        bo_upload_level:
+          description: '업로드 권한 레벨'
+          type: integer
+          example: 0
+        bo_download_level:
+          description: '다운로드 권한 레벨'
+          type: integer
+          example: 0
+        bo_html_level:
+          description: 'HTML 사용 권한 레벨'
+          type: integer
+          example: 0
+        bo_link_level:
+          description: '링크 사용 권한 레벨'
+          type: integer
+          example: 0
+        bo_count_delete:
+          description: '게시글 삭제가 제한될 댓글 갯수'
+          type: integer
+          example: 0
+        bo_count_modify:
+          description: '게시글 수정이 제한될 댓글 갯수'
+          type: integer
+          example: 0
+        bo_read_point:
+          description: '읽기 포인트'
+          type: integer
+          example: 0
+        bo_write_point:
+          description: '쓰기 포인트'
+          type: integer
+          example: 0
+        bo_comment_point:
+          description: '댓글 포인트'
+          type: integer
+          example: 0
+        bo_download_point:
+          description: '다운로드 포인트'
+          type: integer
+          example: 0
+        bo_use_category:
+          description: '카테고리 사용 여부'
+          type: integer
+          example: 0
+        bo_category_list:
+          description: '카테고리 목록 (,로 구분)'
+          type: string
+          example: string
+      type: object
+    GetWritesResponse:
+      description: '게시판 정보 응답 모델'
       type: object
     BoardConfigResponse:
       description: '기본환경설정 > 게시판 설정 응답 모델'
@@ -1152,6 +1293,9 @@ tags:
   -
     name: 회원
     description: '회원 API'
+  -
+    name: 게시판
+    description: 게시판
   -
     name: 게시판
     description: 게시판
