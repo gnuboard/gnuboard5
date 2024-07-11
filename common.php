@@ -58,13 +58,18 @@ include_once($g5_path['path'].'/config.php');   // 설정 파일
 unset($g5_path);
 
 // IIS 에서 SERVER_ADDR 서버변수가 없다면
-if(! isset($_SERVER['SERVER_ADDR'])) {
+if (!isset($_SERVER['SERVER_ADDR'])) {
     $_SERVER['SERVER_ADDR'] = isset($_SERVER['LOCAL_ADDR']) ? $_SERVER['LOCAL_ADDR'] : '';
 }
 
 // Cloudflare 환경을 고려한 https 사용여부
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === "https") {
     $_SERVER['HTTPS'] = 'on';
+}
+
+// Cloudflare 사용시 REMOTE_ADDR 에 사용자 IP 적용
+if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    $_SERVER['REMOTE_ADDR'] = preg_replace('/[^0-9.]/', '', $_SERVER['HTTP_CF_CONNECTING_IP']);
 }
 
 // multi-dimensional array에 사용자지정 함수적용
