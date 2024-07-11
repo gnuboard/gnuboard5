@@ -149,9 +149,4 @@ class GetMemberResponse
         $this->mb_9 = $data['mb_9'];
         $this->mb_10 = $data['mb_10'];
     }
-
-    public function toArray()
-    {
-        return (array) $this;
-    }
 }
