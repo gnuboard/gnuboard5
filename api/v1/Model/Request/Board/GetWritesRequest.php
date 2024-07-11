@@ -13,7 +13,7 @@ class GetWritesRequest
     /**
      * 정렬필드
      * @var string
-     * @OA\Property(in="query", example="")
+     * @OA\Property(example="")
      */
     public string $sst = '';
 }
