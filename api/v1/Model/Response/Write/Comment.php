@@ -14,7 +14,7 @@ class Comment
      * 댓글 ID
      * @OA\Property()
      */
-    public int $wr_id;
+    public int $wr_id = 0;
 
     /**
      * 부모 글 ID
@@ -117,4 +117,17 @@ class Comment
      * @OA\Property()
      */
     public bool $is_secret_content = false;
+
+    public function __construct(array $data = [])
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                if (gettype($this->$key) == 'boolean') {
+                    $this->$key = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                } else {
+                    $this->$key = $value;
+                }
+            }
+        }
+    }
 }

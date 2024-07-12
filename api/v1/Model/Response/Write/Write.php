@@ -162,4 +162,18 @@ class Write
      * @var \API\v1\Model\Response\Board\Comment[]
      */
     public array $comments = [];
+
+    public function __construct(array $data = [])
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+
+        // Thumbnail 초기화
+        if (empty($this->thumbnail)) {
+            $this->thumbnail = new Thumbnail();
+        }
+    }
 }

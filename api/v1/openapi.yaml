@@ -140,6 +140,45 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}':
+    get:
+      tags:
+        - 게시판
+      summary: '게시글 조회'
+      description: '게시판의 게시글 1건을 조회합니다.'
+      operationId: e297a07d6b68c39438ed3b158d72bb87
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '게시판 글 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Write'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/config/html:
     get:
       tags:
@@ -1619,6 +1658,9 @@ tags:
   -
     name: 회원
     description: '회원 API'
+  -
+    name: 게시판
+    description: 게시판
   -
     name: 게시판
     description: 게시판
