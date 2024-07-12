@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Exception\HttpNotFoundException;
+use API\Database\Db;
 
 
 /**
@@ -57,8 +58,9 @@ class AccessTokenAuthMiddleware
     {
         global $g5;
 
-        $sql = "SELECT * FROM {$g5['member_table']} WHERE mb_id = '{$mb_id}'";
-        $member = sql_fetch($sql);
+        $query = "SELECT * FROM {$g5['member_table']} where mb_id = :mb_id";
+        $stmt = Db::getInstance()->run($query, ['mb_id' => $mb_id]);
+        $member = $stmt->fetch();
 
         if (!$member) {
             throw new HttpNotFoundException($request, 'Member not found.');
