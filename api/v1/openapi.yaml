@@ -116,9 +116,13 @@ paths:
         -
           $ref: '#/components/parameters/sca'
         -
+          $ref: '#/components/parameters/spt'
+        -
           $ref: '#/components/parameters/page'
         -
           $ref: '#/components/parameters/per_page'
+        -
+          $ref: '#/components/parameters/is_mobile'
       responses:
         '200':
           description: '게시판 글 목록 조회 성공'
@@ -945,6 +949,12 @@ components:
         total_pages:
           description: '총 페이지 수'
           type: integer
+        current_page:
+          description: '현재 페이지'
+          type: integer
+        is_mobile:
+          description: '모바일 여부'
+          type: boolean
         categories:
           description: '카테고리 목록'
           type: array
@@ -962,12 +972,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Write'
-        total_count:
-          description: '전체 게시글 수'
-          type: integer
-        current_page:
-          description: '현재 페이지'
-          type: integer
         prev_spt:
           description: '이전검색 포인터'
           type: integer
@@ -1553,6 +1557,13 @@ components:
         default: 0
         maximum: 100
         minimum: 0
+    is_mobile:
+      name: is_mobile
+      in: query
+      description: '모바일 여부'
+      schema:
+        type: boolean
+        default: false
     sst:
       name: sst
       in: query
@@ -1590,6 +1601,13 @@ components:
       description: '검색 분류'
       schema:
         type: string
+        default: ''
+    spt:
+      name: spt
+      in: query
+      description: '검색 시작 위치'
+      schema:
+        type: int
         default: ''
 tags:
   -

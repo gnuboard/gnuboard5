@@ -16,4 +16,39 @@ class PageParameters
      * @OA\Parameter(name="per_page", in="query", @OA\Schema(type="integer", minimum=0, maximum=100, default=0))
      */
     public int $per_page = 0;
+
+    /**
+     * 모바일 여부
+     * @OA\Parameter(name="is_mobile", in="query", @OA\Schema(type="boolean", default=false))
+     */
+    public bool $is_mobile = false;
+
+    /**
+     * 시작 위치
+     */
+    public int $offset = 0;
+
+    public function __construct(array $data = [], array $board = [])
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key) && $value) {
+                if (gettype($this->$key) == 'boolean') {
+                    $this->$key = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                } else {
+                    $this->$key = $value;
+                }
+            }
+        }
+        // per_page값이 없을 경우 게시판 설정값 반영
+        if ($this->per_page <= 0 && $board) {
+            if ($this->is_mobile) {
+                $this->per_page = $board['bo_mobile_page_rows'];
+            } else {
+                $this->per_page = $board['bo_page_rows'];
+            }
+        }
+
+        // 시작 위치 초기화
+        $this->offset = ($this->page - 1) * $this->per_page;
+    }
 }   

@@ -38,7 +38,28 @@ class SearchParameters
      */
     public string $sca = '';
 
-    public function __construct($data = [])
+    /**
+     * 검색 시작 위치
+     * @OA\Parameter(name="spt", in="query", @OA\Schema(type="int", default=""))
+     */
+    public int $spt = 0;
+
+    /**
+     * 최소 검색 시작 위치 (wr_num)
+     */
+    public int $min_spt = 0;
+
+    /**
+     * 검색 단위 (config Table)
+     */
+    public int $search_part = 0;
+
+    /**
+     * 검색 여부
+     */
+    public bool $is_search = false;
+
+    public function __construct($data = [], $board_service = null, $config = null)
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key) && $value) {
@@ -53,5 +74,24 @@ class SearchParameters
         if ($this->sfl) {
             $this->sfl = trim($this->sfl);
         }
+        if ($this->sca || $this->stx || $this->stx === '0') {
+            $this->is_search = true;
+        }
+
+        if ($this->is_search && $board_service && $config) {
+            $this->initializeSearchParameters($board_service, $config);
+        }
+    }
+
+    /**
+     * 검색 단위 파라미터 초기화
+     */
+    private function initializeSearchParameters($board_service, $config): void
+    {
+        $this->min_spt = $board_service->getMinimumWriteNumber();
+        if (empty($this->spt)) {
+            $this->spt = $this->min_spt;
+        }
+        $this->search_part = (int)$config['cf_search_part'];
     }
 }   

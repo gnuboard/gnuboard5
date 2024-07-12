@@ -23,6 +23,18 @@ class GetWritesResponse
     public int $total_pages = 0;
 
     /**
+     * 현재 페이지
+     * @OA\Property()
+     */
+    public int $current_page = 0;
+
+    /**
+     * 모바일 여부
+     * @OA\Property()
+     */
+    public bool $is_mobile = false;
+
+    /**
      * 카테고리 목록
      * @OA\Property(type="array", @OA\Items(type="string"))
      */
@@ -55,18 +67,6 @@ class GetWritesResponse
      * @var \API\v1\Model\Response\Board\Write[]
      */
     public array $writes = [];
-
-    /**
-     * 전체 게시글 수
-     * @OA\Property()
-     */
-    public int $total_count = 0;
-
-    /**
-     * 현재 페이지
-     * @OA\Property()
-     */
-    public int $current_page = 0;
 
     /**
      * 이전검색 포인터

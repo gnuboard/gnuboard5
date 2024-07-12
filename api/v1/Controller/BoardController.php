@@ -3,8 +3,10 @@
 namespace API\v1\Controller;
 
 use API\Service\BoardService;
+use API\v1\Model\PageParameters;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\SearchParameters;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -43,8 +45,10 @@ class BoardController
      *      @OA\Parameter(ref="#/components/parameters/sfl"),
      *      @OA\Parameter(ref="#/components/parameters/stx"),
      *      @OA\Parameter(ref="#/components/parameters/sca"),
+     *      @OA\Parameter(ref="#/components/parameters/spt"),
      *      @OA\Parameter(ref="#/components/parameters/page"),
      *      @OA\Parameter(ref="#/components/parameters/per_page"),
+     *      @OA\Parameter(ref="#/components/parameters/is_mobile"),
      *      @OA\Response(response="200", description="게시판 글 목록 조회 성공", @OA\JsonContent(ref="#/components/schemas/GetWritesResponse")),
      *      @OA\Response(response="400", ref="#/components/responses/400"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
@@ -55,16 +59,43 @@ class BoardController
      */
     public function getWrites(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $config = $request->getAttribute('config');
         $board = $request->getAttribute('board');
         $board_service = new BoardService($board);
 
+        // 검색 조건
         $query_params = $request->getQueryParams();
+        $search_params = new SearchParameters($query_params, $board_service, $config);
 
-        $total_records = $board_service->fetchTotalWritesRecords($query_params);
+        // 페이징 처리
+        $page_params = new PageParameters($query_params, $board);
+        $total_records = $board_service->fetchTotalWritesRecords((array)$search_params);
+        $total_page = ceil($total_records / $page_params->per_page);
+
+        /**
+         * TODO: 공지글을 출력결과 수에 포함시킬 것인지 별도로 출력할 것인지 결정 필요
+         * - 그누보드5는 공지글을 출력결과 수에 포함시킴 
+         * - 아래는 별도로 출력하도록 개발됨
+         */ 
+        // 공지글 목록 조회
+        $notice_writes = [];
+        if (!$search_params->is_search) {
+            $notice_writes = $board_service->fetchNoticeWrites();
+        }
+        // 게시글 목록 조회
+        $writes = $board_service->fetchWrites((array)$search_params, (array)$page_params);
 
         $response_data = new GetWritesResponse([
             "total_records" => $total_records,
-            "board" => new Board($board)
+            "total_pages" => $total_page,
+            "current_page" => $page_params->page,
+            "is_mobile" => $page_params->is_mobile,
+            "categories" => $board_service->getCategories(),
+            "board" => new Board($board),
+            "notice_writes" => $notice_writes,
+            "writes" => $writes,
+            "prev_spt" => $board_service->getPrevSearchPart((array)$search_params),
+            "next_spt" => $board_service->getNextSearchPart((array)$search_params),
         ]);
         return api_response_json($response, (array)$response_data);
     }
