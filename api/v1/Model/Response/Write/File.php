@@ -5,10 +5,10 @@ namespace API\v1\Model\Response\Write;
 /**
  * @OA\Schema(
  *     type="object",
- *     description="이미지 정보",
+ *     description="파일 정보",
  * )
  */
-class Image
+class File
 {
     /**
      * 원본 파일명
@@ -39,4 +39,15 @@ class Image
      * @OA\Property()
      */
     public string $bf_file = "";
+
+    public function __construct(array $data = [])
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+
+        $this->bf_file = G5_DATA_URL . '/file/' . $data['bo_table'] . '/' . $this->bf_file;
+    }
 }

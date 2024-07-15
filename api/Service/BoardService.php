@@ -3,7 +3,7 @@
 namespace API\Service;
 
 use API\Database\Db;
-
+use API\v1\Model\Response\Write\File;
 
 class BoardService
 {
@@ -16,6 +16,21 @@ class BoardService
 
         $this->board = $board;
         $this->write_table = $g5['write_prefix'] . $board['bo_table'];
+    }
+
+    /**
+     * 부모 게시글 정보 조회
+     */
+    public function fetchParentWrite(int $wr_num): array
+    {
+        $query = "SELECT mb_id FROM {$this->write_table}
+                    WHERE wr_num = :wr_num
+                    AND wr_reply = ''
+                    AND wr_is_comment = 0";
+        $query = "SELECT * FROM {$this->write_table} WHERE wr_id = :wr_id";
+        $stmt = Db::getInstance()->run($query, ['wr_num' => $wr_num]);
+
+        return $stmt->fetch();
     }
 
     /**
@@ -276,5 +291,31 @@ class BoardService
             return 0;
         }
         return $search_params['spt'] + $search_params['search_part'];
+    }
+
+    public function fetchWriteFiles(int $wr_id): array
+    {
+        global $g5;
+
+        $query = "SELECT * FROM {$g5['board_file_table']} WHERE bo_table = :bo_table AND wr_id = :wr_id ORDER BY bf_no";
+        $stmt = Db::getInstance()->run($query, ['bo_table' => $this->board['bo_table'], 'wr_id' => $wr_id]);
+
+        return $stmt->fetchAll();
+    }
+
+    public function getWriteFiles(int $wr_id, string $type)
+    {
+        $fetch_files = $this->fetchWriteFiles($wr_id);
+        
+        $images = [];
+        $files = [];
+        foreach ($fetch_files as $file) {
+            if (preg_match("/\.(gif|jpg|jpeg|png|webp)$/i", $file['bf_file'])) {
+                $images[] = new File($file);
+            } else {
+                $files[] = new File($file);
+            }
+        }
+        return $type === 'image' ? $images : $files;
     }
 }

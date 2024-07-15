@@ -134,10 +134,10 @@ class Write
      * 이미지 목록
      * @OA\Property(
      *     type="array",
-     *     @OA\Items(ref="#/components/schemas/Image")
+     *     @OA\Items(ref="#/components/schemas/File")
      * )
      * 
-     * @var \API\v1\Model\Response\Board\Image[]
+     * @var \API\v1\Model\Response\Write\File[]
      */
     public array $images = [];
 
@@ -145,10 +145,10 @@ class Write
      * 일반 파일 목록
      * @OA\Property(
      *     type="array",
-     *     @OA\Items(type="string")
+     *     @OA\Items(ref="#/components/schemas/File")
      * )
      * 
-     * @var string[]
+     * @var \API\v1\Model\Response\Write\File[]
      */
     public array $normal_files = [];
 

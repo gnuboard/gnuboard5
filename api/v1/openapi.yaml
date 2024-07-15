@@ -1406,8 +1406,8 @@ components:
           description: '비밀글 내용 여부'
           type: boolean
       type: object
-    Image:
-      description: '이미지 정보'
+    File:
+      description: '파일 정보'
       properties:
         bf_source:
           description: '원본 파일명'
@@ -1523,12 +1523,12 @@ components:
           description: '이미지 목록'
           type: array
           items:
-            $ref: '#/components/schemas/Image'
+            $ref: '#/components/schemas/File'
         normal_files:
           description: '일반 파일 목록'
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/File'
         comments:
           description: '댓글 목록'
           type: array

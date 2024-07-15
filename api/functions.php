@@ -153,3 +153,9 @@ function send_reset_password_mail(array $config, array $member, string $mb_nonce
 
     mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $member['mb_email'], $subject, $content, 1);
 }
+
+
+function is_super_admin($config, string $mb_id)
+{
+    return $config['cf_admin'] == $mb_id;
+}

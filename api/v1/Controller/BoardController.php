@@ -4,14 +4,16 @@ namespace API\v1\Controller;
 
 use API\Service\BoardService;
 use API\Service\CommentService;
+use API\Service\BoardPermission;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\Response\Write\Thumbnail;
 use API\v1\Model\Response\Write\Write;
-use API\v1\Model\Response\Write\Comment;
 use API\v1\Model\SearchParameters;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpForbiddenException;
 
 
 class BoardController
@@ -64,7 +66,16 @@ class BoardController
     {
         $config = $request->getAttribute('config');
         $board = $request->getAttribute('board');
+        $member = $request->getAttribute('member');
         $board_service = new BoardService($board);
+        $board_permission = new BoardPermission($config, $board);
+        
+        // 권한 체크
+        try {
+            $board_permission->checkAccessWrites($member);
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
 
         // 검색 조건
         $query_params = $request->getQueryParams();
@@ -125,15 +136,30 @@ class BoardController
      */
     public function getWrite(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $write = $request->getAttribute('write');
+        $config = $request->getAttribute('config');
         $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $board_service = new BoardService($board);
+        $board_permission = new BoardPermission($config, $board);
         $comment_service = new CommentService($board);
+        
+        // 권한 체크
+        try {
+            $board_permission->checkAccessWrite($member, $write);
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
 
-        $comments = $comment_service->getComments($write['wr_id']);
-        // $images;
-        // $thumbnail;
+        $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+        $write_data = array_merge($write, array(
+                "comments" => $comment_service->getComments($write['wr_id']),
+                "images" => $board_service->getWriteFiles((int)$write['wr_id'], 'image'),
+                "normal_files" => $board_service->getWriteFiles((int)$write['wr_id'], 'file'),
+                "thumbnail" => new Thumbnail($thumb)
+            ));
 
-        $write = new Write(array_merge($write, array("comments" => $comments)));
+        $write = new Write($write_data);
 
         return api_response_json($response, (array)$write);
     }

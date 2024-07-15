@@ -27,4 +27,13 @@ class Thumbnail
      * @OA\Property()
      */
     public string $noimg = "";
+
+    public function __construct(array $data = [])
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
 }
