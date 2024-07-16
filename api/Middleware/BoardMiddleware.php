@@ -3,6 +3,7 @@
 namespace API\Middleware;
 
 use API\Database\Db;
+use API\Service\GroupService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -33,7 +34,11 @@ class BoardMiddleware
             throw new HttpNotFoundException($request, '존재하지 않는 게시판입니다.');
         }
 
+        $group_service = new GroupService();
+        $group = $group_service->fetchGroup($board['gr_id']);
+
         $request = $request->withAttribute('board', $board);
+        $request = $request->withAttribute('group', $group);
 
         return $handler->handle($request);
     }

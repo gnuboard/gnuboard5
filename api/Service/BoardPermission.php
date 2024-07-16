@@ -9,8 +9,20 @@ use Exception;
 
 class BoardPermission
 {
+    public array $config;
+    public array $board;
+
+    private GroupService $group_service;
+    private BoardService $board_service;
+
     private const ERROR_NO_LIST_PERMISSION = '글 목록을 볼 권한이 없습니다.';
     private const ERROR_NO_READ_PERMISSION = '글을 읽을 권한이 없습니다.';
+    private const ERROR_NO_WRITE_PERMISSION = '글을 작성할 권한이 없습니다.';
+    private const ERROR_NO_WRITE_NOTICE_PERMISSION = '공지글을 작성할 권한이 없습니다.';
+    private const ERROR_NO_NOTICE_REPLY_PERMISSION = '공지에는 답변 할 수 없습니다.';
+    private const ERROR_NO_REPLY_PERMISSION = '글을 답변할 권한이 없습니다.';
+    private const ERROR_NO_REPLY_WRITE = '답변할 글이 존재하지 않습니다.';
+    private const ERROR_REPLY_DEPTH = '더 이상 답변하실 수 없습니다. 답변은 10단계 까지만 가능합니다.';
     private const ERROR_INSUFFICIENT_POINTS = '보유하신 포인트(%s)가 없거나 모자라서 글읽기(%s)가 불가합니다.';
     private const ERROR_NO_GUEST_ACCESS = '비회원은 이 게시판에 접근할 권한이 없습니다.';
     private const ERROR_NO_GROUP_ACCESS = '게시판에 접근할 권한이 없습니다.';
@@ -18,11 +30,6 @@ class BoardPermission
     private const ERROR_CERT_CHANGED = '본인인증 정보가 변경되었습니다. 다시 인증을 진행해주세요.';
     private const ERROR_ADULT_REQUIRED = '이 게시판은 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.';
     private const ERROR_SECRET_WRITE = '비밀글은 조회할 수 없습니다.';
-
-    private array $config;
-    private array $board;
-    private GroupService $group_service;
-    private BoardService $board_service;
 
     public function __construct(array $config, array $board)
     {
@@ -63,8 +70,77 @@ class BoardPermission
     }
 
     /**
+     * 공지 게시글 작성권한 체크
+     */
+    public function checkAccessCreateNotice(array $member): void
+    {
+        if (!$this->isBoardManager($member['mb_id'])) {
+            $this->throwException(self::ERROR_NO_WRITE_NOTICE_PERMISSION);
+        }
+    }
+
+    /**
+     * 글 작성 권한 체크
+     */
+    public function checkAccessCreateWrite(array $member): void
+    {
+        $this->checkAccessBoardGroup($member['mb_id']);
+
+        $board_level = (int)$this->board['bo_write_level'];
+        if (!$this->checkLevel($board_level, $member)) {
+            $this->throwException(self::ERROR_NO_WRITE_PERMISSION);
+        }
+    }
+
+    /**
+     * 글 답변 권한 체크
+     */
+    public function checkAccessCreateReply(array $member, array $parent_write): void
+    {
+        $this->checkAccessBoardGroup($member['mb_id']);
+
+        if (empty($parent_write)) {
+            $this->throwException(self::ERROR_NO_REPLY_WRITE);
+        }
+
+        $board_level = (int)$this->board['bo_reply_level'];
+        if (!$this->checkLevel($board_level, $member)) {
+            $this->throwException(self::ERROR_NO_REPLY_PERMISSION);
+        }
+
+        $this->checkAccessNoticeReply($parent_write['wr_id']);
+        $this->checkReplyDepth($parent_write);
+        // TODO: 답변 갯수 체크 (26개 A-Z) 추가
+        // TODO: 게시글 연속 등록 방지 추가
+    }
+
+    /**
+     * 공지 답변 금지 체크
+     */
+    public function checkAccessNoticeReply(int $parent_id): void
+    {
+        $notice_ids = explode(",", $this->board['bo_notice']);
+        if (in_array($parent_id, $notice_ids)) {
+            $this->throwException(self::ERROR_NO_NOTICE_REPLY_PERMISSION);
+        }
+    }
+
+    /**
+     * 답변 깊이 체크
+     */
+    public function checkReplyDepth(array $reply_array): void
+    {
+        if (strlen($reply_array['wr_reply']) == 10) {
+            $this->throwException(self::ERROR_REPLY_DEPTH);
+        }
+    }
+
+    /**
+     * 
      * 글읽기 포인트 체크
-     * - 세션 대신 테이블의 내역을 체크
+     * - 그누보드5에선 세션을 사용했지만 세션을 사용하지 않으므로 테이블의 내역을 체크한다.
+     * 
+     * TODO: 범용적으로 사용될 수 있도록 수정이 필요하다.
      */
     public function checkAccessByPoint(string $type, array $member, array $write): void
     {
@@ -104,7 +180,7 @@ class BoardPermission
             $this->throwException(sprintf(self::ERROR_INSUFFICIENT_POINTS, $mb_point, $board_point));
         }
 
-        insert_point($mb_id, $board_point, $board_subject . ' '.$wr_id.' 글읽기', $this->board['bo_table'], $wr_id, '읽기');
+        insert_point($mb_id, $board_point, $board_subject . ' ' . $wr_id . ' 글읽기', $this->board['bo_table'], $wr_id, '읽기');
     }
 
     /**
@@ -139,8 +215,10 @@ class BoardPermission
             return;
         }
 
-        if (empty($member['mb_id'])
-                || ($this->board['bo_use_cert'] == 'cert' && !$member['mb_certify'])) {
+        if (
+            empty($member['mb_id'])
+            || ($this->board['bo_use_cert'] == 'cert' && !$member['mb_certify'])
+        ) {
             $this->throwException(self::ERROR_CERT_REQUIRED);
         }
         // 본인 인증 된 계정 중에서 di로 저장 되었을 경우
@@ -170,7 +248,7 @@ class BoardPermission
 
         // 답변글일 경우 원글의 작성자인지 체크
         if ($write['wr_reply'] && $mb_id) {
-            $parent_write = $this->board_service->fetchParentWrite((int)$write['wr_num']);
+            $parent_write = $this->board_service->fetchParentWriteByNumber((int)$write['wr_num']);
             if (isset($parent_write['mb_id']) && $parent_write['mb_id'] === $mb_id) {
                 return;
             }
@@ -199,7 +277,7 @@ class BoardPermission
     /**
      * 관리자 체크
      */
-    private function isBoardManager(string $mb_id, array $group = null): bool
+    public function isBoardManager(string $mb_id, array $group = null): bool
     {
         if (is_null($group)) {
             $group = $this->group_service->fetchGroup($this->board['gr_id']);
@@ -215,7 +293,10 @@ class BoardPermission
      */
     private function isGroupAdmin(array $group, string $mb_id): bool
     {
-        return isset($group['gr_admin']) && $group['gr_admin'] === $mb_id;
+        if (empty($mb_id) || !isset($group['gr_admin']) || empty($group['gr_admin'])) {
+            return false;
+        }
+        return $group['gr_admin'] === $mb_id;
     }
 
     /**
@@ -223,7 +304,10 @@ class BoardPermission
      */
     private function isBoardAdmin(string $mb_id): bool
     {
-        return isset($this->board['bo_admin']) && $this->board['bo_admin'] === $mb_id;
+        if (empty($mb_id) || !isset($this->board['bo_admin']) || empty($this->board['bo_admin'])) {
+            return false;
+        }
+        return $this->board['bo_admin'] === $mb_id;
     }
 
     /**
@@ -231,7 +315,10 @@ class BoardPermission
      */
     private function isOwner(array $write, string $mb_id): bool
     {
-        return isset($write['mb_id']) && $write['mb_id'] === $mb_id;
+        if (empty($mb_id) || !isset($write['mb_id']) || empty($write['mb_id'])) {
+            return false;
+        }
+        return $write['mb_id'] === $mb_id;
     }
 
     /**

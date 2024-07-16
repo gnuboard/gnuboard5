@@ -17,12 +17,12 @@ class OptionalAccessTokenAuthMiddleware
     private $algorithm;
     private $secretKey;
     private $member_service;
-    private $default_member = array('mb_id'=>'', 'mb_level'=> 1, 'mb_name'=> '', 'mb_point'=> 0, 'mb_certify'=>'', 'mb_email'=>'', 'mb_open'=>'', 'mb_homepage'=>'', 'mb_tel'=>'', 'mb_hp'=>'', 'mb_zip1'=>'', 'mb_zip2'=>'', 'mb_addr1'=>'', 'mb_addr2'=>'', 'mb_addr3'=>'', 'mb_addr_jibeon'=>'', 'mb_signature'=>'', 'mb_profile'=>'');
+    private $default_member = array('mb_id' => '', 'mb_level' => 1, 'mb_name' => '', 'mb_point' => 0, 'mb_certify' => '', 'mb_email' => '', 'mb_open' => '', 'mb_homepage' => '', 'mb_tel' => '', 'mb_hp' => '', 'mb_zip1' => '', 'mb_zip2' => '', 'mb_addr1' => '', 'mb_addr2' => '', 'mb_addr3' => '', 'mb_addr_jibeon' => '', 'mb_signature' => '', 'mb_profile' => '');
 
     public function __construct()
     {
         $token_manager = new JwtTokenManager(new EnvironmentConfig());
-        
+
         $this->secretKey = $token_manager->secret_key();
         $this->algorithm = $token_manager->algorithm;
         $this->member_service = new MemberService();
@@ -32,13 +32,9 @@ class OptionalAccessTokenAuthMiddleware
     {
         $token = $this->extract_token($request);
         if ($token) {
-            try {
-                $decode = JWT::decode($token, new Key($this->secretKey, $this->algorithm));
-                $member = $this->member_service->fetchMemberById($decode->sub);
-                $request = $request->withAttribute('member', $member);
-            } catch (\Exception $e) {
-                $request = $request->withAttribute('member', $this->default_member);
-            }
+            $decode = JWT::decode($token, new Key($this->secretKey, $this->algorithm));
+            $member = $this->member_service->fetchMemberById($decode->sub);
+            $request = $request->withAttribute('member', $member);
         } else {
             $request = $request->withAttribute('member', $this->default_member);
         }
