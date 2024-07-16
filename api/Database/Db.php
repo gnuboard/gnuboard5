@@ -59,9 +59,14 @@ class Db
         return self::$instance;
     }
 
-    public static function makeWhereInPlaceHolder($data)
+    /**
+     * where in 절에 사용할 바인딩 자리 생성.
+     * @param array $values
+     * @return string
+     */
+    public static function makeWhereInPlaceHolder(array $values)
     {
-        return str_repeat('?,', count($data) - 1) . '?';
+        return str_repeat('?,', count($values) - 1) . '?';
     }
 
 
