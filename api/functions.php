@@ -9,17 +9,18 @@ use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * API Response JSON
- * 
+ *
  * @param Response $response
- * @param array $data
+ * @param array|object $data
+ * @param int $status
  * @return Response
  */
-function api_response_json(Response $response, array $data, int $status = 200)
+function api_response_json(Response $response, $data, int $status = 200)
 {
     $json = json_encode($data, JSON_UNESCAPED_UNICODE);
     $response->getBody()->write($json);
-    $response = $response->withStatus($status);
-    return $response->withAddedHeader('Content-Type', 'application/json');
+    $new_response = $response->withStatus($status);
+    return $new_response->withAddedHeader('Content-Type', 'application/json');
 }
 
 
