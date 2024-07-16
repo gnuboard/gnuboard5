@@ -73,22 +73,25 @@ function vote_poll($po_id, $item_id, $ip)
 
 /**
  * @param $poll
+ * @param $member
+ * @param $ip
  * @return bool
  * @todo 멤버/guest 체크 필요
  * 투표 여부 확인
  */
-function check_already_vote($poll)
+function check_already_vote($poll, $member, $ip)
 {
-    //@todo 
-    //if guest
-    $poll_ips = explode(',', trim($poll['po_ips']));
-    if (in_array($ip = $_SERVER['REMOTE_ADDR'], $poll_ips)) {
-        return true;
+    //member 
+    if (isset($member['mb_id'])) {
+        $ids = explode(',', trim($poll['mb_ids']));
+        if (in_array($member['mb_id'], $ids)) {
+            return true;
+        }
     }
-    $member = [];
-    //if member
-    $ids = explode(',', trim($poll['mb_ids']));
-    if (in_array($member['mb_id'], $ids)) {
+
+    //guest
+    $poll_ips = explode(',', trim($poll['po_ips']));
+    if (in_array($ip, $poll_ips)) {
         return true;
     }
     return false;
@@ -112,6 +115,11 @@ function add_etc_poll($po_id, $poll_etc)
     ]);
 }
 
+/**
+ * @param $po_id
+ * @param $pc_id
+ * @return bool
+ */
 function delete_etc_poll($po_id, $pc_id)
 {
     $poll_etc_table = $GLOBALS['g5']['poll_etc_table'];
@@ -119,6 +127,11 @@ function delete_etc_poll($po_id, $pc_id)
     return $result > 0;
 }
 
+/**
+ * @param $pc_id
+ * @param $mb_id
+ * @return bool
+ */
 function check_auth_etc_poll($pc_id, $mb_id)
 {
     $poll_etc_table = $GLOBALS['g5']['poll_etc_table'];
