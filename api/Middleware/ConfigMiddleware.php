@@ -2,11 +2,11 @@
 
 namespace API\Middleware;
 
+use API\Database\Db;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpNotFoundException;
-
 
 /**
  * Config Middleware
@@ -17,8 +17,8 @@ class ConfigMiddleware
     {
         global $g5;
 
-        $sql = "SELECT * FROM {$g5['config_table']}";
-        $config = sql_fetch($sql);
+        $stmt = Db::getInstance()->run("SELECT * FROM {$g5['config_table']}");
+        $config = $stmt->fetch();
 
         if (!$config) {
             throw new HttpNotFoundException($request, 'Config not found.');
