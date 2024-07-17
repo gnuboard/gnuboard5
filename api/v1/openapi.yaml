@@ -216,6 +216,44 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - 게시판
+      summary: '게시글 삭제'
+      description: '지정된 게시판의 글을 삭제합니다.'
+      operationId: 82b00d1f5cb19ffdf1d6e8fe18274b1f
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '게시글 삭제 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/config/html:
     get:
       tags:
@@ -562,6 +600,9 @@ components:
     CreateWriteRequest:
       description: '게시글 작성 모델'
       properties:
+        '':
+          description: 공지
+          example: false
         wr_subject:
           description: '게시글 제목'
           type: string
@@ -614,14 +655,65 @@ components:
           description: 카테고리
           type: string
           example: 카테고리
-        notice:
+      type: object
+    UpdateWriteRequest:
+      description: '게시글 작성 모델'
+      properties:
+        '':
           description: 공지
-          type: boolean
           example: false
-        wr_parent:
-          description: '부모 아이디'
-          type: integer
-          example: 0
+        wr_subject:
+          description: '게시글 제목'
+          type: string
+          example: 제목
+        wr_content:
+          description: '게시글 내용'
+          type: string
+          example: 내용
+        wr_name:
+          description: '게시글 작성자'
+          type: string
+          example: 작성자
+        wr_password:
+          description: '게시글 비밀번호'
+          type: string
+          example: 비밀번호
+        wr_email:
+          description: '게시글 이메일'
+          type: string
+          example: 이메일
+        wr_homepage:
+          description: 홈페이지
+          type: string
+          example: 홈페이지
+        wr_link1:
+          description: 링크1
+          type: string
+          example: 링크1
+        wr_link2:
+          description: 링크2
+          type: string
+          example: 링크2
+        wr_option:
+          description: 옵션
+          type: string
+          example: 옵션
+        html:
+          description: HTML
+          type: string
+          example: HTML
+        mail:
+          description: 메일
+          type: string
+          example: 메일
+        secret:
+          description: 비밀글
+          type: string
+          example: 비밀글
+        ca_name:
+          description: 카테고리
+          type: string
+          example: 카테고리
       type: object
     ChangeCertificationEmailRequest:
       description: '인증 이메일 변경 요청 모델'
@@ -1760,6 +1852,9 @@ tags:
   -
     name: 회원
     description: '회원 API'
+  -
+    name: 게시판
+    description: 게시판
   -
     name: 게시판
     description: 게시판

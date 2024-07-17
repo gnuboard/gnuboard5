@@ -10,6 +10,7 @@ use Exception;
 class BoardPermission
 {
     public array $config;
+    public array $group;
     public array $board;
 
     private GroupService $group_service;
@@ -30,13 +31,23 @@ class BoardPermission
     private const ERROR_CERT_CHANGED = '본인인증 정보가 변경되었습니다. 다시 인증을 진행해주세요.';
     private const ERROR_ADULT_REQUIRED = '이 게시판은 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.';
     private const ERROR_SECRET_WRITE = '비밀글은 조회할 수 없습니다.';
+    private const ERROR_NO_DELETE_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 글은 삭제할 수 없습니다.';
+    private const ERROR_NO_DELETE_OWNER = '자신의 글이 아니므로 삭제할 수 없습니다.';
+    private const ERROR_NO_DELETE_REPLY = '이 글과 관련된 답변글이 존재하므로 삭제 할 수 없습니다.';
+    private const ERROR_NO_DELETE_COMMENT = '이 글과 관련된 코멘트가 존재하므로 삭제 할 수 없습니다. 코멘트가 %s건 이상 달린 원글은 삭제할 수 없습니다.';
+    private const ERROR_NO_DELETE_PASSWORD = '비밀번호가 일치하지 않으므로 삭제할 수 없습니다.';
 
-    public function __construct(array $config, array $board)
-    {
+    public function __construct(
+        GroupService $group_service,
+        BoardService $board_service,
+        array $config,
+        array $group
+    ) {
+        $this->group_service = $group_service;
+        $this->board_service = $board_service;
         $this->config = $config;
-        $this->board = $board;
-        $this->group_service = new GroupService();
-        $this->board_service = new BoardService($board);
+        $this->group = $group;
+        $this->board = $board_service->board;
     }
 
     /**
@@ -114,6 +125,71 @@ class BoardPermission
         // TODO: 게시글 연속 등록 방지 추가
     }
 
+    public function checkAccessUpdateWrite(array $member, array $write): void
+    {
+    }
+
+    /**
+     * 글 삭제 권한 체크
+     */
+    public function checkDeleteWrite(array $member, array $write): void
+    {
+        $mb_id = $member['mb_id'];
+        $mb_level = $member['mb_level'];
+
+        if (is_super_admin($this->config, $mb_id)) {
+            return;
+        }
+        // TODO: Dependency Injection
+        $member_service = new MemberService();
+        $write_member = $member_service->fetchMemberById($write['mb_id']);
+
+        if ($this->isGroupAdmin($mb_id) || $this->isBoardAdmin($mb_id)) {
+            if ($mb_level < $write_member['mb_level']) {
+                $this->throwException(self::ERROR_NO_DELETE_LEVEL);
+            }
+        } elseif (!$this->isOwner($write, $mb_id)) {
+            $this->throwException(self::ERROR_NO_DELETE_OWNER);
+        }
+
+        $replies = $this->board_service->fetchReplyByWrite($write);
+        if (count($replies) > 0) {
+            $this->throwException(self::ERROR_NO_DELETE_REPLY);
+        }
+
+        $comments = $this->board_service->fetchCommentsByWrite($write, $member);
+        $comments_count = count($comments);
+        if ($comments_count >= $this->board['bo_count_delete']) {
+            $this->throwException(sprintf(self::ERROR_NO_DELETE_COMMENT, $comments_count));
+        }
+    }
+
+    /**
+     * 비회원 글 삭제 권한 체크
+     */
+    public function checkDeleteNonMemberWrite(array $member, array $write, string $wr_password): void
+    {
+        $mb_id = $member['mb_id'];
+
+        if ($this->isBoardManager($mb_id)) {
+            return;
+        }
+        if (!check_password($write['wr_password'], $wr_password)) {
+            $this->throwException(self::ERROR_NO_DELETE_PASSWORD);
+        }
+
+        $replies = $this->board_service->fetchReplyByWrite($write);
+        if (count($replies) > 0) {
+            $this->throwException(self::ERROR_NO_DELETE_REPLY);
+        }
+
+        $comments = $this->board_service->fetchCommentsByWrite($write, $member);
+        $comments_count = count($comments);
+        if ($comments_count >= $this->board['bo_count_delete']) {
+            $this->throwException(sprintf(self::ERROR_NO_DELETE_COMMENT, $comments_count));
+        }
+    }
+
     /**
      * 공지 답변 금지 체크
      */
@@ -188,9 +264,7 @@ class BoardPermission
      */
     public function checkAccessBoardGroup(string $mb_id): void
     {
-        $group = $this->group_service->fetchGroup($this->board['gr_id']);
-
-        if (!isset($group['gr_use_access']) || !$group['gr_use_access']) {
+        if (!isset($this->group['gr_use_access']) || !$this->group['gr_use_access']) {
             return;
         }
 
@@ -198,8 +272,8 @@ class BoardPermission
             $this->throwException(self::ERROR_NO_GUEST_ACCESS);
         }
 
-        if (!$this->isBoardManager($mb_id, $group)) {
-            $group_member = $this->group_service->fetchGroupMember($group['gr_id'], $mb_id);
+        if (!$this->isBoardManager($mb_id)) {
+            $group_member = $this->group_service->fetchGroupMember($this->group['gr_id'], $mb_id);
             if (empty($group_member)) {
                 $this->throwException(self::ERROR_NO_GROUP_ACCESS);
             }
@@ -277,26 +351,22 @@ class BoardPermission
     /**
      * 관리자 체크
      */
-    public function isBoardManager(string $mb_id, array $group = null): bool
+    public function isBoardManager(string $mb_id): bool
     {
-        if (is_null($group)) {
-            $group = $this->group_service->fetchGroup($this->board['gr_id']);
-        }
-
         return is_super_admin($this->config, $mb_id)
-            || $this->isGroupAdmin($group, $mb_id)
+            || $this->isGroupAdmin($mb_id)
             || $this->isBoardAdmin($mb_id);
     }
 
     /**
      * 그룹 관리자 체크
      */
-    private function isGroupAdmin(array $group, string $mb_id): bool
+    private function isGroupAdmin(string $mb_id): bool
     {
-        if (empty($mb_id) || !isset($group['gr_admin']) || empty($group['gr_admin'])) {
+        if (empty($mb_id) || !isset($this->group['gr_admin']) || empty($this->group['gr_admin'])) {
             return false;
         }
-        return $group['gr_admin'] === $mb_id;
+        return $this->group['gr_admin'] === $mb_id;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace API\Service;
 
 use API\Database\Db;
-use API\v1\Model\Response\Write\File;
 
 class BoardService
 {
@@ -16,31 +15,6 @@ class BoardService
 
         $this->board = $board;
         $this->write_table = $g5['write_prefix'] . $board['bo_table'];
-    }
-
-    /**
-     * 게시판 정보 조회
-     */
-    public function fetchWriteById(int $wr_id): array
-    {
-        $query = "SELECT * FROM {$this->write_table} WHERE wr_id = :wr_id";
-        $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
-
-        return $stmt->fetch();
-    }
-
-    /**
-     * 부모 게시글 정보 조회
-     */
-    public function fetchParentWriteByNumber(int $wr_num): array
-    {
-        $query = "SELECT mb_id FROM {$this->write_table}
-                    WHERE wr_num = :wr_num
-                    AND wr_reply = ''
-                    AND wr_is_comment = 0";
-        $stmt = Db::getInstance()->run($query, ['wr_num' => $wr_num]);
-
-        return $stmt->fetch();
     }
 
     /**
@@ -108,35 +82,70 @@ class BoardService
     }
 
     /**
-     * 게시글 파일 목록 조회
+     * 게시판 정보 조회
+     * @return array|bool
      */
-    public function fetchWriteFilesById(int $wr_id): array
+    public function fetchWriteById(int $wr_id): mixed
     {
-        global $g5;
+        $query = "SELECT * FROM {$this->write_table} WHERE wr_id = :wr_id";
+        $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
 
-        $query = "SELECT * FROM {$g5['board_file_table']} WHERE bo_table = :bo_table AND wr_id = :wr_id ORDER BY bf_no";
-        $stmt = Db::getInstance()->run($query, ['bo_table' => $this->board['bo_table'], 'wr_id' => $wr_id]);
+        return $stmt->fetch();
+    }
+
+    /**
+     * 게시글의 원글/답글/댓글 조회
+     */
+    public function fetchWritesAndComments(int $wr_id): mixed
+    {
+        $query = "SELECT * FROM {$this->write_table} WHERE wr_parent = :wr_id order by wr_id";
+        $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
+
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * 부모 게시글 정보 조회
+     */
+    public function fetchParentWriteByNumber(int $wr_num): array
+    {
+        $query = "SELECT * FROM {$this->write_table}
+                    WHERE wr_num = :wr_num
+                    AND wr_reply = ''
+                    AND wr_is_comment = 0";
+        $stmt = Db::getInstance()->run($query, ['wr_num' => $wr_num]);
+
+        return $stmt->fetch();
+    }
+
+    /**
+     * 게시글의 답글 조회
+     */
+    public function fetchReplyByWrite(array $write): mixed
+    {
+        $query = "SELECT * FROM {$this->write_table}
+                    WHERE wr_reply LIKE :wr_reply
+                    AND wr_id <> :wr_id
+                    AND wr_num = :wr_num
+                    AND wr_is_comment = 0";
+        $stmt = Db::getInstance()->run($query, [
+            'wr_reply' => $write['wr_reply'] . '%',
+            'wr_id' => $write['wr_id'],
+            'wr_num' => $write['wr_num'],
+        ]);
 
         return $stmt->fetchAll();
     }
 
     /**
-     * 게시글 파일 목록을 이미지와 파일로 분리하여 반환
+     * 게시글의 댓글 목록 조회
      */
-    public function getFilesByType(int $wr_id, string $type)
+    public function fetchCommentsByWrite(array $write): mixed
     {
-        $fetch_files = $this->fetchWriteFilesById($wr_id);
+        $query = "SELECT * FROM {$this->write_table} WHERE wr_parent = :wr_id AND wr_is_comment = 1";
+        $stmt = Db::getInstance()->run($query, ['wr_id' => $write['wr_id']]);
 
-        $images = [];
-        $files = [];
-        foreach ($fetch_files as $file) {
-            if (preg_match("/\.(gif|jpg|jpeg|png|webp)$/i", $file['bf_file'])) {
-                $images[] = new File($file);
-            } else {
-                $files[] = new File($file);
-            }
-        }
-        return $type === 'image' ? $images : $files;
+        return $stmt->fetchAll();
     }
 
     /**
@@ -144,7 +153,7 @@ class BoardService
      */
     public function createWriteData(object $data, array $member = [], array $parent_write = []): int
     {
-        $min_wr_num = $this->getMinimumWriteNumber() - 1;
+        $min_wr_num = $this->fetchMinimumWriteNumber() - 1;
         $data->wr_num = $parent_write ? $parent_write['wr_num'] : $min_wr_num;
         $data->wr_parent = $parent_write['wr_id'] ?? 0;
         $data->wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($data->wr_subject), $this->write_table);
@@ -183,17 +192,31 @@ class BoardService
     }
 
     /**
-     * 게시판에 등록된 공지사항 글번호 갱신
+     * 게시판 정보 갱신
      */
-    public function updateNoticeWrites(string $bo_notice): void
+    public function updateBoard(array $data)
     {
         global $g5;
 
-        Db::getInstance()->update(
-            $g5['board_table'],
-            ['bo_notice' => $bo_notice],
-            ['bo_table' => $this->board['bo_table']]
-        );
+        Db::getInstance()->update($g5['board_table'], $data, ['bo_table' => $this->board['bo_table']]);
+    }
+
+    /**
+     * 게시판 게시글/댓글 갯수 갱신
+     */
+    public function updateWriteCount(int $count_writes = 0, int $count_comments = 0): void
+    {
+        global $g5;
+
+        $query = "UPDATE {$g5['board_table']} 
+                    SET bo_count_write = bo_count_write - :count_write, 
+                        bo_count_comment = bo_count_comment - :count_comment 
+                    WHERE bo_table = :bo_table";
+        Db::getInstance()->run($query, [
+            'count_write' => $count_writes,
+            'count_comment' => $count_comments,
+            'bo_table' => $this->board['bo_table']
+        ]);
     }
 
     /**
@@ -222,11 +245,36 @@ class BoardService
         );
     }
 
-    // Protected Methods
+    /**
+     * 게시글 삭제
+     */
+    public function deleteWriteById(int $wr_id): void
+    {
+        Db::getInstance()->delete($this->write_table, ['wr_id' => $wr_id]);
+    }
+
+    /**
+     * 부모 아이디로 게시글 삭제
+     */
+    public function deleteWriteByParentId(int $wr_id): void
+    {
+        Db::getInstance()->delete($this->write_table, ['wr_parent' => $wr_id]);
+    }
+
+    /**
+     * 새글 테이블 정보 삭제
+     */
+    public function deleteBoardNew(int $wr_id): void
+    {
+        global $g5;
+
+        Db::getInstance()->delete($g5['board_new_table'], ['bo_table' => $this->board['bo_table'], 'wr_parent' => $wr_id]);
+    }
+
     /**
      * 게시글 목록의 최소 wr_num 조회
      */
-    protected function getMinimumWriteNumber(): int
+    protected function fetchMinimumWriteNumber(): int
     {
         $query = "SELECT MIN(wr_num) AS min_wr_num FROM {$this->write_table}";
         $stmt = Db::getInstance()->run($query);
