@@ -181,11 +181,9 @@ class PollController
      *     @OA\Response(response="200", description="투표완료", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *     @OA\Response(response=400, ref="#/components/responses/400"),
      *     @OA\Response(response=403, ref="#/components/responses/403"),
-     *     )
-     * @OA\Response(response=404, ref="#/components/responses/404")
-     * @OA\Response(response=422, ref="#/components/responses/422")
+     *     @OA\Response(response=404, ref="#/components/responses/404"),
+     *     @OA\Response(response=422, ref="#/components/responses/422")
      * )
-     *
      */
     public function create_etc(Request $request, Response $response, array $args)
     {

@@ -99,7 +99,6 @@ class AutosaveController
 
     /**
      * 회원의 임시저장된글 카운트
-     * @OA\Get (
      *     
      */
     public function get_count()
