@@ -8,10 +8,10 @@ use Exception;
 /**
  * @OA\Schema(
  *     type="object",
- *     description="게시글 작성 모델",
+ *     description="게시글 수정 모델",
  * )
  */
-class CreateWriteRequest
+class UpdateWriteRequest
 {
     /**
      * 게시글 제목
@@ -98,13 +98,7 @@ class CreateWriteRequest
      */
     public bool $notice = false;
 
-    /**
-     * 부모글 ID(답글일 경우)
-     * @OA\Property(example=false)
-     */
-    public int $wr_parent = 0;
-
-    public function __construct(BoardPermission $permission, array $member, array $data = [])
+    public function __construct(BoardPermission $permission, array $write, array $member, array $data = [])
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
@@ -119,10 +113,10 @@ class CreateWriteRequest
         $this->validate_subject();
         $this->validate_content();
         $this->validate_option($board, $is_board_manager);
-        $this->validate_name($member);
+        $this->validate_name($write);
 
         $this->sanitize_link();
-        $this->set_member_data($board, $member);
+        $this->set_writer_data($write);
 
         // 공지여부는 게시판 정보에만 일괄저장되므로 입력만 받도록 처리한다.
         unset($this->notice);
@@ -217,27 +211,30 @@ class CreateWriteRequest
     /**
      * 이름 유효성 검사
      */
-    public function validate_name(array $member): void
+    public function validate_name(array $write): void
     {
         $this->wr_name = $this->sanitizeInput($this->wr_name, 20);
 
-        if (!$member['mb_id'] && $this->wr_name === '') {
-            throw new Exception('비회원은 이름은 필수로 입력해야 합니다.');
+        if (!$write['mb_id'] && $this->wr_name === '') {
+            throw new Exception('비회원 게시글은 이름은 필수로 입력해야 합니다.');
         }
     }
 
     /**
-     * 회원 데이터 설정
+     * 작성자 정보 데이터 설정
      */
-    public function set_member_data(array $board, array $member): void
+    public function set_writer_data(array $write): void
     {
-        if ($member['mb_id']) {
-            $this->wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
-            $this->wr_password = '';
-            $this->wr_email = addslashes($member['mb_email']);
-            $this->wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
+        if ($write['mb_id']) {
+            unset($this->wr_name);
+            unset($this->wr_password);
+            unset($this->wr_email);
+            unset($this->wr_homepage);
         } else {
+            $this->wr_name = addslashes(clean_xss_tags($this->wr_name));
             $this->wr_password = get_encrypt_string($this->wr_password);
+            $this->wr_email = addslashes($this->wr_email);
+            $this->wr_homepage = addslashes(clean_xss_tags($this->wr_homepage));
         }
     }
 
