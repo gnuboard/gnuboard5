@@ -96,7 +96,7 @@ class CreateWriteRequest
      * 공지
      * @OA\Property(example=false)
      */
-    // public bool $notice = false;
+    public bool $notice = false;
 
     public function __construct(BoardPermission $permission, array $member, array $data = [])
     {
@@ -117,6 +117,9 @@ class CreateWriteRequest
 
         $this->sanitize_link();
         $this->set_member_data($board, $member);
+
+        // 공지여부는 게시판 정보에만 일괄저장되므로 입력만 받도록 처리한다.
+        unset($this->notice);
     }
 
     /**

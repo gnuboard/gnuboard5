@@ -103,7 +103,7 @@ class BoardService
 
         return $stmt->fetchAll();
     }
-    
+
     /**
      * 부모 게시글 정보 조회
      */
@@ -192,13 +192,32 @@ class BoardService
     }
 
     /**
-     * 게시판 정보 갱신
+     * 게시글 수정 처리
+     */
+    public function updateWriteData(array $write, object $data): void
+    {
+        $data->wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($data->wr_subject), $this->write_table, $write['wr_id']);
+        $data->wr_last = G5_TIME_YMDHIS;
+
+        $this->updateWrite($write['wr_id'], (array)$data);
+    }
+
+    /**
+     * 게시판 데이터베이스 갱신
      */
     public function updateBoard(array $data)
     {
         global $g5;
 
-        Db::getInstance()->update($g5['board_table'], $data, ['bo_table' => $this->board['bo_table']]);
+        Db::getInstance()->update($g5['board_table'], ['bo_table' => $this->board['bo_table']], $data);
+    }
+
+    /**
+     * 게시글 데이터베이스 갱신
+     */
+    public function updateWrite(int $wr_id, array $data): void
+    {
+        Db::getInstance()->update($this->write_table, ['wr_id' => $wr_id], $data);
     }
 
     /**
@@ -232,6 +251,18 @@ class BoardService
     }
 
     /**
+     * 게시글에 속한 댓글의 분류 갱신
+     */
+    public function updateCategoryByParentId(int $wr_id, string $ca_name): void
+    {
+        Db::getInstance()->update(
+            $this->write_table,
+            ['wr_parent' => $wr_id],
+            ['ca_name' => $ca_name],
+        );
+    }
+
+    /**
      * 게시판 정보에 게시글 수 갱신
      */
     public function incrementWriteCount(): void
@@ -240,8 +271,8 @@ class BoardService
 
         Db::getInstance()->update(
             $g5['board_table'],
-            ["bo_count_write" => "bo_count_write + 1"],
-            ['bo_table' => $this->board['bo_table']]
+            ['bo_table' => $this->board['bo_table']],
+            ["bo_count_write" => "bo_count_write + 1"]
         );
     }
 

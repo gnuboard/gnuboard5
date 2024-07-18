@@ -108,6 +108,18 @@ class BoardPermission
         $this->checkAccessCert($member);
         $this->checkReplyNotice($parent_write['wr_id']);
         $this->checkReplyDepth($parent_write);
+        // // 비밀글인지를 검사
+        // if (strstr($write['wr_option'], 'secret')) {
+        //     if ($write['mb_id']) {
+        //         // 회원의 경우는 해당 글쓴 회원 및 관리자
+        //         if (!($write['mb_id'] === $member['mb_id'] || $is_admin))
+        //             alert('비밀글에는 자신 또는 관리자만 답변이 가능합니다.');
+        //     } else {
+        //         // 비회원의 경우는 비밀글에 답변이 불가함
+        //         if (!$is_admin)
+        //             alert('비회원의 비밀글에는 답변이 불가합니다.');
+        //     }
+        // }
         // TODO: 답변 갯수 체크 (26개 A-Z) 추가
         // TODO: 게시글 연속 등록 방지 추가
     }
@@ -122,29 +134,10 @@ class BoardPermission
         }
 
         $this->checkAccessBoardGroup($member['mb_id']);
-        $this->verifyWriteOwnerAndLevel($member, $write, 'update');
         $this->hasWriteReply($write, self::ERROR_NO_UPDATE_REPLY);
         $this->checkCommentLimit($write, $this->board['bo_count_modify'], self::ERROR_NO_UPDATE_COMMENT);
         $this->checkAccessCert($member);
-    }
-
-    /**
-     * 글 수정/삭제 시 관리자/작성자 체크
-     */
-    protected function verifyWriteOwnerAndLevel(array $member, array $write, string $type): void
-    {
-        $message_level = ($type == 'update') ? self::ERROR_NO_UPDATE_LEVEL : self::ERROR_NO_DELETE_LEVEL;
-        $message_owner = ($type == 'update') ? self::ERROR_NO_UPDATE_OWNER : self::ERROR_NO_DELETE_OWNER;
-
-        // TODO: Dependency Injection
-        $member_service = new MemberService();
-        $write_member = $member_service->fetchMemberById($write['mb_id']);
-
-        if ($this->isGroupAdmin($member['mb_id']) || $this->isBoardAdmin($member['mb_id'])) {
-            $this->checkMemberLevel($member, $write_member['mb_level'], $message_level);
-        } elseif (!$this->isOwner($write, $member['mb_id'])) {
-            $this->throwException($message_owner);
-        }
+        $this->verifyWriteOwnerAndLevel($member, $write, 'update');
     }
 
     /**
@@ -156,9 +149,9 @@ class BoardPermission
             return;
         }
 
+        $this->checkAccessBoardGroup($member['mb_id']);
         $this->hasWriteReply($write, self::ERROR_NO_UPDATE_REPLY);
         $this->checkCommentLimit($write, $this->board['bo_count_modify'], self::ERROR_NO_UPDATE_COMMENT);
-        $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkAccessCert($member);
         $this->checkWritePassword($write, $wr_password, self::ERROR_NO_UPDATE_PASSWORD);
     }
@@ -199,6 +192,25 @@ class BoardPermission
         return is_super_admin($this->config, $mb_id)
             || $this->isGroupAdmin($mb_id)
             || $this->isBoardAdmin($mb_id);
+    }
+
+    /**
+     * 글 수정/삭제 시 관리자/작성자 체크
+     */
+    private function verifyWriteOwnerAndLevel(array $member, array $write, string $type): void
+    {
+        $message_level = ($type == 'update') ? self::ERROR_NO_UPDATE_LEVEL : self::ERROR_NO_DELETE_LEVEL;
+        $message_owner = ($type == 'update') ? self::ERROR_NO_UPDATE_OWNER : self::ERROR_NO_DELETE_OWNER;
+
+        // TODO: Dependency Injection
+        $member_service = new MemberService();
+        $write_member = $member_service->fetchMemberById($write['mb_id']);
+
+        if ($this->isGroupAdmin($member['mb_id']) || $this->isBoardAdmin($member['mb_id'])) {
+            $this->checkMemberLevel($member, $write_member['mb_level'], $message_level);
+        } elseif (!$this->isOwner($write, $member['mb_id'])) {
+            $this->throwException($message_owner);
+        }
     }
 
     /**
@@ -361,7 +373,7 @@ class BoardPermission
         $comments = $this->board_service->fetchCommentsByWrite($write);
         $comments_count = count($comments);
         if ($comments_count >= $limit) {
-            $this->throwException(sprintf($message, $comments_count));
+            $this->throwException(sprintf($message, $limit));
         }
     }
 

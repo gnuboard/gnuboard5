@@ -266,6 +266,29 @@ class BoardController
         return api_response_json($response, (array)$response_data);
     }
 
+    /**
+     * @OA\Put(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}",
+     *      summary="게시글 수정",
+     *      tags={"게시판"},
+     *      description="지정된 게시판의 글을 수정합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/UpdateWriteRequest"),
+     *          )
+     *      ),
+     *      @OA\Response(response="200", description="게시글 수정  성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
     public function updateWrite(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $config = $request->getAttribute('config');
@@ -282,12 +305,11 @@ class BoardController
         // 데이터 검증 및 처리
         try {
             $request_body = $request->getParsedBody();
-            $request_data = new CreateWriteRequest($permission, $member, $request_body);
+            $request_data = new UpdateWriteRequest($permission, $write, $member, $request_body);
         } catch (Exception $e) {
             throw new HttpException($request, $e->getMessage(), 422);
         }
         $secret = $request_body['secret'];
-        $html = $request_body['html'];
         $is_notice = $request_body['notice'];
 
         // 권한 체크
@@ -295,16 +317,31 @@ class BoardController
             if ($is_notice) {
                 $permission->createNotice($member);
             }
-            $permission->updateWrite($member, $write);
+            if ($write['mb_id']) {
+                $permission->updateWrite($member, $write);
+            } else {
+                $wr_password = $request_body['wr_password'] ?? '';
+                $permission->updateWriteByNonMember($member, $write, $wr_password);
+            }
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
+        }
+
+        // 게시글 수정
+        $board_service->updateWriteData($write, $request_data);
+        $board_service->updateCategoryByParentId($write['wr_id'], $request_data->ca_name);
+
+        $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], $is_notice);
+        $board_service->updateBoard(['bo_notice' => $bo_notice]);
+
+        if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
+            naver_syndi_ping($board['bo_table'], $write['wr_id']);
         }
 
         run_event('api_update_write_after', $board, $write['wr_id']);
 
         return api_response_json($response, array("message" => "게시글이 수정되었습니다."));
     }
-
 
     /**
      * @OA\Delete(
