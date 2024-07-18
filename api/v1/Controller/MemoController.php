@@ -91,16 +91,16 @@ class MemoController
             return api_response_json($response, ['message' => 'me_memo 필드가 필요합니다.'], 422);
         }
 
-        $reciver_mb_id = $request_data['me_recv_mb_id'];
+        $receiver_mb_id = $request_data['me_recv_mb_id'];
         $mem_content = $request_data['me_memo'];
 
         $memo_service = new MemoService($request);
-        $result = $memo_service->send_memo($mb_id, $reciver_mb_id, $mem_content);
+        $result = $memo_service->send_memo($mb_id, $receiver_mb_id, $mem_content);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], 400);
         }
 
-        $memo_service->update_memo_count($reciver_mb_id);
+        $memo_service->update_not_read_memo_count($receiver_mb_id);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
     }
@@ -110,7 +110,6 @@ class MemoController
      */
     public function show(Request $request, Response $response, $args)
     {
-        /*$data = $request->getParsedBody();*/
         $access_token = $request->getHeaderLine('Authorization');
         $access_token = str_replace('Bearer ', '', $access_token);
 
@@ -139,7 +138,6 @@ class MemoController
      */
     public function delete(Request $request, Response $response, $args)
     {
-        //        $data = $request->getParsedBody();
         $access_token = $request->getHeaderLine('Authorization');
         $access_token = str_replace('Bearer ', '', $access_token);
 
