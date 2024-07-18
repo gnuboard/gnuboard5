@@ -17,6 +17,13 @@ use Slim\Psr7\Response;
  */
 class PollController
 {
+    private PollService $poll_service;
+    
+    public function __construct(PollService $pollService)
+    {
+        $this->poll_service = $pollService;
+    }
+
     /**
      * @OA\Get (
      *      path="/api/v1/polls/latest",
@@ -32,8 +39,7 @@ class PollController
      */
     public function show_latest(Request $request, Response $response)
     {
-        $poll_service = new PollService();
-        $poll = $poll_service->get_latest_poll();
+        $poll = $this->poll_service->get_latest_poll();
         if ($poll === null) {
             return api_response_json($response, ['message' => '최신 투표가 없습니다.'], 404);
         }
@@ -64,9 +70,9 @@ class PollController
             return api_response_json($response, ['message' => '설문조사 번호가 잘못되었습니다.'], 400);
         }
 
-        //@todo cache 추가
-        $poll_service = new PollService();
-        $poll = $poll_service->get_poll($po_id);
+        //@todo cache 레이어 추가
+
+        $poll = $this->poll_service->get_poll($po_id);
         if ($poll === null) {
             return api_response_json($response, ['message' => '설문조사가 없습니다.'], 404);
         }
@@ -128,8 +134,8 @@ class PollController
             return api_response_json($response, ['message' => '설문항목 번호가 잘못되었습니다.'], 400);
         }
 
-        $poll_service = new PollService();
-        $poll = $poll_service->get_poll($po_id);
+
+        $poll = $this->poll_service->get_poll($po_id);
         if ($poll === null) {
             return api_response_json($response, ['message' => '설문조사가 없습니다.'], 404);
         }
@@ -138,11 +144,11 @@ class PollController
             return api_response_json($response, ['message' => '투표 권한이 없습니다.'], 403);
         }
 
-        if ($poll_service->check_already_vote($po_id, $member, get_real_client_ip())) {
+        if ($this->poll_service->check_already_vote($po_id, $member, get_real_client_ip())) {
             return api_response_json($response, ['message' => '이미 투표하셨습니다.'], 400);
         }
 
-        $poll_service->vote_poll($po_id, $item_id, get_real_client_ip());
+        $this->poll_service->vote_poll($po_id, $item_id, get_real_client_ip());
         return api_response_json($response, ['message' => '투표가 완료되었습니다.']);
     }
 
@@ -204,12 +210,12 @@ class PollController
             return api_response_json($response, ['message' => '설문조사 번호가 잘못되었습니다.'], 400);
         }
 
-        $poll_service = new PollService();
-        $poll_service->add_etc_poll($po_id, $pc_name, $content, $mb_id);
+
+        $this->poll_service->add_etc_poll($po_id, $pc_name, $content, $mb_id);
 
         // 관리자에게 메일 보내기
         if ($config['cf_email_po_super_admin']) {
-            $poll = $poll_service->get_poll($po_id);
+            $poll = $this->poll_service->get_poll($po_id);
             $subject = $poll['po_subject'];
 
             ob_start();
@@ -272,12 +278,11 @@ class PollController
             return api_response_json($response, ['message' => '설문조사 번호 또는 항목 번호가 잘못되었습니다.'], 400);
         }
 
-        $poll_service = new PollService();
-        if ($poll_service->check_auth_etc_poll($pc_id, $mb_id)) {
+        if ($this->poll_service->check_auth_etc_poll($pc_id, $mb_id)) {
             return api_response_json($response, ['message' => '권한이 없습니다.'], 403);
         }
 
-        if ($poll_service->delete_etc_poll($po_id, $pc_id)) {
+        if ($this->poll_service->delete_etc_poll($po_id, $pc_id)) {
             return api_response_json($response, ['message' => '삭제되었습니다.']);
         }
 

@@ -351,7 +351,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         $member_response = new GetMemberMeResponse($member);
 
-        return api_response_json($response, $member_response->toArray());
+        return api_response_json($response, (array)$member_response);
     }
 
     /**
@@ -398,7 +398,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         $member_response = new GetMemberResponse($member);
 
-        return api_response_json($response, $member_response->toArray());
+        return api_response_json($response, (array)$member_response);
     }
 
     /**

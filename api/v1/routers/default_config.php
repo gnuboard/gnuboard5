@@ -11,4 +11,4 @@ $app->group('/config', function (RouteCollectorProxy $group) {
     $group->get('/member', [ConfigController::class, 'getMemberConfig']);
     $group->get('/memo', [ConfigController::class, 'getMemoConfig']);
     $group->get('/board', [ConfigController::class, 'getBoardConfig']);
-})->add(new ConfigMiddleware());
+})->add(ConfigMiddleware::class);

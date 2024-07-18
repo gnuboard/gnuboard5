@@ -2,12 +2,10 @@
 
 namespace API\v1\Model\Request\Member;
 
-use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
  *     type="object",
- *     title="CreateMemberRequest",
  *     description="회원정보 모델",
  * )
  */
@@ -281,7 +279,8 @@ class CreateMemberRequest
     public $mb_10 = '';
 
 
-    public function __construct($data = []) {
+    public function __construct($data = [])
+    {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;

@@ -3,17 +3,10 @@
 namespace API\Service;
 
 use API\Database\Db;
-use Slim\Psr7\Request;
 
 class MemoService
 {
 
-    private Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
 
     /**
      * 메모의 전체 카운트 수 조회
@@ -107,7 +100,7 @@ class MemoService
      * @param string $content
      * @return bool|string[] ['error' => '쪽지를 전송할 회원이 없습니다.', code => 400]
      */
-    public function send_memo($mb_id, $receiver_ids, $content)
+    public function send_memo($mb_id, $receiver_ids, $content, $ip)
     {
         $result = $this->get_recive_members($receiver_ids);
 
@@ -136,7 +129,7 @@ class MemoService
                 'me_memo' => $content,
                 'me_type' => 'recv',
                 'me_send_id' => $mb_no,
-                'me_send_ip' => $this->request->getServerParams()['REMOTE_ADDR']
+                'me_send_ip' => $ip
             ]);
 
             if ($last_insert_id) {
@@ -147,7 +140,7 @@ class MemoService
                     'me_memo' => $content,
                     'me_type' => 'send',
                     'me_send_id' => $mb_no,
-                    'me_send_ip' => $this->request->getServerParams()['REMOTE_ADDR']
+                    'me_send_ip' => $ip
                 ]);
             }
         }

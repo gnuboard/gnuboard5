@@ -8,7 +8,6 @@ use API\v1\Controller\PollController;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\App;
 
-
 /**
  * @var App $app
  */

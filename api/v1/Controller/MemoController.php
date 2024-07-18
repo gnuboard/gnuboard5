@@ -9,6 +9,13 @@ use Slim\Psr7\Response;
 
 class MemoController
 {
+    private MemoService $memo_service;
+
+    public function __construct(MemoService $memoService)
+    {
+        $this->memo_service = $memoService;
+    }
+    
     /**
      * 쪽지 목록 조회
      * 현재 로그인 회원의 쪽지 목록을 조회합니다.
@@ -51,10 +58,9 @@ class MemoController
         //request 검사.
 
         //메모 리스트 가져오기
-        $memo_service = new MemoService($request);
         //count
-        $total_records = $memo_service->fetch_total_records($me_type, $mb_id);
-        $memo_data = $memo_service->fetch_memos($me_type, $mb_id, $page, $per_page);
+        $total_records = $this->memo_service->fetch_total_records($me_type, $mb_id);
+        $memo_data = $this->memo_service->fetch_memos($me_type, $mb_id, $page, $per_page);
 
 
         $response_data = [
@@ -94,13 +100,13 @@ class MemoController
         $receiver_mb_id = $request_data['me_recv_mb_id'];
         $mem_content = $request_data['me_memo'];
 
-        $memo_service = new MemoService($request);
-        $result = $memo_service->send_memo($mb_id, $receiver_mb_id, $mem_content);
+        $ip = $request->getServerParams()['REMOTE_ADDR'];
+        $result = $this->memo_service->send_memo($mb_id, $receiver_mb_id, $mem_content, $ip);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], 400);
         }
 
-        $memo_service->update_not_read_memo_count($receiver_mb_id);
+        $this->memo_service->update_not_read_memo_count($receiver_mb_id);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
     }
@@ -122,13 +128,13 @@ class MemoController
             return api_response_json($response, ['message' => '숫자만 가능합니다.'], 422);
         }
 
-        $memo_service = new MemoService($request);
-        $result = $memo_service->fetch_memo($memo_id, $mb_id);
+
+        $result = $this->memo_service->fetch_memo($memo_id, $mb_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
 
-        $memo_service->read_check($memo_id);
+        $this->memo_service->read_check($memo_id);
 
         return api_response_json($response, $result);
     }
@@ -150,14 +156,12 @@ class MemoController
             return api_response_json($response, ['message' => 'memo_id 는 숫자만 가능합니다.'], 422);
         }
 
-        $memo_service = new MemoService($request);
-
-        $result = $memo_service->delete_memo_call($memo_id);
+        $result = $this->memo_service->delete_memo_call($memo_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
 
-        $result = $memo_service->delete_memo($memo_id, $mb_id);
+        $result = $this->memo_service->delete_memo($memo_id, $mb_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }

@@ -17,21 +17,205 @@ paths:
       tags:
         - 인증
       summary: 'Access/Refresh Token 발급'
-      description: 'Access Token & Refresh Token을 발급합니다.'
+      description: "\r\nAccess Token & Refresh Token을 발급합니다.\r\n- Access Token은 API 요청에 사용되며, 일정 시간 후 만료됩니다.\r\n- Refresh Token은 Access Token 재발급에 필요하며 데이터베이스에 저장됩니다.\r\n"
       operationId: 8e03e8c7922c70f6e5fbdad4202d66cc
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GenerateTokenRequest'
       responses:
         '200':
-          description: ''
+          description: 'Access/Refresh Token 발급 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateTokenResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/token/refresh:
     post:
       tags:
         - 인증
-      summary: 'Refresh Token 재발급'
-      description: 'Refresh Token을 이용하여 Access Token을 재발급합니다.'
+      summary: 'Access Token 재발급'
+      description: "\r\nRefresh Token을 사용하여 새로운 Access Token을 발급합니다.\r\n- Refresh Token도 함께 갱신되며 데이터베이스에 저장됩니다.\r\n"
       operationId: f1f53bb425188289820fcda4ab79ac1b
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
       responses:
         '200':
-          description: ''
+          description: 'Access Token 재발급 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateTokenResponse'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}':
+    get:
+      tags:
+        - 게시판
+      summary: '게시판 조회'
+      description: '게시판 정보 1건을 조회합니다.'
+      operationId: 43b548f85f219b07c5b029be83b4070c
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '게시판 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes':
+    get:
+      tags:
+        - 게시판
+      summary: '게시판 글 목록 조회'
+      description: '게시판 글 목록을 조회합니다.'
+      operationId: d3b7d5197d87c91f60adbe4cc55b411e
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          $ref: '#/components/parameters/sst'
+        -
+          $ref: '#/components/parameters/sod'
+        -
+          $ref: '#/components/parameters/sfl'
+        -
+          $ref: '#/components/parameters/stx'
+        -
+          $ref: '#/components/parameters/sca'
+        -
+          $ref: '#/components/parameters/spt'
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/per_page'
+        -
+          $ref: '#/components/parameters/is_mobile'
+      responses:
+        '200':
+          description: '게시판 글 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWritesResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - 게시판
+      summary: '게시글 작성'
+      description: '지정된 게시판에 새 글을 작성합니다.'
+      operationId: 1d52c42bfd4297e774ac552a56d0e6ab
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWriteRequest'
+      responses:
+        '200':
+          description: '게시글 작성 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWriteResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}':
+    get:
+      tags:
+        - 게시판
+      summary: '게시글 조회'
+      description: '게시판의 게시글 1건을 조회합니다.'
+      operationId: e297a07d6b68c39438ed3b158d72bb87
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '게시판 글 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Write'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/config/html:
     get:
       tags:
@@ -346,8 +530,99 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   schemas:
+    GenerateTokenRequest:
+      description: 'JWT 생성 요청 모델'
+      required:
+        - username
+        - password
+      properties:
+        username:
+          description: '사용자 이름'
+          type: string
+          example: ''
+        password:
+          description: 비밀번호
+          type: string
+          example: ''
+      type: object
+    RefreshTokenRequest:
+      description: 'Access Token 재발급 요청 모델'
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          description: '리프레시 토큰'
+          type: string
+          example: ''
+      type: object
+    CreateWriteRequest:
+      description: '게시글 작성 모델'
+      properties:
+        wr_subject:
+          description: '게시글 제목'
+          type: string
+          example: 제목
+        wr_content:
+          description: '게시글 내용'
+          type: string
+          example: 내용
+        wr_name:
+          description: '게시글 작성자'
+          type: string
+          example: 작성자
+        wr_password:
+          description: '게시글 비밀번호'
+          type: string
+          example: 비밀번호
+        wr_email:
+          description: '게시글 이메일'
+          type: string
+          example: 이메일
+        wr_homepage:
+          description: 홈페이지
+          type: string
+          example: 홈페이지
+        wr_link1:
+          description: 링크1
+          type: string
+          example: 링크1
+        wr_link2:
+          description: 링크2
+          type: string
+          example: 링크2
+        wr_option:
+          description: 옵션
+          type: string
+          example: 옵션
+        html:
+          description: HTML
+          type: string
+          example: HTML
+        mail:
+          description: 메일
+          type: string
+          example: 메일
+        secret:
+          description: 비밀글
+          type: string
+          example: 비밀글
+        ca_name:
+          description: 카테고리
+          type: string
+          example: 카테고리
+        notice:
+          description: 공지
+          type: boolean
+          example: false
+        wr_parent:
+          description: '부모 아이디'
+          type: integer
+          example: 0
+      type: object
     ChangeCertificationEmailRequest:
       description: '인증 이메일 변경 요청 모델'
       properties:
@@ -361,7 +636,6 @@ components:
           example: test1234
       type: object
     CreateMemberRequest:
-      title: CreateMemberRequest
       description: '회원정보 모델'
       properties:
         mb_id:
@@ -673,6 +947,30 @@ components:
           type: string
           example: test
       type: object
+    GenerateTokenResponse:
+      description: 'JWT 생성 응답 모델'
+      properties:
+        access_token:
+          description: '액세스 토큰'
+          type: string
+          example: string
+        access_token_expire_at:
+          description: '액세스 토큰 만료 시간'
+          type: string
+          format: date-time
+        refresh_token:
+          description: '리프레시 토큰'
+          type: string
+          example: string
+        refresh_token_expire_at:
+          description: '리프레시 토큰 만료 시간'
+          type: string
+          format: date-time
+        token_type:
+          description: '토큰 타입'
+          type: string
+          example: string
+      type: object
     BaseResponse:
       description: '응답 메시지를 포함하는 기본 모델 클래스'
       properties:
@@ -680,6 +978,147 @@ components:
           description: '응답 메시지'
           type: string
           example: string
+      type: object
+    Board:
+      description: '게시판 정보'
+      properties:
+        bo_table:
+          description: '게시판 아이디'
+          type: string
+          example: free
+        gr_id:
+          description: '그룹 아이디'
+          type: string
+          example: community
+        bo_subject:
+          description: '게시판 제목'
+          type: string
+          example: 자유게시판
+        bo_mobile_subject:
+          description: '게시판 모바일 제목'
+          type: string
+          example: '자유게시판 모바일'
+        bo_device:
+          description: '접속 허용 디바이스'
+          type: string
+          example: both
+        bo_admin:
+          description: '게시판 관리자'
+          type: string
+          example: admin
+        bo_list_level:
+          description: '목록 접근 권한 레벨'
+          type: integer
+          example: 1
+        bo_read_level:
+          description: '읽기 권한 레벨'
+          type: integer
+          example: 1
+        bo_write_level:
+          description: '쓰기 권한 레벨'
+          type: integer
+          example: 2
+        bo_reply_level:
+          description: '답글 권한 레벨'
+          type: integer
+          example: 1
+        bo_comment_level:
+          description: '댓글 권한 레벨'
+          type: integer
+          example: 1
+        bo_upload_level:
+          description: '업로드 권한 레벨'
+          type: integer
+          example: 1
+        bo_download_level:
+          description: '다운로드 권한 레벨'
+          type: integer
+          example: 1
+        bo_html_level:
+          description: 'HTML 권한 레벨'
+          type: integer
+          example: 1
+        bo_link_level:
+          description: '링크 권한 레벨'
+          type: integer
+          example: 1
+        bo_count_delete:
+          description: '게시글 삭제를 제한할 댓글 갯수'
+          type: integer
+          example: 1
+        bo_count_modify:
+          description: '게시글 수정을 제한할 댓글 갯수'
+          type: integer
+          example: 1
+        bo_read_point:
+          description: '읽기 포인트'
+          type: integer
+        bo_write_point:
+          description: '쓰기 포인트'
+          type: integer
+        bo_comment_point:
+          description: '댓글 포인트'
+          type: integer
+        bo_download_point:
+          description: '다운로드 포인트'
+          type: integer
+        bo_use_category:
+          description: '카테고리 사용 여부'
+          type: integer
+          example: 1
+        bo_category_list:
+          description: '카테고리 목록'
+          type: string
+          example: 게시판|취미|소모임|그누보드
+      type: object
+    CreateWriteResponse:
+      description: '게시글 작성 결과 응답모델'
+      properties:
+        result:
+          description: '게시글 작성 결과'
+          type: string
+        wr_id:
+          description: '게시글 아이디'
+          type: integer
+      type: object
+    GetWritesResponse:
+      description: '게시판 정보 응답 모델'
+      properties:
+        total_records:
+          description: '총 레코드 수'
+          type: integer
+        total_pages:
+          description: '총 페이지 수'
+          type: integer
+        current_page:
+          description: '현재 페이지'
+          type: integer
+        is_mobile:
+          description: '모바일 여부'
+          type: boolean
+        categories:
+          description: '카테고리 목록'
+          type: array
+          items:
+            type: string
+        board:
+          $ref: '#/components/schemas/Board'
+        notice_writes:
+          description: '공지 글 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Write'
+        writes:
+          description: '게시글 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Write'
+        prev_spt:
+          description: '이전검색 포인터'
+          type: integer
+        next_spt:
+          description: '다음검색 포인터'
+          type: integer
       type: object
     BoardConfigResponse:
       description: '기본환경설정 > 게시판 설정 응답 모델'
@@ -917,6 +1356,10 @@ components:
               description: '회원 이름'
               type: string
               example: 홍길동
+            mb_level:
+              description: '회원 레벨'
+              type: integer
+              example: 2
             mb_memo_cnt:
               description: '회원 메모 갯수'
               type: integer
@@ -998,6 +1441,202 @@ components:
           type: string
           example: test
       type: object
+    Comment:
+      description: '댓글 정보'
+      properties:
+        wr_id:
+          description: '댓글 ID'
+          type: integer
+        wr_parent:
+          description: '부모 글 ID'
+          type: integer
+        wr_name:
+          description: '작성자 이름'
+          type: string
+          example: '댓글 작성자'
+        mb_id:
+          description: '회원 ID'
+          type: string
+          example: test
+        mb_image_path:
+          description: '회원 이미지 경로'
+          type: string
+          example: '/data/member_image\\te\\test.gif?1712194038'
+        mb_icon_path:
+          description: '회원 아이콘 경로'
+          type: string
+          example: '/data/member\\te\\test.gif?1712194038'
+        save_content:
+          description: '댓글 내용'
+          type: string
+          example: '댓글 내용입니다'
+        wr_datetime:
+          description: 작성일시
+          type: string
+          format: date-time
+        wr_last:
+          description: '마지막 수정일시'
+          type: string
+          format: date-time
+        wr_option:
+          description: 옵션
+          type: string
+          example: html1
+        wr_email:
+          description: '작성자 이메일'
+          type: string
+          example: test@test.com
+        wr_comment:
+          description: '댓글 수'
+          type: integer
+        wr_comment_reply:
+          description: 대댓글
+          type: string
+        is_reply:
+          description: '답글 여부'
+          type: boolean
+        is_edit:
+          description: '수정 가능 여부'
+          type: boolean
+        is_del:
+          description: '삭제 가능 여부'
+          type: boolean
+        is_secret:
+          description: '비밀글 여부'
+          type: boolean
+        is_secret_content:
+          description: '비밀글 내용 여부'
+          type: boolean
+      type: object
+    File:
+      description: '파일 정보'
+      properties:
+        bf_source:
+          description: '원본 파일명'
+          type: string
+        bf_filesize:
+          description: '파일 크기'
+          type: integer
+        bf_download:
+          description: '다운로드 수'
+          type: integer
+        bf_datetime:
+          description: '업로드 일시'
+          type: string
+          format: date-time
+        bf_file:
+          description: '파일 경로'
+          type: string
+      type: object
+    Thumbnail:
+      description: '썸네일 정보'
+      properties:
+        src:
+          description: '이미지 경로'
+          type: string
+        alt:
+          description: '대체 텍스트'
+          type: string
+        noimg:
+          description: '이미지 없음 대체 텍스트'
+          type: string
+      type: object
+    Write:
+      description: '게시글 정보'
+      properties:
+        wr_id:
+          description: '글 ID'
+          type: integer
+        wr_num:
+          description: '글 번호'
+          type: integer
+          example: -2
+        wr_reply:
+          description: 답글
+          type: string
+          example: ''
+        wr_subject:
+          description: '글 제목'
+          type: string
+          example: 제목입니다
+        wr_name:
+          description: '작성자 이름'
+          type: string
+          example: 홍길동
+        mb_id:
+          description: '회원 아이디'
+          type: string
+          example: test
+        mb_image_path:
+          description: '회원 이미지 경로'
+          type: string
+          example: '/data/member_image/te/test.gif?1712194038'
+        mb_icon_path:
+          description: '회원 아이콘 경로'
+          type: string
+          example: '/data/member/te/test.gif?1712194038'
+        wr_datetime:
+          description: 작성일시
+          type: string
+          format: date-time
+        wr_email:
+          description: '작성자 이메일'
+          type: string
+          example: test@test.com
+        wr_content:
+          description: '글 내용'
+          type: string
+          example: '<p>내용입니다.</p>'
+        wr_link1:
+          description: 링크1
+          type: string
+          example: ''
+        wr_link2:
+          description: 링크2
+          type: string
+          example: ''
+        wr_comment:
+          description: '댓글 수'
+          type: integer
+          example: 2
+        wr_hit:
+          description: '조회 수'
+          type: integer
+          example: 3
+        wr_ip:
+          description: '작성자 IP'
+          type: string
+          example: 127.0.0.1
+        good:
+          description: '좋아요 수'
+          type: integer
+          example: 0
+        nogood:
+          description: '싫어요 수'
+          type: integer
+          example: 0
+        thumbnail:
+          $ref: '#/components/schemas/Thumbnail'
+        wr_option:
+          description: 옵션
+          type: string
+          example: html1
+        images:
+          description: '이미지 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        normal_files:
+          description: '일반 파일 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        comments:
+          description: '댓글 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      type: object
   responses:
     '400':
       description: '잘못된 요청'
@@ -1041,6 +1680,76 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BaseResponse'
+  parameters:
+    page:
+      name: page
+      in: query
+      description: '페이지 번호'
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    per_page:
+      name: per_page
+      in: query
+      description: '페이지 당 결과 수'
+      schema:
+        type: integer
+        default: 0
+        maximum: 100
+        minimum: 0
+    is_mobile:
+      name: is_mobile
+      in: query
+      description: '모바일 여부'
+      schema:
+        type: boolean
+        default: false
+    sst:
+      name: sst
+      in: query
+      description: '정렬 필드'
+      schema:
+        type: string
+        default: ''
+    sod:
+      name: sod
+      in: query
+      description: '검색 연산자'
+      schema:
+        type: string
+        default: and
+        enum:
+          - and
+          - or
+    sfl:
+      name: sfl
+      in: query
+      description: 검색필드
+      schema:
+        type: string
+        default: wr_subject||wr_content
+    stx:
+      name: stx
+      in: query
+      description: 검색어
+      schema:
+        type: string
+        default: ''
+    sca:
+      name: sca
+      in: query
+      description: '검색 분류'
+      schema:
+        type: string
+        default: ''
+    spt:
+      name: spt
+      in: query
+      description: '검색 시작 위치'
+      schema:
+        type: int
+        default: ''
 tags:
   -
     name: 환경설정
@@ -1051,3 +1760,15 @@ tags:
   -
     name: 회원
     description: '회원 API'
+  -
+    name: 게시판
+    description: 게시판
+  -
+    name: 게시판
+    description: 게시판
+  -
+    name: 게시판
+    description: 게시판
+  -
+    name: 게시판
+    description: 게시판
