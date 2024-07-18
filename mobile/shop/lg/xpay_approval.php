@@ -80,6 +80,8 @@ $payReqMap['LGD_HASHDATA']           = $LGD_HASHDATA;              // MD5 해쉬
 $payReqMap['LGD_RETURNURL']          = $LGD_RETURNURL;             // 응답수신페이지
 $payReqMap['LGD_VERSION']            = "PHP_SmartXPay_1.0";        // 버전정보 (삭제하지 마세요)
 $payReqMap['LGD_CUSTOM_FIRSTPAY']    = $LGD_CUSTOM_FIRSTPAY;       // 디폴트 결제수단
+// 2024년 7월에 모바일 결제수단 키가 LGD_CUSTOM_USABLEPAY 키로 쓰이는 것을 확인함
+$payReqMap['LGD_CUSTOM_USABLEPAY'] = $LGD_CUSTOM_FIRSTPAY;       // 디폴트 결제수단
 $payReqMap['LGD_CUSTOM_SWITCHINGTYPE']  = "SUBMIT";        // 신용카드 카드사 인증 페이지 연동 방식
 $payReqMap['LGD_ENCODING']           = "UTF-8";
 $payReqMap['LGD_ENCODING_NOTEURL']   = "UTF-8";
