@@ -44,6 +44,7 @@ class BoardController
 
         return api_response_json($response, (array)$response_data);
     }
+
     /**
      * @OA\Get(
      *      path="/api/v1/boards/{bo_table}/writes",
@@ -198,7 +199,6 @@ class BoardController
      * )
      * 
      * FIXME: 데이터 및 권한마다 세부적인 테스트 진행이 필요하다.
-     * TODO: 답글은 처리하지 않는다 => 별도의 Router로 분리
      */
     public function createWrite(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
@@ -223,21 +223,28 @@ class BoardController
         $html = $request_body['html'];
         $is_notice = $request_body['notice'];
 
+        $parent_write = [];
+        if ($request_data->wr_parent) {
+            $parent_write = $board_service->fetchWriteById($request_data->wr_parent);
+        }
+
         // 권한 체크
         try {
             if ($is_notice) {
                 $permission->createNotice($member);
             }
-            $permission->createWrite($member);
+            if ($request_data->wr_parent) {
+                $permission->createReply($member, $parent_write);
+            } else {
+                $permission->createWrite($member);
+            }
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
         }
-
         // TODO: upload_max_filesize 제한 추가
-        // TODO: 게시글 연속 등록 방지 추가
 
         // 게시글 등록
-        $wr_id = $board_service->createWriteData($request_data, $member);
+        $wr_id = $board_service->createWriteData($request_data, $member, $parent_write);
         $board_service->updateWriteParentId($wr_id, $wr_id);
 
         if ($is_notice) {

@@ -30,6 +30,9 @@ class BoardPermission
     private const ERROR_NO_REPLY_NOTICE = '공지에는 답변할 수 없습니다.';
     private const ERROR_NO_REPLY_LEVEL = '글을 답변할 권한이 없습니다.';
     private const ERROR_NO_REPLY_DEPTH = '더 이상 답변하실 수 없습니다. 답변은 10단계 까지만 가능합니다.';
+    private const ERROR_NO_REPLY_COUNT = '더 이상 답변하실 수 없습니다. 답변은 26개 까지만 가능합니다.';
+    private const ERROR_NO_REPLY_SECRET = '비밀글에는 작성자 또는 관리자만 답변이 가능합니다.';
+    private const ERROR_NO_REPLY_SECRET_NONMEMBER = '비회원의 비밀글에는 답변이 불가합니다.';
     private const ERROR_NO_UPDATE_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.';
     private const ERROR_NO_UPDATE_OWNER = '자신의 글이 아니므로 수정할 수 없습니다.';
     private const ERROR_NO_UPDATE_REPLY = '이 글과 관련된 답변글이 존재하므로 수정할 수 없습니다.';
@@ -85,6 +88,7 @@ class BoardPermission
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_CREATE_LEVEL);
         $this->checkAccessCert($member);
+        // TODO: 게시글 연속 등록 방지 추가
     }
 
     /**
@@ -100,28 +104,36 @@ class BoardPermission
     /**
      * 글 답변 권한 체크
      */
-    public function createReply(array $member, array $parent_write): void
+    public function createReply(array $member, array $write): void
     {
         $level = (int)$this->board['bo_reply_level'];
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_REPLY_LEVEL);
         $this->checkAccessCert($member);
-        $this->checkReplyNotice($parent_write['wr_id']);
-        $this->checkReplyDepth($parent_write);
-        // // 비밀글인지를 검사
-        // if (strstr($write['wr_option'], 'secret')) {
-        //     if ($write['mb_id']) {
-        //         // 회원의 경우는 해당 글쓴 회원 및 관리자
-        //         if (!($write['mb_id'] === $member['mb_id'] || $is_admin))
-        //             alert('비밀글에는 자신 또는 관리자만 답변이 가능합니다.');
-        //     } else {
-        //         // 비회원의 경우는 비밀글에 답변이 불가함
-        //         if (!$is_admin)
-        //             alert('비회원의 비밀글에는 답변이 불가합니다.');
-        //     }
-        // }
-        // TODO: 답변 갯수 체크 (26개 A-Z) 추가
+        $this->checkReplyNotice($write['wr_id']);
+        $this->checkReplyDepth($write);
+        $this->checkReplySecret($member, $write);
         // TODO: 게시글 연속 등록 방지 추가
+    }
+
+    /**
+     * 답변글 작성시 원글이 비밀글인지 체크
+     */
+    private function checkReplySecret(array $member, array $write): void
+    {
+        if (strstr($write['wr_option'], 'secret')) {
+            if ($this->isBoardManager($member['mb_id'])) {
+                return;
+            }
+
+            if ($write['mb_id']) {
+                if (!$this->isOwner($write, $member['mb_id'])) {
+                    $this->throwException(self::ERROR_NO_REPLY_SECRET);
+                }
+            } else {
+                $this->throwException(self::ERROR_NO_REPLY_SECRET_NONMEMBER);
+            }
+        }
     }
 
     /**

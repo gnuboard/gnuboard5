@@ -98,6 +98,12 @@ class CreateWriteRequest
      */
     public bool $notice = false;
 
+    /**
+     * 부모글 ID(답글일 경우)
+     * @OA\Property(example=false)
+     */
+    public int $wr_parent = 0;
+
     public function __construct(BoardPermission $permission, array $member, array $data = [])
     {
         foreach ($data as $key => $value) {

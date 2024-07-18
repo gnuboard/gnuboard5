@@ -3,6 +3,7 @@
 namespace API\Service;
 
 use API\Database\Db;
+use Exception;
 
 class BoardService
 {
@@ -161,6 +162,9 @@ class BoardService
         $data->wr_datetime = G5_TIME_YMDHIS;
         $data->wr_last = G5_TIME_YMDHIS;
         $data->wr_ip = $_SERVER['REMOTE_ADDR'];
+        if ($parent_write) {
+            $data->wr_reply = $this->setReplyCharacter($parent_write);
+        }
 
         $insert_id = $this->insertWrite($data);
         return $insert_id;
@@ -499,5 +503,61 @@ class BoardService
             return 0;
         }
         return $search_params['spt'] + $search_params['search_part'];
+    }
+
+    /**
+     * 게시글의 마지막 wr_reply 조회
+     */
+    public function fetchLastReply(array $write): string
+    {
+        $reply_len = strlen($write['wr_reply']) + 1;
+        $order_func = $this->board['bo_reply_order'] ? 'MAX' : 'MIN';
+        $values = [
+            'reply_len1' => $reply_len,
+            'reply_len2' => $reply_len,
+            'wr_num' => $write['wr_num'],
+        ];
+
+        $query = "SELECT {$order_func}(SUBSTRING(wr_reply, :reply_len1, 1)) as reply 
+                FROM {$this->write_table} 
+                WHERE wr_num = :wr_num 
+                AND SUBSTRING(wr_reply, :reply_len2, 1) <> ''";
+
+        if ($write['wr_reply']) {
+            $query .= " AND wr_reply LIKE :wr_reply";
+            $values = array_merge($values, ['wr_reply' => $write['wr_reply'] . '%']);
+        }
+        $stmt = Db::getInstance()->run($query, $values);
+        $row = $stmt->fetch();
+        return $row['reply'] ?? '';
+    }
+
+    /**
+     * 답변글 작성시 답변글 wr_reply 생성
+     * - Exception 관련 코드를 Permission으로 이동하고 싶었으나 코드 중복이 발생하여 이동하지 않음
+     */
+    public function setReplyCharacter(array $write)
+    {
+        $last_reply = $this->fetchLastReply($write);
+
+        if ($this->board['bo_reply_order']) {
+            $begin_reply_char = 'A';
+            $end_reply_char = 'Z';
+            $reply_number = +1;
+        } else {
+            $begin_reply_char = 'Z';
+            $end_reply_char = 'A';
+            $reply_number = -1;
+        }
+
+        if (!$last_reply) {
+            $reply_char = $begin_reply_char;
+        } else if ($last_reply == $end_reply_char) {
+            throw new Exception('더 이상 답변하실 수 없습니다. 답변은 26개 까지만 가능합니다.');
+        } else {
+            $reply_char = chr(ord($last_reply) + $reply_number);
+        }
+    
+        return $write['wr_reply'] . $reply_char;
     }
 }
