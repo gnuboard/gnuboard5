@@ -23,22 +23,22 @@ class AutosaveService
             'limit' => $per_page
         ]);
         $data = $stmt->fetchAll();
-        if(!$data) {
+        if (!$data) {
             return false;
         }
-        
+
         $query = "SELECT count(*) FROM $autosave_table WHERE mb_id = :mb_id";
         $stmt = Db::getInstance()->run($query, [
             'mb_id' => $mb_id
         ]);
-        
+
         $total_records = $stmt->fetchColumn();
-        if($total_records === false) {
-           return false;
+        if ($total_records === false) {
+            return false;
         }
-        
+
         $total_pages = ceil($total_records / $per_page);
-        
+
         return [
             'autosaves' => $data,
             'total_records' => $total_records ?: 0,
@@ -61,5 +61,20 @@ class AutosaveService
             'as_id' => $as_id
         ]);
         return $stmt->fetch();
+    }
+
+    /**
+     * 임시저장된 글 갯수 조회
+     * @param string $mb_id
+     * @return int 없으면 0
+     */
+    public function get_count($mb_id)
+    {
+        $autosave_table = $GLOBALS['g5']['autosave_table'];
+        $query = "SELECT count(*) FROM {$autosave_table} WHERE mb_id = :mb_id";
+        $result = Db::getInstance()->run($query, [
+            'mb_id' => $mb_id
+        ])->fetch();
+        return $result[0] ?? 0;
     }
 }
