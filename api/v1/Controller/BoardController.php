@@ -80,7 +80,7 @@ class BoardController
 
         // 권한 체크
         try {
-            $board_permission->checkAccessWrites($member);
+            $board_permission->readWrites($member);
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
         }
@@ -157,7 +157,7 @@ class BoardController
 
         // 권한 체크
         try {
-            $board_permission->checkAccessWrite($member, $write);
+            $board_permission->readWrite($member, $write);
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
         }
@@ -210,7 +210,6 @@ class BoardController
         $board_service = new BoardService($board);
         $permission = new BoardPermission($group_service, $board_service, $config, $group);
 
-
         run_event('api_create_write_before', $board);
 
         // 데이터 검증 및 처리
@@ -227,9 +226,9 @@ class BoardController
         // 권한 체크
         try {
             if ($is_notice) {
-                $permission->checkAccessCreateNotice($member);
+                $permission->createNotice($member);
             }
-            $permission->checkAccessCreateWrite($member);
+            $permission->createWrite($member);
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
         }
@@ -278,13 +277,12 @@ class BoardController
         $board_service = new BoardService($board);
         $permission = new BoardPermission($group_service, $board_service, $config, $group);
 
-
         run_event('api_update_write_before', $board, $write['wr_id']);
 
         // 데이터 검증 및 처리
         try {
             $request_body = $request->getParsedBody();
-            $request_data = new UpdateWriteRequest($permission, $member, $request_body);
+            $request_data = new CreateWriteRequest($permission, $member, $request_body);
         } catch (Exception $e) {
             throw new HttpException($request, $e->getMessage(), 422);
         }
@@ -295,16 +293,16 @@ class BoardController
         // 권한 체크
         try {
             if ($is_notice) {
-                $permission->checkAccessCreateNotice($member);
+                $permission->createNotice($member);
             }
-            $permission->checkAccessUpdateWrite($member, $write);
+            $permission->updateWrite($member, $write);
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
         }
 
         run_event('api_update_write_after', $board, $write['wr_id']);
 
-        exit;
+        return api_response_json($response, array("message" => "게시글이 수정되었습니다."));
     }
 
 
@@ -341,10 +339,10 @@ class BoardController
         // 권한 체크
         try {
             if ($write['mb_id']) {
-                $permission->checkDeleteWrite($member, $write);
+                $permission->deleteWrite($member, $write);
             } else {
                 $wr_password = $request_body['wr_password'] ?? '';
-                $permission->checkDeleteNonMemberWrite($member, $write, $wr_password);
+                $permission->deleteWriteByNonMember($member, $write, $wr_password);
             }
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
