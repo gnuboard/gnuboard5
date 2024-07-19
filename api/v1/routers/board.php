@@ -19,6 +19,9 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
             $group->get('', [BoardController::class, 'getWrite']);
             $group->put('', [BoardController::class, 'updateWrite']);
             $group->delete('', [BoardController::class, 'deleteWrite']);
+
+            $group->post('/files', [BoardController::class, 'uploadFiles']);
+            $group->get('/files/{bf_no}', [BoardController::class, 'downloadFile']);
         })
         ->add(WriteMiddleware::class);
     });

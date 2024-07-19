@@ -176,7 +176,7 @@ class MemberController
 
         // 회원가입 처리
         $member_service->insertMember($data);
-        
+
         // 회원가입 포인트 부여
         $register_point = $config['cf_register_point'] ?? 0;
         insert_point($data->mb_id, $register_point, '회원가입 축하', '@member', $data->mb_id, '회원가입');
@@ -234,7 +234,7 @@ class MemberController
 
             mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
         }
-        
+
         $result = new CreateMemberResponse("회원가입이 완료되었습니다.", $data);
         return api_response_json($response, $result->toArray());
     }
@@ -308,11 +308,11 @@ class MemberController
         // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
         $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
 
-        $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $certify_href = G5_BBS_URL . '/email_certify.php?mb_id=' . $mb_id . '&amp;mb_md5=' . $mb_md5;
         $w = "u";
         $mb_name = $member['mb_name'];
         ob_start();
-        include_once (__DIR__ . '../../../../bbs/register_form_update_mail3.php');
+        include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -345,7 +345,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
         $member_service = new MemberService($config);
-        
+
         $member['mb_icon_path'] = $member_service->getMemberImagePath($member['mb_id'], 'icon');
         $member['mb_image_path'] = $member_service->getMemberImagePath($member['mb_id'], 'image');
 
@@ -446,7 +446,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
             if ($msg = exist_mb_nick($data->mb_nick, $member['mb_id'])) {
                 return api_response_json($response, array("message" => $msg), 409);
             }
-            
+
             // 닉네임 변경일수 체크
             if ($member['mb_nick_date'] < date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) {
                 $data->mb_nick_date = G5_TIME_YMD;
@@ -498,7 +498,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
     /**
      * 회원 아이콘/이미지 수정
      * 
-     * @OA\Put(
+     * @OA\Post(
      *      path="/api/v1/member/images",
      *      summary="회원 아이콘&이미지 수정",
      *      tags={"회원"},
@@ -637,6 +637,6 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         run_event('password_lost2_after', $member, $mb_nonce, $mb_lost_certify);
 
-        return api_response_json($response, ["message" => '비밀번호를 변경할 수 있는 링크가 '.$email.' 메일로 발송되었습니다.']);
+        return api_response_json($response, ["message" => '비밀번호를 변경할 수 있는 링크가 ' . $email . ' 메일로 발송되었습니다.']);
     }
 }
