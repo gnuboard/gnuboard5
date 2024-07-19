@@ -557,7 +557,7 @@ class BoardService
         } else {
             $reply_char = chr(ord($last_reply) + $reply_number);
         }
-    
+
         return $write['wr_reply'] . $reply_char;
     }
 }

@@ -216,6 +216,50 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+    put:
+      tags:
+        - 게시판
+      summary: '게시글 수정'
+      description: '지정된 게시판의 글을 수정합니다.'
+      operationId: 03d69387e2f82c23a219b58a6b3d7f3d
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWriteRequest'
+      responses:
+        '200':
+          description: '게시글 수정  성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
     delete:
       tags:
         - 게시판
@@ -244,6 +288,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}/files':
+    post:
+      tags:
+        - 게시판
+      summary: '게시글 파일 업로드'
+      description: "\r\n파일을 업로드합니다.\r\n- multipart/form-data로 전송해야 합니다.\r\n- 게시판에 설정된 파일 업로드 제한에 따라 파일을 업로드할 수 있습니다.\r\n    - 업로드 파일 갯수\r\n    - 파일 크기\r\n    - 파일 설명\r\n"
+      operationId: 0d3885b1f805db9d8793ab10049dfefc
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFileRequest'
+            encoding:
+              'file_contents[]':
+                explode: true
+              'file_dels[]':
+                explode: true
+      responses:
+        '200':
+          description: '게시글 파일 업로드 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}/files/{bf_no}':
+    get:
+      tags:
+        - 게시판
+      summary: '파일 다운로드'
+      description: '게시글의 파일을 다운로드합니다.'
+      operationId: 4c17cfb4959ccf4f2bbb492e63cb80df
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+        -
+          name: bf_no
+          in: path
+          description: '파일 번호'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '첨부파일 다운로드 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/baseResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -502,12 +642,12 @@ paths:
         '403':
           $ref: '#/components/responses/403'
   /api/v1/member/images:
-    put:
+    post:
       tags:
         - 회원
       summary: '회원 아이콘&이미지 수정'
       description: 'JWT 토큰을 통해 인증된 회원의 아이콘 & 이미지를 수정합니다.'
-      operationId: bdb6532e2ad7753e50a631f2f26efb85
+      operationId: 91c4791ec1dda52b9f4634a0c6422727
       requestBody:
         required: true
         content:
@@ -600,9 +740,6 @@ components:
     CreateWriteRequest:
       description: '게시글 작성 모델'
       properties:
-        '':
-          description: 공지
-          example: false
         wr_subject:
           description: '게시글 제목'
           type: string
@@ -655,13 +792,18 @@ components:
           description: 카테고리
           type: string
           example: 카테고리
+        notice:
+          description: 공지
+          type: boolean
+          example: false
+        wr_parent:
+          description: '부모글 ID(답글일 경우)'
+          type: integer
+          example: false
       type: object
     UpdateWriteRequest:
-      description: '게시글 작성 모델'
+      description: '게시글 수정 모델'
       properties:
-        '':
-          description: 공지
-          example: false
         wr_subject:
           description: '게시글 제목'
           type: string
@@ -714,6 +856,33 @@ components:
           description: 카테고리
           type: string
           example: 카테고리
+        notice:
+          description: 공지
+          type: boolean
+          example: false
+      type: object
+    UploadFileRequest:
+      description: '게시글 파일 업로드 모델'
+      properties:
+        'files[]':
+          description: '업로드 파일'
+          type: array
+          items:
+            type: string
+            format: binary
+            example: ''
+        'file_contents[]':
+          description: '파일 설명'
+          type: array
+          items:
+            type: string
+            example: ''
+        'file_dels[]':
+          description: '기존 파일 삭제여부 (true: 삭제, false: 유지)'
+          type: array
+          items:
+            type: boolean
+            example: 'false'
       type: object
     ChangeCertificationEmailRequest:
       description: '인증 이메일 변경 요청 모델'
@@ -1852,6 +2021,15 @@ tags:
   -
     name: 회원
     description: '회원 API'
+  -
+    name: 게시판
+    description: 게시판
+  -
+    name: 게시판
+    description: 게시판
+  -
+    name: 게시판
+    description: 게시판
   -
     name: 게시판
     description: 게시판

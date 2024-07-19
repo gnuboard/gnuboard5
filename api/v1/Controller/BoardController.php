@@ -10,6 +10,7 @@ use API\Service\BoardPermission;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
 use API\v1\Model\Request\Board\UpdateWriteRequest;
+use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
@@ -21,6 +22,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpForbiddenException;
 use Exception;
+use Slim\Exception\HttpNotFoundException;
 
 class BoardController
 {
@@ -152,7 +154,7 @@ class BoardController
         $member = $request->getAttribute('member');
         $group_service = new GroupService();
         $board_service = new BoardService($board);
-        $file_service = new BoardFileService();
+        $file_service = new BoardFileService($board);
         $comment_service = new CommentService($board);
         $board_permission = new BoardPermission($group_service, $board_service, $config, $group);
 
@@ -166,8 +168,8 @@ class BoardController
         $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
         $write_data = array_merge($write, array(
             "comments" => $comment_service->getComments($write['wr_id']),
-            "images" => $file_service->getFilesByType($board['bo_table'], (int)$write['wr_id'], 'image'),
-            "normal_files" => $file_service->getFilesByType($board['bo_table'], (int)$write['wr_id'], 'file'),
+            "images" => $file_service->getFilesByType((int)$write['wr_id'], 'image'),
+            "normal_files" => $file_service->getFilesByType((int)$write['wr_id'], 'file'),
             "thumbnail" => new Thumbnail($thumb)
         ));
 
@@ -351,6 +353,134 @@ class BoardController
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/files",
+     *      summary="게시글 파일 업로드",
+     *      tags={"게시판"},
+     *      description="
+파일을 업로드합니다.
+- multipart/form-data로 전송해야 합니다.
+- 게시판에 설정된 파일 업로드 제한에 따라 파일을 업로드할 수 있습니다.
+    - 업로드 파일 갯수
+    - 파일 크기
+    - 파일 설명
+",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              encoding={
+     *                  "file_contents[]": {"explode": true},
+     *                  "file_dels[]": {"explode": true}
+     *              },
+     *              @OA\Schema(ref="#/components/schemas/UploadFileRequest"),
+     *          )
+     *      ),
+     *      @OA\Response(response="200", description="게시글 파일 업로드 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function uploadFiles(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $config = $request->getAttribute('config');
+        $group = $request->getAttribute('group');
+        $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $group_service = new GroupService();
+        $board_service = new BoardService($board);
+        $permission = new BoardPermission($group_service, $board_service, $config, $group);
+        $data = $request->getParsedBody();
+        $uploaded = $request->getUploadedFiles();
+        $upload_files = new UploadFileRequest($request, $board, $write, $uploaded, $data);
+
+        try {
+            $permission->uploadFiles($member, $write);
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
+
+        $file_service = new BoardFileService($board);
+        $file_service->createDirectoryIfNotExists();
+        $file_service->deleteWriteFilesByNo($write['wr_id'], (array)$upload_files->file_dels);
+        $file_service->uploadFiles($write['wr_id'], (array)$upload_files);
+
+        // 파일의 개수를 게시물에 업데이트 한다.
+        $files = $file_service->fetchWriteFiles($write['wr_id']);
+        $board_service->updateWrite($write['wr_id'], ["wr_file" => count($files)]);
+
+        return api_response_json($response, array("message" => "파일 정보가 갱신되었습니다."));
+    }
+
+
+    /**
+     * @OA\Get(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/files/{bf_no}",
+     *      summary="파일 다운로드",
+     *      tags={"게시판"},
+     *      description="게시글의 파일을 다운로드합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\PathParameter(name="bf_no", description="파일 번호", @OA\Schema(type="integer")),
+     *      @OA\Response(response="200", description="첨부파일 다운로드 성공", @OA\JsonContent(ref="#/components/schemas/baseResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function downloadFile(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $config = $request->getAttribute('config');
+        $group = $request->getAttribute('group');
+        $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $group_service = new GroupService();
+        $board_service = new BoardService($board);
+        $permission = new BoardPermission($group_service, $board_service, $config, $group);
+        $file_service = new BoardFileService($board);
+
+        $file = $file_service->fetchWriteFileByNo($write['wr_id'], $request->getAttribute('bf_no'));
+        if (!$file) {
+            throw new HttpNotFoundException($request, "파일정보가 존재하지 않습니다.");
+        }
+
+        $file_path = G5_DATA_PATH . '/file/' . $board['bo_table'] . '/' . $file['bf_file'];
+        if (!file_exists($file_path)) {
+            throw new HttpNotFoundException($request, "파일이 존재하지 않습니다.");
+        }
+
+        try {
+            $permission->downloadFiles($member);
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
+
+        $file_size = $file['bf_filesize'];
+        $file_name = $file['bf_source'];
+        $encoded_file_name = rawurlencode($file_name);
+
+        $response = $response->withHeader('Content-Description', 'File Transfer');
+        $response = $response->withHeader('Content-Type', 'application/octet-stream');
+        $response = $response->withHeader('Content-Disposition', 'attachment; filename=' . $encoded_file_name);
+        $response = $response->withHeader('Content-Length', $file_size);
+        $response = $response->withHeader('Pragma', 'no-cache');
+        $response = $response->withHeader('Expires', '0');
+
+        $response->getBody()->write(file_get_contents($file_path));
+
+        return $response;
+    }
+
+    /**
      * @OA\Delete(
      *      path="/api/v1/boards/{bo_table}/writes/{wr_id}",
      *      summary="게시글 삭제",
@@ -375,7 +505,7 @@ class BoardController
         $member = $request->getAttribute('member');
         $group_service = new GroupService();
         $board_service = new BoardService($board);
-        $file_service = new BoardFileService();
+        $file_service = new BoardFileService($board);
         $permission = new BoardPermission($group_service, $board_service, $config, $group);
 
         $request_body = $request->getParsedBody();
@@ -409,7 +539,7 @@ class BoardController
                     insert_point($all['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} {$all['wr_id']} 글삭제");
                 }
 
-                $file_service->removeWriteFiles($board['bo_table'], $all);
+                $file_service->deleteWriteFiles($all);
 
                 $count_writes++;
             }

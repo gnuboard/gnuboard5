@@ -38,6 +38,9 @@ class BoardPermission
     private const ERROR_NO_UPDATE_REPLY = '이 글과 관련된 답변글이 존재하므로 수정할 수 없습니다.';
     private const ERROR_NO_UPDATE_COMMENT = '이 글과 관련된 코멘트가 존재하므로 수정할 수 없습니다. 코멘트가 %s건 이상 달린 원글은 수정할 수 없습니다.';
     private const ERROR_NO_UPDATE_PASSWORD = '비밀번호가 일치하지 않으므로 수정할 수 없습니다.';
+    private const ERROR_NO_UPLOAD_LEVEL = '파일을 업로드할 권한이 없습니다.';
+    private const ERROR_NO_UPLOAD_OWNER = '자신의 글이 아니므로 파일을 업로드할 수 없습니다.';
+    private const ERROR_NO_DOWNLOAD_LEVEL = '파일을 다운로드할 권한이 없습니다.';
     private const ERROR_NO_DELETE_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 글은 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_OWNER = '자신의 글이 아니므로 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_REPLY = '이 글과 관련된 답변글이 존재하므로 삭제 할 수 없습니다.';
@@ -169,6 +172,37 @@ class BoardPermission
     }
 
     /**
+     * 파일 업로드 권한 체크
+     */
+    public function uploadFiles(array $member, array $write): void
+    {
+        if (is_super_admin($this->config, $member['mb_id'])) {
+            return;
+        }
+
+        $level = (int)$this->board['bo_upload_level'];
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->checkMemberLevel($member, $level, self::ERROR_NO_UPLOAD_LEVEL);
+        $this->checkAccessCert($member);
+        $this->verifyWriteOwnerAndLevel($member, $write, 'upload');
+    }
+
+    /**
+     * 파일 다운로드 권한 체크
+     */
+    public function downloadFiles(array $member): void
+    {
+        if ($this->isBoardManager($member['mb_id'])) {
+            return;
+        }
+
+        $level = (int)$this->board['bo_download_level'];
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->checkMemberLevel($member, $level, self::ERROR_NO_DOWNLOAD_LEVEL);
+        $this->checkAccessCert($member);
+    }
+
+    /**
      * 글 삭제 권한 체크
      */
     public function deleteWrite(array $member, array $write): void
@@ -211,8 +245,22 @@ class BoardPermission
      */
     private function verifyWriteOwnerAndLevel(array $member, array $write, string $type): void
     {
-        $message_level = ($type == 'update') ? self::ERROR_NO_UPDATE_LEVEL : self::ERROR_NO_DELETE_LEVEL;
-        $message_owner = ($type == 'update') ? self::ERROR_NO_UPDATE_OWNER : self::ERROR_NO_DELETE_OWNER;
+        $message_level = "";
+        $message_owner = "";
+        switch ($type) {
+            case 'update':
+                $message_level = self::ERROR_NO_UPDATE_LEVEL;
+                $message_owner = self::ERROR_NO_UPDATE_OWNER;
+                break;
+            case 'delete':
+                $message_level = self::ERROR_NO_DELETE_LEVEL;
+                $message_owner = self::ERROR_NO_DELETE_OWNER;
+                break;
+            case 'upload':
+                $message_level = self::ERROR_NO_UPLOAD_LEVEL;
+                $message_owner = self::ERROR_NO_UPLOAD_OWNER;
+                break;
+        }
 
         // TODO: Dependency Injection
         $member_service = new MemberService();
