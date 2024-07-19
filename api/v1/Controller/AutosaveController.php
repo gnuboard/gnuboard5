@@ -100,10 +100,26 @@ class AutosaveController
     /**
      * 회원의 임시저장된글 카운트
      * @OA\Get (
-     *     
+     *     path="/api/v1/autosaves/count",
+     *     summary="임시저장된 글 갯수 조회",
+     *     tags={"자동 임시저장"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response (
+     *     response="200",
+     *     description="임시저장된 글 갯수 조회 성공",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="count", type="integer")
+     *      )
+     *     )
+     * )
+     *
      */
-    public function get_count()
+    public function get_count(Request $request, Response $response)
     {
-        
+        $member = $request->getAttribute('member');
+        $count = $this->autosave_service->get_count($member['mb_id']);
+        return api_response_json($response, ['count' => $count]);
     }
+    
+    
 }
