@@ -5,7 +5,6 @@ namespace API\v1\Controller;
 /**
  * @OA\Tag(name="환경설정", description="기능별 환경설정정보 API")
  * @OA\Tag(name="인증", description="인증 API")
- * @OA\Tag(name="설문조사", description="설문조사 API")
  * @OA\Tag(name="회원", description="회원 API")
  * @OA\Info(
  *      version="1.0.0",

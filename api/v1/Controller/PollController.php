@@ -4,7 +4,10 @@ namespace API\v1\Controller;
 
 require_once G5_LIB_PATH . '/mailer.lib.php';
 
+use API\Service\MemberService;
 use API\Service\PollService;
+use API\v1\Model\Response\Poll\GetItemResponse;
+use API\v1\Model\Response\Poll\PollResponse;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -18,9 +21,11 @@ use Slim\Psr7\Response;
 class PollController
 {
     private PollService $poll_service;
-    
-    public function __construct(PollService $pollService)
+    private MemberService $member_service;
+
+    public function __construct(PollService $pollService, MemberService $member_service)
     {
+        $this->member_service = $member_service;
         $this->poll_service = $pollService;
     }
 
@@ -70,14 +75,13 @@ class PollController
             return api_response_json($response, ['message' => '설문조사 번호가 잘못되었습니다.'], 400);
         }
 
-        //@todo cache 레이어 추가
-
         $poll = $this->poll_service->get_poll($po_id);
         if ($poll === null) {
             return api_response_json($response, ['message' => '설문조사가 없습니다.'], 404);
         }
 
-        return api_response_json($response, $poll);
+        $response_data = new PollResponse($poll);
+        return api_response_json($response, $response_data);
     }
 
     /**
@@ -158,7 +162,6 @@ class PollController
      * @param Response $response
      * @param array $args
      * @return ResponseInterface
-     * @todo 비회원 기능
      * @OA\Post (
      *     path="/api/v1/polls/{po_id}/etc",
      *     tags={"설문조사"},
@@ -193,13 +196,6 @@ class PollController
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
 
-        $mb_id = $member['mb_id'];
-        if ($member) {
-            $pc_name = $member['mb_nick'];
-        } else {
-            $mb_id = '';
-        }
-
         if (!$content) {
             return api_response_json($response, ['message' => '의견을 입력해주세요.'], 400);
         }
@@ -207,7 +203,13 @@ class PollController
         if (!is_numeric($po_id)) {
             return api_response_json($response, ['message' => '설문조사 번호가 잘못되었습니다.'], 400);
         }
-
+        
+        $is_guest = empty($member['mb_id']) == '';
+        if ($is_guest) {
+            $mb_id = '';
+        } else {
+            $mb_id = $member['mb_id'];
+        }
 
         $this->poll_service->add_etc_poll($po_id, $pc_name, $content, $mb_id);
 
@@ -222,10 +224,9 @@ class PollController
             ob_end_clean();
 
             $admin_id = $config['cf_admin'];
-            // @todo refactor 
-            $admin_member = get_member($admin_id);
+            $admin_member = $this->member_service->fetchMemberById($admin_id);
             $from_email = $member['mb_email'] ?: $admin_member['mb_email'];
-            if (!$mb_id) {
+            if ($is_guest) {
                 $name = 'guest';
             } else {
                 $name = $member['mb_nick'];
