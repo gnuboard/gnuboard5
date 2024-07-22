@@ -9,196 +9,251 @@ use Slim\Psr7\Response;
 
 class MemoController
 {
+    private MemoService $memo_service;
+
+    public function __construct(MemoService $memoService)
+    {
+        $this->memo_service = $memoService;
+    }
+
     /**
      * 쪽지 목록 조회
      * 현재 로그인 회원의 쪽지 목록을 조회합니다.
+     * @OA\Get (
+     *     path="/api/v1/member/memos",
+     *     summary="쪽지 목록 조회",
+     *     tags={"쪽지"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter (
+     *     name="page",
+     *     description="페이지 번호",
+     *     in="query",
+     *     required=false,
+     *     @OA\Schema(type="integer", minimum=1)
+     *    ),
+     *     @OA\Parameter (
+     *     name="per_page",
+     *     description="페이지당 표시할 목록 수",
+     *     in="query",
+     *     required=false,
+     *     @OA\Schema(type="integer", maximum=100)
+     *   ),
+     *     @OA\Parameter (
+     *     name="me_type",
+     *     description="쪽지 타입 (recv: 받은 쪽지, send: 보낸 쪽지)",
+     *     in="query",
+     *     required=true,
+     *     @OA\Schema(type="string")
+     *  ),
+     *     @OA\Response (
+     *     response="200",
+     *     description="쪽지 목록 조회 성공",
+     *     @OA\JsonContent(ref="#/components/schemas/MemoListResponse")
+     *  ),
+     *      @OA\Response(response="400", ref="#/components/responses/400"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="422", ref="#/components/responses/422")
+     * )
+     *
+     *
      */
     public function index(Request $request, Response $response)
     {
-        $queryParams = $request->getQueryParams();
-        $page = isset($queryParams['page']) ? (int)$queryParams['page'] : 1;
-        $perPage = isset($queryParams['per_page']) ? (int)$queryParams['per_page'] : 10;
-        $meType = isset($queryParams['me_type']) ? $queryParams['me_type'] : 'recv';
+        $query_params = $request->getQueryParams();
+        $page = isset($query_params['page']) ? (int)$query_params['page'] : 1;
+        $per_page = isset($query_params['per_page']) ? (int)$query_params['per_page'] : 10;
+        $memo_type = $query_params['me_type'] ?? null;
 
-        $accessToken = $request->getHeaderLine('Authorization');
-        $accessToken = str_replace('Bearer ', '', $accessToken);
+        $access_token = $request->getHeaderLine('Authorization');
+        $access_token = str_replace('Bearer ', '', $access_token);
 
         // JWT 디코딩
-        $accessTokenDecode = decode_token('access', $accessToken);
-        //@todo 변경가능성있음.
-        $memberId = $accessTokenDecode->sub;
-
-        $error_data = [];
+        $access_token_decode = decode_token('access', $access_token);
+        // @todo 변경가능성있음.
+        $mb_id = $access_token_decode->sub;
 
         if ($page < 1) {
             $page = 1;
         }
 
-        if ($perPage < 1) {
-            $perPage = 10;
+        if ($per_page < 1) {
+            $per_page = 10;
         }
 
-        if ($page > 100) {
-            $error_data[] = [
-                'loc' => ['query', 'page'],
-                'msg' => 'ensure this value is less than or equal to 100',
-                'type' => 'less_than_equal'
-            ];
+        if ($per_page > 100) {
+            return api_response_json($response, ['message' => '한번에 100개 이상 조회할 수 없습니다.'], 422);
         }
 
-        if (!in_array($meType, ['recv', 'send'])) {
-            $meType = 'recv';
+        if ($memo_type == null) {
+            return api_response_json($response, ['message' => 'me_type 을 입력하세요'], 422);
         }
 
-        if ($error_data) {
-            return $this->responseValidationError($response, $error_data);
+        if (!in_array($memo_type, ['recv', 'send'])) {
+            return api_response_json($response, ['message' => '올바른 me_type 을 입력하세요'], 400);
         }
-        //request 검사.
+
+        //request 검사 끝
 
         //메모 리스트 가져오기
-        $memo_service = new MemoService($request);
         //count
-        $totalRecords = $memo_service->fetchTotalRecords($meType, $memberId);
-        $memo_data = $memo_service->fetchMemos($meType, $memberId, $page, $perPage);
+        $total_records = $this->memo_service->fetch_total_records($memo_type, $mb_id);
+        $memo_data = $this->memo_service->fetch_memos($memo_type, $mb_id, $page, $per_page);
 
-        $responseData = [
+        $response_data = [
             'memos' => [
                 $memo_data
             ],
-            'total_records' => $totalRecords,
-            'total_page' => $page,
+            'total_records' => $total_records,
+            'total_page' => ceil($total_records / $per_page)
         ];
 
-        return api_response_json($response, $responseData);
+        return api_response_json($response, $response_data);
     }
 
     /**
-     * 쪽지 전송
      * 현재 로그인 회원이 다른 회원에게 쪽지를 전송합니다.
+     * @OA\Post (
+     *     path="/api/v1/member/memos",
+     *     summary="쪽지 전송",
+     *     tags={"쪽지"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody (
+     *     required=true,
+     *     description="쪽지 전송",
+     *     @OA\JsonContent(
+     *     required={"me_recv_mb_id", "me_memo"},
+     *     @OA\Property(
+     *     property="me_recv_mb_id",
+     *     type="string",
+     *     description="받는 회원 ID"
+     *   ),
+     *     @OA\Property(
+     *     property="me_memo",
+     *     type="string",
+     *     description="쪽지 내용"
+     *     )
+     *    )
+     *   ),
+     *     @OA\Response (
+     *     response="200",
+     *     description="쪽지 전송 성공",
+     *     @OA\JsonContent(ref="#/components/schemas/BaseResponse")
+     *     ),
+     *     @OA\Response(response="400", ref="#/components/responses/400"),
+     *     @OA\Response(response="403", ref="#/components/responses/403"),
+     *     @OA\Response(response="422", ref="#/components/responses/422")
+     * )
      */
     public function send(Request $request, Response $response)
     {
-        $data = $request->getParsedBody();
-        $accessToken = $request->getHeaderLine('Authorization');
-        $accessToken = str_replace('Bearer ', '', $accessToken);
+        $access_token = $request->getHeaderLine('Authorization');
+        $access_token = str_replace('Bearer ', '', $access_token);
 
         // JWT 디코딩
-        $accessTokenDecode = decode_token('access', $accessToken);
-        $memberId = $accessTokenDecode->sub;
+        $access_token_decode = decode_token('access', $access_token);
+        $mb_id = $access_token_decode->sub;
 
         $request_data = $request->getParsedBody();
-        $error_data = [];
-        //request data 검사
-        //@todo 오류 response 포맷 변경
-        if (!isset($data['me_recv_mb_id'])) {
-            $error_data[] = [
-                'loc' => ['body', 'me_recv_mb_id'],
-                'msg' => 'field required',
-                'type' => 'value_error.missing'
-            ];
+
+        if (!isset($request_data['me_recv_mb_id'])) {
+            return api_response_json($response, ['message' => 'me_recv_mb_id 필드가 필요합니다.'], 422);
         }
 
-        if (!isset($data['me_memo'])) {
-            $error_data[] = [
-                'loc' => ['body', 'me_memo'],
-                'msg' => 'field required',
-                'type' => 'value_error.missing'
-            ];
+        if (!isset($request_data['me_memo'])) {
+            return api_response_json($response, ['message' => 'me_memo 필드가 필요합니다.'], 422);
         }
 
-        if ($error_data) {
-            return $this->responseValidationError($response, $error_data);
-        }
+        $receiver_mb_id = $request_data['me_recv_mb_id'];
+        $mem_content = $request_data['me_memo'];
 
-        $reciverMemeberId = $request_data['me_recv_mb_id'];
-        $memoContent = $request_data['me_memo'];
-
-        $memo_service = new MemoService($request);
-        $result = $memo_service->sendMemo($memberId, $reciverMemeberId, $memoContent);
+        $ip = $request->getServerParams()['REMOTE_ADDR']; // @todo 클라우드 플레어, LB 등을 고려한 ip 함수 추가 필요.
+        $result = $this->memo_service->send_memo($mb_id, $receiver_mb_id, $mem_content, $ip);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], 400);
         }
 
+        $this->memo_service->update_not_read_memo_count($receiver_mb_id);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
     }
 
     /**
      * 본인 쪽지 조회
+     * @OA\Get (
+     *     path="/api/v1/member/memos/{me_id}",
+     *     summary="쪽지 조회",
+     *     tags={"쪽지"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter (
+     *     name="me_id",
+     *     in="path",
+     *     description="쪽지 ID",
+     *     required=true,
+     *     @OA\Schema(type="integer")
+     *   ),
+     *     @OA\Response (
+     *     response="200",
+     *     description="쪽지 조회 성공",
+     *     @OA\JsonContent(ref="#/components/schemas/MemoResponse")
+     *  ),
+     *     @OA\Response(response="400", ref="#/components/responses/400"),
+     *     @OA\Response(response="403", ref="#/components/responses/403"),
+     *     @OA\Response(response="422", ref="#/components/responses/422")
+     * )    
      */
     public function show(Request $request, Response $response, $args)
     {
-        $data = $request->getParsedBody();
-        $accessToken = $request->getHeaderLine('Authorization');
-        $accessToken = str_replace('Bearer ', '', $accessToken);
-
-        $memoId = $args['me_id'];
-        if (!is_numeric($memoId)) {
-            $error_data[] = [
-                'loc' => ['body', 'me_id'],
-                'msg' => '숫자만 가능합니다.',
-                'type' => 'type error'
-            ];
-            return $this->responseValidationError($response, $error_data);
-        }
+        $access_token = $request->getHeaderLine('Authorization');
+        $access_token = str_replace('Bearer ', '', $access_token);
 
         // JWT 디코딩
-        $accessTokenDecode = decode_token('access', $accessToken);
-        $memberId = $accessTokenDecode->sub;
+        $access_token_decode = decode_token('access', $access_token);
+        $mb_id = $access_token_decode->sub;
 
-        $memoService = new MemoService($request);
-        $result = $memoService->fetchMemo($memoId, $memberId);
-        if ($result['error']) {
+        $memo_id = $args['me_id'];
+        if (!is_numeric($memo_id)) {
+            return api_response_json($response, ['message' => '숫자만 가능합니다.'], 422);
+        }
+
+
+        $result = $this->memo_service->fetch_memo($memo_id, $mb_id);
+        if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
+
+        $this->memo_service->read_check($memo_id);
 
         return api_response_json($response, $result);
     }
 
+    /**
+     * 쪽지 삭제
+     */
     public function delete(Request $request, Response $response, $args)
     {
-        //        $data = $request->getParsedBody();
-        $accessToken = $request->getHeaderLine('Authorization');
-        $accessToken = str_replace('Bearer ', '', $accessToken);
-
-        $memoId = $args['me_id'];
-        if (!is_numeric($memoId)) {
-            $error_data[] = [
-                'loc' => ['body', 'me_id'],
-                'msg' => '숫자만 가능합니다.',
-                'type' => 'type error'
-            ];
-            return $this->responseValidationError($response, $error_data);
-        }
+        $access_token = $request->getHeaderLine('Authorization');
+        $access_token = str_replace('Bearer ', '', $access_token);
 
         // JWT 디코딩
-        $accessTokenDecode = decode_token('access', $accessToken);
-        $memberId = $accessTokenDecode->sub;
+        $access_token_decode = decode_token('access', $access_token);
+        $mb_id = $access_token_decode->sub;
 
-        $memoService = new MemoService($request);
-        $memoService->deleteMemoCall($memoId);
-        $result = $memoService->deleteMemo($memoId, $memberId);
-        if ($result['error']) {
+        $memo_id = $args['me_id'];
+        if (!is_numeric($memo_id)) {
+            return api_response_json($response, ['message' => 'memo_id 는 숫자만 가능합니다.'], 422);
+        }
+
+        $result = $this->memo_service->delete_memo_call($memo_id);
+        if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
 
-        return api_response_json($response, ['message' => '삭제되었습니다.']);
-    }
+        $result = $this->memo_service->delete_memo($memo_id, $mb_id);
+        if (isset($result['error'])) {
+            return api_response_json($response, ['message' => $result['error']], $result['code']);
+        }
 
-    /**
-     * FastAPI pydantic 오류 형식 호환 함수
-     * @param $response
-     * @param $error_data
-     * @return mixed
-     */
-    public function responseValidationError($response, $error_data)
-    {
-        $errorResponse = [
-            'detail' => [
-                $error_data
-            ]
-        ];
-        $response->getBody()->write(json_encode($errorResponse));
-        return $response->withStatus(422)->withHeader('Content-Type', 'application/json');
+
+        return api_response_json($response, ['message' => '삭제되었습니다.']);
     }
 }

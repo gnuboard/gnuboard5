@@ -12,6 +12,7 @@ use API\Handlers\HttpErrorHandler;
 use API\Handlers\ShutdownHandler;
 use API\Middleware\JsonBodyParserMiddleware;
 use API\ResponseEmitter\ResponseEmitter;
+use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -28,6 +29,8 @@ $displayErrorDetails = true;
 /**
  * Instantiate App
  */
+$container =new Container();
+AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 // Create Request object from globals

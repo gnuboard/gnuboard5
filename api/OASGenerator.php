@@ -2,8 +2,8 @@
 
 namespace API;
 
+use OpenApi\Annotations\OpenApi;
 use OpenApi\Generator;
-use API\EnvironmentConfig;
 use Exception;
 
 /**
@@ -41,7 +41,9 @@ class OASGenerator
     {
         try {
             $api_dir = "{$root_path}/api/{$this->version}";
-            $openapi = Generator::scan([$api_dir]);
+            $openapi = Generator::scan([$api_dir], [
+                'version' => OpenApi::VERSION_3_1_0
+            ]);
             file_put_contents("{$api_dir}/{$this->filename}", $openapi->toYaml());
         } catch (\Exception $e) {
             echo $e->getMessage();

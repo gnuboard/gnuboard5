@@ -59,9 +59,14 @@ class Db
         return self::$instance;
     }
 
-    public static function makeWhereInPlaceHolder($data)
+    /**
+     * where in 절에 사용할 바인딩 자리 생성.
+     * @param array $values
+     * @return string
+     */
+    public static function makeWhereInPlaceHolder(array $values)
     {
-        return str_repeat('?,', count($data) - 1) . '?';
+        return str_repeat('?,', count($values) - 1) . '?';
     }
 
 
@@ -88,10 +93,6 @@ class Db
      */
     public function run($query, $params = [])
     {
-        if (!$params) {
-            return $this->pdo->query($query);
-        }
-
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($params);
         if (G5_DEBUG) {

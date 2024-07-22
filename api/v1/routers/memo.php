@@ -26,4 +26,4 @@ $app->group('/member/memos', function (RouteCollectorProxy $group) {
     $group->post('', [MemoController::class, 'send']);
     $group->get('/{me_id}', [MemoController::class, 'show']);
     $group->delete('/{me_id}', [MemoController::class, 'delete']);
-})->add(new AccessTokenAuthMiddleware());
+})->add(AccessTokenAuthMiddleware::class);
