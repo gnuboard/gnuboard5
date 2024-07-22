@@ -10,6 +10,8 @@ use API\Service\BoardPermission;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
 use API\v1\Model\Request\Board\UpdateWriteRequest;
+use API\v1\Model\Request\Comment\CreateCommentRequest;
+use API\v1\Model\Request\Comment\UpdateCommentRequest;
 use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
@@ -173,8 +175,9 @@ class BoardController
             "thumbnail" => new Thumbnail($thumb)
         ));
 
-        $write = new Write($write_data);
+        insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
 
+        $write = new Write($write_data);
         return api_response_json($response, (array)$write);
     }
 
@@ -254,7 +257,7 @@ class BoardController
             $board_service->updateBoard(['bo_notice' => $bo_notice]);
         }
 
-        $board_service->insertBoardNew($wr_id, $member['mb_id']);
+        $board_service->insertBoardNew($wr_id, $wr_id, $member['mb_id']);
         $board_service->incrementWriteCount();
 
         // 게시글 등록 후 처리
@@ -422,7 +425,7 @@ class BoardController
     /**
      * @OA\Get(
      *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/files/{bf_no}",
-     *      summary="파일 다운로드",
+     *      summary="게시글 파일 다운로드",
      *      tags={"게시판"},
      *      description="게시글의 파일을 다운로드합니다.",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
@@ -459,7 +462,7 @@ class BoardController
         }
 
         try {
-            $permission->downloadFiles($member);
+            $permission->downloadFiles($member, $write);
         } catch (\Exception $e) {
             throw new HttpForbiddenException($request, $e->getMessage());
         }
@@ -488,6 +491,12 @@ class BoardController
      *      description="지정된 게시판의 글을 삭제합니다.",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(@OA\Property(property="wr_password", type="string", description="게시글 비밀번호(비회원 글일 경우 필수)"))
+     *           )
+     *      ),
      *      @OA\Response(response="200", description="게시글 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
@@ -508,14 +517,12 @@ class BoardController
         $file_service = new BoardFileService($board);
         $permission = new BoardPermission($group_service, $board_service, $config, $group);
 
-        $request_body = $request->getParsedBody();
-
         // 권한 체크
         try {
             if ($write['mb_id']) {
                 $permission->deleteWrite($member, $write);
             } else {
-                $wr_password = $request_body['wr_password'] ?? '';
+                $wr_password = $request->getParsedBody()['wr_password'] ?? '';
                 $permission->deleteWriteByNonMember($member, $write, $wr_password);
             }
         } catch (\Exception $e) {
@@ -560,5 +567,213 @@ class BoardController
         run_event('api_delete_write', $write, $board);
 
         return api_response_json($response, array("message" => "게시글이 삭제되었습니다."));
+    }
+
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/comments",
+     *      summary="댓글 작성",
+     *      tags={"게시판"},
+     *      description="지정된 게시판의 글에 댓글을 작성합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/CreateCommentRequest"),
+     *          )
+     *      ),
+     *      @OA\Response(response="200", description="댓글 작성 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function createComment(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $config = $request->getAttribute('config');
+        $group = $request->getAttribute('group');
+        $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $group_service = new GroupService();
+        $board_service = new BoardService($board);
+        $comment_service = new CommentService($board);
+        $permission = new BoardPermission($group_service, $board_service, $config, $group);
+
+        // 데이터 검증 및 처리
+        try {
+            $request_body = $request->getParsedBody();
+            $request_data = new CreateCommentRequest($board, $member, $request_body);
+
+            $parent_comment = [];
+            if ($request_data->comment_id) {
+                $parent_comment = $board_service->fetchWriteById($request_data->comment_id);
+                if (!$parent_comment) {
+                    throw new Exception("부모 댓글 정보가 존재하지 않습니다.");
+                }
+                if ($write['wr_id'] != $parent_comment['wr_parent']) {
+                    throw new Exception("부모 댓글 정보가 올바르지 않습니다.");
+                }
+            }
+            unset($request_data->comment_id);
+        } catch (Exception $e) {
+            throw new HttpException($request, $e->getMessage(), 422);
+        }
+
+        // 권한 체크
+        try {
+            $permission->createComment($member, $write);
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
+
+        // 댓글 등록
+        $comment_id = $comment_service->createCommentData($write, $request_data, $member, $parent_comment);
+        $board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
+
+        $board_service->insertBoardNew($comment_id, $write['wr_id'], $member['mb_id']);
+        $board_service->incrementCommentCount();
+
+        insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
+
+        // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
+        // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
+
+        run_event('api_create_comment_after', $board, $write['wr_id'], $comment_id, $parent_comment);
+
+        return api_response_json($response, array("message" => "댓글이 등록되었습니다."));
+    }
+
+    /**
+     * @OA\Put(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/comments/{comment_id}",
+     *      summary="댓글 수정",
+     *      tags={"게시판"},
+     *      description="지정된 게시판의 글에 작성된 댓글을 수정합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\PathParameter(name="comment_id", description="댓글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/UpdateCommentRequest"),
+     *          )
+     *      ),
+     *      @OA\Response(response="200", description="댓글 수정 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function updateComment(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $config = $request->getAttribute('config');
+        $group = $request->getAttribute('group');
+        $board = $request->getAttribute('board');
+        $comment = $request->getAttribute('comment');
+        $member = $request->getAttribute('member');
+        $group_service = new GroupService();
+        $board_service = new BoardService($board);
+        $comment_service = new CommentService($board);
+        $permission = new BoardPermission($group_service, $board_service, $config, $group);
+
+        // 데이터 검증 및 처리
+        try {
+            $request_body = $request->getParsedBody();
+            $request_data = new UpdateCommentRequest($member, $request_body);
+        } catch (Exception $e) {
+            throw new HttpException($request, $e->getMessage(), 422);
+        }
+
+        // 권한 체크
+        try {
+            if ($comment['mb_id']) {
+                $permission->updateComment($member, $comment);
+            } else {
+                $wr_password = $request_body['wr_password'] ?? '';
+                $permission->updateCommentByNonMember($member, $comment, $wr_password);
+                unset($request_data->wr_password);
+            }
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
+
+        // 댓글 수정
+        $comment_service->updateCommentData($comment['wr_id'], $request_data);
+
+        return api_response_json($response, array("message" => "댓글이 수정되었습니다."));
+    }
+
+    /**
+     * @OA\Delete(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/comments/{comment_id}",
+     *      summary="댓글 삭제",
+     *      tags={"게시판"},
+     *      description="지정된 게시판의 글에 작성된 댓글을 삭제합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\PathParameter(name="comment_id", description="댓글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(@OA\Property(property="wr_password", type="string", description="댓글 비밀번호(비회원 댓글일 경우 필수)"))
+     *           )
+     *      ),
+     *      @OA\Response(response="200", description="댓글 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function deleteComment(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $config = $request->getAttribute('config');
+        $group = $request->getAttribute('group');
+        $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $comment = $request->getAttribute('comment');
+        $member = $request->getAttribute('member');
+        $group_service = new GroupService();
+        $board_service = new BoardService($board);
+        $comment_service = new CommentService($board);
+        $permission = new BoardPermission($group_service, $board_service, $config, $group);
+
+        // 권한 체크
+        try {
+            if ($comment['mb_id']) {
+                $permission->deleteComment($member, $comment);
+            } else {
+                $wr_password = $request->getParsedBody()['wr_password'] ?? '';
+                $permission->deleteCommentByNonMember($member, $comment, $wr_password);
+            }
+        } catch (\Exception $e) {
+            throw new HttpForbiddenException($request, $e->getMessage());
+        }
+
+        // 댓글 삭제
+        
+        // 코멘트 포인트 삭제
+        if (!delete_point($comment['mb_id'], $board['bo_table'], $comment['wr_id'], '댓글')) {
+            insert_point($comment['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$comment['wr_parent']}-{$comment['wr_id']} 댓글삭제");
+        }
+        // 코멘트 삭제
+        $comment_service->deleteCommentById($comment['wr_id']);
+        
+        // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)
+        $last = $board_service->fetchWriteCommentLast($write);
+        $board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
+        $board_service->deleteBoardNew($comment['wr_id']);
+
+        return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
     }
 }

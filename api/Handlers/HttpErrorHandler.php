@@ -71,7 +71,7 @@ class HttpErrorHandler extends SlimErrorHandler
         
         if ($exception instanceof \PDOException) {
             $statusCode = 500;
-            $description = 'DB operator error';
+            $description = 'DB operator error : ' . $exception->getMessage();
         }
 
         // Add JWT exceptions
