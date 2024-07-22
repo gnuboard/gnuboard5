@@ -6,7 +6,6 @@ require_once G5_LIB_PATH . '/mailer.lib.php';
 
 use API\Service\MemberService;
 use API\Service\PollService;
-use API\v1\Model\Response\Poll\GetItemResponse;
 use API\v1\Model\Response\Poll\PollResponse;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
