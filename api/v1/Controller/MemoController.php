@@ -63,15 +63,9 @@ class MemoController
         $page = isset($query_params['page']) ? (int)$query_params['page'] : 1;
         $per_page = isset($query_params['per_page']) ? (int)$query_params['per_page'] : 10;
         $memo_type = $query_params['me_type'] ?? null;
-
-        $access_token = $request->getHeaderLine('Authorization');
-        $access_token = str_replace('Bearer ', '', $access_token);
-
-        // JWT 디코딩
-        $access_token_decode = decode_token('access', $access_token);
-        // @todo 변경가능성있음.
-        $mb_id = $access_token_decode->sub;
-
+        $member = $request->getAttribute('member');
+        $mb_id = $member['mb_id'];
+        
         if ($page < 1) {
             $page = 1;
         }
@@ -146,12 +140,8 @@ class MemoController
      */
     public function send(Request $request, Response $response)
     {
-        $access_token = $request->getHeaderLine('Authorization');
-        $access_token = str_replace('Bearer ', '', $access_token);
-
-        // JWT 디코딩
-        $access_token_decode = decode_token('access', $access_token);
-        $mb_id = $access_token_decode->sub;
+        $member = $request->getAttribute('member');
+        $mb_id = $member['mb_id'];
 
         $request_data = $request->getParsedBody();
 
@@ -203,12 +193,8 @@ class MemoController
      */
     public function show(Request $request, Response $response, $args)
     {
-        $access_token = $request->getHeaderLine('Authorization');
-        $access_token = str_replace('Bearer ', '', $access_token);
-
-        // JWT 디코딩
-        $access_token_decode = decode_token('access', $access_token);
-        $mb_id = $access_token_decode->sub;
+        $member = $request->getAttribute('member');
+        $mb_id = $member['mb_id'];
 
         $memo_id = $args['me_id'];
         if (!is_numeric($memo_id)) {
@@ -231,12 +217,8 @@ class MemoController
      */
     public function delete(Request $request, Response $response, $args)
     {
-        $access_token = $request->getHeaderLine('Authorization');
-        $access_token = str_replace('Bearer ', '', $access_token);
-
-        // JWT 디코딩
-        $access_token_decode = decode_token('access', $access_token);
-        $mb_id = $access_token_decode->sub;
+        $member = $request->getAttribute('member');
+        $mb_id = $member['mb_id'];
 
         $memo_id = $args['me_id'];
         if (!is_numeric($memo_id)) {
