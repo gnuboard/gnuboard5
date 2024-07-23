@@ -28,7 +28,12 @@ class PageParameters
      */
     public int $offset = 0;
 
-    public function __construct(array $data = [], array $board = [])
+    /**
+     * @param array $config 기본환경설정
+     * @param array|null $data 요청 데이터
+     * @param array|null $board 게시판 설정
+     */
+    public function __construct(array $config, array $data = [], array $board = [])
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key) && $value) {
@@ -39,16 +44,17 @@ class PageParameters
                 }
             }
         }
+
         // per_page값이 없을 경우 게시판 설정값 반영
-        if ($this->per_page <= 0 && $board) {
+        if ($this->per_page <= 0) {
             if ($this->is_mobile) {
-                $this->per_page = $board['bo_mobile_page_rows'];
+                $this->per_page = $board['bo_mobile_page_rows'] ?? $config['cf_mobile_page_rows'];
             } else {
-                $this->per_page = $board['bo_page_rows'];
+                $this->per_page = $board['bo_page_rows'] ?? $config['cf_page_rows'];
             }
         }
 
         // 시작 위치 초기화
         $this->offset = ($this->page - 1) * $this->per_page;
     }
-}   
+}

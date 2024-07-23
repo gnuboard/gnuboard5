@@ -63,15 +63,26 @@ class BoardPermission
     public function __construct(
         GroupService $group_service,
         BoardService $board_service,
-        array $config,
-        array $group
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
-        $this->config = $config;
-        $this->group = $group;
-        $this->board = $board_service->board;
     }
+
+    function setConfig(array $config): void
+    {
+        $this->config = $config;
+    }
+
+    function setGroup(array $group): void
+    {
+        $this->group = $group;
+    }
+
+    function setBoard(array $board): void
+    {
+        $this->board = $board;
+    }
+
     /**
      * 글 목록 조회 권한 체크
      */
@@ -513,7 +524,7 @@ class BoardPermission
      */
     private function checkAccessCert(array $member): void
     {
-        if ($this->board['bo_use_cert'] == '' || !$this->config['cf_cert_use'] || $this->isSuperAdmin($member['mb_id'])) {
+        if ($this->board['bo_use_cert'] == '' || !$this->config['cf_cert_use'] || is_super_admin($this->config, $member['mb_id'])) {
             return;
         }
 

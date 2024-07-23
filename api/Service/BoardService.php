@@ -10,12 +10,28 @@ class BoardService
     public array $board;
     public string $write_table;
 
-    public function __construct(array $board)
+    public function setBoard(array $board): void
+    {
+        $this->board = $board;
+        $this->setWriteTable($board['bo_table']);
+    }
+
+    public function setWriteTable(string $bo_table): void
+    {
+        global $g5;
+        $this->write_table = $g5['write_prefix'] . $bo_table;
+    }
+
+    /**
+     * 게시판 정보 조회
+     */
+    public function fetchBoardByTable(string $bo_table): array
     {
         global $g5;
 
-        $this->board = $board;
-        $this->write_table = $g5['write_prefix'] . $board['bo_table'];
+        $query = "SELECT * FROM {$g5['board_table']} WHERE bo_table = :bo_table";
+        $stmt = Db::getInstance()->run($query, ['bo_table' => $bo_table]);
+        return $stmt->fetch();
     }
 
     /**
@@ -280,8 +296,8 @@ class BoardService
     {
         Db::getInstance()->update(
             $this->write_table,
-            ['wr_parent' => $parent_id],
-            ['wr_id' => $wr_id]
+            ['wr_id' => $wr_id],
+            ['wr_parent' => $parent_id]
         );
     }
 

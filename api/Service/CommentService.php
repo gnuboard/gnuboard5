@@ -11,12 +11,16 @@ class CommentService
     public array $board;
     public string $write_table;
 
-    public function __construct(array $board)
+    public function setBoard(array $board): void
+    {
+        $this->board = $board;
+        $this->setWriteTable($board['bo_table']);
+    }
+
+    public function setWriteTable(string $bo_table): void
     {
         global $g5;
-
-        $this->board = $board;
-        $this->write_table = $g5['write_prefix'] . $board['bo_table'];
+        $this->write_table = $g5['write_prefix'] . $bo_table;
     }
 
     /**

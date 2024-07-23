@@ -98,6 +98,14 @@ class UpdateWriteRequest
      */
     public bool $notice = false;
 
+    /**
+     * @param BoardPermission $permission  게시판 권한
+     * @param array $write  게시글 정보
+     * @param array $member  회원 정보
+     * @param array $data  요청 데이터
+     * @throws Exception  유효성 검사 실패시 예외 발생
+     * @return void
+     */
     public function __construct(BoardPermission $permission, array $write, array $member, array $data = [])
     {
         foreach ($data as $key => $value) {
@@ -109,14 +117,14 @@ class UpdateWriteRequest
         $board = $permission->board;
         $is_board_manager = $permission->isBoardManager($member['mb_id']);
 
-        $this->validate_category($board, $is_board_manager);
-        $this->validate_subject();
-        $this->validate_content();
-        $this->validate_option($board, $is_board_manager);
-        $this->validate_name($write);
+        $this->validateCategory($board, $is_board_manager);
+        $this->validateSubject();
+        $this->validateContent();
+        $this->validateOption($board, $is_board_manager);
+        $this->validateName($write);
 
-        $this->sanitize_link();
-        $this->set_writer_data($write);
+        $this->sanitizeLink();
+        $this->initializeWriterData($write);
 
         // 공지여부는 게시판 정보에만 일괄저장되므로 입력만 받도록 처리한다.
         unset($this->notice);
@@ -125,7 +133,7 @@ class UpdateWriteRequest
     /**
      * 분류 유효성 검사
      */
-    public function validate_category(array $board, bool $is_admin = false): void
+    public function validateCategory(array $board, bool $is_admin = false): void
     {
         $categories = array_map('trim', explode("|", $board['bo_category_list'] . ($is_admin ? '|공지' : '')));
         if (!$board['bo_use_category'] || empty($categories)) {
@@ -143,9 +151,9 @@ class UpdateWriteRequest
     /**
      * 제목 유효성 검사
      */
-    public function validate_subject(): void
+    public function validateSubject(): void
     {
-        $this->wr_subject = $this->sanitizeInput($this->wr_subject, 255);
+        $this->wr_subject = sanitize_input($this->wr_subject, 255);
 
         if ($this->wr_subject === '') {
             throw new Exception('제목을 입력하세요.');
@@ -155,9 +163,9 @@ class UpdateWriteRequest
     /**
      * 내용 유효성 검사
      */
-    public function validate_content(): void
+    public function validateContent(): void
     {
-        $this->wr_content = $this->sanitizeInput($this->wr_content, 65536);
+        $this->wr_content = sanitize_input($this->wr_content, 65536);
 
         if ($this->wr_content === '') {
             throw new Exception('내용을 입력하세요.');
@@ -170,16 +178,16 @@ class UpdateWriteRequest
     /**
      * 링크 변환
      */
-    public function sanitize_link(): void
+    public function sanitizeLink(): void
     {
-        $this->wr_link1 = $this->sanitizeInput($this->wr_link1, 1000, true);
-        $this->wr_link2 = $this->sanitizeInput($this->wr_link2, 1000, true);
+        $this->wr_link1 = sanitize_input($this->wr_link1, 1000, true);
+        $this->wr_link2 = sanitize_input($this->wr_link2, 1000, true);
     }
 
     /**
      * 비밀글, HTML, 메일, 공지 설정
      */
-    public function validate_option(array $board, bool $is_admin = false): void
+    public function validateOption(array $board, bool $is_admin = false): void
     {
         if (!$is_admin && !$board['bo_use_secret']) {
             if (stripos($this->html, 'secret') !== false || stripos($this->secret, 'secret') !== false || stripos($this->mail, 'secret') !== false) {
@@ -211,9 +219,9 @@ class UpdateWriteRequest
     /**
      * 이름 유효성 검사
      */
-    public function validate_name(array $write): void
+    public function validateName(array $write): void
     {
-        $this->wr_name = $this->sanitizeInput($this->wr_name, 20);
+        $this->wr_name = sanitize_input($this->wr_name, 20);
 
         if (!$write['mb_id'] && $this->wr_name === '') {
             throw new Exception('비회원 게시글은 이름은 필수로 입력해야 합니다.');
@@ -223,7 +231,7 @@ class UpdateWriteRequest
     /**
      * 작성자 정보 데이터 설정
      */
-    public function set_writer_data(array $write): void
+    public function initializeWriterData(array $write): void
     {
         if ($write['mb_id']) {
             unset($this->wr_name);
@@ -236,17 +244,5 @@ class UpdateWriteRequest
             $this->wr_email = addslashes($this->wr_email);
             $this->wr_homepage = addslashes(clean_xss_tags($this->wr_homepage));
         }
-    }
-
-    /**
-     * 입력 값을 정리하고 제한 길이만큼 자름
-     */
-    private function sanitizeInput(string $input, int $maxLength, bool $stripTags = false): string
-    {
-        $input = substr(trim($input), 0, $maxLength);
-        if ($stripTags) {
-            $input = trim(strip_tags($input));
-        }
-        return preg_replace("#[\\\]+$#", "", $input);
     }
 }

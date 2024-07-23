@@ -50,20 +50,20 @@ class CreateCommentRequest
             }
         }
 
-        $this->validate_content();
-        $this->validate_option();
-        $this->validate_name($member);
-        $this->validate_password($member);
+        $this->validateContent();
+        $this->validateOption();
+        $this->validateName($member);
+        $this->validatePassword($member);
 
-        $this->set_member_data($board, $member);
+        $this->initializeMemberData($board, $member);
     }
 
     /**
      * 내용 유효성 검사
      */
-    public function validate_content(): void
+    public function validateContent(): void
     {
-        $this->wr_content = $this->sanitizeInput($this->wr_content, 65536);
+        $this->wr_content = sanitize_input($this->wr_content, 65536);
 
         if ($this->wr_content === '') {
             throw new Exception('내용을 입력하세요.');
@@ -76,7 +76,7 @@ class CreateCommentRequest
     /**
      * 옵션 - 비밀댓글 설정
      */
-    public function validate_option(): void
+    public function validateOption(): void
     {
         if ($this->wr_option !== 'secret') {
             $this->wr_option = '';
@@ -86,9 +86,9 @@ class CreateCommentRequest
     /**
      * 이름 유효성 검사
      */
-    public function validate_name(array $member): void
+    public function validateName(array $member): void
     {
-        $this->wr_name = $this->sanitizeInput($this->wr_name, 20);
+        $this->wr_name = sanitize_input($this->wr_name, 20);
 
         if (!$member['mb_id'] && $this->wr_name === '') {
             throw new Exception('비회원은 이름은 필수로 입력해야 합니다.');
@@ -98,7 +98,7 @@ class CreateCommentRequest
     /**
      * 비밀번호 유효성 검사
      */
-    public function validate_password(array $member): void
+    public function validatePassword(array $member): void
     {
         if (!$member['mb_id'] && $this->wr_password === '') {
             throw new Exception('비회원은 비밀번호는 필수로 입력해야 합니다.');
@@ -108,7 +108,7 @@ class CreateCommentRequest
     /**
      * 회원 데이터 설정
      */
-    public function set_member_data(array $board, array $member): void
+    public function initializeMemberData(array $board, array $member): void
     {
         if ($member['mb_id']) {
             $this->wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
@@ -116,17 +116,5 @@ class CreateCommentRequest
         } else {
             $this->wr_password = get_encrypt_string($this->wr_password);
         }
-    }
-
-    /**
-     * 입력 값을 정리하고 제한 길이만큼 자름
-     */
-    private function sanitizeInput(string $input, int $maxLength, bool $stripTags = false): string
-    {
-        $input = substr(trim($input), 0, $maxLength);
-        if ($stripTags) {
-            $input = trim(strip_tags($input));
-        }
-        return preg_replace("#[\\\]+$#", "", $input);
     }
 }
