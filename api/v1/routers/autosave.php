@@ -1,6 +1,5 @@
 <?php
 
-namespace Api\V1\memo;
 
 use API\Middleware\AccessTokenAuthMiddleware;
 use API\v1\Controller\AutosaveController;
