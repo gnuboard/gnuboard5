@@ -57,7 +57,7 @@ function create_refresh_token_table()
 function create_token(string $type, array $add_claim = array())
 {
     $env_config = new EnvironmentConfig();
-    $token_info = new JwtTokenManager($env_config, $type);
+    $token_info = new JwtTokenManager($env_config);
 
     $payload = [
         'iss' => $env_config->auth_issuer,
@@ -67,7 +67,7 @@ function create_token(string $type, array $add_claim = array())
         'exp' => time() + (60 * $token_info->expire_minutes()),
     ];
     $payload = array_merge($payload, $add_claim);
-    return JWT::encode($payload, $token_info->secret_key(), $token_info->algorithm);
+    return JWT::encode($payload, $token_info->secret_key($type), $token_info::ALGORITHM);
 }
 
 /**
@@ -75,7 +75,8 @@ function create_token(string $type, array $add_claim = array())
  */
 function decode_token(string $type, string $token, stdClass $headers = null)
 {
-    $token_info = new JwtTokenManager(new EnvironmentConfig(), $type);
+    $env_config = new EnvironmentConfig();
+    $token_info = new JwtTokenManager($env_config);
 
     /**
      * You can add a leeway to account for when there is a clock skew times between
@@ -85,7 +86,7 @@ function decode_token(string $type, string $token, stdClass $headers = null)
      * Source: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#nbfDef
      */
     // JWT::$leeway = 60; // $leeway in seconds
-    return JWT::decode($token, new Key($token_info->secret_key(), $token_info->algorithm), $headers);
+    return JWT::decode($token, new Key($token_info->secret_key($type), $token_info::ALGORITHM), $headers);
 }
 
 

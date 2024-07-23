@@ -9,8 +9,8 @@ use API\v1\Model\Request\Member\UpdateMemberRequest;
 use API\v1\Model\Response\Member\CreateMemberResponse;
 use API\v1\Model\Response\Member\GetMemberResponse;
 use API\v1\Model\Response\Member\GetMemberMeResponse;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Exception;
 
 require_once __DIR__ . '../../../../lib/register.lib.php';
@@ -43,7 +43,7 @@ class MemberController
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function createMember(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function createMember(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $member_service = new MemberService($config);
@@ -265,7 +265,7 @@ class MemberController
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function changeCertificationEmail(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function changeCertificationEmail(Request $request, Response $response, array $args): Response
     {
         $config = $request->getAttribute('config');
         $member_service = new MemberService($config);
@@ -340,7 +340,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getMe(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function getMe(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
@@ -372,7 +372,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getMember(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function getMember(Request $request, Response $response, array $args): Response
     {
         $config = $request->getAttribute('config');
         $login_member = $request->getAttribute('member');
@@ -422,7 +422,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function updateMember(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function updateMember(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
@@ -522,7 +522,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function updateMemberImages(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function updateMemberImages(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
@@ -560,7 +560,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      * )
      */
-    public function leaveMember(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function leaveMember(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
@@ -594,7 +594,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function searchPasswordResetMail(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function searchPasswordResetMail(Request $request, Response $response): Response
     {
         // TODO: 비로그인 체크
 
