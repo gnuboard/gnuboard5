@@ -50,46 +50,6 @@ function create_refresh_token_table()
     }
 }
 
-
-/**
- * Create JWT token
- */
-function create_token(string $type, array $add_claim = array())
-{
-    $env_config = new EnvironmentConfig();
-    $token_info = new JwtTokenManager($env_config);
-
-    $payload = [
-        'iss' => $env_config->auth_issuer,
-        'aud' => $env_config->auth_audience,
-        'iat' => time(),
-        'nbf' => time(),
-        'exp' => time() + (60 * $token_info->expire_minutes()),
-    ];
-    $payload = array_merge($payload, $add_claim);
-    return JWT::encode($payload, $token_info->secret_key($type), $token_info::ALGORITHM);
-}
-
-/**
- * Decode JWT token
- */
-function decode_token(string $type, string $token, stdClass $headers = null)
-{
-    $env_config = new EnvironmentConfig();
-    $token_info = new JwtTokenManager($env_config);
-
-    /**
-     * You can add a leeway to account for when there is a clock skew times between
-     * the signing and verifying servers. It is recommended that this leeway should
-     * not be bigger than a few minutes.
-     *
-     * Source: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#nbfDef
-     */
-    // JWT::$leeway = 60; // $leeway in seconds
-    return JWT::decode($token, new Key($token_info->secret_key($type), $token_info::ALGORITHM), $headers);
-}
-
-
 /**
  * Moves the uploaded file to the upload directory and assigns it a unique name
  * to avoid overwriting an existing uploaded file.
