@@ -1,6 +1,8 @@
 <?php
 namespace API\Handlers;
 
+use API\Exceptions\HttpConflictException;
+use API\Exceptions\HttpUnprocessableEntityException;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
@@ -22,13 +24,16 @@ use UnexpectedValueException;
 class HttpErrorHandler extends SlimErrorHandler
 {
     public const BAD_REQUEST = 'BAD_REQUEST';
-    public const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';
-    public const NOT_ALLOWED = 'NOT_ALLOWED';
-    public const NOT_IMPLEMENTED = 'NOT_IMPLEMENTED';
-    public const RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND';
-    public const SERVER_ERROR = 'SERVER_ERROR';
     public const UNAUTHENTICATED = 'UNAUTHENTICATED';
-    
+    public const FORBIDDEN = 'FORBIDDEN';
+    public const RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND';
+    public const NOT_ALLOWED = 'NOT_ALLOWED';
+    public const CONFLICT = 'CONFLICT';
+    public const UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY';
+    public const SERVER_ERROR = 'SERVER_ERROR';
+    public const NOT_IMPLEMENTED = 'NOT_IMPLEMENTED';
+    public const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';
+
     protected function respond(): ResponseInterface
     {
         $exception = $this->exception;
@@ -36,21 +41,24 @@ class HttpErrorHandler extends SlimErrorHandler
         $type = self::SERVER_ERROR;
         $description = 'An internal error has occurred while processing your request.';
 
-        
         if ($exception instanceof HttpException) {
             $statusCode = $exception->getCode();
             $description = $exception->getMessage();
 
-            if ($exception instanceof HttpNotFoundException) {
-                $type = self::RESOURCE_NOT_FOUND;
-            } elseif ($exception instanceof HttpMethodNotAllowedException) {
-                $type = self::NOT_ALLOWED;
+            if ($exception instanceof HttpBadRequestException) {
+                $type = self::BAD_REQUEST;
             } elseif ($exception instanceof HttpUnauthorizedException) {
                 $type = self::UNAUTHENTICATED;
             } elseif ($exception instanceof HttpForbiddenException) {
-                $type = self::UNAUTHENTICATED;
-            } elseif ($exception instanceof HttpBadRequestException) {
-                $type = self::BAD_REQUEST;
+                $type = self::FORBIDDEN;
+            } elseif ($exception instanceof HttpNotFoundException) {
+                    $type = self::RESOURCE_NOT_FOUND;
+            } elseif ($exception instanceof HttpMethodNotAllowedException) {
+                $type = self::NOT_ALLOWED;
+            } elseif ($exception instanceof HttpConflictException) {
+                $type = self::CONFLICT;
+            } elseif ($exception instanceof HttpUnprocessableEntityException) {
+                $type = self::UNPROCESSABLE_ENTITY;
             } elseif ($exception instanceof HttpNotImplementedException) {
                 $type = self::NOT_IMPLEMENTED;
             }
