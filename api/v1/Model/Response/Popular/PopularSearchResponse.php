@@ -3,7 +3,10 @@
 namespace API\v1\Model\Response\Popular;
 
 /**
- * 인기 검색어 응답
+ * @OA\Schema(
+ *      type="object",
+ *      description="인기 검색어 응답",
+ * )
  */
 class PopularSearchResponse
 {

@@ -430,7 +430,7 @@ class BoardController
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\PathParameter(name="bf_no", description="파일 번호", @OA\Schema(type="integer")),
-     *      @OA\Response(response="200", description="첨부파일 다운로드 성공", @OA\JsonContent(ref="#/components/schemas/baseResponse")),
+     *      @OA\Response(response="200", description="첨부파일 다운로드 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      *      @OA\Response(response="404", ref="#/components/responses/404"),
