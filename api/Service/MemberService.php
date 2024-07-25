@@ -6,17 +6,42 @@ use API\Database\Db;
 use Psr\Http\Message\UploadedFileInterface;
 use Exception;
 
-
 class MemberService
 {
     private const IMAGE_DIR = '/member_image';
     private const ICON_DIR = '/member';
-    private $config;
     private $allowed_media_types = ['image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/x-png', 'image/png'];
 
-    public function __construct(array $config = [])
+    private string $table;
+    private ConfigService $config_service;
+
+    public function __construct(ConfigService $config_service)
     {
-        $this->config = $config;
+        global $g5;
+        $this->table = $g5['member_table'];
+        $this->config_service = $config_service;
+    }
+
+    public function createMember(object $data): int
+    {
+        $config = $this->config_service->getConfig();
+
+        if ($this->fetchMemberById($data->mb_id)) {
+            throw new Exception("이미 사용중인 회원아이디 입니다.", 409);
+        }
+        if ($this->existsMemberByNick($data->mb_nick, $data->mb_id)) {
+            throw new Exception("이미 사용중인 닉네임 입니다.", 409);
+        }
+        if ($this->existsMemberByEmail($data->mb_email, $data->mb_id)) {
+            throw new Exception("이미 사용중인 이메일 입니다.", 409);
+        }
+        if ($config['cf_use_recommend'] && $data->mb_recommend) {
+            if (!$this->fetchMemberById($data->mb_recommend)) {
+                throw new Exception("추천인이 존재하지 않습니다.", 404);
+            }
+        }
+
+        return $this->insertMember($data);
     }
 
     /**
@@ -41,7 +66,7 @@ class MemberService
      * @return void
      * @throws Exception
      */
-    public function updateMemberImage(string $mb_id, string $image_type, UploadedFileInterface $file = null)
+    public function updateMemberImage(array $config, string $mb_id, string $image_type, UploadedFileInterface $file = null)
     {
         if ($file->getError()) {
             return;
@@ -50,15 +75,15 @@ class MemberService
         if ($image_type == "icon") {
             $type_string = "아이콘";
             $base_dir = self::ICON_DIR;
-            $limit_size = $this->config['cf_member_icon_size'];
-            $limit_width = $this->config['cf_member_icon_width'];
-            $limit_height = $this->config['cf_member_icon_height'];
+            $limit_size = $config['cf_member_icon_size'];
+            $limit_width = $config['cf_member_icon_width'];
+            $limit_height = $config['cf_member_icon_height'];
         } else {
             $type_string = "이미지";
             $base_dir = self::IMAGE_DIR;
-            $limit_size = $this->config['cf_member_img_size'];
-            $limit_width = $this->config['cf_member_img_width'];
-            $limit_height = $this->config['cf_member_img_height'];
+            $limit_size = $config['cf_member_img_size'];
+            $limit_width = $config['cf_member_img_width'];
+            $limit_height = $config['cf_member_img_height'];
         }
 
         // 이미지파일 타입 검사
@@ -129,10 +154,6 @@ class MemberService
      */
     public function leaveMember(array $member)
     {
-        if ($this->config['cf_admin'] == $member['mb_id']) {
-            throw new Exception("최고 관리자는 탈퇴할 수 없습니다.");
-        }
-
         $update_data = [
             "mb_leave_date" => date("Ymd"),
             "mb_memo" => date('Ymd', G5_SERVER_TIME) . " 탈퇴함\n" . sql_real_escape_string($member['mb_memo']),
@@ -151,48 +172,64 @@ class MemberService
         }
     }
 
-    public function fetchMemberById(string $mb_id)
+    public function fetchMemberById(string $mb_id): mixed
     {
-        global $g5;
-
-        $query = "SELECT * FROM {$g5['member_table']} WHERE mb_id = :mb_id";
+        $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id";
 
         $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
 
         return $stmt->fetch();
     }
 
-    public function fetchAllMemberByEmail(string $mb_email)
+    public function existsMemberByNick(string $mb_nick, string $mb_id): bool
     {
-        global $g5;
+        $query = "SELECT count(*) as cnt
+                    FROM {$this->table}
+                    WHERE mb_nick = :mb_nick
+                    AND mb_id <> :mb_id";
 
-        $query = "SELECT * FROM {$g5['member_table']} WHERE mb_email = :mb_email";
+        $stmt = Db::getInstance()->run($query, [
+            "mb_nick" => $mb_nick,
+            "mb_id" => $mb_id
+        ]);
+
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function existsMemberByEmail(string $mb_email, string $mb_id): bool
+    {
+        $query = "SELECT count(*) as cnt
+                    FROM {$this->table}
+                    WHERE mb_email = :mb_email
+                    AND mb_id <> :mb_id";
+
+        $stmt = Db::getInstance()->run($query, [
+            "mb_email" => $mb_email,
+            "mb_id" => $mb_id
+        ]);
+
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function fetchAllMemberByEmail(string $mb_email): mixed
+    {
+        $query = "SELECT * FROM {$this->table} WHERE mb_email = :mb_email";
 
         $stmt = Db::getInstance()->run($query, ["mb_email" => $mb_email]);
 
         return $stmt->fetchAll();
     }
 
-    public function insertMember(object $data)
+    public function insertMember(object $data): int
     {
-        global $g5;
-
-        $data->mb_datetime = date('Y-m-d H:i:s', G5_SERVER_TIME);
-
-        $insert_id = Db::getInstance()->insert($g5['member_table'], (array)$data);
+        $insert_id = Db::getInstance()->insert($this->table, (array)$data);
 
         return $insert_id;
     }
 
     public function updateMember(string $mb_id, array $data): int
     {
-        global $g5;
-
-        $update_count = Db::getInstance()->update(
-            $g5['member_table'],
-            ["mb_id" => $mb_id],
-            $data
-        );
+        $update_count = Db::getInstance()->update($this->table, ["mb_id" => $mb_id], $data);
 
         return $update_count;
     }

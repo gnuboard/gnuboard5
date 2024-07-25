@@ -9,7 +9,7 @@ use Slim\Routing\RouteCollectorProxy;
 $app->group('/members', function (RouteCollectorProxy $group) {
     $group->get('/me', [MemberController::class, 'getMe'])->add(AccessTokenAuthMiddleware::class);
     $group->get('/{mb_id}', [MemberController::class, 'getMember'])->add(AccessTokenAuthMiddleware::class);
-    $group->post('', [MemberController::class, 'createMember']);
+    $group->post('', [MemberController::class, 'create']);
     $group->post('/search/password', [MemberController::class, 'searchPasswordResetMail']);
     $group->put('/{mb_id}/email-certification/change', [MemberController::class, 'changeCertificationEmail']);
 })

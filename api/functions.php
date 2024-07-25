@@ -1,11 +1,15 @@
 <?php
+/**
+ * API Functions
+ * TODO: 용도에 맞게 함수들을 별도의 파일로 분리하거나 클래스로 만들어 관리하는 것이 좋을 것 같다.
+ */
 
-use API\Auth\JwtTokenManager;
-use API\EnvironmentConfig;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\UploadedFileInterface;
+
+// ========================================
+// API Helper Functions
+// ========================================
 
 /**
  * API Response JSON
@@ -22,7 +26,6 @@ function api_response_json(Response $response, $data, int $status = 200)
     $new_response = $response->withStatus($status);
     return $new_response->withAddedHeader('Content-Type', 'application/json');
 }
-
 
 /**
  * Create a refresh token table
@@ -73,28 +76,116 @@ function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile
     return $filename;
 }
 
+// ========================================
+// 회원정보 관련 유효성 검사 함수들
+// ========================================
+
 /**
- * 최고관리자 여부
+ * 문자열의 최소 길이를 검증
+ * 
+ * @param string $string 검증할 문자열
+ * @param int $minLength 최소 길이
+ * @return string 최소 길이와 같거나 크면 true, 그렇지 않으면 false
  */
-function is_super_admin(array $config, string $mb_id)
+function has_min_length(string $string, int $min_length): bool
 {
-    if (empty($mb_id) || !isset($config['cf_admin']) || empty($config['cf_admin'])) {
-        return false;
-    }
-    return $config['cf_admin'] === $mb_id;
+    return strlen($string) >= $min_length;
 }
 
 /**
- * 입력 값을 정리하고 제한 길이만큼 자름
+ * 문자열이 유효한 UTF-8 인코딩을 따르는지 여부를 확인
+ * @param string $str 검사할 문자열
+ * @return bool 유효한 UTF-8 인코딩이면 true, 아니면 false
  */
-function sanitize_input(string $input, int $max_length, bool $strip_tags = false): string
+function is_valid_utf8_string(string $str): bool
 {
-    $input = substr(trim($input), 0, $max_length);
-    if ($strip_tags) {
-        $input = trim(strip_tags($input));
-    }
-    return preg_replace("#[\\\]+$#", "", $input);
+    return iconv('UTF-8', 'UTF-8//IGNORE', $str) === $str;
 }
+
+/**
+ * 아이디 형식 검사
+ * - register.lib.php 의 valid_mb_id 함수를 참고하여 작성
+ * @param string $id 아이디
+ * @return bool 아이디 형식이면 true, 아니면 false
+ */
+function is_valid_mb_id(string $mb_id): bool
+{
+    return (bool)!preg_match("/[^0-9a-z_]+/i", $mb_id);
+}
+
+/**
+ * 닉네임 형식 검사
+ * - register.lib.php 의 valid_mb_nick 함수를 참고하여 작성
+ * @param string $nick 닉네임
+ * @return bool 닉네임 형식이면 true, 아니면 false
+ */
+function is_valid_mb_nick(string $nick): bool
+{
+    return check_string($nick, G5_HANGUL + G5_ALPHABETIC + G5_NUMERIC);
+}
+
+/**
+ * 휴대폰 번호 형식 검사
+ * - register.lib.php 의 valid_mb_hp 함수를 참고하여 작성
+ * @param string $hp 휴대폰 번호
+ * @return bool 휴대폰 번호 형식이면 true, 아니면 false
+ */
+function is_valid_hp(string $hp): bool
+{
+    $hp = preg_replace("/[^0-9]/", "", $hp);
+
+    if (!$hp) {
+        return false;
+    }
+
+    return preg_match("/^01[0-9]{8,9}$/", $hp) === 1;
+}
+
+/**
+ * 이메일 형식 검사
+ * - register.lib.php 의 valid_mb_email 함수를 참고하여 작성
+ * @param string $email 이메일 주소
+ * @return bool 이메일 형식이면 true, 아니면 false
+ */
+function is_valid_email(string $email): bool
+{
+    return (bool)preg_match("/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/", $email);
+}
+
+/**
+ * 금지된 이메일 도메인인지 검사
+ * - register.lib.php 의 prohibit_mb_email 함수를 참고하여 작성
+ * @param string $email 이메일 주소
+ * @param array $config 환경설정
+ * @return bool 금지된 도메인이면 true, 아니면 false
+ */
+function is_prohibited_email_domain(string $email, array $config): bool
+{
+    list($id, $domain) = explode("@", $email);
+    $prohibited_domains = explode("\n", trim($config['cf_prohibit_email']));
+    $prohibited_domains = array_map('trim', $prohibited_domains);
+    $prohibited_domains = array_map('strtolower', $prohibited_domains);
+    $email_domain = strtolower($domain);
+
+    return in_array($email_domain, $prohibited_domains);
+}
+
+/**
+ * 금지된 단어인지 검사
+ * - register.lib.php 의 reserve_mb_nick 함수를 참고하여 작성
+ * @param string $word 검사할 단어
+ * @param array $config 환경설정
+ * @return bool 금지된 단어이면 true, 아니면 false
+ */
+function is_prohibited_word(string $word, array $config): bool
+{
+    $pattern = "/[\,]?" . preg_quote($word) . "/i";
+    return preg_match($pattern, $config['cf_prohibit_id']);
+}
+
+// ========================================
+// 메일 발송 관련 함수들
+// ========================================
 
 /**
  * 임시비밀번호 메일 발송
@@ -203,4 +294,31 @@ function send_write_mail(array $config, array $board, int $wr_id, string $w, str
     for ($i = 0; $i < count($unique_email); $i++) {
         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
     }
+}
+
+// ========================================
+// 기타 함수들
+// ========================================\
+
+/**
+ * 최고관리자 여부
+ */
+function is_super_admin(array $config, string $mb_id)
+{
+    if (empty($mb_id) || !isset($config['cf_admin']) || empty($config['cf_admin'])) {
+        return false;
+    }
+    return $config['cf_admin'] === $mb_id;
+}
+
+/**
+ * 입력 값을 정리하고 제한 길이만큼 자름
+ */
+function sanitize_input(string $input, int $max_length, bool $strip_tags = false): string
+{
+    $input = substr(trim($input), 0, $max_length);
+    if ($strip_tags) {
+        $input = trim(strip_tags($input));
+    }
+    return preg_replace("#[\\\]+$#", "", $input);
 }
