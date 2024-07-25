@@ -36,11 +36,11 @@ function create_refresh_token_table()
     global $g5;
 
     if (isset($g5['member_refresh_token_table'])) {
-        if (!table_exist_check(" DESCRIBE {$g5['member_refresh_token_table']} ")) {
+        if (!table_exist_check($g5['member_refresh_token_table'])) {
             $sql = "CREATE TABLE IF NOT EXISTS `{$g5['member_refresh_token_table']}` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NOT NULL,
-                    `refresh_token` text NOT NULL,
+                    `refresh_token` varchar(200) NOT NULL,
                     `expires_at` datetime NOT NULL,
                     `created_at` datetime NOT NULL,
                     `updated_at` datetime NOT NULL,
@@ -48,7 +48,7 @@ function create_refresh_token_table()
                     UNIQUE KEY `refresh_token` (`refresh_token`) USING HASH,
                     KEY `ix_member_refresh_token_mb_id` (`mb_id`),
                     KEY `ix_member_refresh_token_id` (`id`)
-                    ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+                    ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
             Db::getInstance()->run($sql);
         }
     }
