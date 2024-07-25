@@ -27,6 +27,7 @@ class BoardPermission
     private const ERROR_NO_READ_POINTS = '보유하신 포인트(%s)가 없거나 모자라서 글읽기(%s)가 불가합니다.';
     private const ERROR_NO_CREATE_LEVEL = '글을 작성할 권한이 없습니다.';
     private const ERROR_NO_CREATE_NOTICE = '공지글을 작성할 권한이 없습니다.';
+    private const ERROR_NO_CREATE_POINTS = '보유하신 포인트(%s)가 없거나 모자라서 글쓰기(%s)가 불가합니다.';
     private const ERROR_NO_REPLY_NOTICE = '공지에는 답변할 수 없습니다.';
     private const ERROR_NO_REPLY_LEVEL = '글을 답변할 권한이 없습니다.';
     private const ERROR_NO_REPLY_DEPTH = '더 이상 답변하실 수 없습니다. 답변은 10단계 까지만 가능합니다.';
@@ -41,24 +42,47 @@ class BoardPermission
     private const ERROR_NO_UPLOAD_LEVEL = '파일을 업로드할 권한이 없습니다.';
     private const ERROR_NO_UPLOAD_OWNER = '자신의 글이 아니므로 파일을 업로드할 수 없습니다.';
     private const ERROR_NO_DOWNLOAD_LEVEL = '파일을 다운로드할 권한이 없습니다.';
+    private const ERROR_NO_DOWNLOAD_POINTS = '보유하신 포인트(%s)가 없거나 모자라서 파일 다운로드(%s)가 불가합니다.';
     private const ERROR_NO_DELETE_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 글은 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_OWNER = '자신의 글이 아니므로 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_REPLY = '이 글과 관련된 답변글이 존재하므로 삭제 할 수 없습니다.';
     private const ERROR_NO_DELETE_COMMENT = '이 글과 관련된 코멘트가 존재하므로 삭제 할 수 없습니다. 코멘트가 %s건 이상 달린 원글은 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_PASSWORD = '비밀번호가 일치하지 않으므로 삭제할 수 없습니다.';
+    private const ERROR_NO_CREATE_COMMENT_LEVEL = '댓글을 작성할 권한이 없습니다.';
+    private const ERROR_NO_CREATE_COMMENT_POINTS = '보유하신 포인트(%s)가 없거나 모자라서 댓글쓰기(%s)가 불가합니다.';
+    private const ERROR_NO_UPDATE_COMMENT_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 댓글은 수정할 수 없습니다.';
+    private const ERROR_NO_UPDATE_COMMENT_OWNER = '자신의 댓글이 아니므로 수정할 수 없습니다.';
+    private const ERROR_NO_UPDATE_COMMENT_REPLY = '이 글과 관련된 대댓글이 존재하므로 수정할 수 없습니다.';
+    private const ERROR_NO_UPDATE_COMMENT_PASSWORD = '비밀번호가 일치하지 않으므로 댓글을 수정할 수 없습니다.';
+    private const ERROR_NO_DELETE_COMMENT_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 글은 삭제할 수 없습니다.';
+    private const ERROR_NO_DELETE_COMMENT_OWNER = '자신의 댓글이 아니므로 삭제할 수 없습니다.';
+    private const ERROR_NO_DELETE_COMMENT_PASSWORD = '비밀번호가 일치하지 않으므로 댓글을 삭제할 수 없습니다.';
+    private const ERROR_NO_DELETE_COMMENT_REPLY = '이 글과 관련된 대댓글이 존재하므로 삭제할 수 없습니다.';
+
 
     public function __construct(
         GroupService $group_service,
         BoardService $board_service,
-        array $config,
-        array $group
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
-        $this->config = $config;
-        $this->group = $group;
-        $this->board = $board_service->board;
     }
+
+    function setConfig(array $config): void
+    {
+        $this->config = $config;
+    }
+
+    function setGroup(array $group): void
+    {
+        $this->group = $group;
+    }
+
+    function setBoard(array $board): void
+    {
+        $this->board = $board;
+    }
+
     /**
      * 글 목록 조회 권한 체크
      */
@@ -190,7 +214,7 @@ class BoardPermission
     /**
      * 파일 다운로드 권한 체크
      */
-    public function downloadFiles(array $member): void
+    public function downloadFiles(array $member, array $write): void
     {
         if ($this->isBoardManager($member['mb_id'])) {
             return;
@@ -200,6 +224,7 @@ class BoardPermission
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_DOWNLOAD_LEVEL);
         $this->checkAccessCert($member);
+        $this->checkMemberPoint('download', $member, $write);
     }
 
     /**
@@ -228,6 +253,76 @@ class BoardPermission
         $this->hasWriteReply($write, self::ERROR_NO_DELETE_REPLY);
         $this->checkCommentLimit($write, $this->board['bo_count_delete'], self::ERROR_NO_DELETE_COMMENT);
         $this->checkWritePassword($write, $wr_password, self::ERROR_NO_DELETE_PASSWORD);
+    }
+
+    /**
+     * 댓글 작성 권한 체크
+     */
+    public function createComment(array $member, array $write): void
+    {
+        $level = (int)$this->board['bo_comment_level'];
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->checkMemberLevel($member, $level, self::ERROR_NO_CREATE_COMMENT_LEVEL);
+        $this->checkMemberPoint('comment', $member, $write);
+        // TODO: 게시글 연속 등록 방지 추가
+    }
+
+    /**
+     * 댓글 수정 권한 체크
+     */
+    public function updateComment(array $member, array $comment): void
+    {
+        if (is_super_admin($this->config, $member['mb_id'])) {
+            return;
+        }
+
+        $level = (int)$this->board['bo_comment_level'];
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->checkMemberLevel($member, $level, self::ERROR_NO_CREATE_COMMENT_LEVEL);
+        $this->hasCommentReply($comment, self::ERROR_NO_UPDATE_COMMENT_REPLY);
+        $this->verifyCommentOwnerAndLevel($member, $comment, 'update');
+    }
+
+    /**
+     * 비회원 댓글 수정 권한 체크
+     */
+    public function updateCommentByNonMember(array $member, array $comment, string $wr_password): void
+    {
+        if ($this->isBoardManager($member['mb_id'])) {
+            return;
+        }
+
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->hasCommentReply($comment, self::ERROR_NO_UPDATE_COMMENT_REPLY);
+        $this->checkWritePassword($comment, $wr_password, self::ERROR_NO_UPDATE_COMMENT_PASSWORD);
+    }
+
+    /**
+     * 댓글 삭제 권한 체크
+     */
+    public function deleteComment(array $member, array $comment): void
+    {
+        if (is_super_admin($this->config, $member['mb_id'])) {
+            return;
+        }
+
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->hasCommentReply($comment, self::ERROR_NO_DELETE_COMMENT_REPLY);
+        $this->verifyCommentOwnerAndLevel($member, $comment, 'delete');
+    }
+
+    /**
+     * 비회원 댓글 삭제 권한 체크
+     */
+    public function deleteCommentByNonMember(array $member, array $comment, string $wr_password): void
+    {
+        if ($this->isBoardManager($member['mb_id'])) {
+            return;
+        }
+
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->hasCommentReply($comment, self::ERROR_NO_DELETE_COMMENT_REPLY);
+        $this->checkWritePassword($comment, $wr_password, self::ERROR_NO_DELETE_COMMENT_PASSWORD);
     }
 
     /**
@@ -274,6 +369,46 @@ class BoardPermission
     }
 
     /**
+     * 글 수정/삭제 시 관리자/작성자 체크
+     */
+    private function verifyCommentOwnerAndLevel(array $member, array $comment, string $type): void
+    {
+        $message_level = "";
+        $message_owner = "";
+        switch ($type) {
+            case 'update':
+                $message_level = self::ERROR_NO_UPDATE_COMMENT_LEVEL;
+                $message_owner = self::ERROR_NO_UPDATE_COMMENT_OWNER;
+                break;
+            case 'delete':
+                $message_level = self::ERROR_NO_DELETE_COMMENT_LEVEL;
+                $message_owner = self::ERROR_NO_DELETE_COMMENT_OWNER;
+                break;
+        }
+
+        // TODO: Dependency Injection
+        $member_service = new MemberService();
+        $comment_member = $member_service->fetchMemberById($comment['mb_id']);
+
+        if ($this->isGroupAdmin($member['mb_id']) || $this->isBoardAdmin($member['mb_id'])) {
+            $this->checkMemberLevel($member, $comment_member['mb_level'], $message_level);
+        } elseif (!$this->isOwner($comment, $member['mb_id'])) {
+            $this->throwException($message_owner);
+        }
+    }
+
+    /**
+     * 대댓글이 있는지 체크
+     */
+    private function hasCommentReply(array $write, string $message): void
+    {
+        $replies = $this->board_service->fetchReplyByComment($write);
+        if (count($replies) > 0) {
+            $this->throwException($message);
+        }
+    }
+
+    /**
      * 답변한 게시글이 공지글인지 체크
      */
     private function checkReplyNotice(int $parent_id): void
@@ -303,11 +438,34 @@ class BoardPermission
      */
     private function checkMemberPoint(string $type, array $member, array $write): void
     {
+        // 읽기, 쓰기, 댓글, 다운로드
         global $g5;
 
-        $board_point = (int)$this->board['bo_' . $type . '_point'];
-        $board_level = (int)$this->board['bo_' . $type . '_level'];
-        $board_subject = (G5_IS_MOBILE && $this->board['bo_mobile_subject']) ? $this->board['bo_mobile_subject'] : $this->board['bo_subject'];
+        switch ($type) {
+            case 'read':
+                $board_point = (int)$this->board['bo_read_point'];
+                $board_level = (int)$this->board['bo_read_level'];
+                $message = self::ERROR_NO_READ_POINTS;
+                break;
+            case 'write':
+                $board_point = (int)$this->board['bo_write_point'];
+                $board_level = (int)$this->board['bo_write_level'];
+                $message = self::ERROR_NO_CREATE_POINTS;
+                break;
+            case 'comment':
+                $board_point = (int)$this->board['bo_comment_point'];
+                $board_level = (int)$this->board['bo_comment_level'];
+                $message = self::ERROR_NO_CREATE_COMMENT_POINTS;
+                break;
+            case 'download':
+                $board_point = (int)$this->board['bo_download_point'];
+                $board_level = (int)$this->board['bo_download_level'];
+                $message = self::ERROR_NO_DOWNLOAD_POINTS;
+                break;
+            default:
+                return;
+        }
+
         $mb_id = $member['mb_id'];
         $mb_point = $member['mb_point'];
         $wr_id = $write['wr_id'];
@@ -336,10 +494,8 @@ class BoardPermission
         }
 
         if ($mb_point + $board_point < 0) {
-            $this->throwException(sprintf(self::ERROR_NO_READ_POINTS, $mb_point, $board_point));
+            $this->throwException(sprintf($message, $mb_point, $board_point));
         }
-
-        insert_point($mb_id, $board_point, $board_subject . ' ' . $wr_id . ' 글읽기', $this->board['bo_table'], $wr_id, '읽기');
     }
 
     /**
@@ -368,7 +524,7 @@ class BoardPermission
      */
     private function checkAccessCert(array $member): void
     {
-        if ($this->board['bo_use_cert'] == '' || !$this->config['cf_cert_use'] || $this->isSuperAdmin($member['mb_id'])) {
+        if ($this->board['bo_use_cert'] == '' || !$this->config['cf_cert_use'] || is_super_admin($this->config, $member['mb_id'])) {
             return;
         }
 
@@ -453,7 +609,7 @@ class BoardPermission
      */
     private function checkWritePassword(array $write, string $wr_password, string $message): void
     {
-        if (!check_password($write['wr_password'], $wr_password)) {
+        if (!check_password($wr_password, $write['wr_password'])) {
             $this->throwException($message);
         }
     }

@@ -5,6 +5,7 @@ namespace API\v1\Model\Request\Board;
 use API\Service\BoardFileService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
+use Exception;
 
 /**
  * @OA\Schema(
@@ -42,13 +43,19 @@ class UploadFileRequest
         'pif', 'cpl', 'jar', 'vb', 'vbe', 'ws', 'bas', 'prg', 'scpt', 'scptd', 'app', 'ipa', 'apk', 'dll',
         'sys', 'drv', 'bin', 'inf', 'reg', 'gadget'
     ];
-    private Request $request;
     private array $board;
     private array $write;
 
-    public function __construct(Request $request, array $board, array $write, array $uploaded_files, array $data)
+    /**
+     * @param array $board 게시판 정보
+     * @param array $write 게시글 정보
+     * @param array $uploaded_files 업로드된 파일
+     * @param array $data 파일관련 데이터
+     * @throws Exception 파일 업로드 오류, 크기, 확장자 오류
+     * @return void
+     */
+    public function __construct(array $board, array $write, array $uploaded_files, array $data)
     {
-        $this->request = $request;
         $this->board = $board;
         $this->write = $write;
 
@@ -110,14 +117,14 @@ class UploadFileRequest
             }
             // 크기 체크
             if ($filesize > $this->board['bo_upload_size']) {
-                $this->throwException(
+                throw new Exception(
                     sprintf(self::ERROR_FILE_SIZE, $filename, number_format($filesize), number_format($this->board['bo_upload_size']))
                 );
             }
             // 확장자 체크
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             if (in_array(strtolower($ext), array_map('strtolower', $this->disallowed_ext))) {
-                $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
+                throw new Exception(sprintf(self::ERROR_FILE_EXT, $filename));
             }
         }
     }
@@ -132,7 +139,7 @@ class UploadFileRequest
         $write_files = $file_service->fetchWriteFiles($this->write['wr_id']);
 
         if (count($write_files) > $this->board['bo_upload_count']) {
-            $this->throwException(sprintf(self::ERROR_NO_UPLOAD_WRITE_FILES, $this->board['bo_upload_count']));
+            throw new Exception(sprintf(self::ERROR_NO_UPLOAD_WRITE_FILES, $this->board['bo_upload_count']));
         }
     }
 
@@ -142,15 +149,7 @@ class UploadFileRequest
     public function checkFilesCount(): void
     {
         if (count($this->files) > $this->board['bo_upload_count']) {
-            $this->throwException(sprintf(self::ERROR_NO_UPLOAD_COUNT, $this->board['bo_upload_count']));
+            throw new Exception(sprintf(self::ERROR_NO_UPLOAD_COUNT, $this->board['bo_upload_count']));
         }
-    }
-
-    /**
-     * 예외 발생
-     */
-    private function throwException(string $message): void
-    {
-        throw new HttpBadRequestException($this->request, $message);
     }
 }

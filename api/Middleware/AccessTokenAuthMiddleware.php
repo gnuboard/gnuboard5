@@ -3,10 +3,7 @@
 namespace API\Middleware;
 
 use API\Auth\JwtTokenManager;
-use API\EnvironmentConfig;
 use API\Service\MemberService;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -21,23 +18,19 @@ use Slim\Exception\HttpNotFoundException;
  */
 class AccessTokenAuthMiddleware
 {
-    private $algorithm;
-    private $secretKey;
-    private $member_service;
+    private JwtTokenManager $token_manager;
+    private MemberService $member_service;
 
-    public function __construct()
+    public function __construct(JwtTokenManager $token_manager, MemberService $member_service)
     {
-        $token_manager = new JwtTokenManager(new EnvironmentConfig());
-
-        $this->secretKey = $token_manager->secret_key();
-        $this->algorithm = $token_manager->algorithm;
-        $this->member_service = new MemberService();
+        $this->token_manager = $token_manager;
+        $this->member_service = $member_service;
     }
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $token = $this->extract_token($request);
-        $decode = JWT::decode($token, new Key($this->secretKey, $this->algorithm));
+        $decode = $this->token_manager->decode_token('access', $token);
         $request = $request->withAttribute('member', $this->get_member($request, $decode->sub));
 
         return $handler->handle($request);

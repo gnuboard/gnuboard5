@@ -10,12 +10,28 @@ class BoardService
     public array $board;
     public string $write_table;
 
-    public function __construct(array $board)
+    public function setBoard(array $board): void
+    {
+        $this->board = $board;
+        $this->setWriteTable($board['bo_table']);
+    }
+
+    public function setWriteTable(string $bo_table): void
+    {
+        global $g5;
+        $this->write_table = $g5['write_prefix'] . $bo_table;
+    }
+
+    /**
+     * 게시판 정보 조회
+     */
+    public function fetchBoardByTable(string $bo_table): array
     {
         global $g5;
 
-        $this->board = $board;
-        $this->write_table = $g5['write_prefix'] . $board['bo_table'];
+        $query = "SELECT * FROM {$g5['board_table']} WHERE bo_table = :bo_table";
+        $stmt = Db::getInstance()->run($query, ['bo_table' => $bo_table]);
+        return $stmt->fetch();
     }
 
     /**
@@ -139,6 +155,27 @@ class BoardService
     }
 
     /**
+     * 게시글의 답글 조회
+     */
+    public function fetchReplyByComment(array $comment): mixed
+    {
+        $query = "SELECT * FROM {$this->write_table}
+                    WHERE wr_comment_reply LIKE :wr_comment_reply
+                    AND wr_id <> :wr_id
+                    AND wr_parent = :wr_parent
+                    AND wr_comment = :wr_comment
+                    AND wr_is_comment = 1";
+        $stmt = Db::getInstance()->run($query, [
+            'wr_comment_reply' => $comment['wr_comment_reply'] . '%',
+            'wr_id' => $comment['wr_id'],
+            'wr_parent' => $comment['wr_parent'],
+            'wr_comment' => $comment['wr_comment'],
+        ]);
+
+        return $stmt->fetchAll();
+    }
+
+    /**
      * 게시글의 댓글 목록 조회
      */
     public function fetchCommentsByWrite(array $write): mixed
@@ -147,6 +184,16 @@ class BoardService
         $stmt = Db::getInstance()->run($query, ['wr_id' => $write['wr_id']]);
 
         return $stmt->fetchAll();
+    }
+
+    /**
+     * 가장 최근 작성된 댓글의 날짜 조회
+     */
+    public function fetchWriteCommentLast(array $write): mixed
+    {
+        $query = "SELECT MAX(wr_datetime) as wr_last FROM {$this->write_table} WHERE wr_parent = :wr_parent";
+        $stmt = Db::getInstance()->run($query, ['wr_parent' => $write['wr_parent']]);
+        return $stmt->fetch();
     }
 
     /**
@@ -181,14 +228,14 @@ class BoardService
     /**
      * 새글 테이블에 게시글 정보 등록
      */
-    public function insertBoardNew(int $wr_id, string $mb_id): int
+    public function insertBoardNew(int $wr_id, int $wr_parent, string $mb_id): int
     {
         global $g5;
 
         $data = [
             'bo_table' => $this->board['bo_table'],
             'wr_id' => $wr_id,
-            'wr_parent' => $wr_id,
+            'wr_parent' => $wr_parent,
             'bn_datetime' => G5_TIME_YMDHIS,
             'mb_id' => $mb_id
         ];
@@ -249,8 +296,8 @@ class BoardService
     {
         Db::getInstance()->update(
             $this->write_table,
-            ['wr_parent' => $parent_id],
-            ['wr_id' => $wr_id]
+            ['wr_id' => $wr_id],
+            ['wr_parent' => $parent_id]
         );
     }
 
@@ -272,12 +319,18 @@ class BoardService
     public function incrementWriteCount(): void
     {
         global $g5;
+        $query = "UPDATE {$g5['board_table']} SET bo_count_write = bo_count_write + 1 WHERE bo_table = :bo_table";
+        Db::getInstance()->run($query, ['bo_table' => $this->board['bo_table']]);
+    }
 
-        Db::getInstance()->update(
-            $g5['board_table'],
-            ['bo_table' => $this->board['bo_table']],
-            ["bo_count_write" => "bo_count_write + 1"]
-        );
+    /**
+     * 게시판 정보에 게시글 수 갱신
+     */
+    public function incrementCommentCount(): void
+    {
+        global $g5;
+        $query = "UPDATE {$g5['board_table']} SET bo_count_comment = bo_count_comment + 1 WHERE bo_table = :bo_table";
+        Db::getInstance()->run($query, ['bo_table' => $this->board['bo_table']]);
     }
 
     /**

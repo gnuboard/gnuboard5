@@ -29,7 +29,7 @@ $displayErrorDetails = true;
 /**
  * Instantiate App
  */
-$container =new Container();
+$container = new Container();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 

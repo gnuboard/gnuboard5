@@ -2,16 +2,29 @@
 
 namespace API\v1\Controller;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use API\Auth\JwtTokenManager;
 use API\Service\AuthenticationService;
 use API\v1\Model\Request\Authentication\GenerateTokenRequest;
 use API\v1\Model\Request\Authentication\RefreshTokenRequest;
 use API\v1\Model\Response\Authentication\GenerateTokenResponse;
-
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpException;
+use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpUnauthorizedException;
+use Exception;
 
 class AuthenticationController
 {
+    private AuthenticationService $auth_service;
+    private JwtTokenManager $token_manager;
+
+    public function __construct(AuthenticationService $auth_service, JwtTokenManager $token_manager)
+    {
+        $this->auth_service = $auth_service;
+        $this->token_manager = $token_manager;
+    }
+
     /**
      * @OA\Post(
      *     path="/api/v1/token",
@@ -36,54 +49,43 @@ Access Token & Refresh Token을 발급합니다.
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function generateToken(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function generateToken(Request $request, Response $response): Response
     {
-        $auth_service = new AuthenticationService();
-
-        $request_body = $request->getParsedBody();
-        $data = new GenerateTokenRequest($request_body);
-
-        if (empty($data->username) || empty($data->password)) {
-            return api_response_json($response, array(
-                'message' => '아이디 또는 비밀번호가 입력되지 않았습니다.'
-            ), 400);
+        try {
+            $request_body = $request->getParsedBody();
+            $request_data = new GenerateTokenRequest($request_body);
+        } catch (Exception $e) {
+            throw new HttpException($request, $e->getMessage(), 422);
         }
 
-        $member = get_member($data->username);
-        if (!$member || !login_password_check($member, $data->password, $member['mb_password'])) {
-            return api_response_json($response, array(
-                'message' => '아이디 또는 비밀번호가 일치하지 않습니다.'
-            ), 403);
+        $member = get_member($request_data->username);
+        if (!$member || !login_password_check($member, $request_data->password, $member['mb_password'])) {
+            throw new HttpUnauthorizedException($request, '아이디 또는 비밀번호가 일치하지 않습니다.');
         }
 
-        // 탈퇴 또는 차단된 아이디인가?
         if (($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
             || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
         ) {
-            return api_response_json($response, array(
-                'message' => '현재 로그인 회원은 탈퇴 또는 차단된 회원입니다.'
-            ), 403);
+            throw new HttpForbiddenException($request, '탈퇴 또는 차단된 회원이므로 로그인하실 수 없습니다.');
         }
 
         // 메일인증 설정이 되어 있다면
         if (is_use_email_certify() && !preg_match("/[1-9]/", $member['mb_email_certify'])) {
-            return api_response_json($response, array(
-                'message' => "{$member['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다."
-            ), 403);
+            throw new HttpForbiddenException($request, "{$member['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다.");
         }
 
         // 토큰 생성
         $claim = array('sub' => $member['mb_id']);
-        $access_token = create_token('access', $claim);
-        $refresh_token = create_token('refresh', $claim);
+        $access_token = $this->token_manager->create_token('access', $claim);
+        $refresh_token = $this->token_manager->create_token('refresh', $claim);
 
         // 토큰 디코딩
-        $access_token_decode = decode_token('access', $access_token);
-        $refresh_token_decode = decode_token('refresh', $refresh_token);
+        $access_token_decode = $this->token_manager->decode_token('access', $access_token);
+        $refresh_token_decode = $this->token_manager->decode_token('refresh', $refresh_token);
 
         // 기존 토큰 삭제 후 새로운 토큰 저장
-        $auth_service->deleteRefreshToken($member['mb_id']);
-        $auth_service->insertRefreshToken($member['mb_id'], $refresh_token, $refresh_token_decode);
+        $this->auth_service->deleteRefreshToken($member['mb_id']);
+        $this->auth_service->insertRefreshToken($member['mb_id'], $refresh_token, $refresh_token_decode);
 
         $response_data = new GenerateTokenResponse(
             [
@@ -118,29 +120,30 @@ Refresh Token을 사용하여 새로운 Access Token을 발급합니다.
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function refreshToken(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function refreshToken(Request $request, Response $response): Response
     {
-        $auth_service = new AuthenticationService();
-
-        $request_body = $request->getParsedBody();
-        $data = new RefreshTokenRequest($request_body);
-
-        $row = $auth_service->fetchRefreshToken($data->refresh_token);
+        try {
+            $request_body = $request->getParsedBody();
+            $request_data = new RefreshTokenRequest($request_body);
+        } catch (Exception $e) {
+            throw new HttpException($request, $e->getMessage(), 422);
+        }
+        $row = $this->auth_service->fetchRefreshToken($request_data->refresh_token);
         if (!$row) {
-            return api_response_json($response, array('message' => '토큰이 존재하지 않습니다.'), 403);
+            throw new HttpForbiddenException($request, '토큰이 존재하지 않습니다.');
         }
 
         // 토큰 재생성
         $claim = array('sub' => $row['mb_id']);
-        $access_token = create_token('access', $claim);
-        $refresh_token = create_token('refresh', $claim);
+        $access_token = $this->token_manager->create_token('access', $claim);
+        $refresh_token = $this->token_manager->create_token('refresh', $claim);
 
         // 토큰 디코딩
-        $access_token_decode = decode_token('access', $access_token);
-        $refresh_token_decode = decode_token('refresh', $refresh_token);
+        $access_token_decode = $this->token_manager->decode_token('access', $access_token);
+        $refresh_token_decode = $this->token_manager->decode_token('refresh', $refresh_token);
 
         // 기존 토큰 갱신
-        $auth_service->updateRefreshToken($row['mb_id'], $refresh_token, $refresh_token_decode);
+        $this->auth_service->updateRefreshToken($row['mb_id'], $refresh_token, $refresh_token_decode);
 
         $response_data = new GenerateTokenResponse(
             [

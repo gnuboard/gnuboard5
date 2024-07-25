@@ -2,13 +2,13 @@
 
 namespace API\v1\Controller;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use API\v1\Model\Response\Config\BoardConfigResponse;
 use API\v1\Model\Response\Config\HtmlConfigResponse;
 use API\v1\Model\Response\Config\MemberConfigResponse;
 use API\v1\Model\Response\Config\MemoConfigResponse;
 use API\v1\Model\Response\Config\PolicyConfigResponse;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ConfigController
 {
@@ -22,7 +22,7 @@ class ConfigController
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getHtmlConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function getHtmlConfig(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $data = new HtmlConfigResponse($config);
@@ -40,7 +40,7 @@ class ConfigController
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getPolicyConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function getPolicyConfig(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $data = new PolicyConfigResponse($config);
@@ -58,7 +58,7 @@ class ConfigController
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getMemberConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function getMemberConfig(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $data = new MemberConfigResponse($config);
@@ -70,13 +70,13 @@ class ConfigController
      * @OA\Get(
      *     path="/api/v1/config/memo",
      *     summary="쪽지 발송 소진 포인트 조회",
-     *     tags={"환경설정"},
+     *     tags={"환경설정", "쪽지"},
      *     description="쪽지 발송 시, 1건당 소모되는 포인트 설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="소진 포인트 조회 성공", @OA\JsonContent(ref="#/components/schemas/MemoConfigResponse")),
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getMemoConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function getMemoConfig(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $data = new MemoConfigResponse($config);
@@ -88,13 +88,13 @@ class ConfigController
      * @OA\Get(
      *     path="/api/v1/config/board",
      *     summary="게시판 설정 조회",
-     *     tags={"환경설정"},
+     *     tags={"환경설정", "게시판"},
      *     description="게시판에 사용되는 설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="게시판설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/BoardConfigResponse")),
      *     @OA\Response(response="500", ref="#/components/responses/500"),
      * )
      */
-    public function getBoardConfig(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function getBoardConfig(Request $request, Response $response): Response
     {
         $config = $request->getAttribute('config');
         $data = new BoardConfigResponse($config);

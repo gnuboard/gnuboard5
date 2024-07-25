@@ -44,7 +44,7 @@ class PopularSearchController
      *     description="팝업 조회 성공",
      *     @OA\JsonContent(
      *          type="array",
-     *          @OA\Items(ref="#/components/schemas/PopupularResponse")
+     *          @OA\Items(ref="#/components/schemas/PopupResponse")
      *     )
      *   ),
      *   @OA\Response(response="404", ref="#/components/responses/404", description="팝업이 없습니다.")

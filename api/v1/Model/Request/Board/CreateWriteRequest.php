@@ -104,6 +104,13 @@ class CreateWriteRequest
      */
     public int $wr_parent = 0;
 
+    /**
+     * @param BoardPermission $permission  게시판 권한 
+     * @param array $member  회원 정보
+     * @param array|null $data  요청 데이터
+     * @throws Exception  유효성 검사 실패시 예외 발생
+     * @return void
+     */
     public function __construct(BoardPermission $permission, array $member, array $data = [])
     {
         foreach ($data as $key => $value) {
@@ -115,14 +122,14 @@ class CreateWriteRequest
         $board = $permission->board;
         $is_board_manager = $permission->isBoardManager($member['mb_id']);
 
-        $this->validate_category($board, $is_board_manager);
-        $this->validate_subject();
-        $this->validate_content();
-        $this->validate_option($board, $is_board_manager);
-        $this->validate_name($member);
+        $this->validateCategory($board, $is_board_manager);
+        $this->validateSubject();
+        $this->validateContent();
+        $this->validateOption($board, $is_board_manager);
+        $this->validateName($member);
 
-        $this->sanitize_link();
-        $this->set_member_data($board, $member);
+        $this->sanitizeLink();
+        $this->initializeMemberData($board, $member);
 
         // 공지여부는 게시판 정보에만 일괄저장되므로 입력만 받도록 처리한다.
         unset($this->notice);
@@ -131,7 +138,7 @@ class CreateWriteRequest
     /**
      * 분류 유효성 검사
      */
-    public function validate_category(array $board, bool $is_admin = false): void
+    public function validateCategory(array $board, bool $is_admin = false): void
     {
         $categories = array_map('trim', explode("|", $board['bo_category_list'] . ($is_admin ? '|공지' : '')));
         if (!$board['bo_use_category'] || empty($categories)) {
@@ -149,9 +156,9 @@ class CreateWriteRequest
     /**
      * 제목 유효성 검사
      */
-    public function validate_subject(): void
+    public function validateSubject(): void
     {
-        $this->wr_subject = $this->sanitizeInput($this->wr_subject, 255);
+        $this->wr_subject = sanitize_input($this->wr_subject, 255);
 
         if ($this->wr_subject === '') {
             throw new Exception('제목을 입력하세요.');
@@ -161,9 +168,9 @@ class CreateWriteRequest
     /**
      * 내용 유효성 검사
      */
-    public function validate_content(): void
+    public function validateContent(): void
     {
-        $this->wr_content = $this->sanitizeInput($this->wr_content, 65536);
+        $this->wr_content = sanitize_input($this->wr_content, 65536);
 
         if ($this->wr_content === '') {
             throw new Exception('내용을 입력하세요.');
@@ -176,16 +183,16 @@ class CreateWriteRequest
     /**
      * 링크 변환
      */
-    public function sanitize_link(): void
+    public function sanitizeLink(): void
     {
-        $this->wr_link1 = $this->sanitizeInput($this->wr_link1, 1000, true);
-        $this->wr_link2 = $this->sanitizeInput($this->wr_link2, 1000, true);
+        $this->wr_link1 = sanitize_input($this->wr_link1, 1000, true);
+        $this->wr_link2 = sanitize_input($this->wr_link2, 1000, true);
     }
 
     /**
      * 비밀글, HTML, 메일, 공지 설정
      */
-    public function validate_option(array $board, bool $is_admin = false): void
+    public function validateOption(array $board, bool $is_admin = false): void
     {
         if (!$is_admin && !$board['bo_use_secret']) {
             if (stripos($this->html, 'secret') !== false || stripos($this->secret, 'secret') !== false || stripos($this->mail, 'secret') !== false) {
@@ -217,9 +224,9 @@ class CreateWriteRequest
     /**
      * 이름 유효성 검사
      */
-    public function validate_name(array $member): void
+    public function validateName(array $member): void
     {
-        $this->wr_name = $this->sanitizeInput($this->wr_name, 20);
+        $this->wr_name = sanitize_input($this->wr_name, 20);
 
         if (!$member['mb_id'] && $this->wr_name === '') {
             throw new Exception('비회원은 이름은 필수로 입력해야 합니다.');
@@ -229,7 +236,7 @@ class CreateWriteRequest
     /**
      * 회원 데이터 설정
      */
-    public function set_member_data(array $board, array $member): void
+    public function initializeMemberData(array $board, array $member): void
     {
         if ($member['mb_id']) {
             $this->wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
@@ -239,17 +246,5 @@ class CreateWriteRequest
         } else {
             $this->wr_password = get_encrypt_string($this->wr_password);
         }
-    }
-
-    /**
-     * 입력 값을 정리하고 제한 길이만큼 자름
-     */
-    private function sanitizeInput(string $input, int $maxLength, bool $stripTags = false): string
-    {
-        $input = substr(trim($input), 0, $maxLength);
-        if ($stripTags) {
-            $input = trim(strip_tags($input));
-        }
-        return preg_replace("#[\\\]+$#", "", $input);
     }
 }

@@ -7,6 +7,14 @@ use stdClass;
 
 class AuthenticationService
 {
+    private string $table;
+
+    public function __construct()
+    {
+        global $g5;
+        $this->table = $g5['member_refresh_token_table'];
+    }
+
     /**
      * Refresh Token 조회
      * @param string $refresh_token  Refresh Token
@@ -14,9 +22,7 @@ class AuthenticationService
      */
     public function fetchRefreshToken(string $refresh_token): mixed
     {
-        global $g5;
-
-        $query = "SELECT * FROM {$g5['member_refresh_token_table']} WHERE refresh_token = :refresh_token";
+        $query = "SELECT * FROM {$this->table} WHERE refresh_token = :refresh_token";
         $stmt = Db::getInstance()->run($query, ["refresh_token" => $refresh_token]);
 
         return $stmt->fetch();
@@ -30,8 +36,6 @@ class AuthenticationService
      */
     public function insertRefreshToken(string $mb_id, string $refresh_token, stdClass $decode): void
     {
-        global $g5;
-
         $data = [
             "mb_id" => $mb_id,
             "refresh_token" => $refresh_token,
@@ -39,7 +43,7 @@ class AuthenticationService
             "created_at" => date('Y-m-d H:i:s', $decode->iat),
             "updated_at" => date('Y-m-d H:i:s', $decode->iat),
         ];
-        Db::getInstance()->insert($g5['member_refresh_token_table'], $data);
+        Db::getInstance()->insert($this->table, $data);
     }
 
     /**
@@ -51,14 +55,12 @@ class AuthenticationService
      */
     public function updateRefreshToken(string $mb_id, string $refresh_token, stdClass $decode): void
     {
-        global $g5;
-
         $data = [
             "refresh_token" => $refresh_token,
             "expires_at" => date('Y-m-d H:i:s', $decode->exp),
             "updated_at" => date('Y-m-d H:i:s', $decode->iat),
         ];
-        Db::getInstance()->update($g5['member_refresh_token_table'], ["mb_id" => $mb_id], $data);
+        Db::getInstance()->update($this->table, ["mb_id" => $mb_id], $data);
     }
 
     /**
@@ -68,8 +70,6 @@ class AuthenticationService
      */
     public function deleteRefreshToken(string $mb_id): void
     {
-        global $g5;
-
-        Db::getInstance()->delete($g5['member_refresh_token_table'], ["mb_id" => $mb_id]);
+        Db::getInstance()->delete($this->table, ["mb_id" => $mb_id]);
     }
 }

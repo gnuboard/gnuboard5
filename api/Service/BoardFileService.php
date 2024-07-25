@@ -7,15 +7,25 @@ use API\v1\Model\Response\Write\File;
 
 class BoardFileService
 {
-    private string $bo_table;
-    private string $table;
+    public string $bo_table;
+    public array $board;
+    public string $table;
 
-    public function __construct(array $board)
+    public function __construct()
     {
         global $g5;
-
-        $this->bo_table = $board['bo_table'];
         $this->table = $g5['board_file_table'];
+    }
+
+    public function setBoard(array $board): void
+    {
+        $this->board = $board;
+        $this->setBoTable($board['bo_table']);
+    }
+
+    public function setBoTable(string $bo_table): void
+    {
+        $this->bo_table = $bo_table;
     }
 
     /**

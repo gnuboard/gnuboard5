@@ -10,9 +10,9 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteContext;
 
 /**
- * Write Middleware
+ * Comment Middleware
  */
-class WriteMiddleware
+class CommentMiddleware
 {
     private BoardService $board_service;
 
@@ -27,15 +27,15 @@ class WriteMiddleware
         $routeContext = RouteContext::fromRequest($request);
         $route = $routeContext->getRoute();
         $routeArguments = $route->getArguments();
-        $wr_id = $routeArguments['wr_id'] ?? null;
+        $comment_id = $routeArguments['comment_id'] ?? null;
 
-        $write = $this->board_service->fetchWriteById((int)$wr_id);
+        $comment = $this->board_service->fetchWriteById((int)$comment_id);
 
-        if (!$write) {
-            throw new HttpNotFoundException($request, '존재하지 않는 게시글입니다.');
+        if (!$comment) {
+            throw new HttpNotFoundException($request, '존재하지 않는 댓글입니다.');
         }
 
-        $request = $request->withAttribute('write', $write);
+        $request = $request->withAttribute('comment', $comment);
 
         return $handler->handle($request);
     }

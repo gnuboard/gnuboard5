@@ -50,45 +50,6 @@ function create_refresh_token_table()
     }
 }
 
-
-/**
- * Create JWT token
- */
-function create_token(string $type, array $add_claim = array())
-{
-    $env_config = new EnvironmentConfig();
-    $token_info = new JwtTokenManager($env_config, $type);
-
-    $payload = [
-        'iss' => $env_config->auth_issuer,
-        'aud' => $env_config->auth_audience,
-        'iat' => time(),
-        'nbf' => time(),
-        'exp' => time() + (60 * $token_info->expire_minutes()),
-    ];
-    $payload = array_merge($payload, $add_claim);
-    return JWT::encode($payload, $token_info->secret_key(), $token_info->algorithm);
-}
-
-/**
- * Decode JWT token
- */
-function decode_token(string $type, string $token, stdClass $headers = null)
-{
-    $token_info = new JwtTokenManager(new EnvironmentConfig(), $type);
-
-    /**
-     * You can add a leeway to account for when there is a clock skew times between
-     * the signing and verifying servers. It is recommended that this leeway should
-     * not be bigger than a few minutes.
-     *
-     * Source: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#nbfDef
-     */
-    // JWT::$leeway = 60; // $leeway in seconds
-    return JWT::decode($token, new Key($token_info->secret_key(), $token_info->algorithm), $headers);
-}
-
-
 /**
  * Moves the uploaded file to the upload directory and assigns it a unique name
  * to avoid overwriting an existing uploaded file.
@@ -112,6 +73,28 @@ function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile
     return $filename;
 }
 
+/**
+ * 최고관리자 여부
+ */
+function is_super_admin(array $config, string $mb_id)
+{
+    if (empty($mb_id) || !isset($config['cf_admin']) || empty($config['cf_admin'])) {
+        return false;
+    }
+    return $config['cf_admin'] === $mb_id;
+}
+
+/**
+ * 입력 값을 정리하고 제한 길이만큼 자름
+ */
+function sanitize_input(string $input, int $max_length, bool $strip_tags = false): string
+{
+    $input = substr(trim($input), 0, $max_length);
+    if ($strip_tags) {
+        $input = trim(strip_tags($input));
+    }
+    return preg_replace("#[\\\]+$#", "", $input);
+}
 
 /**
  * 임시비밀번호 메일 발송
@@ -156,13 +139,6 @@ function send_reset_password_mail(array $config, array $member, string $mb_nonce
 }
 
 
-function is_super_admin(array $config, string $mb_id)
-{
-    if (empty($mb_id) || !isset($config['cf_admin']) || empty($config['cf_admin'])) {
-        return false;
-    }
-    return $config['cf_admin'] === $mb_id;
-}
 
 /**
  * FIXME: API에 맞게 수정 필요하다.

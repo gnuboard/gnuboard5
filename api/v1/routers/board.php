@@ -1,6 +1,7 @@
 <?php
 
 use API\Middleware\BoardMiddleware;
+use API\Middleware\CommentMiddleware;
 use API\Middleware\ConfigMiddleware;
 use API\Middleware\OptionalAccessTokenAuthMiddleware;
 use API\Middleware\WriteMiddleware;
@@ -22,6 +23,13 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
 
             $group->post('/files', [BoardController::class, 'uploadFiles']);
             $group->get('/files/{bf_no}', [BoardController::class, 'downloadFile']);
+
+            $group->post('/comments', [BoardController::class, 'createComment']);
+            $group->get('/comments', [BoardController::class, 'getComments']);
+            $group->put('/comments/{comment_id}', [BoardController::class, 'updateComment'])
+                ->add(CommentMiddleware::class);
+            $group->delete('/comments/{comment_id}', [BoardController::class, 'deleteComment'])
+                ->add(CommentMiddleware::class);
         })
         ->add(WriteMiddleware::class);
     });
