@@ -2,7 +2,7 @@
 
 namespace API\Middleware;
 
-use API\Database\Db;
+use API\Service\ConfigService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -13,12 +13,16 @@ use Slim\Exception\HttpNotFoundException;
  */
 class ConfigMiddleware
 {
+    private ConfigService $config_service;
+
+    public function __construct(ConfigService $config_service)
+    {
+        $this->config_service = $config_service;
+    }
+
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        global $g5;
-
-        $stmt = Db::getInstance()->run("SELECT * FROM {$g5['config_table']}");
-        $config = $stmt->fetch();
+        $config = $this->config_service->getConfig();
 
         if (!$config) {
             throw new HttpNotFoundException($request, 'Config not found.');

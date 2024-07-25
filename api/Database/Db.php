@@ -2,7 +2,7 @@
 
 namespace API\Database;
 
-
+use API\Exceptions\DbConnectException;
 use PDO;
 use PDOException;
 

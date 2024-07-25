@@ -41,9 +41,18 @@ class OASGenerator
     {
         try {
             $api_dir = "{$root_path}/api/{$this->version}";
-            $openapi = Generator::scan([$api_dir], [
-                'version' => OpenApi::VERSION_3_1_0
-            ]);
+            $exception_dir = "{$root_path}/api/Exceptions";
+            $handler_dir = "{$root_path}/api/Handlers";
+            $openapi = Generator::scan(
+                [
+                    $api_dir,
+                    $exception_dir,
+                    $handler_dir,
+                ],
+                [
+                    'version' => OpenApi::VERSION_3_1_0
+                ]
+            );
             file_put_contents("{$api_dir}/{$this->filename}", $openapi->toYaml());
         } catch (\Exception $e) {
             echo $e->getMessage();
