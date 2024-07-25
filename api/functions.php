@@ -4,6 +4,7 @@
  * TODO: 용도에 맞게 함수들을 별도의 파일로 분리하거나 클래스로 만들어 관리하는 것이 좋을 것 같다.
  */
 
+use API\Database\Db;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -35,7 +36,7 @@ function create_refresh_token_table()
     global $g5;
 
     if (isset($g5['member_refresh_token_table'])) {
-        if (!sql_query(" DESCRIBE {$g5['member_refresh_token_table']} ", false)) {
+        if (!table_exist_check(" DESCRIBE {$g5['member_refresh_token_table']} ")) {
             $sql = "CREATE TABLE IF NOT EXISTS `{$g5['member_refresh_token_table']}` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NOT NULL,
@@ -48,9 +49,64 @@ function create_refresh_token_table()
                     KEY `ix_member_refresh_token_mb_id` (`mb_id`),
                     KEY `ix_member_refresh_token_id` (`id`)
                     ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-            sql_query($sql);
+            Db::getInstance()->run($sql);
         }
     }
+}
+
+/**
+ * 테이블 체크함수
+ * @param $table_name
+ * @return bool
+ */
+function table_exist_check($table_name)
+{
+    $stmt = Db::getInstance()->run("SHOW TABLES LIKE '{$table_name}' ");
+    if ($stmt->rowCount() === 1) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 그누보드 루트 경로 및 URL 반환 함수
+ * @return array
+ */
+function g5_root_path()
+{
+    $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], __DIR__));
+    $path = str_replace('\\', '/', $chroot . __DIR__);
+    
+    //root 경로 정규화
+    // 윈도우 , 리눅스 경로 호환 슬레시로 변경 , // -> / 로 변경
+    $server_script_name = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_NAME']));
+    $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']));
+    // ~ 제거 - 리눅스에서 유저에 ~가 들어가는 경우
+    $tilde_remove = preg_replace('/^\/~[^\/]+(.*)$/', '$1', $server_script_name);
+    $document_root = str_replace($tilde_remove, '', $server_script_filename);
+    $pattern = '/.*?' . preg_quote($document_root, '/') . '/i';
+    $root = preg_replace($pattern, '', $path);
+    
+    $http = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+    
+    //host 경로 정규화
+    $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'];
+    if (isset($_SERVER['HTTP_HOST']) && strpos($host, ':') !== false) {
+        $host = preg_replace('/:[0-9]+$/', '', $host);
+    }
+    $host = preg_replace('/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/', '', $host);
+    
+    // 웹서버의 사용자 경로
+    $user = str_replace(preg_replace($pattern, '', $server_script_filename), '', $server_script_name);
+
+    $server_port = $_SERVER['SERVER_PORT'];
+    $port = ($server_port == 80 || $server_port == 443) ? '' : ':' . $server_port;
+    
+    $gnuboard_root_path = dirname(__DIR__, 1);
+    return [
+        'path' => $gnuboard_root_path,
+        'url' => "{$http}{$host}{$port}{$user}{$root}" // server url
+    ];
 }
 
 /**
