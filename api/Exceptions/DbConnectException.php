@@ -1,6 +1,6 @@
 <?php
 
-namespace API\Database;
+namespace API\Exceptions;
 
 use RuntimeException;
 

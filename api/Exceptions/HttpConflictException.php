@@ -6,6 +6,13 @@ namespace API\Exceptions;
 
 use Slim\Exception\HttpSpecializedException;
 
+/**
+ * @OA\Response(
+ *    response="409",
+ *    description="중복된 데이터",
+ *    @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
+ * )
+ */
 class HttpConflictException extends HttpSpecializedException
 {
     /**

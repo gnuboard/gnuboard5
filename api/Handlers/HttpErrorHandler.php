@@ -1,26 +1,54 @@
 <?php
+
 namespace API\Handlers;
 
+use API\Exceptions\DbConnectException;
+use API\Exceptions\HttpBadRequestException;
 use API\Exceptions\HttpConflictException;
+use API\Exceptions\HttpForbiddenException;
+use API\Exceptions\HttpMethodNotAllowedException;
+use API\Exceptions\HttpNotFoundException;
+use API\Exceptions\HttpNotImplementedException;
+use API\Exceptions\HttpUnauthorizedException;
 use API\Exceptions\HttpUnprocessableEntityException;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
-use Slim\Exception\HttpForbiddenException;
-use Slim\Exception\HttpMethodNotAllowedException;
-use Slim\Exception\HttpNotFoundException;
-use Slim\Exception\HttpNotImplementedException;
-use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
 use DomainException;
 use Exception;
 use InvalidArgumentException;
 use Throwable;
 use UnexpectedValueException;
+use PDOException;
 
+/**
+ * @OA\Schema(
+ *     schema="ErrorResponse",
+ *     type="object",
+ *     @OA\Property(
+ *         property="statusCode",
+ *         type="integer",
+ *         description="HTTP 상태 코드"
+ *     ),
+ *     @OA\Property(
+ *         property="error",
+ *         type="object",
+ *         @OA\Property(
+ *             property="type",
+ *             type="string",
+ *             description="오류 유형"
+ *         ),
+ *         @OA\Property(
+ *             property="description",
+ *             type="string",
+ *             description="오류 설명"
+ *         )
+ *     )
+ * )
+ */
 class HttpErrorHandler extends SlimErrorHandler
 {
     public const BAD_REQUEST = 'BAD_REQUEST';
@@ -52,7 +80,7 @@ class HttpErrorHandler extends SlimErrorHandler
             } elseif ($exception instanceof HttpForbiddenException) {
                 $type = self::FORBIDDEN;
             } elseif ($exception instanceof HttpNotFoundException) {
-                    $type = self::RESOURCE_NOT_FOUND;
+                $type = self::RESOURCE_NOT_FOUND;
             } elseif ($exception instanceof HttpMethodNotAllowedException) {
                 $type = self::NOT_ALLOWED;
             } elseif ($exception instanceof HttpConflictException) {
@@ -72,23 +100,28 @@ class HttpErrorHandler extends SlimErrorHandler
             $description = $exception->getMessage();
         }
 
-        if ($exception instanceof \DbConnectException) {
+        if ($exception instanceof DbConnectException) {
             $statusCode = 500;
-            $description = 'DB connect error';
+            $description = $exception->getMessage();
         }
-        
-        if ($exception instanceof \PDOException) {
+
+        if ($exception instanceof PDOException) {
             $statusCode = 500;
-            $description = 'DB operator error : ' . $exception->getMessage();
+            $description = 'DB operator error';
+            if ($this->displayErrorDetails) {
+                $description .= " : " . $exception->getMessage();
+            }
         }
 
         // Add JWT exceptions
-        if ($exception instanceof InvalidArgumentException 
-                || $exception instanceof DomainException
-                || $exception instanceof UnexpectedValueException
-                || $exception instanceof SignatureInvalidException
-                || $exception instanceof BeforeValidException
-                || $exception instanceof ExpiredException) {
+        if (
+            $exception instanceof InvalidArgumentException
+            || $exception instanceof DomainException
+            || $exception instanceof UnexpectedValueException
+            || $exception instanceof SignatureInvalidException
+            || $exception instanceof BeforeValidException
+            || $exception instanceof ExpiredException
+        ) {
             $statusCode = 401;
             $type = self::UNAUTHENTICATED;
             $description = $exception->getMessage();
@@ -101,10 +134,10 @@ class HttpErrorHandler extends SlimErrorHandler
                 'description' => $description,
             ],
         ];
-        
+
         $payload = json_encode($error, JSON_PRETTY_PRINT);
-        
-        $response = $this->responseFactory->createResponse($statusCode);        
+
+        $response = $this->responseFactory->createResponse($statusCode);
         $response->getBody()->write($payload);
 
         return $response->withHeader('Content-Type', 'application/json');

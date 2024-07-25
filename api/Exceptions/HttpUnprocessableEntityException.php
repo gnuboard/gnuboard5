@@ -6,6 +6,13 @@ namespace API\Exceptions;
 
 use Slim\Exception\HttpSpecializedException;
 
+/**
+ * @OA\Response(
+ *    response="422",
+ *    description="입력값 오류",
+ *    @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
+ * )
+ */
 class HttpUnprocessableEntityException extends HttpSpecializedException
 {
     /**
