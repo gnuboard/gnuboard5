@@ -62,7 +62,7 @@ class BoardPermission
 
     public function __construct(
         GroupService $group_service,
-        BoardService $board_service,
+        BoardService $board_service
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
