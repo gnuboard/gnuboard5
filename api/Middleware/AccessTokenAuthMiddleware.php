@@ -3,12 +3,12 @@
 namespace API\Middleware;
 
 use API\Auth\JwtTokenManager;
+use API\Exceptions\HttpNotFoundException;
+use API\Exceptions\HttpUnauthorizedException;
 use API\Service\MemberService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Slim\Exception\HttpUnauthorizedException;
-use Slim\Exception\HttpNotFoundException;
 
 /**
  * Access Token Authentication Middleware

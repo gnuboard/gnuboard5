@@ -84,7 +84,7 @@ class GetWritesResponse
      */
     public int $next_spt = 0;
 
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         $this->mapDataToProperties($this, $data);
     }

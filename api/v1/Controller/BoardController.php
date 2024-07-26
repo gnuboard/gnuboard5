@@ -96,8 +96,8 @@ class BoardController
         $board = $request->getAttribute('board');
         $member = $request->getAttribute('member');
 
-        // 권한 체크
         try {
+            // 권한 체크
             $this->board_permission->readWrites($member);
 
             // 검색 조건 및 페이징 처리

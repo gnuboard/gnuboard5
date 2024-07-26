@@ -6,6 +6,7 @@ namespace API\v1;
  * @OA\Tag(name="환경설정", description="기능별 환경설정정보 API")
  * @OA\Tag(name="인증", description="인증 API")
  * @OA\Tag(name="회원", description="회원 API")
+ * @OA\Tag(name="포인트", description="포인트 API")
  * @OA\Info(
  *      version="1.0.0",
  *      title="GnuBoard5 API Test Documentation",
