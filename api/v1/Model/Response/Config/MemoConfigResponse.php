@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Config;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,19 +12,16 @@ namespace API\v1\Model\Response\Config;
  */
 class MemoConfigResponse
 {
+    use SchemaHelperTrait;
+
     /**
      * 쪽지발송 1건당 소진 포인트
-     * @var integer
      * @OA\Property(example=500)
      */
     public int $cf_memo_send_point = 0;
 
     public function __construct($config = [])
     {
-        foreach ($config as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $config);
     }
 }

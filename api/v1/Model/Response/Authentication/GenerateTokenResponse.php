@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Authentication;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,23 +12,22 @@ namespace API\v1\Model\Response\Authentication;
  */
 class GenerateTokenResponse
 {
+    use SchemaHelperTrait;
+
     /**
      * 액세스 토큰
-     * @var string
      * @OA\Property(example="string")
      */
     public string $access_token = '';
 
     /**
      * 액세스 토큰 만료 시간
-     * @var string
      * @OA\Property(format="date-time")
      */
     public string $access_token_expire_at = '';
 
     /**
      * 리프레시 토큰
-     * @var string
      * @OA\Property(example="string")
      */
     public string $refresh_token = '';
@@ -40,17 +41,12 @@ class GenerateTokenResponse
 
     /**
      * 토큰 타입
-     * @var string
      * @OA\Property(example="string")
      */
     public string $token_type = '';
 
-    public function __construct($data = [])
+    public function __construct(array $data)
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
     }
 }

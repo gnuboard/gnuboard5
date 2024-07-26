@@ -2,6 +2,10 @@
 
 namespace API\v1\Controller;
 
+use API\Exceptions\HttpUnprocessableEntityException;
+use API\Exceptions\HttpBadRequestException;
+use API\Exceptions\HttpForbiddenException;
+use API\Exceptions\HttpNotFoundException;
 use API\Service\BoardService;
 use API\Service\BoardFileService;
 use API\Service\CommentService;
@@ -20,10 +24,6 @@ use API\v1\Model\Response\Write\Write;
 use API\v1\Model\SearchParameters;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpBadRequestException;
-use Slim\Exception\HttpException;
-use Slim\Exception\HttpForbiddenException;
-use Slim\Exception\HttpNotFoundException;
 use Exception;
 
 class BoardController
@@ -63,7 +63,7 @@ class BoardController
 
         $response_data = new Board($board);
 
-        return api_response_json($response, (array)$response_data);
+        return api_response_json($response, $response_data);
     }
 
     /**
@@ -99,49 +99,55 @@ class BoardController
         // 권한 체크
         try {
             $this->board_permission->readWrites($member);
+
+            // 검색 조건 및 페이징 처리
+            $query_params = $request->getQueryParams();
+            $search_params = new SearchParameters($this->board_service, $config, $query_params);
+            $page_params = new PageParameters($query_params, $config, $board);
+
+            $total_records = $this->board_service->fetchTotalWriteCount((array)$search_params);
+            $total_page = ceil($total_records / $page_params->per_page);
+
+            /**
+             * TODO: 공지글을 출력결과 수에 포함시킬 것인지 별도로 출력할 것인지 결정 필요
+             * - 그누보드5는 공지글을 출력결과 수에 포함시킴 
+             * - 아래는 별도로 출력하도록 개발됨
+             * TODO: 목록에 필요한 데이터를 반환하도록 변경이 필요함
+             * - comments => 댓글갯수, images/normal_files => 파일갯수
+             */
+            // 공지글 목록 조회
+            $notice_writes = [];
+            if (!$search_params->is_search) {
+                $fetch_notice_writes = $this->board_service->fetchNoticeWrites();
+                $notice_writes = array_map(fn ($notice_write) => new Write($notice_write), $fetch_notice_writes);
+            }
+            // 게시글 목록 조회
+            $fetch_writes = $this->board_service->fetchWrites((array)$search_params, (array)$page_params);
+            $writes = array_map(fn ($write) => new Write($write), $fetch_writes);
+
+            $response_data = new GetWritesResponse([
+                "total_records" => $total_records,
+                "total_pages" => $total_page,
+                "current_page" => $page_params->page,
+                "is_mobile" => $page_params->is_mobile,
+                "categories" => $this->board_service->getCategories(),
+                "board" => new Board($board),
+                "notice_writes" => $notice_writes,
+                "writes" => $writes,
+                "prev_spt" => $this->board_service->getPrevSearchPart((array)$search_params),
+                "next_spt" => $this->board_service->getNextSearchPart((array)$search_params),
+            ]);
+
+            return api_response_json($response, (array)$response_data);
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        // 검색 조건 및 페이징 처리
-        $query_params = $request->getQueryParams();
-        $search_params = new SearchParameters($this->board_service, $config, $query_params);
-        $page_params = new PageParameters($config, $query_params, $board);
-
-        $total_records = $this->board_service->fetchTotalWriteCount((array)$search_params);
-        $total_page = ceil($total_records / $page_params->per_page);
-
-        /**
-         * TODO: 공지글을 출력결과 수에 포함시킬 것인지 별도로 출력할 것인지 결정 필요
-         * - 그누보드5는 공지글을 출력결과 수에 포함시킴 
-         * - 아래는 별도로 출력하도록 개발됨
-         * TODO: 목록에 필요한 데이터를 반환하도록 변경이 필요함
-         * - comments => 댓글갯수, images/normal_files => 파일갯수
-         */
-        // 공지글 목록 조회
-        $notice_writes = [];
-        if (!$search_params->is_search) {
-            $fetch_notice_writes = $this->board_service->fetchNoticeWrites();
-            $notice_writes = array_map(fn ($notice_write) => new Write($notice_write), $fetch_notice_writes);
-        }
-        // 게시글 목록 조회
-        $fetch_writes = $this->board_service->fetchWrites((array)$search_params, (array)$page_params);
-        $writes = array_map(fn ($write) => new Write($write), $fetch_writes);
-
-        $response_data = new GetWritesResponse([
-            "total_records" => $total_records,
-            "total_pages" => $total_page,
-            "current_page" => $page_params->page,
-            "is_mobile" => $page_params->is_mobile,
-            "categories" => $this->board_service->getCategories(),
-            "board" => new Board($board),
-            "notice_writes" => $notice_writes,
-            "writes" => $writes,
-            "prev_spt" => $this->board_service->getPrevSearchPart((array)$search_params),
-            "next_spt" => $this->board_service->getNextSearchPart((array)$search_params),
-        ]);
-
-        return api_response_json($response, (array)$response_data);
     }
 
     /**
@@ -169,22 +175,28 @@ class BoardController
         // 권한 체크
         try {
             $this->board_permission->readWrite($member, $write);
+
+            $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+            $write_data = array_merge($write, array(
+                "comments" => $this->comment_service->getComments($write['wr_id']),
+                "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
+                "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
+                "thumbnail" => new Thumbnail($thumb)
+            ));
+
+            insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
+
+            $write = new Write($write_data);
+            return api_response_json($response, $write);
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
-        $write_data = array_merge($write, array(
-            "comments" => $this->comment_service->getComments($write['wr_id']),
-            "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
-            "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
-            "thumbnail" => new Thumbnail($thumb)
-        ));
-
-        insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
-
-        $write = new Write($write_data);
-        return api_response_json($response, (array)$write);
     }
 
     /**
@@ -208,8 +220,6 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
-     * 
-     * FIXME: 데이터 및 권한마다 세부적인 테스트 진행이 필요하다.
      */
     public function createWrite(Request $request, Response $response): Response
     {
@@ -220,23 +230,21 @@ class BoardController
 
         run_event('api_create_write_before', $board);
 
-        // 데이터 검증 및 처리
+
         try {
+            // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateWriteRequest($this->board_permission, $member, $request_body);
-        } catch (Exception $e) {
-            throw new HttpException($request, $e->getMessage(), 422);
-        }
-        $secret = $request_body['secret'];
-        $is_notice = $request_body['notice'];
 
-        $parent_write = [];
-        if ($request_data->wr_parent) {
-            $parent_write = $this->board_service->fetchWriteById($request_data->wr_parent);
-        }
+            $secret = $request_body['secret'];
+            $is_notice = $request_body['notice'];
 
-        // 권한 체크
-        try {
+            $parent_write = [];
+            if ($request_data->wr_parent) {
+                $parent_write = $this->board_service->fetchWriteById($request_data->wr_parent);
+            }
+
+            // 권한 체크
             if ($is_notice) {
                 $this->board_permission->createNotice($member);
             }
@@ -245,39 +253,45 @@ class BoardController
             } else {
                 $this->board_permission->createWrite($member);
             }
+            // TODO: upload_max_filesize 제한 추가 필요
+
+            // 게시글 등록
+            $wr_id = $this->board_service->createWriteData($request_data, $member, $parent_write);
+            $this->board_service->updateWriteParentId($wr_id, $wr_id);
+
+            if ($is_notice) {
+                $bo_notice = board_notice($board['bo_notice'], $wr_id, true);
+                $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
+            }
+
+            $this->board_service->insertBoardNew($wr_id, $wr_id, $member['mb_id']);
+            $this->board_service->incrementWriteCount();
+
+            // 게시글 등록 후 처리
+            insert_point($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
+
+            if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
+                naver_syndi_ping($board['bo_table'], $wr_id);
+            }
+
+            if ($config['cf_email_use'] && $board['bo_use_email']) {
+                // TODO: 기존 코드를 API와 함께 사용할 수 있도록 변경 필요 (추후 Mail Class를 작업하면서 일괄 수정)
+                // send_write_mail($config, $board, $wr_id, '', $request_data->wr_subject, $request_data->wr_content, $html);
+            }
+
+            run_event('api_create_write_after', $board, $wr_id);
+
+            $response_data = new CreateWriteResponse("success", $wr_id);
+            return api_response_json($response, (array)$response_data);
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-        // TODO: upload_max_filesize 제한 추가
-
-        // 게시글 등록
-        $wr_id = $this->board_service->createWriteData($request_data, $member, $parent_write);
-        $this->board_service->updateWriteParentId($wr_id, $wr_id);
-
-        if ($is_notice) {
-            $bo_notice = board_notice($board['bo_notice'], $wr_id, true);
-            $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
-        }
-
-        $this->board_service->insertBoardNew($wr_id, $wr_id, $member['mb_id']);
-        $this->board_service->incrementWriteCount();
-
-        // 게시글 등록 후 처리
-        insert_point($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
-
-        if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-            naver_syndi_ping($board['bo_table'], $wr_id);
-        }
-
-        if ($config['cf_email_use'] && $board['bo_use_email']) {
-            // TODO: 기존 코드를 API와 함께 사용할 수 있도록 변경 필요 (추후 Mail Class를 작업하면서 일괄 수정)
-            // send_write_mail($config, $board, $wr_id, '', $request_data->wr_subject, $request_data->wr_content, $html);
-        }
-
-        run_event('api_create_write_after', $board, $wr_id);
-
-        $response_data = new CreateWriteResponse("success", $wr_id);
-        return api_response_json($response, (array)$response_data);
     }
 
     /**
@@ -316,14 +330,11 @@ class BoardController
         try {
             $request_body = $request->getParsedBody();
             $request_data = new UpdateWriteRequest($this->board_permission, $write, $member, $request_body);
-        } catch (Exception $e) {
-            throw new HttpException($request, $e->getMessage(), 422);
-        }
-        $secret = $request_body['secret'];
-        $is_notice = $request_body['notice'];
 
-        // 권한 체크
-        try {
+            $secret = $request_body['secret'];
+            $is_notice = $request_body['notice'];
+
+            // 권한 체크
             if ($is_notice) {
                 $this->board_permission->createNotice($member);
             }
@@ -333,24 +344,30 @@ class BoardController
                 $wr_password = $request_body['wr_password'] ?? '';
                 $this->board_permission->updateWriteByNonMember($member, $write, $wr_password);
             }
+
+            // 게시글 수정
+            $this->board_service->updateWriteData($write, $request_data);
+            $this->board_service->updateCategoryByParentId($write['wr_id'], $request_data->ca_name);
+
+            $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], $is_notice);
+            $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
+
+            if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
+                naver_syndi_ping($board['bo_table'], $write['wr_id']);
+            }
+
+            run_event('api_update_write_after', $board, $write['wr_id']);
+
+            return api_response_json($response, array("message" => "게시글이 수정되었습니다."));
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        // 게시글 수정
-        $this->board_service->updateWriteData($write, $request_data);
-        $this->board_service->updateCategoryByParentId($write['wr_id'], $request_data->ca_name);
-
-        $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], $is_notice);
-        $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
-
-        if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-            naver_syndi_ping($board['bo_table'], $write['wr_id']);
-        }
-
-        run_event('api_update_write_after', $board, $write['wr_id']);
-
-        return api_response_json($response, array("message" => "게시글이 수정되었습니다."));
     }
 
     /**
@@ -393,32 +410,34 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
-        // 데이터 검증 및 처리
         try {
+            // 데이터 검증 및 처리
             $data = $request->getParsedBody();
             $uploaded = $request->getUploadedFiles();
-            $upload_files = new UploadFileRequest($board, $write, $uploaded, $data);
-        } catch (Exception $e) {
-            throw new HttpException($request, $e->getMessage(), 422);
-        }
+            $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded, $data);
 
-        // 권한 체크
-        try {
+            // 권한 체크
             $this->board_permission->uploadFiles($member, $write);
+
+            // 파일 업로드
+            $this->file_service->createDirectoryIfNotExists();
+            $this->file_service->deleteWriteFilesByNo($write['wr_id'], (array)$upload_files->file_dels);
+            $this->file_service->uploadFiles($write['wr_id'], (array)$upload_files);
+
+            // 게시글에 파일 갯수 갱신
+            $files = $this->file_service->fetchWriteFiles($write['wr_id']);
+            $this->board_service->updateWrite($write['wr_id'], ["wr_file" => count($files)]);
+
+            return api_response_json($response, array("message" => "파일 정보가 갱신되었습니다."));
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        // 파일 업로드
-        $this->file_service->createDirectoryIfNotExists();
-        $this->file_service->deleteWriteFilesByNo($write['wr_id'], (array)$upload_files->file_dels);
-        $this->file_service->uploadFiles($write['wr_id'], (array)$upload_files);
-
-        // 게시글에 파일 갯수 갱신
-        $files = $this->file_service->fetchWriteFiles($write['wr_id']);
-        $this->board_service->updateWrite($write['wr_id'], ["wr_file" => count($files)]);
-
-        return api_response_json($response, array("message" => "파일 정보가 갱신되었습니다."));
     }
 
     /**
@@ -505,56 +524,60 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
-        // 권한 체크
         try {
+            // 권한 체크
             if ($write['mb_id']) {
                 $this->board_permission->deleteWrite($member, $write);
             } else {
                 $wr_password = $request->getParsedBody()['wr_password'] ?? '';
                 $this->board_permission->deleteWriteByNonMember($member, $write, $wr_password);
             }
+
+            // 포인트&파일 삭제
+            // TODO: 포인트 관련 로직은 추후 이동 예정
+            $count_comments = 0;
+            $count_writes = 0;
+            $all_writes = $this->board_service->fetchWritesAndComments($write['wr_id']);
+            foreach ($all_writes as $all) {
+                if ($all['wr_is_comment']) {
+                    if (!delete_point($all['mb_id'], $board['bo_table'], $all['wr_id'], '댓글')) {
+                        insert_point($all['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$all['wr_id']} 댓글삭제");
+                    }
+
+                    $count_comments++;
+                } else {
+                    if (!delete_point($all['mb_id'], $board['bo_table'], $all['wr_id'], '쓰기')) {
+                        insert_point($all['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} {$all['wr_id']} 글삭제");
+                    }
+
+                    $this->file_service->deleteWriteFiles($all);
+
+                    $count_writes++;
+                }
+            }
+
+            $this->board_service->deleteWriteByParentId($write['wr_id']);
+            $this->board_service->deleteBoardNew($write['wr_id']);
+            // TODO: 스크랩 삭제 개발 필요
+            // sql_query(" delete from {$g5['scrap_table']} where bo_table = '$bo_table' and wr_id = '{$write['wr_id']}' ");
+
+            $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
+            $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
+
+            $this->board_service->updateWriteCount($count_writes, $count_comments);
+
+            delete_cache_latest($board['bo_table']);
+
+            run_event('api_delete_write', $write, $board);
+
+            return api_response_json($response, array("message" => "게시글이 삭제되었습니다."));
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
-        }
-
-        // 포인트&파일 삭제
-        // TODO: 포인트 관련 로직은 추후 이동 예정
-        $count_comments = 0;
-        $count_writes = 0;
-        $all_writes = $this->board_service->fetchWritesAndComments($write['wr_id']);
-        foreach ($all_writes as $all) {
-            if ($all['wr_is_comment']) {
-                if (!delete_point($all['mb_id'], $board['bo_table'], $all['wr_id'], '댓글')) {
-                    insert_point($all['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$all['wr_id']} 댓글삭제");
-                }
-
-                $count_comments++;
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
             } else {
-                if (!delete_point($all['mb_id'], $board['bo_table'], $all['wr_id'], '쓰기')) {
-                    insert_point($all['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} {$all['wr_id']} 글삭제");
-                }
-
-                $this->file_service->deleteWriteFiles($all);
-
-                $count_writes++;
+                throw $e;
             }
         }
-
-        $this->board_service->deleteWriteByParentId($write['wr_id']);
-        $this->board_service->deleteBoardNew($write['wr_id']);
-        // TODO: 스크랩 삭제
-        // sql_query(" delete from {$g5['scrap_table']} where bo_table = '$bo_table' and wr_id = '{$write['wr_id']}' ");
-
-        $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
-        $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
-
-        $this->board_service->updateWriteCount($count_writes, $count_comments);
-
-        delete_cache_latest($board['bo_table']);
-
-        run_event('api_delete_write', $write, $board);
-
-        return api_response_json($response, array("message" => "게시글이 삭제되었습니다."));
     }
 
     /**
@@ -586,47 +609,50 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
-        // 데이터 검증 및 처리
         try {
+            // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateCommentRequest($board, $member, $request_body);
-        } catch (Exception $e) {
-            throw new HttpException($request, $e->getMessage(), 422);
-        }
-        $parent_comment = [];
-        if ($request_data->comment_id) {
-            $parent_comment = $this->board_service->fetchWriteById($request_data->comment_id);
-            if (!$parent_comment) {
-                throw new HttpNotFoundException($request, "부모 댓글 정보가 존재하지 않습니다.");
-            }
-            if ($write['wr_id'] != $parent_comment['wr_parent']) {
-                throw new HttpBadRequestException($request, "부모 댓글 정보가 올바르지 않습니다.");
-            }
-        }
-        unset($request_data->comment_id);
 
-        // 권한 체크
-        try {
+            $parent_comment = [];
+            if ($request_data->comment_id) {
+                $parent_comment = $this->board_service->fetchWriteById($request_data->comment_id);
+                if (!$parent_comment) {
+                    throw new HttpNotFoundException($request, "부모 댓글 정보가 존재하지 않습니다.");
+                }
+                if ($write['wr_id'] != $parent_comment['wr_parent']) {
+                    throw new HttpBadRequestException($request, "부모 댓글 정보가 올바르지 않습니다.");
+                }
+            }
+            unset($request_data->comment_id);
+
+            // 권한 체크
             $this->board_permission->createComment($member, $write);
+
+            // 댓글 등록
+            $comment_id = $this->comment_service->createCommentData($write, $request_data, $member, $parent_comment);
+            $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
+
+            $this->board_service->insertBoardNew($comment_id, $write['wr_id'], $member['mb_id']);
+            $this->board_service->incrementCommentCount();
+
+            insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
+
+            // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
+            // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
+
+            run_event('api_create_comment_after', $board, $write['wr_id'], $comment_id, $parent_comment);
+
+            return api_response_json($response, array("message" => "댓글이 등록되었습니다."));
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        // 댓글 등록
-        $comment_id = $this->comment_service->createCommentData($write, $request_data, $member, $parent_comment);
-        $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
-
-        $this->board_service->insertBoardNew($comment_id, $write['wr_id'], $member['mb_id']);
-        $this->board_service->incrementCommentCount();
-
-        insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
-
-        // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
-        // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
-
-        run_event('api_create_comment_after', $board, $write['wr_id'], $comment_id, $parent_comment);
-
-        return api_response_json($response, array("message" => "댓글이 등록되었습니다."));
     }
 
     /**
@@ -658,16 +684,12 @@ class BoardController
         $comment = $request->getAttribute('comment');
         $member = $request->getAttribute('member');
 
-        // 데이터 검증 및 처리
         try {
+            // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new UpdateCommentRequest($member, $request_body);
-        } catch (Exception $e) {
-            throw new HttpException($request, $e->getMessage(), 422);
-        }
 
-        // 권한 체크
-        try {
+            // 권한 체크
             if ($comment['mb_id']) {
                 $this->board_permission->updateComment($member, $comment);
             } else {
@@ -675,14 +697,20 @@ class BoardController
                 $this->board_permission->updateCommentByNonMember($member, $comment, $wr_password);
                 unset($request_data->wr_password);
             }
+
+            // 댓글 수정
+            $this->comment_service->updateCommentData($comment['wr_id'], $request_data);
+
+            return api_response_json($response, array("message" => "댓글이 수정되었습니다."));
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } elseif ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        // 댓글 수정
-        $this->comment_service->updateCommentData($comment['wr_id'], $request_data);
-
-        return api_response_json($response, array("message" => "댓글이 수정되었습니다."));
     }
 
     /**
@@ -723,23 +751,27 @@ class BoardController
                 $wr_password = $request->getParsedBody()['wr_password'] ?? '';
                 $this->board_permission->deleteCommentByNonMember($member, $comment, $wr_password);
             }
+
+            // 댓글 삭제
+            $this->comment_service->deleteCommentById($comment['wr_id']);
+
+            // 댓글 포인트 삭제
+            if (!delete_point($comment['mb_id'], $board['bo_table'], $comment['wr_id'], '댓글')) {
+                insert_point($comment['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$comment['wr_parent']}-{$comment['wr_id']} 댓글삭제");
+            }
+
+            // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)
+            $last = $this->board_service->fetchWriteCommentLast($write);
+            $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
+            $this->board_service->deleteBoardNew($comment['wr_id']);
+
+            return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
         } catch (Exception $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
-
-        // 댓글 삭제
-        $this->comment_service->deleteCommentById($comment['wr_id']);
-
-        // 댓글 포인트 삭제
-        if (!delete_point($comment['mb_id'], $board['bo_table'], $comment['wr_id'], '댓글')) {
-            insert_point($comment['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$comment['wr_parent']}-{$comment['wr_id']} 댓글삭제");
-        }
-
-        // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)
-        $last = $this->board_service->fetchWriteCommentLast($write);
-        $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
-        $this->board_service->deleteBoardNew($comment['wr_id']);
-
-        return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
     }
 }

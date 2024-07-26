@@ -387,7 +387,11 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
             return api_response_json($response, array("message" => "회원 아이콘/이미지가 수정되었습니다."));
         } catch (Exception $e) {
-            throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
         }
     }
 
@@ -413,18 +417,14 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         try {
             if (is_super_admin($config, $member['mb_id'])) {
-                throw new Exception("최고 관리자는 탈퇴할 수 없습니다.", 403);
+                throw new HttpForbiddenException($request, "최고 관리자는 탈퇴할 수 없습니다.");
             }
 
             $this->member_service->leaveMember($member);
 
             return api_response_json($response, array("message" => "회원탈퇴가 완료되었습니다."));
         } catch (Exception $e) {
-            if ($e->getCode() === 403) {
-                throw new HttpForbiddenException($request, $e->getMessage());
-            } else {
-                throw $e;
-            }
+            throw $e;
         }
     }
 
@@ -459,7 +459,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
             $member = $this->member_service->verifyPasswordResetEmail($request_data->mb_email);
             if (is_super_admin($config, $member['mb_id'])) {
-                throw new Exception("관리자 아이디는 접근 불가합니다.", 403);
+                throw new HttpForbiddenException($request, "관리자 아이디는 접근 불가합니다.");
             }
 
             // TODO: 메일관련 공통 함수로 변경이 필요하다.

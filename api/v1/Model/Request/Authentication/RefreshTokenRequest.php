@@ -2,7 +2,7 @@
 
 namespace API\v1\Model\Request\Authentication;
 
-use Exception;
+use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
@@ -13,9 +13,10 @@ use Exception;
  */
 class RefreshTokenRequest
 {
+    use SchemaHelperTrait;
+
     /**
      * 리프레시 토큰
-     * @var string
      * @OA\Property(example="")
      */
     public string $refresh_token = '';
@@ -27,11 +28,7 @@ class RefreshTokenRequest
      */
     public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         $this->validate();
     }
@@ -42,7 +39,7 @@ class RefreshTokenRequest
     private function validate(): void
     {
         if (empty($this->refresh_token)) {
-            throw new Exception('리프레시 토큰이 입력되지 않았습니다.');
+            $this->throwException('리프레시 토큰이 입력되지 않았습니다.');
         }
     }
 }

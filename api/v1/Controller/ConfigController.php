@@ -19,7 +19,8 @@ class ConfigController
      *     tags={"환경설정"},
      *     description="HTML을 구성하는데 필요한 설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="기본환경설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/HtmlConfigResponse")),
-     *     @OA\Response(response="500", ref="#/components/responses/500"),
+     *     @OA\Response(response="404", ref="#/components/responses/404"),
+     *     @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function getHtmlConfig(Request $request, Response $response): Response
@@ -27,7 +28,7 @@ class ConfigController
         $config = $request->getAttribute('config');
         $data = new HtmlConfigResponse($config);
 
-        return api_response_json($response, (array)$data);
+        return api_response_json($response, $data);
     }
 
     /**
@@ -37,7 +38,8 @@ class ConfigController
      *     tags={"환경설정", "회원"},
      *     description="회원가입 약관을 조회합니다.",
      *     @OA\Response(response="200", description="약관 조회 성공", @OA\JsonContent(ref="#/components/schemas/PolicyConfigResponse")),
-     *     @OA\Response(response="500", ref="#/components/responses/500"),
+     *     @OA\Response(response="404", ref="#/components/responses/404"),
+     *     @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function getPolicyConfig(Request $request, Response $response): Response
@@ -45,7 +47,7 @@ class ConfigController
         $config = $request->getAttribute('config');
         $data = new PolicyConfigResponse($config);
 
-        return api_response_json($response, (array)$data);
+        return api_response_json($response, $data);
     }
 
     /**
@@ -55,7 +57,8 @@ class ConfigController
      *     tags={"환경설정", "회원"},
      *     description="회원가입에 필요한 기본환경설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="회원가입 설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/MemberConfigResponse")),
-     *     @OA\Response(response="500", ref="#/components/responses/500"),
+     *     @OA\Response(response="404", ref="#/components/responses/404"),
+     *     @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function getMemberConfig(Request $request, Response $response): Response
@@ -63,7 +66,7 @@ class ConfigController
         $config = $request->getAttribute('config');
         $data = new MemberConfigResponse($config);
 
-        return api_response_json($response, (array)$data);
+        return api_response_json($response, $data);
     }
 
     /**
@@ -73,7 +76,8 @@ class ConfigController
      *     tags={"환경설정", "쪽지"},
      *     description="쪽지 발송 시, 1건당 소모되는 포인트 설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="소진 포인트 조회 성공", @OA\JsonContent(ref="#/components/schemas/MemoConfigResponse")),
-     *     @OA\Response(response="500", ref="#/components/responses/500"),
+     *     @OA\Response(response="404", ref="#/components/responses/404"),
+     *     @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function getMemoConfig(Request $request, Response $response): Response
@@ -81,7 +85,7 @@ class ConfigController
         $config = $request->getAttribute('config');
         $data = new MemoConfigResponse($config);
 
-        return api_response_json($response, (array)$data);
+        return api_response_json($response, $data);
     }
 
     /**
@@ -91,7 +95,8 @@ class ConfigController
      *     tags={"환경설정", "게시판"},
      *     description="게시판에 사용되는 설정 정보를 조회합니다.",
      *     @OA\Response(response="200", description="게시판설정 조회 성공", @OA\JsonContent(ref="#/components/schemas/BoardConfigResponse")),
-     *     @OA\Response(response="500", ref="#/components/responses/500"),
+     *     @OA\Response(response="404", ref="#/components/responses/404"),
+     *     @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function getBoardConfig(Request $request, Response $response): Response
@@ -99,6 +104,6 @@ class ConfigController
         $config = $request->getAttribute('config');
         $data = new BoardConfigResponse($config);
 
-        return api_response_json($response, (array)$data);
+        return api_response_json($response, $data);
     }
 }

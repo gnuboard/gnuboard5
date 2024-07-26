@@ -3,6 +3,7 @@
 namespace API\v1\Model\Request\Board;
 
 use API\Service\BoardPermission;
+use API\v1\Traits\SchemaHelperTrait;
 use Exception;
 
 /**
@@ -13,6 +14,8 @@ use Exception;
  */
 class UpdateWriteRequest
 {
+    use SchemaHelperTrait;
+
     /**
      * 게시글 제목
      * @OA\Property(example="제목")
@@ -108,11 +111,7 @@ class UpdateWriteRequest
      */
     public function __construct(BoardPermission $permission, array $write, array $member, array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         $board = $permission->board;
         $is_board_manager = $permission->isBoardManager($member['mb_id']);
@@ -141,10 +140,10 @@ class UpdateWriteRequest
             return;
         }
         if (!$this->ca_name) {
-            throw new Exception('분류를 선택하세요.');
+            $this->throwException('분류를 선택하세요.');
         }
         if (!in_array($this->ca_name, $categories)) {
-            throw new Exception('분류를 올바르게 입력하세요.');
+            $this->throwException('분류를 올바르게 입력하세요.');
         }
     }
 
@@ -156,7 +155,7 @@ class UpdateWriteRequest
         $this->wr_subject = sanitize_input($this->wr_subject, 255);
 
         if ($this->wr_subject === '') {
-            throw new Exception('제목을 입력하세요.');
+            $this->throwException('제목을 입력하세요.');
         }
     }
 
@@ -168,10 +167,10 @@ class UpdateWriteRequest
         $this->wr_content = sanitize_input($this->wr_content, 65536);
 
         if ($this->wr_content === '') {
-            throw new Exception('내용을 입력하세요.');
+            $this->throwException('내용을 입력하세요.');
         }
         if (substr_count($this->wr_content, '&#') > 50) {
-            throw new Exception('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
+            $this->throwException('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
         }
     }
 
@@ -191,7 +190,7 @@ class UpdateWriteRequest
     {
         if (!$is_admin && !$board['bo_use_secret']) {
             if (stripos($this->html, 'secret') !== false || stripos($this->secret, 'secret') !== false || stripos($this->mail, 'secret') !== false) {
-                throw new Exception('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
+                $this->throwException('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
             }
         }
 
@@ -224,7 +223,7 @@ class UpdateWriteRequest
         $this->wr_name = sanitize_input($this->wr_name, 20);
 
         if (!$write['mb_id'] && $this->wr_name === '') {
-            throw new Exception('비회원 게시글은 이름은 필수로 입력해야 합니다.');
+            $this->throwException('비회원 게시글은 이름은 필수로 입력해야 합니다.');
         }
     }
 

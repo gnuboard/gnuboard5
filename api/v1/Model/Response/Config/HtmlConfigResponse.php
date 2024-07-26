@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Config;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,40 +12,34 @@ namespace API\v1\Model\Response\Config;
  */
 class HtmlConfigResponse
 {
+    use SchemaHelperTrait;
+
     /**
      * 홈페이지 제목
-     * @var string
      * @OA\Property(example="그누보드5")
      */
     public string $cf_title = "";
 
     /**
      * 추가 메타태그
-     * @var string
      * @OA\Property(example="<meta name='description' content='그누보드5'>")
      */
     public string $cf_add_meta = "";
 
     /**
      * 추가 스크립트
-     * @var string
      * @OA\Property(example="<script src='http://example.com/script.js'></script>")
      */
     public string $cf_add_script = "";
 
     /**
      * 분석코드
-     * @var string
      * @OA\Property(example="UA-12345678-1")
      */
     public string $cf_analytics = "";
 
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
-        foreach ($config as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $config);
     }
 }

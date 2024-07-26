@@ -1,6 +1,6 @@
 <?php
 
-namespace API\v1\Controller;
+namespace API\v1;
 
 /**
  * @OA\Tag(name="환경설정", description="기능별 환경설정정보 API")

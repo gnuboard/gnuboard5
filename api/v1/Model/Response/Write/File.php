@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Write;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *     type="object",
@@ -10,6 +12,8 @@ namespace API\v1\Model\Response\Write;
  */
 class File
 {
+    use SchemaHelperTrait;
+
     /**
      * 원본 파일명
      * @OA\Property()
@@ -42,11 +46,7 @@ class File
 
     public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         $this->bf_file = G5_DATA_URL . '/file/' . $data['bo_table'] . '/' . $this->bf_file;
     }

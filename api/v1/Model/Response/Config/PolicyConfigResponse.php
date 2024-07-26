@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Config;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,26 +12,22 @@ namespace API\v1\Model\Response\Config;
  */
 class PolicyConfigResponse
 {
+    use SchemaHelperTrait;
+
     /**
      * 이용약관
-     * @var string
      * @OA\Property(example="이용약관 내용...")
      */
     public string $cf_stipulation = "";
 
     /**
      * 개인정보 처리방침
-     * @var string
      * @OA\Property(example="개인정보 처리방침 내용...")
      */
     public string $cf_privacy = "";
 
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
-        foreach ($config as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $config);
     }
 }

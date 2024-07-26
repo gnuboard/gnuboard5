@@ -446,14 +446,8 @@ class BoardService
 
         $query_parts[] = '(' . implode(" $where_operator ", $search_clauses) . ')';
 
-        // TODO: 개선점 => 댓글 검색옵션이 없으면 게시글만 검색한다.
-        /*
-        if ($is_write === '1') {
-            $query_parts[] = "wr_is_comment = '0'";
-        } elseif ($is_write === '0') {
-            $query_parts[] = "wr_is_comment = '1'";
-        }
-        */
+        // 기존 코드에서의 개선점 
+        // - 댓글 검색옵션이 없으면 게시글만 검색한다.
         if ($is_write === '0') {
             $query_parts[] = "wr_is_comment = '1'";
         } else {

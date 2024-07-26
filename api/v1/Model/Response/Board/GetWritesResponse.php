@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Board;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,6 +12,8 @@ namespace API\v1\Model\Response\Board;
  */
 class GetWritesResponse
 {
+    use SchemaHelperTrait;
+
     /**
      * 총 레코드 수
      * @OA\Property()
@@ -82,10 +86,6 @@ class GetWritesResponse
 
     public function __construct($data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace API\v1\Model\Request\Comment;
 
-use Exception;
+use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
@@ -12,6 +12,8 @@ use Exception;
  */
 class UpdateCommentRequest
 {
+    use SchemaHelperTrait;
+
     /**
      * 댓글 내용
      * @OA\Property(example="내용")
@@ -59,10 +61,10 @@ class UpdateCommentRequest
         $this->wr_content = sanitize_input($this->wr_content, 65536);
 
         if ($this->wr_content === '') {
-            throw new Exception('내용을 입력하세요.');
+            $this->throwException('내용을 입력하세요.');
         }
         if (substr_count($this->wr_content, '&#') > 50) {
-            throw new Exception('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
+            $this->throwException('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
         }
     }
 
@@ -72,7 +74,7 @@ class UpdateCommentRequest
     public function validatePassword(array $member): void
     {
         if (!$member['mb_id'] && $this->wr_password === '') {
-            throw new Exception('비회원은 비밀번호는 필수로 입력해야 합니다.');
+            $this->throwException('비회원은 비밀번호는 필수로 입력해야 합니다.');
         }
     }
 

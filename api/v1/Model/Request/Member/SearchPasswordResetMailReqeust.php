@@ -2,7 +2,7 @@
 
 namespace API\v1\Model\Request\Member;
 
-use API\v1\Traits\RequestHelperTrait;
+use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
@@ -12,7 +12,7 @@ use API\v1\Traits\RequestHelperTrait;
  */
 class SearchPasswordResetMailReqeust
 {
-    use RequestHelperTrait;
+    use SchemaHelperTrait;
 
     /**
      * 이메일

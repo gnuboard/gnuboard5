@@ -2,6 +2,8 @@
 
 namespace API\v1\Model;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 use API\Service\BoardService;
 
 /**
@@ -9,6 +11,8 @@ use API\Service\BoardService;
  */
 class SearchParameters
 {
+    use SchemaHelperTrait;
+
     /**
      * 정렬 필드
      * @OA\Parameter(name="sst", in="query", @OA\Schema(type="string", default=""))
@@ -67,11 +71,7 @@ class SearchParameters
      */
     public function __construct(BoardService $board_service, array $config, array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key) && !is_null($value)) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         $this->sanitizeParameters();
         $this->checkIfSearch();
