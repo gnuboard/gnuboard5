@@ -2,7 +2,7 @@
 
 namespace API\v1\Model\Request\Member;
 
-use Exception;
+use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
@@ -13,6 +13,8 @@ use Exception;
  */
 class CreateMemberRequest
 {
+    use SchemaHelperTrait;
+
     /**
      * 회원 아이디
      * @OA\Property(example="test")
@@ -243,11 +245,7 @@ class CreateMemberRequest
 
     public function __construct(array $config, array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         $this->validateId($config);
         $this->validatePassword();
@@ -256,28 +254,26 @@ class CreateMemberRequest
         $this->validateEmail($config);
         if ($config['cf_use_recommend']) {
             $this->validateRecommend();
+            $this->mb_recommend = strtolower($this->mb_recommend);
+        } else {
+            unset($this->mb_recommend);
         }
         if ($config['cf_req_hp'] && ($config['cf_use_hp'] || $config['cf_cert_hp'] || $config['cf_cert_simple'])) {
             $this->validateHp();
         }
 
         $this->mb_id = strtolower($this->mb_id);
-        $this->mb_password = get_encrypt_string($this->mb_password);
-        $this->mb_nick_date = date('Y-m-d');
+        $this->processPassword();
         $this->mb_email = get_email_address($this->mb_email);
-        $this->mb_recommend = strtolower($this->mb_recommend);
+        $this->mb_nick_date = date('Y-m-d');
         $this->mb_hp = hyphen_hp_number($this->mb_hp);
-        $this->mb_zip1 = substr($this->mb_zip, 0, 3);
-        $this->mb_zip2 = substr($this->mb_zip, 4, 3);
         $this->mb_ip = $_SERVER['REMOTE_ADDR'];
         $this->mb_level = $config['cf_register_level'] ?? 1;
         $this->mb_datetime = date('Y-m-d H:i:s');
         if (!$config['cf_use_email_certify']) {
             $this->mb_email_certify = date('Y-m-d H:i:s');
         }
-
-        unset($this->mb_password_re);
-        unset($this->mb_zip);
+        $this->processZipCode();
     }
 
     protected function validateId(array $config)
@@ -360,8 +356,16 @@ class CreateMemberRequest
         }
     }
 
-    private function throwException($message)
+    protected function processPassword()
     {
-        throw new Exception($message, 422);
+        $this->mb_password = get_encrypt_string($this->mb_password);
+        unset($this->mb_password_re);
+    }
+
+    protected function processZipCode()
+    {
+        $this->mb_zip1 = substr($this->mb_zip, 0, 3);
+        $this->mb_zip2 = substr($this->mb_zip, 4, 3);
+        unset($this->mb_zip);
     }
 }

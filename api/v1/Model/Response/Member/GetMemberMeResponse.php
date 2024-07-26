@@ -16,13 +16,13 @@ class GetMemberMeResponse extends GetMemberResponse
      * 회원 이름
      * @OA\Property(example="홍길동")
      */
-    public string $mb_name;
+    public string $mb_name = '';
 
     /**
      * 회원 레벨
      * @OA\Property(example=2)
      */
-    public int $mb_level;
+    public int $mb_level = 1;
 
     /**
      * 회원 메모 갯수
@@ -40,9 +40,5 @@ class GetMemberMeResponse extends GetMemberResponse
     public function __construct($data)
     {
         parent::__construct($data);
-        $this->mb_name = $data['mb_name'];
-        $this->mb_level = $data['mb_level'];
-        $this->mb_memo_cnt = $data['mb_memo_cnt'];
-        $this->mb_scrap_cnt = $data['mb_scrap_cnt'];
     }
 }

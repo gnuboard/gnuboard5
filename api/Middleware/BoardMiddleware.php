@@ -2,6 +2,7 @@
 
 namespace API\Middleware;
 
+use API\Exceptions\HttpNotFoundException;
 use API\Service\BoardFileService;
 use API\Service\BoardPermission;
 use API\Service\BoardService;
@@ -10,7 +11,6 @@ use API\Service\GroupService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Slim\Exception\HttpNotFoundException;
 use Slim\Routing\RouteContext;
 
 /**

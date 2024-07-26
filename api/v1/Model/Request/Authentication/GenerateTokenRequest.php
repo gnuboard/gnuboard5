@@ -2,7 +2,7 @@
 
 namespace API\v1\Model\Request\Authentication;
 
-use Exception;
+use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
@@ -13,16 +13,16 @@ use Exception;
  */
 class GenerateTokenRequest
 {
+    use SchemaHelperTrait;
+
     /**
      * 사용자 이름
-     * @var string
      * @OA\Property(example="")
      */
     public string $username = '';
 
     /**
      * 비밀번호
-     * @var string
      * @OA\Property(example="")
      */
     public string $password = '';
@@ -34,11 +34,7 @@ class GenerateTokenRequest
      */
     public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         $this->validate();
     }
@@ -49,7 +45,7 @@ class GenerateTokenRequest
     private function validate(): void
     {
         if (empty($this->username) || empty($this->password)) {
-            throw new Exception('아이디 또는 비밀번호가 입력되지 않았습니다.');
+            $this->throwException('아이디 또는 비밀번호가 입력되지 않았습니다.');
         }
     }
 }

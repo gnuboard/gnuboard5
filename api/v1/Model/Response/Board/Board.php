@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Board;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,6 +12,8 @@ namespace API\v1\Model\Response\Board;
  */
 class Board
 {
+    use SchemaHelperTrait;
+
     /**
      * 게시판 아이디
      * @OA\Property(example="free")
@@ -148,12 +152,8 @@ class Board
      */
     public string $bo_category_list = '';
 
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key) && $value) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
     }
 }

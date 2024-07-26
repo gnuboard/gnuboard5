@@ -2,9 +2,9 @@
 
 namespace API\Handlers;
 
+use API\Exceptions\HttpInternalServerErrorException;
 use API\Handlers\HttpErrorHandler;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpInternalServerErrorException;
 use Slim\ResponseEmitter;
 
 class ShutdownHandler

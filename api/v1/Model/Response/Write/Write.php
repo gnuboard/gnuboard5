@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Write;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *      type="object",
@@ -10,6 +12,8 @@ namespace API\v1\Model\Response\Write;
  */
 class Write
 {
+    use SchemaHelperTrait;
+
     /**
      * 글 ID
      * @OA\Property()
@@ -165,11 +169,7 @@ class Write
 
     public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
+        $this->mapDataToProperties($this, $data);
 
         // Thumbnail 초기화
         if (empty($this->thumbnail)) {

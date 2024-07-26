@@ -2,11 +2,11 @@
 
 namespace API\Middleware;
 
+use API\Exceptions\HttpNotFoundException;
 use API\Service\ConfigService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Slim\Exception\HttpNotFoundException;
 
 /**
  * Config Middleware

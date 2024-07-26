@@ -2,6 +2,8 @@
 
 namespace API\v1\Model\Response\Write;
 
+use API\v1\Traits\SchemaHelperTrait;
+
 /**
  * @OA\Schema(
  *     type="object",
@@ -10,6 +12,8 @@ namespace API\v1\Model\Response\Write;
  */
 class Comment
 {
+    use SchemaHelperTrait;
+
     /**
      * 댓글 ID
      * @OA\Property()
@@ -120,14 +124,6 @@ class Comment
 
     public function __construct(array $data = [])
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                if (gettype($this->$key) == 'boolean') {
-                    $this->$key = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                } else {
-                    $this->$key = $value;
-                }
-            }
-        }
+        $this->mapDataToProperties($this, $data);
     }
 }

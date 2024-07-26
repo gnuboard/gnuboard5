@@ -11,14 +11,12 @@ namespace API\v1\Model\Response;
 class BaseResponse
 {
     /**
-     * @var string 응답 메시지
+     * 응답 메시지
      * @OA\Property(example="string")
      */
-    public $message;
+    public string $message;
 
     /**
-     * 생성자
-     * 
      * @param string $message 응답 메시지
      */
     public function __construct($message) {

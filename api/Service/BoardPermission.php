@@ -15,6 +15,7 @@ class BoardPermission
 
     private GroupService $group_service;
     private BoardService $board_service;
+    private MemberService $member_service;
 
     private const ERROR_NO_ACCESS_GUEST = '비회원은 이 게시판에 접근할 권한이 없습니다.';
     private const ERROR_NO_ACCESS_GROUP = '게시판에 접근할 권한이 없습니다.';
@@ -62,10 +63,12 @@ class BoardPermission
 
     public function __construct(
         GroupService $group_service,
-        BoardService $board_service
+        BoardService $board_service,
+        MemberService $member_service
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
+        $this->member_service = $member_service;
     }
 
     function setConfig(array $config): void
@@ -357,9 +360,7 @@ class BoardPermission
                 break;
         }
 
-        // TODO: Dependency Injection
-        $member_service = new MemberService();
-        $write_member = $member_service->fetchMemberById($write['mb_id']);
+        $write_member = $this->member_service->fetchMemberById($write['mb_id']);
 
         if ($this->isGroupAdmin($member['mb_id']) || $this->isBoardAdmin($member['mb_id'])) {
             $this->checkMemberLevel($member, $write_member['mb_level'], $message_level);
@@ -386,9 +387,7 @@ class BoardPermission
                 break;
         }
 
-        // TODO: Dependency Injection
-        $member_service = new MemberService();
-        $comment_member = $member_service->fetchMemberById($comment['mb_id']);
+        $comment_member = $this->member_service->fetchMemberById($comment['mb_id']);
 
         if ($this->isGroupAdmin($member['mb_id']) || $this->isBoardAdmin($member['mb_id'])) {
             $this->checkMemberLevel($member, $comment_member['mb_level'], $message_level);
@@ -433,8 +432,6 @@ class BoardPermission
      * 
      * 글읽기 포인트 체크
      * - 그누보드5에선 세션을 사용했지만 세션을 사용하지 않으므로 테이블의 내역을 체크한다.
-     * 
-     * TODO: 내부에서 여러 곳에 사용될 수 있도록 수정이 필요하다.
      */
     private function checkMemberPoint(string $type, array $member, array $write): void
     {
@@ -652,6 +649,6 @@ class BoardPermission
      */
     private function throwException(string $message): void
     {
-        throw new Exception($message);
+        throw new Exception($message, 403);
     }
 }

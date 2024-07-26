@@ -22,6 +22,12 @@ class MemberService
         $this->config_service = $config_service;
     }
 
+    /**
+     * 회원가입 처리
+     * @param object $data 회원가입 데이터
+     * @throws Exception 회원가입 실패시 Exception 발생
+     * @return int 회원번호
+     */
     public function createMember(object $data): int
     {
         $config = $this->config_service->getConfig();
@@ -41,7 +47,53 @@ class MemberService
             }
         }
 
-        return $this->insertMember($data);
+        return $this->insertMember((array)$data);
+    }
+
+    /**
+     * 회원정보 갱신 처리
+     * @param string $mb_id 회원아이디
+     * @param object $data 갱신 데이터
+     * @throws Exception 갱신 실패시 Exception 발생
+     * @return void
+     */
+    public function updateMemberProfile(string $mb_id, object $data): void
+    {
+        if ($this->existsMemberByNick($data->mb_nick, $data->mb_id)) {
+            throw new Exception("이미 사용중인 닉네임 입니다.", 409);
+        }
+        if ($this->existsMemberByEmail($data->mb_email, $data->mb_id)) {
+            throw new Exception("이미 사용중인 이메일 입니다.", 409);
+        }
+
+        $this->updateMember($mb_id, (array)$data);
+    }
+
+    /**
+     * 회원탈퇴
+     * - 실제로 삭제하지 않고 탈퇴일자 및 회원메모를 업데이트한다.
+     * @param array $member
+     * @throws Exception
+     * @return void
+     */
+    public function leaveMember(array $member)
+    {
+        $update_data = [
+            "mb_leave_date" => date("Ymd"),
+            "mb_memo" => date('Ymd', G5_SERVER_TIME) . " 탈퇴함\n" . sql_real_escape_string($member['mb_memo']),
+            "mb_certify" => '',
+            "mb_adult" => 0,
+            "mb_dupinfo" => ''
+        ];
+        $this->updateMember($member['mb_id'], $update_data);
+
+        // Hook - 회원탈퇴
+        run_event('member_leave', $member);
+
+        //소셜로그인 해제
+        if (function_exists('social_member_link_delete')) {
+            social_member_link_delete($member['mb_id']);
+        }
     }
 
     /**
@@ -145,39 +197,79 @@ class MemberService
         }
     }
 
+    
     /**
-     * 회원탈퇴
-     * - 실제로 삭제하지 않고 탈퇴일자 및 회원메모를 업데이트한다.
-     * @param array $member
-     * @throws Exception
-     * @return void
+     * 회원정보 조회 검증
+     * @param array $member 회원정보
+     * @param array $login_member 로그인 회원정보
+     * @throws Exception 조회 실패시 Exception 발생
      */
-    public function leaveMember(array $member)
+    public function verifyMemberProfile(array $member, array $login_member): void
     {
-        $update_data = [
-            "mb_leave_date" => date("Ymd"),
-            "mb_memo" => date('Ymd', G5_SERVER_TIME) . " 탈퇴함\n" . sql_real_escape_string($member['mb_memo']),
-            "mb_certify" => '',
-            "mb_adult" => 0,
-            "mb_dupinfo" => ''
-        ];
-        $this->updateMember($member['mb_id'], $update_data);
-
-        // Hook - 회원탈퇴
-        run_event('member_leave', $member);
-
-        //소셜로그인 해제
-        if (function_exists('social_member_link_delete')) {
-            social_member_link_delete($member['mb_id']);
+        if (!$member) {
+            throw new Exception("회원정보가 존재하지 않습니다.", 404);
+        }
+        if ($login_member['mb_id'] != $member['mb_id']) {
+            if (!$login_member['mb_open']) {
+                throw new Exception("자신의 정보를 공개하지 않으면 다른분의 정보를 조회할 수 없습니다.", 403);
+            }
+            if (!$member['mb_open']) {
+                throw new Exception("해당 회원은 정보공개를 하지 않았습니다.", 403);
+            }
+        }
+    }
+    
+    /**
+     * 인증 이메일 변경정보 검증
+     * @param array|bool $member 회원정보
+     * @param object $data 변경정보
+     * @throws Exception 변경정보 검증 실패시 Exception 발생
+     */
+    public function verifyEmailCertification($member, object $data): void
+    {
+        if (!$member) {
+            throw new Exception("회원정보가 존재하지 않습니다.", 404);
+        }
+        if (!check_password($data->password, $member['mb_password'])) {
+            throw new Exception("비밀번호가 일치하지 않습니다.", 403);
+        }
+        if (substr($member["mb_email_certify"], 0, 1) != '0') {
+            throw new Exception("이미 메일인증 하신 회원입니다.", 409);
+        }
+        if ($this->existsMemberByEmail($data->email, $member['mb_id'])) {
+            throw new Exception("이미 사용중인 이메일 입니다.", 409);
         }
     }
 
+    public function verifyPasswordResetEmail(string $email): array
+    {
+        $members = $this->fetchAllMemberByEmail($email);
+        $count = count($members);
+
+        if ($count > 1) {
+            throw new Exception("동일한 메일주소가 2개 이상 존재합니다. 관리자에게 문의하여 주십시오.", 409);
+        } elseif ($count == 0) {
+            throw new Exception("입력한 정보로 등록된 회원을 찾을 수 없습니다.", 404);
+        }
+        
+        return $members[0];
+    }
+
+    public function fetchAllMemberByEmail(string $mb_email): mixed
+    {
+        $query = "SELECT * FROM {$this->table} WHERE mb_email = :mb_email";
+
+        $stmt = Db::getInstance()->run($query, ["mb_email" => $mb_email]);
+        
+        return $stmt->fetchAll();
+    }
+    
     public function fetchMemberById(string $mb_id): mixed
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id";
 
         $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
-
+        
         return $stmt->fetch();
     }
 
@@ -211,18 +303,9 @@ class MemberService
         return $stmt->fetchColumn() > 0;
     }
 
-    public function fetchAllMemberByEmail(string $mb_email): mixed
+    public function insertMember(array $data): int
     {
-        $query = "SELECT * FROM {$this->table} WHERE mb_email = :mb_email";
-
-        $stmt = Db::getInstance()->run($query, ["mb_email" => $mb_email]);
-
-        return $stmt->fetchAll();
-    }
-
-    public function insertMember(object $data): int
-    {
-        $insert_id = Db::getInstance()->insert($this->table, (array)$data);
+        $insert_id = Db::getInstance()->insert($this->table, $data);
 
         return $insert_id;
     }
