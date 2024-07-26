@@ -78,13 +78,11 @@ class PollService
      * @param $member
      * @param $ip
      * @return bool
-     * @todo 멤버/guest 체크 필요
      * 투표 여부 확인
      */
     public function check_already_vote($poll, $member, $ip)
     {
-        //@todo
-        //member 
+        //member
         if (isset($member['mb_id'])) {
             $ids = explode(',', trim($poll['mb_ids']));
             if (in_array($member['mb_id'], $ids)) {
