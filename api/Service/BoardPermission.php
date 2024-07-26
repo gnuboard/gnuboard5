@@ -16,6 +16,7 @@ class BoardPermission
     private GroupService $group_service;
     private BoardService $board_service;
     private MemberService $member_service;
+    private PointService $point_service;
 
     private const ERROR_NO_ACCESS_GUEST = '비회원은 이 게시판에 접근할 권한이 없습니다.';
     private const ERROR_NO_ACCESS_GROUP = '게시판에 접근할 권한이 없습니다.';
@@ -64,11 +65,13 @@ class BoardPermission
     public function __construct(
         GroupService $group_service,
         BoardService $board_service,
-        MemberService $member_service
+        MemberService $member_service,
+        PointService $point_service
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
         $this->member_service = $member_service;
+        $this->point_service = $point_service;
     }
 
     function setConfig(array $config): void
@@ -436,8 +439,6 @@ class BoardPermission
     private function checkMemberPoint(string $type, array $member, array $write): void
     {
         // 읽기, 쓰기, 댓글, 다운로드
-        global $g5;
-
         switch ($type) {
             case 'read':
                 $board_point = (int)$this->board['bo_read_point'];
@@ -476,17 +477,8 @@ class BoardPermission
         if ($board_level == 1 && $write['wr_ip'] == $_SERVER['REMOTE_ADDR']) {
             return;
         }
-
-        // TODO: 포인트 관련 처리 위치로 이동 필요
-        $query = "SELECT * FROM {$g5['point_table']} WHERE mb_id = :mb_id AND po_rel_table = :po_rel_table AND po_rel_id = :po_rel_id AND po_rel_action = :po_rel_action";
-        $stmt = Db::getInstance()->run($query, [
-            'mb_id' => $mb_id,
-            'po_rel_table' => $this->board['bo_table'],
-            'po_rel_id' => $wr_id,
-            'po_rel_action' => '읽기'
-        ]);
-        $point = $stmt->fetch();
-        if ($point) {
+        $exists_relation = $this->point_service->fetchPointByRelation($mb_id, $this->board['bo_table'], $wr_id, '읽기');
+        if ($exists_relation) {
             return;
         }
 
