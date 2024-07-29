@@ -11,8 +11,10 @@ class PointService
     private array $config;
     private string $table;
 
-    public function __construct(ConfigService $config_service, MemberService $member_service)
-    {
+    public function __construct(
+        ConfigService $config_service,
+        MemberService $member_service
+    ) {
         global $g5;
 
         $this->config = $config_service->getConfig();
@@ -53,7 +55,7 @@ class PointService
      * @param int $expire 만료일
      * @return bool
      */
-    public function addPoints(
+    public function addPoint(
         string $mb_id,
         int $point,
         string $content = '',
@@ -100,7 +102,7 @@ class PointService
 
         $data = [
             'mb_id' => $mb_id,
-            'po_datetime' => date('Y-m-d'),
+            'po_datetime' => date('Y-m-d H:i:s'),
             'po_content' => addslashes($content),
             'po_point' => $point,
             'po_mb_point' => $po_mb_point,
