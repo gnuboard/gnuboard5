@@ -68,7 +68,7 @@ $api_path = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
 $api_version = explode("/", str_replace($api_path, '', $_SERVER['REQUEST_URI']))[1];
 $app->setBasePath($api_path . '/' . $api_version);
 
-// Include all routers for the requested API version.
+// Include all Routers for the requested API version.
 $routerFiles = glob(__DIR__ . "/{$api_version}/Routers/*.php");
 foreach ($routerFiles as $routerFile) {
     include $routerFile;

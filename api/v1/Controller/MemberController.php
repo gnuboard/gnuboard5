@@ -7,6 +7,7 @@ use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpUnprocessableEntityException;
 use API\Service\MemberService;
+use API\Service\PointService;
 use API\v1\Model\Request\Member\ChangeCertificationEmailRequest;
 use API\v1\Model\Request\Member\CreateMemberRequest;
 use API\v1\Model\Request\Member\SearchPasswordResetMailReqeust;
@@ -24,10 +25,14 @@ require_once __DIR__ . '../../../../lib/mailer.lib.php';
 class MemberController
 {
     private MemberService $member_service;
+    private PointService $point_service;
 
-    public function __construct(MemberService $member_service)
-    {
+    public function __construct(
+        MemberService $member_service,
+        PointService $point_service
+    ) {
         $this->member_service = $member_service;
+        $this->point_service = $point_service;
     }
 
     /**
@@ -99,12 +104,12 @@ class MemberController
 
         // 회원가입 포인트 부여
         $register_point = $config['cf_register_point'] ?? 0;
-        insert_point($data->mb_id, $register_point, '회원가입 축하', '@member', $data->mb_id, '회원가입');
+        $this->point_service->addPoint($data->mb_id, $register_point, '회원가입 축하', '@member', $data->mb_id, '회원가입');
 
         // 추천인 포인트 부여
         if ($config['cf_use_recommend'] && $data->mb_recommend) {
             $recommand_point = $config['cf_recommend_point'] ?? 0;
-            insert_point($data->mb_recommend, $recommand_point, "{$data->mb_id}의 추천인", '@member', $data->mb_recommend, "{$data->mb_id} 추천");
+            $this->point_service->addPoint($data->mb_recommend, $recommand_point, "{$data->mb_id}의 추천인", '@member', $data->mb_recommend, "{$data->mb_id} 추천");
         }
 
         // 인증메일 발송

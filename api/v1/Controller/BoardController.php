@@ -10,6 +10,7 @@ use API\Service\BoardService;
 use API\Service\BoardFileService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
+use API\Service\PointService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
 use API\v1\Model\Request\Board\UpdateWriteRequest;
@@ -19,6 +20,7 @@ use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\Response\Write\NeighborWrite;
 use API\v1\Model\Response\Write\Thumbnail;
 use API\v1\Model\Response\Write\Write;
 use API\v1\Model\SearchParameters;
@@ -32,17 +34,20 @@ class BoardController
     private BoardPermission $board_permission;
     private BoardFileService $file_service;
     private CommentService $comment_service;
+    private PointService $point_service;
 
     public function __construct(
         BoardService $board_service,
         BoardPermission $board_permission,
         BoardFileService $file_service,
-        CommentService $comment_service
+        CommentService $comment_service,
+        PointService $point_service
     ) {
         $this->board_service = $board_service;
         $this->board_permission = $board_permission;
         $this->file_service = $file_service;
         $this->comment_service = $comment_service;
+        $this->point_service = $point_service;
     }
 
     /**
@@ -171,20 +176,28 @@ class BoardController
         $board = $request->getAttribute('board');
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
+        $params = $request->getQueryParams();
 
         // 권한 체크
         try {
             $this->board_permission->readWrite($member, $write);
 
             $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+            $fetch_prev = $this->board_service->getPrevWrite($write, $params);
+            $fetch_next = $this->board_service->getNextWrite($write, $params);
+            $prev = new NeighborWrite($board['bo_table'], $fetch_prev, $params);
+            $next = new NeighborWrite($board['bo_table'], $fetch_next, $params);
+
             $write_data = array_merge($write, array(
                 "comments" => $this->comment_service->getComments($write['wr_id']),
                 "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
                 "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
-                "thumbnail" => new Thumbnail($thumb)
+                "thumbnail" => new Thumbnail($thumb),
+                "prev" => (array)$prev,
+                "next" => (array)$next
             ));
 
-            insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
+            $this->point_service->addPoint($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
 
             $write = new Write($write_data);
             return api_response_json($response, $write);
@@ -268,7 +281,7 @@ class BoardController
             $this->board_service->incrementWriteCount();
 
             // 게시글 등록 후 처리
-            insert_point($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
+            $this->point_service->addPoint($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
 
             if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
                 naver_syndi_ping($board['bo_table'], $wr_id);
@@ -534,20 +547,19 @@ class BoardController
             }
 
             // 포인트&파일 삭제
-            // TODO: 포인트 관련 로직은 추후 이동 예정
             $count_comments = 0;
             $count_writes = 0;
             $all_writes = $this->board_service->fetchWritesAndComments($write['wr_id']);
             foreach ($all_writes as $all) {
                 if ($all['wr_is_comment']) {
-                    if (!delete_point($all['mb_id'], $board['bo_table'], $all['wr_id'], '댓글')) {
-                        insert_point($all['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$all['wr_id']} 댓글삭제");
+                    if (!$this->point_service->removePoint($all['mb_id'], $board['bo_table'], $all['wr_id'], '댓글')) {
+                        $this->point_service->addPoint($all['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$all['wr_id']} 댓글삭제");
                     }
 
                     $count_comments++;
                 } else {
-                    if (!delete_point($all['mb_id'], $board['bo_table'], $all['wr_id'], '쓰기')) {
-                        insert_point($all['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} {$all['wr_id']} 글삭제");
+                    if (!$this->point_service->removePoint($all['mb_id'], $board['bo_table'], $all['wr_id'], '쓰기')) {
+                        $this->point_service->addPoint($all['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} {$all['wr_id']} 글삭제");
                     }
 
                     $this->file_service->deleteWriteFiles($all);
@@ -636,7 +648,7 @@ class BoardController
             $this->board_service->insertBoardNew($comment_id, $write['wr_id'], $member['mb_id']);
             $this->board_service->incrementCommentCount();
 
-            insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
+            $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
 
             // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
             // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
@@ -756,8 +768,8 @@ class BoardController
             $this->comment_service->deleteCommentById($comment['wr_id']);
 
             // 댓글 포인트 삭제
-            if (!delete_point($comment['mb_id'], $board['bo_table'], $comment['wr_id'], '댓글')) {
-                insert_point($comment['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$comment['wr_parent']}-{$comment['wr_id']} 댓글삭제");
+            if (!$this->point_service->removePoint($comment['mb_id'], $board['bo_table'], $comment['wr_id'], '댓글')) {
+                $this->point_service->addPoint($comment['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$comment['wr_parent']}-{$comment['wr_id']} 댓글삭제");
             }
 
             // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)

@@ -25,7 +25,19 @@ class BoardService
     /**
      * 게시판 정보 조회
      */
-    public function fetchBoardByTable(string $bo_table): array
+    public function fetchBoardsByGroupId(string $gr_id): array
+    {
+        global $g5;
+
+        $query = "SELECT * FROM {$g5['board_table']} WHERE gr_id = :gr_id";
+        $stmt = Db::getInstance()->run($query, ['gr_id' => $gr_id]);
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * 게시판 정보 조회
+     */
+    public function fetchBoardByTable(string $bo_table): mixed
     {
         global $g5;
 
@@ -184,6 +196,74 @@ class BoardService
         $stmt = Db::getInstance()->run($query, ['wr_id' => $write['wr_id']]);
 
         return $stmt->fetchAll();
+    }
+
+    /**
+     * 이전 게시글 정보 조회
+     */
+    public function getPrevWrite(array $write, array $search_params = []): mixed
+    {
+        // 검색조건 설정
+        $search_where = $this->getWhereBySearch($search_params, $search_values);
+
+        $where = "AND {$search_where} AND wr_num = :wr_num AND wr_reply < :wr_reply";
+        $order_by = "ORDER BY wr_num desc, wr_reply DESC";
+        $values = [
+            'wr_num' => $write['wr_num'],
+            'wr_reply' => $write['wr_reply'] ?? '',
+        ];
+
+        $prev = $this->fetchNeighborWrite($where, $order_by, $values);
+
+        if (!$prev) {
+            $where = "AND {$search_where} AND wr_num < :wr_num";
+            unset($values['wr_reply']);
+            $prev = $this->fetchNeighborWrite($where, $order_by, $values);
+        }
+
+        return $prev;
+    }
+
+    /**
+     * 다음 게시글 정보 조회
+     */
+    public function getNextWrite(array $write, array $search_params = []): mixed
+    {
+        // 검색조건 설정
+        $search_where = $this->getWhereBySearch($search_params, $search_values);
+
+        $where = "AND {$search_where} AND wr_num = :wr_num AND wr_reply > :wr_reply";
+        $order_by = "ORDER BY wr_num, wr_reply";
+        $values = [
+            'wr_num' => $write['wr_num'],
+            'wr_reply' => $write['wr_reply'] ?? '',
+        ];
+        $next = $this->fetchNeighborWrite($where, $order_by, $values);
+
+        if (!$next) {
+            $where = "AND {$search_where} AND wr_num > :wr_num";
+            unset($values['wr_reply']);
+            $next = $this->fetchNeighborWrite($where, $order_by, $values);
+        }
+
+        return $next;
+    }
+
+    /**
+     * 이웃 게시글 조회
+     */
+    public function fetchNeighborWrite(string $where, string $order_by, array $values)
+    {
+        $query = "SELECT wr_id, wr_subject, wr_datetime
+                    FROM {$this->write_table}
+                    WHERE wr_is_comment = 0
+                    {$where}
+                    {$order_by}
+                    LIMIT 1";
+
+        $stmt = Db::getInstance()->run($query, $values);
+
+        return $stmt->fetch();
     }
 
     /**
@@ -375,10 +455,10 @@ class BoardService
      */
     protected function getWhereBySearch(array $query_params, &$params = []): string
     {
-        $category = $query_params['sca'];
-        $keyword = $query_params['stx'];
-        $field_string = $query_params['sfl'];
-        $where_operator = $query_params['sod'];
+        $category = $query_params['sca'] ?? '';
+        $keyword = $query_params['stx'] ?? '';
+        $field_string = $query_params['sfl'] ?? '';
+        $where_operator = $query_params['sod'] ?? '';
 
         // 검색조건 배열 초기화
         $query_parts = [];
