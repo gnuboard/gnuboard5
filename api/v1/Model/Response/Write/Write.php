@@ -157,6 +157,18 @@ class Write
     public array $normal_files = [];
 
     /**
+     * 이전 글 정보
+     * @OA\Property(ref="#/components/schemas/NeighborWrite")
+     */
+    public array $prev = [];
+
+    /**
+     * 다음 글 정보
+     * @OA\Property(ref="#/components/schemas/NeighborWrite")
+     */
+    public array $next = [];
+
+    /**
      * 댓글 목록
      * @OA\Property(
      *     type="array",

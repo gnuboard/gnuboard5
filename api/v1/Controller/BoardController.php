@@ -20,6 +20,7 @@ use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\Response\Write\NeighborWrite;
 use API\v1\Model\Response\Write\Thumbnail;
 use API\v1\Model\Response\Write\Write;
 use API\v1\Model\SearchParameters;
@@ -175,17 +176,25 @@ class BoardController
         $board = $request->getAttribute('board');
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
+        $params = $request->getQueryParams();
 
         // 권한 체크
         try {
             $this->board_permission->readWrite($member, $write);
 
             $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+            $fetch_prev = $this->board_service->getPrevWrite($write, $params);
+            $fetch_next = $this->board_service->getNextWrite($write, $params);
+            $prev = new NeighborWrite($board['bo_table'], $fetch_prev, $params);
+            $next = new NeighborWrite($board['bo_table'], $fetch_next, $params);
+
             $write_data = array_merge($write, array(
                 "comments" => $this->comment_service->getComments($write['wr_id']),
                 "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
                 "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
-                "thumbnail" => new Thumbnail($thumb)
+                "thumbnail" => new Thumbnail($thumb),
+                "prev" => (array)$prev,
+                "next" => (array)$next
             ));
 
             $this->point_service->addPoint($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
