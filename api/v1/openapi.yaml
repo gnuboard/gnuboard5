@@ -1432,6 +1432,31 @@ paths:
         '404':
           $ref: '#/components/responses/404'
           description: '팝업이 없습니다.'
+  /api/v1/member/scraps:
+    get:
+      tags:
+        - 스크랩
+      summary: '회원 스크랩 목록을 조회합니다.'
+      description: 'HTML을 구성하는데 필요한 설정 정보를 조회합니다.'
+      operationId: dbb35431d27e4e468527961b43b1488d
+      parameters:
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: '스크랩 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScrapsResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/visit:
     get:
       tags:
@@ -2878,6 +2903,48 @@ components:
           description: '검색어 갯수'
           type: integer
       type: object
+    Scrap:
+      description: '스크랩 정보'
+      properties:
+        ms_id:
+          description: '스크랩 ID'
+          type: integer
+        mb_id:
+          description: '회원 ID'
+          type: string
+          example: test
+        bo_table:
+          description: '게시판 ID'
+          type: string
+          example: test
+        wr_id:
+          description: '게시글 ID'
+          type: integer
+          example: 0
+        wr_subject:
+          description: '게시글 제목'
+          type: string
+          example: '게시글 제목'
+        bo_subject:
+          description: '게시판 제목'
+          type: string
+          example: '게시판 제목'
+      type: object
+    ScrapsResponse:
+      description: '스크랩 목록 응답 모델'
+      properties:
+        total_records:
+          description: '총 레코드 수'
+          type: integer
+        total_pages:
+          description: '총 페이지 수'
+          type: integer
+        scraps:
+          description: '게시글 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Scrap'
+      type: object
     VisitCountResponse:
       description: '방문자  > 방문자 통계'
       properties:
@@ -3299,6 +3366,9 @@ tags:
   -
     name: '팝업 레이어'
     description: '팝업 레이어'
+  -
+    name: 스크랩
+    description: 스크랩
   -
     name: 방문자
     description: 방문자

@@ -547,7 +547,6 @@ class BoardController
             }
 
             // 포인트&파일 삭제
-            // TODO: 포인트 관련 로직은 추후 이동 예정
             $count_comments = 0;
             $count_writes = 0;
             $all_writes = $this->board_service->fetchWritesAndComments($write['wr_id']);

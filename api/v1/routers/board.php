@@ -1,5 +1,7 @@
 <?php
 
+namespace API\v1\Routers;
+
 use API\Middleware\BoardMiddleware;
 use API\Middleware\CommentMiddleware;
 use API\Middleware\ConfigMiddleware;

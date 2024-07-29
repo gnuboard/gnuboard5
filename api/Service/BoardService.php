@@ -37,7 +37,7 @@ class BoardService
     /**
      * 게시판 정보 조회
      */
-    public function fetchBoardByTable(string $bo_table): array
+    public function fetchBoardByTable(string $bo_table): mixed
     {
         global $g5;
 

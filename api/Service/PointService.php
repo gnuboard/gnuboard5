@@ -135,7 +135,7 @@ class PointService
             // 소멸포인트가 있으면 내역 추가
             $expire_point = $this->fetchExpirePointSum($mb_id);
             if ($expire_point > 0) {
-                $mb = get_member($mb_id, 'mb_point');  // TODO : 변경 필요
+                $mb = get_member($mb_id, 'mb_point');  // TODO : PDO를 활용한 방식으로 변경 필요
                 $point = $expire_point * (-1);
                 $data = [
                     'mb_id' => $mb_id,

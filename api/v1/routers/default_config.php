@@ -1,5 +1,7 @@
 <?php
 
+namespace API\v1\Routers;
+
 use API\Middleware\ConfigMiddleware;
 use API\v1\Controller\ConfigController;
 use Slim\Routing\RouteCollectorProxy;
