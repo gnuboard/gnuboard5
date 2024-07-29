@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: 'GnuBoard5 API Test Documentation'
   description: 'Swagger OpenApi description Test'
@@ -10,7 +10,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://127.0.0.1/g5-update'
+    url: 'https://localhost/g5-update'
 paths:
   /api/v1/token:
     post:
@@ -32,8 +32,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateTokenResponse'
-        '400':
-          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
         '422':
@@ -64,6 +64,66 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+  /api/v1/autosaves:
+    get:
+      tags:
+        - '자동 임시저장'
+      summary: '임시저장된 글 목록 조회'
+      operationId: 84ca53d0027be45236175d5f0b19e10f
+      responses:
+        '200':
+          description: '임시저장된 글 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutosaveListResponse'
+      security:
+        -
+          bearerAuth: []
+  '/api/v1/autosaves/{as_id}':
+    get:
+      tags:
+        - '자동 임시저장'
+      summary: '임시저장된 글 조회'
+      description: '임시저장된 글 조회'
+      operationId: 460a3e12212caee5d97d725cabdef4f0
+      parameters:
+        -
+          name: as_id
+          in: path
+          description: '임시저장 아이디'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '임시저장된 글 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autosave'
+      security:
+        -
+          bearerAuth: []
+  /api/v1/autosaves/count:
+    get:
+      tags:
+        - '자동 임시저장'
+      summary: '임시저장된 글 갯수 조회'
+      description: '회원의 임시저장된글 카운트'
+      operationId: 1c4db211f22cfc99c645edac96929aa4
+      responses:
+        '200':
+          description: '임시저장된 글 갯수 조회 성공'
+          content:
+            application/json:
+              schema:
+                properties:
+                  count: { type: integer }
+                type: object
+      security:
+        -
+          bearerAuth: []
   '/api/v1/boards/{bo_table}':
     get:
       tags:
@@ -73,10 +133,10 @@ paths:
       operationId: 43b548f85f219b07c5b029be83b4070c
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
       responses:
@@ -99,10 +159,10 @@ paths:
       operationId: d3b7d5197d87c91f60adbe4cc55b411e
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
@@ -148,10 +208,10 @@ paths:
       operationId: 1d52c42bfd4297e774ac552a56d0e6ab
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
       requestBody:
@@ -186,17 +246,17 @@ paths:
       operationId: e297a07d6b68c39438ed3b158d72bb87
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       responses:
@@ -224,17 +284,17 @@ paths:
       operationId: 03d69387e2f82c23a219b58a6b3d7f3d
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       requestBody:
@@ -245,7 +305,7 @@ paths:
               $ref: '#/components/schemas/UpdateWriteRequest'
       responses:
         '200':
-          description: '게시글 수정  성공'
+          description: '게시글 수정 성공'
           content:
             application/json:
               schema:
@@ -268,19 +328,28 @@ paths:
       operationId: 82b00d1f5cb19ffdf1d6e8fe18274b1f
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                wr_password:
+                  description: '게시글 비밀번호(비회원 글일 경우 필수)'
+                  type: string
+              type: object
       responses:
         '200':
           description: '게시글 삭제 성공'
@@ -307,17 +376,17 @@ paths:
       operationId: 0d3885b1f805db9d8793ab10049dfefc
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       requestBody:
@@ -352,29 +421,29 @@ paths:
     get:
       tags:
         - 게시판
-      summary: '파일 다운로드'
+      summary: '게시글 파일 다운로드'
       description: '게시글의 파일을 다운로드합니다.'
       operationId: 4c17cfb4959ccf4f2bbb492e63cb80df
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
         -
-          name: bf_no
           in: path
-          description: '파일 번호'
           required: true
+          name: bf_no
+          description: '파일 번호'
           schema:
             type: integer
       responses:
@@ -383,7 +452,158 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/baseResponse'
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}/comments':
+    post:
+      tags:
+        - 게시판
+      summary: '댓글 작성'
+      description: '지정된 게시판의 글에 댓글을 작성합니다.'
+      operationId: b73ff2b9f8b93da58cb89bd37451ca15
+      parameters:
+        -
+          in: path
+          required: true
+          name: bo_table
+          description: '게시판 코드'
+          schema:
+            type: string
+        -
+          in: path
+          required: true
+          name: wr_id
+          description: '글 번호'
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentRequest'
+      responses:
+        '200':
+          description: '댓글 작성 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}/comments/{comment_id}':
+    put:
+      tags:
+        - 게시판
+      summary: '댓글 수정'
+      description: '지정된 게시판의 글에 작성된 댓글을 수정합니다.'
+      operationId: 471943dcd91c52f2b9d06bcd0c8febf3
+      parameters:
+        -
+          in: path
+          required: true
+          name: bo_table
+          description: '게시판 코드'
+          schema:
+            type: string
+        -
+          in: path
+          required: true
+          name: wr_id
+          description: '글 번호'
+          schema:
+            type: integer
+        -
+          in: path
+          required: true
+          name: comment_id
+          description: '댓글 번호'
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommentRequest'
+      responses:
+        '200':
+          description: '댓글 수정 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - 게시판
+      summary: '댓글 삭제'
+      description: '지정된 게시판의 글에 작성된 댓글을 삭제합니다.'
+      operationId: c180928d4769936bf8884636165901a2
+      parameters:
+        -
+          in: path
+          required: true
+          name: bo_table
+          description: '게시판 코드'
+          schema:
+            type: string
+        -
+          in: path
+          required: true
+          name: wr_id
+          description: '글 번호'
+          schema:
+            type: integer
+        -
+          in: path
+          required: true
+          name: comment_id
+          description: '댓글 번호'
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                wr_password:
+                  description: '댓글 비밀번호(비회원 댓글일 경우 필수)'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: '댓글 삭제 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -408,6 +628,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HtmlConfigResponse'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
   /api/v1/config/policy:
@@ -425,6 +647,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PolicyConfigResponse'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
   /api/v1/config/member:
@@ -442,12 +666,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MemberConfigResponse'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
   /api/v1/config/memo:
     get:
       tags:
         - 환경설정
+        - 쪽지
       summary: '쪽지 발송 소진 포인트 조회'
       description: '쪽지 발송 시, 1건당 소모되는 포인트 설정 정보를 조회합니다.'
       operationId: 8c2614e4159a0f8ad89fa3cfb4d25b9f
@@ -458,12 +685,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MemoConfigResponse'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
   /api/v1/config/board:
     get:
       tags:
         - 환경설정
+        - 게시판
       summary: '게시판 설정 조회'
       description: '게시판에 사용되는 설정 정보를 조회합니다.'
       operationId: 8c900e31ff563290d83040baa6c38c09
@@ -474,15 +704,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BoardConfigResponse'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  /api/v1/content:
+    get:
+      tags:
+        - 콘텐츠
+      summary: '콘텐츠 목록 조회'
+      description: '콘텐츠 목록 조회'
+      operationId: 8e2821dee6c5b3b3a1a925d3dfd617b9
+      parameters:
+        -
+          name: page
+          in: query
+          description: '페이지 번호'
+          required: false
+          schema:
+            type: integer
+        -
+          name: per_page
+          in: query
+          description: '페이지당 레코드 수'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentListResponse'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/api/v1/content/{co_id}':
+    get:
+      tags:
+        - 콘텐츠
+      summary: '콘텐츠 상세 조회'
+      description: '콘텐츠 상세 조회'
+      operationId: ac4275548077a576df282cfccc85bffe
+      parameters:
+        -
+          name: co_id
+          in: path
+          description: '콘텐츠 ID'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentResponse'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
   /api/v1/members:
     post:
       tags:
         - 회원
       summary: 회원가입
       description: "회원 가입을 처리합니다.\r\n#### 회원가입과 함께 처리되는 작업\r\n- 회원가입 & 추천인 포인트 지급\r\n- 회원가입 메일 발송 (메일발송 설정 시)\r\n- 관리자에게 회원가입 메일 발송 (메일발송 설정 시)"
-      operationId: 0e80e12223f56d817ee88232f74d50c4
+      operationId: 53287e2ec10964d94bfc7394cf62168c
       requestBody:
         required: true
         content:
@@ -496,8 +787,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateMemberResponse'
-        '403':
-          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409'
         '422':
@@ -527,7 +818,7 @@ paths:
               $ref: '#/components/schemas/ChangeCertificationEmailRequest'
       responses:
         '200':
-          description: '이메일 갱신 성공'
+          description: '인증 이메일 갱신 성공'
           content:
             application/json:
               schema:
@@ -600,7 +891,7 @@ paths:
         - 회원
       summary: '회원정보 수정'
       description: 'JWT 토큰을 통해 인증된 회원 정보를 수정합니다.'
-      operationId: e7a371b8b809ea949af9400f8bd88efa
+      operationId: 0f556e95d0411baae9b6dfe362b0c5de
       requestBody:
         required: true
         content:
@@ -609,16 +900,16 @@ paths:
               $ref: '#/components/schemas/UpdateMemberRequest'
       responses:
         '200':
-          description: '회원정보 조회 성공'
+          description: '회원정보 갱신 성공'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BaseResponse'
         '401':
           $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
         '404':
+          $ref: '#/components/responses/404'
+        '409':
           $ref: '#/components/responses/409'
         '422':
           $ref: '#/components/responses/422'
@@ -629,7 +920,7 @@ paths:
         - 회원
       summary: 회원탈퇴
       description: "JWT 토큰을 통해 인증된 회원을 탈퇴합니다.\r\n- 실제로 데이터가 삭제되지 않고, 탈퇴 처리만 진행됩니다.\r\n"
-      operationId: 1612cdee9bd5e85e5583d91d629d5c51
+      operationId: 1b58a703b56ecc2e2c37c0abbc8605bf
       responses:
         '200':
           description: '회원탈퇴 성공'
@@ -641,13 +932,17 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/member/images:
     post:
       tags:
         - 회원
       summary: '회원 아이콘&이미지 수정'
       description: 'JWT 토큰을 통해 인증된 회원의 아이콘 & 이미지를 수정합니다.'
-      operationId: 91c4791ec1dda52b9f4634a0c6422727
+      operationId: 2bc44db643ccb0a1c35944d68b71a69f
       requestBody:
         required: true
         content:
@@ -678,6 +973,8 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
         '500':
@@ -706,14 +1003,425 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '422':
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+  /api/v1/member/memos:
+    get:
+      tags:
+        - 쪽지
+      summary: '쪽지 목록 조회'
+      description: "쪽지 목록 조회\n현재 로그인 회원의 쪽지 목록을 조회합니다."
+      operationId: 6be659a10642ee6d41f9d67aa300f893
+      parameters:
+        -
+          name: page
+          in: query
+          description: '페이지 번호'
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        -
+          name: per_page
+          in: query
+          description: '페이지당 표시할 목록 수'
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+        -
+          name: me_type
+          in: query
+          description: '쪽지 타입 (recv: 받은 쪽지, send: 보낸 쪽지)'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '쪽지 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoListResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '422':
+          $ref: '#/components/responses/422'
+      security:
+        -
+          bearerAuth: []
+    post:
+      tags:
+        - 쪽지
+      summary: '쪽지 전송'
+      description: '현재 로그인 회원이 다른 회원에게 쪽지를 전송합니다.'
+      operationId: d073bd21ae3eab743f44f5994c4fd443
+      requestBody:
+        description: '쪽지 전송'
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - me_recv_mb_id
+                - me_memo
+              properties:
+                me_recv_mb_id:
+                  description: '받는 회원 ID'
+                  type: string
+                me_memo:
+                  description: '쪽지 내용'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: '쪽지 전송 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '422':
+          $ref: '#/components/responses/422'
+      security:
+        -
+          bearerAuth: []
+  '/api/v1/member/memos/{me_id}':
+    get:
+      tags:
+        - 쪽지
+      summary: '쪽지 조회'
+      description: '본인 쪽지 조회'
+      operationId: b8079551ad811a425ed6c9c39f2e22a3
+      parameters:
+        -
+          name: me_id
+          in: path
+          description: '쪽지 ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '쪽지 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '422':
+          $ref: '#/components/responses/422'
+      security:
+        -
+          bearerAuth: []
+  /api/v1/menus:
+    get:
+      tags:
+        - 메뉴
+      summary: '메뉴 목록 조회'
+      operationId: 74ac38f15ba8a91f5f6cf25f4b947c30
+      responses:
+        '200':
+          description: 'Successful response'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+  /api/v1/member/points:
+    get:
+      tags:
+        - 포인트
+      summary: '회원 포인트 내역 목록 조회'
+      description: 'JWT 토큰을 통해 인증된 회원의 포인트 내역을 조회합니다.'
+      operationId: 2ffe0a618c6f8874c6f97dd413e98b0e
+      parameters:
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: '포인트 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  /api/v1/polls/latest:
+    get:
+      tags:
+        - 설문조사
+      summary: '설문조사 조회'
+      description: '설문조사 정보를 조회합니다.'
+      operationId: 79769fa7e37f0482d98620b1ea8c1ce9
+      responses:
+        '200':
+          description: '마지막 투표결과 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetItemResponse'
+        '404':
+          $ref: '#/components/responses/404'
+  '/api/v1/polls/{po_id}':
+    get:
+      tags:
+        - 설문조사
+      summary: '설문조사 조회'
+      description: '설문조사 정보를 조회합니다.'
+      operationId: e565258bb3b2d5e426881e2d98a3c413
+      parameters:
+        -
+          name: po_id
+          in: path
+          description: '설문조사 번호'
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: '설문조사 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollResponse'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      security:
+        -
+          bearerAuth: []
+  '/api/v1/polls/{po_id}/{item}':
+    patch:
+      tags:
+        - 설문조사
+      summary: '설문조사 참여'
+      description: '설문조사 항목에 투표. 권한이 없거나 이미 참여한 경우는 투표할 수 없습니다. 포인트 설정이 되어있는 경우, 투표 시 포인트가 지급됩니다.'
+      operationId: d9856dc1f0f2318592f5f42a098ec572
+      parameters:
+        -
+          name: po_id
+          in: path
+          description: '설문조사 ID'
+          required: true
+          schema:
+            type: integer
+        -
+          name: item
+          in: path
+          description: '설문항목 번호'
+          required: true
+          schema:
+            type: integer
+            maximum: 9
+            minimum: 1
+      responses:
+        '200':
+          description: 투표완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '422':
+          $ref: '#/components/responses/422'
+      security:
+        -
+          OAuth2PasswordBearer(Optional): []
+  '/api/v1/polls/{po_id}/etc':
+    post:
+      tags:
+        - 설문조사
+      summary: '기타 의견 추가'
+      description: '설문조사 기타의견을 추가합니다. 비회원가능'
+      operationId: fb40aa17aeb1079149af3746fbca0772
+      parameters:
+        -
+          name: po_id
+          in: path
+          description: '설문조사 번호'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - content
+              properties:
+                content:
+                  description: 기타의견
+                  type: string
+                  example: '기타의견 내용'
+              type: object
+      responses:
+        '200':
+          description: 투표완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+      security:
+        -
+          OAuth2PasswordBearer(Optional): []
+  '/api/v1/polls/{po_id}/etc/{pc_id}':
+    delete:
+      tags:
+        - 설문조사
+      summary: '회원, 관리자만 가능'
+      description: '설문조사 기타의견을 삭제합니다. 회원, 관리자만 가능'
+      operationId: 041f9d4c9c5018a82be6730f13607858
+      parameters:
+        -
+          name: po_id
+          in: path
+          description: '설문조사 번호'
+          required: true
+          schema:
+            type: integer
+        -
+          name: pc_id
+          in: path
+          description: '기타 의견 번호'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '삭제 되었습니다.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+      security:
+        -
+          OAuth2PasswordBearer(Optional): []
+  /api/v1/populars:
+    get:
+      tags:
+        - '인기 검색어'
+      summary: '인기검색어 목록 조회'
+      description: '인기검색어 목록을 조회합니다.'
+      operationId: 84888f483473c07a6891b0101f58c3b5
+      parameters:
+        -
+          name: days
+          in: query
+          description: '오늘로부터 몇일 전까지 조회할지 (기본값 3)'
+          required: false
+          schema:
+            type: integer
+        -
+          name: limit
+          in: query
+          description: '조회 갯수'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '팝업 조회 성공'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PopupResponse'
+        '404':
+          $ref: '#/components/responses/404'
+          description: '팝업이 없습니다.'
+  /api/v1/newwins:
+    get:
+      tags:
+        - '팝업 레이어'
+      summary: '팝업 창 목록 조회'
+      description: '팝업 목록들을 조회합니다.'
+      operationId: 5261483c892c41b6d5c8f93751b86a41
+      parameters:
+        -
+          name: device
+          in: query
+          description: '접속 기기 (pc, mobile, 기본값 both)'
+          required: false
+          schema:
+            type: string
+        -
+          name: except_ids
+          in: query
+          description: '제외할 팝업 ID'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '팝업 조회 성공'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PopupResponse'
+        '404':
+          $ref: '#/components/responses/404'
+          description: '팝업이 없습니다.'
+  /api/v1/visit:
+    get:
+      tags:
+        - 방문자
+      summary: '방문자 수 조회'
+      description: '방문자 수를 조회합니다.'
+      operationId: ee0e8645714fee7884dc4e43218b41c9
+      responses:
+        '200':
+          description: '방문자 수 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitCountResponse'
 components:
   schemas:
     GenerateTokenRequest:
-      description: 'JWT 생성 요청 모델'
+      description: 'JWT 발급 요청 모델'
       required:
         - username
         - password
@@ -728,7 +1436,7 @@ components:
           example: ''
       type: object
     RefreshTokenRequest:
-      description: 'Access Token 재발급 요청 모델'
+      description: 'JWT 재발급 요청 모델'
       required:
         - refresh_token
       properties:
@@ -884,6 +1592,46 @@ components:
             type: boolean
             example: 'false'
       type: object
+    CreateCommentRequest:
+      description: '댓글 작성 모델'
+      properties:
+        wr_content:
+          description: '댓글 내용'
+          type: string
+          example: 내용
+        wr_name:
+          description: '댓글 작성자 (비회원일 경우 필수)'
+          type: string
+          example: 작성자
+        wr_password:
+          description: '댓글 비밀번호 (비회원일 경우 필수)'
+          type: string
+          example: 비밀번호
+        wr_option:
+          description: '댓글 옵션(비밀글)'
+          type: string
+          example: 옵션
+        comment_id:
+          description: '부모댓글 ID(대댓글일 경우)'
+          type: integer
+          example: 0
+      type: object
+    UpdateCommentRequest:
+      description: '게시글 수정 모델'
+      properties:
+        wr_content:
+          description: '댓글 내용'
+          type: string
+          example: 내용
+        wr_password:
+          description: '댓글 비밀번호 (비회원일 경우 필수)'
+          type: string
+          example: 비밀번호
+        wr_option:
+          description: '댓글 옵션(비밀글)'
+          type: string
+          example: 옵션
+      type: object
     ChangeCertificationEmailRequest:
       description: '인증 이메일 변경 요청 모델'
       properties:
@@ -898,6 +1646,13 @@ components:
       type: object
     CreateMemberRequest:
       description: '회원정보 모델'
+      required:
+        - mb_id
+        - mb_password
+        - mb_password_re
+        - mb_nick
+        - mb_name
+        - mb_email
       properties:
         mb_id:
           description: '회원 아이디'
@@ -918,7 +1673,6 @@ components:
         mb_nick_date:
           description: '닉네임 변경일'
           type: string
-          format: date-time
           readOnly: true
           example: '2021-01-01'
         mb_name:
@@ -930,9 +1684,9 @@ components:
           type: string
           example: m
         mb_email:
-          description: 생년월일
+          description: 이메일
           type: string
-          example: '1990-01-01'
+          example: test@test.com
         mb_homepage:
           description: 홈페이지
           type: string
@@ -990,7 +1744,6 @@ components:
         mb_datetime:
           description: 가입일
           type: string
-          format: date-time
           readOnly: true
           example: '2021-01-01 00:00:00'
         mb_mailling:
@@ -1018,7 +1771,6 @@ components:
         mb_email_certify:
           description: '메일인증 여부'
           type: string
-          format: date-time
           readOnly: true
           example: '2021-01-01 00:00:00'
         mb_1:
@@ -1071,7 +1823,6 @@ components:
           example: test@test.com
       type: object
     UpdateMemberRequest:
-      title: UpdateMemberRequest
       description: '회원정보 갱신 모델'
       properties:
         mb_password:
@@ -1089,7 +1840,6 @@ components:
         mb_nick_date:
           description: '닉네임 변경일'
           type: string
-          format: date-time
           readOnly: true
           example: '2021-01-01'
         mb_sex:
@@ -1232,6 +1982,33 @@ components:
           type: string
           example: string
       type: object
+    Autosave:
+      properties:
+        as_id:
+          type: integer
+        mb_id:
+          type: string
+        as_uid:
+          type: integer
+        as_subject:
+          type: string
+        as_content:
+          type: string
+        as_datetime:
+          type: string
+          format: date-time
+      type: object
+    AutosaveListResponse:
+      properties:
+        autosaves:
+          type: array
+          items:
+            $ref: '#/components/schemas/Autosave'
+        total_records:
+          type: integer
+        total_pages:
+          type: integer
+      type: object
     BaseResponse:
       description: '응답 메시지를 포함하는 기본 모델 클래스'
       properties:
@@ -1364,6 +2141,7 @@ components:
             type: string
         board:
           $ref: '#/components/schemas/Board'
+          description: '게시판 정보'
         notice_writes:
           description: '공지 글 목록'
           type: array
@@ -1463,11 +2241,11 @@ components:
         cf_add_meta:
           description: '추가 메타태그'
           type: string
-          example: "<meta name='description' content='그누보드5'>"
+          example: '<meta name=''description'' content=''그누보드5''>'
         cf_add_script:
           description: '추가 스크립트'
           type: string
-          example: "<script src='http://example.com/script.js'></script>"
+          example: '<script src=''http://example.com/script.js''></script>'
         cf_analytics:
           description: 분석코드
           type: string
@@ -1585,6 +2363,93 @@ components:
           type: string
           example: '개인정보 처리방침 내용...'
       type: object
+    ContentListResponse:
+      title: '콘텐츠 리스트 응답'
+      properties:
+        total_records:
+          description: '전체 레코드 수'
+          type: integer
+        total_pages:
+          description: '전체 페이지 수'
+          type: integer
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentResponse'
+      type: object
+    ContentResponse:
+      title: '콘텐츠 조회'
+      properties:
+        co_id:
+          description: '콘텐츠 ID'
+          type: string
+        co_html:
+          description: 'HTML 사용 여부'
+          type: boolean
+        co_subject:
+          description: '콘텐츠 제목'
+          type: string
+        co_content:
+          description: '콘텐츠 내용'
+          type: string
+        co_seo_title:
+          description: 'SEO 제목'
+          type: string
+        co_mobile_content:
+          description: '모바일 콘텐츠'
+          type: string
+        co_hit:
+          description: 조회수
+          type: integer
+        co_image_head:
+          description: '헤드 이미지'
+          type: string
+        co_image_tail:
+          description: '테일 이미지'
+          type: string
+      type: object
+    PopupResponse:
+      description: 'Popup 창 목록 응답 모델'
+      properties:
+        nw_id:
+          description: 'New popup id'
+          type: integer
+        nw_division:
+          description: 'Popup 종류 구분 (comm:커뮤니티, shop:쇼핑, both: 전체)'
+          type: string
+        nw_device:
+          description: 'Popup Widget 접속 기기 (pc, mobile, both)'
+          type: string
+        nw_begin_time:
+          description: 'Popup Widget 시작 시간'
+          type: string
+          format: date-time
+        nw_end_time:
+          description: 'Popup Widget 종료 시간'
+          type: string
+          format: date-time
+        nw_disable_hours:
+          description: 'Popup Widget 팝업 비활성화 시간 (시간)'
+          type: integer
+        nw_left:
+          description: 'Popup Widget Left Position'
+          type: integer
+        nw_top:
+          description: 'Popup Widget Top Position'
+          type: integer
+        nw_height:
+          description: 'Popup 위젯 높이'
+          type: integer
+        nw_width:
+          description: 'Popup 위젯 가로'
+          type: integer
+        nw_subject:
+          description: 'Popup Subject'
+          type: string
+        nw_content:
+          description: 'Popup Content'
+          type: string
+      type: object
     CreateMemberResponse:
       description: '회원가입 응답 모델'
       properties:
@@ -1593,15 +2458,15 @@ components:
           type: string
           example: string
         mb_id:
-          description: '회원 아이디'
+          description: 아이디
           type: string
           example: string
         mb_name:
-          description: '회원 이름'
+          description: 이름
           type: string
           example: string
         mb_nick:
-          description: '회원 닉네임'
+          description: 닉네임
           type: string
           example: string
       type: object
@@ -1701,6 +2566,263 @@ components:
           description: 여분필드10
           type: string
           example: test
+      type: object
+    MemoResponse:
+      title: MemoResponse
+      description: '쪽지 조회 응답'
+      properties:
+        memos:
+          description: '쪽지 목록'
+          type: array
+          items:
+            properties:
+              me_id:
+                description: '쪽지 ID'
+                type: integer
+              me_recv_mb_id:
+                description: '받는 회원 ID'
+                type: string
+              me_send_mb_id:
+                description: '보내는 회원 ID'
+                type: string
+              me_send_datetime:
+                description: '보낸 시간'
+                type: string
+              me_read_datetime:
+                description: '읽은 시간'
+                type: string
+              me_memo:
+                description: '쪽지 내용'
+                type: string
+              me_send_id:
+                description: '보낸 회원 ID'
+                type: integer
+              me_type:
+                description: '쪽지 타입'
+                type: string
+              me_send_ip:
+                description: '보낸 IP'
+                type: string
+            type: object
+      type: object
+    MemoListResponse:
+      title: MemoListResponse
+      description: '쪽지 목록 조회 응답'
+      required:
+        - total_records
+        - total_pages
+        - memos
+      properties:
+        memos:
+          description: '쪽지 목록'
+          type: array
+          items:
+            properties:
+              me_id:
+                description: '쪽지 ID'
+                type: integer
+              me_recv_mb_id:
+                description: '받는 회원 ID'
+                type: string
+              me_send_mb_id:
+                description: '보내는 회원 ID'
+                type: string
+              me_send_datetime:
+                description: '보낸 시간'
+                type: string
+              me_read_datetime:
+                description: '읽은 시간'
+                type: string
+              me_memo:
+                description: '쪽지 내용'
+                type: string
+              me_send_id:
+                description: '보낸 회원 ID'
+                type: integer
+              me_type:
+                description: '쪽지 타입'
+                type: string
+              me_send_ip:
+                description: '보낸 IP'
+                type: string
+            type: object
+        total_records:
+          description: '전체 쪽지 수'
+          type: integer
+        total_pages:
+          description: '전체 페이지 수'
+          type: integer
+      type: object
+    MenuItem:
+      description: '메뉴 목록'
+      properties:
+        me_id:
+          description: '메뉴 ID'
+          type: integer
+        me_name:
+          description: 이름
+          type: string
+        me_link:
+          type: string
+        me_order:
+          description: '메뉴 순서'
+          type: integer
+        me_mobile_use:
+          description: '모바일에서 사용여부'
+          type: integer
+        me_target:
+          description: '새창으로 열지 여부'
+          type: string
+        me_code:
+          description: 'Menu 구분코드'
+          type: string
+        me_use:
+          description: '메뉴 사용여부'
+          type: integer
+        sub:
+          description: '하위 메뉴'
+          type: array
+          items:
+            type: object
+      type: object
+    Point:
+      description: '포인트 정보'
+      properties:
+        po_content:
+          description: '포인트 내용'
+          type: string
+          example: '회원가입 포인트 지급'
+        po_point:
+          description: 포인트
+          type: integer
+          example: 0
+        po_rel_table:
+          description: '연관 테이블'
+          type: string
+          example: ''
+        po_rel_id:
+          description: '연관 테이블 ID'
+          type: string
+          example: ''
+        po_rel_action:
+          description: '연관 테이블 행동'
+          type: string
+          example: ''
+      type: object
+    PointsResponse:
+      description: '포인트 목록 조회 응답'
+      properties:
+        total_records:
+          description: '총 레코드 수'
+          type: integer
+          example: 0
+        total_pages:
+          description: '총 페이지 수'
+          type: integer
+          example: 0
+        total_points:
+          description: '총 포인트 수'
+          type: integer
+          example: 0
+        page_sum_points:
+          properties:
+            negative:
+              description: '페이지 합계 포인트'
+              type: integer
+              example: 0
+            positive:
+              type: integer
+              example: 0
+          type: object
+        points:
+          description: '포인트 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Point'
+      type: object
+    GetItemResponse:
+      description: '설문조사 > 설문조사 응답 모델'
+      properties:
+        poll:
+          $ref: '#/components/schemas/PollResponse'
+          description: 설문조사
+        total_vote:
+          description: '총 투표수'
+          type: integer
+          example: 1
+        items:
+          description: '투표한 항목'
+          type: array
+          items:
+            type: object
+        etcs:
+          description: '기타 의견'
+          type: array
+          items:
+            type: object
+        other_polls:
+          description: '다른 설문조사'
+          type: array
+          items:
+            type: object
+      type: object
+    PollResponse:
+      description: '설문조사 > 단일 설문조사 응답'
+      properties:
+        po_id:
+          description: '설문조사 번호'
+          type: integer
+          example: 1
+        po_subject:
+          description: '설문조사 제목'
+          type: string
+          example: '설문조사 제목'
+        po_etc:
+          description: '기타 의견'
+          type: string
+          example: '기타 의견'
+        po_level:
+          description: '설문조사 가능 레벨'
+          type: integer
+          example: 1
+        po_point:
+          description: '설문조사 부여 포인트'
+          type: integer
+          example: 100
+        po_date:
+          description: '설문조사 시작일'
+          type: string
+          example: '2024-07-01'
+        po_use:
+          description: '설문조사 열림 여부'
+          type: integer
+          example: 1
+      type: object
+    PopularSearchResponse:
+      description: '인기 검색어 응답'
+      properties:
+        pp_word:
+          description: '인기 검색어'
+          type: string
+        count:
+          description: '검색어 갯수'
+          type: integer
+      type: object
+    VisitCountResponse:
+      description: '방문자  > 방문자 통계'
+      properties:
+        today:
+          type: integer
+          example: '50'
+        yesterday:
+          type: integer
+          example: '50'
+        max:
+          type: integer
+          example: '777'
+        total:
+          type: integer
+          example: '10000'
       type: object
     Comment:
       description: '댓글 정보'
@@ -1878,6 +3000,7 @@ components:
           example: 0
         thumbnail:
           $ref: '#/components/schemas/Thumbnail'
+          description: '썸네일 정보'
         wr_option:
           description: 옵션
           type: string
@@ -1898,49 +3021,82 @@ components:
           items:
             $ref: '#/components/schemas/Comment'
       type: object
+    ErrorResponse:
+      properties:
+        statusCode:
+          description: 'HTTP 상태 코드'
+          type: integer
+        error:
+          properties:
+            type:
+              description: '오류 유형'
+              type: string
+            description:
+              description: '오류 설명'
+              type: string
+          type: object
+      type: object
   responses:
     '400':
       description: '잘못된 요청'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponse'
     '409':
       description: '중복된 데이터'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponse'
     '403':
       description: '권한 없음'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
-    '422':
-      description: '입력값 오류'
+            $ref: '#/components/schemas/ErrorResponse'
+    '500':
+      description: '내부 서버 오류'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponse'
+    '405':
+      description: '허용되지 않은 메소드'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     '404':
       description: '리소스를 찾을 수 없음'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
-    '500':
-      description: '서버 오류'
+            $ref: '#/components/schemas/ErrorResponse'
+    '501':
+      description: '구현되지 않음'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponse'
+    '429':
+      description: '너무 많은 요청'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     '401':
       description: '인증 실패'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '#/components/schemas/ErrorResponse'
+    '422':
+      description: '입력값 오류'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     page:
       name: page
@@ -1953,7 +3109,7 @@ components:
     per_page:
       name: per_page
       in: query
-      description: '페이지 당 결과 수'
+      description: '페이지 당 결과 수 (0이면 설정된 기본값을 사용)'
       schema:
         type: integer
         default: 0
@@ -2009,9 +3165,12 @@ components:
       in: query
       description: '검색 시작 위치'
       schema:
-        type: int
-        default: ''
+        type: integer
+        default: 0
 tags:
+  -
+    name: '자동 임시저장'
+    description: '자동 저장 API'
   -
     name: 환경설정
     description: '기능별 환경설정정보 API'
@@ -2022,26 +3181,29 @@ tags:
     name: 회원
     description: '회원 API'
   -
-    name: 게시판
-    description: 게시판
+    name: 포인트
+    description: '포인트 API'
   -
     name: 게시판
     description: 게시판
   -
-    name: 게시판
-    description: 게시판
+    name: 쪽지
+    description: 쪽지
   -
-    name: 게시판
-    description: 게시판
+    name: 콘텐츠
+    description: 콘텐츠
   -
-    name: 게시판
-    description: 게시판
+    name: 메뉴
+    description: 메뉴
   -
-    name: 게시판
-    description: 게시판
+    name: 설문조사
+    description: 설문조사
   -
-    name: 게시판
-    description: 게시판
+    name: '인기 검색어'
+    description: '인기 검색어'
   -
-    name: 게시판
-    description: 게시판
+    name: '팝업 레이어'
+    description: '팝업 레이어'
+  -
+    name: 방문자
+    description: 방문자
