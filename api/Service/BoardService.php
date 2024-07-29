@@ -25,6 +25,18 @@ class BoardService
     /**
      * 게시판 정보 조회
      */
+    public function fetchBoardsByGroupId(string $gr_id): array
+    {
+        global $g5;
+
+        $query = "SELECT * FROM {$g5['board_table']} WHERE gr_id = :gr_id";
+        $stmt = Db::getInstance()->run($query, ['gr_id' => $gr_id]);
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * 게시판 정보 조회
+     */
     public function fetchBoardByTable(string $bo_table): array
     {
         global $g5;
