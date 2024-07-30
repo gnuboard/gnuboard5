@@ -9,6 +9,7 @@ use API\Exceptions\HttpNotFoundException;
 use API\Service\BoardService;
 use API\Service\BoardFileService;
 use API\Service\BoardGoodService;
+use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
 use API\Service\PointService;
@@ -17,6 +18,7 @@ use API\v1\Model\Request\Board\CreateWriteRequest;
 use API\v1\Model\Request\Board\UpdateWriteRequest;
 use API\v1\Model\Request\Comment\CreateCommentRequest;
 use API\v1\Model\Request\Comment\UpdateCommentRequest;
+use API\v1\Model\Request\Board\SearchRequest;
 use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
@@ -25,7 +27,6 @@ use API\v1\Model\Response\Write\GoodWriteResponse;
 use API\v1\Model\Response\Write\NeighborWrite;
 use API\v1\Model\Response\Write\Thumbnail;
 use API\v1\Model\Response\Write\Write;
-use API\v1\Model\SearchParameters;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Exception;
@@ -34,6 +35,7 @@ class BoardController
 {
     private BoardService $board_service;
     private BoardGoodService $board_good_service;
+    private BoardNewService $board_new_service;
     private BoardPermission $board_permission;
     private BoardFileService $file_service;
     private CommentService $comment_service;
@@ -42,6 +44,7 @@ class BoardController
     public function __construct(
         BoardService $board_service,
         BoardGoodService $board_good_service,
+        BoardNewService $board_new_service,
         BoardPermission $board_permission,
         BoardFileService $file_service,
         CommentService $comment_service,
@@ -49,6 +52,7 @@ class BoardController
     ) {
         $this->board_service = $board_service;
         $this->board_good_service = $board_good_service;
+        $this->board_new_service = $board_new_service;
         $this->board_permission = $board_permission;
         $this->file_service = $file_service;
         $this->comment_service = $comment_service;
@@ -112,8 +116,10 @@ class BoardController
 
             // 검색 조건 및 페이징 처리
             $query_params = $request->getQueryParams();
-            $search_params = new SearchParameters($this->board_service, $config, $query_params);
-            $page_params = new PageParameters($query_params, $config, $board);
+            $page_rows = (int)$board['bo_page_rows'] ?? 0;
+            $mobile_page_rows = (int)$board['bo_mobile_page_rows'] ?? 0;
+            $page_params = new PageParameters($query_params, $config, $page_rows, $mobile_page_rows);
+            $search_params = new SearchRequest($this->board_service, $config, $query_params);
 
             $total_records = $this->board_service->fetchTotalWriteCount((array)$search_params);
             $total_page = ceil($total_records / $page_params->per_page);
@@ -282,7 +288,7 @@ class BoardController
                 $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
             }
 
-            $this->board_service->insertBoardNew($wr_id, $wr_id, $member['mb_id']);
+            $this->board_new_service->insert($board['bo_table'], $wr_id, $wr_id, $member['mb_id']);
             $this->board_service->incrementWriteCount();
 
             // 게시글 등록 후 처리
@@ -574,7 +580,7 @@ class BoardController
             }
 
             $this->board_service->deleteWriteByParentId($write['wr_id']);
-            $this->board_service->deleteBoardNew($write['wr_id']);
+            $this->board_new_service->deleteByWrite($board['bo_table'], $write['wr_id']);
             // TODO: 스크랩 삭제 개발 필요
             // sql_query(" delete from {$g5['scrap_table']} where bo_table = '$bo_table' and wr_id = '{$write['wr_id']}' ");
 
@@ -650,7 +656,7 @@ class BoardController
             $comment_id = $this->comment_service->createCommentData($write, $request_data, $member, $parent_comment);
             $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
 
-            $this->board_service->insertBoardNew($comment_id, $write['wr_id'], $member['mb_id']);
+            $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
             $this->board_service->incrementCommentCount();
 
             $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
@@ -780,7 +786,7 @@ class BoardController
             // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)
             $last = $this->board_service->fetchWriteCommentLast($write);
             $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
-            $this->board_service->deleteBoardNew($comment['wr_id']);
+            $this->board_new_service->deleteByComment($board['bo_table'], $comment['wr_id']);
 
             return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
         } catch (Exception $e) {
@@ -820,9 +826,9 @@ class BoardController
             }
             // 권한 체크
             $this->board_permission->goodWrite($member['mb_id'], $write, $good_type);
-            
+
             // 추천/비추천 처리
-            $this->board_good_service->goodWrite($member['mb_id'], $board['bo_table'], $write['wr_id'], $good_type);
+            $this->board_good_service->insertGood($member['mb_id'], $board['bo_table'], $write['wr_id'], $good_type);
             $this->board_service->updateWriteGood($write['wr_id'], $good_type);
 
             $write = $this->board_service->fetchWriteById($write['wr_id']);

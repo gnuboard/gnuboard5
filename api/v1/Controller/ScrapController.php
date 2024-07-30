@@ -7,6 +7,7 @@ use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpUnprocessableEntityException;
+use API\Service\BoardNewService;
 use API\Service\BoardPermission;
 use API\Service\BoardService;
 use API\Service\CommentService;
@@ -25,6 +26,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class ScrapController
 {
     private BoardService $board_service;
+    private BoardNewService $board_new_service;
     private BoardPermission $board_permission;
     private CommentService $comment_service;
     private MemberService $member_service;
@@ -33,6 +35,7 @@ class ScrapController
 
     public function __construct(
         BoardService $board_service,
+        BoardNewService $board_new_service,
         BoardPermission $board_permission,
         CommentService $comment_service,
         MemberService $member_service,
@@ -40,6 +43,7 @@ class ScrapController
         PointService $point_service
     ) {
         $this->board_service = $board_service;
+        $this->board_new_service = $board_new_service;
         $this->board_permission = $board_permission;
         $this->comment_service = $comment_service;
         $this->member_service = $member_service;
@@ -79,11 +83,10 @@ class ScrapController
             $scraps = array_map(function ($scrap) {
                 // 게시판 정보 및 게시글 정보 조회
                 // TODO: 추후에 조인이 가능하도록 수정해야할 필요가 있음.
-                $board_service = new BoardService();
-                $board = $board_service->fetchBoardByTable($scrap['bo_table']);
+                $board = $this->board_service->fetchBoardByTable($scrap['bo_table']);
                 if ($board) {
-                    $board_service->setBoard($board);
-                    $write = $board_service->fetchWriteById($scrap['wr_id']);
+                    $this->board_service->setBoard($board);
+                    $write = $this->board_service->fetchWriteById($scrap['wr_id']);
                     $scrap['bo_subject'] = $board['bo_subject'];
                     $scrap['wr_subject'] = $write['wr_subject'];
                 }
@@ -186,7 +189,7 @@ class ScrapController
             if ($this->scrap_service->existsScrap($member['mb_id'], $board['bo_table'], $write['wr_id'])) {
                 throw new HttpConflictException($request, '이미 스크랩하신 글 입니다.');
             }
-            
+
             $request_body = $request->getParsedBody() ?? [];
             $request_data = new CreateScrapRequest($request_body);
 
@@ -197,7 +200,7 @@ class ScrapController
                 $comment_id = $this->comment_service->createCommentData($write, $request_data, $member);
                 $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
 
-                $this->board_service->insertBoardNew($comment_id, $write['wr_id'], $member['mb_id']);
+                $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
                 $this->board_service->incrementCommentCount();
 
                 $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
@@ -243,7 +246,7 @@ class ScrapController
             if ($scrap['mb_id'] !== $member['mb_id']) {
                 throw new HttpForbiddenException($request, '본인의 스크랩만 삭제할 수 있습니다.');
             }
-            
+
             $this->scrap_service->deleteScrap($scrap['ms_id']);
 
             $scrap_count = $this->scrap_service->fetchTotalScrapCount($member['mb_id']);

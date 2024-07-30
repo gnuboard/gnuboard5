@@ -660,6 +660,57 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  /api/v1/board-new:
+    get:
+      tags:
+        - 최신글
+      summary: '최신 게시글 목록 조회'
+      description: '최신 게시글 목록을 조회합니다.'
+      operationId: 11fe221c5039df4b86166b1bdc9cf6cb
+      parameters:
+        -
+          $ref: '#/components/parameters/gr_id'
+        -
+          $ref: '#/components/parameters/view'
+        -
+          $ref: '#/components/parameters/mb_id'
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: '최신 게시글 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardNewsResponse'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - 최신글
+      summary: '최신 게시글 목록 조회'
+      description: '최신 게시글 목록을 조회합니다.'
+      operationId: b591b8154586650ab9862987e872f55e
+      parameters:
+        -
+          $ref: '#/components/parameters/page'
+        -
+          $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: '최신 게시글 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/config/html:
     get:
       tags:
@@ -813,12 +864,28 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
+  /api/v1/groups:
+    get:
+      tags:
+        - 게시판그룹
+      summary: '게시판 그룹 목록 조회'
+      description: '등록된 게시판 그룹 목록을 조회합니다.'
+      operationId: 7604721c8b7637ce1b177e157239bd24
+      responses:
+        '200':
+          description: '게시판 그룹 목록 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupsResponse'
+        '500':
+          $ref: '#/components/responses/500'
   '/api/v1/groups/{gr_id}/boards':
     get:
       tags:
         - 게시판그룹
-      summary: '게시판그룹 목록 조회'
-      description: '게시판그룹의 모든 게시판 목록을 보여줍니다.'
+      summary: '게시판 그룹의 게시판 목록 조회'
+      description: '게시판 그룹에 속한 모든 게시판 목록을 보여줍니다.'
       operationId: c97ac48cf8dd264af1412c276a5371d0
       parameters:
         -
@@ -830,15 +897,13 @@ paths:
             type: string
       responses:
         '200':
-          description: '게시판그룹 조회 성공'
+          description: '게시판 목록 조회 성공'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Board'
+                $ref: '#/components/schemas/BoardsResponse'
         '404':
           $ref: '#/components/responses/404'
-        '422':
-          $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
   /api/v1/members:
@@ -2234,6 +2299,58 @@ components:
           type: string
           example: string
       type: object
+    BoardNew:
+      description: '최신글 정보'
+      properties:
+        num:
+          description: '글 번호'
+          type: integer
+        gr_subject:
+          description: '그룹 명'
+          type: string
+        bo_subject:
+          description: '게시판 명'
+          type: string
+        wr_subject:
+          description: '게시글 제목'
+          type: string
+        bo_table:
+          description: '게시판 ID'
+          type: string
+        wr_id:
+          description: '게시글 ID'
+          type: integer
+        wr_parent:
+          description: '게시글 부모 ID'
+          type: integer
+        bn_datetime:
+          description: 등록일
+          type: string
+          example: '2024-07-12T18:15:18'
+        mb_id:
+          description: '회원 ID'
+          type: string
+      type: object
+    BoardNewsResponse:
+      description: '최신 게시글 목록 응답 모델'
+      properties:
+        total_records:
+          description: '총 레코드 수'
+          type: integer
+          example: 0
+        total_pages:
+          description: '총 페이지 수'
+          type: integer
+          example: 0
+        current_page:
+          description: '현재 페이지'
+          type: integer
+        BoardNew:
+          description: '최신글 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/BoardNew'
+      type: object
     Board:
       description: '게시판 정보'
       properties:
@@ -2335,20 +2452,6 @@ components:
         wr_id:
           description: '게시글 아이디'
           type: integer
-      type: object
-    GetBoardsResponse:
-      description: '게시판 목록 응답모델'
-      properties:
-        group:
-          description: '그룹 정보'
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-        boards:
-          description: '게시판 목록'
-          type: array
-          items:
-            $ref: '#/components/schemas/Board'
       type: object
     GetWritesResponse:
       description: '게시판 정보 응답 모델'
@@ -2639,6 +2742,18 @@ components:
           description: '테일 이미지'
           type: string
       type: object
+    BoardsResponse:
+      description: '게시판 그룹 목록 응답 모델'
+      properties:
+        group:
+          $ref: '#/components/schemas/Group'
+          description: '게시판 그룹 정보'
+        boards:
+          description: '게시판 그룹 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Board'
+      type: object
     Group:
       description: '게시판그룹 정보'
       properties:
@@ -2666,6 +2781,15 @@ components:
           description: '그룹 순서'
           type: integer
           example: 0
+      type: object
+    GroupsResponse:
+      description: '게시판 그룹 목록 응답 모델'
+      properties:
+        groups:
+          description: '게시판 그룹 목록'
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
       type: object
     PopupResponse:
       description: 'Popup 창 목록 응답 모델'
@@ -3529,10 +3653,31 @@ components:
       schema:
         type: integer
         default: 0
+    gr_id:
+      name: gr_id
+      in: query
+      description: '게시판 그룹 ID'
+      schema:
+        type: string
+        default: ''
+    view:
+      name: view
+      in: query
+      description: '게시글 검색 유형(게시글/댓글)'
+      schema:
+        type: string
+        default: ''
+        enum:
+          - write
+          - comment
+    mb_id:
+      name: mb_id
+      in: query
+      description: '회원 ID'
+      schema:
+        type: string
+        default: ''
 tags:
-  -
-    name: '자동 임시저장'
-    description: '자동 저장 API'
   -
     name: 환경설정
     description: '기능별 환경설정정보 API'
@@ -3546,14 +3691,23 @@ tags:
     name: 포인트
     description: '포인트 API'
   -
+    name: 쪽지
+    description: '쪽지 API'
+  -
+    name: 스크랩
+    description: '스크랩 API'
+  -
     name: 게시판그룹
     description: '게시판 그룹 API'
   -
     name: 게시판
-    description: 게시판
+    description: '게시판 API'
   -
-    name: 쪽지
-    description: 쪽지
+    name: '자동 임시저장'
+    description: '자동 저장 API'
+  -
+    name: 최신글
+    description: '최신글 API'
   -
     name: 콘텐츠
     description: 콘텐츠
@@ -3569,9 +3723,6 @@ tags:
   -
     name: '팝업 레이어'
     description: '팝업 레이어'
-  -
-    name: 스크랩
-    description: 스크랩
   -
     name: 방문자
     description: 방문자

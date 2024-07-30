@@ -20,25 +20,6 @@ class BoardGoodService
     }
 
     /**
-     * 게시글 추천/비추천 정보 생성
-     * @param string $mb_id 회원 ID
-     * @param string $bo_table 게시판 테이블명
-     * @param int $wr_id 게시글 아이디
-     * @param string $bg_flag 추천/비추천 (good/nogood)
-     * @return void
-     */
-    public function goodWrite(string $mb_id, string $bo_table, int $wr_id, string $bg_flag)
-    {
-        Db::getInstance()->insert($this->table, [
-            'bo_table' => $bo_table,
-            'wr_id' => $wr_id,
-            'mb_id' => $mb_id,
-            'bg_flag' => $bg_flag,
-            'bg_datetime' => date('Y-m-d H:i:s')
-        ]);
-    }
-
-    /**
      * 게시글 추천/비추천 정보 조회
      * @param string $mb_id 회원 ID
      * @param string $bo_table 게시판 테이블명
@@ -59,5 +40,24 @@ class BoardGoodService
             'mb_id' => $mb_id
         ]);
         return $stmt->fetch();
+    }
+
+    /**
+     * 게시글 추천/비추천 등록
+     * @param string $mb_id 회원 ID
+     * @param string $bo_table 게시판 테이블명
+     * @param int $wr_id 게시글 아이디
+     * @param string $bg_flag 추천/비추천 (good/nogood)
+     * @return void
+     */
+    public function insertGood(string $mb_id, string $bo_table, int $wr_id, string $bg_flag)
+    {
+        Db::getInstance()->insert($this->table, [
+            'bo_table' => $bo_table,
+            'wr_id' => $wr_id,
+            'mb_id' => $mb_id,
+            'bg_flag' => $bg_flag,
+            'bg_datetime' => date('Y-m-d H:i:s')
+        ]);
     }
 }

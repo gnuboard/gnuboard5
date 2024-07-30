@@ -1,34 +1,32 @@
 <?php
 
-namespace API\v1\Model\Response\Board;
+namespace API\v1\Model\Response\Group;
 
 use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
  *      type="object",
- *      description="게시판 목록 응답모델",
+ *      description="게시판 그룹 목록 응답 모델",
  * )
  */
-class GetBoardsResponse
+class BoardsResponse
 {
     use SchemaHelperTrait;
 
     /**
-     * 그룹 정보
-     * @OA\Property(
-     *     type="array",
-     *     @OA\Items(ref="#/components/schemas/Group")
-     * )
+     * 게시판 그룹 정보
+     * @OA\Property(ref="#/components/schemas/Group")
      */
-    public array $group = [];
+    public Group $group;
 
     /**
-     * 게시판 목록
+     * 게시판 그룹 목록
      * @OA\Property(
      *     type="array",
      *     @OA\Items(ref="#/components/schemas/Board")
      * )
+     * @var \API\v1\Model\Response\Board\Board[]
      */
     public array $boards = [];
 

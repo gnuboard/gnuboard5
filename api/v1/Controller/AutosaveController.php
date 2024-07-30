@@ -6,9 +6,6 @@ use API\Service\AutosaveService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-/**
- * @OA\Tag(name="자동 임시저장", description="자동 저장 API")
- */
 class AutosaveController
 {
 

@@ -10,6 +10,13 @@ class BoardService
     public array $board;
     public string $write_table;
 
+    private PopularSearch $popular_service;
+
+    public function __construct(PopularSearch $popular_service)
+    {
+        $this->popular_service = $popular_service;
+    }
+
     public function setBoard(array $board): void
     {
         $this->board = $board;
@@ -326,23 +333,6 @@ class BoardService
     }
 
     /**
-     * 새글 테이블에 게시글 정보 등록
-     */
-    public function insertBoardNew(int $wr_id, int $wr_parent, string $mb_id): int
-    {
-        global $g5;
-
-        $data = [
-            'bo_table' => $this->board['bo_table'],
-            'wr_id' => $wr_id,
-            'wr_parent' => $wr_parent,
-            'bn_datetime' => G5_TIME_YMDHIS,
-            'mb_id' => $mb_id
-        ];
-        return Db::getInstance()->insert($g5['board_new_table'], $data);
-    }
-
-    /**
      * 게시글 수정 처리
      */
     public function updateWriteData(array $write, object $data): void
@@ -463,19 +453,9 @@ class BoardService
     }
 
     /**
-     * 새글 테이블 정보 삭제
-     */
-    public function deleteBoardNew(int $wr_id): void
-    {
-        global $g5;
-
-        Db::getInstance()->delete($g5['board_new_table'], ['bo_table' => $this->board['bo_table'], 'wr_parent' => $wr_id]);
-    }
-
-    /**
      * 게시글 목록의 최소 wr_num 조회
      */
-    protected function fetchMinimumWriteNumber(): int
+    public function fetchMinimumWriteNumber(): int
     {
         $query = "SELECT MIN(wr_num) AS min_wr_num FROM {$this->write_table}";
         $stmt = Db::getInstance()->run($query);
@@ -517,7 +497,9 @@ class BoardService
         $search_clauses = [];
 
         foreach ($terms as $i => $term) {
-            insert_popular($fields, $term);
+            if (!in_array('mb_id', $fields)) {
+                $this->popular_service->add_keyword($term);
+            }
 
             $field_clauses = [];
             foreach ($fields as $field) {
