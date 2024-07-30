@@ -18,9 +18,9 @@ class AuthenticationService
     /**
      * Refresh Token 조회
      * @param string $refresh_token  Refresh Token
-     * @return mixed
+     * @return array|false
      */
-    public function fetchRefreshToken(string $refresh_token): mixed
+    public function fetchRefreshToken(string $refresh_token)
     {
         $query = "SELECT * FROM {$this->table} WHERE refresh_token = :refresh_token";
         $stmt = Db::getInstance()->run($query, ["refresh_token" => $refresh_token]);

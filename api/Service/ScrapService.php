@@ -32,9 +32,9 @@ class ScrapService
      * 스크랩 목록 조회
      * @param string $mb_id 회원 아이디
      * @param array $page_params 페이지 정보
-     * @return mixed 스크랩 목록 or false
+     * @return array|false
      */
-    public function fetchScraps(string $mb_id, array $page_params): mixed
+    public function fetchScraps(string $mb_id, array $page_params)
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id ORDER BY ms_id DESC LIMIT :offset, :per_page";
 
@@ -50,9 +50,9 @@ class ScrapService
     /**
      * 스크랩 조회
      * @param int $ms_id 스크랩 아이디
-     * @return mixed 스크랩 or false
+     * @return array|false
      */
-    public function fetchScrapById(int $ms_id): mixed
+    public function fetchScrapById(int $ms_id)
     {
         $query = "SELECT * FROM {$this->table} WHERE ms_id = :ms_id";
 

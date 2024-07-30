@@ -36,8 +36,10 @@ class BoardService
 
     /**
      * 게시판 정보 조회
+     * @param string $bo_table 게시판 테이블명
+     * @return array|false
      */
-    public function fetchBoardByTable(string $bo_table): mixed
+    public function fetchBoardByTable(string $bo_table)
     {
         global $g5;
 
@@ -111,10 +113,11 @@ class BoardService
     }
 
     /**
-     * 게시판 정보 조회
-     * @return array|bool
+     * 게시글 정보 조회
+     * @param string $wr_id 게시글 아이디
+     * @return array|false
      */
-    public function fetchWriteById(int $wr_id): mixed
+    public function fetchWriteById(int $wr_id)
     {
         $query = "SELECT * FROM {$this->write_table} WHERE wr_id = :wr_id";
         $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
@@ -124,8 +127,10 @@ class BoardService
 
     /**
      * 게시글의 원글/답글/댓글 조회
+     * @param int $wr_id 게시글 아이디
+     * @return array|false
      */
-    public function fetchWritesAndComments(int $wr_id): mixed
+    public function fetchWritesAndComments(int $wr_id)
     {
         $query = "SELECT * FROM {$this->write_table} WHERE wr_parent = :wr_id order by wr_id";
         $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
@@ -149,14 +154,17 @@ class BoardService
 
     /**
      * 게시글의 답글 조회
+     * @param array $write 게시글 정보
+     * @return array|false
      */
-    public function fetchReplyByWrite(array $write): mixed
+    public function fetchReplyByWrite(array $write)
     {
         $query = "SELECT * FROM {$this->write_table}
                     WHERE wr_reply LIKE :wr_reply
                     AND wr_id <> :wr_id
                     AND wr_num = :wr_num
                     AND wr_is_comment = 0";
+
         $stmt = Db::getInstance()->run($query, [
             'wr_reply' => $write['wr_reply'] . '%',
             'wr_id' => $write['wr_id'],
@@ -168,8 +176,10 @@ class BoardService
 
     /**
      * 게시글의 답글 조회
+     * @param array $comment 댓글 정보
+     * @return array|false
      */
-    public function fetchReplyByComment(array $comment): mixed
+    public function fetchReplyByComment(array $comment)
     {
         $query = "SELECT * FROM {$this->write_table}
                     WHERE wr_comment_reply LIKE :wr_comment_reply
@@ -189,8 +199,10 @@ class BoardService
 
     /**
      * 게시글의 댓글 목록 조회
+     * @param array $write 게시글 정보
+     * @return array|false
      */
-    public function fetchCommentsByWrite(array $write): mixed
+    public function fetchCommentsByWrite(array $write)
     {
         $query = "SELECT * FROM {$this->write_table} WHERE wr_parent = :wr_id AND wr_is_comment = 1";
         $stmt = Db::getInstance()->run($query, ['wr_id' => $write['wr_id']]);
@@ -200,8 +212,11 @@ class BoardService
 
     /**
      * 이전 게시글 정보 조회
+     * @param array $write 게시글 정보
+     * @param array $search_params 검색조건
+     * @return array|false
      */
-    public function getPrevWrite(array $write, array $search_params = []): mixed
+    public function getPrevWrite(array $write, array $search_params = [])
     {
         // 검색조건 설정
         $search_where = $this->getWhereBySearch($search_params, $search_values);
@@ -226,8 +241,11 @@ class BoardService
 
     /**
      * 다음 게시글 정보 조회
+     * @param array $write 게시글 정보
+     * @param array $search_params 검색조건
+     * @return array|false
      */
-    public function getNextWrite(array $write, array $search_params = []): mixed
+    public function getNextWrite(array $write, array $search_params = [])
     {
         // 검색조건 설정
         $search_where = $this->getWhereBySearch($search_params, $search_values);
@@ -268,8 +286,10 @@ class BoardService
 
     /**
      * 가장 최근 작성된 댓글의 날짜 조회
+     * @param array $write 게시글 정보
+     * @return array|false
      */
-    public function fetchWriteCommentLast(array $write): mixed
+    public function fetchWriteCommentLast(array $write)
     {
         $query = "SELECT MAX(wr_datetime) as wr_last FROM {$this->write_table} WHERE wr_parent = :wr_parent";
         $stmt = Db::getInstance()->run($query, ['wr_parent' => $write['wr_parent']]);

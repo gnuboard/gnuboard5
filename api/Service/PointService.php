@@ -339,9 +339,9 @@ class PointService
      * 포인트 목록 조회
      * @param string $mb_id 회원 아이디
      * @param array $page_params 페이지 정보
-     * @return mixed 포인트 목록 or false
+     * @return array|false
      */
-    public function fetchPoints(string $mb_id, array $page_params): mixed
+    public function fetchPoints(string $mb_id, array $page_params)
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id ORDER BY po_id DESC LIMIT :offset, :per_page";
 
@@ -360,7 +360,7 @@ class PointService
      * @param string $rel_table 관련 테이블
      * @param string $rel_id 관련 아이디
      * @param string $rel_action 관련 액션
-     * @return mixed 포인트 내역 or false
+     * @return array|false
      */
     public function fetchPointByRelation(string $mb_id, string $rel_table, string $rel_id, string $rel_action)
     {
@@ -429,7 +429,7 @@ class PointService
      * 사용하지 않은 포인트 내역 조회
      * @param string $mb_id 회원 아이디
      * @param string $po_id 제외할 포인트 아이디
-     * @return mixed 포인트 내역 or false
+     * @return array
      */
     protected function fetchUnusedPoints(string $mb_id, string $po_id = ''): array
     {
@@ -458,7 +458,7 @@ class PointService
      * 만료일이 지나지 않은 사용한 포인트 조회
      * @param string $mb_id 회원 아이디
      * @param string $po_id 제외할 포인트 아이디
-     * @return mixed 포인트 내역 or false
+     * @return array
      */
     protected function fetchNonExpiredUsedPoints(string $mb_id): array
     {
@@ -485,7 +485,7 @@ class PointService
      * 만료되고 사용한 포인트 조회
      * @param string $mb_id 회원 아이디
      * @param string $po_id 제외할 포인트 아이디
-     * @return mixed 포인트 내역 or false
+     * @return array
      */
     protected function fetchExpiredUsedPoints(string $mb_id): array
     {

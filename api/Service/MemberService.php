@@ -197,7 +197,7 @@ class MemberService
         }
     }
 
-    
+
     /**
      * 회원정보 조회 검증
      * @param array $member 회원정보
@@ -218,7 +218,7 @@ class MemberService
             }
         }
     }
-    
+
     /**
      * 인증 이메일 변경정보 검증
      * @param array|bool $member 회원정보
@@ -251,25 +251,35 @@ class MemberService
         } elseif ($count == 0) {
             throw new Exception("입력한 정보로 등록된 회원을 찾을 수 없습니다.", 404);
         }
-        
+
         return $members[0];
     }
 
-    public function fetchAllMemberByEmail(string $mb_email): mixed
+    /**
+     * 이메일로 회원정보 목록 조회
+     * @param string $mb_email 이메일
+     * @return array|false
+     */
+    public function fetchAllMemberByEmail(string $mb_email)
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_email = :mb_email";
 
         $stmt = Db::getInstance()->run($query, ["mb_email" => $mb_email]);
-        
+
         return $stmt->fetchAll();
     }
-    
-    public function fetchMemberById(string $mb_id): mixed
+
+    /**
+     * 회원정보 조회
+     * @param string $mb_id 회원아이디
+     * @return array|false
+     */
+    public function fetchMemberById(string $mb_id)
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id";
 
         $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
-        
+
         return $stmt->fetch();
     }
 
