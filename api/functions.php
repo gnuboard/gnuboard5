@@ -318,8 +318,7 @@ function send_write_mail(array $config, array $board, int $wr_id, string $w, str
 
     ob_start();
     include_once('./write_update_mail.php');
-    $content = ob_get_contents();
-    ob_end_clean();
+    $content = ob_get_clean();
 
     $array_email = array();
     // 게시판관리자에게 보내는 메일
@@ -377,4 +376,13 @@ function sanitize_input(string $input, int $max_length, bool $strip_tags = false
         $input = trim(strip_tags($input));
     }
     return preg_replace("#[\\\]+$#", "", $input);
+}
+
+/**
+ * config 정보 가져오기
+ */
+function get_gnuconfig()
+{
+    $config_table = $GLOBALS['g5']['config_table'];
+    return Db::getInstance()->run("SELECT * FROM {$config_table}")->fetch();
 }

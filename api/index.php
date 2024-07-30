@@ -24,6 +24,7 @@ require_once(dirname(__DIR__, 1) . '/config.php');   // 설정 파일
 unset($g5_path);
 
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
+include_once (G5_LIB_PATH.'/common.lib.php'); // 공통 라이브러리 // @todo 정리후 삭제대상
 
 $dbconfig_file = G5_DATA_PATH.'/'.G5_DBCONFIG_FILE;
 if (file_exists($dbconfig_file)) {
@@ -37,6 +38,8 @@ create_refresh_token_table();
 // - Should be set to false in production
 $displayErrorDetails = true;
 
+//@todo 임시 전역변수 정리후 삭제대상
+$config = get_gnuconfig();
 /**
  * Instantiate App
  */
