@@ -255,7 +255,7 @@ class MemberService
         return $members[0];
     }
 
-    public function fetchAllMemberByEmail(string $mb_email): mixed
+    public function fetchAllMemberByEmail(string $mb_email)
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_email = :mb_email";
 
@@ -263,8 +263,12 @@ class MemberService
         
         return $stmt->fetchAll();
     }
-    
-    public function fetchMemberById(string $mb_id): mixed
+
+    /**
+     * @param string $mb_id
+     * @return array|false
+     */
+    public function fetchMemberById(string $mb_id)
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id";
 
