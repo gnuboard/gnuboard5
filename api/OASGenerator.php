@@ -11,21 +11,30 @@ use Exception;
  */
 class OASGenerator
 {
-    /** @var EnvironmentConfig 환경 설정 객체 */
+    /**
+     * $env_config 환경 설정
+     */
     private EnvironmentConfig $env_config;
 
-    /** @var string API 버전 */
+    /**
+     * API 버전
+     */
     private string $version;
 
-    /** @var string OpenAPI 문서 파일명 */
+    /**
+     * OpenAPI 문서 파일명
+     */
     private string $filename = "openapi.yaml";
+
+    private string $api_file_base_path = G5_DATA_PATH . '/api_doc/';
+    private string $api_file_base_url = G5_DATA_URL . '/api_doc/';
 
     /**
      * OASGenerator 생성자
-     * 
-     * @param string|null $version API 버전 (null일 경우 환경 설정의 기본값 사용)
+     *
+     * @param string|null $version API 버전 (null 일 경우 환경 설정의 기본값 사용)
      */
-    public function __construct(string $version = null)
+    public function __construct(?string $version)
     {
         $this->env_config = new EnvironmentConfig();
         $this->version = $version ?? $this->env_config->api_version;
@@ -39,10 +48,15 @@ class OASGenerator
      */
     public function generate(string $root_path = G5_PATH): void
     {
+        $api_dir = "{$root_path}/api/{$this->version}";
+        $exception_dir = "{$root_path}/api/Exceptions";
+        $handler_dir = "{$root_path}/api/Handlers";
+        $openapi_file_path = "{$this->api_file_base_path}/{$this->filename}";
+        if (!is_dir($this->api_file_base_path)) {
+            mkdir($this->api_file_base_path, G5_DIR_PERMISSION);
+        }
+
         try {
-            $api_dir = "{$root_path}/api/{$this->version}";
-            $exception_dir = "{$root_path}/api/Exceptions";
-            $handler_dir = "{$root_path}/api/Handlers";
             $openapi = Generator::scan(
                 [
                     $api_dir,
@@ -53,20 +67,20 @@ class OASGenerator
                     'version' => OpenApi::VERSION_3_1_0
                 ]
             );
-            file_put_contents("{$api_dir}/{$this->filename}", $openapi->toYaml());
+
+            file_put_contents($openapi_file_path, $openapi->toYaml());
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
     }
 
     /**
-     * 생성된 OpenAPI 문서의 URL을 반환합니다.
-     * 
-     * @param string $base_url 기본 URL (기본값: G5_URL)
+     * 생성된 OpenAPI 문서의 URL 을 반환합니다.
+     *
      * @return string OpenAPI 파일의 전체 URL
      */
-    public function getOASUrl(string $base_url = G5_URL): string
+    public function getOASUrl(): string
     {
-        return "{$base_url}/api/{$this->version}/{$this->filename}";
+        return "{$this->api_file_base_url}/{$this->filename}";
     }
 }
