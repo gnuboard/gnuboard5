@@ -10,7 +10,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://127.0.0.1/g5-update'
+    url: 'https://localhost/g5-update'
 paths:
   /api/v1/token:
     post:
@@ -133,10 +133,10 @@ paths:
       operationId: 43b548f85f219b07c5b029be83b4070c
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
       responses:
@@ -159,10 +159,10 @@ paths:
       operationId: d3b7d5197d87c91f60adbe4cc55b411e
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
@@ -208,10 +208,10 @@ paths:
       operationId: 1d52c42bfd4297e774ac552a56d0e6ab
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
       requestBody:
@@ -246,17 +246,17 @@ paths:
       operationId: e297a07d6b68c39438ed3b158d72bb87
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       responses:
@@ -284,17 +284,17 @@ paths:
       operationId: 03d69387e2f82c23a219b58a6b3d7f3d
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       requestBody:
@@ -328,17 +328,17 @@ paths:
       operationId: 82b00d1f5cb19ffdf1d6e8fe18274b1f
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       requestBody:
@@ -376,17 +376,17 @@ paths:
       operationId: 0d3885b1f805db9d8793ab10049dfefc
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       requestBody:
@@ -426,24 +426,24 @@ paths:
       operationId: 4c17cfb4959ccf4f2bbb492e63cb80df
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
         -
-          name: bf_no
           in: path
-          description: '파일 번호'
           required: true
+          name: bf_no
+          description: '파일 번호'
           schema:
             type: integer
       responses:
@@ -472,17 +472,17 @@ paths:
       operationId: b73ff2b9f8b93da58cb89bd37451ca15
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
       requestBody:
@@ -517,24 +517,24 @@ paths:
       operationId: 471943dcd91c52f2b9d06bcd0c8febf3
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
         -
-          name: comment_id
           in: path
-          description: '댓글 번호'
           required: true
+          name: comment_id
+          description: '댓글 번호'
           schema:
             type: integer
       requestBody:
@@ -568,24 +568,24 @@ paths:
       operationId: c180928d4769936bf8884636165901a2
       parameters:
         -
-          name: bo_table
           in: path
-          description: '게시판 코드'
           required: true
+          name: bo_table
+          description: '게시판 코드'
           schema:
             type: string
         -
-          name: wr_id
           in: path
-          description: '글 번호'
           required: true
+          name: wr_id
+          description: '글 번호'
           schema:
             type: integer
         -
-          name: comment_id
           in: path
-          description: '댓글 번호'
           required: true
+          name: comment_id
+          description: '댓글 번호'
           schema:
             type: integer
       requestBody:
@@ -767,34 +767,6 @@ paths:
           $ref: '#/components/responses/404'
         '422':
           $ref: '#/components/responses/422'
-  '/api/v1/groups/{gr_id}/boards':
-    get:
-      tags:
-        - 게시판그룹
-      summary: '게시판그룹 목록 조회'
-      description: '게시판그룹의 모든 게시판 목록을 보여줍니다.'
-      operationId: c97ac48cf8dd264af1412c276a5371d0
-      parameters:
-        -
-          name: gr_id
-          in: path
-          description: '그룹 아이디'
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: '게시판그룹 조회 성공'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Board'
-        '404':
-          $ref: '#/components/responses/404'
-        '422':
-          $ref: '#/components/responses/422'
-        '500':
-          $ref: '#/components/responses/500'
   /api/v1/members:
     post:
       tags:
@@ -2290,20 +2262,6 @@ components:
           description: '게시글 아이디'
           type: integer
       type: object
-    GetBoardsResponse:
-      description: '게시판 목록 응답모델'
-      properties:
-        group:
-          description: '그룹 정보'
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
-        boards:
-          description: '게시판 목록'
-          type: array
-          items:
-            $ref: '#/components/schemas/Board'
-      type: object
     GetWritesResponse:
       description: '게시판 정보 응답 모델'
       properties:
@@ -2426,11 +2384,11 @@ components:
         cf_add_meta:
           description: '추가 메타태그'
           type: string
-          example: "<meta name='description' content='그누보드5'>"
+          example: '<meta name=''description'' content=''그누보드5''>'
         cf_add_script:
           description: '추가 스크립트'
           type: string
-          example: "<script src='http://example.com/script.js'></script>"
+          example: '<script src=''http://example.com/script.js''></script>'
         cf_analytics:
           description: 분석코드
           type: string
@@ -2592,34 +2550,6 @@ components:
         co_image_tail:
           description: '테일 이미지'
           type: string
-      type: object
-    Group:
-      description: '게시판그룹 정보'
-      properties:
-        gr_id:
-          description: '그룹 아이디'
-          type: string
-          example: string
-        gr_subject:
-          description: '그룹 제목'
-          type: string
-          example: string
-        gr_device:
-          description: '접속 허용 디바이스'
-          type: string
-          example: string
-        gr_admin:
-          description: '그룹 관리자'
-          type: string
-          example: string
-        gr_use_access:
-          description: '접근 권한 사용 여부'
-          type: integer
-          example: 0
-        gr_order:
-          description: '그룹 순서'
-          type: integer
-          example: 0
       type: object
     PopupResponse:
       description: 'Popup 창 목록 응답 모델'
@@ -3190,22 +3120,6 @@ components:
           description: '파일 경로'
           type: string
       type: object
-    NeighborWrite:
-      description: '이웃 게시글 정보'
-      properties:
-        wr_subject:
-          description: '게시글 제목'
-          type: string
-          example: 제목
-        href:
-          description: '게시글 링크'
-          type: string
-          example: 'http://example.com/bbs/board.php?bo_table=free&wr_id=1'
-        wr_datetime:
-          description: '게시글 작성일'
-          type: string
-          example: '2021-01-01 00:00:00'
-      type: object
     Thumbnail:
       description: '썸네일 정보'
       properties:
@@ -3310,12 +3224,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/File'
-        prev:
-          $ref: '#/components/schemas/NeighborWrite'
-          description: '이전 글 정보'
-        next:
-          $ref: '#/components/schemas/NeighborWrite'
-          description: '다음 글 정보'
         comments:
           description: '댓글 목록'
           type: array
@@ -3485,9 +3393,6 @@ tags:
     name: 포인트
     description: '포인트 API'
   -
-    name: 게시판그룹
-    description: '게시판 그룹 API'
-  -
     name: 게시판
     description: 게시판
   -
@@ -3508,9 +3413,6 @@ tags:
   -
     name: '팝업 레이어'
     description: '팝업 레이어'
-  -
-    name: 스크랩
-    description: 스크랩
   -
     name: 방문자
     description: 방문자
