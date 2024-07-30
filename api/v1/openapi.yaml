@@ -614,6 +614,52 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+  '/api/v1/boards/{bo_table}/writes/{wr_id}/{good_type}':
+    post:
+      tags:
+        - 게시판
+      summary: '게시글 추천/비추천'
+      description: '게시글에 대한 추천/비추천을 처리합니다.'
+      operationId: 3297b83fc0019a2da4a94c5a37309f43
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 코드'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '글 번호'
+          required: true
+          schema:
+            type: integer
+        -
+          name: good_type
+          in: path
+          description: 추천타입
+          required: true
+          schema:
+            type: string
+            default: good
+            enum:
+              - good
+              - nogood
+      responses:
+        '200':
+          description: '추천/비추천 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodWriteResponse'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
   /api/v1/config/html:
     get:
       tags:
@@ -3190,6 +3236,21 @@ components:
           description: '파일 경로'
           type: string
       type: object
+    GoodWriteResponse:
+      description: '추천/비추천 처리결과 모델'
+      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/BaseResponse'
+        -
+          properties:
+            good:
+              description: '게시글 추천 수'
+              type: integer
+            nogood:
+              description: '게시글 비추천 수'
+              type: integer
+          type: object
     NeighborWrite:
       description: '이웃 게시글 정보'
       properties:
@@ -3286,11 +3347,11 @@ components:
           type: string
           example: 127.0.0.1
         good:
-          description: '좋아요 수'
+          description: '추천 수'
           type: integer
           example: 0
         nogood:
-          description: '싫어요 수'
+          description: '비추천 수'
           type: integer
           example: 0
         thumbnail:

@@ -414,6 +414,19 @@ class BoardService
     }
 
     /**
+     * 게시글 추천/비추천 갱신
+     * @param int $wr_id 게시글 아이디
+     * @param string $good_type 추천/비추천 (good/nogood)
+     * @return void
+     */
+    public function updateWriteGood(int $wr_id, string $good_type): void
+    {
+        $column = "wr_{$good_type}";
+        $query = "UPDATE {$this->write_table} SET {$column} = {$column} + 1 WHERE wr_id = :wr_id";
+        Db::getInstance()->run($query, ['wr_id' => $wr_id]);
+    }
+
+    /**
      * 게시판 정보에 게시글 수 갱신
      */
     public function incrementWriteCount(): void

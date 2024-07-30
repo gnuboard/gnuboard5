@@ -2,7 +2,6 @@
 
 namespace API\Service;
 
-use API\Database\Db;
 use API\Service\BoardService;
 use API\Service\GroupService;
 use Exception;
@@ -15,6 +14,7 @@ class BoardPermission
 
     private GroupService $group_service;
     private BoardService $board_service;
+    private BoardGoodService $board_good_service;
     private MemberService $member_service;
     private PointService $point_service;
 
@@ -60,16 +60,21 @@ class BoardPermission
     private const ERROR_NO_DELETE_COMMENT_OWNER = '자신의 댓글이 아니므로 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_COMMENT_PASSWORD = '비밀번호가 일치하지 않으므로 댓글을 삭제할 수 없습니다.';
     private const ERROR_NO_DELETE_COMMENT_REPLY = '이 글과 관련된 대댓글이 존재하므로 삭제할 수 없습니다.';
+    private const ERROR_NO_GOOD_OWNER = '자신의 글에는 %s 하실 수 없습니다.';
+    private const ERROR_NO_GOOD_SETTING = '이 게시판은 %s 기능을 사용하지 않습니다.';
+    private const ERROR_NO_GOOD_EXIST = "이미 %s 하신 글 입니다.";
 
 
     public function __construct(
         GroupService $group_service,
         BoardService $board_service,
+        BoardGoodService $board_good_service,
         MemberService $member_service,
         PointService $point_service
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
+        $this->board_good_service = $board_good_service;
         $this->member_service = $member_service;
         $this->point_service = $point_service;
     }
@@ -150,26 +155,6 @@ class BoardPermission
     }
 
     /**
-     * 답변글 작성시 원글이 비밀글인지 체크
-     */
-    private function checkReplySecret(array $member, array $write): void
-    {
-        if (strstr($write['wr_option'], 'secret')) {
-            if ($this->isBoardManager($member['mb_id'])) {
-                return;
-            }
-
-            if ($write['mb_id']) {
-                if (!$this->isOwner($write, $member['mb_id'])) {
-                    $this->throwException(self::ERROR_NO_REPLY_SECRET);
-                }
-            } else {
-                $this->throwException(self::ERROR_NO_REPLY_SECRET_NONMEMBER);
-            }
-        }
-    }
-
-    /**
      * 글 수정 권한 체크
      */
     public function updateWrite(array $member, array $write): void
@@ -231,6 +216,32 @@ class BoardPermission
         $this->checkMemberLevel($member, $level, self::ERROR_NO_DOWNLOAD_LEVEL);
         $this->checkAccessCert($member);
         $this->checkMemberPoint('download', $member, $write);
+    }
+
+    /**
+     * 추천/비추천 권한 체크
+     * @param array $member 사용자 정보
+     * @param array $write 글 정보
+     * @param string $type good|nogood
+     * @return void
+     */
+    public function goodWrite(array $member, array $write, string $type)
+    {
+        if ($this->isBoardManager($member['mb_id'])) {
+            return;
+        }
+
+        $word = ($type == 'good') ? '추천' : '비추천';
+        if (!$this->isUsedGood($type)) {
+            $this->throwException(sprintf(self::ERROR_NO_GOOD_SETTING, $word));
+        }
+        if ($this->isOwner($write, $member['mb_id'])) {
+            $this->throwException(sprintf(self::ERROR_NO_GOOD_OWNER, $word));
+        }
+        $exists = $this->board_good_service->fetchGoodByMember($member['mb_id'], $this->board['bo_table'], $write['wr_id'], $type);
+        if ($exists) {
+            $this->throwException(sprintf(self::ERROR_NO_GOOD_EXIST, $word));
+        }
     }
 
     /**
@@ -418,6 +429,26 @@ class BoardPermission
         $notice_ids = explode(",", $this->board['bo_notice']);
         if (in_array($parent_id, $notice_ids)) {
             $this->throwException(self::ERROR_NO_REPLY_NOTICE);
+        }
+    }
+
+    /**
+     * 답변글 작성시 원글이 비밀글인지 체크
+     */
+    private function checkReplySecret(array $member, array $write): void
+    {
+        if (strstr($write['wr_option'], 'secret')) {
+            if ($this->isBoardManager($member['mb_id'])) {
+                return;
+            }
+
+            if ($write['mb_id']) {
+                if (!$this->isOwner($write, $member['mb_id'])) {
+                    $this->throwException(self::ERROR_NO_REPLY_SECRET);
+                }
+            } else {
+                $this->throwException(self::ERROR_NO_REPLY_SECRET_NONMEMBER);
+            }
         }
     }
 
@@ -634,6 +665,16 @@ class BoardPermission
             return false;
         }
         return $write['mb_id'] === $mb_id;
+    }
+
+    /**
+     * 게시판의 추천/비추천 사용 여부 체크
+     * @param string $type good|nogood
+     * @return bool
+     */
+    private function isUsedGood(string $type)
+    {
+        return isset($this->board['bo_use_' . $type]) && $this->board['bo_use_' . $type];
     }
 
     /**

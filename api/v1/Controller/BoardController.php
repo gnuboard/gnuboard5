@@ -8,6 +8,7 @@ use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpNotFoundException;
 use API\Service\BoardService;
 use API\Service\BoardFileService;
+use API\Service\BoardGoodService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
 use API\Service\PointService;
@@ -20,6 +21,7 @@ use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\Response\Write\GoodWriteResponse;
 use API\v1\Model\Response\Write\NeighborWrite;
 use API\v1\Model\Response\Write\Thumbnail;
 use API\v1\Model\Response\Write\Write;
@@ -31,6 +33,7 @@ use Exception;
 class BoardController
 {
     private BoardService $board_service;
+    private BoardGoodService $board_good_service;
     private BoardPermission $board_permission;
     private BoardFileService $file_service;
     private CommentService $comment_service;
@@ -38,12 +41,14 @@ class BoardController
 
     public function __construct(
         BoardService $board_service,
+        BoardGoodService $board_good_service,
         BoardPermission $board_permission,
         BoardFileService $file_service,
         CommentService $comment_service,
         PointService $point_service
     ) {
         $this->board_service = $board_service;
+        $this->board_good_service = $board_good_service;
         $this->board_permission = $board_permission;
         $this->file_service = $file_service;
         $this->comment_service = $comment_service;
@@ -778,6 +783,56 @@ class BoardController
             $this->board_service->deleteBoardNew($comment['wr_id']);
 
             return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            } else {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/{good_type}",
+     *      summary="게시글 추천/비추천",
+     *      tags={"게시판"},
+     *      description="게시글에 대한 추천/비추천을 처리합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\PathParameter(name="good_type", description="추천타입", @OA\Schema(type="string", default="good", enum={"good", "nogood"}) ),
+     *      @OA\Response(response="200", description="추천/비추천 성공", @OA\JsonContent(ref="#/components/schemas/GoodWriteResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function goodWrite(Request $request, Response $response, array $args): Response
+    {
+        $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $good_type = $args['good_type'] ?? '';
+        $word = ($good_type == 'good') ? '추천' : '비추천';
+
+        try {
+            if (!in_array($good_type, ['good', 'nogood'])) {
+                throw new HttpNotFoundException($request, "추천 타입이 올바르지 않습니다.");
+            }
+            // 권한 체크
+            $this->board_permission->goodWrite($member, $write, $good_type);
+
+            // 추천/비추천 처리
+            $this->board_good_service->goodWrite($member['mb_id'], $board['bo_table'], $write['wr_id'], $good_type);
+            $this->board_service->updateWriteGood($write['wr_id'], $good_type);
+
+            $write = $this->board_service->fetchWriteById($write['wr_id']);
+            $response_data = new GoodWriteResponse([
+                "message" => "해당 글을 {$word}하였습니다.",
+                "good" => $write['wr_good'],
+                "nogood" => $write['wr_nogood']
+            ]);
+            return api_response_json($response, $response_data);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());

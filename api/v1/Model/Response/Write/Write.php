@@ -111,13 +111,13 @@ class Write
     public string $wr_ip = "";
 
     /**
-     * 좋아요 수
+     * 추천 수
      * @OA\Property(example=0)
      */
     public int $good = 0;
 
     /**
-     * 싫어요 수
+     * 비추천 수
      * @OA\Property(example=0)
      */
     public int $nogood = 0;
