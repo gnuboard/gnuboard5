@@ -40,7 +40,7 @@ class Scrap
 
     /**
      * 스크랩 등록일
-     * @OA\Property(example=2024-07-29T05:39:23.484Z)
+     * @OA\Property(example="2024-07-29T05:39:23.484Z")
      */
     public string $ms_datetime = '';
     

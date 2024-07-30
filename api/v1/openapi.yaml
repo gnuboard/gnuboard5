@@ -1436,8 +1436,8 @@ paths:
     get:
       tags:
         - 스크랩
-      summary: '회원 스크랩 목록을 조회합니다.'
-      description: 'HTML을 구성하는데 필요한 설정 정보를 조회합니다.'
+      summary: '회원 스크랩 목록 조회'
+      description: '회원 스크랩 목록을 조회합니다.'
       operationId: dbb35431d27e4e468527961b43b1488d
       parameters:
         -
@@ -1455,6 +1455,116 @@ paths:
           $ref: '#/components/responses/401'
         '422':
           $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/member/scraps/{bo_table}/{wr_id}':
+    get:
+      tags:
+        - 스크랩
+      summary: '회원 스크랩 등록 페이지 정보 조회'
+      description: "\r\n스크랩 등록 페이지의 정보를 조회합니다.\r\n- 게시판 정보 및 게시글 정보를 조회합니다.\r\n"
+      operationId: b265bb713d4c488df6de88f7ec1c3331
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 ID'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '게시글 ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '스크랩 페이지 정보 조회 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateScrapPageResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - 스크랩
+      summary: '회원 스크랩 등록'
+      description: "\r\n회원 스크랩을 등록합니다.\r\n- 댓글을 작성하면 댓글도 함께 등록됩니다.\r\n"
+      operationId: 74c88efcec6660ccdf3dafad84b11b11
+      parameters:
+        -
+          name: bo_table
+          in: path
+          description: '게시판 ID'
+          required: true
+          schema:
+            type: string
+        -
+          name: wr_id
+          in: path
+          description: '게시글 ID'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScrapRequest'
+      responses:
+        '200':
+          description: '스크랩 등록 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '409':
+          $ref: '#/components/responses/409'
+        '422':
+          $ref: '#/components/responses/422'
+        '500':
+          $ref: '#/components/responses/500'
+  '/api/v1/member/scraps/{ms_id}':
+    delete:
+      tags:
+        - 스크랩
+      summary: '회원 스크랩 삭제'
+      description: "\r\n회원 스크랩을 삭제합니다.\r\n"
+      operationId: ffe809e38e0da2a737deac7fb5d1d471
+      parameters:
+        -
+          name: ms_id
+          in: path
+          description: '스크랩 ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: '스크랩 삭제 성공'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
   /api/v1/visit:
@@ -2010,6 +2120,14 @@ components:
           description: 여분필드10
           type: string
           example: test
+      type: object
+    CreateScrapRequest:
+      description: '스크랩 추가 요청 모델'
+      properties:
+        wr_content:
+          description: 댓글내용
+          type: string
+          example: 댓글
       type: object
     GenerateTokenResponse:
       description: 'JWT 생성 응답 모델'
@@ -2903,6 +3021,26 @@ components:
           description: '검색어 갯수'
           type: integer
       type: object
+    CreateScrapPageResponse:
+      description: '스크랩 등록페이지 응답 모델'
+      properties:
+        board:
+          properties:
+            bo_table:
+              description: '게시판 정보'
+              type: string
+            bo_subject:
+              type: string
+          type: object
+        write:
+          properties:
+            wr_id:
+              description: '게시글 정보'
+              type: integer
+            wr_subject:
+              type: string
+          type: object
+      type: object
     Scrap:
       description: '스크랩 정보'
       properties:
@@ -2921,6 +3059,10 @@ components:
           description: '게시글 ID'
           type: integer
           example: 0
+        ms_datetime:
+          description: '스크랩 등록일'
+          type: string
+          example: '2024-07-29T05:39:23.484Z'
         wr_subject:
           description: '게시글 제목'
           type: string
