@@ -39,6 +39,7 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
     ->add(OptionalAccessTokenAuthMiddleware::class);
 
     $group->post('/writes/{wr_id}/{good_type}', [BoardController::class, 'goodWrite'])
+        ->add(WriteMiddleware::class)
         ->add(AccessTokenAuthMiddleware::class);
 })
 ->add(BoardMiddleware::class)

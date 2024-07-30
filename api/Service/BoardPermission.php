@@ -225,22 +225,24 @@ class BoardPermission
      * @param string $type good|nogood
      * @return void
      */
-    public function goodWrite(array $member, array $write, string $type)
+    public function goodWrite(string $mb_id, array $write, string $type)
     {
-        if ($this->isBoardManager($member['mb_id'])) {
-            return;
-        }
-
-        $word = ($type == 'good') ? '추천' : '비추천';
         if (!$this->isUsedGood($type)) {
+            $word = get_good_word($type);
             $this->throwException(sprintf(self::ERROR_NO_GOOD_SETTING, $word));
         }
-        if ($this->isOwner($write, $member['mb_id'])) {
-            $this->throwException(sprintf(self::ERROR_NO_GOOD_OWNER, $word));
-        }
-        $exists = $this->board_good_service->fetchGoodByMember($member['mb_id'], $this->board['bo_table'], $write['wr_id'], $type);
+        $exists = $this->board_good_service->fetchGoodByMember($mb_id, $this->board['bo_table'], $write['wr_id']);
         if ($exists) {
+            $word = get_good_word($exists['bg_flag']);
             $this->throwException(sprintf(self::ERROR_NO_GOOD_EXIST, $word));
+        }
+
+        if ($this->isBoardManager($mb_id)) {
+            return;
+        }
+        if ($this->isOwner($write, $mb_id)) {
+            $word = get_good_word($type);
+            $this->throwException(sprintf(self::ERROR_NO_GOOD_OWNER, $word));
         }
     }
 

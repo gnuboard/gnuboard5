@@ -813,20 +813,20 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
         $good_type = $args['good_type'] ?? '';
-        $word = ($good_type == 'good') ? '추천' : '비추천';
 
         try {
             if (!in_array($good_type, ['good', 'nogood'])) {
-                throw new HttpNotFoundException($request, "추천 타입이 올바르지 않습니다.");
+                throw new HttpBadRequestException($request, "추천 타입이 올바르지 않습니다.");
             }
             // 권한 체크
-            $this->board_permission->goodWrite($member, $write, $good_type);
-
+            $this->board_permission->goodWrite($member['mb_id'], $write, $good_type);
+            
             // 추천/비추천 처리
             $this->board_good_service->goodWrite($member['mb_id'], $board['bo_table'], $write['wr_id'], $good_type);
             $this->board_service->updateWriteGood($write['wr_id'], $good_type);
 
             $write = $this->board_service->fetchWriteById($write['wr_id']);
+            $word = get_good_word($good_type);
             $response_data = new GoodWriteResponse([
                 "message" => "해당 글을 {$word}하였습니다.",
                 "good" => $write['wr_good'],
