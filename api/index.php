@@ -17,8 +17,19 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/_common.php';
 
+//gnuboard 로딩
+$g5_path = g5_root_path();
+require_once(dirname(__DIR__, 1) . '/config.php');   // 설정 파일
+unset($g5_path);
+
+include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
+
+$dbconfig_file = G5_DATA_PATH.'/'.G5_DBCONFIG_FILE;
+if (file_exists($dbconfig_file)) {
+    include_once($dbconfig_file);
+}
+//-------------------------
 // Create refresh token table
 create_refresh_token_table();
 
@@ -71,7 +82,7 @@ $app->setBasePath($api_path . '/' . $api_version);
 // Include all Routers for the requested API version.
 $routerFiles = glob(__DIR__ . "/{$api_version}/Routers/*.php");
 foreach ($routerFiles as $routerFile) {
-    include $routerFile;
+    include_once $routerFile;
 }
 
 /**
