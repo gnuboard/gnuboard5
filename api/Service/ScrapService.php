@@ -100,12 +100,23 @@ class ScrapService
 
     /**
      * 스크랩 삭제 
-     * @param int $ms_id 스크랩 아이디
+     * @param int $ms_id 스크랩 ID
      * @return void
      */
     public function deleteScrap(int $ms_id): void
     {
         Db::getInstance()->delete($this->table, ["ms_id" => $ms_id]);
+    }
+
+    /**
+     * 스크랩 삭제(게시글)
+     * @param string $bo_table 게시판 테이블
+     * @param int $wr_id 게시글 ID
+     * @return void
+     */
+    public function deleteScrapByWrite(string $bo_table, int $wr_id): void
+    {
+        Db::getInstance()->delete($this->table, ["bo_table" => $bo_table, "wr_id" => $wr_id]);
     }
 
     public function setTable(string $table): void

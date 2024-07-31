@@ -692,17 +692,22 @@ paths:
     delete:
       tags:
         - 최신글
-      summary: '최신 게시글 목록 조회'
-      description: '최신 게시글 목록을 조회합니다.'
+      summary: '최신 게시글 일괄 삭제'
+      description: "\r\n최신 게시글을 일괄로 삭제한다.\r\n- 최고관리자만 가능\r\n"
       operationId: b591b8154586650ab9862987e872f55e
       parameters:
         -
-          $ref: '#/components/parameters/page'
-        -
-          $ref: '#/components/parameters/per_page'
+          name: 'bn_ids[]'
+          in: query
+          description: '삭제할 최신 게시글 ID'
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
       responses:
         '200':
-          description: '최신 게시글 목록 조회 성공'
+          description: '최신 게시글 삭제 성공'
           content:
             application/json:
               schema:
@@ -2323,12 +2328,18 @@ components:
         wr_parent:
           description: '게시글 부모 ID'
           type: integer
+        wr_is_comment:
+          description: '댓글 여부'
+          type: integer
         bn_datetime:
           description: 등록일
           type: string
           example: '2024-07-12T18:15:18'
         mb_id:
           description: '회원 ID'
+          type: string
+        mb_name:
+          description: '회원 이름'
           type: string
       type: object
     BoardNewsResponse:
@@ -2345,7 +2356,7 @@ components:
         current_page:
           description: '현재 페이지'
           type: integer
-        BoardNew:
+        board_news:
           description: '최신글 목록'
           type: array
           items:

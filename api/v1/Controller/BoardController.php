@@ -13,6 +13,7 @@ use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
 use API\Service\PointService;
+use API\Service\ScrapService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
 use API\v1\Model\Request\Board\UpdateWriteRequest;
@@ -40,6 +41,7 @@ class BoardController
     private BoardFileService $file_service;
     private CommentService $comment_service;
     private PointService $point_service;
+    private ScrapService $scrap_service;
 
     public function __construct(
         BoardService $board_service,
@@ -48,7 +50,8 @@ class BoardController
         BoardPermission $board_permission,
         BoardFileService $file_service,
         CommentService $comment_service,
-        PointService $point_service
+        PointService $point_service,
+        ScrapService $scrap_service
     ) {
         $this->board_service = $board_service;
         $this->board_good_service = $board_good_service;
@@ -57,6 +60,7 @@ class BoardController
         $this->file_service = $file_service;
         $this->comment_service = $comment_service;
         $this->point_service = $point_service;
+        $this->scrap_service = $scrap_service;
     }
 
     /**
@@ -581,8 +585,7 @@ class BoardController
 
             $this->board_service->deleteWriteByParentId($write['wr_id']);
             $this->board_new_service->deleteByWrite($board['bo_table'], $write['wr_id']);
-            // TODO: 스크랩 삭제 개발 필요
-            // sql_query(" delete from {$g5['scrap_table']} where bo_table = '$bo_table' and wr_id = '{$write['wr_id']}' ");
+            $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
 
             $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);

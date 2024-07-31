@@ -62,6 +62,18 @@ class BoardNewService
     }
 
     /**
+     * 최신글 상세 조회
+     * @param int $bn_id 최신글 ID
+     * @return array|false
+     */
+    public function fetchById(int $bn_id)
+    {
+        $query = "SELECT * FROM {$this->table} WHERE bn_id = :bn_id";
+        $stmt = Db::getInstance()->run($query, [':bn_id' => $bn_id]);
+        return $stmt->fetch();
+    }
+
+    /**
      * 최신글 추가
      */
     public function insert(string $bo_table, int $wr_id, int $wr_parent, string $mb_id = ""): int
@@ -74,6 +86,11 @@ class BoardNewService
             'mb_id' => $mb_id
         ];
         return Db::getInstance()->insert($this->table, $data);
+    }
+
+    public function delete()
+    {
+
     }
 
     /**
