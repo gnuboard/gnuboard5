@@ -245,6 +245,7 @@ class MemberController
      *      path="/api/v1/members/me",
      *      summary="현재 로그인 회원정보 조회",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="
 JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 - 탈퇴 또는 차단된 회원은 조회할 수 없습니다.
@@ -274,6 +275,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/members/{mb_id}",
      *      summary="회원정보 조회",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="
 회원 정보를 조회합니다.
 - 자신&상대방의 정보가 공개 설정된 경우 조회 가능합니다.
@@ -308,6 +310,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member",
      *      summary="회원정보 수정",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="JWT 토큰을 통해 인증된 회원 정보를 수정합니다.",
      *      @OA\RequestBody(
      *          required=true,
@@ -354,6 +357,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member/images",
      *      summary="회원 아이콘&이미지 수정",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="JWT 토큰을 통해 인증된 회원의 아이콘 & 이미지를 수정합니다.",
      *      @OA\RequestBody(
      *          required=true,
@@ -408,6 +412,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member",
      *      summary="회원탈퇴",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="JWT 토큰을 통해 인증된 회원을 탈퇴합니다.
 - 실제로 데이터가 삭제되지 않고, 탈퇴 처리만 진행됩니다.
 ",

@@ -57,16 +57,17 @@ class ScrapController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/member/scraps",
-     *     summary="회원 스크랩 목록 조회",
-     *     tags={"스크랩"},
-     *     description="회원 스크랩 목록을 조회합니다.",
-     *     @OA\Parameter(ref="#/components/parameters/page"),
-     *     @OA\Parameter(ref="#/components/parameters/per_page"),
-     *     @OA\Response(response="200", description="스크랩 목록 조회 성공", @OA\JsonContent(ref="#/components/schemas/ScrapsResponse")),
-     *     @OA\Response(response="401", ref="#/components/responses/401"),
-     *     @OA\Response(response="422", ref="#/components/responses/422"),
-     *     @OA\Response(response="500", ref="#/components/responses/500")
+     *      path="/api/v1/member/scraps",
+     *      summary="회원 스크랩 목록 조회",
+     *      tags={"스크랩"},
+     *      security={ {"Oauth2Password": {}} },
+     *      description="회원 스크랩 목록을 조회합니다.",
+     *      @OA\Parameter(ref="#/components/parameters/page"),
+     *      @OA\Parameter(ref="#/components/parameters/per_page"),
+     *      @OA\Response(response="200", description="스크랩 목록 조회 성공", @OA\JsonContent(ref="#/components/schemas/ScrapsResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function getScraps(Request $request, Response $response): Response
@@ -115,20 +116,21 @@ class ScrapController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/member/scraps/{bo_table}/{wr_id}",
-     *     summary="회원 스크랩 등록 페이지 정보 조회",
-     *     tags={"스크랩"},
-     *     description="
+     *      path="/api/v1/member/scraps/{bo_table}/{wr_id}",
+     *      summary="회원 스크랩 등록 페이지 정보 조회",
+     *      tags={"스크랩"},
+     *      security={ {"Oauth2Password": {}} },
+     *      description="
 스크랩 등록 페이지의 정보를 조회합니다.
 - 게시판 정보 및 게시글 정보를 조회합니다.
 ",
-     *     @OA\PathParameter(name="bo_table", description="게시판 ID", @OA\Schema(type="string")),
-     *     @OA\PathParameter(name="wr_id", description="게시글 ID", @OA\Schema(type="integer")),
-     *     @OA\Response(response="200", description="스크랩 페이지 정보 조회 성공", @OA\JsonContent(ref="#/components/schemas/CreateScrapPageResponse")),
-     *     @OA\Response(response="400", ref="#/components/responses/400"),
-     *     @OA\Response(response="401", ref="#/components/responses/401"),
-     *     @OA\Response(response="409", ref="#/components/responses/409"),
-     *     @OA\Response(response="500", ref="#/components/responses/500")
+     *      @OA\PathParameter(name="bo_table", description="게시판 ID", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="게시글 ID", @OA\Schema(type="integer")),
+     *      @OA\Response(response="200", description="스크랩 페이지 정보 조회 성공", @OA\JsonContent(ref="#/components/schemas/CreateScrapPageResponse")),
+     *      @OA\Response(response="400", ref="#/components/responses/400"),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="409", ref="#/components/responses/409"),
+     *      @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function createPage(Request $request, Response $response): Response
@@ -157,27 +159,28 @@ class ScrapController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/member/scraps/{bo_table}/{wr_id}",
-     *     summary="회원 스크랩 등록",
-     *     tags={"스크랩"},
+     *      path="/api/v1/member/scraps/{bo_table}/{wr_id}",
+     *      summary="회원 스크랩 등록",
+     *      tags={"스크랩"},
+     *      security={ {"Oauth2Password": {}} },
      *     description="
 회원 스크랩을 등록합니다.
 - 댓글을 작성하면 댓글도 함께 등록됩니다.
 ",
-     *     @OA\PathParameter(name="bo_table", description="게시판 ID", @OA\Schema(type="string")),
-     *     @OA\PathParameter(name="wr_id", description="게시글 ID", @OA\Schema(type="integer")),
+     *      @OA\PathParameter(name="bo_table", description="게시판 ID", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="게시글 ID", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(ref="#/components/schemas/CreateScrapRequest"),
      *          )
      *      ),
-     *     @OA\Response(response="200", description="스크랩 등록 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
-     *     @OA\Response(response="400", ref="#/components/responses/400"),
-     *     @OA\Response(response="401", ref="#/components/responses/401"),
-     *     @OA\Response(response="409", ref="#/components/responses/409"),
-     *     @OA\Response(response="422", ref="#/components/responses/422"),
-     *     @OA\Response(response="500", ref="#/components/responses/500")
+     *      @OA\Response(response="200", description="스크랩 등록 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="400", ref="#/components/responses/400"),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="409", ref="#/components/responses/409"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function create(Request $request, Response $response): Response
@@ -223,18 +226,19 @@ class ScrapController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/member/scraps/{ms_id}",
-     *     summary="회원 스크랩 삭제",
-     *     tags={"스크랩"},
-     *     description="
+     *      path="/api/v1/member/scraps/{ms_id}",
+     *      summary="회원 스크랩 삭제",
+     *      tags={"스크랩"},
+     *      security={ {"Oauth2Password": {}} },
+     *      description="
 회원 스크랩을 삭제합니다.
 ",
-     *     @OA\PathParameter(name="ms_id", description="스크랩 ID", @OA\Schema(type="integer")),
-     *     @OA\Response(response="200", description="스크랩 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
-     *     @OA\Response(response="400", ref="#/components/responses/400"),
-     *     @OA\Response(response="401", ref="#/components/responses/401"),
-     *     @OA\Response(response="404", ref="#/components/responses/404"),
-     *     @OA\Response(response="500", ref="#/components/responses/500")
+     *      @OA\PathParameter(name="ms_id", description="스크랩 ID", @OA\Schema(type="integer")),
+     *      @OA\Response(response="200", description="스크랩 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(response="400", ref="#/components/responses/400"),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="500", ref="#/components/responses/500")
      * )
      */
     public function delete(Request $request, Response $response): Response

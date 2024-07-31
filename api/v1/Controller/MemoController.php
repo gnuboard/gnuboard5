@@ -23,7 +23,7 @@ class MemoController
      *     path="/api/v1/member/memos",
      *     summary="쪽지 목록 조회",
      *     tags={"쪽지"},
-     *     security={{"bearerAuth": {}}},
+     *     security={ {"Oauth2Password": {}} },
      *     @OA\Parameter (
      *     name="page",
      *     description="페이지 번호",
@@ -110,7 +110,7 @@ class MemoController
      *     path="/api/v1/member/memos",
      *     summary="쪽지 전송",
      *     tags={"쪽지"},
-     *     security={{"bearerAuth": {}}},
+     *     security={ {"Oauth2Password": {}} },
      *     @OA\RequestBody (
      *     required=true,
      *     description="쪽지 전송",
@@ -173,7 +173,7 @@ class MemoController
      *     path="/api/v1/member/memos/{me_id}",
      *     summary="쪽지 조회",
      *     tags={"쪽지"},
-     *     security={{"bearerAuth": {}}},
+     *     security={ {"Oauth2Password": {}} },
      *     @OA\Parameter (
      *     name="me_id",
      *     in="path",

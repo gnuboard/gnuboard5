@@ -79,7 +79,7 @@ paths:
                 $ref: '#/components/schemas/AutosaveListResponse'
       security:
         -
-          bearerAuth: []
+          Oauth2Password: []
   '/api/v1/autosaves/{as_id}':
     get:
       tags:
@@ -104,7 +104,7 @@ paths:
                 $ref: '#/components/schemas/Autosave'
       security:
         -
-          bearerAuth: []
+          Oauth2Password: []
   /api/v1/autosaves/count:
     get:
       tags:
@@ -123,7 +123,7 @@ paths:
                 type: object
       security:
         -
-          bearerAuth: []
+          Oauth2Password: []
   '/api/v1/boards/{bo_table}':
     get:
       tags:
@@ -660,6 +660,9 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   /api/v1/board-new:
     get:
       tags:
@@ -999,6 +1002,9 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   '/api/v1/members/{mb_id}':
     get:
       tags:
@@ -1031,6 +1037,9 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   /api/v1/member:
     put:
       tags:
@@ -1061,6 +1070,9 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
     delete:
       tags:
         - 회원
@@ -1082,6 +1094,9 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   /api/v1/member/images:
     post:
       tags:
@@ -1125,6 +1140,9 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   /api/v1/members/search/password:
     post:
       tags:
@@ -1201,7 +1219,7 @@ paths:
           $ref: '#/components/responses/422'
       security:
         -
-          bearerAuth: []
+          Oauth2Password: []
     post:
       tags:
         - 쪽지
@@ -1240,7 +1258,7 @@ paths:
           $ref: '#/components/responses/422'
       security:
         -
-          bearerAuth: []
+          Oauth2Password: []
   '/api/v1/member/memos/{me_id}':
     get:
       tags:
@@ -1271,7 +1289,7 @@ paths:
           $ref: '#/components/responses/422'
       security:
         -
-          bearerAuth: []
+          Oauth2Password: []
   /api/v1/menus:
     get:
       tags:
@@ -1312,6 +1330,9 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   /api/v1/polls/latest:
     get:
       tags:
@@ -1575,6 +1596,9 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   '/api/v1/member/scraps/{bo_table}/{wr_id}':
     get:
       tags:
@@ -1612,6 +1636,9 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
     post:
       tags:
         - 스크랩
@@ -1655,6 +1682,9 @@ paths:
           $ref: '#/components/responses/422'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   '/api/v1/member/scraps/{ms_id}':
     delete:
       tags:
@@ -1685,6 +1715,9 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+      security:
+        -
+          Oauth2Password: []
   /api/v1/visit:
     get:
       tags:
@@ -3690,13 +3723,22 @@ components:
       schema:
         type: string
         default: ''
+  securitySchemes:
+    Oauth2Password:
+      type: oauth2
+      description: "\r\n로그인을 통해 Access Token 발급 후, API 요청 시 Authorization 헤더를 추가합니다.\r\n- Authorization: Bearer {Access Token}\r\n"
+      flows:
+        password:
+          tokenUrl: 'http://127.0.0.1/g5-update/api/v1/token'
+          refreshUrl: 'http://127.0.0.1/g5-update/api/v1/token/refresh'
+          scopes: {  }
 tags:
   -
     name: 환경설정
     description: '기능별 환경설정정보 API'
   -
     name: 인증
-    description: '인증 API'
+    description: 'JWT를 활용한 인증 API'
   -
     name: 회원
     description: '회원 API'
@@ -3717,25 +3759,25 @@ tags:
     description: '게시판 API'
   -
     name: '자동 임시저장'
-    description: '자동 저장 API'
+    description: '게시글 작성 시 자동 임시저장 API'
   -
     name: 최신글
-    description: '최신글 API'
+    description: '최신 게시글 API'
   -
     name: 콘텐츠
-    description: 콘텐츠
+    description: '콘텐츠 API'
   -
     name: 메뉴
-    description: 메뉴
+    description: '메뉴 API'
   -
     name: 설문조사
-    description: 설문조사
+    description: '설문조사 API'
   -
     name: '인기 검색어'
-    description: '인기 검색어'
+    description: '인기 검색어 API'
   -
     name: '팝업 레이어'
-    description: '팝업 레이어'
+    description: '팝업 레이어 API'
   -
     name: 방문자
-    description: 방문자
+    description: '방문자 API'

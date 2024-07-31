@@ -810,6 +810,7 @@ class BoardController
      *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/{good_type}",
      *      summary="게시글 추천/비추천",
      *      tags={"게시판"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="게시글에 대한 추천/비추천을 처리합니다.",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
