@@ -29,7 +29,7 @@ class PopularSearchController
      *     @OA\Parameter(
      *     name="days",
      *     in="query",
-     *     description="오늘로부터 몇일 전까지 조회할지 (기본값 3)",
+     *     description="몇 일전 검색어부터 조회할지 (기본값 3)",
      *     required=false,
      *     @OA\Schema(type="integer")
      *    ),

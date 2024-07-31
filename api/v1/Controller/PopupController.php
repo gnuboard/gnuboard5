@@ -30,10 +30,9 @@ class PopupController
      *     @OA\Parameter(
      *      name="device",
      *      in="query",
-     *      description="접속 기기 (pc, mobile, 기본값 both)",
+     *      description="접속 기기",
      *      required=false,
-     *      @OA\Schema(type="string")
-     *     ),
+     *     @OA\Schema(type="string", default="both (둘다)", enum={"pc", "mobile", "both"})),
      *     @OA\Parameter(
      *     name="except_ids",
      *     in="query",
@@ -60,7 +59,7 @@ class PopupController
         $except_ids = $request->getQueryParams()['except_ids'] ?? '';
         // @todo cache
         $data = $this->popup_service->fetch_popup($device);
-        if (!$data || is_countable($data) && count($data) === 0) {
+        if (!$data || (is_countable($data) && count($data) === 0)) {
             return api_response_json($response, ['message' => '팝업이 없습니다.'], 404);
         }
 
