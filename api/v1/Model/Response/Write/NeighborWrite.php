@@ -35,6 +35,8 @@ class NeighborWrite
     {
         $this->mapDataToProperties($this, $data);
 
-        $this->href = get_pretty_url($bo_table, $data['wr_id']);
+        // TODO: include 제거로 인한 url 처리 오류 해결.
+        // get_pretty_url($bo_table, $data['wr_id']);
+        $this->href = "";
     }
 }

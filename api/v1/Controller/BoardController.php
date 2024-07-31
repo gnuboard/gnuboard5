@@ -201,7 +201,9 @@ class BoardController
         try {
             $this->board_permission->readWrite($member, $write);
 
-            $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+            // TODO: include 제거로 인한 썸네일 처리 오류 해결.
+            // get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+            $thumb = [];
             $fetch_prev = $this->write_service->fetchPrevWrite($write, $params);
             $fetch_next = $this->write_service->fetchNextWrite($write, $params);
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev, $params);
@@ -595,8 +597,6 @@ class BoardController
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
 
             $this->board_service->decreaseWriteAndCommentCount($count_writes, $count_comments);
-
-            delete_cache_latest($board['bo_table']);
 
             run_event('api_delete_write', $write, $board);
 

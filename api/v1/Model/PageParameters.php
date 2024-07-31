@@ -44,9 +44,9 @@ class PageParameters
         // per_page값이 없을 경우 게시판 설정값 반영
         if ($this->per_page <= 0) {
             if ($this->is_mobile) {
-                $this->per_page = $mobile_page_rows ?? (int)$config['cf_mobile_page_rows'];
+                $this->per_page = $mobile_page_rows ?: (int)$config['cf_mobile_page_rows'];
             } else {
-                $this->per_page = $page_rows ?? (int)$config['cf_page_rows'];
+                $this->per_page = $page_rows ?: (int)$config['cf_page_rows'];
             }
         }
 
