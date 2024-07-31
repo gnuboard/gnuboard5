@@ -693,7 +693,7 @@ paths:
       tags:
         - 최신글
       summary: '최신 게시글 일괄 삭제'
-      description: "\r\n최신 게시글을 일괄로 삭제한다.\r\n- 최고관리자만 가능\r\n"
+      description: "\r\n최신 게시글을 일괄로 삭제한다.\r\n- 최신 게시글로 등록된 원래 게시글/댓글도 삭제\r\n- 최고관리자만 가능\r\n"
       operationId: b591b8154586650ab9862987e872f55e
       parameters:
         -
@@ -711,7 +711,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Board'
+                $ref: '#/components/schemas/BaseResponse'
+        '403':
+          $ref: '#/components/responses/403'
         '422':
           $ref: '#/components/responses/422'
         '500':

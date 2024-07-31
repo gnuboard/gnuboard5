@@ -2,7 +2,7 @@
 
 namespace API\v1\Model\Request\Board;
 
-use API\Service\BoardService;
+use API\Service\WriteService;
 use API\v1\Traits\SchemaHelperTrait;
 use API\v1\Model\SearchParameters;
 
@@ -29,17 +29,17 @@ class SearchRequest extends SearchParameters
     public bool $is_search = false;
 
     /**
-     * @param BoardService $board_service 게시판 서비스 객체
+     * @param WriteService $write_service 게시글 서비스 객체
      * @param array $data 요청 데이터
      * @param array|null $config 설정 데이터
      */
-    public function __construct(BoardService $board_service, array $config, array $data = [])
+    public function __construct(WriteService $write_service, array $config, array $data = [])
     {
         $this->mapDataToProperties($this, $data);
 
         $this->sanitizeParameters();
         $this->checkIfSearch();
-        $this->initializeSearchPartParameters($board_service, $config);
+        $this->initializeSearchPartParameters($write_service, $config);
     }
 
     /**
@@ -64,13 +64,13 @@ class SearchRequest extends SearchParameters
     /**
      * 검색 단위 파라미터 초기화
      */
-    private function initializeSearchPartParameters(BoardService $board_service, array $config): void
+    private function initializeSearchPartParameters(WriteService $write_service, array $config): void
     {
         if (!$this->is_search) {
             return;
         }
 
-        $this->min_spt = $board_service->fetchMinimumWriteNumber();
+        $this->min_spt = $write_service->fetchMinimumWriteNumber();
         if (empty($this->spt)) {
             $this->spt = $this->min_spt;
         }

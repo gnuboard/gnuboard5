@@ -14,6 +14,7 @@ use API\Service\CommentService;
 use API\Service\BoardPermission;
 use API\Service\PointService;
 use API\Service\ScrapService;
+use API\Service\WriteService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
 use API\v1\Model\Request\Board\UpdateWriteRequest;
@@ -42,6 +43,7 @@ class BoardController
     private CommentService $comment_service;
     private PointService $point_service;
     private ScrapService $scrap_service;
+    private WriteService $write_service;
 
     public function __construct(
         BoardService $board_service,
@@ -51,7 +53,8 @@ class BoardController
         BoardFileService $file_service,
         CommentService $comment_service,
         PointService $point_service,
-        ScrapService $scrap_service
+        ScrapService $scrap_service,
+        WriteService $write_service
     ) {
         $this->board_service = $board_service;
         $this->board_good_service = $board_good_service;
@@ -61,6 +64,7 @@ class BoardController
         $this->comment_service = $comment_service;
         $this->point_service = $point_service;
         $this->scrap_service = $scrap_service;
+        $this->write_service = $write_service;
     }
 
     /**
@@ -123,9 +127,9 @@ class BoardController
             $page_rows = (int)$board['bo_page_rows'] ?? 0;
             $mobile_page_rows = (int)$board['bo_mobile_page_rows'] ?? 0;
             $page_params = new PageParameters($query_params, $config, $page_rows, $mobile_page_rows);
-            $search_params = new SearchRequest($this->board_service, $config, $query_params);
+            $search_params = new SearchRequest($this->write_service, $config, $query_params);
 
-            $total_records = $this->board_service->fetchTotalWriteCount((array)$search_params);
+            $total_records = $this->write_service->fetchTotalCount((array)$search_params);
             $total_page = ceil($total_records / $page_params->per_page);
 
             /**
@@ -138,11 +142,11 @@ class BoardController
             // 공지글 목록 조회
             $notice_writes = [];
             if (!$search_params->is_search) {
-                $fetch_notice_writes = $this->board_service->fetchNoticeWrites();
+                $fetch_notice_writes = $this->write_service->fetchNoticeWrites();
                 $notice_writes = array_map(fn ($notice_write) => new Write($notice_write), $fetch_notice_writes);
             }
             // 게시글 목록 조회
-            $fetch_writes = $this->board_service->fetchWrites((array)$search_params, (array)$page_params);
+            $fetch_writes = $this->write_service->fetchWrites((array)$search_params, (array)$page_params);
             $writes = array_map(fn ($write) => new Write($write), $fetch_writes);
 
             $response_data = new GetWritesResponse([
@@ -154,8 +158,8 @@ class BoardController
                 "board" => new Board($board),
                 "notice_writes" => $notice_writes,
                 "writes" => $writes,
-                "prev_spt" => $this->board_service->getPrevSearchPart((array)$search_params),
-                "next_spt" => $this->board_service->getNextSearchPart((array)$search_params),
+                "prev_spt" => $this->write_service->getPrevSearchPart((array)$search_params),
+                "next_spt" => $this->write_service->getNextSearchPart((array)$search_params),
             ]);
 
             return api_response_json($response, (array)$response_data);
@@ -198,8 +202,8 @@ class BoardController
             $this->board_permission->readWrite($member, $write);
 
             $thumb = get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
-            $fetch_prev = $this->board_service->getPrevWrite($write, $params);
-            $fetch_next = $this->board_service->getNextWrite($write, $params);
+            $fetch_prev = $this->write_service->fetchPrevWrite($write, $params);
+            $fetch_next = $this->write_service->fetchNextWrite($write, $params);
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev, $params);
             $next = new NeighborWrite($board['bo_table'], $fetch_next, $params);
 
@@ -269,7 +273,7 @@ class BoardController
 
             $parent_write = [];
             if ($request_data->wr_parent) {
-                $parent_write = $this->board_service->fetchWriteById($request_data->wr_parent);
+                $parent_write = $this->write_service->fetchWrite($request_data->wr_parent);
             }
 
             // 권한 체크
@@ -284,8 +288,8 @@ class BoardController
             // TODO: upload_max_filesize 제한 추가 필요
 
             // 게시글 등록
-            $wr_id = $this->board_service->createWriteData($request_data, $member, $parent_write);
-            $this->board_service->updateWriteParentId($wr_id, $wr_id);
+            $wr_id = $this->write_service->createWriteData($request_data, $member, $parent_write);
+            $this->write_service->updateWriteParentId($wr_id, $wr_id);
 
             if ($is_notice) {
                 $bo_notice = board_notice($board['bo_notice'], $wr_id, true);
@@ -293,7 +297,7 @@ class BoardController
             }
 
             $this->board_new_service->insert($board['bo_table'], $wr_id, $wr_id, $member['mb_id']);
-            $this->board_service->incrementWriteCount();
+            $this->board_service->increaseWriteCount();
 
             // 게시글 등록 후 처리
             $this->point_service->addPoint($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
@@ -374,8 +378,8 @@ class BoardController
             }
 
             // 게시글 수정
-            $this->board_service->updateWriteData($write, $request_data);
-            $this->board_service->updateCategoryByParentId($write['wr_id'], $request_data->ca_name);
+            $this->write_service->updateWriteData($write, $request_data);
+            $this->write_service->updateCategoryByParentId($write['wr_id'], $request_data->ca_name);
 
             $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], $is_notice);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
@@ -454,7 +458,7 @@ class BoardController
 
             // 게시글에 파일 갯수 갱신
             $files = $this->file_service->fetchWriteFiles($write['wr_id']);
-            $this->board_service->updateWrite($write['wr_id'], ["wr_file" => count($files)]);
+            $this->write_service->updateWrite($write['wr_id'], ["wr_file" => count($files)]);
 
             return api_response_json($response, array("message" => "파일 정보가 갱신되었습니다."));
         } catch (Exception $e) {
@@ -564,7 +568,7 @@ class BoardController
             // 포인트&파일 삭제
             $count_comments = 0;
             $count_writes = 0;
-            $all_writes = $this->board_service->fetchWritesAndComments($write['wr_id']);
+            $all_writes = $this->write_service->fetchWritesAndComments($write['wr_id']);
             foreach ($all_writes as $all) {
                 if ($all['wr_is_comment']) {
                     if (!$this->point_service->removePoint($all['mb_id'], $board['bo_table'], $all['wr_id'], '댓글')) {
@@ -583,14 +587,14 @@ class BoardController
                 }
             }
 
-            $this->board_service->deleteWriteByParentId($write['wr_id']);
+            $this->write_service->deleteWriteByParentId($write['wr_id']);
             $this->board_new_service->deleteByWrite($board['bo_table'], $write['wr_id']);
             $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
 
             $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
 
-            $this->board_service->updateWriteCount($count_writes, $count_comments);
+            $this->board_service->decreaseWriteAndCommentCount($count_writes, $count_comments);
 
             delete_cache_latest($board['bo_table']);
 
@@ -642,7 +646,7 @@ class BoardController
 
             $parent_comment = [];
             if ($request_data->comment_id) {
-                $parent_comment = $this->board_service->fetchWriteById($request_data->comment_id);
+                $parent_comment = $this->write_service->fetchWrite($request_data->comment_id);
                 if (!$parent_comment) {
                     throw new HttpNotFoundException($request, "부모 댓글 정보가 존재하지 않습니다.");
                 }
@@ -657,10 +661,10 @@ class BoardController
 
             // 댓글 등록
             $comment_id = $this->comment_service->createCommentData($write, $request_data, $member, $parent_comment);
-            $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
+            $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
 
             $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
-            $this->board_service->incrementCommentCount();
+            $this->board_service->increaseCommentCount();
 
             $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
 
@@ -787,8 +791,8 @@ class BoardController
             }
 
             // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)
-            $last = $this->board_service->fetchWriteCommentLast($write);
-            $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
+            $last = $this->write_service->fetchWriteCommentLast($write);
+            $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
             $this->board_new_service->deleteByComment($board['bo_table'], $comment['wr_id']);
 
             return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
@@ -832,9 +836,9 @@ class BoardController
 
             // 추천/비추천 처리
             $this->board_good_service->insertGood($member['mb_id'], $board['bo_table'], $write['wr_id'], $good_type);
-            $this->board_service->updateWriteGood($write['wr_id'], $good_type);
+            $this->write_service->updateWriteGood($write['wr_id'], $good_type);
 
-            $write = $this->board_service->fetchWriteById($write['wr_id']);
+            $write = $this->write_service->fetchWrite((int)$write['wr_id']);
             $word = get_good_word($good_type);
             $response_data = new GoodWriteResponse([
                 "message" => "해당 글을 {$word}하였습니다.",

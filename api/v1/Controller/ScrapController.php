@@ -14,6 +14,7 @@ use API\Service\CommentService;
 use API\Service\MemberService;
 use API\Service\PointService;
 use API\Service\ScrapService;
+use API\Service\WriteService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Scrap\CreateScrapRequest;
 use API\v1\Model\Response\Scrap\CreateScrapPageResponse;
@@ -32,6 +33,7 @@ class ScrapController
     private MemberService $member_service;
     private PointService $point_service;
     private ScrapService $scrap_service;
+    private WriteService $write_service;
 
     public function __construct(
         BoardService $board_service,
@@ -40,7 +42,8 @@ class ScrapController
         CommentService $comment_service,
         MemberService $member_service,
         ScrapService $scrap_service,
-        PointService $point_service
+        PointService $point_service,
+        WriteService $write_service
     ) {
         $this->board_service = $board_service;
         $this->board_new_service = $board_new_service;
@@ -49,6 +52,7 @@ class ScrapController
         $this->member_service = $member_service;
         $this->scrap_service = $scrap_service;
         $this->point_service = $point_service;
+        $this->write_service = $write_service;
     }
 
     /**
@@ -83,10 +87,10 @@ class ScrapController
             $scraps = array_map(function ($scrap) {
                 // 게시판 정보 및 게시글 정보 조회
                 // TODO: 추후에 조인이 가능하도록 수정해야할 필요가 있음.
-                $board = $this->board_service->fetchBoardByTable($scrap['bo_table']);
+                $board = $this->board_service->fetchBoard($scrap['bo_table']);
                 if ($board) {
-                    $this->board_service->setBoard($board);
-                    $write = $this->board_service->fetchWriteById($scrap['wr_id']);
+                    $this->write_service->setBoard($board);
+                    $write = $this->write_service->fetchWrite((int)$scrap['wr_id']);
                     $scrap['bo_subject'] = $board['bo_subject'];
                     $scrap['wr_subject'] = $write['wr_subject'];
                 }
@@ -198,10 +202,10 @@ class ScrapController
                 $this->board_permission->createComment($member, $write);
 
                 $comment_id = $this->comment_service->createCommentData($write, $request_data, $member);
-                $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
+                $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
 
                 $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
-                $this->board_service->incrementCommentCount();
+                $this->board_service->increaseCommentCount();
 
                 $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
             }

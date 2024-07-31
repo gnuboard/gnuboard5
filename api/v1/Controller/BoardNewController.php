@@ -10,6 +10,7 @@ use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\PointService;
 use API\Service\ScrapService;
+use API\Service\WriteService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\BoardNew\SearchRequest;
 use API\v1\Model\Response\BoardNew\BoardNew;
@@ -26,6 +27,7 @@ class BoardNewController
     private CommentService $comment_service;
     private PointService $point_service;
     private ScrapService $scrap_service;
+    private WriteService $write_service;
 
     public function __construct(
         BoardService $board_service,
@@ -33,7 +35,8 @@ class BoardNewController
         BoardFileService $file_service,
         CommentService $comment_service,
         PointService $point_service,
-        ScrapService $scrap_service
+        ScrapService $scrap_service,
+        WriteService $write_service
     ) {
         $this->service = $service;
         $this->board_service = $board_service;
@@ -41,6 +44,7 @@ class BoardNewController
         $this->comment_service = $comment_service;
         $this->point_service = $point_service;
         $this->scrap_service = $scrap_service;
+        $this->write_service = $write_service;
     }
 
     /**
@@ -74,10 +78,10 @@ class BoardNewController
         $fetch_board_news = $this->service->fetchBoardNews((array)$search_params, (array)$page_params);
         $board_news = [];
         foreach ($fetch_board_news as $i => $new) {
-            $this->board_service->setWriteTable($new['bo_table']);
-            $write = $this->board_service->fetchWriteById($new['wr_id']);
+            $this->write_service->setWriteTable($new['bo_table']);
+            $write = $this->write_service->fetchWrite((int)$new['wr_id']);
             if ($write['wr_is_comment']) {
-                $comment = $this->board_service->fetchWriteById($write['wr_parent']);
+                $comment = $this->write_service->fetchWrite((int)$write['wr_parent']);
                 $new['wr_subject'] = $comment['wr_subject'];
             } else {
                 $new['wr_subject'] = $write['wr_subject'];
@@ -143,11 +147,11 @@ class BoardNewController
                     continue;
                 }
                 // 게시판 정보 및 게시글 정보 조회
-                $board = $this->board_service->fetchBoardByTable($board_new['bo_table']);
-                $this->board_service->setBoard($board);
+                $board = $this->board_service->fetchBoard($board_new['bo_table']);
+                $this->write_service->setBoard($board);
                 $this->comment_service->setBoard($board);
                 $this->file_service->setBoard($board);
-                $write = $this->board_service->fetchWriteById($board_new['wr_id']);
+                $write = $this->write_service->fetchWrite((int)$board_new['wr_id']);
 
                 if ($write['wr_is_comment']) {
                     // 댓글 삭제
@@ -157,14 +161,14 @@ class BoardNewController
                         $this->point_service->addPoint($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$write['wr_id']} 댓글삭제");
                     }
                     // 게시물 정보 갱신 (wr_last, wr_comment)
-                    $last = $this->board_service->fetchWriteCommentLast($write);
-                    $this->board_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
+                    $last = $this->write_service->fetchWriteCommentLast($write);
+                    $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
                     $this->service->deleteByComment($board['bo_table'], $write['wr_id']);
                 } else {
                     // 포인트 및 파일 삭제
                     $count_comments = 0;
                     $count_writes = 0;
-                    $all_writes = $this->board_service->fetchWritesAndComments($write['wr_id']);
+                    $all_writes = $this->write_service->fetchWritesAndComments($write['wr_id']);
                     foreach ($all_writes as $all) {
                         if ($all['wr_is_comment']) {
                             if (!$this->point_service->removePoint($all['mb_id'], $board['bo_table'], $all['wr_id'], '댓글')) {
@@ -180,14 +184,14 @@ class BoardNewController
                         }
                     }
                     // 게시글/댓글 및 최신글/스크랩 삭제
-                    $this->board_service->deleteWriteByParentId($write['wr_id']);
+                    $this->write_service->deleteWriteByParentId($write['wr_id']);
                     $this->service->deleteByWrite($board['bo_table'], $write['wr_id']);
                     $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
                     // 공지사항 삭제
                     $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
                     $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
                     // 글/댓글 숫자 감소
-                    $this->board_service->updateWriteCount($count_writes, $count_comments);
+                    $this->board_service->decreaseWriteAndCommentCount($count_writes, $count_comments);
                 }
             }
         } catch (Exception $e) {

@@ -21,7 +21,6 @@ class Db
 
     private function __construct()
     {
-        require_once __DIR__ . '/../../data/dbconfig.php';
         $db_settings = [
             'driver' => 'mysql', // @todo
             'host' => G5_MYSQL_HOST,

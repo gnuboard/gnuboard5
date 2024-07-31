@@ -17,6 +17,7 @@ class BoardPermission
     private BoardGoodService $board_good_service;
     private MemberService $member_service;
     private PointService $point_service;
+    private WriteService $write_service;
 
     private const ERROR_NO_ACCESS_GUEST = '비회원은 이 게시판에 접근할 권한이 없습니다.';
     private const ERROR_NO_ACCESS_GROUP = '게시판에 접근할 권한이 없습니다.';
@@ -70,13 +71,15 @@ class BoardPermission
         BoardService $board_service,
         BoardGoodService $board_good_service,
         MemberService $member_service,
-        PointService $point_service
+        PointService $point_service,
+        WriteService $write_service
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
         $this->board_good_service = $board_good_service;
         $this->member_service = $member_service;
         $this->point_service = $point_service;
+        $this->write_service = $write_service;
     }
 
     function setConfig(array $config): void
@@ -417,7 +420,7 @@ class BoardPermission
      */
     private function hasCommentReply(array $write, string $message): void
     {
-        $replies = $this->board_service->fetchReplyByComment($write);
+        $replies = $this->write_service->fetchReplyByComment($write);
         if (count($replies) > 0) {
             $this->throwException($message);
         }
@@ -583,7 +586,7 @@ class BoardPermission
 
         // 답변글일 경우 원글의 작성자인지 체크
         if ($write['wr_reply'] && $mb_id) {
-            $parent_write = $this->board_service->fetchParentWriteByNumber((int)$write['wr_num']);
+            $parent_write = $this->write_service->fetchParentWriteByNumber((int)$write['wr_num']);
             if (isset($parent_write['mb_id']) && $parent_write['mb_id'] === $mb_id) {
                 return;
             }
@@ -597,7 +600,7 @@ class BoardPermission
      */
     private function hasWriteReply(array $write, string $message): void
     {
-        $replies = $this->board_service->fetchReplyByWrite($write);
+        $replies = $this->write_service->fetchReplyByWrite($write);
         if (count($replies) > 0) {
             $this->throwException($message);
         }
@@ -608,7 +611,7 @@ class BoardPermission
      */
     private function checkCommentLimit(array $write, int $limit, string $message): void
     {
-        $comments = $this->board_service->fetchCommentsByWrite($write);
+        $comments = $this->write_service->fetchCommentsByWrite($write);
         $comments_count = count($comments);
         if ($comments_count >= $limit) {
             $this->throwException(sprintf($message, $limit));

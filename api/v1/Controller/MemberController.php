@@ -6,6 +6,7 @@ use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpUnprocessableEntityException;
+use API\Service\MemberImageService;
 use API\Service\MemberService;
 use API\Service\PointService;
 use API\v1\Model\Request\Member\ChangeCertificationEmailRequest;
@@ -19,19 +20,21 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Exception;
 
-require_once __DIR__ . '../../../../lib/mailer.lib.php';
-
+require_once G5_LIB_PATH . '/mailer.lib.php';
 
 class MemberController
 {
     private MemberService $member_service;
+    private MemberImageService $image_service;
     private PointService $point_service;
 
     public function __construct(
         MemberService $member_service,
+        MemberImageService $image_service,
         PointService $point_service
     ) {
         $this->member_service = $member_service;
+        $this->image_service = $image_service;
         $this->point_service = $point_service;
     }
 
@@ -258,8 +261,8 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
     {
         $member = $request->getAttribute('member');
 
-        $member['mb_icon_path'] = $this->member_service->getMemberImagePath($member['mb_id'], 'icon');
-        $member['mb_image_path'] = $this->member_service->getMemberImagePath($member['mb_id'], 'image');
+        $member['mb_icon_path'] = $this->image_service->getMemberImagePath($member['mb_id'], 'icon');
+        $member['mb_image_path'] = $this->image_service->getMemberImagePath($member['mb_id'], 'image');
 
         $response_data = new GetMemberMeResponse($member);
 
@@ -292,8 +295,8 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         $this->member_service->verifyMemberProfile($member, $login_member);
 
-        $member['mb_icon_path'] = $this->member_service->getMemberImagePath($mb_id, 'icon');
-        $member['mb_image_path'] = $this->member_service->getMemberImagePath($mb_id, 'image');
+        $member['mb_icon_path'] = $this->image_service->getMemberImagePath($mb_id, 'icon');
+        $member['mb_image_path'] = $this->image_service->getMemberImagePath($mb_id, 'image');
 
         $response_data = new GetMemberResponse($member);
 
@@ -382,13 +385,13 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         try {
             if ($request_data['del_mb_img']) {
-                $this->member_service->deleteMemberImage($member['mb_id'], 'image');
+                $this->image_service->deleteMemberImage($member['mb_id'], 'image');
             }
             if ($request_data['del_mb_icon']) {
-                $this->member_service->deleteMemberImage($member['mb_id'], 'icon');
+                $this->image_service->deleteMemberImage($member['mb_id'], 'icon');
             }
-            $this->member_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
-            $this->member_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
+            $this->image_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
+            $this->image_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
 
             return api_response_json($response, array("message" => "회원 아이콘/이미지가 수정되었습니다."));
         } catch (Exception $e) {
