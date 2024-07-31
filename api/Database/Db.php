@@ -111,7 +111,7 @@ class Db
     {
         $columns = implode(',', array_keys($data));
         $placeholders = implode(',', array_fill(0, count($data), '?'));
-        $this->run("INSERT INTO {$table} ({$columns}) VALUES ({$placeholders})", array_values($data));
+        $this->run("INSERT INTO `{$table}` ({$columns}) VALUES ({$placeholders})", array_values($data));
 
         return $this->pdo->lastInsertId();
     }
@@ -144,7 +144,7 @@ class Db
             $i++;
         }
 
-        $query = "UPDATE $table SET $fields WHERE {$whereCondition}";
+        $query = "UPDATE `$table` SET $fields WHERE {$whereCondition}";
         return $this->run($query, $values)->rowCount();
     }
 
@@ -172,7 +172,7 @@ class Db
             $limit = "LIMIT $limit";
         }
 
-        $stmt = $this->run("DELETE FROM {$table} WHERE {$whereCondition} {$limit}", $values);
+        $stmt = $this->run("DELETE FROM `{$table}` WHERE {$whereCondition} {$limit}", $values);
         return $stmt->rowCount();
     }
 
@@ -213,6 +213,11 @@ class Db
     }
 
 
+    /**
+     * 마지막 실행된 쿼리를 로그파일에 기록.
+     * @param $stmt
+     * @return void
+     */
     public function logging_last_stmt($stmt)
     {
         error_log($stmt->queryString);
