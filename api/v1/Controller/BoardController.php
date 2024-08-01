@@ -501,7 +501,6 @@ class BoardController
         $response = $response->withHeader('Content-Type', 'application/octet-stream');
         $response = $response->withHeader('Content-Disposition', 'attachment; filename=' . $encoded_file_name);
         $response = $response->withHeader('Content-Length', $file_size);
-        $response = $response->withHeader('Pragma', 'no-cache');
         $response = $response->withHeader('Expires', '0');
 
         $response->getBody()->write(file_get_contents($file_path));
