@@ -19,8 +19,8 @@ trait SchemaHelperTrait
     {
         foreach ($data as $key => $value) {
             if (property_exists($object, $key)) {
-                if ($value === null || $value === '') {
-                    continue; // 값을 제공하지 않은 경우 기본 속성값을 유지
+                if (!$value) { // [], null, 0 등 빈값 일 때 기본 속성값을 유지
+                    continue;
                 }
 
                 // isset()을 사용하여 초기화 여부 확인
@@ -37,7 +37,7 @@ trait SchemaHelperTrait
                             $object->$key = filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
                             break;
                         case 'array':
-                            $object->$key = is_array($value) ? $value : json_decode($value, true);
+                            $object->$key = is_array($value) ? $value : array($value);
                             break;
                         case 'string':
                             $object->$key = (string) $value;
@@ -60,6 +60,6 @@ trait SchemaHelperTrait
      */
     protected function throwException(string $message): void
     {
-        throw new Exception($message, 422);
+        throw new \RuntimeException($message, 422);
     }
 }
