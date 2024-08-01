@@ -40,12 +40,11 @@ function create_refresh_token_table()
             $sql = "CREATE TABLE IF NOT EXISTS `{$g5['member_refresh_token_table']}` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NOT NULL,
-                    `refresh_token` varchar(200) NOT NULL,
+                    `refresh_token` text NOT NULL,
                     `expires_at` datetime NOT NULL,
                     `created_at` datetime NOT NULL,
                     `updated_at` datetime NOT NULL,
                     PRIMARY KEY (`id`),
-                    UNIQUE KEY `refresh_token` (`refresh_token`) USING HASH,
                     KEY `ix_member_refresh_token_mb_id` (`mb_id`),
                     KEY `ix_member_refresh_token_id` (`id`)
                     ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
