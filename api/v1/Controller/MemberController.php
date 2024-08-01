@@ -6,6 +6,7 @@ use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpUnprocessableEntityException;
+use API\Service\MemberImageService;
 use API\Service\MemberService;
 use API\Service\PointService;
 use API\v1\Model\Request\Member\ChangeCertificationEmailRequest;
@@ -19,19 +20,21 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Exception;
 
-require_once __DIR__ . '../../../../lib/mailer.lib.php';
-
+require_once G5_LIB_PATH . '/mailer.lib.php';
 
 class MemberController
 {
     private MemberService $member_service;
+    private MemberImageService $image_service;
     private PointService $point_service;
 
     public function __construct(
         MemberService $member_service,
+        MemberImageService $image_service,
         PointService $point_service
     ) {
         $this->member_service = $member_service;
+        $this->image_service = $image_service;
         $this->point_service = $point_service;
     }
 
@@ -242,6 +245,7 @@ class MemberController
      *      path="/api/v1/members/me",
      *      summary="현재 로그인 회원정보 조회",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="
 JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 - 탈퇴 또는 차단된 회원은 조회할 수 없습니다.
@@ -258,8 +262,8 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
     {
         $member = $request->getAttribute('member');
 
-        $member['mb_icon_path'] = $this->member_service->getMemberImagePath($member['mb_id'], 'icon');
-        $member['mb_image_path'] = $this->member_service->getMemberImagePath($member['mb_id'], 'image');
+        $member['mb_icon_path'] = $this->image_service->getMemberImagePath($member['mb_id'], 'icon');
+        $member['mb_image_path'] = $this->image_service->getMemberImagePath($member['mb_id'], 'image');
 
         $response_data = new GetMemberMeResponse($member);
 
@@ -271,6 +275,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/members/{mb_id}",
      *      summary="회원정보 조회",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="
 회원 정보를 조회합니다.
 - 자신&상대방의 정보가 공개 설정된 경우 조회 가능합니다.
@@ -292,8 +297,8 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         $this->member_service->verifyMemberProfile($member, $login_member);
 
-        $member['mb_icon_path'] = $this->member_service->getMemberImagePath($mb_id, 'icon');
-        $member['mb_image_path'] = $this->member_service->getMemberImagePath($mb_id, 'image');
+        $member['mb_icon_path'] = $this->image_service->getMemberImagePath($mb_id, 'icon');
+        $member['mb_image_path'] = $this->image_service->getMemberImagePath($mb_id, 'image');
 
         $response_data = new GetMemberResponse($member);
 
@@ -305,6 +310,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member",
      *      summary="회원정보 수정",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="JWT 토큰을 통해 인증된 회원 정보를 수정합니다.",
      *      @OA\RequestBody(
      *          required=true,
@@ -351,6 +357,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member/images",
      *      summary="회원 아이콘&이미지 수정",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="JWT 토큰을 통해 인증된 회원의 아이콘 & 이미지를 수정합니다.",
      *      @OA\RequestBody(
      *          required=true,
@@ -382,13 +389,13 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
         try {
             if ($request_data['del_mb_img']) {
-                $this->member_service->deleteMemberImage($member['mb_id'], 'image');
+                $this->image_service->deleteMemberImage($member['mb_id'], 'image');
             }
             if ($request_data['del_mb_icon']) {
-                $this->member_service->deleteMemberImage($member['mb_id'], 'icon');
+                $this->image_service->deleteMemberImage($member['mb_id'], 'icon');
             }
-            $this->member_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
-            $this->member_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
+            $this->image_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
+            $this->image_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
 
             return api_response_json($response, array("message" => "회원 아이콘/이미지가 수정되었습니다."));
         } catch (Exception $e) {
@@ -405,6 +412,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member",
      *      summary="회원탈퇴",
      *      tags={"회원"},
+     *      security={ {"Oauth2Password": {}} },
      *      description="JWT 토큰을 통해 인증된 회원을 탈퇴합니다.
 - 실제로 데이터가 삭제되지 않고, 탈퇴 처리만 진행됩니다.
 ",

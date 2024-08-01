@@ -6,9 +6,6 @@ use API\Service\AutosaveService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-/**
- * @OA\Tag(name="자동 임시저장", description="자동 저장 API")
- */
 class AutosaveController
 {
 
@@ -24,7 +21,7 @@ class AutosaveController
      *     path="/api/v1/autosaves",
      *     summary="임시저장된 글 목록 조회",
      *     tags={"자동 임시저장"},
-     * security={{"bearerAuth": {}}},
+     *      security={ {"Oauth2Password": {}} },
      * @OA\Response (
      *     response="200",
      *     description="임시저장된 글 목록 조회 성공",
@@ -65,7 +62,7 @@ class AutosaveController
      *     path="/api/v1/autosaves/{as_id}",
      *     summary="임시저장된 글 조회",
      *     tags={"자동 임시저장"},
-     *     security={{"bearerAuth": {}}},
+     *      security={ {"Oauth2Password": {}} },
      *     @OA\Parameter (
      *      name="as_id",
      *      in="path",
@@ -103,7 +100,7 @@ class AutosaveController
      *     path="/api/v1/autosaves/count",
      *     summary="임시저장된 글 갯수 조회",
      *     tags={"자동 임시저장"},
-     *     security={{"bearerAuth": {}}},
+     *      security={ {"Oauth2Password": {}} },
      *     @OA\Response (
      *     response="200",
      *     description="임시저장된 글 갯수 조회 성공",

@@ -3,7 +3,7 @@
 namespace API\Middleware;
 
 use API\Exceptions\HttpNotFoundException;
-use API\Service\BoardService;
+use API\Service\WriteService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -14,11 +14,11 @@ use Slim\Routing\RouteContext;
  */
 class WriteMiddleware
 {
-    private BoardService $board_service;
+    private WriteService $write_service;
 
-    public function __construct(BoardService $board_service)
+    public function __construct(WriteService $write_service)
     {
-        $this->board_service = $board_service;
+        $this->write_service = $write_service;
     }
 
     public function __invoke(Request $request, RequestHandler $handler): Response
@@ -29,7 +29,7 @@ class WriteMiddleware
         $routeArguments = $route->getArguments();
         $wr_id = $routeArguments['wr_id'] ?? null;
 
-        $write = $this->board_service->fetchWriteById((int)$wr_id);
+        $write = $this->write_service->fetchWrite((int)$wr_id);
 
         if (!$write) {
             throw new HttpNotFoundException($request, '존재하지 않는 게시글입니다.');

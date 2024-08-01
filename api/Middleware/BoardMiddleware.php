@@ -8,6 +8,7 @@ use API\Service\BoardPermission;
 use API\Service\BoardService;
 use API\Service\CommentService;
 use API\Service\GroupService;
+use API\Service\WriteService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -23,19 +24,22 @@ class BoardMiddleware
     private BoardPermission $board_permission;
     private BoardFileService $file_service;
     private CommentService $comment_service;
+    private WriteService $write_service;
 
     public function __construct(
         GroupService $group_service,
         BoardService $board_service,
         BoardPermission $board_permission,
         BoardFileService $file_service,
-        CommentService $comment_service
+        CommentService $comment_service,
+        WriteService $write_service
     ) {
         $this->group_service = $group_service;
         $this->board_service = $board_service;
         $this->board_permission = $board_permission;
         $this->file_service = $file_service;
         $this->comment_service = $comment_service;
+        $this->write_service = $write_service;
     }
 
     public function __invoke(Request $request, RequestHandler $handler): Response
@@ -48,7 +52,7 @@ class BoardMiddleware
 
         $routeArguments = $route->getArguments();
         $bo_table = $routeArguments['bo_table'] ?? null;
-        $board = $this->board_service->fetchBoardByTable($bo_table);
+        $board = $this->board_service->fetchBoard($bo_table);
 
         if (!$board) {
             throw new HttpNotFoundException($request, '존재하지 않는 게시판입니다.');
@@ -66,6 +70,7 @@ class BoardMiddleware
         $this->board_permission->setGroup($group);
         $this->file_service->setBoard($board);
         $this->comment_service->setBoard($board);
+        $this->write_service->setBoard($board);
 
         return $handler->handle($request);
     }

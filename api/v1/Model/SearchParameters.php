@@ -2,17 +2,11 @@
 
 namespace API\v1\Model;
 
-use API\v1\Traits\SchemaHelperTrait;
-
-use API\Service\BoardService;
-
 /**
  * 검색 파라미터 클래스
  */
 class SearchParameters
 {
-    use SchemaHelperTrait;
-
     /**
      * 정렬 필드
      * @OA\Parameter(name="sst", in="query", @OA\Schema(type="string", default=""))
@@ -50,66 +44,20 @@ class SearchParameters
     public int $spt = 0;
 
     /**
-     * 최소 검색 시작 위치 (wr_num)
+     * 게시판 그룹 ID
+     * @OA\Parameter(name="gr_id", in="query", @OA\Schema(type="string", default=""))
      */
-    public int $min_spt = 0;
+    public string $gr_id = '';
 
     /**
-     * 검색 단위 (config Table)
+     * 게시글 검색 유형(게시글/댓글)
+     * @OA\Parameter(name="view", in="query", @OA\Schema(type="string", default="", enum={"write", "comment"}))
      */
-    public int $search_part = 0;
+    public string $view = '';
 
     /**
-     * 검색 여부
+     * 회원 ID
+     * @OA\Parameter(name="mb_id", in="query", @OA\Schema(type="string", default=""))
      */
-    public bool $is_search = false;
-
-    /**
-     * @param BoardService $board_service 게시판 서비스 객체
-     * @param array $data 요청 데이터
-     * @param array|null $config 설정 데이터
-     */
-    public function __construct(BoardService $board_service, array $config, array $data = [])
-    {
-        $this->mapDataToProperties($this, $data);
-
-        $this->sanitizeParameters();
-        $this->checkIfSearch();
-        $this->initializeSearchPartParameters($board_service, $config);
-    }
-
-    /**
-     * 파라미터 정리
-     */
-    private function sanitizeParameters(): void
-    {
-        $this->stx = trim(stripslashes(strip_tags($this->stx)));
-        $this->sfl = trim($this->sfl);
-    }
-
-    /**
-     * 검색 여부 확인
-     */
-    private function checkIfSearch(): void
-    {
-        if ($this->sca || $this->stx || $this->stx === '0') {
-            $this->is_search = true;
-        }
-    }
-
-    /**
-     * 검색 단위 파라미터 초기화
-     */
-    private function initializeSearchPartParameters(BoardService $board_service, array $config): void
-    {
-        if (!$this->is_search) {
-            return;
-        }
-
-        $this->min_spt = $board_service->getMinimumWriteNumber();
-        if (empty($this->spt)) {
-            $this->spt = $this->min_spt;
-        }
-        $this->search_part = (int)$config['cf_search_part'];
-    }
+    public string $mb_id = '';
 }

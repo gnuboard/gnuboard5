@@ -386,3 +386,11 @@ function get_gnuconfig()
     $config_table = $GLOBALS['g5']['config_table'];
     return Db::getInstance()->run("SELECT * FROM {$config_table}")->fetch();
 }
+
+/**
+ * 추천/비추천 단어 반환
+ */
+function get_good_word(string $good_type)
+{
+    return $good_type === 'good' ? '추천' : '비추천';
+}

@@ -2,6 +2,7 @@
 
 namespace API\v1\Routers;
 
+use API\Middleware\AccessTokenAuthMiddleware;
 use API\Middleware\BoardMiddleware;
 use API\Middleware\CommentMiddleware;
 use API\Middleware\ConfigMiddleware;
@@ -34,8 +35,12 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
                 ->add(CommentMiddleware::class);
         })
         ->add(WriteMiddleware::class);
-    });
+    })
+    ->add(OptionalAccessTokenAuthMiddleware::class);
+
+    $group->post('/writes/{wr_id}/{good_type}', [BoardController::class, 'goodWrite'])
+        ->add(WriteMiddleware::class)
+        ->add(AccessTokenAuthMiddleware::class);
 })
-->add(OptionalAccessTokenAuthMiddleware::class)
 ->add(BoardMiddleware::class)
 ->add(ConfigMiddleware::class);

@@ -73,6 +73,7 @@ class CommentService
 
         if ($member) {
             $data->mb_id = $member['mb_id'];
+            $data->wr_name = $member['mb_name'];
             $data->wr_email = $member['mb_email'];
             $data->wr_homepage = $member['mb_homepage'];
         }

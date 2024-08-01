@@ -4,7 +4,10 @@ namespace API\v1\Routers;
 
 use API\Middleware\ConfigMiddleware;
 use API\v1\Controller\GroupController;
+use Slim\Routing\RouteCollectorProxy;
 
-
-$app->get('/groups/{gr_id}/boards', [GroupController::class, 'getBoards'])
+$app->group('/groups', function (RouteCollectorProxy $group) {
+    $group->get('', [GroupController::class, 'getGroups']);
+    $group->get('/{gr_id}/boards', [GroupController::class, 'getBoards']);
+})
     ->add(ConfigMiddleware::class);

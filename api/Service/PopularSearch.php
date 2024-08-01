@@ -33,12 +33,12 @@ class PopularSearch
     }
 
     /**
-     * 인기 키워드 추가
-     * @throw \PDOException 쿼리 실패시
-     * @param $keyword
+     * 인기 검색어 추가
+     * @param string $keyword 검색어
      * @return bool
      */
-    public function add_keyword($keyword)
+    // @throws \PDOException 쿼리 실패시
+    public function add_keyword(string $keyword): bool
     {
         $popular_search_table = $GLOBALS['g5']['popular_table'];
         $query = "INSERT INTO {$popular_search_table} (pp_word, pp_date, pp_ip) VALUES (:pp_word, :pp_date, :pp_ip)";
@@ -50,13 +50,13 @@ class PopularSearch
             ]);
             return $stmt->rowCount() > 0;
         } catch (\PDOException $e) {
-            $error = Db::getInstance()->getPdo()->errorInfo();
-            // 1062: MYSQL duplicate key 오류번호
-            if (isset($error[1]) && $error[1] === 1062) {
-                return true;
-            }
-            throw $e;
+            // $error = Db::getInstance()->getPdo()->errorInfo();
+            // // 1062: MYSQL duplicate key 오류번호
+            // if (isset($error[1]) && $error[1] === 1062) {
+            //     return true;
+            // }
+            // throw $e;
+            return false;
         }
     }
-
 }

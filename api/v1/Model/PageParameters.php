@@ -32,20 +32,21 @@ class PageParameters
     public int $offset = 0;
 
     /**
-     * @param array $config 기본환경설정
-     * @param array|null $data 요청 데이터
-     * @param array|null $board 게시판 설정
+     * @param array $data 요청 데이터
+     * @param array $config 기본환경설정 (결과 수 기본값 설정)
+     * @param int $page_rows 표시할 페이지당 결과 수
+     * @param int $mobile_page_rows 모바일에서 표시할 페이지당 결과 수
      */
-    public function __construct(array $data, array $config, array $board = [])
+    public function __construct(array $data, array $config, int $page_rows = 0, int $mobile_page_rows = 0)
     {
         $this->mapDataToProperties($this, $data);
 
         // per_page값이 없을 경우 게시판 설정값 반영
         if ($this->per_page <= 0) {
             if ($this->is_mobile) {
-                $this->per_page = $board['bo_mobile_page_rows'] ?? $config['cf_mobile_page_rows'];
+                $this->per_page = $mobile_page_rows ?: (int)$config['cf_mobile_page_rows'];
             } else {
-                $this->per_page = $board['bo_page_rows'] ?? $config['cf_page_rows'];
+                $this->per_page = $page_rows ?: (int)$config['cf_page_rows'];
             }
         }
 

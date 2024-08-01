@@ -3,7 +3,7 @@
 namespace API\Middleware;
 
 use API\Exceptions\HttpNotFoundException;
-use API\Service\BoardService;
+use API\Service\WriteService;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -14,11 +14,11 @@ use Slim\Routing\RouteContext;
  */
 class CommentMiddleware
 {
-    private BoardService $board_service;
+    private WriteService $write_service;
 
-    public function __construct(BoardService $board_service)
+    public function __construct(WriteService $write_service)
     {
-        $this->board_service = $board_service;
+        $this->write_service = $write_service;
     }
 
     public function __invoke(Request $request, RequestHandler $handler): Response
@@ -29,7 +29,7 @@ class CommentMiddleware
         $routeArguments = $route->getArguments();
         $comment_id = $routeArguments['comment_id'] ?? null;
 
-        $comment = $this->board_service->fetchWriteById((int)$comment_id);
+        $comment = $this->write_service->fetchWrite((int)$comment_id);
 
         if (!$comment) {
             throw new HttpNotFoundException($request, '존재하지 않는 댓글입니다.');
