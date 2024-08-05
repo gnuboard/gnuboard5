@@ -124,8 +124,8 @@ class BoardController
 
             // 검색 조건 및 페이징 처리
             $query_params = $request->getQueryParams();
-            $page_rows = (int)$board['bo_page_rows'] ?? 0;
-            $mobile_page_rows = (int)$board['bo_mobile_page_rows'] ?? 0;
+            $page_rows = (int)($board['bo_page_rows'] ?? 0);
+            $mobile_page_rows = (int)($board['bo_mobile_page_rows'] ?? 0);
             $page_params = new PageParameters($query_params, $config, $page_rows, $mobile_page_rows);
             $search_params = new SearchRequest($this->write_service, $config, $query_params);
 
@@ -166,11 +166,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -204,8 +206,8 @@ class BoardController
             // TODO: include 제거로 인한 썸네일 처리 오류 해결.
             // get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
             $thumb = [];
-            $fetch_prev = $this->write_service->fetchPrevWrite($write, $params);
-            $fetch_next = $this->write_service->fetchNextWrite($write, $params);
+            $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
+            $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev, $params);
             $next = new NeighborWrite($board['bo_table'], $fetch_next, $params);
 

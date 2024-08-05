@@ -17,6 +17,12 @@ class CreateWriteRequest
     use SchemaHelperTrait;
 
     /**
+     * 게시글 순서값
+     * @OA\Property(example=-1)
+     */
+    public int $wr_num = 0;
+
+    /**
      * 게시글 제목
      * @OA\Property(example="제목")
      */
@@ -105,7 +111,7 @@ class CreateWriteRequest
      * 부모글 ID(답글일 경우)
      * @OA\Property(example=false)
      */
-    public int $wr_parent = 0;
+    public ?int $wr_parent = 0;
 
     /**
      * @param BoardPermission $permission  게시판 권한 

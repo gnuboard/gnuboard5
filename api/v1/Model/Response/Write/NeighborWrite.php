@@ -21,7 +21,7 @@ class NeighborWrite
 
     /**
      * 게시글 링크
-     * @OA\Property(example="http://example.com/bbs/board.php?bo_table=free&wr_id=1")
+     * @OA\Property(example="http://example.com/free/1")
      */
     public string $href = "";
 
@@ -37,6 +37,8 @@ class NeighborWrite
 
         // TODO: include 제거로 인한 url 처리 오류 해결.
         // get_pretty_url($bo_table, $data['wr_id']);
-        $this->href = "";
+        if(isset($data['wr_id'])) {
+            $this->href = G5_URL . "$bo_table/writes/{$data['wr_id']}";
+        }
     }
 }
