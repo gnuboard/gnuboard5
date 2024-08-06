@@ -51,16 +51,16 @@ use PDOException;
  */
 class HttpErrorHandler extends SlimErrorHandler
 {
-    public const BAD_REQUEST = 'BAD_REQUEST';
-    public const UNAUTHENTICATED = 'UNAUTHENTICATED';
-    public const FORBIDDEN = 'FORBIDDEN';
-    public const RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND';
-    public const NOT_ALLOWED = 'NOT_ALLOWED';
-    public const CONFLICT = 'CONFLICT';
-    public const UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY';
-    public const SERVER_ERROR = 'SERVER_ERROR';
-    public const NOT_IMPLEMENTED = 'NOT_IMPLEMENTED';
-    public const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';
+    public const BAD_REQUEST = 'Bad Request';
+    public const UNAUTHENTICATED = 'Unauthenticated';
+    public const FORBIDDEN = 'Forbidden';
+    public const RESOURCE_NOT_FOUND = 'Resource Not Found';
+    public const NOT_ALLOWED = 'Not Allowed';
+    public const CONFLICT = 'Conflict';
+    public const UNPROCESSABLE_ENTITY = 'Unprocessable Entity';
+    public const SERVER_ERROR = 'Server Error';
+    public const NOT_IMPLEMENTED = 'Not Implemented';
+    public const INSUFFICIENT_PRIVILEGES = 'Insufficient Privileges';
 
     protected function respond(): ResponseInterface
     {
@@ -135,7 +135,7 @@ class HttpErrorHandler extends SlimErrorHandler
             ],
         ];
 
-        $payload = json_encode($error, JSON_PRETTY_PRINT);
+        $payload = json_encode($error, JSON_UNESCAPED_UNICODE);
 
         $response = $this->responseFactory->createResponse($statusCode);
         $response->getBody()->write($payload);
