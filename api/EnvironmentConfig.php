@@ -45,6 +45,7 @@ class EnvironmentConfig
         if(!trim($_ENV['REFRESH_TOKEN_SECRET_KEY'])) {
             throw new \Exception("env REFRESH_TOKEN_SECRET_KEY is empty");
         }
+        $this->refresh_token_secret_key = $_ENV['REFRESH_TOKEN_SECRET_KEY'];
         $this->refresh_token_expire_minutes = isset($_ENV['REFRESH_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['REFRESH_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES;
         $this->auth_issuer = $_ENV['AUTH_ISSUER'] ?? self::DEFAULT_AUTH_ISSUER;
         $this->auth_audience = $_ENV['AUTH_AUDIENCE'] ?? self::DEFAULT_AUTH_AUDIENCE;
