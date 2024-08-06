@@ -118,25 +118,25 @@ class Board
 
     /**
      * 읽기 포인트
-     * @OA\Property()
+     * @OA\Property
      */
     public int $bo_read_point = 0;
 
     /**
      * 쓰기 포인트
-     * @OA\Property()
+     * @OA\Property
      */
     public int $bo_write_point = 0;
 
     /**
      * 댓글 포인트
-     * @OA\Property()
+     * @OA\Property
      */
     public int $bo_comment_point = 0;
 
     /**
      * 다운로드 포인트
-     * @OA\Property()
+     * @OA\Property
      */
     public int $bo_download_point = 0;
 

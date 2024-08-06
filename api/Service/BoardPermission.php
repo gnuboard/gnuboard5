@@ -223,7 +223,7 @@ class BoardPermission
 
     /**
      * 추천/비추천 권한 체크
-     * @param array $member 사용자 정보
+     * @param string $mb_id
      * @param array $write 글 정보
      * @param string $type good|nogood
      * @return void
@@ -555,7 +555,7 @@ class BoardPermission
 
         if (
             empty($member['mb_id'])
-            || ($this->board['bo_use_cert'] == 'cert' && !$member['mb_certify'])
+            || ($this->board['bo_use_cert'] === 'cert' && !$member['mb_certify'])
         ) {
             $this->throwException(self::ERROR_NO_ACCESS_CERT);
         }
@@ -564,7 +564,7 @@ class BoardPermission
             $this->throwException(self::ERROR_NO_ACCESS_CERT_CHANGED);
         }
 
-        if ($this->board['bo_use_cert'] == 'adult' && !$member['mb_adult']) {
+        if ($this->board['bo_use_cert'] === 'adult' && !$member['mb_adult']) {
             $this->throwException(self::ERROR_NO_ACCESS_ADULT);
         }
     }
@@ -623,7 +623,7 @@ class BoardPermission
      */
     private function checkMemberLevel(array $member, int $level, string $message): void
     {
-        $member_level = isset($member['mb_level']) ? $member['mb_level'] : 1;
+        $member_level = $member['mb_level'] ?? 1;
         if ($member_level < $level) {
             $this->throwException($message);
         }

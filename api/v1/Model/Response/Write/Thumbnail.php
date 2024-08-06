@@ -16,19 +16,19 @@ class Thumbnail
 
     /**
      * 이미지 경로
-     * @OA\Property()
+     * @OA\Property
      */
     public string $src = "";
 
     /**
      * 대체 텍스트
-     * @OA\Property()
+     * @OA\Property
      */
     public string $alt = "";
 
     /**
      * 이미지 없음 대체 텍스트
-     * @OA\Property()
+     * @OA\Property
      */
     public string $noimg = "";
 

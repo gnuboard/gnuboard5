@@ -28,7 +28,7 @@ class BoardNewsResponse
 
     /**
      * 현재 페이지
-     * @OA\Property()
+     * @OA\Property
      */
     public int $current_page = 0;
 

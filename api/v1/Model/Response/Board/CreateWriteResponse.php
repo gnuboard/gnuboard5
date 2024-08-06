@@ -12,13 +12,13 @@ class CreateWriteResponse
 {
     /**
      * 게시글 작성 결과
-     * @OA\Property()
+     * @OA\Property
      */
     public string $result = "";
 
     /**
      * 게시글 아이디
-     * @OA\Property()
+     * @OA\Property
      */
     public int $wr_id = 0;
 

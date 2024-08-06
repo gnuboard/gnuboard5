@@ -16,25 +16,25 @@ class GetWritesResponse
 
     /**
      * 총 레코드 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $total_records = 0;
 
     /**
      * 총 페이지 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $total_pages = 0;
 
     /**
      * 현재 페이지
-     * @OA\Property()
+     * @OA\Property
      */
     public int $current_page = 0;
 
     /**
      * 모바일 여부
-     * @OA\Property()
+     * @OA\Property
      */
     public bool $is_mobile = false;
 
@@ -74,13 +74,13 @@ class GetWritesResponse
 
     /**
      * 이전검색 포인터
-     * @OA\Property()
+     * @OA\Property
      */
     public int $prev_spt = 0;
 
     /**
      * 다음검색 포인터
-     * @OA\Property()
+     * @OA\Property
      */
     public int $next_spt = 0;
 

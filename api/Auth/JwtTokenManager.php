@@ -22,14 +22,14 @@ class JwtTokenManager
 
     public function secret_key(string $type = 'access'): string
     {
-        return $type == 'refresh'
+        return $type === 'refresh'
             ? $this->env_config->refresh_token_secret_key
             : $this->env_config->access_token_secret_key;
     }
 
     public function expire_minutes(string $type = 'access'): int
     {
-        return $type == 'refresh'
+        return $type === 'refresh'
             ? $this->env_config->refresh_token_expire_minutes
             : $this->env_config->access_token_expire_minutes;
     }

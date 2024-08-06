@@ -10,38 +10,32 @@ namespace API\v1\Model\Response\Autosave;
 class Autosave
 {
     /**
-     * @var int
-     * @OA\Property(property="as_id", type="integer")
+     * @OA\Property
      */
-    public $as_id;
+    public int $as_id = 0;
 
     /**
-     * @var string
-     * @OA\Property(property="mb_id", type="string")
+     * @OA\Property
      */
-    public $mb_id;
+    public string $mb_id;
 
     /**
-     * @var int
-     * @OA\Property(property="as_uid", type="integer")
+     * @OA\Property
      */
-    public $as_uid;
+    public int $as_uid;
 
     /**
-     * @var string
-     * @OA\Property(property="as_subject", type="string"),
+     * @OA\Property
      */
-    public $as_subject;
+    public string $as_subject;
 
     /**
-     * @var string
-     * @OA\Property(property="as_content", type="string")
+     * @OA\Property
      */
-    public $as_content;
+    public string $as_content;
 
     /**
-     * @var string
-     * @OA\Property(property="as_datetime", type="string", format="date-time")
+     * @OA\Property(format="date-time")
      */
-    public $as_datetime;
+    public string $as_datetime;
 }

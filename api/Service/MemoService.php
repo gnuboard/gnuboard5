@@ -17,7 +17,7 @@ class MemoService
     public function fetch_total_records($me_type, $mb_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
-        if ($me_type == 'recv') {
+        if ($me_type === 'recv') {
             $where = "me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
         } else {
             $where = "me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";

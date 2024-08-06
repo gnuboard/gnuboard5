@@ -17,13 +17,13 @@ class GoodWriteResponse extends BaseResponse
 
     /**
      * 게시글 추천 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $good = 0;
 
     /**
      * 게시글 비추천 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $nogood = 0;
 

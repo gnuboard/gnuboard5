@@ -16,13 +16,13 @@ class ScrapsResponse
 
     /**
      * 총 레코드 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $total_records = 0;
 
     /**
      * 총 페이지 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $total_pages = 0;
 

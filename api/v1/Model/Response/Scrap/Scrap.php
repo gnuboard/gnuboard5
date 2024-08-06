@@ -16,7 +16,7 @@ class Scrap
 
     /**
      * 스크랩 ID
-     * @OA\Property()
+     * @OA\Property
      */
     public int $ms_id;
 

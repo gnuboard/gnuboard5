@@ -16,14 +16,12 @@ class AutosaveListResponse
     public $autosaves;
 
     /**
-     * @var int
-     * @OA\Property(property="total_records", type="integer")
+     * @OA\Property
      */
-    public $total_records;
+    public int $total_records;
 
     /**
-     * @var int
-     * @OA\Property(property="total_pages", type="integer")
+     * @OA\Property
      */
-    public $total_pages;
+    public int $total_pages;
 }

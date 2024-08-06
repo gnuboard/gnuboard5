@@ -16,19 +16,19 @@ class File
 
     /**
      * 원본 파일명
-     * @OA\Property()
+     * @OA\Property
      */
     public string $bf_source = "";
 
     /**
      * 파일 크기
-     * @OA\Property()
+     * @OA\Property
      */
     public int $bf_filesize = 0;
 
     /**
      * 다운로드 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $bf_download = 0;
 
@@ -40,7 +40,7 @@ class File
 
     /**
      * 파일 경로
-     * @OA\Property()
+     * @OA\Property
      */
     public string $bf_file = "";
 

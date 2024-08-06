@@ -131,9 +131,9 @@ class BoardNewService
         }
 
         if (!empty($search_params['view'])) {
-            if ($search_params['view'] == 'write') {
+            if ($search_params['view'] === 'write') {
                 $where[] = 'a.wr_id = wr_parent';
-            } elseif ($search_params['view'] == 'comment') {
+            } elseif ($search_params['view'] === 'comment') {
                 $where[] = 'a.wr_id <> wr_parent';
             }
         }

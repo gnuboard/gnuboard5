@@ -5,7 +5,7 @@ use API\OASGenerator;
 require_once '../../../vendor/autoload.php';
 require_once '../../../common.php';
 
-$version = isset($_GET['version']) ? $_GET['version'] : null;
+$version = $_GET['version'] ?? null;
 $open_api = new OASGenerator($version);
 $open_api->generate();
 $swagger_url = $open_api->getOASUrl();

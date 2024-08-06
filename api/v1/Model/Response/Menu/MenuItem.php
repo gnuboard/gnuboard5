@@ -12,48 +12,48 @@ class MenuItem
 {
     /**
      * 메뉴 ID
-     * @OA\Property(type="integer")
+     * @OA\Property
      */
     public int $me_id;
 
     /**
      * 이름
-     * @OA\Property(type="string")
+     * @OA\Property
      */
     public string $me_name;
 
     /**
-     * @OA\Property(type="string")
+     * @OA\Property
      */
     public string $me_link;
 
     /**
      * 메뉴 순서
-     * @OA\Property(type="integer")
+     * @OA\Property
      */
     public int $me_order;
 
     /**
      * 모바일에서 사용여부
-     * @OA\Property(type="integer")
+     * @OA\Property
      */
     public int $me_mobile_use;
 
     /**
      * 새창으로 열지 여부
-     * @OA\Property(type="string")
+     * @OA\Property
      */
     public string $me_target;
 
     /**
      * Menu 구분코드
-     * @OA\Property(type="string")
+     * @OA\Property
      */
     public string $me_code;
 
     /**
      * 메뉴 사용여부
-     * @OA\Property(type="integer")
+     * @OA\Property
      */
     public int $me_use;
 

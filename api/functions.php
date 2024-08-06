@@ -160,7 +160,7 @@ function is_valid_utf8_string(string $str): bool
 /**
  * 아이디 형식 검사
  * - register.lib.php 의 valid_mb_id 함수를 참고하여 작성
- * @param string $id 아이디
+ * @param string $mb_id
  * @return bool 아이디 형식이면 true, 아니면 false
  */
 function is_valid_mb_id(string $mb_id): bool

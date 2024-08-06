@@ -16,13 +16,13 @@ class Comment
 
     /**
      * 댓글 ID
-     * @OA\Property()
+     * @OA\Property
      */
     public int $wr_id = 0;
 
     /**
      * 부모 글 ID
-     * @OA\Property()
+     * @OA\Property
      */
     public int $wr_parent = 0;
 
@@ -82,43 +82,43 @@ class Comment
 
     /**
      * 댓글 수
-     * @OA\Property()
+     * @OA\Property
      */
     public int $wr_comment = 0;
 
     /**
      * 대댓글
-     * @OA\Property()
+     * @OA\Property
      */
     public string $wr_comment_reply = "";
 
     /**
      * 답글 여부
-     * @OA\Property()
+     * @OA\Property
      */
     public bool $is_reply = false;
 
     /**
      * 수정 가능 여부
-     * @OA\Property()
+     * @OA\Property
      */
     public bool $is_edit = false;
 
     /**
      * 삭제 가능 여부
-     * @OA\Property()
+     * @OA\Property
      */
     public bool $is_del = false;
 
     /**
      * 비밀글 여부
-     * @OA\Property()
+     * @OA\Property
      */
     public bool $is_secret = false;
 
     /**
      * 비밀글 내용 여부
-     * @OA\Property()
+     * @OA\Property
      */
     public bool $is_secret_content = false;
 
