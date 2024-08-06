@@ -208,8 +208,8 @@ class BoardController
             $thumb = [];
             $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
             $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
-            $prev = new NeighborWrite($board['bo_table'], $fetch_prev, $params);
-            $next = new NeighborWrite($board['bo_table'], $fetch_next, $params);
+            $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
+            $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
             $write_data = array_merge($write, array(
                 "comments" => $this->comment_service->getComments($write['wr_id']),
@@ -379,6 +379,7 @@ class BoardController
             } else {
                 $wr_password = $request_body['wr_password'] ?? '';
                 $this->board_permission->updateWriteByNonMember($member, $write, $wr_password);
+                unset($request_data->wr_password);
             }
 
             // 게시글 수정

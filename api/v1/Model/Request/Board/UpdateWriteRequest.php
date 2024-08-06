@@ -233,10 +233,7 @@ class UpdateWriteRequest
     public function initializeWriterData(array $write): void
     {
         if ($write['mb_id']) {
-            unset($this->wr_name);
-            unset($this->wr_password);
-            unset($this->wr_email);
-            unset($this->wr_homepage);
+            unset($this->wr_name, $this->wr_password, $this->wr_email, $this->wr_homepage);
         } else {
             $this->wr_name = addslashes(clean_xss_tags($this->wr_name));
             $this->wr_password = get_encrypt_string($this->wr_password);
