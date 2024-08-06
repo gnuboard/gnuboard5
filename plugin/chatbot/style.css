@@ -10,7 +10,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 14px; /* PC 기본 글꼴 크기를 14px로 설정 */
 }
 
 body {
@@ -53,7 +53,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 10px;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 14px; /* PC 입력 필드 글꼴 크기 */
     box-sizing: border-box;
 }
 
@@ -65,7 +65,7 @@ body {
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px; /* PC 버튼 글꼴 크기 */
     transition: background-color 0.3s;
 }
 
@@ -85,7 +85,7 @@ body {
     max-width: 80%;
     white-space: pre-wrap;
     word-wrap: break-word;
-    font-size: 16px;
+    font-size: 14px; /* PC 메시지 글꼴 크기 */
 }
 
 .user {
@@ -117,7 +117,7 @@ body {
     padding: 10px;
     border-radius: 10px;
     margin-right: 10px;
-    font-size: 16px;
+    font-size: 14px; /* PC 입력 필드 글꼴 크기 */
     min-width: 0;
 }
 
@@ -128,7 +128,7 @@ body {
     padding: 10px 15px;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px; /* PC 버튼 글꼴 크기 */
     transition: background-color 0.3s;
     white-space: nowrap;
 }
@@ -159,7 +159,7 @@ body {
 
 .loading-text {
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 14px; /* PC 로딩 텍스트 글꼴 크기 */
     color: #666;
 }
 
@@ -178,6 +178,7 @@ body {
 @media (max-width: 600px) {
     body {
         align-items: stretch;
+        font-size: 16px; /* 모바일 기본 글꼴 크기 */
     }
 
     .chat-container {
@@ -188,10 +189,23 @@ body {
 
     .chat-header {
         border-radius: 0;
+        font-size: 1.3em;
     }
 
     .chat-messages {
         flex: 1 1 0;
         min-height: 0;
+    }
+
+    .message {
+        font-size: 16px; /* 모바일 메시지 글꼴 크기 */
+    }
+
+    #ai-role, #set-role-button, #user-input, #send-button {
+        font-size: 16px; /* 모바일 입력 필드와 버튼 글꼴 크기 */
+    }
+
+    .loading-text {
+        font-size: 16px; /* 모바일 로딩 텍스트 글꼴 크기 */
     }
 }
