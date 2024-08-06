@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전문가 챗봇</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --chat-bg: #fff;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            background-color: var(--chat-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .role-setting {
+            background-color: var(--background-color);
+            padding: 15px;
+        }
+        #ai-role {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        #set-role-button {
+            width: 100%;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        #set-role-button:hover {
+            background-color: #27ae60;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .message {
+            margin-bottom: 15px;
+            clear: both;
+            max-width: 80%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .user {
+            float: right;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 18px 18px 0 18px;
+            padding: 10px 15px;
+        }
+        .bot {
+            float: left;
+            background-color: #f1f3f5;
+            color: var(--text-color);
+            border-radius: 18px 18px 18px 0;
+            padding: 10px 15px;
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: var(--background-color);
+        }
+        #user-input {
+            flex-grow: 1;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        #send-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        #send-button:hover {
+            background-color: #2980b9;
+        }
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0,0,0,.3);
+            border-radius: 50%;
+            border-top-color: #3498db;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .loading-dots::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header" id="chat-header">
+            ㅇㅇ 전문가 챗봇
+        </div>
+        <div class="role-setting">
+            <input type="text" id="ai-role" placeholder="AI의 역할을 입력하세요">
+            <button id="set-role-button">역할 설정</button>
+        </div>
+        <div class="chat-messages" id="chat-container"></div>
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">응답 생성 중<span class="loading-dots"></span></div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="메시지를 입력하세요...">
+            <button id="send-button">전송</button>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const API_KEY = 'AIzaSyAM0pNncBHCpkw1OBLePFivWPTgUtT46oA';
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+        let conversationHistory = [];
+        let aiRole = "";
+
+        function addMessage(sender, message) {
+            const chatContainer = $('#chat-container');
+            chatContainer.append(`<div class="message ${sender}">${message}</div>`);
+            chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        }
+
+        function setAIRole() {
+            aiRole = $('#ai-role').val().trim();
+            if (aiRole) {
+                conversationHistory = [{ role: 'user', parts: [{ text: `당신은 ${aiRole} 전문가입니다. 이 역할에 맞게 대화해 주세요.` }] }];
+                $('#chat-header').text(`${aiRole} 전문가 챗봇`);
+                addMessage('bot', `AI의 역할이 "${aiRole} 전문가"로 설정되었습니다. 대화를 시작하세요.`);
+            }
+        }
+
+        function formatResponse(text) {
+            const sentenceEndRegex = /[.!?]\s+/g;
+            return text.replace(sentenceEndRegex, match => match + '\n');
+        }
+
+        function sendMessage() {
+            const userInput = $('#user-input').val().trim();
+            if (userInput) {
+                addMessage('user', userInput);
+                $('#user-input').val('');
+                $('#loading').show();
+
+                conversationHistory.push({ role: 'user', parts: [{ text: userInput }] });
+
+                $.ajax({
+                    url: `${API_URL}?key=${API_KEY}`,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        contents: conversationHistory,
+                        generationConfig: {
+                            temperature: 0.9,
+                            topK: 1,
+                            topP: 1,
+                            maxOutputTokens: 2048,
+                        },
+                    }),
+                    success: function(response) {
+                        $('#loading').hide();
+                        const botResponse = response.candidates[0].content.parts[0].text;
+                        const formattedResponse = formatResponse(botResponse);
+                        addMessage('bot', formattedResponse);
+                        conversationHistory.push({ role: 'model', parts: [{ text: botResponse }] });
+                    },
+                    error: function(xhr, status, error) {
+                        $('#loading').hide();
+                        console.error('API 호출 오류:', error);
+                        addMessage('bot', '죄송합니다. 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            $('#send-button').click(sendMessage);
+            $('#set-role-button').click(setAIRole);
+            $('#user-input').keypress(function(e) {
+                if (e.which == 13) {
+                    sendMessage();
+                    return false;
+                }
+            });
+
+            // 초기 메시지
+            addMessage('bot', '안녕하세요! ㅇㅇ 전문가 챗봇입니다.\nAI의 역할을 설정한 후 대화를 시작해 주세요.');
+        });
+    </script>
+</body>
+</html>
