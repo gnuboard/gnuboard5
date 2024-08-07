@@ -25,7 +25,7 @@ class ScrapService
         $query = "SELECT count(*) FROM {$this->table} WHERE mb_id = :mb_id";
 
         $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
-        return $stmt->fetchColumn() ?? 0;
+        return $stmt->fetchColumn() ?: 0;
     }
 
     /**

@@ -32,7 +32,7 @@ class WriteService
         $query = "SELECT COUNT(*) FROM {$this->table} WHERE {$sql_where}";
 
         $stmt = Db::getInstance()->run($query, $search_values);
-        return (int)$stmt->fetchColumn();
+        return $stmt->fetchColumn() ?: 0;
     }
 
     /**

@@ -100,8 +100,9 @@ class CommentService
 
     /**
      * 댓글 정보를 데이터베이스에 등록
+     * @return string|false
      */
-    public function insertComment(object $data): int
+    public function insertComment(object $data): string
     {
         return Db::getInstance()->insert($this->write_table, (array)$data);
     }

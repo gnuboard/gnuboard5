@@ -37,7 +37,7 @@ class MemoService
             'me_type' => $me_type,
             'me_read_datetime' => '0000-00-00 00:00:00'
         ]);
-        return $stmt->fetchColumn();
+        return $stmt->fetchColumn() ?: 0;
     }
 
     /**

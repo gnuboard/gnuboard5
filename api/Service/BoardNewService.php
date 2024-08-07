@@ -33,7 +33,7 @@ class BoardNewService
                   WHERE b.bo_use_search = 1 AND {$sql_where}";
 
         $stmt = Db::getInstance()->run($query, $search_values);
-        return $stmt->fetchColumn() ?? 0;
+        return $stmt->fetchColumn() ?: 0;
     }
 
     /**
@@ -75,8 +75,9 @@ class BoardNewService
 
     /**
      * 최신글 추가
+     * @return string|false
      */
-    public function insert(string $bo_table, int $wr_id, int $wr_parent, string $mb_id = ""): int
+    public function insert(string $bo_table, int $wr_id, int $wr_parent, string $mb_id = "")
     {
         $data = [
             'bo_table' => $bo_table,
@@ -102,7 +103,7 @@ class BoardNewService
     }
 
     /**
-     * 최신글 삭제 (댓글)
+     *  최신글 삭제 (댓글)
      */
     public function deleteByComment(string $bo_table, int $wr_id): void
     {

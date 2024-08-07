@@ -331,7 +331,7 @@ class PointService
         $query = "SELECT count(*) FROM {$this->table} WHERE mb_id = :mb_id ORDER BY po_id DESC";
 
         $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
-        return $stmt->fetchColumn() ?? 0;
+        return $stmt->fetchColumn() ?: 0;
     }
 
     /**
