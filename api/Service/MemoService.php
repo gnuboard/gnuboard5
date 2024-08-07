@@ -8,6 +8,13 @@ class MemoService
 {
 
 
+    private MemberService $member_service;
+
+    public function __construct(MemberService $member_service)
+    {
+        $this->member_service = $member_service;
+    }
+
     /**
      * 메모의 전체 카운트 수 조회
      * @param string $me_type
@@ -103,8 +110,7 @@ class MemoService
     public function send_memo($mb_id, $receiver_ids, $content, $ip)
     {
         $result = $this->get_recive_members($receiver_ids);
-
-        $member_result = get_member($mb_id, 'mb_no');
+        $member_result = $this->member_service->fetchMemberById($mb_id);
         if (!isset($member_result['mb_no'])) {
             return ['error' => '회원 정보가 없습니다.', 'code' => 400];
         }

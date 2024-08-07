@@ -135,7 +135,7 @@ class PointService
             // 소멸포인트가 있으면 내역 추가
             $expire_point = $this->fetchExpirePointSum($mb_id);
             if ($expire_point > 0) {
-                $mb = get_member($mb_id, 'mb_point');  // TODO : PDO를 활용한 방식으로 변경 필요
+                $mb = $this->member_service->fetchMemberById($mb_id);
                 $point = $expire_point * (-1);
                 $data = [
                     'mb_id' => $mb_id,
@@ -208,7 +208,6 @@ class PointService
      */
     public function removePoint(string $mb_id, string $rel_table, string $rel_id, string $rel_action): bool
     {
-        $result = false;
         if (!($rel_table || $rel_id || $rel_action)) {
             return false;
         }
@@ -484,7 +483,6 @@ class PointService
     /**
      * 만료되고 사용한 포인트 조회
      * @param string $mb_id 회원 아이디
-     * @param string $po_id 제외할 포인트 아이디
      * @return array
      */
     protected function fetchExpiredUsedPoints(string $mb_id): array
