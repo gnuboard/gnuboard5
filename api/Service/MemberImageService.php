@@ -15,33 +15,33 @@ class MemberImageService
 
     /**
      * 회원 이미지 경로 반환
-     * TODO: 확장자에 대한 처리를 고민해봐야함.
      * @param string $mb_id 회원 아이디
-     * @param string $type  이미지 타입 (icon, image)
+     * @param string $type 이미지 타입 (icon, image)
      * @return string
      */
     public function getMemberImagePath(string $mb_id, string $type = 'image')
     {
-        $dir = ($type == 'icon') ? self::ICON_DIR : self::IMAGE_DIR;
+        $dir = ($type === 'icon') ? self::ICON_DIR : self::IMAGE_DIR;
         $mb_dir = substr($mb_id, 0, 2);
         return G5_DATA_URL . $dir . '/' . $mb_dir . '/' . $mb_id . '.gif';
     }
 
     /**
      * 회원 이미지 업로드
+     * @param array $config
      * @param string $mb_id 회원 아이디
-     * @param string $image_type 이미지 타입 (icon, image)
+     * @param string $image_type 이미지 용도 (icon, image)
      * @param UploadedFileInterface $file 업로드 파일
      * @return void
-     * @throws Exception
+     * @throws \RandomException
      */
-    public function updateMemberImage(array $config, string $mb_id, string $image_type, UploadedFileInterface $file = null)
+    public function updateMemberImage(array $config, string $mb_id, string $image_type, UploadedFileInterface $file)
     {
         if ($file->getError()) {
             return;
         }
 
-        if ($image_type == "icon") {
+        if ($image_type === "icon") {
             $type_string = "아이콘";
             $base_dir = self::ICON_DIR;
             $limit_size = $config['cf_member_icon_size'];
@@ -55,7 +55,7 @@ class MemberImageService
             $limit_height = $config['cf_member_img_height'];
         }
 
-        // 이미지파일 타입 검사
+        // 이미지파일 확장자 검사
         if (!in_array($file->getClientMediaType(), $this->allowed_media_types)) {
             throw new Exception("gif, jpeg, png 이미지 파일만 업로드 가능합니다.", 404);
         }
@@ -68,16 +68,15 @@ class MemberImageService
 
         // 이미지 경로 생성
         $file_dir = G5_DATA_PATH . $base_dir . "/" . substr($mb_id, 0, 2);
-        $ext = pathinfo($file->getClientFilename(), PATHINFO_EXTENSION);
         $filename = $mb_id;
-        $file_fullname = $filename . "." . $ext;
+        $file_fullname = $filename . "." . 'gif'; // 그누보드 5 와 호환성 유지를 위해 gif 확장자 사용
         if (!is_dir($file_dir)) {
             @mkdir($file_dir, G5_DIR_PERMISSION);
             @chmod($file_dir, G5_DIR_PERMISSION);
         }
 
         if ($file->getError() === UPLOAD_ERR_OK) {
-            moveUploadedFile($file_dir, $file, $filename);
+            $file->moveTo($file_dir . '/' . $file_fullname);
         }
 
         // 이미지 가로 or 세로가 설정값보다 크면 썸네일 생성
@@ -106,7 +105,7 @@ class MemberImageService
      */
     public function deleteMemberImage(string $mb_id, string $image_type)
     {
-        $base_dir = ($image_type == "icon") ? self::ICON_DIR : self::IMAGE_DIR;
+        $base_dir = ($image_type === "icon") ? self::ICON_DIR : self::IMAGE_DIR;
         $path = G5_DATA_PATH . $base_dir . "/" . substr($mb_id, 0, 2) . "/{$mb_id}.*";
 
         foreach (glob($path) as $filename) {

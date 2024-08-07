@@ -10,6 +10,8 @@ use API\v1\Traits\SchemaHelperTrait;
  *     description="댓글 작성 모델",
  * )
  */
+
+#[\AllowDynamicProperties]
 class CreateCommentRequest
 {
     use SchemaHelperTrait;
