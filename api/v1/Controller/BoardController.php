@@ -111,6 +111,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function getWrites(Request $request, Response $response): Response
     {
@@ -227,11 +228,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -322,11 +325,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -352,6 +357,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function updateWrite(Request $request, Response $response): Response
     {
@@ -399,11 +405,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -413,13 +421,13 @@ class BoardController
      *      summary="게시글 파일 업로드",
      *      tags={"게시판"},
      *      description="
-파일을 업로드합니다.
-- multipart/form-data로 전송해야 합니다.
-- 게시판에 설정된 파일 업로드 제한에 따라 파일을 업로드할 수 있습니다.
+    파일을 업로드합니다.
+    - multipart/form-data로 전송해야 합니다.
+    - 게시판에 설정된 파일 업로드 제한에 따라 파일을 업로드할 수 있습니다.
     - 업로드 파일 갯수
     - 파일 크기
     - 파일 설명
-",
+    ",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
@@ -469,11 +477,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -606,9 +616,9 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 
@@ -679,11 +689,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -737,11 +749,13 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -801,9 +815,9 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 
@@ -812,7 +826,7 @@ class BoardController
      *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/{good_type}",
      *      summary="게시글 추천/비추천",
      *      tags={"게시판"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="게시글에 대한 추천/비추천을 처리합니다.",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
@@ -852,9 +866,9 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 }

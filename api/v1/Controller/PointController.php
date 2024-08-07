@@ -24,7 +24,7 @@ class PointController
      *      path="/api/v1/member/points",
      *      summary="회원 포인트 내역 목록 조회",
      *      tags={"포인트"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="JWT 토큰을 통해 인증된 회원의 포인트 내역을 조회합니다.",
      *      @OA\Parameter(ref="#/components/parameters/page"),
      *      @OA\Parameter(ref="#/components/parameters/per_page"),
@@ -63,9 +63,9 @@ class PointController
         } catch (Exception $e) {
             if ($e->getCode() === 422) {
                 throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 }

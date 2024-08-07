@@ -108,9 +108,9 @@ class ScrapController
         } catch (Exception $e) {
             if ($e->getCode() === 422) {
                 throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 

@@ -33,7 +33,7 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
                 ->add(CommentMiddleware::class);
             $group->delete('/comments/{comment_id}', [BoardController::class, 'deleteComment'])
                 ->add(CommentMiddleware::class);
-        })->add(OptionalAccessTokenAuthMiddleware::class)
+        })
         ->add(WriteMiddleware::class);
     })
     ->add(OptionalAccessTokenAuthMiddleware::class);

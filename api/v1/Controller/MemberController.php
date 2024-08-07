@@ -96,13 +96,17 @@ class MemberController
         } catch (Exception $e) {
             if ($e->getCode() === 404) {
                 throw new HttpNotFoundException($request, $e->getMessage());
-            } elseif ($e->getCode() === 409) {
-                throw new HttpConflictException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 409) {
+                throw new HttpConflictException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
 
         // 회원가입 포인트 부여
@@ -129,8 +133,7 @@ class MemberController
             $w = "";
             ob_start();
             include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
 
             $content = run_replace('register_form_update_mail_certify_content', $content, $data->mb_id);
 
@@ -142,8 +145,7 @@ class MemberController
 
             ob_start();
             include_once __DIR__ . '../../../../bbs/register_form_update_mail1.php';
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
 
             $content = run_replace('register_form_update_mail_mb_content', $content, $data->mb_id);
 
@@ -156,8 +158,7 @@ class MemberController
 
             ob_start();
             include_once(__DIR__ . '../../../../bbs/register_form_update_mail2.php');
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
 
             $content = run_replace('register_form_update_mail_admin_content', $content, $data->mb_id);
 
@@ -217,8 +218,7 @@ class MemberController
             $mb_name = $member['mb_name'];
             ob_start();
             include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
 
             mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $data->email, $subject, $content, 1);
 
@@ -228,15 +228,21 @@ class MemberController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            } elseif ($e->getCode() === 404) {
-                throw new HttpNotFoundException($request, $e->getMessage());
-            } elseif ($e->getCode() === 409) {
-                throw new HttpConflictException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 404) {
+                throw new HttpNotFoundException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 409) {
+                throw new HttpConflictException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -245,7 +251,7 @@ class MemberController
      *      path="/api/v1/members/me",
      *      summary="현재 로그인 회원정보 조회",
      *      tags={"회원"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="
 JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 - 탈퇴 또는 차단된 회원은 조회할 수 없습니다.
@@ -275,7 +281,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/members/{mb_id}",
      *      summary="회원정보 조회",
      *      tags={"회원"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="
 회원 정보를 조회합니다.
 - 자신&상대방의 정보가 공개 설정된 경우 조회 가능합니다.
@@ -310,7 +316,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member",
      *      summary="회원정보 수정",
      *      tags={"회원"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="JWT 토큰을 통해 인증된 회원 정보를 수정합니다.",
      *      @OA\RequestBody(
      *          required=true,
@@ -342,11 +348,13 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
         } catch (Exception $e) {
             if ($e->getCode() === 409) {
                 throw new HttpConflictException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 
@@ -357,7 +365,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member/images",
      *      summary="회원 아이콘&이미지 수정",
      *      tags={"회원"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="JWT 토큰을 통해 인증된 회원의 아이콘 & 이미지를 수정합니다.",
      *      @OA\RequestBody(
      *          required=true,
@@ -401,9 +409,9 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
         } catch (Exception $e) {
             if ($e->getCode() === 422) {
                 throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 
@@ -412,7 +420,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
      *      path="/api/v1/member",
      *      summary="회원탈퇴",
      *      tags={"회원"},
-     *      security={ {"Oauth2Password": {}} },
+     *      security={{"Oauth2Password": {}}},
      *      description="JWT 토큰을 통해 인증된 회원을 탈퇴합니다.
 - 실제로 데이터가 삭제되지 않고, 탈퇴 처리만 진행됩니다.
 ",
@@ -491,13 +499,17 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
         } catch (Exception $e) {
             if ($e->getCode() === 404) {
                 throw new HttpNotFoundException($request, $e->getMessage());
-            } elseif ($e->getCode() === 409) {
-                throw new HttpConflictException($request, $e->getMessage());
-            } elseif ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            if ($e->getCode() === 409) {
+                throw new HttpConflictException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
         }
     }
 }

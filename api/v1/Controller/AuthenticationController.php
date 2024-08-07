@@ -102,9 +102,9 @@ Access Token & Refresh Token을 발급합니다.
         } catch (Exception $e) {
             if ($e->getCode() === 422) {
                 throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 
@@ -165,9 +165,9 @@ Refresh Token을 사용하여 새로운 Access Token을 발급합니다.
         } catch (Exception $e) {
             if ($e->getCode() === 422) {
                 throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 }
