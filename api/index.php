@@ -34,9 +34,13 @@ if (file_exists($dbconfig_file)) {
 // Create refresh token table
 create_refresh_token_table();
 
-// Set error display settings
+// 응답 json 에 오류메시지를 같이 출력합니다.
 // - Should be set to false in production
-$displayErrorDetails = true;
+// 실서버에서는 false 이어야 합니다.
+$displayErrorDetails = false;
+if (G5_DEBUG) {
+    $displayErrorDetails = true;
+}
 
 //@todo 임시 전역변수 정리후 삭제대상
 $config = get_gnuconfig();
