@@ -11,27 +11,24 @@ class ContentListResponse
 {
     /**
      * @OA\Property (
-     *     type="integer",
      *     description="전체 레코드 수"
      * )
      */
-    public int $total_records;
+    public int $total_records = 0;
     
     /**
      * @OA\Property (
-     *     type="integer",
      *     description="전체 페이지 수"
      * )
      */
-    public int $total_pages;
+    public int $total_pages = 0;
     
     /**
      * @OA\Property (
-     *     type="array",
      *     @OA\Items(ref="#/components/schemas/ContentResponse")
      * )
      */
-    public array $contents;
+    public array $contents = [];
     
     public function __construct($data)
     {

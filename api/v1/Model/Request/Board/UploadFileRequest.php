@@ -20,19 +20,19 @@ class UploadFileRequest
      * 업로드 파일
      * @OA\Property(property="files[]", type="array", @OA\Items(type="string", format="binary", example=""))
      */
-    public array $files;
+    public array $files = [];
 
     /**
      * 파일 설명
      * @OA\Property(property="file_contents[]", type="array", @OA\Items(type="string", example=""))
      */
-    public array $file_contents;
+    public array $file_contents = [];
 
     /**
      * 기존 파일 삭제여부 (true: 삭제, false: 유지)
      * @OA\Property(property="file_dels[]", type="array", @OA\Items(type="boolean", example="false"))
      */
-    public array $file_dels;
+    public array $file_dels = [];
 
     private const ERROR_NO_UPLOAD_WRITE_FILES = '기존 파일을 삭제하신 후 첨부파일을 %s개 이하로 업로드 해주십시오.';
     private const ERROR_NO_UPLOAD_COUNT = '파일은 %s개 까지만 업로드 가능합니다.';
@@ -44,8 +44,8 @@ class UploadFileRequest
         'pif', 'cpl', 'jar', 'vb', 'vbe', 'ws', 'bas', 'prg', 'scpt', 'scptd', 'app', 'ipa', 'apk', 'dll',
         'sys', 'drv', 'bin', 'inf', 'reg', 'gadget'
     ];
-    private array $board;
-    private array $write;
+    private array $board = [];
+    private array $write = [];
 
     /**
      * @param array $board 게시판 정보

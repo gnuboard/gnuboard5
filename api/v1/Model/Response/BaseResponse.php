@@ -14,7 +14,7 @@ class BaseResponse
      * 응답 메시지
      * @OA\Property(example="string")
      */
-    public string $message;
+    public string $message = '';
 
     /**
      * @param string $message 응답 메시지

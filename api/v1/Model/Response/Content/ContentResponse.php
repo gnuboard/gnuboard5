@@ -15,63 +15,63 @@ class ContentResponse
      *     description="콘텐츠 ID"
      * )
      */
-    public string $co_id;
+    public string $co_id = '';
 
     /**
      * @OA\Property (
      *     description="HTML 사용 여부"
      * )
      */
-    public bool $co_html;
+    public bool $co_html = false;
 
     /**
      * @OA\Property (
      *     description="콘텐츠 제목"
      * )
      */
-    public string $co_subject;
+    public string $co_subject = '';
 
     /**
      * @OA\Property (
      *     description="콘텐츠 내용"
      * )
      */
-    public string $co_content;
+    public string $co_content = '';
 
     /**
      * @OA\Property (
      *     description="SEO 제목"
      * )
      */
-    public string $co_seo_title;
+    public string $co_seo_title = '';
 
     /**
      * @OA\Property (
      *     description="모바일 콘텐츠"
      * )
      */
-    public string $co_mobile_content;
+    public string $co_mobile_content = '';
 
     /**
      * @OA\Property (
      *     description="조회수"
      * )
      */
-    public int $co_hit;
+    public int $co_hit = 0;
 
     /**
      * @OA\Property (
      *     description="헤드 이미지"
      * )
      */
-    public string $co_image_head;
+    public string $co_image_head = '';
 
     /**
      * @OA\Property (
      *     description="테일 이미지"
      * )
      */
-    public string $co_image_tail;
+    public string $co_image_tail = '';
 
     public function __construct($data)
     {

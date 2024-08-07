@@ -44,6 +44,22 @@ class CreateCommentRequest
      */
     public int $comment_id = 0;
 
+    /**
+     * 대댓글 여부
+     * @OA\Property(example='')
+     */
+    public string $wr_comment_reply = '';
+
+    /**
+     * @OA\Property(example="홈페이지")
+     */
+    public string $wr_homepage = '';
+
+    /**
+     * @OA\Property(example="email")
+     */
+    public string $wr_email = '';
+
     public function __construct(array $board, array $member, array $data = [])
     {
         $this->mapDataToProperties($this, $data);

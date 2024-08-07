@@ -18,29 +18,29 @@ class UpdateMemberRequest
      * 비밀번호
      * @OA\Property(example="test1234")
      */
-    public string $mb_password;
+    public string $mb_password = '';
 
     /**
      * 비밀번호 확인
      * @OA\Property(example="test1234")
      */
-    public string $mb_password_re;
+    public string $mb_password_re = '';
 
     /**
      * 닉네임
      * @OA\Property(example="테스트")
      */
-    public string $mb_nick;
+    public string $mb_nick = '';
 
     /**
      * 닉네임 변경일
      * @OA\Property(example="2021-01-01", readOnly=true)
      */
-    public string $mb_nick_date;
+    public string $mb_nick_date = '';
 
     /**
      * 성별
-     * @OA\Property(example="m")
+     * @OA\Property(example=" 'w'  or 'm' ")
      */
     public string $mb_sex = '';
 
@@ -213,7 +213,7 @@ class UpdateMemberRequest
         $this->validatePassword();
 
         if ($member['mb_nick'] !== $this->mb_nick) {
-            $this->validateNickName($config, $member);
+            $this->validateNickName($config);
             $this->processNickDate($config, $member);
         }
         if ($member['mb_email'] !== $this->mb_email) {
@@ -278,8 +278,7 @@ class UpdateMemberRequest
         if ($member['mb_nick_date'] < date("Y-m-d", time() - ($config['cf_nick_modify'] * 86400))) {
             $this->mb_nick_date = date('Y-m-d');
         } else {
-            unset($this->mb_nick);
-            unset($this->mb_nick_date);
+            unset($this->mb_nick, $this->mb_nick_date);
         }
     }
 

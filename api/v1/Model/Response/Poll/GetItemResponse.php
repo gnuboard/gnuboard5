@@ -14,33 +14,32 @@ class GetItemResponse
      * 설문조사
      * @OA\Property(type="object", ref="#/components/schemas/PollResponse")
      */
-    public array $poll;
+    public array $poll = [];
     
     /**
      * 총 투표수
      * @OA\Property(type="integer", example=1)
      */
-    public int $total_vote;
+    public int $total_vote = 0;
     
     /**
      * 투표한 항목
      * @OA\Property(type="array", @OA\Items(type="object"))
      */
-    public array $items;
+    public array $items = [];
 
     /**
      * 기타 의견
      * @OA\Property(type="array", @OA\Items(type="object"))
      */
-    public array $etcs;
+    public array $etcs = [];
     
     /**
      * 다른 설문조사
      * @OA\Property(type="array", @OA\Items(type="object"))
      */
-    public array $other_polls;
+    public array $other_polls = [];
     
-    //constructor by array to object mapper
     public function __construct(array $data)
     {
         $this->poll = $data['poll'];

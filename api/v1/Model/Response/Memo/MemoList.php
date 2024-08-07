@@ -66,20 +66,18 @@ class MemoList
 {
     /**
      * @OA\Property(
-     *  property="total_records",
-     *  type="integer",
      *  description="전체 쪽지 수"
      *  )
      */
-    public int $total_records;
+    public int $total_records = 0;
 
     /**
      * @OA\Property(
-     *  property="total_pages",
-     *  type="integer",
      *  description="전체 페이지 수"
      *  )
      */
-    public int $total_pages;
-    public array $memos;
+    public int $total_pages = 0;
+    
+    
+    public array $memos = [];
 }

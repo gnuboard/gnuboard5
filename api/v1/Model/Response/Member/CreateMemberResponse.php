@@ -14,33 +14,31 @@ class CreateMemberResponse
      * 응답 메시지
      * @OA\Property(example="string")
      */
-    public string $message;
+    public string $message = '';
 
     /**
      * 아이디
      * @OA\Property(example="string")
      */
-    public string $mb_id;
+    public string $mb_id = '';
 
     /**
      * 이름
      * @OA\Property(example="string")
      */
-    public string $mb_name;
+    public string $mb_name = '';
 
     /**
      * 닉네임
      * @OA\Property(example="string")
      */
-    public string $mb_nick;
+    public string $mb_nick = '';
 
     /**
      * CreateMemberResponse 생성자.
      *
      * @param string $message 응답 메시지
-     * @param string $mb_id 회원 아이디
-     * @param string $mb_name 회원 이름
-     * @param string $mb_nick 회원 닉네임
+     * @param object $data
      */
     public function __construct(string $message, object $data)
     {

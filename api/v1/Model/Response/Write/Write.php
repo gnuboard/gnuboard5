@@ -18,7 +18,7 @@ class Write
      * 글 ID
      * @OA\Property
      */
-    public int $wr_id;
+    public int $wr_id = 0;
 
     /**
      * 글 번호

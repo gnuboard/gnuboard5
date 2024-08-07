@@ -14,54 +14,54 @@ class MenuItem
      * 메뉴 ID
      * @OA\Property
      */
-    public int $me_id;
+    public int $me_id = 0;
 
     /**
      * 이름
      * @OA\Property
      */
-    public string $me_name;
+    public string $me_name = '';
 
     /**
      * @OA\Property
      */
-    public string $me_link;
+    public string $me_link = '';
 
     /**
      * 메뉴 순서
      * @OA\Property
      */
-    public int $me_order;
+    public int $me_order = 0;
 
     /**
      * 모바일에서 사용여부
      * @OA\Property
      */
-    public int $me_mobile_use;
+    public int $me_mobile_use = 0;
 
     /**
      * 새창으로 열지 여부
      * @OA\Property
      */
-    public string $me_target;
+    public string $me_target = '';
 
     /**
      * Menu 구분코드
      * @OA\Property
      */
-    public string $me_code;
+    public string $me_code = '';
 
     /**
      * 메뉴 사용여부
      * @OA\Property
      */
-    public int $me_use;
+    public int $me_use = 0;
 
     /**
      * 하위 메뉴
      * @OA\Property(type="array", @OA\Items(type="object"))
      */
-    public array $sub;
+    public array $sub = [];
 
     public function __construct(array $data)
     {

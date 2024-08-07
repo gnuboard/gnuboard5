@@ -12,19 +12,17 @@ class PopularSearchResponse
 {
     /**
      * @OA\Property (
-     *     type="string",
      *     description="인기 검색어"
      * )
      */
-    public string $pp_word;
+    public string $pp_word = '';
 
     /**
      * @OA\Property (
-     *     type="integer",
      *     description="검색어 갯수"
      * )
      */
-    public int $count;
+    public int $count = 0;
 
     public function __construct($data)
     {

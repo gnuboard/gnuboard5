@@ -18,37 +18,37 @@ class Board
      * 게시판 아이디
      * @OA\Property(example="free")
      */
-    public string $bo_table;
+    public string $bo_table = '';
 
     /**
      * 그룹 아이디
      * @OA\Property(example="community")
      */
-    public string $gr_id;
+    public string $gr_id = '';
 
     /**
      * 게시판 제목
      * @OA\Property(example="자유게시판")
      */
-    public string $bo_subject;
+    public string $bo_subject = '';
 
     /**
      * 게시판 모바일 제목
      * @OA\Property(example="자유게시판 모바일")
      */
-    public string $bo_mobile_subject;
+    public string $bo_mobile_subject = '';
 
     /**
      * 접속 허용 디바이스
      * @OA\Property(example="both")
      */
-    public string $bo_device;
+    public string $bo_device = '';
 
     /**
      * 게시판 관리자
      * @OA\Property(example="admin")
      */
-    public string $bo_admin;
+    public string $bo_admin = '';
 
     /**
      * 목록 접근 권한 레벨

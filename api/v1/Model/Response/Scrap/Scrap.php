@@ -18,7 +18,7 @@ class Scrap
      * 스크랩 ID
      * @OA\Property
      */
-    public int $ms_id;
+    public int $ms_id = 0;
 
     /**
      * 회원 ID

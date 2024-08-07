@@ -29,99 +29,87 @@ class PopupResponse
     }
     /**
      * @OA\Property(
-     *     property="nw_id",
      *     description="New popup id"
      * )
      */
-    public int $nw_id;
+    public int $nw_id = 0;
 
     /**
      * @OA\Property(
-     *     property="nw_division",
      *     description="Popup 종류 구분 (comm:커뮤니티, shop:쇼핑, both: 전체)"
      * )
      */
-    public string $nw_division;
+    public string $nw_division = '';
 
     /**
      * @OA\Property(
-     *     property="nw_device",
      *     description="Popup Widget 접속 기기 (pc, mobile, both)"
      * )
      */
-    public string $nw_device;
+    public string $nw_device = '';
 
     /**
      * @OA\Property(
-     *     property="nw_begin_time",
      *     format="date-time",
      *     description="Popup Widget 시작 시간"
      * )
      */
-    public string $nw_begin_time;
+    public string $nw_begin_time = '';
 
     /**
      * @OA\Property(
-     *     property="nw_end_time",
      *     format="date-time",
      *     description="Popup Widget 종료 시간"
      * )
      */
-    public string $nw_end_time;
+    public string $nw_end_time = '';
 
     /**
      * @OA\Property(
-     *     property="nw_disable_hours",
      *     description="Popup Widget 팝업 비활성화 시간 (시간)"
      * )
      */
-    public int $nw_disable_hours;
+    public int $nw_disable_hours = 0;
 
     /**
      * @OA\Property(
-     *     property="nw_left",
      *     description="Popup Widget Left Position"
      * )
      */
-    public int $nw_left;
+    public int $nw_left = 0;
 
     /**
      * @OA\Property(
-     *     property="nw_top",
      *     description="Popup Widget Top Position"
      * )
      */
-    public int $nw_top;
+    public int $nw_top = 0;
 
     /**
      * @OA\Property(
-     *     property="nw_height",
      *     description="Popup 위젯 높이"
      * )
      */
-    public int $nw_height;
+    public int $nw_height = 0;
 
     /**
      * @OA\Property(
-     *     property="nw_width",
      *     description="Popup 위젯 가로"
      * )
      */
-    public int $nw_width;
+    public int $nw_width = 0;
 
     /**
      * @OA\Property(
-     *     property="nw_subject",
      *     description="Popup Subject"
      * )
      */
-    public string $nw_subject;
+    public string $nw_subject = '';
 
     /**
      * @OA\Property(
-     *     property="nw_content",
      *     description="Popup Content"
      * )
      */
-    public string $nw_content;
+    public string $nw_content = '';
 }

@@ -14,7 +14,7 @@ class CreateWriteResponse
      * 게시글 작성 결과
      * @OA\Property
      */
-    public string $result = "";
+    public string $result = '';
 
     /**
      * 게시글 아이디
