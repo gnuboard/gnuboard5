@@ -324,7 +324,7 @@ class WriteService
      * @return false|string
      * @throws Exception
      */
-    public function createWriteData(object $data, array $member = [], array $parent_write = []): int
+    public function createWriteData(object $data, array $member = [], array $parent_write = [])
     {
         $min_wr_num = $this->fetchMinimumWriteNumber() - 1;
         $data->wr_num = $parent_write ? $parent_write['wr_num'] : $min_wr_num;
@@ -332,17 +332,17 @@ class WriteService
 
         // TODO: include url.lib.php 문제 해결 필요
         // exist_seo_title_recursive('bbs', generate_seo_title($data->wr_subject), $this->table);
-        $data->wr_seo_title = "";
-        $data->mb_id = $member['mb_id'] ?? '';
-        $data->wr_datetime = G5_TIME_YMDHIS;
-        $data->wr_last = G5_TIME_YMDHIS;
-        $data->wr_ip = $_SERVER['REMOTE_ADDR'];
+        $data->setWrSeoTitle('');
+        $data->setMbId($member['mb_id'] ?? '');
+        $data->setWrDatetime(G5_TIME_YMDHIS);
+        $data->setWrLast(G5_TIME_YMDHIS);
+        $data->setWrIp($_SERVER['REMOTE_ADDR']);
         if ($parent_write) {
             $data->wr_reply = $this->getReplyCharacter($parent_write);
         }
 
-        $insert_id = $this->insertWrite($data);
-        return $insert_id;
+        //inserted id
+        return $this->insertWrite($data->toArray());
     }
 
     /**
@@ -570,7 +570,7 @@ class WriteService
             if ($this->board['bo_sort_field']) {
                 $sst = $this->board['bo_sort_field'];
             } else {
-                $sst  = "wr_num, wr_reply";
+                $sst = "wr_num, wr_reply";
                 $sod = "";
             }
         } else {
@@ -583,12 +583,13 @@ class WriteService
         }
 
         if (!$sst) {
-            $sst  = "wr_num, wr_reply";
+            $sst = "wr_num, wr_reply";
         }
 
         return [$sst, $sod];
     }
 
+    
     /**
      * 검색 단위 > 이전위치 조회
      * @param array $search_params 검색조건

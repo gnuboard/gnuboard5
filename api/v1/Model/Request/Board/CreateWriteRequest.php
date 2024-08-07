@@ -23,6 +23,49 @@ class CreateWriteRequest
     public int $wr_num = 0;
 
     /**
+     * 게시글 답글여부
+     * @OA\Property(example="답글여부")
+     */
+    public string $wr_reply;
+
+    private string $wr_seo_title = '';
+
+    public function setWrSeoTitle(string $wr_seo_title): void
+    {
+        $this->wr_seo_title = $wr_seo_title;
+    }
+
+    private string $mb_id = '';
+
+    public function setMbId(string $mb_id): void
+    {
+        $this->mb_id = $mb_id;
+    }
+
+    private string $wr_datetime = '';
+
+    public function setWrDatetime(string $wr_datetime): void
+    {
+        $this->wr_datetime = $wr_datetime;
+    }
+
+    private string $wr_last = '';
+
+    public function setWrLast(string $wr_last): void
+    {
+        $this->wr_last = $wr_last;
+    }
+
+    private string $wr_ip = '';
+
+    public function setWrIp(string $wr_ip): void
+    {
+        $this->wr_ip = $wr_ip;
+    }
+
+    public int $wr_is_comment = 0;
+
+    /**
      * 게시글 제목
      * @OA\Property(example="제목")
      */
@@ -114,11 +157,9 @@ class CreateWriteRequest
     public ?int $wr_parent = 0;
 
     /**
-     * @param BoardPermission $permission  게시판 권한 
-     * @param array $member  회원 정보
-     * @param array|null $data  요청 데이터
-     * @throws Exception  유효성 검사 실패시 예외 발생
-     * @return void
+     * @param BoardPermission $permission 게시판 권한
+     * @param array $member 회원 정보
+     * @param array $data 요청 데이터
      */
     public function __construct(BoardPermission $permission, array $member, array $data = [])
     {
@@ -251,5 +292,29 @@ class CreateWriteRequest
         } else {
             $this->wr_password = get_encrypt_string($this->wr_password);
         }
+    }
+
+    public function toArray()
+    {
+        return [
+            'wr_num' => $this->wr_num,
+            'wr_seo_title' => $this->wr_seo_title,
+            'mb_id' => $this->mb_id,
+            'wr_datetime' => $this->wr_datetime,
+            'wr_last' => $this->wr_last,
+            'wr_ip' => $this->wr_ip,
+            'wr_is_comment' => $this->wr_is_comment,
+            'wr_subject' => $this->wr_subject,
+            'wr_content' => $this->wr_content,
+            'wr_name' => $this->wr_name,
+            'wr_password' => $this->wr_password,
+            'wr_email' => $this->wr_email,
+            'wr_homepage' => $this->wr_homepage,
+            'wr_link1' => $this->wr_link1,
+            'wr_link2' => $this->wr_link2,
+            'wr_option' => $this->wr_option,
+            'ca_name' => $this->ca_name,
+            'wr_parent' => $this->wr_parent
+        ];
     }
 }
