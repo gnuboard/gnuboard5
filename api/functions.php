@@ -24,8 +24,7 @@ function api_response_json(Response $response, $data, int $status = 200)
 {
     $json = json_encode($data, JSON_UNESCAPED_UNICODE);
     $response->getBody()->write($json);
-    $new_response = $response->withStatus($status);
-    return $new_response->withAddedHeader('Content-Type', 'application/json');
+    return $response->withStatus($status)->withAddedHeader('Content-Type', 'application/json');
 }
 
 /**
@@ -54,7 +53,7 @@ function create_refresh_token_table()
 }
 
 /**
- * 테이블 체크함수
+ * DB 테이블 있는지 확인 함수
  * @param $table_name
  * @return bool
  */
@@ -117,12 +116,13 @@ function g5_root_path()
  * @param string|null $basename The basename of the file to use
  *
  * @return string The filename of moved file
+ * @throws \Random\RandomException
  */
 function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile, string $basename = null)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 
-    // see http://php.net/manual/en/function.random-bytes.php
+    // @see http://php.net/manual/en/function.random-bytes.php
     $basename = $basename ?: bin2hex(random_bytes(8));
     $filename = sprintf('%s.%0.8s', $basename, $extension);
 
@@ -137,10 +137,10 @@ function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile
 
 /**
  * 문자열의 최소 길이를 검증
- * 
+ *
  * @param string $string 검증할 문자열
- * @param int $minLength 최소 길이
- * @return string 최소 길이와 같거나 크면 true, 그렇지 않으면 false
+ * @param int $min_length
+ * @return bool 최소 길이와 같거나 크면 true, 그렇지 않으면 false
  */
 function has_min_length(string $string, int $min_length): bool
 {
@@ -154,7 +154,7 @@ function has_min_length(string $string, int $min_length): bool
  */
 function is_valid_utf8_string(string $str): bool
 {
-    return iconv('UTF-8', 'UTF-8//IGNORE', $str) === $str;
+    return mb_detect_encoding($str, 'UTF-8', true) === 'UTF-8';
 }
 
 /**
@@ -217,6 +217,9 @@ function is_valid_email(string $email): bool
 function is_prohibited_email_domain(string $email, array $config): bool
 {
     list($id, $domain) = explode("@", $email);
+    if (trim($domain) === '') {
+        return false;
+    }
     $prohibited_domains = explode("\n", trim($config['cf_prohibit_email']));
     $prohibited_domains = array_map('trim', $prohibited_domains);
     $prohibited_domains = array_map('strtolower', $prohibited_domains);
@@ -257,8 +260,7 @@ function send_reset_password_mail(array $config, array $member, string $mb_nonce
 
     $subject = "[" . $config['cf_title'] . "] 요청하신 회원정보 찾기 안내 메일입니다.";
 
-    $content = "";
-    $content .= '<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">';
+    $content = '<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">';
     $content .= '<div style="border:1px solid #dedede">';
     $content .= '<h1 style="padding:30px 30px 0;background:#f7f7f7;color:#555;font-size:1.4em">';
     $content .= '회원정보 찾기 안내';
@@ -336,7 +338,7 @@ function send_write_mail(array $config, array $board, int $wr_id, string $w, str
     }
 
     // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
-    if (isset($wr['wr_option']) && isset($wr['wr_email'])) {
+    if (isset($wr['wr_option'], $wr['wr_email'])) {
         if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
             $array_email[] = $wr['wr_email'];
     }
@@ -382,8 +384,7 @@ function sanitize_input(string $input, int $max_length, bool $strip_tags = false
  */
 function get_gnuconfig()
 {
-    $config_table = $GLOBALS['g5']['config_table'];
-    return Db::getInstance()->run("SELECT * FROM {$config_table}")->fetch();
+    return (new \API\Service\ConfigService())->getConfig();
 }
 
 /**
