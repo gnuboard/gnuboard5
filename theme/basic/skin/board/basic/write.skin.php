@@ -97,6 +97,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         
         <div id="autosave_wrapper" class="write_div">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
+            <button type="button" id="btn_auto_write" class="btn_frmline">자동 글쓰기</button>
             <?php if ($is_member) { // 임시 저장된 글 기능 ?>
             <script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
             <?php if($editor_content_js) echo $editor_content_js; ?>
@@ -165,6 +166,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
     </form>
+
+    <div id="loading">
+        <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20"></circle>
+        </svg>
+    </div>
 
     <script>
     <?php if($write_min || $write_max) { ?>
@@ -250,6 +257,47 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
         return true;
     }
+
+
+    // Update the auto-write functionality
+    $(function() {
+        $("#btn_auto_write").on("click", function() {
+            var subject = $("#wr_subject").val();
+            if (subject.trim() === "") {
+                alert("제목을 입력해주세요.");
+                return;
+            }
+
+            $("#loading").show(); // Show loading icon
+
+            $.ajax({
+                url: g5_bbs_url + "/ajax.gemini_write.php",
+                type: "POST",
+                data: {
+                    "subject": subject
+                },
+                dataType: "json",
+                success: function(data) {
+                    $("#loading").hide(); // Hide loading icon
+                    if (data.error) {
+                        alert("오류가 발생했습니다: " + data.error);
+                    } else {
+                        // 에디터가 사용되는 경우와 아닌 경우를 구분하여 처리
+                        if (typeof(ed_wr_content) != "undefined") {
+                            ed_wr_content.setContents(data.content);
+                        } else {
+                            $("#wr_content").val(data.content);
+                        }
+                        alert("내용이 자동으로 생성되었습니다.");
+                    }
+                },
+                error: function() {
+                    $("#loading").hide(); // Hide loading icon
+                    alert("서버 요청에 실패했습니다.");
+                }
+            });
+        });
+    });
     </script>
 </section>
 <!-- } 게시물 작성/수정 끝 -->
