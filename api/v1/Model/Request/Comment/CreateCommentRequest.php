@@ -48,7 +48,7 @@ class CreateCommentRequest
 
     /**
      * 대댓글 여부
-     * @OA\Property(example='')
+     * @OA\Property(example="")
      */
     public string $wr_comment_reply = '';
 

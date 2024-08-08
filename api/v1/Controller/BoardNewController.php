@@ -107,10 +107,10 @@ class BoardNewController
      *      summary="최신 게시글 일괄 삭제",
      *      tags={"최신글"},
      *      description="
-최신 게시글을 일괄로 삭제한다.
-- 최신 게시글로 등록된 원래 게시글/댓글도 삭제
-- 최고관리자만 가능
-",
+    최신 게시글을 일괄로 삭제한다.
+    - 최신 게시글로 등록된 원래 게시글/댓글도 삭제
+    - 최고관리자만 가능
+    ",
      *      @OA\Parameter(
      *          name="bn_ids[]", in="query",
      *          description="삭제할 최신 게시글 ID",

@@ -57,7 +57,7 @@ class PollController
      *      summary="설문조사 조회",
      *      tags={"설문조사"},
      *      description="설문조사 정보를 조회합니다.",
-     *      security={{"bearerAuth": {}}},
+     *      security={{"Oauth2Password": {}}},
      *     @OA\Parameter(name="po_id", in="path", description="설문조사 번호", required=true, @OA\Schema(type="integer"), example=1),
      *     @OA\Response(response="200", description="설문조사 조회 성공",
      *     @OA\JsonContent(ref="#/components/schemas/PollResponse")
@@ -112,7 +112,7 @@ class PollController
      *     @OA\Response(response=404, ref="#/components/responses/404"),
      *     @OA\Response(response="409", ref="#/components/responses/409"),
      *     @OA\Response(response="422", ref="#/components/responses/422"),
-     *     security={{"OAuth2PasswordBearer(Optional)": {}}}
+     *      security={{"Oauth2Password": {}}}
      *  )
      *
      * @param Request $request
@@ -179,7 +179,7 @@ class PollController
      *     @OA\Property(property="content", type="string", description="기타의견", example="기타의견 내용")
      *     )
      *    ),
-     *     security={{"OAuth2PasswordBearer(Optional)": {}}},
+     *      security={{"Oauth2Password": {}}},
      *     @OA\Response(response="200", description="투표완료", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *     @OA\Response(response=400, ref="#/components/responses/400"),
      *     @OA\Response(response=403, ref="#/components/responses/403"),
@@ -261,7 +261,7 @@ class PollController
      *     required=true,
      *     @OA\Schema(type="integer")
      *  ),
-     *     security={{"OAuth2PasswordBearer(Optional)": {}}},
+     *     security={{"Oauth2Password": {}}},
      *     @OA\Response(response="200", description="삭제 되었습니다.", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *     @OA\Response(response=400, ref="#/components/responses/400"),
      *     @OA\Response(response=403, ref="#/components/responses/403")

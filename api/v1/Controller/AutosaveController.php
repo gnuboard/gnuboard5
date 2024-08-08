@@ -100,7 +100,7 @@ class AutosaveController
      *     path="/api/v1/autosaves/count",
      *     summary="임시저장된 글 갯수 조회",
      *     tags={"자동 임시저장"},
-     *      security={{"Oauth2Password": {}}},
+     *     security={{"Oauth2Password": {}}},
      *     @OA\Response (
      *     response="200",
      *     description="임시저장된 글 갯수 조회 성공",
