@@ -111,7 +111,7 @@ class AutosaveController
      * )
      *
      */
-    public function get_count(Request $request, Response $response)
+    public function getCount(Request $request, Response $response)
     {
         $member = $request->getAttribute('member');
         $count = $this->autosave_service->get_count($member['mb_id']);

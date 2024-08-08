@@ -35,7 +35,7 @@ class MenuController
      */
     public function index(Request $request, Response $response, $args)
     {
-        $result = $this->menu->get_menus();
+        $result = $this->menu->getMenu();
         $response_data = [];
         foreach ($result as $row) {
             $menu = new MenuItem($row);

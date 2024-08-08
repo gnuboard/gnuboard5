@@ -62,7 +62,7 @@ class ContentController
             return api_response_json($response, ['message' => '페이지당 최대 100개까지 조회 가능합니다.'], 422);
         }
 
-        $contents = ContentService::get_content_list($page, $per_page);
+        $contents = ContentService::getContentList($page, $per_page);
         if (empty($contents)) {
             return api_response_json($response, ['message' => '콘텐츠가 없습니다.'], 404);
         }
@@ -104,7 +104,7 @@ class ContentController
             return api_response_json($response, ['message' => '콘텐츠 ID가 필요합니다.'], 422);
         }
 
-        $content = ContentService::get_content($args['co_id']);
+        $content = ContentService::getContent($args['co_id']);
         if (empty($content)) {
             return api_response_json($response, ['message' => '콘텐츠가 없습니다.'], 404);
         }

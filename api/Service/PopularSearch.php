@@ -13,7 +13,7 @@ class PopularSearch
      * @param int $days 현재에서 며칠전 데이터인지 지정 e.g.) 7 (7일전)
      * @return array|false
      */
-    public function get_keywords($days, $count_limit)
+    public function fetchKeywords($days, $count_limit)
     {
         $popular_search_table = $GLOBALS['g5']['popular_table'];
         $query = "SELECT *, COUNT({$popular_search_table}.pp_word) as count FROM {$popular_search_table}
@@ -36,9 +36,10 @@ class PopularSearch
      * 인기 검색어 추가
      * @param string $keyword 검색어
      * @return bool
+     * @todo 중복 검색어 처리
      */
     // @throws \PDOException 쿼리 실패시
-    public function add_keyword(string $keyword): bool
+    public function addKeyword(string $keyword): bool
     {
         $popular_search_table = $GLOBALS['g5']['popular_table'];
         $query = "INSERT INTO {$popular_search_table} (pp_word, pp_date, pp_ip) VALUES (:pp_word, :pp_date, :pp_ip)";

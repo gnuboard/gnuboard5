@@ -45,7 +45,7 @@ Access Token & Refresh Token을 발급합니다.
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\MediaType(
-     *              mediaType="application/x-www-form-urlencoded",
+     *              mediaType="application/json",
      *              @OA\Schema(ref="#/components/schemas/GenerateTokenRequest"),
      *          )
      *      ),

@@ -13,16 +13,13 @@ class ContentService
      * @return array|null
      * @todo cache 추가
      */
-    public static function get_content($co_id)
+    public static function getContent($co_id)
     {
         $content_table = $GLOBALS['g5']['content_table'];
         $query = "SELECT * FROM  $content_table WHERE co_id = :co_id";
-
-        if (!isset($cache[$co_id])) {
-            $content = Db::getInstance()->run($query, ['co_id' => $co_id])->fetch();
-            if (!isset($content['co_id'])) {
-                return null;
-            }
+        $content = Db::getInstance()->run($query, ['co_id' => $co_id])->fetch();
+        if (!isset($content['co_id'])) {
+            return null;
         }
 
         return $content;
@@ -35,7 +32,7 @@ class ContentService
      * @param int $per_page
      * @todo cache 추가
      */
-    public static function get_content_list($page, $per_page)
+    public static function getContentList($page, $per_page)
     {
         $content_table = $GLOBALS['g5']['content_table'];
         $query = "SELECT * FROM  $content_table LIMIT :per_page OFFSET :offset";

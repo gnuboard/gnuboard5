@@ -13,7 +13,7 @@ class PollService
      * @param int $po_id
      * @return array|null
      */
-    public function get_poll($po_id)
+    public function fetchPoll($po_id)
     {
         $poll_table = $GLOBALS['g5']['poll_table'];
         $query = "SELECT * FROM  $poll_table WHERE po_id = :po_id";
@@ -48,7 +48,7 @@ class PollService
      * @param string $ip
      * @return bool
      */
-    public function vote_poll($po_id, $item_id, $ip)
+    public function votePoll($po_id, $item_id, $ip)
     {
         $poll_table = $GLOBALS['g5']['poll_table'];
         $poll_target_id = "po_poll{$item_id}";
@@ -80,7 +80,7 @@ class PollService
      * @return bool
      * 투표 여부 확인
      */
-    public function check_already_vote($poll, $member, $ip)
+    public function checkAlreadyVote($poll, $member, $ip)
     {
         //member
         if (isset($member['mb_id'])) {
@@ -106,7 +106,7 @@ class PollService
      * @param string $mb_id 회원아이디 비회원은 공백문자
      * @return bool
      */
-    public function add_etc_poll($po_id, $pc_name, $pc_idea, $mb_id)
+    public function addEtcPoll($po_id, $pc_name, $pc_idea, $mb_id)
     {
         $poll_etc_table = $GLOBALS['g5']['poll_etc_table'];
         $db = Db::getInstance();
@@ -140,7 +140,7 @@ class PollService
      * @param $pc_id
      * @return bool
      */
-    public function delete_etc_poll($po_id, $pc_id)
+    public function deleteEtcPoll($po_id, $pc_id)
     {
         $poll_etc_table = $GLOBALS['g5']['poll_etc_table'];
         $result = Db::getInstance()->delete($poll_etc_table, ['pc_id' => $pc_id, 'po_id' => $po_id, 'mb_id']);
@@ -152,7 +152,7 @@ class PollService
      * @param $mb_id
      * @return bool
      */
-    public function check_auth_etc_poll($pc_id, $mb_id)
+    public function checkAuthEtcPoll($pc_id, $mb_id)
     {
         $poll_etc_table = $GLOBALS['g5']['poll_etc_table'];
         $result = Db::getInstance()->run("SELECT * FROM $poll_etc_table WHERE pc_id = :pc_id AND mb_id = :mb_id", ['pc_id' => $pc_id, 'mb_id' => $mb_id])->fetch();

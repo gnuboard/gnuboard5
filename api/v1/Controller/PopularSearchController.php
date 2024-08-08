@@ -71,7 +71,7 @@ class PopularSearchController
         }
 
 
-        $keywords = $this->popular_service->get_keywords($days, $count_limit);
+        $keywords = $this->popular_service->fetchKeywords($days, $count_limit);
         if (!$keywords) {
             return api_response_json($response, ['message' => '인기 검색어가 없습니다.'], 404);
         }

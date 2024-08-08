@@ -3,7 +3,7 @@
 
 namespace Api\V1\Visit;
 
-use API\Middleware\AccessTokenAuthMiddleware;
+use API\Middleware\OptionalAccessTokenAuthMiddleware;
 use API\v1\Controller\VisitController;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\App;
@@ -13,5 +13,5 @@ use Slim\App;
  */
 
 $app->group('/visit', function (RouteCollectorProxy $group) {
-    $group->get('', [VisitController::class, 'show_count']);
-})->add(AccessTokenAuthMiddleware::class);
+    $group->get('', [VisitController::class, 'show']);
+})->add(OptionalAccessTokenAuthMiddleware::class);

@@ -33,9 +33,9 @@ class VisitController
      *    )
      * )
      */
-    public function show_count(Request $request, Response $response)
+    public function show(Request $request, Response $response)
     {
-        $data = $this->visit_service->fetch_common_visit_count();
+        $data = $this->visit_service->fetchCommonVisitCount();
         $response_data = new VisitCountResponse($data);
         return api_response_json($response, $response_data);
     }

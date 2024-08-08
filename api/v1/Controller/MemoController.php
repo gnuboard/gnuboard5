@@ -90,8 +90,8 @@ class MemoController
 
         //메모 리스트 가져오기
         //count
-        $total_records = $this->memo_service->fetch_total_records($memo_type, $mb_id);
-        $memo_data = $this->memo_service->fetch_memos($memo_type, $mb_id, $page, $per_page);
+        $total_records = $this->memo_service->fetchTotalCount($memo_type, $mb_id);
+        $memo_data = $this->memo_service->fetchMemos($memo_type, $mb_id, $page, $per_page);
 
         $response_data = [
             'memos' => [
@@ -157,7 +157,7 @@ class MemoController
         $mem_content = $request_data['me_memo'];
 
         $ip = $request->getServerParams()['REMOTE_ADDR']; // @todo 클라우드 플레어, LB 등을 고려한 ip 함수 추가 필요.
-        $result = $this->memo_service->send_memo($mb_id, $receiver_mb_id, $mem_content, $ip);
+        $result = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $mem_content, $ip);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], 400);
         }
@@ -202,12 +202,12 @@ class MemoController
         }
 
 
-        $result = $this->memo_service->fetch_memo($memo_id, $mb_id);
+        $result = $this->memo_service->fetchMemo($memo_id, $mb_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
 
-        $this->memo_service->read_check($memo_id);
+        $this->memo_service->readCheck($memo_id);
 
         return api_response_json($response, $result);
     }

@@ -481,7 +481,7 @@ class WriteService
 
         foreach ($terms as $i => $term) {
             if (!in_array('mb_id', $fields)) {
-                $this->popular_service->add_keyword($term);
+                $this->popular_service->addKeyword($term);
             }
 
             $field_clauses = [];
@@ -511,10 +511,10 @@ class WriteService
                         break;
                     default:
                         if (preg_match("/[a-zA-Z]/", $term)) {
-                            $field_clauses[] = "INSTR(LOWER($field), LOWER($param_key))";
-                        } else {
-                            $field_clauses[] = "INSTR($field, $param_key)";
+                            $field = strtolower($field);
+                            $param_key = strtolower($param_key);
                         }
+                        $field_clauses[] = "INSTR($field, $param_key)";
                         $params[$param_key] = $term;
                         break;
                 }

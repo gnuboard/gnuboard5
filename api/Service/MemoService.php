@@ -21,7 +21,7 @@ class MemoService
      * @param string $mb_id
      * @return int
      */
-    public function fetch_total_records($me_type, $mb_id)
+    public function fetchTotalCount($me_type, $mb_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         if ($me_type === 'recv') {
@@ -47,9 +47,9 @@ class MemoService
      * @param int $per_page
      * @return array
      */
-    public function fetch_memos(string $me_type, string $mb_id, int $page, int $per_page)
+    public function fetchMemos(string $me_type, string $mb_id, int $page, int $per_page)
     {
-        if ($me_type == 'recv') {
+        if ($me_type === 'recv') {
             $where = "me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
         } else {
             $where = "me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
@@ -77,7 +77,7 @@ class MemoService
      * @param string $receiver_ids
      * @return array ['available_ids' => [], 'not_available_ids' => []]
      */
-    public function get_recive_members(string $receiver_ids)
+    public function getReciveMembers(string $receiver_ids)
     {
         $member_table = $GLOBALS['g5']['member_table'];
         $send_target_ids = explode(',', $receiver_ids);
@@ -107,9 +107,9 @@ class MemoService
      * @param string $content
      * @return bool|string[] ['error' => '쪽지를 전송할 회원이 없습니다.', code => 400]
      */
-    public function send_memo($mb_id, $receiver_ids, $content, $ip)
+    public function sendMemo($mb_id, $receiver_ids, $content, $ip)
     {
-        $result = $this->get_recive_members($receiver_ids);
+        $result = $this->getReciveMembers($receiver_ids);
         $member_result = $this->member_service->fetchMemberById($mb_id);
         if (!isset($member_result['mb_no'])) {
             return ['error' => '회원 정보가 없습니다.', 'code' => 400];
@@ -160,7 +160,7 @@ class MemoService
      * @param string $member_id
      * @return array
      */
-    public function fetch_memo($memo_id, $member_id)
+    public function fetchMemo($memo_id, $member_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $query = "SELECT * FROM $memo_table WHERE me_id = :me_id";
@@ -177,7 +177,7 @@ class MemoService
      * @param int $memo_id
      * @return bool
      */
-    public function read_check($memo_id)
+    public function readCheck($memo_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $row_count = Db::getInstance()->update($memo_table, ['me_id' => $memo_id], ['me_read_datetime' => G5_TIME_YMDHIS]);

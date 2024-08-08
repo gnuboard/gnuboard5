@@ -41,7 +41,7 @@ class PollController
      *     @OA\Response(response="404", ref="#/components/responses/404")
      * )
      */
-    public function show_latest(Request $request, Response $response)
+    public function showLatest(Request $request, Response $response)
     {
         $poll = $this->poll_service->get_latest_poll();
         if ($poll === null) {
@@ -74,7 +74,7 @@ class PollController
             return api_response_json($response, ['message' => '설문조사 번호가 잘못되었습니다.'], 400);
         }
 
-        $poll = $this->poll_service->get_poll($po_id);
+        $poll = $this->poll_service->fetchPoll($po_id);
         if ($poll === null) {
             return api_response_json($response, ['message' => '설문조사가 없습니다.'], 404);
         }
@@ -138,7 +138,7 @@ class PollController
         }
 
 
-        $poll = $this->poll_service->get_poll($po_id);
+        $poll = $this->poll_service->fetchPoll($po_id);
         if ($poll === null) {
             return api_response_json($response, ['message' => '설문조사가 없습니다.'], 404);
         }
@@ -147,11 +147,11 @@ class PollController
             return api_response_json($response, ['message' => '투표 권한이 없습니다.'], 403);
         }
 
-        if ($this->poll_service->check_already_vote($po_id, $member, get_real_client_ip())) {
+        if ($this->poll_service->checkAlreadyVote($po_id, $member, get_real_client_ip())) {
             return api_response_json($response, ['message' => '이미 투표하셨습니다.'], 400);
         }
 
-        $this->poll_service->vote_poll($po_id, $item_id, get_real_client_ip());
+        $this->poll_service->votePoll($po_id, $item_id, get_real_client_ip());
         return api_response_json($response, ['message' => '투표가 완료되었습니다.']);
     }
 
@@ -187,7 +187,7 @@ class PollController
      *     @OA\Response(response=422, ref="#/components/responses/422")
      * )
      */
-    public function create_etc(Request $request, Response $response, array $args)
+    public function createEtc(Request $request, Response $response, array $args)
     {
         $po_id = $args['po_id'];
         $content = $request->getParsedBody()['content'] ?? '';
@@ -210,17 +210,16 @@ class PollController
             $mb_id = $member['mb_id'];
         }
 
-        $this->poll_service->add_etc_poll($po_id, $pc_name, $content, $mb_id);
+        $this->poll_service->addEtcPoll($po_id, $pc_name, $content, $mb_id);
 
         // 관리자에게 메일 보내기
         if ($config['cf_email_po_super_admin']) {
-            $poll = $this->poll_service->get_poll($po_id);
+            $poll = $this->poll_service->fetchPoll($po_id);
             $subject = $poll['po_subject'];
 
             ob_start();
             include_once(G5_BBS_PATH . '/poll_etc_update_mail.php');
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
 
             $admin_id = $config['cf_admin'];
             $admin_member = $this->member_service->fetchMemberById($admin_id);
@@ -267,7 +266,7 @@ class PollController
      *     @OA\Response(response=403, ref="#/components/responses/403")
      * )
      */
-    public function delete_etc(Request $request, Response $response, array $args)
+    public function deleteEtc(Request $request, Response $response, array $args)
     {
         $po_id = $args['po_id'];
         $pc_id = $args['pc_id'];
@@ -276,11 +275,11 @@ class PollController
             return api_response_json($response, ['message' => '설문조사 번호 또는 항목 번호가 잘못되었습니다.'], 400);
         }
 
-        if ($this->poll_service->check_auth_etc_poll($pc_id, $mb_id)) {
+        if ($this->poll_service->checkAuthEtcPoll($pc_id, $mb_id)) {
             return api_response_json($response, ['message' => '권한이 없습니다.'], 403);
         }
 
-        if ($this->poll_service->delete_etc_poll($po_id, $pc_id)) {
+        if ($this->poll_service->deleteEtcPoll($po_id, $pc_id)) {
             return api_response_json($response, ['message' => '삭제되었습니다.']);
         }
 
