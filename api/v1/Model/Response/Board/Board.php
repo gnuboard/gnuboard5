@@ -45,6 +45,12 @@ class Board
     public string $bo_device = '';
 
     /**
+     * 게시글 공지 번호
+     * @OA\Property
+     */
+    public string $bo_notice = '';
+    
+    /**
      * 게시판 관리자
      * @OA\Property(example="admin")
      */
