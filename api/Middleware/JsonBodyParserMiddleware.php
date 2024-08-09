@@ -2,17 +2,17 @@
 
 namespace API\Middleware;
 
+use API\Exceptions\HttpBadRequestException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-
 /**
  * JSON Body Parser Middleware
- * 
+ *
  * This middleware parses JSON request body and attaches it to the request as a `parsedBody` attribute
- * 
+ *
  * @see https://www.slimframework.com/docs/v4/objects/request.html#the-request-body
  */
 class JsonBodyParserMiddleware implements MiddlewareInterface
@@ -29,10 +29,12 @@ class JsonBodyParserMiddleware implements MiddlewareInterface
     {
         $contentType = $request->getHeaderLine('Content-Type');
 
-        if (strstr($contentType, 'application/json')) {
+        if (strpos($contentType, 'application/json') !== false) {
             $contents = json_decode(file_get_contents('php://input'), true);
             if (json_last_error() === JSON_ERROR_NONE) {
                 $request = $request->withParsedBody($contents);
+            } else {
+                throw new  HttpBadRequestException($request, 'Invalid JSON');
             }
         }
 
