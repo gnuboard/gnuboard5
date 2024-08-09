@@ -5,6 +5,9 @@ namespace API\Service;
 use API\Database\Db;
 use stdClass;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class AuthenticationService
 {
     private string $table;

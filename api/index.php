@@ -43,7 +43,7 @@ if (G5_DEBUG) {
 }
 
 //@todo 임시 전역변수 정리후 삭제대상
-$config = get_gnuconfig();
+$config = getConfig();
 /**
  * Instantiate App
  */

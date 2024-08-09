@@ -125,6 +125,7 @@ class UploadFileRequest
             }
             // 확장자 체크
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            // @todo 허용리스트로 변경이 필요합니다.
             if (in_array(strtolower($ext), array_map('strtolower', $this->disallowed_ext))) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }

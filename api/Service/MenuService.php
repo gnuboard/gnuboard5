@@ -4,9 +4,11 @@ namespace API\Service;
 
 use API\Database\Db;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class MenuService
 {
-
     /**
      * DB 메뉴테이블에서 데이터를 가져옵니다.
      * @param bool $is_mobile
@@ -30,11 +32,11 @@ class MenuService
      */
     public function sortMenu(array $data)
     {
-        $parents = array_filter($data, fn($item) => strlen($item['me_code']) === 2);
-        $sub_menu_list = array_filter($data, fn($item) => strlen($item['me_code']) === 4);
+        $parents = array_filter($data, fn ($item) => strlen($item['me_code']) === 2);
+        $sub_menu_list = array_filter($data, fn ($item) => strlen($item['me_code']) === 4);
 
-        usort($parents, fn($a, $b) => $a['me_order'] <=> $b['me_order']);
-        usort($sub_menu_list, fn($a, $b) => $a['me_order'] <=> $b['me_order']);
+        usort($parents, fn ($a, $b) => $a['me_order'] <=> $b['me_order']);
+        usort($sub_menu_list, fn ($a, $b) => $a['me_order'] <=> $b['me_order']);
 
         $sub_menu_data = [];
         foreach ($sub_menu_list as $sub_menu) {

@@ -6,28 +6,27 @@ use API\Database\Db;
 
 class ConfigService
 {
-    private string $table;
-    private array $config;
+    private static array $config;
 
-    public function __construct()
-    {
-        global $g5;
-        $this->table = $g5['config_table'];
-    }
+    
 
-    public function getConfig()
+    public static function getConfig()
     {
-        if (empty($this->config)) {
-            $this->config = $this->fetchConfig();
+        if (empty(self::$config)) {
+            self::$config = self::fetchConfig();
         }
 
-        return $this->config;
+        return self::$config;
     }
 
-    public function fetchConfig()
-    {
-        $stmt = Db::getInstance()->run("SELECT * FROM {$this->table}");
+    /**
+     * @TODO cache
+     * @return mixed
+     */
 
-        return $stmt->fetch();
+    public static function fetchConfig()
+    {
+        global $g5;
+        return Db::getInstance()->run("SELECT * FROM `{$g5['config_table']}`")->fetch();
     }
 }

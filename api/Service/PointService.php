@@ -17,7 +17,7 @@ class PointService
     ) {
         global $g5;
 
-        $this->config = $config_service->getConfig();
+        $this->config = $config_service::getConfig();
         $this->member_service = $member_service;
 
         $this->setTable($g5['point_table']);

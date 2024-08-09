@@ -5,6 +5,9 @@ namespace API\Service;
 use API\Database\Db;
 use Exception;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class MemberService
 {
     private string $table;
@@ -25,7 +28,7 @@ class MemberService
      */
     public function createMember(object $data): int
     {
-        $config = $this->config_service->getConfig();
+        $config = $this->config_service::getConfig();
 
         if ($this->fetchMemberById($data->mb_id)) {
             throw new Exception("이미 사용중인 회원아이디 입니다.", 409);
@@ -54,6 +57,7 @@ class MemberService
      */
     public function updateMemberProfile(string $mb_id, object $data): void
     {
+        // 닉네임 변경 허용이 안되면 mb_nick 프로퍼티가 없다.
         if(isset($data->mb_nick)) {
             if ($this->existsMemberByNick($data->mb_nick, $mb_id)) {
                 throw new Exception("이미 사용중인 닉네임 입니다.", 409);

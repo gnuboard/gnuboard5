@@ -5,6 +5,9 @@ namespace API\Service;
 use API\Database\Db;
 use API\v1\Model\Response\Write\File;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class BoardFileService
 {
     public string $bo_table;

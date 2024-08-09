@@ -16,9 +16,9 @@ use API\v1\Model\Request\Member\UpdateMemberRequest;
 use API\v1\Model\Response\Member\CreateMemberResponse;
 use API\v1\Model\Response\Member\GetMemberResponse;
 use API\v1\Model\Response\Member\GetMemberMeResponse;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Exception;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
 require_once G5_LIB_PATH . '/mailer.lib.php';
 
@@ -360,7 +360,7 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
 
     /**
      * 회원 아이콘/이미지 수정
-     * 
+     *
      * @OA\Post(
      *      path="/api/v1/member/images",
      *      summary="회원 아이콘&이미지 수정",

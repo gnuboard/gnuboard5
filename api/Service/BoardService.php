@@ -53,8 +53,22 @@ class BoardService
     public function fetchBoard(string $bo_table)
     {
         $query = "SELECT * FROM {$this->table} WHERE bo_table = :bo_table";
-        $stmt = Db::getInstance()->run($query, ['bo_table' => $bo_table]);
-        return $stmt->fetch();
+        return Db::getInstance()->run($query, ['bo_table' => $bo_table])->fetch();
+    }
+
+    /**
+     * 게시판테이블명 조회
+     * @return array
+     */
+    public static function fetchBoardTables()
+    {
+        global $g5;
+        $query = "SELECT bo_table FROM `{$g5['board_table']}` ";
+        $result = Db::getInstance()->run($query)->fetchAll();
+        if(!$result) {
+            return [];
+        }
+        return $result;
     }
 
     /**

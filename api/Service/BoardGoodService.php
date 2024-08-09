@@ -4,11 +4,14 @@ namespace API\Service;
 
 use API\Database\Db;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class BoardGoodService
 {
     public string $table;
 
-    function __construct()
+    public function __construct()
     {
         $this->setTable();
     }

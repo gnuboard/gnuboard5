@@ -382,9 +382,9 @@ function sanitize_input(string $input, int $max_length, bool $strip_tags = false
 /**
  * config 정보 가져오기
  */
-function get_gnuconfig()
+function getConfig()
 {
-    return (new \API\Service\ConfigService())->getConfig();
+    return \API\Service\ConfigService::getConfig();
 }
 
 /**

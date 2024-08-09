@@ -6,6 +6,9 @@ use API\Service\BoardService;
 use API\Service\GroupService;
 use Exception;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class BoardPermission
 {
     public array $config;
@@ -82,23 +85,24 @@ class BoardPermission
         $this->write_service = $write_service;
     }
 
-    function setConfig(array $config): void
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }
 
-    function setGroup(array $group): void
+    public function setGroup(array $group): void
     {
         $this->group = $group;
     }
 
-    function setBoard(array $board): void
+    public function setBoard(array $board): void
     {
         $this->board = $board;
     }
 
     /**
      * 글 목록 조회 권한 체크
+     * @throws Exception 권한 에러
      */
     public function readWrites(array $member): void
     {
@@ -109,6 +113,7 @@ class BoardPermission
 
     /**
      * 글 읽기 권한 체크
+     * @throws Exception
      */
     public function readWrite(array $member, array $write): void
     {
@@ -190,7 +195,11 @@ class BoardPermission
     }
 
     /**
-     * 파일 업로드 권한 체크
+     *  파일 업로드 권한 체크
+     * @param array $member
+     * @param array $write
+     * @return void
+     * @throws Exception
      */
     public function uploadFiles(array $member, array $write): void
     {
@@ -206,7 +215,11 @@ class BoardPermission
     }
 
     /**
-     * 파일 다운로드 권한 체크
+     *  파일 다운로드 권한 체크
+     * @param array $member
+     * @param array $write
+     * @return void
+     * @throws Exception
      */
     public function downloadFiles(array $member, array $write): void
     {
@@ -227,6 +240,7 @@ class BoardPermission
      * @param array $write 글 정보
      * @param string $type good|nogood
      * @return void
+     * @throws Exception
      */
     public function goodWrite(string $mb_id, array $write, string $type)
     {
@@ -359,6 +373,7 @@ class BoardPermission
 
     /**
      * 글 수정/삭제 시 관리자/작성자 체크
+     * @throws Exception
      */
     private function verifyWriteOwnerAndLevel(array $member, array $write, string $type): void
     {
@@ -390,6 +405,7 @@ class BoardPermission
 
     /**
      * 글 수정/삭제 시 관리자/작성자 체크
+     * @throws Exception
      */
     private function verifyCommentOwnerAndLevel(array $member, array $comment, string $type): void
     {
@@ -428,6 +444,7 @@ class BoardPermission
 
     /**
      * 답변한 게시글이 공지글인지 체크
+     * @throws Exception
      */
     private function checkReplyNotice(int $parent_id): void
     {
@@ -439,10 +456,11 @@ class BoardPermission
 
     /**
      * 답변글 작성시 원글이 비밀글인지 체크
+     * @throws Exception
      */
     private function checkReplySecret(array $member, array $write): void
     {
-        if (strstr($write['wr_option'], 'secret')) {
+        if (str_contains($write['wr_option'], 'secret')) {
             if ($this->isBoardManager($member['mb_id'])) {
                 return;
             }
@@ -468,7 +486,7 @@ class BoardPermission
     }
 
     /**
-     * 
+     *
      * 글읽기 포인트 체크
      * - 그누보드5에선 세션을 사용했지만 세션을 사용하지 않으므로 테이블의 내역을 체크한다.
      */
@@ -546,6 +564,7 @@ class BoardPermission
 
     /**
      * 본인인증 체크
+     * @throws Exception
      */
     private function checkAccessCert(array $member): void
     {
@@ -574,7 +593,7 @@ class BoardPermission
      */
     private function checkReadSecretWrite(array $member, array $write): void
     {
-        if (!strstr($write['wr_option'], "secret")) {
+        if (!str_contains($write['wr_option'], "secret")) {
             return;
         }
 
@@ -620,6 +639,7 @@ class BoardPermission
 
     /**
      * 게시글에 접근 가능한 회원레벨 체크
+     * @throws Exception
      */
     private function checkMemberLevel(array $member, int $level, string $message): void
     {
@@ -684,6 +704,7 @@ class BoardPermission
 
     /**
      * 예외를 던지기 위한 메서드
+     * @throws Exception
      */
     private function throwException(string $message): void
     {

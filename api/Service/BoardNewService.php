@@ -4,13 +4,16 @@ namespace API\Service;
 
 use API\Database\Db;
 
+/**
+ * @deprecated 함수 모음으로 변경
+ */
 class BoardNewService
 {
     public string $table;
     public string $board_table;
     public string $group_table;
 
-    function __construct()
+    public function __construct()
     {
         global $g5;
         $this->table = $g5['board_new_table'];
