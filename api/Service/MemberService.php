@@ -54,8 +54,10 @@ class MemberService
      */
     public function updateMemberProfile(string $mb_id, object $data): void
     {
-        if ($this->existsMemberByNick($data->mb_nick, $mb_id)) {
-            throw new Exception("이미 사용중인 닉네임 입니다.", 409);
+        if(isset($data->mb_nick)) {
+            if ($this->existsMemberByNick($data->mb_nick, $mb_id)) {
+                throw new Exception("이미 사용중인 닉네임 입니다.", 409);
+            }
         }
         if ($this->existsMemberByEmail($data->mb_email, $mb_id)) {
             throw new Exception("이미 사용중인 이메일 입니다.", 409);
