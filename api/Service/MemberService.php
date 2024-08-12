@@ -11,13 +11,11 @@ use Exception;
 class MemberService
 {
     private string $table;
-    private ConfigService $config_service;
 
-    public function __construct(ConfigService $config_service)
+    public function __construct()
     {
         global $g5;
         $this->table = $g5['member_table'];
-        $this->config_service = $config_service;
     }
 
     /**
@@ -28,7 +26,7 @@ class MemberService
      */
     public function createMember(object $data): int
     {
-        $config = $this->config_service::getConfig();
+        $config = ConfigService::getConfig();
 
         if ($this->fetchMemberById($data->mb_id)) {
             throw new Exception("이미 사용중인 회원아이디 입니다.", 409);

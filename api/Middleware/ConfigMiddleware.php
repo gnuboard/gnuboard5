@@ -17,7 +17,6 @@ class ConfigMiddleware
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $config = ConfigService::getConfig();
-
         if (!$config) {
             throw new HttpNotFoundException($request, 'Config not found.');
         }

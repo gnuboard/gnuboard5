@@ -7,6 +7,7 @@ use API\Service\BoardFileService;
 use API\Service\BoardPermission;
 use API\Service\BoardService;
 use API\Service\CommentService;
+use API\Service\ConfigService;
 use API\Service\GroupService;
 use API\Service\WriteService;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -44,13 +45,14 @@ class BoardMiddleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $config = $request->getAttribute('config');
+        $config = ConfigService::getConfig();
 
         // RouteContext를 사용하여 경로 매개변수 가져오기
-        $routeContext = RouteContext::fromRequest($request);
-        $route = $routeContext->getRoute();
-
-        $routeArguments = $route->getArguments();
+        $routeContext = RouteContext::fromRequest($request)->getRoute();
+        if ($routeContext === null) {
+            throw new HttpNotFoundException($request, 'url 을 찾을 수없습니다.');
+        }
+        $routeArguments = $routeContext->getArguments();
         $bo_table = $routeArguments['bo_table'] ?? null;
         $board = $this->board_service->fetchBoard($bo_table);
 

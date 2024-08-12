@@ -27,9 +27,8 @@ class JsonBodyParserMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandler $handler): Response
     {
-        $contentType = $request->getHeaderLine('Content-Type');
-
-        if (strpos($contentType, 'application/json') !== false) {
+        $contentType = $request->getHeader('Content-Type');
+        if (isset($contentType[0]) && $contentType[0] === 'application/json') {
             $contents = json_decode(file_get_contents('php://input'), true);
             if (json_last_error() === JSON_ERROR_NONE) {
                 $request = $request->withParsedBody($contents);

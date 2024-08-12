@@ -6,13 +6,11 @@ use API\Database\Db;
 
 class ConfigService
 {
-    private static array $config;
-
-    
+    private static ?array $config = null;
 
     public static function getConfig()
     {
-        if (empty(self::$config)) {
+        if (self::$config === null) {
             self::$config = self::fetchConfig();
         }
 
