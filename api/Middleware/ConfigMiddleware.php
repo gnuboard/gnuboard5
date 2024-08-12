@@ -13,16 +13,10 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
  */
 class ConfigMiddleware
 {
-    private ConfigService $config_service;
-
-    public function __construct(ConfigService $config_service)
-    {
-        $this->config_service = $config_service;
-    }
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $config = $this->config_service::getConfig();
+        $config = ConfigService::getConfig();
 
         if (!$config) {
             throw new HttpNotFoundException($request, 'Config not found.');
