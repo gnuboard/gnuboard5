@@ -12,7 +12,7 @@ use PDOException;
  */
 class Db
 {
-    private static $instance = null;
+    private static $instance;
 
     /**
      * @var ?PDO PDO 객체
@@ -22,7 +22,7 @@ class Db
     private function __construct()
     {
         $db_settings = [
-            'driver' => 'mysql', // @todo
+            'driver' => 'mysql',
             'host' => G5_MYSQL_HOST,
             'dbname' => G5_MYSQL_DB,
             'user' => G5_MYSQL_USER,
@@ -36,13 +36,13 @@ class Db
                 $db_settings['password'],
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_EMULATE_PREPARES => 0, // PHP 8.4 부터는 bool 타입이나. 암시적 형변환되어 0이면 false로 인식됨.
+                    PDO::ATTR_EMULATE_PREPARES => 0, // PHP 8.4 부터는 bool 타입이지만 암시적 형변환되어 false로 인식됨.
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                 ]
             );
 
             //mysql 0000 허용
-            if ($this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql' || $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mariadb') {
+            if ($db_settings['driver'] === 'mysql') {
                 $this->pdo->exec("SET SESSION sql_mode = 'ALLOW_INVALID_DATES'");
             }
         } catch (PDOException $e) {
@@ -50,9 +50,12 @@ class Db
         }
     }
 
+    /**
+     * @return Db 인스턴스
+     */
     public static function getInstance()
     {
-        if (self::$instance == null) {
+        if (self::$instance === null) {
             self::$instance = new Db();
         }
         return self::$instance;
@@ -102,8 +105,8 @@ class Db
 
     /**
      * insert 쿼리
-     * @param $table
-     * @param array $data associative array
+     * @param string $table
+     * @param array $data [column => value]
      * @return false|string
      */
     public function insert($table, array $data)
