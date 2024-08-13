@@ -27,7 +27,7 @@ define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
 // 그누보드 디버그바 설정입니다, 실제 서버운영시 false 로 설정해 주세요.
-define('G5_DEBUG', false);
+define('G5_DEBUG', true);
 define('G5_COLLECT_QUERY', false);
 
 // Set Database table default engine is Database default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.

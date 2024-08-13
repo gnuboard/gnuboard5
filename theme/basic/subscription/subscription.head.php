@@ -1,51 +1,50 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) {
+    exit;
+} // 개별 페이지 접근 불가
 
 $q = isset($_GET['q']) ? clean_xss_tags($_GET['q'], 1, 1) : '';
 
-if(defined('G5_THEME_PATH')) {
-    require_once(G5_THEME_SHOP_PATH.'/shop.head.php');
+if (G5_IS_MOBILE) {
+    include_once G5_THEME_MSUBSCRIPTION_PATH.'/subscription.head.php';
+
     return;
 }
 
-include_once(G5_PATH.'/head.sub.php');
-include_once(G5_LIB_PATH.'/outlogin.lib.php');
-include_once(G5_LIB_PATH.'/poll.lib.php');
-include_once(G5_LIB_PATH.'/visit.lib.php');
-include_once(G5_LIB_PATH.'/connect.lib.php');
-include_once(G5_LIB_PATH.'/popular.lib.php');
-include_once(G5_LIB_PATH.'/latest.lib.php');
-
-add_javascript('<script src="'.G5_JS_URL.'/owlcarousel/owl.carousel.min.js"></script>', 10);
-add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carousel.css">', 0);
+include_once G5_THEME_PATH.'/head.sub.php';
+include_once G5_LIB_PATH.'/outlogin.lib.php';
+include_once G5_LIB_PATH.'/poll.lib.php';
+include_once G5_LIB_PATH.'/visit.lib.php';
+include_once G5_LIB_PATH.'/connect.lib.php';
+include_once G5_LIB_PATH.'/popular.lib.php';
+include_once G5_LIB_PATH.'/latest.lib.php';
 ?>
 
 <!-- 상단 시작 { -->
 <div id="hd">
-    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
+    <h1 id="hd_h1"><?php echo $g5['title']; ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-    <?php if(defined('_INDEX_')) { // index에서만 실행
+    <?php if (defined('_INDEX_')) { // index에서만 실행
         include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
-	} ?>
+    } ?>
      
 	<div id="tnb">
     	<div class="inner">
-            <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?>
+            <?php if (defined('G5_COMMUNITY_USE') && G5_COMMUNITY_USE) { ?>
     		<ul id="hd_define">
-    			<li><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
-    			<li class="active"><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
+    			<li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
+    			<li class="active"><a href="<?php echo G5_SHOP_URL; ?>/">쇼핑몰</a></li>
     		</ul>
             <?php } ?>
 			<ul id="hd_qnb">
-                <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
-                <li><a href="<?php echo G5_SUBSCRIPTION_URL ?>/list.php">정기결제</a></li>
-                <?php } ?>
-	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
-	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
-	            <li><a href="<?php echo G5_SHOP_URL ?>/personalpay.php">개인결제</a></li>
-	            <li><a href="<?php echo G5_SHOP_URL ?>/itemuselist.php">사용후기</a></li> 
-	            <li><a href="<?php echo G5_SHOP_URL ?>/itemqalist.php">상품문의</a></li>
+                <li><a href="<?php echo G5_SUBSCRIPTION_URL; ?>/list.php">정기결제</a></li>
+	            <li><a href="<?php echo G5_BBS_URL; ?>/faq.php">FAQ</a></li>
+	            <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
+	            <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
+	            <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li> 
+	            <li><a href="<?php echo G5_SHOP_URL; ?>/itemqalist.php">상품문의</a></li>
+				<li class="bd"><a href="<?php echo G5_SHOP_URL; ?>/couponzone.php">쿠폰존</a></li>
 	        </ul>
 		</div>
 	</div>
@@ -76,24 +75,24 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 	        </fieldset>
 		</div>
         <!-- 쇼핑몰 배너 시작 { -->
-        <?php // echo display_banner('왼쪽'); ?>
+        <?php // echo display_banner('왼쪽');?>
         <!-- } 쇼핑몰 배너 끝 -->
         
         <ul class="hd_login">        
             <?php if ($is_member) {  ?>
 			<li class="shop_login">
-				<?php echo outlogin('shop_basic'); // 아웃로그인 ?>	
+				<?php echo outlogin('theme/shop_basic'); // 아웃로그인?>	
 			</li>
 			<li class="shop_cart"><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="sound_only">장바구니</span><span class="count"><?php echo get_boxcart_datas_count(); ?></span></a></li>
             <?php } else { ?>
-            <li class="login"><a href="<?php echo G5_BBS_URL ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
+            <li class="login"><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
             <?php }  ?>
         </ul>
     </div>
 
     <div id="hd_menu">
     	<button type="button" id="menu_open"><i class="fa fa-bars" aria-hidden="true"></i> 카테고리</button>
-		<?php include_once(G5_SHOP_PATH.'/category.php'); // 분류 ?>
+		<?php include_once G5_THEME_SHOP_PATH.'/category.php'; // 분류?>
 		<ul class="hd_menu">
             <li><a href="<?php echo shop_type_url(1); ?>">히트상품</a></li>
             <li><a href="<?php echo shop_type_url(2); ?>">추천상품</a></li>
@@ -116,38 +115,37 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
     <div id="tabs_con">
 	    <div class="side_mn_wr1 qk_con">
 	    	<div class="qk_con_wr">
-	    		<?php echo outlogin('shop_side'); // 아웃로그인 ?>
+	    		<?php echo outlogin('theme/shop_side'); // 아웃로그인?>
 		        <ul class="side_tnb">
 		        	<?php if ($is_member) { ?>
 					<li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
 		            <?php } ?>
 					<li><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php">주문내역</a></li>
-					<li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
-		            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
-		            <li><a href="<?php echo G5_SHOP_URL ?>/personalpay.php">개인결제</a></li>
-		            <li><a href="<?php echo G5_SHOP_URL ?>/itemuselist.php">사용후기</a></li>
-		            <li><a href="<?php echo G5_SHOP_URL ?>/itemqalist.php">상품문의</a></li>
+					<li><a href="<?php echo G5_BBS_URL; ?>/faq.php">FAQ</a></li>
+		            <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
+		            <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
+		            <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
+		            <li><a href="<?php echo G5_SHOP_URL; ?>/itemqalist.php">상품문의</a></li>
 		            <li><a href="<?php echo G5_SHOP_URL; ?>/couponzone.php">쿠폰존</a></li>
 		        </ul>
-	        	<?php // include_once(G5_SHOP_SKIN_PATH.'/boxcommunity.skin.php'); // 커뮤니티 ?>
 	    		<button type="button" class="con_close"><i class="fa fa-times-circle" aria-hidden="true"></i><span class="sound_only">나의정보 닫기</span></button>
 	    	</div>
 	    </div>
 	    <div class="side_mn_wr2 qk_con">
 	    	<div class="qk_con_wr">
-	        	<?php include(G5_SHOP_SKIN_PATH.'/boxtodayview.skin.php'); // 오늘 본 상품 ?>
+	        	<?php include G5_SHOP_SKIN_PATH.'/boxtodayview.skin.php'; // 오늘 본 상품?>
 	    		<button type="button" class="con_close"><i class="fa fa-times-circle" aria-hidden="true"></i><span class="sound_only">오늘 본 상품 닫기</span></button>
 	    	</div>
 	    </div>
 	    <div class="side_mn_wr3 qk_con">
 	    	<div class="qk_con_wr">
-	        	<?php include_once(G5_SHOP_SKIN_PATH.'/boxcart.skin.php'); // 장바구니 ?>
+	        	<?php include_once G5_SHOP_SKIN_PATH.'/boxcart.skin.php'; // 장바구니?>
 	    		<button type="button" class="con_close"><i class="fa fa-times-circle" aria-hidden="true"></i><span class="sound_only">장바구니 닫기</span></button>
 	    	</div>
 	    </div>
 	    <div class="side_mn_wr4 qk_con">
 	    	<div class="qk_con_wr">
-	        	<?php include_once(G5_SHOP_SKIN_PATH.'/boxwish.skin.php'); // 위시리스트 ?>
+	        	<?php include_once G5_SHOP_SKIN_PATH.'/boxwish.skin.php'; // 위시리스트?>
 	    		<button type="button" class="con_close"><i class="fa fa-times-circle" aria-hidden="true"></i><span class="sound_only">위시리스트 닫기</span></button>
 	    	</div>
 	    </div>
@@ -208,20 +206,20 @@ jQuery(function ($){
 });
 </script>
 <?php
-    $wrapper_class = array();
-    if( defined('G5_IS_COMMUNITY_PAGE') && G5_IS_COMMUNITY_PAGE ){
-        $wrapper_class[] = 'is_community';
-    }
+    $wrapper_class = [];
+if (defined('G5_IS_COMMUNITY_PAGE') && G5_IS_COMMUNITY_PAGE) {
+    $wrapper_class[] = 'is_community';
+}
 ?>
 <!-- 전체 콘텐츠 시작 { -->
 <div id="wrapper" class="<?php echo implode(' ', $wrapper_class); ?>">
     <!-- #container 시작 { -->
     <div id="container">
 
-        <?php if(defined('_INDEX_')) { ?>
+        <?php if (defined('_INDEX_')) { ?>
         <div id="aside">
-            <?php include_once(G5_SHOP_SKIN_PATH.'/boxcategory.skin.php'); // 상품분류 ?>
-            <?php if($default['de_type4_list_use']) { ?>
+            <?php include_once G5_SHOP_SKIN_PATH.'/boxcategory.skin.php'; // 상품분류?>
+            <?php if ($default['de_type4_list_use']) { ?>
             <!-- 인기상품 시작 { -->
             <section id="side_pd">
                 <h2><a href="<?php echo shop_type_url('4'); ?>">인기상품</a></h2>
@@ -243,24 +241,24 @@ jQuery(function ($){
             <?php } ?>
             
             <?php echo display_banner('왼쪽', 'boxbanner.skin.php'); ?>
-            <?php echo poll('shop_basic'); // 설문조사 ?>
+            <?php echo poll('theme/shop_basic'); // 설문조사?>
         </div>
-        <?php } // end if ?>
+        <?php } // end if?>
         <?php
-            $content_class = array('shop-content');
-            if( isset($it_id) && isset($it) && isset($it['it_id']) && $it_id === $it['it_id']){
-                $content_class[] = 'is_item';
-            }
-            if( defined('IS_SHOP_SEARCH') && IS_SHOP_SEARCH ){
-                $content_class[] = 'is_search';
-            }
-            if( defined('_INDEX_') && _INDEX_ ){
-                $content_class[] = 'is_index';
-            }
-        ?>
+            $content_class = ['shop-content'];
+if (isset($it_id) && isset($it) && isset($it['it_id']) && $it_id === $it['it_id']) {
+    $content_class[] = 'is_item';
+}
+if (defined('IS_SHOP_SEARCH') && IS_SHOP_SEARCH) {
+    $content_class[] = 'is_search';
+}
+if (defined('_INDEX_') && _INDEX_) {
+    $content_class[] = 'is_index';
+}
+?>
         <!-- .shop-content 시작 { -->
         <div class="<?php echo implode(' ', $content_class); ?>">
-            <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g5['title'] ?></div><?php } ?>
+            <?php if ((!$bo_table || $w == 's') && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g5['title']; ?></div><?php } ?>
             <!-- 글자크기 조정 display:none 되어 있음 시작 { -->
             <div id="text_size">
                 <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
