@@ -40,15 +40,17 @@ class ShutdownHandler
     public function __invoke()
     {
         $error = error_get_last();
-        if ($error) {
+        
+        if ($error['type'] !== E_DEPRECATED && $error) {
             $errorFile = $error['file'];
             $errorLine = $error['line'];
             $errorMessage = $error['message'];
             $errorType = $error['type'];
             $message = 'An error while processing your request. Please try again later.';
-
+        
             if ($this->displayErrorDetails) {
                 switch ($errorType) {
+                    
                     case E_USER_ERROR:
                         $message = "FATAL ERROR: {$errorMessage}. ";
                         $message .= " on line {$errorLine} in file {$errorFile}.";

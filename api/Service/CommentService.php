@@ -13,6 +13,12 @@ class CommentService
 {
     public array $board;
     public string $write_table;
+    private BoardPermission $board_permission;
+
+    public function __construct(BoardPermission $board_permission)
+    {
+        $this->board_permission = $board_permission;
+    }
 
     public function setBoard(array $board): void
     {
@@ -29,29 +35,57 @@ class CommentService
     /**
      * 게시글의 댓글목록 조회
      */
-    public function getComments(int $wr_id): array
+    public function getComments(int $wr_id, string $mb_id, $page, $per_page): array
     {
-        $fetch_comments = $this->fetchComments($wr_id);
+        $fetch_comments = $this->fetchComments($wr_id, $page, $per_page);
 
-        $comments = [];
+        $result = [];
         foreach ($fetch_comments as $comment) {
-            $comments[] = new Comment($comment);
+            $comment['save_content'] = $comment['wr_content'];
+            $canReadComment = $this->board_permission->canReadSecretComment($mb_id, $comment);
+            if ($canReadComment) {
+                $comment['is_secret'] = true;
+                $comment['is_secret_content'] = true;
+                $comment['wr_content'] = '비밀글입니다.';
+            }
+
+            $result[] = new Comment($comment);
         }
 
-        return $comments;
+        return $result;
     }
 
     /**
      * 게시글의 댓글목록 조회 쿼리
      */
-    public function fetchComments(int $wr_id): array
+    public function fetchComments(int $wr_id, $page, $per_page): array
     {
+        $offset = ($page - 1) * $per_page;
+        $limit = $per_page;
         $query = "SELECT * FROM {$this->write_table}
                     WHERE wr_parent = :wr_id
                         AND wr_is_comment = 1
+                    
+                    ORDER BY wr_comment, wr_comment_reply
+                    LIMIT :offset, :limit
+                    ";
+        return Db::getInstance()->run($query, [
+            'wr_id' => $wr_id,
+            'offset' => $offset,
+            'limit' => $limit
+        ])->fetchAll();
+    }
+
+    public function fetchTotalRecords(int $wr_id)
+    {
+        $query = "SELECT count(*) FROM `{$this->write_table}`
+                    WHERE wr_parent = :wr_id
+                        AND wr_is_comment = 1
                     ORDER BY wr_comment, wr_comment_reply";
-        $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
-        return $stmt->fetchAll();
+        $stmt = Db::getInstance()->run($query, [
+            'wr_id' => $wr_id
+        ]);
+        return $stmt->fetchColumn();
     }
 
     public function updateCommentData(int $comment_id, object $data): void

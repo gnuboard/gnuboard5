@@ -12,6 +12,7 @@ use API\Service\BoardGoodService;
 use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
+use API\Service\ConfigService;
 use API\Service\PointService;
 use API\Service\ScrapService;
 use API\Service\WriteService;
@@ -25,6 +26,7 @@ use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\Response\Write\GetCommentsResponse;
 use API\v1\Model\Response\Write\GoodWriteResponse;
 use API\v1\Model\Response\Write\NeighborWrite;
 use API\v1\Model\Response\Write\Thumbnail;
@@ -138,7 +140,7 @@ class BoardController
              * - 그누보드5는 공지글을 출력결과 수에 포함시킴 
              * - 아래는 별도로 출력하도록 개발됨
              * TODO: 목록에 필요한 데이터를 반환하도록 변경이 필요함
-             * - comments => 댓글갯수, images/normal_files => 파일갯수
+             * - images/normal_files => 파일갯수
              */
             // 공지글 목록 조회
             $notice_writes = [];
@@ -147,8 +149,8 @@ class BoardController
                 $notice_writes = array_map(fn ($notice_write) => new Write($notice_write), $fetch_notice_writes);
             }
             // 게시글 목록 조회
-            $fetch_writes = $this->write_service->fetchWrites((array)$search_params, (array)$page_params);
-            $writes = array_map(fn ($write) => new Write($write), $fetch_writes);
+            $get_writes = $this->write_service->getWrites($board, (array)$search_params, (array)$page_params);
+            $writes = array_map(fn ($write) => new Write($write), $get_writes);
 
             $response_data = new GetWritesResponse([
                 "total_records" => $total_records,
@@ -163,7 +165,7 @@ class BoardController
                 "next_spt" => $this->write_service->getNextSearchPart((array)$search_params),
             ]);
 
-            return api_response_json($response, (array)$response_data);
+            return api_response_json($response, $response_data);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -214,7 +216,6 @@ class BoardController
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
             $write_data = array_merge($write, array(
-                "comments" => $this->comment_service->getComments($write['wr_id']),
                 "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
                 "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
                 "thumbnail" => new Thumbnail($thumb),
@@ -226,6 +227,67 @@ class BoardController
 
             $write = new Write($write_data);
             return api_response_json($response, $write);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/comments",
+     *      summary="댓글 조회",
+     *      tags={"게시판"},
+     *      security={{"Oauth2Password": {}}},
+     *      description="게시글 1건의 댓글을 조회합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\Parameter(ref="#/components/parameters/page"),
+     *      @OA\Parameter(ref="#/components/parameters/per_page"),
+     *      @OA\Response(response="200", description="게시판 글 조회 성공", @OA\JsonContent(ref="#/components/schemas/Comment")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     * )
+     */
+    public function getComments(Request $request, Response $response)
+    {
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $config = $request->getAttribute('config');
+        $query_params = $request->getQueryParams();
+
+        try {
+            // 권한 체크
+            $this->board_permission->readWrites($member);
+            
+            // 검색 조건 및 페이징 처리
+            $page_rows = (int)$query_params['per_page'];
+            $page_rows = $page_rows >= 100 ? 100 : $page_rows;
+            $mobile_page_rows = (int)($board['bo_mobile_page_rows'] ?? 0);
+            $page_params = new PageParameters($query_params, $config, $page_rows, $mobile_page_rows);
+            $page = $page_params->page;
+            $per_page = $page_params->per_page;
+            
+            $comments = $this->comment_service->getComments($write['wr_id'], $member['mb_id'], $page, $per_page);
+            $total_count = $this->comment_service->fetchTotalRecords($write['wr_id']) ?: 1;
+
+            $response_data = new GetCommentsResponse([
+                'current_page' => $page,
+                'total_pages' => ceil($total_count / $per_page),
+                'total_records' => $total_count,
+                'comments' => $comments,
+            ]);
+
+            return api_response_json($response, $response_data);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -323,7 +385,7 @@ class BoardController
             run_event('api_create_write_after', $board, $wr_id);
 
             $response_data = new CreateWriteResponse("success", $wr_id);
-            return api_response_json($response, (array)$response_data);
+            return api_response_json($response, $response_data);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());

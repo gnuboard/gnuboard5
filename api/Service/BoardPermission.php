@@ -7,7 +7,7 @@ use API\Service\GroupService;
 use Exception;
 
 /**
- * @deprecated 함수 모음으로 변경
+ * 게시판 전반의 권한 확인에 쓰입니다.
  */
 class BoardPermission
 {
@@ -615,6 +615,28 @@ class BoardPermission
     }
 
     /**
+     * 비밀글 읽기 권한 확인
+     * @param $mb_id
+     * @param array $comment
+     * @return bool
+     */
+    public function canReadSecretComment($mb_id, array $comment): bool
+    {
+        if (is_super_admin($this->config, $mb_id)) {
+            return true;
+        }
+        if (!str_contains($comment['wr_option'], "secret")) {
+            return true;
+        }
+
+        if ($this->isBoardManager($mb_id) || $this->isOwner($comment, $mb_id)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * 답변글이 있는지 체크
      */
     private function hasWriteReply(array $write, string $message): void
@@ -684,7 +706,7 @@ class BoardPermission
     /**
      * 글 작성자 체크
      */
-    private function isOwner(array $write, string $mb_id): bool
+    public function isOwner(array $write, string $mb_id): bool
     {
         if (empty($mb_id) || !isset($write['mb_id']) || empty($write['mb_id'])) {
             return false;

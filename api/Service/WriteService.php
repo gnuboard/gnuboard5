@@ -83,9 +83,33 @@ class WriteService
         $search_values[':offset'] = $page_params['offset'];
         $search_values[':per_page'] = $page_params['per_page'];
 
-        $stmt = Db::getInstance()->run($query, $search_values);
+        return Db::getInstance()->run($query, $search_values)->fetchAll();
+    }
 
-        return $stmt->fetchAll();
+    /**
+     * 가져온 게시글 목록 데이터 가공
+     * @param array $board
+     * @param $search_params
+     * @param $page_params
+     * @return array
+     */
+    public function getWrites(array $board, $search_params, $page_params)
+    {
+        $use_show_content = (int)$board['bo_use_list_content'] === 1;
+        $data = $this->fetchWrites($search_params, $page_params);
+        foreach ($data as &$write) {
+            //게시판설정에서 내용보기 체크시
+            $write['wr_password'] = '';
+            if($use_show_content) {
+                if (strpos($write['wr_option'], 'secret') !== false) {
+                    $write['wr_content'] = '비밀글입니다.';
+                }
+            } else {
+                $write['wr_content'] = '';
+            }
+        }
+        
+        return $data;
     }
 
     /**
@@ -96,9 +120,7 @@ class WriteService
     public function fetchWrite(int $wr_id)
     {
         $query = "SELECT * FROM {$this->table} WHERE wr_id = :wr_id";
-        $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
-
-        return $stmt->fetch();
+        return Db::getInstance()->run($query, ['wr_id' => $wr_id])->fetch();
     }
 
     /**

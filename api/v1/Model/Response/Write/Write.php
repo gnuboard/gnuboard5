@@ -168,17 +168,6 @@ class Write
      */
     public array $next = [];
 
-    /**
-     * 댓글 목록
-     * @OA\Property(
-     *     type="array",
-     *     @OA\Items(ref="#/components/schemas/Comment")
-     * )
-     * 
-     * @var \API\v1\Model\Response\Board\Comment[]
-     */
-    public array $comments = [];
-
     public function __construct(array $data = [])
     {
         $this->mapDataToProperties($this, $data);
