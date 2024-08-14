@@ -111,6 +111,7 @@ for ($i = 0; $row = sql_fetch_array($result); ++$i) {
 
     $it_name = $a1.stripslashes($row['it_name']).$a2;
     $it_options = print_item_options($row['it_id'], $s_cart_id);
+    $mod_options = '';
     if ($it_options) {
         $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
         $it_name .= '<div class="sod_opt">'.$it_options.'</div>';

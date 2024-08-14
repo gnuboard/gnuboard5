@@ -63,6 +63,9 @@ $comm_free_mny = 0; // 면세금액
 $tot_tax_mny = 0;
 
 for ($i = 0; $row = sql_fetch_array($result); ++$i) {
+
+    $cp_button = '';
+
     // 합계금액 계산
     $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                             SUM(ct_point * ct_qty) as point,
@@ -266,7 +269,7 @@ if ($is_member) {
 
     // 기본배송지
     $sql = " select *
-                                from {$g5['g5_subscription_order_address_table']}
+                                from {$g5['g5_shop_order_address_table']}
                                 where mb_id = '{$member['mb_id']}'
                                   and ad_default = '1' ";
     $row = sql_fetch($sql);
@@ -278,7 +281,7 @@ if ($is_member) {
 
     // 최근배송지
     $sql = " select *
-                                from {$g5['g5_subscription_order_address_table']}
+                                from {$g5['g5_shop_order_address_table']}
                                 where mb_id = '{$member['mb_id']}'
                                   and ad_default = '0'
                                 order by ad_id desc
@@ -395,7 +398,7 @@ if ($is_member) {
 if ($is_member) {
     // 주문쿠폰
     $sql = " select cp_id
-                        from {$g5['g5_subscription_coupon_table']}
+                        from {$g5['g5_shop_coupon_table']}
                         where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_method = '2'
                           and cp_start <= '".G5_TIME_YMD."'
@@ -414,7 +417,7 @@ if ($is_member) {
     if ($send_cost > 0) {
         // 배송비쿠폰
         $sql = " select cp_id
-                            from {$g5['g5_subscription_coupon_table']}
+                            from {$g5['g5_shop_coupon_table']}
                             where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                               and cp_method = '3'
                               and cp_start <= '".G5_TIME_YMD."'
@@ -862,7 +865,7 @@ function forderform_check(f)
         }
     }
 
-    <?php if ($default['su_pg_service'] == 'inicis') { ?>
+    <?php if (get_subs_option('su_pg_service') == 'inicis') { ?>
     if( f.action != form_action_url ){
         f.action = form_action_url;
         f.removeAttribute("target");

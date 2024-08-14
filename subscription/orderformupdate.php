@@ -204,7 +204,7 @@ $od_b_addr_jibeon = preg_match('/^(N|R)$/', $od_b_addr_jibeon) ? $od_b_addr_jibe
 $od_memo = clean_xss_tags($od_memo, 1, 1, 0, 0);
 $od_deposit_name = clean_xss_tags($od_deposit_name);
 
-$inserts = [
+$inserts = array(
     'od_id' => $od_id,
     'mb_id' => $member['mb_id'],
     'od_pwd' => '',
@@ -261,7 +261,7 @@ $inserts = [
     'od_test' => get_subs_option('su_card_use'),
     'card_number' => $card_number,
     'card_billkey' => $card_billkey,
-];
+);
 
 // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php
 $columns = implode(', ', array_keys($inserts));

@@ -48,7 +48,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tr class="pg_info_fld kcp_info_fld">
             <th scope="row"><label for="su_kcp_group_id">NHN KCP 그룹아이디</label></th>
             <td>
-                <input type="text" name="su_kcp_group_id" value="<?php echo get_sanitize_input($default['su_kcp_group_id']); ?>" id="su_kcp_group_id" class="frm_input" size="36" maxlength="25">
+                <input type="text" name="su_kcp_group_id" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_group_id')); ?>" id="su_kcp_group_id" class="frm_input" size="36" maxlength="25">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
@@ -118,8 +118,6 @@ jQuery(function($) {
 
         var pg = $(this).attr("data-value"),
             class_name = "tab-current";
-        
-        alert(pg);
         
         $("#su_pg_service").val(pg);
         $(this).parent("li").addClass(class_name).siblings().removeClass(class_name);

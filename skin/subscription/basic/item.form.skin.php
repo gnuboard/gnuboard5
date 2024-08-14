@@ -310,9 +310,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SUBSCRIPTION_CSS_URL.'/style.c
 	            <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
 	            <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_alm">재입고알림</a>
 	            <?php } ?>
-	            <?php if ($naverpay_button_js) { ?>
-	            <div class="itemform-naverpay"><?php echo $naverpay_request_js.$naverpay_button_js; ?></div>
-	            <?php } ?>
 	        </div>
 	
 	        <script>

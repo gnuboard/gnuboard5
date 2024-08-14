@@ -382,15 +382,15 @@ if(!sql_query(" select it_skin from {$g5['g5_subscription_item_table']} limit 1"
             <td>
                 <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
                 <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
-                <label for="it_type1">히트 <img src="<?php echo G5_subscription_URL; ?>/img/icon_hit.gif" alt=""></label>
+                <label for="it_type1">히트 <img src="<?php echo G5_SUBSCRIPTION_URL; ?>/img/icon_hit.gif" alt=""></label>
                 <input type="checkbox" name="it_type2" value="1" <?php echo ($it['it_type2'] ? "checked" : ""); ?> id="it_type2">
-                <label for="it_type2">추천 <img src="<?php echo G5_subscription_URL; ?>/img/icon_rec.gif" alt=""></label>
+                <label for="it_type2">추천 <img src="<?php echo G5_SUBSCRIPTION_URL; ?>/img/icon_rec.gif" alt=""></label>
                 <input type="checkbox" name="it_type3" value="1" <?php echo ($it['it_type3'] ? "checked" : ""); ?> id="it_type3">
-                <label for="it_type3">신상품 <img src="<?php echo G5_subscription_URL; ?>/img/icon_new.gif" alt=""></label>
+                <label for="it_type3">신상품 <img src="<?php echo G5_SUBSCRIPTION_URL; ?>/img/icon_new.gif" alt=""></label>
                 <input type="checkbox" name="it_type4" value="1" <?php echo ($it['it_type4'] ? "checked" : ""); ?> id="it_type4">
-                <label for="it_type4">인기 <img src="<?php echo G5_subscription_URL; ?>/img/icon_best.gif" alt=""></label>
+                <label for="it_type4">인기 <img src="<?php echo G5_SUBSCRIPTION_URL; ?>/img/icon_best.gif" alt=""></label>
                 <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
-                <label for="it_type5">할인 <img src="<?php echo G5_subscription_URL; ?>/img/icon_discount.gif" alt=""></label>
+                <label for="it_type5">할인 <img src="<?php echo G5_SUBSCRIPTION_URL; ?>/img/icon_discount.gif" alt=""></label>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_sc_it_type" value="1" id="chk_sc_it_type">

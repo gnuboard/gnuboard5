@@ -371,3 +371,81 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_data` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_event`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_event`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_event` (
+  `ev_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ev_skin` varchar(255) NOT NULL DEFAULT '',
+  `ev_mobile_skin` varchar(255) NOT NULL DEFAULT '',
+  `ev_img_width` int(11) NOT NULL DEFAULT '0',
+  `ev_img_height` int(11) NOT NULL DEFAULT '0',
+  `ev_list_mod` int(11) NOT NULL DEFAULT '0',
+  `ev_list_row` int(11) NOT NULL DEFAULT '0',
+  `ev_mobile_img_width` int(11) NOT NULL DEFAULT '0',
+  `ev_mobile_img_height` int(11) NOT NULL DEFAULT '0',
+  `ev_mobile_list_mod` int(11) NOT NULL DEFAULT '0',
+  `ev_mobile_list_row` int(11) NOT NULL DEFAULT '0',
+  `ev_subject` varchar(255) NOT NULL DEFAULT '',
+  `ev_subject_strong` tinyint(4) NOT NULL DEFAULT '0',
+  `ev_head_html` text NOT NULL,
+  `ev_tail_html` text NOT NULL,
+  `ev_use` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ev_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_event_item`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_event_item`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_event_item` (
+  `ev_id` int(11) NOT NULL DEFAULT '0',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ev_id`,`it_id`),
+  KEY `it_id` (`it_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_item_relation`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_item_relation`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_item_relation` (
+  `it_id` varchar(20) NOT NULL DEFAULT '',
+  `it_id2` varchar(20) NOT NULL DEFAULT '',
+  `ir_no` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`it_id`,`it_id2`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_item_use`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_item_use`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
+  `is_id` int(11) NOT NULL AUTO_INCREMENT,
+  `it_id` varchar(20) NOT NULL DEFAULT '0',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `is_name` varchar(255) NOT NULL DEFAULT '',
+  `is_password` varchar(255) NOT NULL DEFAULT '',
+  `is_score` tinyint(4) NOT NULL DEFAULT '0',
+  `is_subject` varchar(255) NOT NULL DEFAULT '',
+  `is_content` text NOT NULL,
+  `is_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `is_ip` varchar(25) NOT NULL DEFAULT '',
+  `is_confirm` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`is_id`),
+  KEY `index1` (`it_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
