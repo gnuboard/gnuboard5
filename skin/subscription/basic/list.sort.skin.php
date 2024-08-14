@@ -5,8 +5,8 @@ if (!defined('_GNUBOARD_')) {
 
 $sct_sort_href = $_SERVER['SCRIPT_NAME'].'?';
 
-if ($ca_id) {
-    $subscription_category_url = subscription_category_url($ca_id);
+if ($sc_id) {
+    $subscription_category_url = subscription_category_url($sc_id);
     $sct_sort_href = (strpos($subscription_category_url, '?') === false) ? $subscription_category_url.'?1=1' : $subscription_category_url;
 } elseif ($ev_id) {
     $sct_sort_href .= 'ev_id='.$ev_id;

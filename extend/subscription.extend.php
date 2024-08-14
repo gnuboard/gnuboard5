@@ -869,6 +869,47 @@ class SubscriptionList
     }
 }
 
+// 상품이미지에 유형 아이콘 출력
+function subscription_item_icon($it) {
+    global $g5;
+
+    $icon = '<span class="sit_icon">';
+
+    if ($it['it_type1'])
+        $icon .= '<span class="shop_icon shop_icon_1">히트</span>';
+
+    if ($it['it_type2'])
+        $icon .= '<span class="shop_icon shop_icon_2">추천</span>';
+
+    if ($it['it_type3'])
+        $icon .= '<span class="shop_icon shop_icon_3">최신</span>';
+
+    if ($it['it_type4'])
+        $icon .= '<span class="shop_icon shop_icon_4">인기</span>';
+
+    if ($it['it_type5'])
+        $icon .= '<span class="shop_icon shop_icon_5">할인</span>';
+
+
+    // 쿠폰상품
+    $sql = " select count(*) as cnt
+                from {$g5['g5_shop_coupon_table']}
+                where cp_start <= '".G5_TIME_YMD."'
+                  and cp_end >= '".G5_TIME_YMD."'
+                  and (
+                        ( cp_method = '0' and cp_target = '{$it['it_id']}' )
+                        OR
+                        ( cp_method = '1' and ( cp_target IN ( '{$it['sc_id']}', '{$it['sc_id2']}', '{$it['sc_id3']}' ) ) )
+                      ) ";
+    $row = sql_fetch($sql);
+    if($row['cnt'])
+        $icon .= '<span class="shop_icon shop_icon_coupon">쿠폰</span>';
+
+    $icon .= '</span>';
+
+    return $icon;
+}
+
 // 상품 이미지를 얻는다
 function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img_alt='', $is_crop=false)
 {

@@ -137,7 +137,7 @@ foreach((array) $list as $row){
     echo "</div>";
 
         if ($this->view_it_icon) {
-            echo "<div class=\"sit_icon_li\">".item_icon($row)."</div>\n";
+            echo "<div class=\"sit_icon_li\">".subscription_item_icon($row)."</div>\n";
         }
 
 	echo "</div>\n";

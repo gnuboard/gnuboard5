@@ -22,10 +22,8 @@ $it = array(
 'it_type5'=>0,
 'it_brand'=>'',
 'it_model'=>'',
-'it_tel_inq'=>0,
 'it_use'=>0,
 'it_nocoupon'=>0,
-'ec_mall_pid'=>'',
 'it_mobile_explan'=>'',
 'it_sell_email'=>'',
 'it_subscription_memo'=>'',
@@ -154,31 +152,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $script .= "sc_sell_email['{$row['sc_id']}'] = '{$row['sc_sell_email']}';\n";
 }
 
-// 재입고알림 설정 필드 추가
-if(!sql_query(" select it_stock_sms from {$g5['g5_subscription_item_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
-                    ADD `it_stock_sms` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_stock_qty` ", true);
-}
-
-// 추가옵션 포인트 설정 필드 추가
-if(!sql_query(" select it_supply_point from {$g5['g5_subscription_item_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
-                    ADD `it_supply_point` int(11) NOT NULL DEFAULT '0' AFTER `it_point_type` ", true);
-}
-
-// 상품메모 필드 추가
-if(!sql_query(" select it_subscription_memo from {$g5['g5_subscription_item_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
-                    ADD `it_subscription_memo` text NOT NULL AFTER `it_use_avg` ", true);
-}
-
-// 지식쇼핑 PID 필드추가
-// 상품메모 필드 추가
-if(!sql_query(" select ec_mall_pid from {$g5['g5_subscription_item_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
-                    ADD `ec_mall_pid` varchar(255) NOT NULL AFTER `it_subscription_memo` ", true);
-}
-
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_skin">스킨설정</a></li>
@@ -193,20 +166,6 @@ $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_extra">여분필드</a></li>
 </ul>
 ';
-
-
-// 쿠폰적용안함 설정 필드 추가
-if(!sql_query(" select it_nocoupon from {$g5['g5_subscription_item_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
-                    ADD `it_nocoupon` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_use` ", true);
-}
-
-// 스킨필드 추가
-if(!sql_query(" select it_skin from {$g5['g5_subscription_item_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
-                    ADD `it_skin` varchar(255) NOT NULL DEFAULT '' AFTER `sc_id3`,
-                    ADD `it_mobile_skin` varchar(255) NOT NULL DEFAULT '' AFTER `it_skin` ", true);
-}
 ?>
 
 <form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
@@ -452,19 +411,6 @@ if(!sql_query(" select it_skin from {$g5['g5_subscription_item_table']} limit 1"
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="it_tel_inq">전화문의</label></th>
-            <td>
-                <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
-                <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_sc_it_tel_inq" value="1" id="chk_sc_it_tel_inq">
-                <label for="chk_sc_it_tel_inq">분류적용</label>
-                <input type="checkbox" name="chk_all_it_tel_inq" value="1" id="chk_all_it_tel_inq">
-                <label for="chk_all_it_tel_inq">전체적용</label>
-            </td>
-        </tr>
-        <tr>
             <th scope="row"><label for="it_use">판매가능</label></th>
             <td>
                 <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
@@ -489,14 +435,7 @@ if(!sql_query(" select it_skin from {$g5['g5_subscription_item_table']} limit 1"
                 <input type="checkbox" name="chk_all_it_nocoupon" value="1" id="chk_all_it_nocoupon">
                 <label for="chk_all_it_nocoupon">전체적용</label>
             </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="ec_mall_pid">네이버쇼핑 상품ID</label></th>
-            <td colspan="2">
-                <?php echo help("네이버쇼핑에 입점한 경우 네이버쇼핑 상품ID를 입력하시면 네이버페이와 연동됩니다.<br>일부 쇼핑몰의 경우 네이버쇼핑 상품ID 대신 쇼핑몰 상품ID를 입력해야 하는 경우가 있습니다.<br>네이버페이 연동과정에서 이 부분에 대한 안내가 이뤄지니 안내받은 대로 값을 입력하시면 됩니다."); ?>
-                <input type="text" name="ec_mall_pid" value="<?php echo get_text($it['ec_mall_pid']); ?>" id="ec_mall_pid" class="frm_input" size="20">
-            </td>
-        </tr>
+        </tr>-
         <tr>
             <th scope="row">상품설명</th>
             <td colspan="2"> <?php echo editor_html('it_explan', get_text(html_purifier($it['it_explan']), 0)); ?></td>
@@ -1160,7 +1099,7 @@ $(function(){
 
 
 <section id="anc_sitfrm_sendcost">
-    <h2 class="h2_frm">배송비</h2>
+    <h2 class="h2_frm">배송관련</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
         <p>쇼핑몰설정 &gt; 배송비유형 설정보다 <strong>개별상품 배송비설정이 우선</strong> 적용됩니다.</p>
@@ -1168,13 +1107,36 @@ $(function(){
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
-        <caption>배송비 입력</caption>
+        <caption>배송관련 입력</caption>
         <colgroup>
             <col class="grid_4">
             <col>
             <col class="grid_3">
         </colgroup>
         <tbody>
+            <tr>
+                <th scope="row"><label for="delivery_cycle_date">배송주기</label></th>
+                <td>
+                    <?php echo help("배송주기 입력"); ?>
+                    <div>
+                    <input type="text" name="delivery_cycle_date" value="<?php echo $it['delivery_cycle_date']; ?>" >
+                    </div>
+                    <?php echo help("배송주기 입력"); ?>
+                    <div>
+                    <input type="text" name="delivery_cycle_date" value="<?php echo $it['delivery_cycle_date']; ?>" >
+                    </div>
+                    <?php echo help("첫발송일, 입력하지 않으면 출력되지 않습니다."); ?>
+                    <div>
+                    <input type="text" name="delivery_cycle_date" value="<?php echo $it['first_ship_date']; ?>" >
+                    </div>
+                </td>
+                <td class="td_grpset">
+                    <input type="checkbox" name="chk_sc_it_sendcost" value="1" id="chk_sc_it_sendcost">
+                    <label for="chk_sc_it_sendcost">분류적용</label>
+                    <input type="checkbox" name="chk_all_it_sendcost" value="1" id="chk_all_it_sendcost">
+                    <label for="chk_all_it_sendcost">전체적용</label>
+                </td>
+            </tr>
             <tr>
                 <th scope="row"><label for="it_sc_type">배송비 유형</label></th>
                 <td>

@@ -47,7 +47,7 @@ foreach((array) $list as $row){
     }
 
     if ($this->view_it_icon) {
-        echo "<div class=\"sct_icon\">".item_icon($row)."</div>\n";
+        echo "<div class=\"sct_icon\">".subscription_item_icon($row)."</div>\n";
     }
 
     if ($this->view_it_id) {
