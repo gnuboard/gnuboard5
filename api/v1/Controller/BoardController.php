@@ -34,6 +34,7 @@ use API\v1\Model\Response\Write\Write;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Exception;
+use Slim\Psr7\Stream;
 
 class BoardController
 {
@@ -598,13 +599,14 @@ class BoardController
         $file_name = $file['bf_source'];
         $encoded_file_name = rawurlencode($file_name);
 
-        $response = $response->withHeader('Content-Description', 'File Transfer');
+        $response = $response->withHeader('Content-Description', 'web site');
         $response = $response->withHeader('Content-Type', 'application/octet-stream');
         $response = $response->withHeader('Content-Disposition', 'attachment; filename=' . $encoded_file_name);
+        $response = $response->withHeader('Content-Transfer-Encoding', 'binary');
         $response = $response->withHeader('Content-Length', $file_size);
         $response = $response->withHeader('Expires', '0');
-
-        $response->getBody()->write(file_get_contents($file_path));
+        $file = fopen($file_path, 'rb');
+        $response = $response->withBody(new Stream($file));
 
         return $response;
     }

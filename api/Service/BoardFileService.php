@@ -55,9 +55,7 @@ class BoardFileService
     {
         $values = ['bo_table' => $this->bo_table, 'wr_id' => $wr_id];
         $query = "SELECT * FROM {$this->table} WHERE bo_table = :bo_table AND wr_id = :wr_id ORDER BY bf_no";
-        $stmt = Db::getInstance()->run($query, $values);
-
-        return $stmt->fetchAll();
+        return Db::getInstance()->run($query, $values)->fetchAll();
     }
 
     /**
