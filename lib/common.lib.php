@@ -849,23 +849,33 @@ function get_group($gr_id, $is_cache=false)
 }
 
 
-// 회원 정보를 얻는다.
-function get_member($mb_id, $fields='*', $is_cache=false)
+/**
+ * 회원 정보를 얻는다
+ * 
+ * @param string $mb_id
+ * @param string $fields
+ * @param bool $is_cache
+ * 
+ * @return array
+ */
+function get_member($mb_id, $fields = '*', $is_cache = false)
 {
     global $g5;
-    
-    if (preg_match("/[^0-9a-z_]+/i", $mb_id))
+
+    $mb_id = trim($mb_id);
+    if (preg_match("/[^0-9a-z_]+/i", $mb_id)) {
         return array();
+    }
 
     static $cache = array();
 
     $key = md5($fields);
 
-    if( $is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key]) ){
+    if ($is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key])) {
         return $cache[$mb_id][$key];
     }
 
-    $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
+    $sql = " SELECT {$fields} from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 
     $cache[$mb_id][$key] = run_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
 
@@ -1673,7 +1683,10 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
             die('Connect Error: '.mysqli_connect_error());
         }
     } else {
-        $link = mysql_connect($host, $user, $pass);
+        if (!function_exists('mysql_connect')) {
+            die('MySQL이 설치되지 않아 mysql_connect 함수를 사용할 수 없습니다.');
+        }
+        $link = mysql_connect($host, $user, $pass) or die('MySQL Host, User, Password 정보에 오류가 있습니다.');
     }
 
     return $link;
@@ -2119,7 +2132,7 @@ function time_select($time, $name="")
     preg_match("/([0-9]{2}):([0-9]{2}):([0-9]{2})/", $time, $m);
 
     // 시
-    $s .= "<select name='{$name}_h'>";
+    $s = "<select name='{$name}_h'>";
     for ($i=0; $i<=23; $i++) {
         $s .= "<option value='$i'";
         if ($i == $m['0']) {

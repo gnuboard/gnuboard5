@@ -20,6 +20,5 @@ SIRsoft000/
 config.php
 pma/
 vendor/
-api/.htaccess
 composer.lock
 .env
