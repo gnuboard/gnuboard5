@@ -62,6 +62,9 @@ $it = array(
 'it_tail_html'=>'',
 'it_mobile_head_html'=>'',
 'it_mobile_tail_html'=>'',
+'it_subscription_expiration_date'=>'',
+'it_subscription_number'=>0,
+'it_subscription_iteration'=>0,
 );
 
 for($i=0;$i<=10;$i++){
@@ -127,6 +130,7 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
 
 $g5['title'] = $html_title;
 include_once (G5_ADMIN_PATH.'/admin.head.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 // 분류리스트
 $category_select = '';
@@ -1115,19 +1119,35 @@ $(function(){
         </colgroup>
         <tbody>
             <tr>
-                <th scope="row"><label for="delivery_cycle_date">배송주기</label></th>
+                <th scope="row"><label for="delivery_cycle_date">정기결제 주기 입력</label></th>
                 <td>
-                    <?php echo help("배송주기 입력"); ?>
+                    <?php echo help("구독 주기 입력"); ?>
                     <div>
-                    <input type="text" name="delivery_cycle_date" value="<?php echo $it['delivery_cycle_date']; ?>" >
+                        <label for="it_subscription_number">
+                        구독 주기 입력
+                        </label>
+                        <input type="number" min="1" name="it_subscription_number" id="it_subscription_number" value="<?php echo $it['it_subscription_number']; ?>" class="frm_input" placeholder="Enter subscription interval"> 
+                        <select id="it_subscription_interval" name="it_subscription_interval">
+                            <option value="day">일</option>
+                            <option value="week">달</option>
+                            <option value="month">월</option>
+                            <option value="year">년</option>
+                        </select>
                     </div>
-                    <?php echo help("배송주기 입력"); ?>
+                    <?php echo help("구독 주기 반복수 입력"); ?>
                     <div>
-                    <input type="text" name="delivery_cycle_date" value="<?php echo $it['delivery_cycle_date']; ?>" >
+                        <label for="it_subscription_iteration">
+                        구독 주기 입력
+                        </label>
+                        <input type="number" name="it_subscription_iteration" id="it_subscription_iteration" value="<?php echo $it['it_subscription_iteration']; ?>" placeholder="Enter subscription iteration"> 
+                    </div>
+                    <?php echo help("구독 종료일, 입력하지 않으면 구독 종료일을 출력하지 않습니다."); ?>
+                    <div>
+                        <input type="text" id="it_subscription_expiration_date"  name="it_subscription_expiration_date" value="<?php echo $it['it_subscription_expiration_date']; ?>" class="frm_input" size="10" maxlength="10">
                     </div>
                     <?php echo help("첫발송일, 입력하지 않으면 출력되지 않습니다."); ?>
                     <div>
-                    <input type="text" name="delivery_cycle_date" value="<?php echo $it['first_ship_date']; ?>" >
+                        <input type="checkbox" name="chk_sc_it_sendcost" value="1" id="chk_sc_it_sendcost">
                     </div>
                 </td>
                 <td class="td_grpset">
@@ -1192,6 +1212,7 @@ $(function(){
 
     <script>
     $(function() {
+        $("#it_subscription_expiration_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", minDate: "+3d" });
         <?php
         switch($it['it_sc_type']) {
             case 1:

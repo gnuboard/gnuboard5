@@ -5,14 +5,14 @@ $navi_datas = $sc_ids = array();
 $is_item_view = (isset($it_id) && isset($it) && isset($it['it_id']) && $it_id === $it['it_id']) ? true : false;
 
 if( !$is_item_view && $sc_id ){
-    $navi_datas = get_shop_navigation_data(true, $sc_id);
+    $navi_datas = get_subscription_navigation_data(true, $sc_id);
     $sc_ids = array(
         'sc_id' => substr($sc_id,0,2),
         'sc_id2' => substr($sc_id,0,4),
         'sc_id3' => substr($sc_id,0,6),
         );
 } else if( $is_item_view && isset($it) && is_array($it) ) {
-    $navi_datas = get_shop_navigation_data(true, $it['sc_id']);
+    $navi_datas = get_subscription_navigation_data(true, $it['sc_id']);
     $sc_ids = array(
         'sc_id' => substr($it['sc_id'],0,2),
         'sc_id2' => substr($it['sc_id'],0,4),

@@ -34,6 +34,7 @@ $g5['g5_subscription_item_use_table']    = $g5['subscription_prefix'] . 'item_us
 $g5['g5_subscription_item_relation_table']    = $g5['subscription_prefix'] . 'item_relation'; // 관련 상품 테이블
 $g5['g5_subscription_event_table']          = $g5['subscription_prefix'] . 'event'; // 이벤트 테이블
 $g5['g5_subscription_event_item_table']    = $g5['subscription_prefix'] .'event_item'; // 상품, 이벤트 연결 테이블
+$g5['g5_subscription_item_option_table'] = $g5['subscription_prefix'].'item_option'; // 상품옵션 테이블
 
 $subscriptions_default = array(
 'su_card_test' => 1,
@@ -968,4 +969,121 @@ function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $im
         $img = $img = '<a href="'.subscription_item_url($it_id).'">'.$img.'</a>';
 
     return run_replace('get_subscription_it_image_tag', $img, $thumb, $it_id, $width, $height, $anchor, $img_id, $img_alt, $is_crop);
+}
+
+function get_subscription_navigation_data($is_cache, $sc_id, $sc_id2='', $sc_id3=''){
+    
+    $all_categories = get_subscription_category_array($is_cache);
+
+    $datas = array();
+    
+    if( strlen($sc_id) >= 2 && $all_categories ){
+        foreach((array) $all_categories as $category1 ){
+            $datas[0][] = $category1['text'];
+        }
+    }
+
+    $select_sc_id = $sc_id2 ? $sc_id2 : $sc_id;
+    $item_categories2 = $select_sc_id ? get_subscription_category_by($is_cache, 'sc_id', $select_sc_id) : array();
+
+    if( strlen($select_sc_id) >= 4 && $item_categories2 ){
+        foreach((array) $item_categories2 as $key=>$category2 ){
+            if( $key === 'text' ) continue;
+
+            $datas[1][] = $category2['text'];
+        }
+    }
+
+    $select_sc_id = $sc_id3 ? $sc_id3 : $sc_id;
+    $item_categories3 = $select_sc_id ? get_subscription_category_by($is_cache, 'sc_id', $select_sc_id) : array();
+
+    if( strlen($select_sc_id) >= 6 && $item_categories3 && isset($item_categories3[substr($select_sc_id,0,4)]) ){
+        $sub_categories = $item_categories3[substr($select_sc_id,0,4)];
+
+        foreach((array) $sub_categories as $key=>$category3 ){
+            if( $key === 'text' ) continue;
+
+            $datas[2][] = $category3['text'];
+        }
+    }
+
+    return $datas;
+}
+
+function get_subscription_category_by($is_cache, $case, $value){
+    
+    if( $case === 'sc_id' ){
+        $categories = get_subscription_category_array($is_cache);
+
+        $key = substr(preg_replace('/[^0-9a-z]/i', '', $value), 0, 2);
+        
+        if( isset($categories[$key]) ){
+            return $categories[$key];
+        }
+    }
+
+    return array();
+}
+
+function get_subscription_category_array($is_cache=false){
+
+    static $categories = array();
+    
+    $categories = run_replace('get_subscription_category_array', $categories, $is_cache);
+
+    if( $is_cache && !empty($categories) ){
+        return $categories;
+    }
+
+    $result = sql_query(get_subscription_category_sql('', 2));
+
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+
+        $row['url'] = subscription_category_url($row['sc_id']);
+        $categories[$row['sc_id']]['text'] = $row;
+        
+        if( $row['sc_id'] ){
+            $result2 = sql_query(get_subscription_category_sql($row['sc_id'], 4));
+
+            for($j=0; $row2=sql_fetch_array($result2); $j++) {
+
+                $row2['url'] = subscription_category_url($row2['sc_id']);
+                $categories[$row['sc_id']][$row2['sc_id']]['text'] = $row2;
+                
+                if( $row2['sc_id'] ){
+                    $result3 = sql_query(get_subscription_category_sql($row2['sc_id'], 6));
+                    for($k=0; $row3=sql_fetch_array($result3); $k++) {
+
+                        $row3['url'] = subscription_category_url($row3['sc_id']);
+                        $categories[$row['sc_id']][$row2['sc_id']][$row3['sc_id']]['text'] = $row3;
+                    }
+                }   //end if
+            }   //end for
+        }   //end if
+    }   //end for
+    
+    return $categories;
+}
+
+function get_subscription_category_sql($sc_id, $len){
+    global $g5;
+
+    $sql = " select * from {$g5['g5_subscription_category_table']}
+                where sc_use = '1' ";
+    if($sc_id)
+        $sql .= " and sc_id like '$sc_id%' ";
+    $sql .= " and length(sc_id) = '$len' order by sc_order, sc_id ";
+
+    return $sql;
+}
+
+// 금액표시
+// $it : 상품 배열
+function get_subscription_price($it)
+{
+    global $member;
+
+    $price = $it['it_price'];
+
+    return (int)$price;
 }

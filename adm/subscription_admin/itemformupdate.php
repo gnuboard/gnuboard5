@@ -300,7 +300,6 @@ $check_sanitize_keys = array(
 'it_origin',            // 원산지
 'it_brand',             // 브랜드
 'it_model',             // 모델
-'it_tel_inq',           // 전화문의
 'it_use',               // 판매가능
 'it_nocoupon',          // 쿠폰적용안함
 'ec_mall_pid',          // 네이버쇼핑 상품ID
@@ -384,11 +383,12 @@ $sql_common = " sc_id               = '$sc_id',
                 it_mobile_tail_html = '$it_mobile_tail_html',
                 it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
-                it_tel_inq          = '$it_tel_inq',
                 it_info_gubun       = '$it_info_gubun',
                 it_info_value       = '$it_info_value',
                 it_subscription_memo        = '$it_subscription_memo',
-                ec_mall_pid         = '$ec_mall_pid',
+                it_subscription_number        = '$it_subscription_number',
+                it_subscription_iteration        = '$it_subscription_iteration',
+                it_subscription_expiration_date        = '$it_subscription_expiration_date',
                 it_img1             = '$it_img1',
                 it_img2             = '$it_img2',
                 it_img3             = '$it_img3',
@@ -438,7 +438,10 @@ if ($w == "")
     $sql = " insert {$g5['g5_subscription_item_table']}
                 set it_id = '$it_id',
 					$sql_common	";
-                    
+    
+    echo $sql;
+    exit;
+    
     sql_query($sql);
 }
 else if ($w == "u")
@@ -546,7 +549,6 @@ if(is_checked('chk_sc_it_model'))               $sc_fields .= " , it_model = '$i
 if(is_checked('chk_sc_it_notax'))               $sc_fields .= " , it_notax = '$it_notax' ";
 if(is_checked('chk_sc_it_sell_email'))          $sc_fields .= " , it_sell_email = '$it_sell_email' ";
 if(is_checked('chk_sc_it_subscription_memo'))           $sc_fields .= " , it_subscription_memo = '$it_subscription_memo' ";
-if(is_checked('chk_sc_it_tel_inq'))             $sc_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_sc_it_use'))                 $sc_fields .= " , it_use = '$it_use' ";
 if(is_checked('chk_sc_it_nocoupon'))            $sc_fields .= " , it_nocoupon = '$it_nocoupon' ";
 if(is_checked('chk_sc_it_soldout'))             $sc_fields .= " , it_soldout = '$it_soldout' ";
@@ -598,7 +600,6 @@ if(is_checked('chk_all_it_model'))               $all_fields .= " , it_model = '
 if(is_checked('chk_all_it_notax'))               $all_fields .= " , it_notax = '$it_notax' ";
 if(is_checked('chk_all_it_sell_email'))          $all_fields .= " , it_sell_email = '$it_sell_email' ";
 if(is_checked('chk_all_it_subscription_memo'))           $all_fields .= " , it_subscription_memo = '$it_subscription_memo' ";
-if(is_checked('chk_all_it_tel_inq'))             $all_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_all_it_use'))                 $all_fields .= " , it_use = '$it_use' ";
 if(is_checked('chk_all_it_nocoupon'))            $all_fields .= " , it_nocoupon = '$it_nocoupon' ";
 if(is_checked('chk_all_it_soldout'))             $all_fields .= " , it_soldout = '$it_soldout' ";

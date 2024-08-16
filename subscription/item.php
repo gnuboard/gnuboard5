@@ -194,7 +194,7 @@ if(G5_SOLDOUT_CHECK)
 
 // 주문가능체크
 $is_orderable = true;
-if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
+if(!$it['it_use'] || $is_soldout)
     $is_orderable = false;
 
 $option_item = $supply_item = '';

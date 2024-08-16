@@ -112,12 +112,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SUBSCRIPTION_CSS_URL.'/style.c
 	                <th scope="row">판매가격</th>
 	                <td>판매중지</td>
 	            </tr>
-	            <?php } else if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
-	            <tr>
-	                <th scope="row">판매가격</th>
-	                <td>전화문의</td>
-	            </tr>
-	            <?php } else { // 전화문의가 아닐 경우?>
+	            <?php } ?>
 	            <?php if ($it['it_cust_price']) { ?>
 	            <tr>
 	                <th scope="row">시중가격</th>
@@ -128,11 +123,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SUBSCRIPTION_CSS_URL.'/style.c
 	            <tr class="tr_price">
 	                <th scope="row">판매가격</th>
 	                <td>
-	                    <strong><?php echo display_price(get_price($it)); ?></strong>
-	                    <input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
+	                    <strong><?php echo display_price(get_subscription_price($it)); ?></strong>
+	                    <input type="hidden" id="it_price" value="<?php echo get_subscription_price($it); ?>">
 	                </td>
 	            </tr>
-	            <?php } ?>
 	            	
 	            <?php if ($it['it_maker']) { ?>
 	            <tr>
@@ -186,6 +180,27 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SUBSCRIPTION_CSS_URL.'/style.c
 	                </td>
 	            </tr>
 	            <?php } ?>
+                <?php if (isset($it['it_subscription_number']) && $it['it_subscription_number']) {
+                $subscription_number_label = '배송주기';
+                $subscription_iteration = ((isset($it['it_subscription_iteration']) && (int) $it['it_subscription_iteration']) > 1) ? (int) $it['it_subscription_iteration'] : 1;
+                ?>
+	            <tr>
+	                <th><?php echo $subscription_number_label; ?></th>
+	                <td>
+                    <?php echo $subscription_iteration; ?>
+                        <select id="js-multiple" name="multiple">
+                          <option selected="" disabled="">선택해주세요</option>
+                          <?php for($i=1; $i<=$subscription_iteration; $i++) { ?>
+                          <option value="<?php echo $i ;?>"><?php echo $i ;?> 주기마다 (<?php echo (int)$it['it_subscription_number']; ?>일마다)</option>
+                          <?php } ?>
+                        </select>
+                    </td>
+	            </tr>
+                <?php } ?>
+                <?php if (isset($it['it_subscription_iteration']) && $it['it_subscription_iteration']) { ?>
+                <?php } ?>  
+                <?php if (isset($it['it_subscription_expiration_date']) && $it['it_subscription_expiration_date']) { ?>
+                <?php } ?>
 	            <?php
 	            $ct_send_cost_label = '배송비결제';
 	

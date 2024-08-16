@@ -190,8 +190,10 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_item` (
   `it_use_cnt` int(11) NOT NULL DEFAULT '0',
   `it_use_avg` DECIMAL(2,1) NOT NULL,
   `it_subscription_memo` text NOT NULL,
-  `it_delivery_cycle` varchar(255) NOT NULL DEFAULT '',
-  `first_ship_date` varchar(255) NOT NULL DEFAULT '',
+  `it_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
+  `it_subscription_iteration` tinyint(4) NOT NULL DEFAULT '0',
+  `it_subscription_expiration_date` datetime NULL,
+  `it_first_ship_date` datetime NULL,
   `it_img1` varchar(255) NOT NULL DEFAULT '',
   `it_img2` varchar(255) NOT NULL DEFAULT '',
   `it_img3` varchar(255) NOT NULL DEFAULT '',
@@ -447,5 +449,26 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
   PRIMARY KEY (`is_id`),
   KEY `index1` (`it_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_shop_item_option`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_item_option`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_item_option` (
+  `io_no` INT(11) NOT NULL AUTO_INCREMENT,
+  `io_id` VARCHAR(255) NOT NULL DEFAULT '0',
+  `io_type` TINYINT(4) NOT NULL DEFAULT '0',                    
+  `it_id` VARCHAR(20) NOT NULL DEFAULT '',
+  `io_price` INT(11) NOT NULL DEFAULT '0',
+  `io_stock_qty` INT(11) NOT NULL DEFAULT '0',
+  `io_noti_qty` INT(11) NOT NULL DEFAULT '0',
+  `io_use` TINYINT(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`io_no`),
+  KEY `io_id` (`io_id`),
+  KEY `it_id` (`it_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
