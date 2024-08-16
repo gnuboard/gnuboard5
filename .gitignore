@@ -1,6 +1,6 @@
 !.gitignore
 /.htaccess
-data/
+/data
 test/
 sirgle/
 test.php
@@ -13,8 +13,13 @@ cheditor5.*/
 log/
 g5_tree/
 .vscode/
+.idea/
 naver*.html
 initests01/
 SIRsoft000/
 config.php
 pma/
+vendor/
+api/.htaccess
+composer.lock
+.env
