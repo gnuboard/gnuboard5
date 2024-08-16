@@ -17,8 +17,8 @@ use API\v1\Model\Response\Member\CreateMemberResponse;
 use API\v1\Model\Response\Member\GetMemberResponse;
 use API\v1\Model\Response\Member\GetMemberMeResponse;
 use Exception;
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once G5_LIB_PATH . '/mailer.lib.php';
 
@@ -166,7 +166,7 @@ class MemberController
         }
 
         $response_data = new CreateMemberResponse("회원가입이 완료되었습니다.", $data);
-        return api_response_json($response, (array)$response_data);
+        return api_response_json($response, $response_data);
     }
 
     /**

@@ -6,9 +6,7 @@ use API\Database\Db;
 use API\v1\Model\Response\Write\Comment;
 use Exception;
 
-/**
- * @deprecated 함수 모음으로 변경
- */
+
 class CommentService
 {
     public array $board;

@@ -5,9 +5,7 @@ namespace API\Service;
 use API\Database\Db;
 use Exception;
 
-/**
- * @deprecated 함수 모음으로 변경
- */
+
 class MemberService
 {
     private string $table;

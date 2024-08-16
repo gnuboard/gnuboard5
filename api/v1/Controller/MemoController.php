@@ -2,27 +2,22 @@
 
 namespace API\v1\Controller;
 
-include_once __DIR__ . '/../Service/Memo.php';
-include_once __DIR__ . '/../Service/Point.php';
-
+use API\Service\MemoService;
+use API\Service\PointService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
-use function API\Service\addPoint;
-use function API\Service\Memo\{
-    fetchTotalCount,
-    fetchMemos,
-    fetchMemo,
-    readCheck,
-    sendMemo,
-    updateNotReadMemoCount,
-    deleteMemo,
-    deleteMemoCall
-};
 
 class MemoController
 {
+    private MemoService $memo_service;
+    private PointService $point_service;
 
+    public function __construct(MemoService $memoService, PointService $point_service)
+    {
+        $this->point_service = $point_service;
+        $this->memo_service = $memoService;
+    }
 
     /**
      * 쪽지 목록 조회
@@ -98,10 +93,8 @@ class MemoController
 
         //메모 리스트 가져오기
         //count
-
-
-        $total_records = fetchTotalCount($memo_type, $mb_id);
-        $memo_data = fetchMemos($memo_type, $mb_id, $page, $per_page);
+        $total_records = $this->memo_service->fetchTotalCount($memo_type, $mb_id);
+        $memo_data = $this->memo_service->fetchMemos($memo_type, $mb_id, $page, $per_page);
 
         $response_data = [
             'memos' => [
@@ -151,7 +144,7 @@ class MemoController
     public function send(Request $request, Response $response)
     {
         $member = $request->getAttribute('member');
-        $config = getConfig();
+        $config = get_config();
         $mb_id = $member['mb_id'];
 
         $request_data = $request->getParsedBody();
@@ -166,13 +159,13 @@ class MemoController
 
         $receiver_mb_id = $request_data['me_recv_mb_id'];
         $ip = $request->getServerParams()['REMOTE_ADDR']; // @todo 클라우드 플레어, LB 등을 고려한 ip 함수 추가 필요.
-        $sending_memo_id = sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
+        $sending_memo_id = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
         // 쪽지 포인트 차감
         foreach ($sending_memo_id as $memo_id) {
-            addPoint($mb_id, (int)$config['cf_memo_send_point'] * (-1), $receiver_mb_id . '(' . $receiver_mb_id . ')님께 쪽지 발송', '@memo', $receiver_mb_id,
+            $this->point_service->addPoint($mb_id, (int)$config['cf_memo_send_point'] * (-1), $receiver_mb_id . '(' . $receiver_mb_id . ')님께 쪽지 발송', '@memo', $receiver_mb_id,
                 $memo_id);
         }
-        updateNotReadMemoCount($receiver_mb_id);
+        $this->memo_service->update_not_read_memo_count($receiver_mb_id);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
     }
@@ -212,12 +205,12 @@ class MemoController
         }
 
 
-        $result = fetchMemo($memo_id, $mb_id);
+        $result = $this->memo_service->fetchMemo($memo_id, $mb_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
 
-        readCheck($memo_id);
+        $this->memo_service->readCheck($memo_id);
 
         return api_response_json($response, $result);
     }
@@ -235,12 +228,12 @@ class MemoController
             return api_response_json($response, ['message' => 'memo_id 는 숫자만 가능합니다.'], 422);
         }
 
-        $result = deleteMemoCall($memo_id);
+        $result = $this->memo_service->delete_memo_call($memo_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }
 
-        $result = deleteMemo($memo_id, $mb_id);
+        $result = $this->memo_service->delete_memo($memo_id, $mb_id);
         if (isset($result['error'])) {
             return api_response_json($response, ['message' => $result['error']], $result['code']);
         }

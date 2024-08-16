@@ -4,9 +4,7 @@ namespace API\Service;
 
 use API\Database\Db;
 
-/**
- * @deprecated 함수 모음으로 변경
- */
+
 class BoardNewService
 {
     public string $table;
