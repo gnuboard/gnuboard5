@@ -249,6 +249,76 @@ class BoardController
     }
 
     /**
+     * @OA\Post(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}",
+     *      summary="게시글 조회 (비회원 비밀글)",
+     *      tags={"게시판"},
+     *      security={{"Oauth2Password": {}}},
+     *      description="게시판의 게시글 1건을 조회합니다.",
+     *           @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *       @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *          @OA\Property(property="wr_password", type="string", description="게시글 비밀번호"),
+     *         ),
+     *     ),
+     *      @OA\Response(response="200", description="게시판 비밀글 조회 성공", @OA\JsonContent(ref="#/components/schemas/Write")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     * )
+     */
+    public function getSecretWrite(Request $request, Response $response): Response
+    {
+        $board = $request->getAttribute('board');
+        $write = $request->getAttribute('write');
+        $member = $request->getAttribute('member');
+        $params = $request->getParsedBody();
+
+        // 권한 체크
+        try {
+            $password = $params['wr_password'] ?? '';
+            $this->board_permission->readWrite($member, $write, $password);
+
+            // TODO: include 제거로 인한 썸네일 처리 오류 해결.
+            // get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
+            $thumb = [];
+            $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
+            $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
+            $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
+            $next = new NeighborWrite($board['bo_table'], $fetch_next);
+
+            $write_data = array_merge($write, array(
+                "mb_icon_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
+                "mb_image_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
+                "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
+                "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
+                "thumbnail" => new Thumbnail($thumb),
+                "prev" => $prev,
+                "next" => $next
+            ));
+
+            $this->point_service->addPoint($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
+
+            $write = new Write($write_data);
+            return api_response_json($response, $write);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
      * @OA\Get(
      *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/comments",
      *      summary="댓글 조회",

@@ -23,6 +23,7 @@ class BoardPermission
     private WriteService $write_service;
 
     private const ERROR_NO_ACCESS_GUEST = '비회원은 이 게시판에 접근할 권한이 없습니다.';
+    private const ERROR_NO_ACCESS_PASSWORD = '비밀번호가 일치하지 않습니다.';
     private const ERROR_NO_ACCESS_GROUP = '게시판에 접근할 권한이 없습니다.';
     private const ERROR_NO_ACCESS_CERT = '이 게시판은 본인인증을 진행하신 회원만 접근 가능합니다.';
     private const ERROR_NO_ACCESS_CERT_CHANGED = '본인인증 정보가 변경되었습니다. 다시 인증을 진행해주세요.';
@@ -115,13 +116,13 @@ class BoardPermission
      * 글 읽기 권한 체크
      * @throws Exception
      */
-    public function readWrite(array $member, array $write): void
+    public function readWrite(array $member, array $write, string $password = null): void
     {
         $level = (int)$this->board['bo_read_level'];
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_READ_WRITE);
         $this->checkAccessCert($member);
-        $this->checkReadSecretWrite($member, $write);
+        $this->checkReadSecretWrite($member, $write, $password);
         $this->checkMemberPoint('read', $member, $write);
     }
 
@@ -590,8 +591,9 @@ class BoardPermission
 
     /**
      * 비밀글 읽기 권한 체크
+     * @throws Exception
      */
-    private function checkReadSecretWrite(array $member, array $write): void
+    private function checkReadSecretWrite(array $member, array $write, $password = null): void
     {
         if (!str_contains($write['wr_option'], "secret")) {
             return;
@@ -599,7 +601,20 @@ class BoardPermission
 
         $mb_id = $member['mb_id'];
 
-        if ($this->isBoardManager($mb_id) || $this->isOwner($write, $mb_id)) {
+        if ($this->isBoardManager($mb_id)) {
+            return;
+        }
+
+        // 비회원 비밀글 읽기 권한 체크
+        if (!$mb_id && $password != null && trim($write['wr_password'])) {
+            $result = check_password($password, $write['wr_password']);
+            if (!$result) {
+                $this->throwException(self::ERROR_NO_ACCESS_PASSWORD);
+            }
+            return;
+        }
+
+        if ($this->isOwner($write, $mb_id)) {
             return;
         }
 

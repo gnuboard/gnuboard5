@@ -71,6 +71,9 @@ class PointService
         ) {
             return false;
         }
+        if (!$mb_id) {
+            return false;
+        }
         $member = $this->member_service->fetchMemberById($mb_id);
         if (!$member) {
             return false;

@@ -21,6 +21,7 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
 
         $group->group('/{wr_id}', function (RouteCollectorProxy $group) {
             $group->get('', [BoardController::class, 'getWrite']);
+            $group->post('', [BoardController::class, 'getSecretWrite']);
             $group->put('', [BoardController::class, 'updateWrite']);
             $group->delete('', [BoardController::class, 'deleteWrite']);
 
