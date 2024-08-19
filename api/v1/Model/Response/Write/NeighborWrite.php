@@ -41,8 +41,7 @@ class NeighborWrite
     {
         $this->mapDataToProperties($this, $data);
 
-        // TODO: include 제거로 인한 url 처리 오류 해결.
-        // get_pretty_url($bo_table, $data['wr_id']);
+        // TODO: API URL 을 사용해야함.
         if(isset($data['wr_id'])) {
             $this->href = G5_URL . "/$bo_table/writes/{$data['wr_id']}";
         }

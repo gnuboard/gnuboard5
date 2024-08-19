@@ -81,12 +81,6 @@ class Comment
     public string $wr_email = "";
 
     /**
-     * 댓글 수
-     * @OA\Property
-     */
-    public int $wr_comment = 0;
-
-    /**
      * 대댓글
      * @OA\Property
      */

@@ -12,9 +12,11 @@ class CommentService
     public array $board;
     public string $write_table;
     private BoardPermission $board_permission;
+    private MemberImageService $image_service;
 
-    public function __construct(BoardPermission $board_permission)
+    public function __construct(BoardPermission $board_permission, MemberImageService $image_service)
     {
+        $this->image_service = $image_service;
         $this->board_permission = $board_permission;
     }
 
@@ -36,15 +38,26 @@ class CommentService
     public function getComments(int $wr_id, string $mb_id, $page, $per_page): array
     {
         $fetch_comments = $this->fetchComments($wr_id, $page, $per_page);
-
         $result = [];
         foreach ($fetch_comments as $comment) {
             $comment['save_content'] = $comment['wr_content'];
+            $comment['mb_icon_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'icon');
+            $comment['mb_image_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'image');
             $canReadComment = $this->board_permission->canReadSecretComment($mb_id, $comment);
-            if ($canReadComment) {
-                $comment['is_secret'] = true;
-                $comment['is_secret_content'] = true;
-                $comment['wr_content'] = '비밀글입니다.';
+            if (!$canReadComment) {
+                $empty_comment = array_map(function () {
+                    return '';
+                }, $comment);
+                $secret_comment = [
+                    'wr_id' => $comment['wr_id'],
+                    'wr_parent' => $comment['wr_parent'],
+                    'wr_comment_reply' => $comment['wr_comment_reply'],
+                    'wr_option' => $comment['wr_option'],
+                    'is_secret' => true,
+                    'is_secret_content' => true,
+                    'save_content' => '비밀글입니다.'
+                ];
+                $comment = array_merge($empty_comment, $secret_comment);
             }
 
             $result[] = new Comment($comment);

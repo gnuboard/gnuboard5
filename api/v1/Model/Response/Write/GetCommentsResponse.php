@@ -4,6 +4,13 @@ namespace API\v1\Model\Response\Write;
 
 use API\v1\Traits\SchemaHelperTrait;
 
+/**
+ * @OA\Schema(
+ *     title="GetCommentsResponse",
+ *     description="댓글 목록 응답",
+ *     type="object"
+ * )
+ */
 class GetCommentsResponse
 {
     use SchemaHelperTrait;

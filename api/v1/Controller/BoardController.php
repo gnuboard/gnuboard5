@@ -13,6 +13,7 @@ use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
 use API\Service\ConfigService;
+use API\Service\MemberImageService;
 use API\Service\PointService;
 use API\Service\ScrapService;
 use API\Service\WriteService;
@@ -47,6 +48,8 @@ class BoardController
     private PointService $point_service;
     private ScrapService $scrap_service;
     private WriteService $write_service;
+    
+    private MemberImageService $image_service;
 
     public function __construct(
         BoardService $board_service,
@@ -57,7 +60,8 @@ class BoardController
         CommentService $comment_service,
         PointService $point_service,
         ScrapService $scrap_service,
-        WriteService $write_service
+        WriteService $write_service,
+        MemberImageService $image_service
     ) {
         $this->board_service = $board_service;
         $this->board_good_service = $board_good_service;
@@ -68,6 +72,7 @@ class BoardController
         $this->point_service = $point_service;
         $this->scrap_service = $scrap_service;
         $this->write_service = $write_service;
+        $this->image_service = $image_service;
     }
 
     /**
@@ -217,6 +222,8 @@ class BoardController
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
             $write_data = array_merge($write, array(
+                "mb_icon_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
+                "mb_image_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
                 "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
                 "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
                 "thumbnail" => new Thumbnail($thumb),
@@ -261,6 +268,7 @@ class BoardController
      */
     public function getComments(Request $request, Response $response)
     {
+        $board = $request->getAttribute('board');
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
         $config = $request->getAttribute('config');
@@ -271,7 +279,7 @@ class BoardController
             $this->board_permission->readWrites($member);
             
             // 검색 조건 및 페이징 처리
-            $page_rows = (int)$query_params['per_page'];
+            $page_rows = (int)($query_params['per_page'] ?? $board['bo_page_rows']);
             $page_rows = $page_rows >= 100 ? 100 : $page_rows;
             $mobile_page_rows = (int)($board['bo_mobile_page_rows'] ?? 0);
             $page_params = new PageParameters($query_params, $config, $page_rows, $mobile_page_rows);
