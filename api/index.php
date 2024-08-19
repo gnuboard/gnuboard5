@@ -17,9 +17,10 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
-
 //gnuboard 로딩
-$g5_path = g5_root_path();
+$is_root = false;
+$g5_path = g5_root_path($is_root, 1);
+
 require_once(dirname(__DIR__, 1) . '/config.php');   // 설정 파일
 unset($g5_path);
 
