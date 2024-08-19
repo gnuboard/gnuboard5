@@ -25,16 +25,15 @@ trait SchemaHelperTrait
 
                 // isset()을 사용하여 초기화 여부 확인
                 if (isset($object->$key)) {
-                    $property_type = gettype($object->$key);
-                    switch ($property_type) {
+                    switch (gettype($object->$key)) {
                         case 'boolean':
-                            $object->$key = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                            $object->$key = filter_var($value, FILTER_VALIDATE_BOOLEAN);
                             break;
                         case 'integer':
-                            $object->$key = filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+                            $object->$key = filter_var($value, FILTER_VALIDATE_INT);
                             break;
                         case 'double':
-                            $object->$key = filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
+                            $object->$key = filter_var($value, FILTER_VALIDATE_FLOAT);
                             break;
                         case 'array':
                             $object->$key = is_array($value) ? $value : array($value);
