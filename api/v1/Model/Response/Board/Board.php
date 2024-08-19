@@ -153,6 +153,12 @@ class Board
     public int $bo_use_category = 0;
 
     /**
+     * 파일 업로드 갯수
+     * @OA\Property(example=2)
+     */
+    public int $bo_upload_count = 0;
+
+    /**
      * 카테고리 목록
      * @OA\Property(example="게시판|취미|소모임|그누보드")
      */
