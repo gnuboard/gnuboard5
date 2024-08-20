@@ -3,6 +3,7 @@
 namespace API\Service;
 
 use API\Database\Db;
+use API\v1\Model\Response\Write\Thumbnail;
 use Exception;
 
 class WriteService
@@ -11,9 +12,16 @@ class WriteService
     public string $table;
 
     private PopularSearch $popular_service;
+    private MemberImageService $image_service;
+    private BoardFileService $file_service;
 
-    public function __construct(PopularSearch $popular_service)
-    {
+    public function __construct(
+        PopularSearch $popular_service,
+        MemberImageService $image_service,
+        BoardFileService $file_service
+    ) {
+        $this->file_service = $file_service;
+        $this->image_service = $image_service;
         $this->popular_service = $popular_service;
     }
 
@@ -96,19 +104,39 @@ class WriteService
     public function getWrites(array $board, $search_params, $page_params)
     {
         $use_show_content = (int)$board['bo_use_list_content'] === 1;
+        $use_show_file = (int)$board['bo_use_list_file'] === 1;
         $data = $this->fetchWrites($search_params, $page_params);
         foreach ($data as &$write) {
+            $write["mb_icon_path"] = $this->image_service->getMemberImagePath($write['mb_id'], 'icon');
+            $write["mb_image_path"] = $this->image_service->getMemberImagePath($write['mb_id'], 'image');
+            if ($use_show_file) {
+                $write["images"] = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
+                $write["normal_files"] = $this->file_service->getFilesByType((int)$write['wr_id'], 'file');
+            }
+            // @todo 썸네일
+            $write['thumbnail'] = new Thumbnail([]);
             //게시판설정에서 내용보기 체크시
             $write['wr_password'] = '';
-            if($use_show_content) {
+            if ($use_show_content) {
                 if (strpos($write['wr_option'], 'secret') !== false) {
-                    $write['wr_content'] = '비밀글입니다.';
+                    $empty_write = array_map(function () {
+                        return '';
+                    }, $write);
+                    $write = array_merge($empty_write, [
+                        'wr_id' => $write['wr_id'],
+                        'wr_num' => $write['wr_num'],
+                        'wr_parent' => $write['wr_parent'],
+                        'wr_reply' => $write['wr_reply'],
+                        'wr_option' => $write['wr_option'],
+                        'ca_name' => $write['ca_name'],
+                        'wr_content' => '비밀글입니다.'
+                    ]);
                 }
             } else {
                 $write['wr_content'] = '';
             }
         }
-        
+
         return $data;
     }
 
@@ -611,7 +639,7 @@ class WriteService
         return [$sst, $sod];
     }
 
-    
+
     /**
      * 검색 단위 > 이전위치 조회
      * @param array $search_params 검색조건

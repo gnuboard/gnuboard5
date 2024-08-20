@@ -47,6 +47,6 @@ class File
     public function __construct(array $data = [])
     {
         $this->mapDataToProperties($this, $data);
-        $this->bf_file = G5_URL  . "/v1/boards/{$data['bo_table']}/writes/{$data['wr_id']}/files/{$data['bf_no']}";
+        $this->bf_file = G5_URL . "/api/v1/boards/{$data['bo_table']}/writes/{$data['wr_id']}/files/{$data['bf_no']}";
     }
 }

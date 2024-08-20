@@ -143,9 +143,7 @@ class BoardController
             $total_page = ceil($total_records / $page_params->per_page);
 
             /**
-             * TODO: 공지글을 출력결과 수에 포함시킬 것인지 별도로 출력할 것인지 결정 필요
-             * - 그누보드5는 공지글을 출력결과 수에 포함시킴 
-             * - 아래는 별도로 출력하도록 개발됨
+             * - 공지사항을 별도로 출력합니다.
              * TODO: 목록에 필요한 데이터를 반환하도록 변경이 필요함
              * - images/normal_files => 파일갯수
              */
@@ -156,9 +154,11 @@ class BoardController
                 $notice_writes = array_map(fn ($notice_write) => new Write($notice_write), $fetch_notice_writes);
             }
             // 게시글 목록 조회
-            $get_writes = $this->write_service->getWrites($board, (array)$search_params, (array)$page_params);
+            $search_params = (array)$search_params;
+            $get_writes = $this->write_service->getWrites($board, $search_params, (array)$page_params);
             $writes = array_map(fn ($write) => new Write($write), $get_writes);
 
+            // 게시글 목록 응답 데이터
             $response_data = new GetWritesResponse([
                 "total_records" => $total_records,
                 "total_pages" => $total_page,
@@ -168,8 +168,8 @@ class BoardController
                 "board" => new Board($board),
                 "notice_writes" => $notice_writes,
                 "writes" => $writes,
-                "prev_spt" => $this->write_service->getPrevSearchPart((array)$search_params),
-                "next_spt" => $this->write_service->getNextSearchPart((array)$search_params),
+                "prev_spt" => $this->write_service->getPrevSearchPart($search_params),
+                "next_spt" => $this->write_service->getNextSearchPart($search_params),
             ]);
 
             return api_response_json($response, $response_data);
@@ -228,8 +228,8 @@ class BoardController
                 "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
                 "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
                 "thumbnail" => new Thumbnail($thumb),
-                "prev" => (array)$prev,
-                "next" => (array)$next
+                "prev" => $prev,
+                "next" => $next
             ));
 
             $this->point_service->addPoint($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
@@ -348,7 +348,7 @@ class BoardController
         try {
             // 권한 체크
             $this->board_permission->readWrites($member);
-            
+
             // 검색 조건 및 페이징 처리
             $page_rows = (int)($query_params['per_page'] ?? $board['bo_page_rows']);
             $page_rows = $page_rows >= 100 ? 100 : $page_rows;
@@ -356,7 +356,7 @@ class BoardController
             $page_params = new PageParameters($query_params, $config, $page_rows, $mobile_page_rows);
             $page = $page_params->page;
             $per_page = $page_params->per_page;
-            
+
             $comments = $this->comment_service->getComments($write['wr_id'], $member['mb_id'], $page, $per_page);
             $total_count = $this->comment_service->fetchTotalRecords($write['wr_id']) ?: 1;
 
