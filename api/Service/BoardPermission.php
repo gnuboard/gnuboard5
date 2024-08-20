@@ -630,12 +630,13 @@ class BoardPermission
     }
 
     /**
-     * 비밀글 읽기 권한 확인
+     * 댓글 읽기 권한 확인
      * @param $mb_id
      * @param array $comment
+     * @param ?string $password 비밀번호를 알고있을경우
      * @return bool
      */
-    public function canReadSecretComment($mb_id, array $comment): bool
+    public function canReadSecretComment($mb_id, array $comment, $password = null): bool
     {
         if (is_super_admin($this->config, $mb_id)) {
             return true;
@@ -644,7 +645,20 @@ class BoardPermission
             return true;
         }
 
-        if ($this->isBoardManager($mb_id) || $this->isOwner($comment, $mb_id)) {
+        if ($this->isBoardManager($mb_id)) {
+            return true;
+        }
+
+        // 비회원 비밀글 읽기 권한 체크
+        if (!$mb_id && $password != null && trim($comment['wr_password'])) {
+            $result = check_password($password, $comment['wr_password']);
+            if (!$result) {
+                return false;
+            }
+            return true;
+        }
+
+        if ($this->isOwner($comment, $mb_id)) {
             return true;
         }
 
@@ -659,6 +673,22 @@ class BoardPermission
         $replies = $this->write_service->fetchReplyByWrite($write);
         if (count($replies) > 0) {
             $this->throwException($message);
+        }
+    }
+
+    /**
+     * 댓글 읽기 권한 체크
+     * @throws Exception
+     */
+    public function readComment(array $member, array $comment, string $password = null): void
+    {
+        $level = (int)$this->board['bo_read_level'];
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->checkMemberLevel($member, $level, self::ERROR_NO_READ_WRITE);
+        $this->checkAccessCert($member);
+        $can_read = $this->canReadSecretComment($member['mb_id'], $comment, $password);
+        if (!$can_read) {
+            $this->throwException(self::ERROR_NO_READ_SECRET);
         }
     }
 

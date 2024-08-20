@@ -33,6 +33,62 @@ class CommentService
     }
 
     /**
+     * 댓글 1개 조회
+     * @param int $wr_id
+     * @param string $mb_id
+     * @param string|null $password 비밀글 비밀번호
+     * @return array
+     */
+    public function getComment(int $wr_id, string $mb_id, ?string $password): array
+    {
+        $fetch_comments = [$this->fetchComment($wr_id)];
+        $result = [];
+        foreach ($fetch_comments as $comment) {
+            $comment['save_content'] = $comment['wr_content'];
+            $comment['mb_icon_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'icon');
+            $comment['mb_image_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'image');
+            $can_read_comment = $this->board_permission->canReadSecretComment($mb_id, $comment, $password);
+            // 수정,삭제는 읽기 권한과 동일함.
+            $comment['is_del'] = $can_read_comment;
+            $comment['is_edit'] = $can_read_comment;
+            if (!$can_read_comment) {
+                $empty_comment = array_map(function () {
+                    return '';
+                }, $comment);
+                $secret_comment = [
+                    'wr_id' => $comment['wr_id'],
+                    'wr_parent' => $comment['wr_parent'],
+                    'wr_comment_reply' => $comment['wr_comment_reply'],
+                    'wr_option' => $comment['wr_option'],
+                    'is_secret' => true,
+                    'is_secret_content' => true,
+                    'save_content' => '비밀글입니다.'
+                ];
+                $comment = array_merge($empty_comment, $secret_comment);
+            }
+
+            $result[] = new Comment($comment);
+        }
+
+        return $result;
+    }
+
+    /**
+     *  댓글 1개 조회 쿼리
+     * @param int $wr_id
+     * @return array
+     */
+    public function fetchComment(int $wr_id): array
+    {
+        $query = "SELECT * FROM `{$this->write_table}`
+                    WHERE wr_id = :wr_id
+                        AND wr_is_comment = 1";
+        return Db::getInstance()->run($query, [
+            'wr_id' => $wr_id,
+        ])->fetch();
+    }
+    
+    /**
      * 게시글의 댓글목록 조회
      */
     public function getComments(int $wr_id, string $mb_id, $page, $per_page): array
@@ -43,8 +99,11 @@ class CommentService
             $comment['save_content'] = $comment['wr_content'];
             $comment['mb_icon_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'icon');
             $comment['mb_image_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'image');
-            $canReadComment = $this->board_permission->canReadSecretComment($mb_id, $comment);
-            if (!$canReadComment) {
+            $can_read_comment = $this->board_permission->canReadSecretComment($mb_id, $comment);
+            // 수정,삭제는 읽기 권한과 동일함.
+            $comment['is_del'] = $can_read_comment;
+            $comment['is_edit'] = $can_read_comment;
+            if (!$can_read_comment) {
                 $empty_comment = array_map(function () {
                     return '';
                 }, $comment);

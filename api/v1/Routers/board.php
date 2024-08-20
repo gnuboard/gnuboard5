@@ -30,10 +30,11 @@ $app->group('/boards/{bo_table}', function (RouteCollectorProxy $group){
 
             $group->post('/comments', [BoardController::class, 'createComment']);
             $group->get('/comments', [BoardController::class, 'getComments']);
-            $group->put('/comments/{comment_id}', [BoardController::class, 'updateComment'])
-                ->add(CommentMiddleware::class);
-            $group->delete('/comments/{comment_id}', [BoardController::class, 'deleteComment'])
-                ->add(CommentMiddleware::class);
+            $group->group('/comments/{comment_id}', function (RouteCollectorProxy $group) {
+                $group->post('', [BoardController::class, 'getComment']);
+                $group->put('', [BoardController::class, 'updateComment']);
+                $group->delete('', [BoardController::class, 'deleteComment']);
+            })->add(CommentMiddleware::class);
         })
         ->add(WriteMiddleware::class);
     })

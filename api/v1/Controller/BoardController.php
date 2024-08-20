@@ -27,6 +27,7 @@ use API\v1\Model\Request\Board\UploadFileRequest;
 use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
+use API\v1\Model\Response\Write\CommentResponse;
 use API\v1\Model\Response\Write\GetCommentsResponse;
 use API\v1\Model\Response\Write\GoodWriteResponse;
 use API\v1\Model\Response\Write\NeighborWrite;
@@ -48,7 +49,7 @@ class BoardController
     private PointService $point_service;
     private ScrapService $scrap_service;
     private WriteService $write_service;
-    
+
     private MemberImageService $image_service;
 
     public function __construct(
@@ -363,6 +364,57 @@ class BoardController
                 'current_page' => $page,
                 'total_pages' => ceil($total_count / $per_page),
                 'total_records' => $total_count,
+                'comments' => $comments,
+            ]);
+
+            return api_response_json($response, $response_data);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 422) {
+                throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/boards/{bo_table}/writes/{wr_id}/comments/{comment_id}",
+     *      summary="비밀 댓글 1건 조회",
+     *      tags={"게시판"},
+     *      security={{"Oauth2Password": {}}},
+     *      description="게시글의 댓글 1건을 조회합니다.",
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="게시글 번호", @OA\Schema(type="integer")),
+     *      @OA\PathParameter(name="comment_id", description="댓글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *       required=false,
+     *       @OA\JsonContent(
+     *       @OA\Property(property="wr_password", type="string", description="게시글 비밀번호"),
+     *       )
+     *      ),
+     *      @OA\Response(response="200", description="댓글 조회 성공", @OA\JsonContent(ref="#/components/schemas/CommentResponse")),
+     *      @OA\Response(response="401", ref="#/components/responses/401"),
+     *      @OA\Response(response="403", ref="#/components/responses/403"),
+     *      @OA\Response(response="404", ref="#/components/responses/404"),
+     *      @OA\Response(response="422", ref="#/components/responses/422"),
+     * )
+     */
+    public function getComment(Request $request, Response $response)
+    {
+        $member = $request->getAttribute('member');
+        $comment_id = (int)$request->getAttribute('comment_id');
+        $password = $request->getParsedBody()['wr_password'] ?? null;
+        $comment = $request->getAttribute('comment');
+        try {
+            // 권한 체크
+            $this->board_permission->readComment($member, $comment, $password);
+            $comments = $this->comment_service->getComment($comment_id, $member['mb_id'], $password);
+            $response_data = new CommentResponse([
                 'comments' => $comments,
             ]);
 
@@ -827,7 +879,8 @@ class BoardController
             $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
             $this->board_service->increaseCommentCount();
 
-            $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
+            $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'],
+                $comment_id, '댓글');
 
             // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
             // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
