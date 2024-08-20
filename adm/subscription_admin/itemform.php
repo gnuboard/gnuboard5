@@ -65,6 +65,8 @@ $it = array(
 'it_subscription_expiration_date'=>'',
 'it_subscription_number'=>0,
 'it_subscription_iteration'=>0,
+'it_check_firstshipment_day'=>0,
+'it_expire_firstshipmen_day'=>0,
 );
 
 for($i=0;$i<=10;$i++){
@@ -110,7 +112,7 @@ else if ($w == "u")
 
     $it = get_subscription_item($it_id);
 
-    if(!$it)
+    if (! (isset($it['it_id']) && $it['it_id']))
         alert('상품정보가 존재하지 않습니다.');
     
     if (function_exists('check_case_exist_title')) check_case_exist_title($it, G5_SUBSCRIPTION_DIR, false);
@@ -1143,11 +1145,15 @@ $(function(){
                     </div>
                     <?php echo help("구독 종료일, 입력하지 않으면 구독 종료일을 출력하지 않습니다."); ?>
                     <div>
-                        <input type="text" id="it_subscription_expiration_date"  name="it_subscription_expiration_date" value="<?php echo $it['it_subscription_expiration_date']; ?>" class="frm_input" size="10" maxlength="10">
+                        <input type="text" id="it_subscription_expiration_date"  name="it_subscription_expiration_date" value="<?php echo $it['it_subscription_expiration_date']; ?>" class="frm_input" size="20" maxlength="20">
                     </div>
                     <?php echo help("첫발송일, 입력하지 않으면 출력되지 않습니다."); ?>
                     <div>
-                        <input type="checkbox" name="chk_sc_it_sendcost" value="1" id="chk_sc_it_sendcost">
+                        <input type="number" name="it_check_firstshipment_day" class="frm_input" value="<?php echo (int) $it['it_check_firstshipment_day']; ?>">
+                    </div>
+                    <?php echo help("첫발송일, 입력 가능한 마지막일"); ?>
+                    <div>
+                        <input type="number" name="it_expire_firstshipmen_day" class="frm_input" value="<?php echo (int) $it['it_expire_firstshipmen_day']; ?>">
                     </div>
                 </td>
                 <td class="td_grpset">

@@ -389,6 +389,8 @@ $sql_common = " sc_id               = '$sc_id',
                 it_subscription_number        = '$it_subscription_number',
                 it_subscription_iteration        = '$it_subscription_iteration',
                 it_subscription_expiration_date        = '$it_subscription_expiration_date',
+                it_check_firstshipment_day       = '$it_check_firstshipment_day',
+                it_expire_firstshipmen_day        = '$it_expire_firstshipmen_day',
                 it_img1             = '$it_img1',
                 it_img2             = '$it_img2',
                 it_img3             = '$it_img3',
@@ -439,9 +441,6 @@ if ($w == "")
                 set it_id = '$it_id',
 					$sql_common	";
     
-    echo $sql;
-    exit;
-    
     sql_query($sql);
 }
 else if ($w == "u")
@@ -450,6 +449,7 @@ else if ($w == "u")
     $sql = " update {$g5['g5_subscription_item_table']}
                 set $sql_common
               where it_id = '$it_id' ";
+    
     sql_query($sql);
 }
 /*

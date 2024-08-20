@@ -104,7 +104,7 @@ foreach((array) $list as $row){
 
             echo "<div class=\"sct_cost\">\n";
             if ($this->view_it_price) {
-                echo display_price(get_price($row), $row['it_tel_inq'])."\n";
+                echo display_price(get_subscription_price($row))."\n";
             }
             if ($this->view_it_cust_price && $row['it_cust_price']) {
                 echo "<span class=\"sct_dict\">".display_price($row['it_cust_price'])."</span>\n";
