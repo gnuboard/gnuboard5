@@ -68,8 +68,9 @@ class HttpErrorHandler extends SlimErrorHandler
         $statusCode = 500;
         $type = self::SERVER_ERROR;
         $description = 'An internal error has occurred while processing your request.';
+        $is_http_exception = $exception instanceof HttpException;
         
-        if ($exception instanceof HttpException) {
+        if ($is_http_exception) {
             $statusCode = $exception->getCode();
             $description = $exception->getMessage();
 
@@ -89,12 +90,13 @@ class HttpErrorHandler extends SlimErrorHandler
                 $type = self::UNPROCESSABLE_ENTITY;
             } elseif ($exception instanceof HttpNotImplementedException) {
                 $type = self::NOT_IMPLEMENTED;
+            } else {
+                $type = '';
             }
         }
 
-        if (
-            !($exception instanceof HttpException)
-            && ($exception instanceof Exception || $exception instanceof Throwable)
+        if (!($is_http_exception)
+            && ($exception instanceof Throwable)
             && $this->displayErrorDetails
         ) {
             $description = $exception->getMessage();
@@ -113,7 +115,7 @@ class HttpErrorHandler extends SlimErrorHandler
             }
         }
 
-        // Add JWT exceptions
+        // JWT exceptions
         if (
             $exception instanceof InvalidArgumentException
             || $exception instanceof DomainException
