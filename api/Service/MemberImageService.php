@@ -41,6 +41,7 @@ class MemberImageService
      * @param UploadedFileInterface $file 업로드 파일
      * @return void
      * @throws \RandomException
+     * @throw \Exception
      */
     public function updateMemberImage(array $config, string $mb_id, string $image_type, UploadedFileInterface $file)
     {
@@ -64,13 +65,13 @@ class MemberImageService
 
         // 이미지파일 확장자 검사
         if (!in_array($file->getClientMediaType(), $this->allowed_media_types)) {
-            throw new Exception("gif, jpeg, png 이미지 파일만 업로드 가능합니다.", 404);
+            throw new Exception("gif, jpeg, png 이미지 파일만 업로드 가능합니다.", 400);
         }
 
         // 이미지 크기 검사 (byte)
         if ($file->getSize() > $limit_size) {
             $limit = number_format($limit_size);
-            throw new Exception("회원{$type_string}은(는) {$limit}바이트까지 업로드 가능합니다.", 404);
+            throw new Exception("회원{$type_string}은(는) {$limit}바이트까지 업로드 가능합니다.", 400);
         }
 
         // 이미지 경로 생성

@@ -2,6 +2,7 @@
 
 namespace API\v1\Controller;
 
+use API\Exceptions\HttpBadRequestException;
 use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
@@ -19,6 +20,7 @@ use API\v1\Model\Response\Member\GetMemberMeResponse;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
 
 require_once G5_LIB_PATH . '/mailer.lib.php';
 
@@ -402,13 +404,21 @@ JWT 토큰을 통해 인증된 회원 정보를 조회합니다.
             if ($request_data['del_mb_icon']) {
                 $this->image_service->deleteMemberImage($member['mb_id'], 'icon');
             }
-            $this->image_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
-            $this->image_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
+            if (isset($uploaded_files['mb_img'])) {
+                $this->image_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
+            }
+            if (isset($uploaded_files['mb_icon'])) {
+                $this->image_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
+            }
 
             return api_response_json($response, array("message" => "회원 아이콘/이미지가 수정되었습니다."));
         } catch (Exception $e) {
             if ($e->getCode() === 422) {
                 throw new HttpUnprocessableEntityException($request, $e->getMessage());
+            }
+
+            if ($e->getCode() === 400) {
+                throw new HttpBadRequestException($request, $e->getMessage());
             }
 
             throw $e;
