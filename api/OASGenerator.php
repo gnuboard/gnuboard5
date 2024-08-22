@@ -26,8 +26,8 @@ class OASGenerator
      */
     private string $filename = "openapi.yaml";
 
-    private string $api_file_base_path = G5_DATA_PATH . '/api_doc/';
-    private string $api_file_base_url = G5_DATA_URL . '/api_doc/';
+    private string $api_file_base_path = G5_DATA_PATH . '/api_doc';
+    private string $api_file_base_url = G5_DATA_URL . '/api_doc';
 
     /**
      * OASGenerator 생성자
