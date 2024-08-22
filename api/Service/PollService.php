@@ -64,10 +64,10 @@ class PollService
 
         $poll_item_index = "po_cnt{$item_id}";
         $affect_rows = $db->update($poll_table, [
-            'po_id' => $po_id,
-        ], [
             $poll_item_index => $poll[$poll_item_index] + 1,
             'po_ip' => $ip,
+        ], [
+            'po_id' => $po_id,
         ]);
 
         return $affect_rows > 0;

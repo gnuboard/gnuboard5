@@ -215,8 +215,9 @@ class CommentService
      */
     public function updateComment(int $comment_id, array $data): void
     {
-        Db::getInstance()->update($this->write_table, ['wr_id' => $comment_id], $data);
+        Db::getInstance()->update($this->write_table, $data, ['wr_id' => $comment_id]);
     }
+    
 
     /**
      * 댓글 정보를 데이터베이스에 등록

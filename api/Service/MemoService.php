@@ -185,7 +185,7 @@ class MemoService
     public function readCheck($memo_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
-        $row_count = Db::getInstance()->update($memo_table, ['me_id' => $memo_id], ['me_read_datetime' => G5_TIME_YMDHIS]);
+        $row_count = Db::getInstance()->update($memo_table, ['me_read_datetime' => G5_TIME_YMDHIS], ['me_id' => $memo_id]);
         return $row_count > 0;
     }
 
@@ -230,11 +230,11 @@ class MemoService
         Db::getInstance()->update(
             $member_table,
             [
-                'mb_id' => $memo['me_recv_mb_id'],
-                'mb_memo_call' => $memo['me_send_mb_id']
+                'mb_memo_call' => ''
             ],
             [
-                'mb_memo_call' => ''
+                'mb_id' => $memo['me_recv_mb_id'],
+                'mb_memo_call' => $memo['me_send_mb_id']
             ]
         );
 
@@ -249,7 +249,7 @@ class MemoService
     {
         $not_read_memo_count = $this->not_read_memo_count($receiver_mb_id);
         $member_table = $GLOBALS['g5']['member_table'];
-        return Db::getInstance()->update($member_table, ['mb_id' => $receiver_mb_id], ['mb_memo_cnt' => $not_read_memo_count]);
+        return Db::getInstance()->update($member_table, ['mb_memo_cnt' => $not_read_memo_count], ['mb_id' => $receiver_mb_id]);
     }
 
     /**

@@ -27,9 +27,10 @@ unset($g5_path);
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
 include_once (G5_LIB_PATH.'/common.lib.php'); // 공통 라이브러리 // @todo 정리후 삭제대상
 
-$dbconfig_file = G5_DATA_PATH.'/'.G5_DBCONFIG_FILE;
-if (file_exists($dbconfig_file)) {
-    include_once($dbconfig_file);
+if (!include(G5_DATA_PATH . '/' . G5_DBCONFIG_FILE)) {
+    header('Content-Type: application/json');
+    echo json_encode('그누보드가 설치되어있지 않습니다.');
+    exit;
 }
 //-------------------------
 // Create refresh token table

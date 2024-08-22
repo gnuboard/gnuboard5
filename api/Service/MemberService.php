@@ -258,7 +258,7 @@ class MemberService
      */
     public function updateMember(string $mb_id, array $data): int
     {
-        $update_count = Db::getInstance()->update($this->table, ["mb_id" => $mb_id], $data);
+        $update_count = Db::getInstance()->update($this->table, $data, ["mb_id" => $mb_id]);
 
         return $update_count;
     }

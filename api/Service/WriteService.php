@@ -430,7 +430,7 @@ class WriteService
      */
     public function updateWrite(int $wr_id, array $data): void
     {
-        Db::getInstance()->update($this->table, ['wr_id' => $wr_id], $data);
+        Db::getInstance()->update($this->table, $data, ['wr_id' => $wr_id]);
     }
 
     /**
@@ -442,8 +442,8 @@ class WriteService
     {
         Db::getInstance()->update(
             $this->table,
-            ['wr_id' => $wr_id],
-            ['wr_parent' => $parent_id]
+            ['wr_parent' => $parent_id],
+            ['wr_id' => $wr_id]
         );
     }
 
@@ -457,8 +457,8 @@ class WriteService
     {
         Db::getInstance()->update(
             $this->table,
-            ['wr_parent' => $wr_id],
             ['ca_name' => $ca_name],
+            ['wr_parent' => $wr_id],
         );
     }
 

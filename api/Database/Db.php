@@ -119,13 +119,14 @@ class Db
     }
 
     /**
-     * 업데이트 쿼리 SQL 쿼리순으로 테이블 where value
+     * 업데이트 쿼리
+     * 테이블 SET data WHERE 조건
      * @param string $table
-     * @param ?array $where [column => value] where 조건이 없으면 null 을 넣어주세요.
      * @param array $update_data [column => value]
+     * @param ?array $where [column => value] where 조건이 없으면 null 을 넣어주세요.
      * @return int
      */
-    public function update(string $table, ?array $where, $update_data)
+    public function update(string $table, array $update_data, ?array $where)
     {
         $values = [];
 

@@ -78,7 +78,7 @@ class BoardService
      */
     public function updateBoard(array $data): int
     {
-        return Db::getInstance()->update($this->table, ['bo_table' => $this->board['bo_table']], $data);
+        return Db::getInstance()->update($this->table, $data, ['bo_table' => $this->board['bo_table']]);
     }
 
     /**

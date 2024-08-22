@@ -60,7 +60,7 @@ class AuthenticationService
             "expires_at" => date('Y-m-d H:i:s', $decode->exp),
             "updated_at" => date('Y-m-d H:i:s', $decode->iat),
         ];
-        Db::getInstance()->update($this->table, ["mb_id" => $mb_id], $data);
+        Db::getInstance()->update($this->table, $data, ["mb_id" => $mb_id]);
     }
 
     /**
