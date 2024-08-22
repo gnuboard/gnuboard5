@@ -51,6 +51,7 @@ class CommentService
             // 수정,삭제는 읽기 권한과 동일함.
             $comment['is_del'] = $can_read_comment;
             $comment['is_edit'] = $can_read_comment;
+            // 읽기 권한확인
             if (!$can_read_comment) {
                 $empty_comment = array_map(function () {
                     return '';
@@ -65,6 +66,11 @@ class CommentService
                     'save_content' => '비밀글입니다.'
                 ];
                 $comment = array_merge($empty_comment, $secret_comment);
+            }
+            // 비밀글 여부 표시
+            if(strpos($comment['wr_option'], 'secret') !== false) {
+                $comment['is_secret'] = true;
+                $comment['is_secret_content'] = true;
             }
 
             $result[] = new Comment($comment);
@@ -167,10 +173,17 @@ class CommentService
     }
 
     /**
-     * 댓글 작성 처리
+     * 댓글 정보를 데이터베이스에 등록
+     * @param array $write
+     * @param object $data 댓글의 입력 데이터
+     * @param array $member
+     * @param array $parent_comment
+     * @return int
+     * @throws Exception
      */
     public function createCommentData(array $write, object $data, array $member = [], array $parent_comment = []): int
     {
+        $is_guest = $member['mb_id'] === '';
         $data->ca_name = $write['ca_name'];
         $data->wr_num = $write['wr_num'];
         $data->wr_parent = $write['wr_id'];
@@ -178,7 +191,7 @@ class CommentService
         $data->wr_datetime = G5_TIME_YMDHIS;
         $data->wr_ip = $_SERVER['REMOTE_ADDR'];
 
-        if ($member) {
+        if (!$is_guest) {
             $data->mb_id = $member['mb_id'];
             $data->wr_name = $member['mb_name'];
             $data->wr_email = $member['mb_email'];
