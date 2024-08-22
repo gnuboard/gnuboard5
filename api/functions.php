@@ -17,12 +17,13 @@ use Psr\Http\Message\UploadedFileInterface;
  *
  * @param Response $response
  * @param array|object $data
- * @param int $status
+ * @param int $status HTTP 상태 코드
  * @return Response
  */
 function api_response_json(Response $response, $data, int $status = 200)
 {
-    $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+    // api 에서는 json 인코딩시 php 의 백슬래시 추가를 막습니다.
+    $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     $response->getBody()->write($json);
     return $response->withStatus($status)->withAddedHeader('Content-Type', 'application/json');
 }
@@ -251,9 +252,9 @@ function is_prohibited_word(string $word, array $config): bool
     return preg_match($pattern, $config['cf_prohibit_id']);
 }
 
-// ========================================
+// ==========================
 // 메일 발송 관련 함수들
-// ========================================
+// ==========================
 
 /**
  * 임시비밀번호 메일 발송
