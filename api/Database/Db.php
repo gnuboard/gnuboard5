@@ -121,60 +121,71 @@ class Db
     /**
      * 업데이트 쿼리 SQL 쿼리순으로 테이블 where value
      * @param string $table
-     * @param array $where [column => value]
-     * @param array $updateData [column => value]
+     * @param ?array $where [column => value] where 조건이 없으면 null 을 넣어주세요.
+     * @param array $update_data [column => value]
      * @return int
      */
-    public function update($table, $where, $updateData)
+    public function update(string $table, ?array $where, $update_data)
     {
         $values = [];
 
         $fields = null;
-        foreach ($updateData as $key => $value) {
+        foreach ($update_data as $key => $value) {
             $key = '`' . trim($key, '`') . '`';
             $fields .= "$key = ?,";
             $values[] = $value;
         }
         $fields = rtrim($fields, ',');
 
-        $whereCondition = null;
+        if (!$where) {
+            $query = "UPDATE `$table` SET {$fields}";
+            return $this->run($query, $values)->rowCount();
+        }
+
+        $where_condition = '';
         $i = 0;
         foreach ($where as $key => $value) {
             $key = '`' . trim($key, '`') . '`';
-            $whereCondition .= $i == 0 ? "$key = ?" : " AND $key = ?";
+            $where_condition .= $i == 0 ? "$key = ?" : " AND $key = ?";
             $values[] = $value;
             $i++;
         }
 
-        $query = "UPDATE `$table` SET $fields WHERE {$whereCondition}";
+        $query = "UPDATE `$table` SET $fields WHERE {$where_condition}";
         return $this->run($query, $values)->rowCount();
     }
 
     /**
      * 삭제 쿼리
      * @param string $table
-     * @param array $where [column => value]
+     * @param ?array $where [column => value] where 조건이 없으면 null 을 넣어주세요.
      * @param ?int $limit
      * @return int
      */
-    public function delete($table, $where, $limit = null)
+    public function delete(string $table, ?array $where, $limit = null)
     {
         $values = array_values($where);
 
-        $whereCondition = null;
-        $i = 0;
-        foreach ($where as $key => $value) {
-            $key = '`' . trim($key, '`') . '`';
-            $whereCondition .= $i == 0 ? "$key = ?" : " AND $key = ?";
-            $i++;
-        }
 
         // limit 제한시
         if (is_numeric($limit)) {
             $limit = "LIMIT $limit";
         }
 
-        $stmt = $this->run("DELETE FROM `{$table}` WHERE {$whereCondition} {$limit}", $values);
+        if (!$where) {
+            $query = "DELETE FROM `{$table}` {$limit}";
+            return $this->run($query, $values)->rowCount();
+        }
+
+        $where_condition = '';
+        $i = 0;
+        foreach ($where as $key => $value) {
+            $key = '`' . trim($key, '`') . '`';
+            $where_condition .= $i == 0 ? "$key = ?" : " AND $key = ?";
+            $i++;
+        }
+
+        $stmt = $this->run("DELETE FROM `{$table}` WHERE {$where_condition} {$limit}", $values);
         return $stmt->rowCount();
     }
 
