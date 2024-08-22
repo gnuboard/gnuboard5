@@ -33,11 +33,9 @@ function api_response_json(Response $response, $data, int $status = 200)
  */
 function create_refresh_token_table()
 {
-    global $g5;
-
-    if (isset($g5['member_refresh_token_table'])) {
-        if (!table_exist_check($g5['member_refresh_token_table'])) {
-            $sql = "CREATE TABLE IF NOT EXISTS `{$g5['member_refresh_token_table']}` (
+    $refresh_token_table_name = $GLOBALS['g5']['member_refresh_token_table'] ?? G5_TABLE_PREFIX . 'member_refresh_token';
+    if (!table_exist_check($refresh_token_table_name)) {
+        $sql = "CREATE TABLE IF NOT EXISTS `$refresh_token_table_name` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NOT NULL,
                     `refresh_token` text NOT NULL,
@@ -48,8 +46,7 @@ function create_refresh_token_table()
                     KEY `ix_member_refresh_token_mb_id` (`mb_id`),
                     KEY `ix_member_refresh_token_id` (`id`)
                     ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-            Db::getInstance()->run($sql);
-        }
+        Db::getInstance()->run($sql);
     }
 }
 
