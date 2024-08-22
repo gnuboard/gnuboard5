@@ -783,6 +783,18 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     </td>
                 </tr>
                 <tr>
+                    <th scope="row"><label for="od_refund_price">배송주기</label></th>
+                    <td>
+                        <?php echo $od['od_subscription_number']; ?> <?php echo $od['od_subscription_date_format']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="od_refund_price">첫 발송일</label></th>
+                    <td>
+                        <?php echo date('Y년 m월 d일', strtotime($od['od_firstshipment_date'])); ?> (<?php echo get_weekend_yoil($od['od_firstshipment_date']); ?>)
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row"><label for="od_invoice">운송장번호</label></th>
                     <td>
                         <?php if ($config['cf_sms_use'] && $default['de_sms_use5']) { ?>

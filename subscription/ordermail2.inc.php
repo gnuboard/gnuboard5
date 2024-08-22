@@ -8,7 +8,7 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 //------------------------------------------------------------------------------
 $subject = $config['cf_title'].' - 주문 알림 메일 ('.$od_name.')';
 ob_start();
-include G5_SHOP_PATH.'/mail/orderupdate1.mail.php';
+include G5_SUBSCRIPTION_PATH.'/mail/orderupdate1.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
@@ -20,7 +20,7 @@ mailer($od_name, $od_email, $config['cf_admin_email'], $subject, $content, 1);
 //------------------------------------------------------------------------------
 $subject = $config['cf_title'].' - 주문 내역 안내 메일';
 ob_start();
-include G5_SHOP_PATH.'/mail/orderupdate2.mail.php';
+include G5_SUBSCRIPTION_PATH.'/mail/orderupdate2.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
@@ -36,7 +36,7 @@ unset($list);
 $sql = " select b.it_sell_email,
                 a.it_id,
                 a.it_name
-           from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+           from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
           where a.od_id = '$od_id'
             and a.ct_select = '1'
             and b.it_sell_email <> ''
@@ -48,7 +48,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                     SUM(ct_point * ct_qty) as point,
                     SUM(ct_qty) as qty
-                from {$g5['g5_shop_cart_table']}
+                from {$g5['g5_subscription_cart_table']}
                 where it_id = '{$row['it_id']}'
                   and od_id = '$od_id'
                   and ct_select = '1' ";
@@ -56,7 +56,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     // 옵션정보
     $sql2 = " select ct_option, ct_qty, io_price
-                from {$g5['g5_shop_cart_table']}
+                from {$g5['g5_subscription_cart_table']}
                 where it_id = '{$row['it_id']}' and od_id = '$od_id' and ct_select = '1'
                 order by io_type asc, ct_id asc ";
     $result2 = sql_query($sql2);

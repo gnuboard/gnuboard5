@@ -33,6 +33,9 @@ if ($member['mb_level'] < $default['de_level_sell']) {
     alert('상품을 구입할 수 있는 권한이 없습니다.');
 }
 
+$it_subscription_number = (isset($_POST['it_subscription_number']) && $_POST['it_subscription_number']) ? (int) $_POST['it_subscription_number'] : 0;
+$it_firstshipment_date = (isset($_POST['it_firstshipment_date']) && $_POST['it_firstshipment_date']) ? preg_replace('/[^0-9]/i', '', $_POST['it_firstshipment_date']) : 0;
+
 if ($act == 'buy') {
     if (!count($post_ct_chk)) {
         alert('주문하실 상품을 하나이상 선택해 주십시오.');
@@ -184,10 +187,14 @@ if ($act == 'buy') {
 
         // 상품정보
         $it = get_subscription_item($it_id, false);
-        if (!$it['it_id']) {
+        if (! (isset($it['it_id']) && $it['it_id'])) {
             alert('상품정보가 존재하지 않습니다.');
         }
-
+        
+        $ct_subscription_number = $it_subscription_number;
+        $ct_firstshipment_date = $it_firstshipment_date;
+        $ct_date_format = $it['it_subscription_date_format'];
+        
         // 바로구매에 있던 장바구니 자료를 지운다.
         if ($i == 0 && $sw_direct) {
             sql_query(" delete from {$g5['g5_subscription_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
@@ -299,7 +306,7 @@ if ($act == 'buy') {
         // 장바구니에 Insert
         $comma = '';
         $sql = " INSERT INTO {$g5['g5_subscription_cart_table']}
-                        ( od_id, mb_id, it_id, it_name, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select, ct_select_time )
+                        ( od_id, mb_id, it_id, it_name, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select, ct_select_time, ct_subscription_number, ct_firstshipment_date, ct_date_format )
                     VALUES ";
 
         // print_r2($_POST);
@@ -380,7 +387,7 @@ if ($act == 'buy') {
             $io_value = sql_real_escape_string(strip_tags($io_value));
             $remote_addr = get_real_client_ip();
 
-            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '".addslashes($it['it_name'])."', '{$it['it_sc_type']}', '{$it['it_sc_method']}', '{$it['it_sc_price']}', '{$it['it_sc_minimum']}', '{$it['it_sc_qty']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G5_TIME_YMDHIS."', '$remote_addr', '$ct_send_cost', '$sw_direct', '$ct_select', '$ct_select_time' )";
+            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '".addslashes($it['it_name'])."', '{$it['it_sc_type']}', '{$it['it_sc_method']}', '{$it['it_sc_price']}', '{$it['it_sc_minimum']}', '{$it['it_sc_qty']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G5_TIME_YMDHIS."', '$remote_addr', '$ct_send_cost', '$sw_direct', '$ct_select', '$ct_select_time', '$ct_subscription_number', '$ct_firstshipment_date', '$ct_date_format' )";
             $comma = ' , ';
             ++$ct_count;
         }

@@ -212,6 +212,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 										<span id="firstshipment-datepicker-ymd" data-ymd="<?php echo date('Y-m-d', strtotime(G5_TIME_YMDHIS . ' +' . (int) $it['it_check_firstshipment_day'] . ' day')); ?>">
 											<?php echo date('Y년 m월 d일', strtotime(G5_TIME_YMDHIS . ' +' . (int) $it['it_check_firstshipment_day'] . ' day')); ?>
 										</span>
+                                        <input type="hidden" id="it_firstshipment_date" name="it_firstshipment_date" value="" >
 										<div id="firstshipment-datepicker"></div>
 										<script>
 											jQuery(function($) {
@@ -220,13 +221,15 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 													changeMonth: true,
 													changeYear: true,
 													onSelect: function() {
-														var dateObject = $(this).datepicker('getDate');
+														var dateObject = $(this).datepicker('getDate'),
+                                                            datepicker_ymd_val = $.datepicker.formatDate("yy-mm-dd", dateObject);
 
 														$("#firstshipment-datepicker-ymd")
-															.attr("data-ymd", $.datepicker.formatDate("yy-mm-dd", dateObject))
+															.attr("data-ymd", datepicker_ymd_val)
 															.text($.datepicker.formatDate("yy년 mm월 dd일", dateObject));
-
-														console.log($.datepicker.formatDate("yy-mm-dd", dateObject));
+                                                        
+                                                        $("#it_firstshipment_date").val(datepicker_ymd_val);
+														console.log(datepicker_ymd_val);
 													},
 													beforeShowDay: function(date) {
 														var day = date.getDay();
@@ -482,7 +485,9 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 			alert("전화로 문의해 주시면 감사하겠습니다.");
 			return false;
 		}
-
+        
+        console.log(f);
+        
 		if ($(".sit_opt_list").length < 1) {
 			alert("상품의 선택옵션을 선택해 주십시오.");
 			return false;
@@ -553,12 +558,19 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 			alert("전화로 문의해 주시면 감사하겠습니다.");
 			return false;
 		}
-
+        
+        console.log(f);
+        
 		if ($(".sit_opt_list").length < 1) {
 			alert("상품의 선택옵션을 선택해 주십시오.");
 			return false;
 		}
-
+        
+        if (!$("#it_subscription_number_select").val()) {
+			alert("배송주기를 입력해 주세요.");
+			return false;
+        }
+        
 		var val, io_type, result = true;
 		var sum_qty = 0;
 		var min_qty = parseInt(<?php echo $it['it_buy_min_qty']; ?>);

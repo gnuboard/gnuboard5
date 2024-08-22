@@ -31,7 +31,11 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
 
                     $goods = $goods_it_id = '';
                     $goods_count = -1;
-
+                    
+                    $ct_subscription_number = '';   // 정기결제 관련
+                    $ct_firstshipment_date = '';    // 정기결제 관련
+                    $ct_date_format = '';           // 정기결제 관련
+                    
                     // $s_cart_id 로 현재 장바구니 자료 쿼리
                     $sql = " select a.ct_id,
                         a.it_id,
@@ -42,10 +46,19 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         a.ct_status,
                         a.ct_send_cost,
                         a.it_sc_type,
+                        a.ct_subscription_number,
+                        a.ct_firstshipment_date,
+                        a.ct_date_format,
                         b.sc_id,
                         b.sc_id2,
                         b.sc_id3,
-                        b.it_notax
+                        b.it_notax,
+                        b.it_subscription_date_format,
+                        b.it_subscription_expiration_date,
+                        b.it_subscription_number,
+                        b.it_subscription_iteration,
+                        b.it_check_firstshipment_day,
+                        b.it_expire_firstshipmen_day
                    from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
                   where a.od_id = '$s_cart_id'
                     and a.ct_select = '1' ";
@@ -91,6 +104,10 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             $it_name .= '<div class="sod_opt">' . $it_options . '</div>';
                         }
 
+                        $ct_subscription_number = $row['ct_subscription_number'];   // 정기결제 관련
+                        $ct_firstshipment_date = $row['ct_firstshipment_date'];    // 정기결제 관련
+                        $ct_date_format = $row['ct_date_format'];           // 정기결제 관련
+                    
                         $point = $sum['point'];
                         $sell_price = $sum['price'];
 
@@ -152,6 +169,16 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         $send_cost = get_sendcost($s_cart_id);
                     }
                     ?>
+                    <tr>
+                        <td colspan="6">
+                            <ul>
+                                <li>배송 주기: <?php echo $ct_subscription_number; ?><?php echo $ct_date_format; ?> (구독단위 : <?php echo $ct_date_format; ?>)</li>
+                                <?php if ($ct_firstshipment_date) { ?>
+                                <li>첫 발송일: <?php echo date('Y년 m월 d일', strtotime($ct_firstshipment_date)); ?>(<?php echo get_weekend_yoil($ct_firstshipment_date); ?>)</li>
+                                <?php } ?>
+                            </ul>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -234,14 +261,14 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                     <th scope="row"><label for="od_hope_date">희망배송일</label></th>
                                     <td>
                                         <!-- <select name="od_hope_date" id="od_hope_date">
-                        <option value="">선택하십시오.</option>
-                        <?php
-                                for ($i = 0; $i < 7; ++$i) {
-                                    $sdate = date('Y-m-d', time() + 86400 * (get_subs_option('de_hope_date_after') + $i));
-                                    echo '<option value="' . $sdate . '">' . $sdate . ' (' . get_yoil($sdate) . ')</option>' . PHP_EOL;
-                                }
-                        ?>
-                        </select> -->
+                                        <option value="">선택하십시오.</option>
+                                        <?php
+                                                for ($i = 0; $i < 7; ++$i) {
+                                                    $sdate = date('Y-m-d', time() + 86400 * (get_subs_option('de_hope_date_after') + $i));
+                                                    echo '<option value="' . $sdate . '">' . $sdate . ' (' . get_yoil($sdate) . ')</option>' . PHP_EOL;
+                                                }
+                                        ?>
+                                        </select> -->
                                         <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
                                     </td>
                                 </tr>

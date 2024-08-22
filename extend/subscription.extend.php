@@ -47,11 +47,12 @@ $subscriptions_default = array(
 'su_hope_date_use' => 0,
 'su_hope_date_after' => 0,
 'su_card_use' => 1,     // 세금계산서
-'su_bank_use' => 0,     // 무통장
+'su_bank_use' => 1,     // 무통장
 'su_kcp_mid' => '',     // kcp 정기결제 사이트키
 'su_kcp_group_id' => '', // kcp kcp_group_id
 'su_nice_clientid' => '',   // 나이스페이 clientId
 'su_nicepay_secretkey' => '',   // 나이스페이 secretKey
+'su_tax_flag_use' => '',
 );
 
 $config['g5_subscriptions_options'] = array_merge($subscriptions_default, (array) sql_fetch("select * from `{$g5['g5_subscription_config_table']}` limit 1", false));
@@ -1075,6 +1076,13 @@ function get_subscription_category_sql($sc_id, $len){
     $sql .= " and length(sc_id) = '$len' order by sc_order, sc_id ";
 
     return $sql;
+}
+
+function get_weekend_yoil($date) {
+    
+    $yoil = array("일","월","화","수","목","금","토");
+    
+    return $yoil[date('w', strtotime($date))];
 }
 
 // 금액표시

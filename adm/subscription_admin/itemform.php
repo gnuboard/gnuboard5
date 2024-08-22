@@ -67,6 +67,7 @@ $it = array(
 'it_subscription_iteration'=>0,
 'it_check_firstshipment_day'=>0,
 'it_expire_firstshipmen_day'=>0,
+'it_subscription_date_format'=>'',
 );
 
 for($i=0;$i<=10;$i++){
@@ -126,6 +127,12 @@ else if ($w == "u")
 else
 {
     alert();
+}
+
+// 상품메모 필드 추가
+if(!sql_query(" select it_subscription_date_format from {$g5['g5_subscription_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_subscription_item_table']}`
+                    ADD `it_subscription_date_format` char(4) NOT NULL DEFAULT '' AFTER `it_use_avg` ", true);
 }
 
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
@@ -1129,11 +1136,11 @@ $(function(){
                         구독 주기 입력
                         </label>
                         <input type="number" min="1" name="it_subscription_number" id="it_subscription_number" value="<?php echo $it['it_subscription_number']; ?>" class="frm_input" placeholder="Enter subscription interval"> 
-                        <select id="it_subscription_interval" name="it_subscription_interval">
-                            <option value="day">일</option>
-                            <option value="week">달</option>
-                            <option value="month">월</option>
-                            <option value="year">년</option>
+                        <select id="it_subscription_date_format" name="it_subscription_date_format">
+                            <option value="day" <?php echo get_selected($it['it_subscription_date_format'], 'day'); ?>>일</option>
+                            <option value="week" <?php echo get_selected($it['it_subscription_date_format'], 'week'); ?>>주</option>
+                            <option value="month" <?php echo get_selected($it['it_subscription_date_format'], 'month'); ?>>월</option>
+                            <option value="year" <?php echo get_selected($it['it_subscription_date_format'], 'year'); ?>>년</option>
                         </select>
                     </div>
                     <?php echo help("구독 주기 반복수 입력"); ?>

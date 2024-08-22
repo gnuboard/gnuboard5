@@ -324,6 +324,7 @@ $check_sanitize_keys = array(
 'it_type3',             // 상품유형(신상품)
 'it_type4',             // 상품유형(인기)
 'it_type5',             // 상품유형(할인)
+'it_subscription_date_format',      // 정기결제 추가중
 );
 
 foreach( $check_sanitize_keys as $key ){
@@ -391,6 +392,7 @@ $sql_common = " sc_id               = '$sc_id',
                 it_subscription_expiration_date        = '$it_subscription_expiration_date',
                 it_check_firstshipment_day       = '$it_check_firstshipment_day',
                 it_expire_firstshipmen_day        = '$it_expire_firstshipmen_day',
+                it_subscription_date_format        = '$it_subscription_date_format',
                 it_img1             = '$it_img1',
                 it_img2             = '$it_img2',
                 it_img3             = '$it_img3',
