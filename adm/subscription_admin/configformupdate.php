@@ -21,6 +21,7 @@ $check_sanitize_keys = array(
 'su_nice_clientid',             //나이스페이 클라이언트 키
 'su_nice_secretkey',            //나이스페이 비밀 키
 'su_card_test',                 //결제 테스트
+'su_cron_execute_hour',         // 매일 크론 실행 hour
 );
 
 $inserts = array();

@@ -5,6 +5,22 @@ include_once(G5_EDITOR_LIB);
 
 auth_check_menu($auth, $sub_menu, "r");
 
+if ($is_admin != 'super') {
+    alert('최고관리자만 접근 가능합니다.');
+}
+
+$sql = " select * from `{$g5['g5_subscription_config_table']}` limit 1";
+$g5_subscriptions_options = $config['g5_subscriptions_options'] = sql_fetch($sql);
+
+if (! isset($g5_subscriptions_options)) {
+    sql_query(
+        " ALTER TABLE `{$g5['g5_subscription_config_table']}`
+                    ADD `su_cron_updatetime` datetime DEFAULT NULL,
+                    ADD `su_cron_execute_hour` tinyint(2) NOT NULL DEFAULT '0'",
+        true
+    );
+}
+
 $g5['title'] = '정기결제설정';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
@@ -23,6 +39,24 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <col>
         </colgroup>
         <tbody>
+        <tr>
+            <th scope="row"><label>마지막 크론실행시간</label></th>
+            <td>
+                <?php echo get_subs_option('su_cron_updatetime'); ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="su_cron_execute_hour">매일 크론 실행 hour</label></th>
+            <td>
+                <?php echo help('매일 실행되는 크론 실행 시간을 지정합니다. 지정된 시간에만 정기결제를 실행합니다.'); ?>
+                
+                <select name="su_cron_execute_hour" id="su_cron_execute_hour">
+                    <?php for($i=0;$i<24;++$i) { ?>
+                    <option value="<?php echo $i; ?>" <?php echo get_selected(get_subs_option('su_cron_execute_hour'), $i) ?>><?php echo $i.' ~ '.$i + 1; ?> 시</option>
+                    <?php } ?>
+                </select>
+            </td>
+        </tr>
         <tr>
             <th scope="row"><label for="su_pg_service">결제대행사</label></th>
             <td>

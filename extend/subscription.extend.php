@@ -26,6 +26,7 @@ $g5['g5_subscription_config_table'] = $g5['subscription_prefix'] .'config';     
 $g5['g5_subscription_cart_table']          = $g5['subscription_prefix'] . 'cart';
 $g5['g5_subscription_category_table']           = $g5['subscription_prefix'] . 'category';
 $g5['g5_subscription_item_table']         = $g5['subscription_prefix'] . 'item';
+$g5['g5_subscription_pay_table']            = $g5['subscription_prefix'] . 'pay';
 $g5['g5_subscription_order_table']            = $g5['subscription_prefix'] . 'order';
 $g5['g5_subscription_order_data_table']   = $g5['subscription_prefix'] . 'order_data'; // 결제정보 임시저장 테이블
 $g5['g5_subscription_item_qa_table']    = $g5['subscription_prefix'] . 'item_qa'; // 상품 질문답변 테이블
@@ -1083,6 +1084,15 @@ function get_weekend_yoil($date) {
     $yoil = array("일","월","화","수","목","금","토");
     
     return $yoil[date('w', strtotime($date))];
+}
+
+function subscription_order_pay($od) {
+    global $g5;
+    
+    $inserts = array(
+        'od_id' => $od['od_id'],
+        'mb_id' => $od['mb_id']
+        );
 }
 
 // 금액표시
