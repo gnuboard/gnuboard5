@@ -270,8 +270,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
 -- DROP TABLE IF EXISTS `g5_subscription_pay`;
 
 CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
- `id` bigint(20) unsigned NOT NULL,
-  `py_id` bigint(20) unsigned NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `py_name` varchar(20) NOT NULL DEFAULT '',
   `py_email` varchar(100) NOT NULL DEFAULT '',

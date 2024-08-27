@@ -12,7 +12,7 @@ if ($is_admin != 'super') {
 $sql = " select * from `{$g5['g5_subscription_config_table']}` limit 1";
 $g5_subscriptions_options = $config['g5_subscriptions_options'] = sql_fetch($sql);
 
-if (! isset($g5_subscriptions_options)) {
+if (! isset($g5_subscriptions_options['su_cron_execute_hour']) ) {
     sql_query(
         " ALTER TABLE `{$g5['g5_subscription_config_table']}`
                     ADD `su_cron_updatetime` datetime DEFAULT NULL,

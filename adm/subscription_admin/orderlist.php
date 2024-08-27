@@ -4,7 +4,7 @@ include_once './_common.php';
 
 auth_check_menu($auth, $sub_menu, 'r');
 
-$g5['title'] = '정기결제 주문내역';
+$g5['title'] = '회원 구독 리스트';
 include_once G5_ADMIN_PATH.'/admin.head.php';
 include_once G5_PLUGIN_PATH.'/jquery-ui/datepicker.php';
 
