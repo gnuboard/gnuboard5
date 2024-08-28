@@ -51,7 +51,16 @@ class JwtTokenManager
     }
 
     /**
-     * Decode JWT token
+     * @param string $type
+     * @param string $token
+     * @param stdClass|null $headers
+     * @throws \Firebase\JWT\BeforeValidException
+     * @throws \Firebase\JWT\ExpiredException
+     * @throws \Firebase\JWT\SignatureInvalidException
+     * @throws \Firebase\JWT\InvalidArgumentException
+     * @throws \UnexpectedValueException
+     * @throws \DomainException
+     * @return stdClass
      */
     public function decode_token(string $type, string $token, ?stdClass $headers = null): stdClass
     {

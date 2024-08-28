@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 /**
  * Access Token Authentication Middleware
- * 
+ *
  * Add this middleware to routes that require access token authentication
  * Append member information to the request as an attribute
  */

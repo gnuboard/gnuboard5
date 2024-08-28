@@ -2,6 +2,7 @@
 
 namespace API\v1\Model\Request\Authentication;
 
+use API\Exceptions\ValidateException;
 use API\v1\Traits\SchemaHelperTrait;
 
 /**
@@ -23,7 +24,7 @@ class RefreshTokenRequest
 
     /**
      * @param array $data 요청 데이터
-     * @throws \Exception 유효성 검사 실패 시 예외 발생
+     * @throws ValidateException 유효성 검사 실패 시 예외 발생
      * @return void
      */
     public function __construct(array $data = [])

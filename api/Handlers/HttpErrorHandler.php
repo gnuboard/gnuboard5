@@ -11,16 +11,13 @@ use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpNotImplementedException;
 use API\Exceptions\HttpUnauthorizedException;
 use API\Exceptions\HttpUnprocessableEntityException;
-use Firebase\JWT\BeforeValidException;
+use API\Exceptions\ValidateException;
 use Firebase\JWT\ExpiredException;
-use Firebase\JWT\SignatureInvalidException;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpException;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
 use DomainException;
-use Exception;
 use InvalidArgumentException;
-use Throwable;
 use UnexpectedValueException;
 use PDOException;
 
@@ -65,13 +62,14 @@ class HttpErrorHandler extends SlimErrorHandler
     protected function respond(): ResponseInterface
     {
         $exception = $this->exception;
-        $statusCode = 500;
+        $status_code = 500;
         $type = self::SERVER_ERROR;
         $description = 'An internal error has occurred while processing your request.';
+
         $is_http_exception = $exception instanceof HttpException;
-        
+
         if ($is_http_exception) {
-            $statusCode = $exception->getCode();
+            $status_code = $exception->getCode();
             $description = $exception->getMessage();
 
             if ($exception instanceof HttpBadRequestException) {
@@ -93,55 +91,77 @@ class HttpErrorHandler extends SlimErrorHandler
             } else {
                 $type = '';
             }
+
+            return $this->respondWithJson($type, $description, $status_code);
         }
 
-        if (!($is_http_exception)
-            && ($exception instanceof Throwable)
-            && $this->displayErrorDetails
-        ) {
+        if ($exception instanceof ValidateException) {
+            $status_code = $exception->getCode();
             $description = $exception->getMessage();
+            $type = self::UNPROCESSABLE_ENTITY;
+            return $this->respondWithJson($type, $description, $status_code);
         }
 
         if ($exception instanceof DbConnectException) {
-            $statusCode = 500;
+            $status_code = 500;
             $description = $exception->getMessage();
+
+            return $this->respondWithJson($type, $description, $status_code);
         }
 
         if ($exception instanceof PDOException) {
-            $statusCode = 500;
+            $status_code = 500;
             $description = 'DB operator error';
             if ($this->displayErrorDetails) {
                 $description .= " : " . $exception->getMessage();
             }
+
+            return $this->respondWithJson($type, $description, $status_code);
         }
 
-        // JWT exceptions
-        if (
-            $exception instanceof InvalidArgumentException
+        // JWT 인증만료
+        if ($exception instanceof ExpiredException) {
+            $status_code = 401;
+            $type = 'Token Expired';
+            $description = $exception->getMessage();
+            return $this->respondWithJson($type, $description, $status_code);
+        }
+
+        // JWT 인증만료를 제외한 예외
+        if ($exception instanceof InvalidArgumentException
             || $exception instanceof DomainException
             || $exception instanceof UnexpectedValueException
-            || $exception instanceof SignatureInvalidException
-            || $exception instanceof BeforeValidException
-            || $exception instanceof ExpiredException
         ) {
-            $statusCode = 401;
-            $type = self::UNAUTHENTICATED;
-            $description = $exception->getMessage();
+            $status_code = 400;
+            $type = self::BAD_REQUEST;
+            return $this->respondWithJson($type, $description, $status_code);
         }
 
+        // 나머지 오류 
+        return $this->respondWithJson($type, $description, $status_code);
+    }
+
+    /**
+     * 오류 응답 생성
+     * @param string $type  오류 유형
+     * @param string $description G5_DEBUG 환경변수에 따라 오류 설명을 노출할지 결정된다.
+     * @param int $status_code HTTP 상태 코드
+     * @return ResponseInterface
+     */
+    private function respondWithJson($type, $description, $status_code = 200)
+    {
         $error = [
-            'statusCode' => $statusCode,
+            'statusCode' => $status_code,
             'error' => [
                 'type' => $type,
-                'description' => $description,
+                'description' => G5_DEBUG ? $description : self::SERVER_ERROR,
             ],
         ];
-
-        $payload = json_encode($error, JSON_UNESCAPED_UNICODE);
-
-        $response = $this->responseFactory->createResponse($statusCode);
+        $response = $this->responseFactory->createResponse($status_code);
+        $payload = json_encode($error, \JSON_UNESCAPED_UNICODE);
         $response->getBody()->write($payload);
-
-        return $response->withHeader('Content-Type', 'application/json');
+        return $response->withHeader('Content-Type', 'application/json')->withStatus($status_code);
     }
+
+
 }
