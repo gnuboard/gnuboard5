@@ -8,11 +8,17 @@ if (get_subs_option('su_card_test')) {
     // 웹 결제 테스트 signkey
     set_subs_option('su_inicis_sign_key', 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS');
 
+    $inicis_iniapi_key = "rKnPljRn5m6J9Mzz";
+    $inicis_iniapi_iv = "W2KLNKra6Wxc1P==";
+    
     // 테스트 결제 URL
     $stdpay_js_url = 'https://stgstdpay.inicis.com/stdjs/INIStdPay.js';
     
 } else {
     set_subs_option('su_inicis_mid', "SIR".get_subs_option('su_inicis_mid'));
+    
+    $inicis_iniapi_key = get_subs_option('su_inicis_iniapi_key');
+    $inicis_iniapi_iv = get_subs_option('su_inicis_iniapi_iv')
     
     // 실 결제 URL
     $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';

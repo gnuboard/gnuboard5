@@ -12,6 +12,7 @@ if ($is_admin != 'super') {
 $sql = " select * from `{$g5['g5_subscription_config_table']}` limit 1";
 $g5_subscriptions_options = $config['g5_subscriptions_options'] = sql_fetch($sql);
 
+/*
 if (! isset($g5_subscriptions_options['su_cron_execute_hour']) ) {
     sql_query(
         " ALTER TABLE `{$g5['g5_subscription_config_table']}`
@@ -20,6 +21,7 @@ if (! isset($g5_subscriptions_options['su_cron_execute_hour']) ) {
         true
     );
 }
+*/
 
 $g5['title'] = '정기결제설정';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -85,6 +87,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <input type="text" name="su_kcp_group_id" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_group_id')); ?>" id="su_kcp_group_id" class="frm_input" size="36" maxlength="25">
             </td>
         </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="su_kcp_cert_info">NHN KCP 인증서 정보</label></th>
+            <td>
+                <?php echo help("kcp_cert_info는 결제 승인, 거래취소, 거래등록 시에 필요합니다.\n추가적으로 NHNKCP 상점 관리자 > 기술관리센터 > 인증센터 > KCP PG-API > 발급하기 경로에서 개인키 + 인증서 발급이 가능합니다."); ?>
+                <textarea id="su_kcp_cert_info" name="su_kcp_cert_info" rows="7"><?php echo html_purifier(get_subs_option('su_kcp_cert_info')); ?></textarea>
+            </td>
+        </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
             <th scope="row">
                 <label for="su_inicis_mid">KG이니시스 상점아이디</label><br>
@@ -100,6 +109,20 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <td>
                 <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\n<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
                 <input type="text" name="su_inicis_sign_key" value="<?php echo get_sanitize_input(get_subs_option('su_inicis_sign_key')); ?>" id="su_inicis_sign_key" class="frm_input" size="40" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="su_inicis_iniapi_key">KG이니시스 INIAPI KEY</label></th>
+            <td>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI key 생성 조회 하여 KEY를 여기에 입력합니다."); ?>
+                <input type="text" name="su_inicis_iniapi_key" value="<?php echo get_sanitize_input(get_subs_option('su_inicis_iniapi_key')); ?>" id="su_inicis_iniapi_key" class="frm_input" size="30" maxlength="30">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="su_inicis_iniapi_iv">KG이니시스 INIAPI IV</label></th>
+            <td>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI IV 생성 조회 하여 KEY를 여기에 입력합니다."); ?>
+                <input type="text" name="su_inicis_iniapi_iv" value="<?php echo get_sanitize_input(get_subs_option('su_inicis_iniapi_iv')); ?>" id="su_inicis_iniapi_iv" class="frm_input" size="30" maxlength="30">
             </td>
         </tr>
         <tr class="pg_info_fld nicepay_info_fld" id="nicepay_info_anchor">
@@ -126,11 +149,14 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <input type="radio" name="su_card_test" value="1" <?php echo (get_subs_option('su_card_test') == 1) ? "checked" : ""; ?> id="su_card_test2">
                 <label for="su_card_test2">테스트결제</label>
                 <div class="scf_cardtest kcp_cardtest">
-                    <a href="http://admin.kcp.co.kr/" target="_blank" class="btn_frmline">실결제 관리자</a>
-                    <a href="http://testadmin8.kcp.co.kr/" target="_blank" class="btn_frmline">테스트 관리자</a>
+                    <a href="http://admin.kcp.co.kr/" target="_blank" class="btn_frmline" title="NHN_KCP 상점관리자">실결제 관리자</a>
+                    <a href="http://testadmin8.kcp.co.kr/" target="_blank" class="btn_frmline" title="NHN_KCP 테스트 관리자">테스트 관리자</a>
                 </div>
                 <div class="scf_cardtest inicis_cardtest">
-                    <a href="https://iniweb.inicis.com/" target="_blank" class="btn_frmline">상점 관리자</a>
+                    <a href="https://iniweb.inicis.com/" target="_blank" class="btn_frmline" title="KG이니시스 상점관리자">상점 관리자</a>
+                </div>
+                 <div class="scf_cardtest nicepay_cardtest">
+                    <a href="https://start.nicepay.co.kr/merchant/login/main.do" target="_blank" class="btn_frmline" title="나이스페이 상점관리자">상점 관리자</a>
                 </div>
             </td>
         </tr>
@@ -183,6 +209,10 @@ jQuery(function($) {
         $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
         $("#"+pg+"_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
     });
+    
+    $(".scf_cardtest").addClass("scf_cardtest_hide");
+    $(".<?php echo get_subs_option('su_pg_service'); ?>_cardtest").removeClass("scf_cardtest_hide");
+    $("#<?php echo get_subs_option('su_pg_service'); ?>_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
 });
 </script>
 <?php

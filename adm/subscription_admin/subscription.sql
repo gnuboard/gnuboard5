@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_card_test` int(11) NOT NULL DEFAULT '0',
   `su_kcp_mid` varchar(80) NOT NULL DEFAULT '',
   `su_kcp_group_id` varchar(80) NOT NULL DEFAULT '',
+  `su_kcp_cert_info` text NOT NULL,
   `su_inicis_mid` varchar(80) NOT NULL DEFAULT '',
   `su_inicis_iniapi_key` varchar(30) NOT NULL DEFAULT '',
   `su_inicis_iniapi_iv` varchar(30) NOT NULL DEFAULT '',

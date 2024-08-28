@@ -1032,9 +1032,11 @@ function subscription_order_pay($od, $pg_data) {
 function inicis_billing($od) {
     global $g5;
     
+    include_once(G5_SUBSCRIPTION_PATH.'/settle_inicis.inc.php');
+        
     //step1. 요청을 위한 파라미터 설정
-    $key = "rKnPljRn5m6J9Mzz";
-	$iv = "W2KLNKra6Wxc1P==";
+    $key = $inicis_iniapi_key;
+	$iv = $inicis_iniapi_iv;
     $mid = "INIBillTst";
 	$type = "billing";
 	$paymethod = "Card";

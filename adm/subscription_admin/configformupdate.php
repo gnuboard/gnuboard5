@@ -12,8 +12,9 @@ $warning_msg = '';
 
 $check_sanitize_keys = array(
 'su_pg_service',                //결제대행사
-'su_kcp_mid',                   //KCP SITE CODE
-'su_kcp_group_id',              //NHN KCP 그룹아이디
+'su_kcp_mid',                   // KCP SITE CODE
+'su_kcp_group_id',              // NHN KCP 그룹아이디
+'su_kcp_cert_info',             // NHN KCP 인증서 ( NHNKCP 상점 관리자 > 기술관리센터 > 인증센터 > KCP PG-API > 발급하기 경로에서 개인키 + 인증서 발급이 가능 )
 'su_inicis_mid',                //KG이니시스 상점아이디
 'su_inicis_iniapi_key',         //KG이니시스 INIAPI KEY
 'su_inicis_iniapi_iv',          //KG이니시스 INIAPI IV
