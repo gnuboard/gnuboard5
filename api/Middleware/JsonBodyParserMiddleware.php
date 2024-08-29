@@ -27,12 +27,17 @@ class JsonBodyParserMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandler $handler): Response
     {
-        $contentType = $request->getHeader('Content-Type');
-        if (isset($contentType[0]) && $contentType[0] === 'application/json') {
-            $contents = json_decode(file_get_contents('php://input'), true);
+        $content_type = $request->getHeader('Content-Type');
+        if (isset($content_type[0]) && $content_type[0] === 'application/json') {
+            if (!$receive = file_get_contents('php://input')) {
+                return $handler->handle($request);
+            }
+            
+            $contents = json_decode($receive, true);
             if (json_last_error() === JSON_ERROR_NONE) {
                 $request = $request->withParsedBody($contents);
             } else {
+                error_log('JSON Body Parser Middleware error msg: ' . json_last_error_msg());
                 throw new  HttpBadRequestException($request, 'Invalid JSON');
             }
         }

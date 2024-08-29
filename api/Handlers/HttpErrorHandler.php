@@ -104,6 +104,7 @@ class HttpErrorHandler extends SlimErrorHandler
 
         if ($exception instanceof DbConnectException) {
             $status_code = 500;
+            $type = 'DB Connection Error';
             $description = $exception->getMessage();
 
             return $this->respondWithJson($type, $description, $status_code);
@@ -111,6 +112,7 @@ class HttpErrorHandler extends SlimErrorHandler
 
         if ($exception instanceof PDOException) {
             $status_code = 500;
+            $type = 'DB Error';
             $description = 'DB operator error';
             if ($this->displayErrorDetails) {
                 $description .= " : " . $exception->getMessage();
@@ -122,7 +124,7 @@ class HttpErrorHandler extends SlimErrorHandler
         // JWT 인증만료
         if ($exception instanceof ExpiredException) {
             $status_code = 401;
-            $type = 'Token Expired';
+            $type = 'JWT Token Expired';
             $description = $exception->getMessage();
             return $this->respondWithJson($type, $description, $status_code);
         }
@@ -133,7 +135,8 @@ class HttpErrorHandler extends SlimErrorHandler
             || $exception instanceof UnexpectedValueException
         ) {
             $status_code = 400;
-            $type = self::BAD_REQUEST;
+            $type = 'JWT Token error';
+            $description = 'jwt token error: '. $exception->getMessage();
             return $this->respondWithJson($type, $description, $status_code);
         }
 
@@ -154,7 +157,7 @@ class HttpErrorHandler extends SlimErrorHandler
             'statusCode' => $status_code,
             'error' => [
                 'type' => $type,
-                'description' => G5_DEBUG ? $description : self::SERVER_ERROR,
+                'description' => G5_DEBUG ? $description : 'Error occurred.',
             ],
         ];
         $response = $this->responseFactory->createResponse($status_code);
