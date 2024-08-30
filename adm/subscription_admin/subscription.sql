@@ -389,6 +389,9 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_b_addr3` varchar(255) NOT NULL DEFAULT '',
   `od_b_addr_jibeon` varchar(255) NOT NULL DEFAULT '',
   `od_memo` text NOT NULL,
+  `next_billing_date` datetime DEFAULT NULL,
+  `od_enable_status` tinyint(3) NOT NULL DEFAULT '1',
+  `last_billed_date` datetime DEFAULT NULL,
   `od_cart_count` int(11) NOT NULL DEFAULT '0',
   `od_cart_price` int(11) NOT NULL DEFAULT '0',
   `od_cart_coupon` int(11) NOT NULL DEFAULT '0',
@@ -396,38 +399,23 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_send_cost2` int(11) NOT NULL DEFAULT '0',
   `od_send_coupon` int(11) NOT NULL DEFAULT '0',  
   `od_receipt_price` int(11) NOT NULL DEFAULT '0',
-  `od_cancel_price` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
-  `od_refund_price` int(11) NOT NULL DEFAULT '0',
-  `od_bank_account` varchar(255) NOT NULL DEFAULT '',
-  `od_receipt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `od_card_name` varchar(255) NOT NULL DEFAULT '',
+  `od_receipt_time` datetime DEFAULT NULL,
   `od_coupon` int(11) NOT NULL DEFAULT '0',
-  `od_misu` int(11) NOT NULL DEFAULT '0',
   `od_subscription_memo` text NOT NULL,
   `od_mod_history` text NOT NULL,
-  `od_status` varchar(255) NOT NULL DEFAULT '',  
-  `od_hope_date` date NOT NULL DEFAULT '0000-00-00',  
+  `od_hope_date` datetime DEFAULT NULL,  
   `od_settle_case` varchar(255) NOT NULL DEFAULT '',
   `od_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_pg` varchar(255) NOT NULL DEFAULT '',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
-  `od_app_no` varchar(20) NOT NULL DEFAULT '',
-  `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
-  `od_casseqno` varchar(255) NOT NULL DEFAULT '',
   `od_tax_flag` tinyint(4) NOT NULL DEFAULT '0',
   `od_tax_mny` int(11) NOT NULL DEFAULT '0',
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',
   `od_free_mny` int(11) NOT NULL DEFAULT '0',
-  `od_delivery_company` varchar(255) NOT NULL DEFAULT '0',
-  `od_invoice` varchar(255) NOT NULL DEFAULT '',
-  `od_invoice_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `od_cash` tinyint(4) NOT NULL,
-  `od_cash_no` varchar(255) NOT NULL,
-  `od_cash_info` text NOT NULL, 
-  `od_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
-  `od_pwd` varchar(255) NOT NULL DEFAULT '',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
   `card_number` varchar(50) NOT NULL DEFAULT '',
   `card_billkey` varchar(100) NOT NULL DEFAULT '',
@@ -461,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_data` (
 -- Table structure for table `g5_subscription_event`
 --
 
---DROP TABLE IF EXISTS `g5_subscription_event`;
+-- DROP TABLE IF EXISTS `g5_subscription_event`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_event` (
   `ev_id` int(11) NOT NULL AUTO_INCREMENT,
   `ev_skin` varchar(255) NOT NULL DEFAULT '',
@@ -488,7 +476,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_event` (
 -- Table structure for table `g5_subscription_event_item`
 --
 
---DROP TABLE IF EXISTS `g5_subscription_event_item`;
+-- DROP TABLE IF EXISTS `g5_subscription_event_item`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_event_item` (
   `ev_id` int(11) NOT NULL DEFAULT '0',
   `it_id` varchar(20) NOT NULL DEFAULT '',
@@ -502,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_event_item` (
 -- Table structure for table `g5_subscription_item_relation`
 --
 
---DROP TABLE IF EXISTS `g5_subscription_item_relation`;
+-- DROP TABLE IF EXISTS `g5_subscription_item_relation`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_item_relation` (
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_id2` varchar(20) NOT NULL DEFAULT '',
@@ -529,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
 -- Table structure for table `g5_subscription_item_use`
 --
 
---DROP TABLE IF EXISTS `g5_subscription_item_use`;
+-- DROP TABLE IF EXISTS `g5_subscription_item_use`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(20) NOT NULL DEFAULT '0',
@@ -552,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
 -- Table structure for table `g5_shop_item_option`
 --
 
-DROP TABLE IF EXISTS `g5_subscription_item_option`;
+-- DROP TABLE IF EXISTS `g5_subscription_item_option`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_item_option` (
   `io_no` INT(11) NOT NULL AUTO_INCREMENT,
   `io_id` VARCHAR(255) NOT NULL DEFAULT '0',

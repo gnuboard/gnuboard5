@@ -996,9 +996,24 @@ function subscription_order_pay($od, $pg_data) {
     // inicis : $pg_data['price']
     
     $py_receipt_time = date('Y년m월d일', strtotime($pg_data['payDate'].$pg_data['payTime']));
+    
+    $subscription_id = $pg_data['orderId'];
+    $paymethod = $pg_data['payMethod'];
+    $od_receipt_price = $pg_data['amount'];
+    $receipt_url = $pg_data['receiptUrl'];
+    $py_cardname = $pg_data['card']['cardName'];
+    $py_cardnumber = $pg_data['card']['cardNum'];
+    
+    // 나이스페이인 경우 메뉴얼 : https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
+    // issuedCashReceipt 현금영수증 발급여부 true:발행 / false:미발행
+    // useEscrow 에스크로 거래 여부 false:일반거래 / true:에스크로 거래
+    // approveNo 제휴사 승인 번호 신용카드, 계좌이체, 휴대폰
+    // balanceAmt 취소 가능 잔액, 부분취소 거래인경우, 전체금액에서 현재까지 취소된 금액을 차감한 금액.
+    
     $inserts = array(
         'od_id' => $od['od_id'],
         'mb_id' => $od['mb_id'],
+        'subscription_id' => $subscription_id,
         'py_b_name' => $od['od_b_name'],
         'py_b_hp' => $od['od_b_hp'],
         'py_b_zip1' => $od['od_b_zip1'],
@@ -1007,10 +1022,14 @@ function subscription_order_pay($od, $pg_data) {
         'py_b_addr2' => $od['od_b_addr2'],
         'py_b_addr3' => $od['od_b_addr3'],
         'py_b_addr_jibeon' => $od['od_b_addr_jibeon'],
-        'py_receipt_price' => $od['od_receipt_price'],
+        // 'py_receipt_price' => $od['od_receipt_price'],
+        'py_receipt_price' => $od_receipt_price,
         'py_receipt_time' => G5_TIME_YMDHIS,
-        'py_settle_case' => 'card',
+        // 'py_settle_case' => 'card',
+        'py_settle_case' => $paymethod,
+        'receipt_url' => $receipt_url,
         'py_test' => $od['od_test'],
+        'py_pg' => $od['od_pg'],
         'py_tno' => $pg_data['tid'],
         'py_receipt_time' => G5_TIME_YMDHIS,
         );
@@ -1027,6 +1046,165 @@ function subscription_order_pay($od, $pg_data) {
     echo $sql;
     
     sql_query($sql);
+}
+
+function expire_nicepay_billing($bid) {
+	global $clientId;
+	global $secretKey;
+
+	try {
+		$res = requestPost(
+			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/expire",
+			json_encode(
+				array("orderId" => uniqid())
+			),
+			$clientId . ':' . $secretKey
+		);
+	
+		return $res;
+	} catch (Exception $e) {
+		return $e->getMessage();
+	}
+}
+
+function kcp_billing($od) {
+    global $g5;
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+    
+    $site_cd            = get_subs_option('su_kcp_mid'); // 사이트 코드
+    // 인증서 정보(직렬화)
+    $kcp_cert_info      = get_subs_option('su_kcp_cert_info');
+    
+    $goodsname = get_subscription_goods($od['od_id']);
+    
+    $cust_ip            = "";
+    $currency           = '410'; // 화폐 단위
+    $ordr_idxx          = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid(); // 주문번호 
+    $good_name          = $goodsname['full_name']; // 상품명
+    $buyr_name          = $od['od_name']; // 주문자명
+    $buyr_mail          = $od['od_email']; // 주문자 E-mail
+    $buyr_tel2          = $od['od_hp']; // 주문자 휴대폰번호
+
+    $bt_batch_key       = $od['card_billkey']; // 배치키 정보
+    $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
+    
+    $data = array(
+        "site_cd"        => $site_cd,
+        "kcp_cert_info"  => $kcp_cert_info,
+        "pay_method"     => "CARD",
+        "cust_ip"        => "",
+        "amount"         => $od['od_receipt_price'],
+        "card_mny"       => $od['od_receipt_price'],
+        "currency"       => $currency,
+        "quota"          => "00",
+        "ordr_idxx"      => $ordr_idxx,
+        "good_name"      => $good_name,
+        "buyr_name"      => $buyr_name,
+        "buyr_mail"      => $buyr_mail,
+        "buyr_tel2"      => $buyr_tel2,
+        "card_tx_type"   => "11511000",
+        "bt_batch_key"   => $bt_batch_key,
+        "bt_group_id"    => $bt_group_id
+    );
+    
+    $req_data = json_encode($data);
+    
+    $header_data = array( "Content-Type: application/json", "charset=utf-8" );
+    
+    // API REQ
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $kcp_target_url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header_data);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $req_data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    
+    // API RES
+    $res_data  = curl_exec($ch);
+    
+    curl_close($ch);
+    
+    // 요청 DATA 변수
+    print_r($req_data);
+    
+    echo "<br><br>";
+    
+    // 응답 DATA 변수
+    print_r($res_data);
+}
+
+function subscription_process_payment($od) {
+    
+    $subscription_pg_service = get_subs_option('su_pg_service');
+    
+    if ($subscription_pg_service === 'kcp') {
+        return kcp_billing($od);
+    } else if ($subscription_pg_service === 'inicis') {
+        return inicis_billing($od);
+    } else if ($subscription_pg_service === 'nicepay') {
+        return nicepay_billing($od);
+    }
+    
+    return null;
+}
+
+function nicepay_billing($od) {
+    global $g5;
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
+    
+	$clientId = $nicepay_clientid;
+	$secretKey = $nicepay_secretkey;
+    
+    $goodsname = get_subscription_goods($od['od_id']);
+    
+    $res = null;
+    
+    $bid = $od['card_billkey'];
+    
+    // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
+    $nice_orderId = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid();
+    $edi_date = date('c', G5_SERVER_TIME);
+    $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
+    $buyerName = $od['od_name'];
+    $buyerEmail = $od['od_email'];
+    $buyerTel = $od['od_hp'];
+    
+    // 면세공급가액, 전체 거래금액(amount)중에서 면세에 해당하는 금액을 설정합니다.
+    // $taxFreeAmt = ;
+    
+    $code = 'success';
+    $message = '';
+    $res = array();
+    
+	try {
+		$res = requestPost(
+			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/payments",
+			json_encode(
+				array("orderId" => $nice_orderId, 
+					"amount" => (int) $od['od_receipt_price'],
+					"goodsName" => $goodsname['full_name'],
+					"cardQuota" => 0,
+					"useShopInterest" => false,
+                    'buyerName' => $buyerName,
+                    'buyerTel' => $buyerTel,
+                    'buyerEmail' => $buyerEmail
+                )
+			),
+			$clientId . ':' . $secretKey
+		);
+	    
+        $code = 'success';
+        
+	} catch (Exception $e) {
+        
+        $code = 'fail';
+        $message = $e->getMessage();
+	}
+    
+    return array('code'=>$code, 'message'=>$message, 'response'=>$res);
 }
 
 function inicis_billing($od) {

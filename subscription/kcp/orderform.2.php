@@ -10,12 +10,10 @@ if (get_subs_option('su_pg_service') !== 'kcp') {
 ?>
 <input type="hidden" name="ordr_idxx"   value="<?php echo $od_id; ?>">
 <input type="hidden" name="buyr_name"   value="">
-
-<input type="hidden" name="kcpgroup_id"   value="<?php echo get_subs_option('su_kcpgroup_id'); ?>">
-
 <!-- 가맹점 정보 설정-->
 <input type="hidden" name="site_cd"         value="<?php echo get_subs_option('su_kcp_mid'); ?>" />
 <input type="hidden" name="site_name"       value="<?php echo get_text($g_conf_site_name); ?>" />
+<input type="hidden" name="kcpgroup_id"   value="<?php echo get_subs_option('su_kcp_group_id'); ?>">
 <!-- 상품제공기간 설정 -->
 <input type="hidden" name="good_expr"       value="2:1m"/>
 <!-- 결제 수단 : 고정값 -->

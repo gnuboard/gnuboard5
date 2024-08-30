@@ -42,6 +42,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         </colgroup>
         <tbody>
         <tr>
+            <th scope="row"><label>정기결제 CRON PATH</label></th>
+            <td>
+                <p><?php echo G5_SUBSCRIPTION_URL.'/cron_script.php'; ?></p>
+                <p><?php echo G5_SUBSCRIPTION_PATH.'/cron_script.php'; ?></p>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label>마지막 크론실행시간</label></th>
             <td>
                 <?php echo get_subs_option('su_cron_updatetime'); ?>

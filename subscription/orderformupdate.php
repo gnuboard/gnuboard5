@@ -145,7 +145,8 @@ if (function_exists('check_payment_method')) {
 }
 
 // 변수 초기화
-$od_bank_account = '';
+$od_card_name = '';
+
 $pg_receipt_infos = array(
 'od_cash'=>'',
 'od_cash_no'=>'',
@@ -158,7 +159,6 @@ if ($od_settle_case == '무통장') {
     $od_misu = $i_price - $od_receipt_price;
     if ($od_misu == 0) {
         $od_status = '입금';
-        $od_receipt_time = G5_TIME_YMDHIS;
     }
 } elseif ($od_settle_case == '신용카드') {
     switch (get_subs_option('su_pg_service')) {
@@ -175,11 +175,10 @@ if ($od_settle_case == '무통장') {
     }
 
     $od_tno = $tno;
-    $od_app_no = $app_no;
     $od_receipt_price = $amount;
     $od_receipt_point = $i_temp_point;
-    $od_receipt_time = preg_replace('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/', '\\1-\\2-\\3 \\4:\\5:\\6', $app_time);
-    $od_bank_account = $card_name;
+    // $od_receipt_time = preg_replace('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/', '\\1-\\2-\\3 \\4:\\5:\\6', $app_time);
+    $od_card_name = $card_name;
     $pg_price = $amount;
     $od_misu = $i_price - $od_receipt_price;
     if ($od_misu == 0) {
@@ -192,8 +191,6 @@ if ($od_settle_case == '무통장') {
 $od_pg = get_subs_option('su_pg_service');
 
 $tno = isset($tno) ? $tno : '';
-$od_receipt_time = isset($od_receipt_time) ? $od_receipt_time : '';
-$od_app_no = isset($od_app_no) ? $od_app_no : '';
 
 // 주문금액과 결제금액이 일치하는지 체크
 if ($tno) {
@@ -218,12 +215,6 @@ if ($tno) {
         }
         exit('Receipt Amount Error');
     }
-}
-
-if ($is_member) {
-    $od_pwd = $member['mb_password'];
-} else {
-    $od_pwd = isset($_POST['od_pwd']) ? get_encrypt_string($_POST['od_pwd']) : get_encrypt_string(mt_rand());
 }
 
 // 복합과세 금액
@@ -265,7 +256,6 @@ $od_tax_flag      = get_subs_option('su_tax_flag_use');
 $inserts = array(
     'od_id' => $od_id,
     'mb_id' => $member['mb_id'],
-    'od_pwd' => '',
     'od_name' => $od_name,
     'od_email' => $od_email,
     'od_tel' => $od_tel,
@@ -296,26 +286,19 @@ $inserts = array(
     'od_coupon' => $tot_od_cp_price,
     'od_receipt_price' => $od_receipt_price,
     'od_receipt_point' => $od_receipt_point,
-    'od_bank_account' => $od_bank_account,
-    'od_receipt_time' => $od_receipt_time,
-    'od_misu' => $od_misu,
+    'od_card_name' => $od_card_name,
     'od_pg' => $od_pg,
     'od_tno' => $od_tno,
-    'od_app_no' => $od_app_no,
     'od_tax_flag' => $od_tax_flag,
     'od_tax_mny' => $od_tax_mny,
     'od_vat_mny' => $od_vat_mny,
     'od_free_mny' => $od_free_mny,
-    'od_status' => $od_status,
     'od_subscription_memo' => '',
     'od_hope_date' => $od_hope_date,
     'od_time' => G5_TIME_YMDHIS,
     'od_ip' => $_SERVER['REMOTE_ADDR'],
     'od_settle_case' => $od_settle_case,
     'od_other_pay_type' => $od_other_pay_type,
-    'od_cash' => $pg_receipt_infos['od_cash'],
-    'od_cash_no' => $pg_receipt_infos['od_cash_no'],
-    'od_cash_info' => $pg_receipt_infos['od_cash_info'],
     'od_test' => get_subs_option('su_card_use'),
     'card_number' => $card_number,
     'card_billkey' => $card_billkey,
@@ -332,12 +315,12 @@ $values = implode("', '", array_values($inserts));
 $sql = "INSERT INTO `{$g5['g5_subscription_order_table']}`($columns) VALUES ('$values')";
 
 // echo $sql;
+// exit;
 
 // // 주문서에 입력
 // $sql = " insert {$g5['g5_subscription_order_table']}
 //             set od_id             = '$od_id',
 //                 mb_id             = '{$member['mb_id']}',
-//                 od_pwd            = '$od_pwd',
 //                 od_name           = '$od_name',
 //                 od_email          = '$od_email',
 //                 od_tel            = '$od_tel',
@@ -368,18 +351,13 @@ $sql = "INSERT INTO `{$g5['g5_subscription_order_table']}`($columns) VALUES ('$v
 //                 od_coupon         = '$tot_od_cp_price',
 //                 od_receipt_price  = '$od_receipt_price',
 //                 od_receipt_point  = '$od_receipt_point',
-//                 od_bank_account   = '$od_bank_account',
-//                 od_receipt_time   = '$od_receipt_time',
-//                 od_misu           = '$od_misu',
+//                 od_card_name   = '$od_card_name',
 //                 od_pg             = '$od_pg',
 //                 od_tno            = '$od_tno',
-//                 od_app_no         = '$od_app_no',
-//                 od_escrow         = '$od_escrow',
 //                 od_tax_flag       = '$od_tax_flag',
 //                 od_tax_mny        = '$od_tax_mny',
 //                 od_vat_mny        = '$od_vat_mny',
 //                 od_free_mny       = '$od_free_mny',
-//                 od_status         = '$od_status',
 //                 od_SUBSCRIPTION_memo      = '',
 //                 od_hope_date      = '$od_hope_date',
 //                 od_time           = '".G5_TIME_YMDHIS."',
@@ -394,8 +372,19 @@ $sql = "INSERT INTO `{$g5['g5_subscription_order_table']}`($columns) VALUES ('$v
 $result = sql_query($sql, false);
 
 // 정말로 insert 가 되었는지 한번더 체크한다.
-$exists_sql = "select od_id, od_tno, od_ip from {$g5['g5_subscription_order_table']} where od_id = '$od_id'";
+$exists_sql = "select * from {$g5['g5_subscription_order_table']} where od_id = '$od_id'";
 $exists_order = sql_fetch($exists_sql);
+
+$pays = subscription_process_payment($exists_order);
+
+// 정기결제가 성공이면
+if (isset($pays['code']) && $pays['code'] === 'success') {
+    
+    //subscription_order_pay($pays);
+    
+} else {
+    // 실패시 처리
+}
 
 // 주문정보 입력 오류시 결제 취소
 // if (!$result || !(isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
@@ -537,7 +526,7 @@ include_once G5_SUBSCRIPTION_PATH.'/ordermail2.inc.php';
 
 //         // 무통장 입금 때 고객에게 계좌정보 보냄
 //         if ($od_settle_case == '무통장' && $default['de_sms_use2'] && $od_misu > 0) {
-//             $sms_content = $od_name."님의 입금계좌입니다.\n금액:".number_format($od_misu)."원\n계좌:".$od_bank_account."\n".$default['de_admin_company_name'];
+//             $sms_content = $od_name."님의 입금계좌입니다.\n금액:".number_format($od_misu)."원\n계좌:".$od_card_name."\n".$default['de_admin_company_name'];
 
 //             $recv_number = preg_replace('/[^0-9]/', '', $od_hp);
 //             $send_number = preg_replace('/[^0-9]/', '', $default['de_admin_company_tel']);

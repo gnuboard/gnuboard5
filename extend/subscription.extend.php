@@ -53,6 +53,7 @@ $subscriptions_default = array(
 'su_bank_use' => 1,     // 무통장
 'su_kcp_mid' => '',     // kcp 정기결제 사이트키
 'su_kcp_group_id' => '', // kcp kcp_group_id
+'su_kcp_cert_info' => '',   // kcp 인증서 정보
 'su_nice_clientid' => '',   // 나이스페이 clientId
 'su_nicepay_secretkey' => '',   // 나이스페이 secretKey
 'su_tax_flag_use' => '',

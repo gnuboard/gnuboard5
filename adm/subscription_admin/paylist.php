@@ -285,7 +285,7 @@ if (function_exists('pg_setting_check')) {
     <tr>
         <th scope="col" id="th_odrid">회원ID</th>
         <th scope="col" id="th_odrcnt">주문상품수</th>
-        <th scope="col" id="th_odrall">누적주문수</th>
+        <th scope="col" id="th_odrall">정기결제회차</th>
     </tr>
     <tr>
         <th scope="col" id="odrstat">주문상태</th>
@@ -298,6 +298,9 @@ if (function_exists('pg_setting_check')) {
     <tbody>
     <?php
     for ($i = 0; $row = sql_fetch_array($result); ++$i) {
+        
+        $od = get_subscription_order($row['od_id']);
+        
         // 결제 수단
         $s_receipt_way = $s_br = '';
         if ($row['od_settle_case']) {
@@ -312,19 +315,13 @@ if (function_exists('pg_setting_check')) {
             $s_receipt_way .= $s_br.'포인트';
         }
 
-        $mb_nick = get_sideview($row['mb_id'], get_text($row['od_name']), $row['od_email'], '');
+        $mb_nick = get_sideview($row['mb_id'], get_text($od['od_name']), $od['od_email'], '');
 
         $od_cnt = 0;
         if ($row['mb_id']) {
             $sql2 = " select count(*) as cnt from {$g5['g5_subscription_pay_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
             $od_cnt = $row2['cnt'];
-        }
-
-        // 주문 번호에 device 표시
-        $od_mobile = '';
-        if ($row['od_mobile']) {
-            $od_mobile = '(M)';
         }
 
         // 주문번호에 - 추가
@@ -367,17 +364,16 @@ if (function_exists('pg_setting_check')) {
         </td>
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
-            <?php echo $od_mobile; ?>
             <?php echo $od_paytype; ?>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
-        <td headers="th_odrertel" class="td_tel"><?php echo get_text($row['od_tel']); ?></td>
-        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo get_text($row['od_b_name']); ?>"><?php echo get_text($row['od_b_name']); ?></a></td>
-        <td rowspan="3" class="td_num td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
-        <td rowspan="3" class="td_num_right"><?php echo number_format($row['od_receipt_price']); ?></td>
-        <td rowspan="3" class="td_numcancel<?php echo $td_color; ?> td_num"><?php echo number_format($row['od_cancel_price']); ?></td>
+        <td headers="th_odrertel" class="td_tel"><?php echo get_text($row['py_hp']); ?></td>
+        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=py_b_name&amp;search=<?php echo get_text($row['py_b_name']); ?>"><?php echo get_text($row['py_b_name']); ?></a></td>
+        <td rowspan="3" class="td_num td_numsum"><?php echo number_format($row['py_cart_price'] + $row['py_send_cost'] + $row['py_send_cost2']); ?></td>
+        <td rowspan="3" class="td_num_right"><?php echo number_format($row['py_receipt_price']); ?></td>
+        <td rowspan="3" class="td_numcancel<?php echo $td_color; ?> td_num"><?php echo number_format($row['py_cancel_price']); ?></td>
         <td rowspan="3" class="td_num_right"><?php echo number_format($row['couponprice']); ?></td>
-        <td rowspan="3" class="td_num_right"><?php echo number_format($row['od_misu']); ?></td>
+        <td rowspan="3" class="td_num_right"><?php echo number_format($row['py_misu']); ?></td>
         <td rowspan="3" class="td_mng td_mng_s">
             <a href="./payform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod btn btn_02"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
         </td>
