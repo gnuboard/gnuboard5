@@ -2,36 +2,21 @@
 
 namespace API\v1\Model\Request\Member;
 
+use API\Service\MemberService;
 use API\v1\Traits\SchemaHelperTrait;
 
 /**
  * @OA\Schema(
  *      type="object",
  *      description="회원정보 모델",
- *      required={"mb_id", "mb_password", "mb_password_re", "mb_nick", "mb_name", "mb_email"},
+ *      required={"mb_nick"},
  * )
  */
-class CreateMemberRequest
+class CreateSocialMemberRequest
 {
     use SchemaHelperTrait;
 
-    /**
-     * 회원 아이디
-     * @OA\Property(example="test")
-     */
-    public string $mb_id = '';
-
-    /**
-     * 비밀번호
-     * @OA\Property(example="test1234")
-     */
     public string $mb_password = '';
-
-    /**
-     * 비밀번호 확인
-     * @OA\Property(example="test1234")
-     */
-    public string $mb_password_re = '';
 
     /**
      * 닉네임
@@ -53,7 +38,7 @@ class CreateMemberRequest
 
     /**
      * 성별
-     * @OA\Property(example="m")
+     * @OA\Property(example="")
      */
     public string $mb_sex = '';
 
@@ -125,7 +110,7 @@ class CreateMemberRequest
 
     /**
      * 서명
-     * @OA\Property(example="test")
+     * @OA\Property(example="서명")
      */
     public string $mb_signature = '';
 
@@ -136,16 +121,10 @@ class CreateMemberRequest
     public string $mb_profile = '';
 
     /**
-     * 추천인
-     * @OA\Property(example="test")
-     */
-    public string $mb_recommend = '';
-
-    /**
      * 가입일
-     * @OA\Property(example="2021-01-01 00:00:00", readOnly=true)
+     * @OA\Property(example="2024-01-01 00:00:00", readOnly=true)
      */
-    public string $mb_datetime = '0000-00-00 00:00:00';
+    public string $mb_datetime = '0000-00-00 00:00:00'; // default value
 
     /**
      * 메일 수신여부
@@ -185,61 +164,61 @@ class CreateMemberRequest
 
     /**
      * 여분필드1
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_1 = '';
 
     /**
      * 여분필드2
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_2 = '';
 
     /**
      * 여분필드3
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_3 = '';
 
     /**
      * 여분필드4
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_4 = '';
 
     /**
      * 여분필드5
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_5 = '';
 
     /**
      * 여분필드6
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_6 = '';
 
     /**
      * 여분필드7
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_7 = '';
 
     /**
      * 여분필드8
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_8 = '';
 
     /**
      * 여분필드9
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_9 = '';
 
     /**
      * 여분필드10
-     * @OA\Property(example="test")
+     * @OA\Property(example="")
      */
     public string $mb_10 = '';
 
@@ -247,77 +226,48 @@ class CreateMemberRequest
     {
         $this->mapDataToProperties($this, $data);
 
-        $this->validateId($config);
-        $this->validatePassword();
-        $this->validateName();
         $this->validateNickName($config);
-        $this->validateEmail($config);
-        if ($config['cf_use_recommend']) {
-            $this->validateRecommend();
-            $this->mb_recommend = strtolower($this->mb_recommend);
-        } else {
-            unset($this->mb_recommend);
-        }
+        $this->validateEmailNullable($config);
         if ($config['cf_req_hp'] && ($config['cf_use_hp'] || $config['cf_cert_hp'] || $config['cf_cert_simple'])) {
-            $this->validateHp();
+            if (!empty($this->mb_hp)) {
+                $this->validateHp();
+            }
         }
 
-        $this->mb_id = strtolower($this->mb_id);
-        $this->processPassword();
+        $this->mb_password = $this->randomPasswordGenerator();
         $this->mb_email = get_email_address($this->mb_email);
         $this->mb_nick_date = date('Y-m-d');
         $this->mb_hp = hyphen_hp_number($this->mb_hp);
-        $this->mb_ip = $_SERVER['REMOTE_ADDR'];
-        $this->mb_level = $config['cf_register_level'] ?? 2;
+        $this->mb_ip = $_SERVER['REMOTE_ADDR']; // todo ip
+        $this->mb_level = $config['cf_register_level'] ?? 2; // 2 member 기본 레벨.
         $this->mb_datetime = date('Y-m-d H:i:s');
-        if (!$config['cf_use_email_certify']) {
-            $this->mb_email_certify = date('Y-m-d H:i:s');
-        }
+
+        // 소셜가입은 메일인증 사용안함
         $this->processZipCode();
     }
 
-    protected function validateId(array $config)
-    {
-        if (empty(trim($this->mb_id))) {
-            $this->throwException("아이디를 입력해주세요.");
-        }
-        if (!is_valid_mb_id($this->mb_id)) {
-            $this->throwException("회원아이디는 영문자, 숫자, _ 만 입력하세요.");
-        }
-        $min_length = 3;
-        if (!has_min_length($this->mb_id, $min_length)) {
-            $this->throwException("회원아이디는 최소 {$min_length}글자 이상 입력하세요.");
-        }
-        if (is_prohibited_word($this->mb_id, $config)) {
-            $this->throwException("이미 예약된 단어로 사용할 수 없는 아이디 입니다.");
-        }
-    }
-
-    protected function validatePassword()
-    {
-        if (empty(trim($this->mb_password))) {
-            $this->throwException("비밀번호를 입력해주세요.");
-        }
-        if ($this->mb_password !== $this->mb_password_re) {
-            $this->throwException("비밀번호가 일치하지 않습니다.");
-        }
-    }
-
-    protected function validateName()
+    protected function validateNameNullable()
     {
         if (empty(trim($this->mb_name))) {
-            $this->throwException("이름을 입력해주세요.");
+            return '';
         }
+        
         if (!is_valid_utf8_string($this->mb_name)) {
             $this->throwException("이름을 올바르게 입력해 주십시오.");
         }
     }
 
+    /**
+     * 소셜가입은 닉네임 선택조건.
+     * @param array $config
+     * @return string|void
+     */
     protected function validateNickName(array $config)
     {
         if (empty(trim($this->mb_nick))) {
-            $this->throwException("닉네임을 입력해주세요.");
+            return '';
         }
+        
         if (!is_valid_utf8_string($this->mb_nick)) {
             $this->throwException("닉네임을 올바르게 입력해 주십시오.");
         }
@@ -327,13 +277,19 @@ class CreateMemberRequest
         if (is_prohibited_word($this->mb_nick, $config)) {
             $this->throwException("이미 예약된 단어로 사용할 수 없는 닉네임 입니다.");
         }
+        $member_service = new MemberService();
+        // 모든 회원의 닉네임 중복 검사를 위해 mb_id 를 공백으로 구분.
+        if($member_service->existsMemberByNick($this->mb_nick, ' ')) {
+            $this->throwException("이미 사용중인 닉네임 입니다.");
+        }
     }
 
-    protected function validateEmail(array $config)
+    protected function validateEmailNullable(array $config)
     {
         if (empty(trim($this->mb_email))) {
-            $this->throwException("이메일 주소를 입력해주세요.");
+            return '';
         }
+        
         if (!is_valid_email($this->mb_email)) {
             $this->throwException("잘못된 형식의 이메일 주소입니다.");
         }
@@ -342,10 +298,12 @@ class CreateMemberRequest
         }
     }
 
-    protected function validateRecommend()
+    protected function randomPasswordGenerator()
     {
-        if (strtolower($this->mb_id) == strtolower($this->mb_recommend)) {
-            $this->throwException("본인을 추천인으로 등록할 수 없습니다.");
+        try {
+            return hash('sha256', bin2hex(random_bytes(32) . microtime(true)));
+        } catch (\Exception $e) {
+            return hash('sha256', bin2hex(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') . microtime(true)));
         }
     }
 
@@ -354,12 +312,6 @@ class CreateMemberRequest
         if (!is_valid_hp($this->mb_hp)) {
             $this->throwException("휴대폰번호를 올바르게 입력해 주십시오.");
         }
-    }
-
-    protected function processPassword()
-    {
-        $this->mb_password = get_encrypt_string($this->mb_password);
-        unset($this->mb_password_re);
     }
 
     protected function processZipCode()
