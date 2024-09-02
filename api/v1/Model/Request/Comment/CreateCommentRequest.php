@@ -104,7 +104,13 @@ class CreateCommentRequest
      */
     public function validateName(array $member): void
     {
-        $this->wr_name = sanitize_input($this->wr_name, 20);
+        // 외국인 이름 로마자 표기 37자
+        if (preg_match('/^[A-Za-z\-]+$/', $this->wr_name)) {
+            $this->wr_name = sanitize_input($this->wr_name, 37);
+        } else {
+            $this->wr_name = sanitize_input($this->wr_name, 20);
+            
+        }
 
         if (!$member['mb_id'] && $this->wr_name === '') {
             $this->throwException('비회원은 이름은 필수로 입력해야 합니다.');
