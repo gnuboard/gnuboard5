@@ -15,11 +15,7 @@ use Exception;
 class CreateWriteRequest
 {
     use SchemaHelperTrait;
-
-    /**
-     * 게시글 순서값
-     * @OA\Property(example=-1)
-     */
+    
     public int $wr_num = 0;
 
     /**
@@ -114,33 +110,29 @@ class CreateWriteRequest
      */
     public string $wr_link2 = '';
 
-    /**
-     * 옵션
-     * @OA\Property(example="옵션")
-     */
     public string $wr_option = '';
 
     /**
-     * HTML
-     * @OA\Property(example="HTML")
+     * 
+     * @OA\Property(example="게시글 내용이 html 일때 필수 'html1' 또는 'html2' - html2 는 \n 을 br 태그로 변환합니다. ")
      */
     public string $html = '';
 
     /**
      * 메일
-     * @OA\Property(example="메일")
+     * @OA\Property(example="게시글 내용이 메일일 때 'mail' ")
      */
     public string $mail = '';
 
     /**
      * 비밀글
-     * @OA\Property(example="비밀글")
+     * @OA\Property(example="비밀글 지정시 'secret' 입력")
      */
     public string $secret = '';
 
     /**
      * 카테고리
-     * @OA\Property(example="카테고리")
+     * @OA\Property(example="카테고리 이름")
      */
     public string $ca_name = '';
 

@@ -151,12 +151,12 @@ class BoardController
             $notice_writes = [];
             if (!$search_params->is_search) {
                 $fetch_notice_writes = $this->write_service->fetchNoticeWrites();
-                $notice_writes = array_map(fn ($notice_write) => new Write($notice_write), $fetch_notice_writes);
+                $notice_writes = array_map(fn($notice_write) => new Write($notice_write), $fetch_notice_writes);
             }
             // 게시글 목록 조회
             $search_params = (array)$search_params;
             $get_writes = $this->write_service->getWrites($board, $search_params, (array)$page_params);
-            $writes = array_map(fn ($write) => new Write($write), $get_writes);
+            $writes = array_map(fn($write) => new Write($write), $get_writes);
 
             // 게시글 목록 응답 데이터
             $response_data = new GetWritesResponse([
@@ -256,9 +256,9 @@ class BoardController
      *      tags={"게시판"},
      *      security={{"Oauth2Password": {}}},
      *      description="게시판의 게시글 1건을 조회합니다.",
-     *           @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *       @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *       @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
-     *     @OA\RequestBody(
+     *       @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *          @OA\Property(property="wr_password", type="string", description="게시글 비밀번호"),
@@ -268,8 +268,7 @@ class BoardController
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      *      @OA\Response(response="404", ref="#/components/responses/404"),
-     *      @OA\Response(response="422", ref="#/components/responses/422"),
-     *      @OA\Response(response="500", ref="#/components/responses/500"),
+     *      @OA\Response(response="422", ref="#/components/responses/422")
      * )
      */
     public function getSecretWrite(Request $request, Response $response): Response
@@ -470,8 +469,8 @@ class BoardController
             $request_body = $request->getParsedBody();
             $request_data = new CreateWriteRequest($this->board_permission, $member, $request_body);
 
-            $secret = $request_body['secret'];
-            $is_notice = $request_body['notice'];
+            $secret = $request_body['secret'] ?? false;
+            $is_notice = $request_body['notice'] ?? false;
 
             $parent_write = [];
             if ($request_data->wr_parent) {
@@ -505,7 +504,7 @@ class BoardController
             $this->point_service->addPoint($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
 
             if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-                naver_syndi_ping($board['bo_table'], $wr_id);
+                // naver_syndi_ping($board['bo_table'], $wr_id); // @todo 네이버 신디케이션
             }
 
             if ($config['cf_email_use'] && $board['bo_use_email']) {
@@ -569,8 +568,8 @@ class BoardController
             $request_body = $request->getParsedBody();
             $request_data = new UpdateWriteRequest($this->board_permission, $write, $member, $request_body);
 
-            $secret = $request_body['secret'];
-            $is_notice = $request_body['notice'];
+            $secret = $request_body['secret'] ?? false;
+            $is_notice = $request_body['notice'] ?? false;
 
             // 권한 체크
             if ($is_notice) {
@@ -592,7 +591,7 @@ class BoardController
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
 
             if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-                naver_syndi_ping($board['bo_table'], $write['wr_id']);
+                // naver_syndi_ping($board['bo_table'], $write['wr_id']); // @todo 네이버 신디케이션
             }
 
             run_event('api_update_write_after', $board, $write['wr_id']);
@@ -656,6 +655,7 @@ class BoardController
             // 데이터 검증 및 처리
             $data = $request->getParsedBody();
             $uploaded = $request->getUploadedFiles();
+
             $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded, $data);
 
             // 권한 체크

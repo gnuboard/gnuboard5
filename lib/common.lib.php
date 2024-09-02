@@ -574,8 +574,6 @@ function conv_subject($subject, $len, $suffix='')
 // 내용을 변환
 function conv_content($content, $html, $filter=true)
 {
-    global $config, $board;
-
     if ($html)
     {
         $source = array();
