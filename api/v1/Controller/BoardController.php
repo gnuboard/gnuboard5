@@ -13,6 +13,7 @@ use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
 use API\Service\ConfigService;
+use API\Service\EncryptionService;
 use API\Service\MemberImageService;
 use API\Service\PointService;
 use API\Service\ScrapService;
@@ -150,7 +151,7 @@ class BoardController
             // 공지글 목록 조회
             $notice_writes = [];
             if (!$search_params->is_search) {
-                $fetch_notice_writes = $this->write_service->fetchNoticeWrites();
+                $fetch_notice_writes = $this->write_service->getNotice();
                 $notice_writes = array_map(fn($notice_write) => new Write($notice_write), $fetch_notice_writes);
             }
             // 게시글 목록 조회
@@ -160,16 +161,16 @@ class BoardController
 
             // 게시글 목록 응답 데이터
             $response_data = new GetWritesResponse([
-                "total_records" => $total_records,
-                "total_pages" => $total_page,
-                "current_page" => $page_params->page,
-                "is_mobile" => $page_params->is_mobile,
-                "categories" => $this->board_service->getCategories(),
-                "board" => new Board($board),
-                "notice_writes" => $notice_writes,
-                "writes" => $writes,
-                "prev_spt" => $this->write_service->getPrevSearchPart($search_params),
-                "next_spt" => $this->write_service->getNextSearchPart($search_params),
+                'total_records' => $total_records,
+                'total_pages' => $total_page,
+                'current_page' => $page_params->page,
+                'is_mobile' => $page_params->is_mobile,
+                'categories' => $this->board_service->getCategories(),
+                'board' => new Board($board),
+                'notice_writes' => $notice_writes,
+                'writes' => $writes,
+                'prev_spt' => $this->write_service->getPrevSearchPart($search_params),
+                'next_spt' => $this->write_service->getNextSearchPart($search_params),
             ]);
 
             return api_response_json($response, $response_data);
@@ -222,14 +223,17 @@ class BoardController
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
+            $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
+            $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
+            
             $write_data = array_merge($write, array(
-                "mb_icon_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
-                "mb_image_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
-                "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
-                "thumbnail" => new Thumbnail($thumb),
-                "prev" => $prev,
-                "next" => $next
+                'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
+                'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
+                'images' => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
+                'normal_files' => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
+                'thumbnail' => new Thumbnail($thumb),
+                'prev' => $prev,
+                'next' => $next
             ));
 
             $this->point_service->addPoint($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
@@ -290,17 +294,19 @@ class BoardController
             $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
-
+            
+            $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
+            $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
+            
             $write_data = array_merge($write, array(
-                "mb_icon_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
-                "mb_image_path" => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                "images" => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
-                "normal_files" => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
-                "thumbnail" => new Thumbnail($thumb),
-                "prev" => $prev,
-                "next" => $next
+                'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
+                'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
+                'images' => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
+                'normal_files' => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
+                'thumbnail' => new Thumbnail($thumb),
+                'prev' => $prev,
+                'next' => $next
             ));
-
             $this->point_service->addPoint($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$write['wr_id']} 글읽기", $board['bo_table'], $write['wr_id'], '읽기');
 
             $write = new Write($write_data);
@@ -324,12 +330,12 @@ class BoardController
      *      summary="댓글 조회",
      *      tags={"게시판"},
      *      security={{"Oauth2Password": {}}},
-     *      description="게시글 1건의 댓글을 조회합니다.",
+     *      description="게시글 1건의 댓글 목록을 조회합니다.",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\Parameter(ref="#/components/parameters/page"),
      *      @OA\Parameter(ref="#/components/parameters/per_page"),
-     *      @OA\Response(response="200", description="게시판 글 조회 성공", @OA\JsonContent(ref="#/components/schemas/Comment")),
+     *      @OA\Response(response="200", description="게시판 글 조회 성공", @OA\JsonContent(ref="#/components/schemas/GetCommentsResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      *      @OA\Response(response="404", ref="#/components/responses/404"),

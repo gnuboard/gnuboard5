@@ -43,6 +43,12 @@ class WriteService
         return $stmt->fetchColumn() ?: 0;
     }
 
+    public function getNotice()
+    {
+        $notices = $this->fetchNoticeWrites();
+        return $this->processWrites($this->board, $notices);
+    }
+
     /**
      * 공지 게시글 목록 조회
      * @return array
@@ -65,54 +71,29 @@ class WriteService
         $placeholders = Db::makeWhereInPlaceHolder($notice_ids);
         $query = "SELECT * FROM {$this->table} WHERE wr_id IN ($placeholders) AND wr_option NOT LIKE '%secret%'";
 
-        $stmt = Db::getInstance()->run($query, $notice_ids);
-
-        return $stmt->fetchAll();
+        return Db::getInstance()->run($query, $notice_ids)->fetchAll();
     }
 
     /**
-     * 게시글 목록 조회
-     * @param array $search_params 검색조건
-     * @param array $page_params 페이징 정보
-     * @return array|false
-     */
-    public function fetchWrites(array $search_params, array $page_params)
-    {
-        // 검색 조건 설정
-        $search_values = [];
-        $sql_where = $this->getWhereBySearch($search_params, $search_values);
-        $sql_where .= $this->getWhereSearchPart($search_params, $search_values);
-
-        // 정렬 설정
-        list($sst, $sod) = $this->getSortOrder($search_params);
-        $sql_order = $sst ? " ORDER BY {$sst} {$sod} " : "";
-
-        $query = "SELECT * FROM {$this->table} WHERE {$sql_where} {$sql_order} LIMIT :offset, :per_page";
-        $search_values[':offset'] = $page_params['offset'];
-        $search_values[':per_page'] = $page_params['per_page'];
-
-        return Db::getInstance()->run($query, $search_values)->fetchAll();
-    }
-
-    /**
-     * 가져온 게시글 목록 데이터 가공
-     * @param array $board
-     * @param $search_params
-     * @param $page_params
+     * @param array $board 게시판 정보
+     * @param array $input_data 게시글, 게시글 목록
      * @return array
      */
-    public function getWrites(array $board, $search_params, $page_params)
+    private function processWrites($board, $input_data): array
     {
         $use_show_content = (int)$board['bo_use_list_content'] === 1;
         $use_show_file = (int)$board['bo_use_list_file'] === 1;
-        $data = $this->fetchWrites($search_params, $page_params);
-        foreach ($data as &$write) {
-            $write["mb_icon_path"] = $this->image_service->getMemberImagePath($write['mb_id'], 'icon');
-            $write["mb_image_path"] = $this->image_service->getMemberImagePath($write['mb_id'], 'image');
+        $result = [];
+        foreach ($input_data as $write) {
+            $write['mb_icon_path'] = $this->image_service->getMemberImagePath($write['mb_id'], 'icon');
+            $write['mb_image_path'] = $this->image_service->getMemberImagePath($write['mb_id'], 'image');
             if ($use_show_file) {
-                $write["images"] = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
-                $write["normal_files"] = $this->file_service->getFilesByType((int)$write['wr_id'], 'file');
+                $write['images'] = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
+                $write['normal_files'] = $this->file_service->getFilesByType((int)$write['wr_id'], 'file');
             }
+            $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
+            $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
+
             // @todo 썸네일
             $write['thumbnail'] = new Thumbnail([]);
             //게시판설정에서 내용보기 체크시
@@ -135,9 +116,48 @@ class WriteService
             } else {
                 $write['wr_content'] = '';
             }
+
+            $result[] = $write;
         }
 
-        return $data;
+        return $result;
+    }
+
+    /**
+     * 게시글 목록 조회
+     * @param array $search_params 검색조건
+     * @param array $page_params 페이징 정보
+     * @return array|false
+     */
+    public function fetchWrites(array $search_params, array $page_params)
+    {
+        // 검색 조건 설정
+        $search_values = [];
+        $sql_where = $this->getWhereBySearch($search_params, $search_values);
+        $sql_where .= $this->getWhereSearchPart($search_params, $search_values);
+
+        // 정렬 설정
+        list($sst, $sod) = $this->getSortOrder($search_params);
+        $sql_order = $sst ? " ORDER BY {$sst} {$sod} " : "";
+
+        $query = "SELECT * FROM {$this->table} WHERE {$sql_where} {$sql_order} LIMIT :offset, :per_page";
+        $search_values['offset'] = $page_params['offset'];
+        $search_values['per_page'] = $page_params['per_page'];
+
+        return Db::getInstance()->run($query, $search_values)->fetchAll();
+    }
+
+    /**
+     * 게시글 목록 가져오기
+     * @param array $board
+     * @param $search_params
+     * @param $page_params
+     * @return array
+     */
+    public function getWrites(array $board, $search_params, $page_params)
+    {
+        $data = $this->fetchWrites($search_params, $page_params);
+        return $this->processWrites($board, $data);
     }
 
     /**

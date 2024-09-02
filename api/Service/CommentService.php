@@ -58,20 +58,24 @@ class CommentService
                 }, $comment);
                 $secret_comment = [
                     'wr_id' => $comment['wr_id'],
+                    'wr_name' => $comment['wr_name'],
                     'wr_parent' => $comment['wr_parent'],
                     'wr_comment_reply' => $comment['wr_comment_reply'],
                     'wr_option' => $comment['wr_option'],
                     'is_secret' => true,
                     'is_secret_content' => true,
-                    'save_content' => '비밀글입니다.'
+                    'save_content' => '비밀글입니다.',
+                    'wr_datetime' => $comment['wr_datetime']
                 ];
                 $comment = array_merge($empty_comment, $secret_comment);
             }
             // 비밀글 여부 표시
-            if(strpos($comment['wr_option'], 'secret') !== false) {
+            if (strpos($comment['wr_option'], 'secret') !== false) {
                 $comment['is_secret'] = true;
                 $comment['is_secret_content'] = true;
             }
+            $comment['wr_email'] = EncryptionService::encrypt($comment['wr_email']);
+            $comment['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $comment['wr_ip']);
 
             $result[] = new Comment($comment);
         }
@@ -93,7 +97,7 @@ class CommentService
             'wr_id' => $wr_id,
         ])->fetch();
     }
-    
+
     /**
      * 게시글의 댓글목록 조회
      */
@@ -115,15 +119,20 @@ class CommentService
                 }, $comment);
                 $secret_comment = [
                     'wr_id' => $comment['wr_id'],
+                    'wr_name' => $comment['wr_name'],
                     'wr_parent' => $comment['wr_parent'],
                     'wr_comment_reply' => $comment['wr_comment_reply'],
                     'wr_option' => $comment['wr_option'],
                     'is_secret' => true,
                     'is_secret_content' => true,
-                    'save_content' => '비밀글입니다.'
+                    'save_content' => '비밀글입니다.',
+                    'wr_datetime' => $comment['wr_datetime']
                 ];
                 $comment = array_merge($empty_comment, $secret_comment);
             }
+
+            $comment['wr_email'] = EncryptionService::encrypt($comment['wr_email']);
+            $comment['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $comment['wr_ip']);
 
             $result[] = new Comment($comment);
         }
@@ -217,7 +226,7 @@ class CommentService
     {
         Db::getInstance()->update($this->write_table, $data, ['wr_id' => $comment_id]);
     }
-    
+
 
     /**
      * 댓글 정보를 데이터베이스에 등록

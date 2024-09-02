@@ -55,8 +55,8 @@ class BoardNewService
                   ORDER BY a.bn_id DESC
                   LIMIT :offset, :per_page";
 
-        $search_values[':offset'] = $page_params['offset'];
-        $search_values[':per_page'] = $page_params['per_page'];
+        $search_values['offset'] = $page_params['offset'];
+        $search_values['per_page'] = $page_params['per_page'];
 
         $stmt = Db::getInstance()->run($query, $search_values);
         return $stmt->fetchAll();

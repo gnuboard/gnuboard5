@@ -64,6 +64,7 @@ class EnvironmentConfig
             $env_content .= "ACCESS_TOKEN_EXPIRE_MINUTES=" . self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES . PHP_EOL;
             $env_content .= "REFRESH_TOKEN_SECRET_KEY=" . self::createSecretTokenValue() . PHP_EOL;
             $env_content .= "REFRESH_TOKEN_EXPIRE_MINUTES=" . self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES . PHP_EOL;
+            $env_content .= "ENCRYPTION_KEY=" . self::createSecretTokenValue() . PHP_EOL;
             $env_content .= "AUTH_ISSUER=" . self::DEFAULT_AUTH_ISSUER . PHP_EOL;
             $env_content .= "AUTH_AUDIENCE=" . self::DEFAULT_AUTH_AUDIENCE . PHP_EOL;
             $env_content .= "# CORS 설정\n";
