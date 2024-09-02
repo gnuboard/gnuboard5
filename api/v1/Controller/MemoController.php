@@ -4,8 +4,8 @@ namespace API\v1\Controller;
 
 use API\Service\MemoService;
 use API\Service\PointService;
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 
 class MemoController

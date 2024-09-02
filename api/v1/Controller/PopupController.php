@@ -5,8 +5,8 @@ namespace API\v1\Controller;
 use API\Service\PopupService;
 use API\v1\Model\Response\Layer\PopupResponse;
 
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * 팝업 컨트롤러.

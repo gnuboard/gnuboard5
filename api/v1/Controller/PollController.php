@@ -8,8 +8,8 @@ use API\Service\MemberService;
 use API\Service\PollService;
 use API\v1\Model\Response\Poll\PollResponse;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * 최신 투표 1건 조회

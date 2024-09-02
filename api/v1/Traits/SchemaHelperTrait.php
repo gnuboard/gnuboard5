@@ -2,6 +2,7 @@
 
 namespace API\v1\Traits;
 
+use API\Exceptions\ValidateException;
 use Exception;
 
 /**
@@ -55,10 +56,10 @@ trait SchemaHelperTrait
      * 예외를 던지는 유틸리티 메서드
      * 
      * @param string $message 예외 메시지
-     * @throws Exception 예외 발생
+     * @throws ValidateException 예외 발생
      */
     protected function throwException(string $message): void
     {
-        throw new \RuntimeException($message, 422);
+        throw new ValidateException($message, 422);
     }
 }

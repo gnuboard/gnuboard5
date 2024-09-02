@@ -7,8 +7,8 @@ use API\v1\Model\PageParameters;
 use API\v1\Model\Response\Faq\FaqCategoryResponse;
 use API\v1\Model\Response\Faq\FaqListResponse;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Psr7\Request;
-use Slim\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class FaqController
 {
