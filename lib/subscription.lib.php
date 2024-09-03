@@ -1169,11 +1169,14 @@ function kcp_billing($od) {
     // 응답 DATA 변수
     //print_r($res_data);
     
-
+    $res = null;
+    
     // $res_data 형식은 json
     if ($res_data) {
         $res = json_decode($res_data, true);
     }
+    
+    run_event('subscription_order_pg_pay', 'kcp', $res, $data);
     
     if (isset($res['res_cd']) && $res['res_cd'] = '0000') {
         return array('code'=>'success', 'message'=>$res['res_msg'], 'response'=>$res);
@@ -1226,22 +1229,24 @@ function nicepay_billing($od) {
     
     $code = 'success';
     $message = '';
-    $res = array();
+    $res = null;
+    
+    // $res 형식은 json
+    
+    $request_data = array("orderId" => $nice_orderId, 
+                            "amount" => (int) $od['od_receipt_price'],
+                            "goodsName" => $goodsname['full_name'],
+                            "cardQuota" => 0,
+                            "useShopInterest" => false,
+                            'buyerName' => $buyerName,
+                            'buyerTel' => $buyerTel,
+                            'buyerEmail' => $buyerEmail
+                        );
     
 	try {
 		$res = requestPost(
 			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/payments",
-			json_encode(
-				array("orderId" => $nice_orderId, 
-					"amount" => (int) $od['od_receipt_price'],
-					"goodsName" => $goodsname['full_name'],
-					"cardQuota" => 0,
-					"useShopInterest" => false,
-                    'buyerName' => $buyerName,
-                    'buyerTel' => $buyerTel,
-                    'buyerEmail' => $buyerEmail
-                )
-			),
+			json_encode($request_data),
 			$clientId . ':' . $secretKey
 		);
 	    
@@ -1253,8 +1258,11 @@ function nicepay_billing($od) {
         $message = $e->getMessage();
 	}
     
+    $nice_response = json_decode($res, true);
+    run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $request_data);
+    
     // $res 형식은 json
-    return array('code'=>$code, 'message'=>$message, 'response'=>json_decode($res, true));
+    return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
 }
 
 function inicis_billing($od) {
@@ -1344,6 +1352,8 @@ function inicis_billing($od) {
     // 성공이면 pay 테이블에 insert 한다. $response 형식은 json
     
     $inicis_res = json_decode($response, true);
+    
+    run_event('subscription_order_pg_pay', 'inicis', $inicis_res, $postdata);
     
     if (isset($inicis_res['resultCode']) && $inicis_res['resultCode'] === '00') {
         
