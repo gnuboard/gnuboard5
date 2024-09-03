@@ -67,7 +67,7 @@ class SocialController
         }
 
         $callback_base_url = G5_URL . '/api/v1/social/login-callback';
-        $this->socialService->setProviderConfig($callback_base_url);
+        $this->socialService->setProviderConfig($callback_base_url, true);
         $is_use = $this->socialService->socialUseCheck($provider);
 
         if (!$is_use) {
@@ -79,7 +79,6 @@ class SocialController
 
         return api_response_json($response, ['message' => '소셜 로그인을 진행 해주세요'], 200);
     }
-
 
     /**
      * 웹뷰에서 쓰는 소셜 로그인 콜백
@@ -121,7 +120,7 @@ class SocialController
     {
         $provider = $args['provider'] ?? '';
         $callback_base_url = G5_URL . '/api/v1/social/login-callback';
-        $this->socialService->setProviderConfig($callback_base_url);
+        $this->socialService->setProviderConfig($callback_base_url, true);
         $is_use = $this->socialService->socialUseCheck($provider);
 
         if (!$is_use) {
@@ -152,7 +151,8 @@ class SocialController
                 'process_type' => 'social_register',
                 'social_token' => $social_access_token,
                 'provider' => $provider,
-                'identifier' => $profile->identifier
+                'identifier' => $profile->identifier,
+                'from_callback' => true
             ]);
             $response->withoutHeader('Authorization');
             $response = $response->withHeader('Set-Cookie', 'Authorization=' . urlencode($token) . '; expires=' . (time() + 60 * 10) . '; path=/; httponly');
@@ -171,7 +171,24 @@ class SocialController
             return api_response_json($response, ['message' => '탈퇴 또는 차단된 회원이므로 로그인 하실 수 없습니다.'], 403);
         }
 
-        return api_response_json($response, ['message' => ''], 200);
+        // login
+        $member = $this->socialService->fetchMemberByIdentifier($provider, $profile->identifier);
+        $claim = ['sub' => $member['mb_id']];
+        $login_access_token = $this->token_manager->create_token('access', $claim);
+        $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
+        $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
+        $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
+
+        $response_data = new GenerateTokenResponse(
+            [
+                'access_token' => $login_access_token,
+                'access_token_expire_at' => date('c', $access_token_decode->exp),
+                'refresh_token' => $login_refresh_token,
+                'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
+                'token_type' => 'Bearer',
+            ]
+        );
+        return api_response_json($response, $response_data, 200);
     }
 
     /**
@@ -222,17 +239,22 @@ class SocialController
             throw new HttpBadRequestException($request, '소셜 로그인 provider 를 입력해주세요.');
         }
 
-        //jwt 가져오기
-        $jwt_token = $request->getHeader('Authorization')[0] ?? '' || $request->getCookieParams()['Authorization'] ?? '';
+        //jwt 토큰 가져오기
+        $jwt_token_header = $request->getHeader('Authorization')[0] ?? '';
+        $jwt_token = str_replace('Bearer ', '', $jwt_token_header);
+        if (!$jwt_token) {
+            $jwt_token = $request->getCookieParams()['Authorization'] ?? '';
+        }
         $jwt_data = $this->token_manager->decode_token('access', $jwt_token);
         $process_type = $jwt_data->process_type ?? '';
+        $from_callback = $jwt_data->from_callback;
 
         if ($process_type !== 'social_register') {
             throw new HttpBadRequestException($request, '잘못된 접근입니다.');
         }
 
-        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
-        $this->socialService->setProviderConfig($callback_base_url);
+        $callback_base_url = G5_URL . '/api/v1/social/login-callback'; // 구분
+        $this->socialService->setProviderConfig($callback_base_url, $from_callback);
         $storage_data = [
             'access_token' => $jwt_data->social_token->access_token,
             'refresh_token' => $jwt_data->social_token->refresh_token,
@@ -357,6 +379,19 @@ class SocialController
             throw new HttpBadRequestException($request, '소셜 로그인 provider 를 입력해주세요.');
         }
 
+        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
+        // access token 체크
+        $social_access_token = $request->getParsedBody()['access_token'] ?? '';
+        $storage_data = [
+            'access_token' => $social_access_token,
+            'refresh_token' => '',
+            'expires_at' => '',
+            'expires_in' => '',
+            'token_type' => 'Bearer',
+        ];
+
+        $this->socialService->setProviderConfig($callback_base_url);
+        $this->socialService->setProvider($provider, $storage_data);
         $is_use = $this->socialService->socialUseCheck($provider);
 
         if (!$is_use) {
@@ -370,9 +405,6 @@ class SocialController
             throw new HttpBadRequestException($request, '토큰이 없습니다.');
         }
 
-        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
-        $this->socialService->setProviderConfig($callback_base_url);
-        $this->socialService->setProvider($provider);
         $tokens = [
             'access_token' => $social_access_token,
             'refresh_token' => '',
@@ -392,7 +424,13 @@ class SocialController
 
         // 회원이 없을 경우 회원가입을 위한 소셜 토큰 전달
         if (!$is_exist) {
-            $token = $this->token_manager->create_token('access', ['process_type' => 'social_register', 'provider' => $provider, 'identifier' => $profile->identifier]);
+            $token = $this->token_manager->create_token('access',
+                [
+                    'process_type' => 'social_register',
+                    'provider' => $provider,
+                    'identifier' => $profile->identifier,
+                    'from_callback' => false
+                ]);
             $response->withoutHeader('Authorization');
             $response = $response->withHeader('Set-Cookie', 'Authorization=' . urlencode($token) . '; expires=' . (time() + 60 * 10) . '; path=/; httponly');
 

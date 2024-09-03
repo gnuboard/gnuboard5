@@ -26,7 +26,7 @@ class SocialService
      * @var \Hybridauth\Adapter\AbstractAdapter
      */
     public $current_provider_instance;
-    
+
     private array $social_config = [];
 
 
@@ -37,15 +37,18 @@ class SocialService
     }
 
     /**
-     * HybirdAuth v3 라이브러리 설정
-     * 콜백 URL, 키값 등 설정한다.
-     * 기본적으로 id, secret key 는 web 용 설정.
      *
+     *  HybirdAuth v3 라이브러리 설정
+     *  콜백 URL, 키값 등 설정한다.
+     *  기본적으로 id, secret key 는 callback web 용 설정.
+     * @param string $callback_base_url 콜백 URL
+     * @param bool $from_callback 웹 콜백에서 호출되었는지 여부
+     * @return void
      */
-    function setProviderConfig($callback_base_url)
+    function setProviderConfig($callback_base_url, $from_callback = false)
     {
         $config = $this->config;
-        $social_list = explode(',', $config['cf_social_servicelist']);
+        $social_list = explode(',', $config['cf_social_servicelist']) ?: [];
 
         if (empty($this->social_config)) {
             // Naver
@@ -57,8 +60,8 @@ class SocialService
                 'callback' => $callback_base_url . '/naver',
                 'supportRequestState' => false,
                 'keys' => [
-                    'id' => $config['cf_naver_clientid'],
-                    'secret' => $config['cf_naver_secret'],
+                    'id' => $from_callback ? $config['cf_naver_clientid'] : 'empty-id',
+                    'secret' => $from_callback ? $config['cf_naver_secret'] : 'empty-secret'
                 ],
             ];
 
@@ -70,8 +73,8 @@ class SocialService
                 'callback' => $callback_base_url . '/kakao',
                 'supportRequestState' => false,
                 'keys' => [
-                    'id' => $config['cf_kakao_rest_key'],
-                    'secret' => $config['cf_kakao_client_secret'] ?: $config['cf_kakao_rest_key']
+                    'id' => $from_callback ? $config['cf_kakao_rest_key'] : 'empty-id',
+                    'secret' => $from_callback ? $config['cf_kakao_client_secret'] : 'empty-secret'
                 ],
             ];
 
@@ -81,7 +84,10 @@ class SocialService
                 'adapter' => in_array('facebook', $social_list) ? Facebook::class : '',
                 'callback' => $callback_base_url . '/facebook',
                 'supportRequestState' => false,
-                'keys' => ['id' => $config['cf_facebook_appid'], 'secret' => $config['cf_facebook_secret']],
+                'keys' => [
+                    'id' => $from_callback ? $config['cf_facebook_appid'] : 'empty-id',
+                    'secret' => $from_callback ? $config['cf_facebook_secret'] : 'empty-secret'
+                ],
                 'display' => "popup",
                 'scope' => 'email', // optional
                 'trustForwarded' => false
@@ -94,8 +100,8 @@ class SocialService
                 'callback' => $callback_base_url . '/google',
                 'supportRequestState' => false,
                 'keys' => [
-                    'id' => $config['cf_google_clientid'],
-                    'secret' => $config['cf_google_secret']
+                    'id' => $from_callback ? $config['cf_google_clientid'] : 'empty-id',
+                    'secret' => $from_callback ? $config['cf_google_secret'] : 'empty-secret'
                 ],
                 'scope' => 'https://www.googleapis.com/auth/userinfo.profile ' . 'https://www.googleapis.com/auth/userinfo.email',
                 /*
@@ -113,7 +119,10 @@ class SocialService
 //                'adapter' => in_array('twitter', $social_list) ? \API\Service\Social\Twitter::class : '',
                 'callback' => $callback_base_url . '/twitter',
                 'supportRequestState' => false,
-                'keys' => ['key' => $config['cf_twitter_key'], 'secret' => $config['cf_twitter_secret']],
+                'keys' => [
+                    'key' => $from_callback ? $config['cf_twitter_key'] : 'empty-id',
+                    'secret' => $from_callback ? $config['cf_twitter_secret'] : 'empty-secret'
+                ],
                 'trustForwarded' => false
             ];
 
@@ -123,7 +132,10 @@ class SocialService
 //                'adapter' => in_array('payco', $social_list) ? \API\Service\Social\Payco::class : '',
                 'callback' => $callback_base_url . '/payco',
                 'supportRequestState' => false,
-                'keys' => ['id' => $config['cf_payco_clientid'], 'secret' => $config['cf_payco_secret']],
+                'keys' => [
+                    'id' => $from_callback ? $config['cf_payco_clientid'] : 'empty-id',
+                    'secret' => $from_callback ? $config['cf_payco_secret'] : 'empty-secret'
+                ],
                 'trustForwarded' => false
             ];
 
@@ -157,7 +169,7 @@ class SocialService
             $storage->set($provider_class . '.expires_in', $storage_data['expires_in']);
         }
 
-        $this->current_provider_instance = (new Hybridauth($this->social_config, null, $storage))->getAdapter($provider); 
+        $this->current_provider_instance = (new Hybridauth($this->social_config, null, $storage))->getAdapter($provider);
     }
 
     /**
