@@ -54,7 +54,10 @@ $container = new Container();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 
-// Create Request object from globals
+//env 설정
+$container->set(EnvironmentConfig::class, new EnvironmentConfig());
+
+// PHP 서버 변수에서 값을 가져와 요청 객체를 생성합니다.
 $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
 
@@ -68,16 +71,16 @@ $app->addRoutingMiddleware();
 // Add JSON Body Parser Middleware
 $app->add(new JsonBodyParserMiddleware());
 
-// Create Error Handler
+// Error Handler
 $callableResolver = $app->getCallableResolver();
 $responseFactory = $app->getResponseFactory();
 $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
 
-// Create Shutdown Handler
+// Shutdown Handler
 $shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);
 register_shutdown_function($shutdownHandler);
 
-// Add Error Middleware
+// Error Middleware
 $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, true, true);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
@@ -92,7 +95,7 @@ $app->setBasePath($api_path . '/' . $api_version);
 // Include all Routers for the requested API version.
 $routerFiles = glob(__DIR__ . "/{$api_version}/Routers/*.php");
 foreach ($routerFiles as $routerFile) {
-    include_once $routerFile;
+    include $routerFile;
 }
 
 /**
