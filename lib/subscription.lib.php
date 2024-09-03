@@ -1003,7 +1003,8 @@ function subscription_order_pay($od, $pg_data) {
     $receipt_url = $pg_data['receiptUrl'];
     $py_cardname = $pg_data['card']['cardName'];
     $py_cardnumber = $pg_data['card']['cardNum'];
-    
+    $py_app_no = $pg_data['py_app_no'];
+        
     // 나이스페이인 경우 메뉴얼 : https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
     // issuedCashReceipt 현금영수증 발급여부 true:발행 / false:미발행
     // useEscrow 에스크로 거래 여부 false:일반거래 / true:에스크로 거래
@@ -1027,11 +1028,13 @@ function subscription_order_pay($od, $pg_data) {
         'py_receipt_time' => G5_TIME_YMDHIS,
         // 'py_settle_case' => 'card',
         'py_settle_case' => $paymethod,
-        'receipt_url' => $receipt_url,
+        'py_receipt_url' => $receipt_url,
         'py_test' => $od['od_test'],
         'py_pg' => $od['od_pg'],
         'py_tno' => $pg_data['tid'],
         'py_receipt_time' => G5_TIME_YMDHIS,
+        'py_app_no' => $py_app_no,
+        
         );
      
      
@@ -1046,6 +1049,38 @@ function subscription_order_pay($od, $pg_data) {
     echo $sql;
     
     sql_query($sql);
+    
+    return sql_insert_id();
+}
+
+function calculateNextBillingDate($od){
+    
+    // 현재 날짜를 DateTime 객체로 변환
+    $timestamp = strtotime($od['next_billing_date']);
+    $interval = $od['od_subscription_date_format'];
+    $plus = abs($od['od_subscription_date_format']);
+        
+    // 주어진 interval에 따라 날짜를 증가시킴
+    switch ($interval) {
+        case 'day':
+            $timestamp = strtotime('+'.$plus.' day', $timestamp);
+            break;
+        case 'week':
+            $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            break;
+        case 'month':
+            $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            break;
+        case 'year':
+            $timestamp = strtotime('+'.$plus.' year', $timestamp);
+            break;
+        default:
+            throw new Exception("Unknown billing interval: $interval");
+    }
+
+    // 다음 청구일을 YYYY-MM-DD 형식으로 반환
+    return date('Y-m-d', $timestamp);
+    
 }
 
 function expire_nicepay_billing($bid) {
@@ -1127,12 +1162,26 @@ function kcp_billing($od) {
     curl_close($ch);
     
     // 요청 DATA 변수
-    print_r($req_data);
+    //print_r($req_data);
     
-    echo "<br><br>";
+    //echo "<br><br>";
     
     // 응답 DATA 변수
-    print_r($res_data);
+    //print_r($res_data);
+    
+
+    // $res_data 형식은 json
+    if ($res_data) {
+        $res = json_decode($res_data, true);
+    }
+    
+    if (isset($res['res_cd']) && $res['res_cd'] = '0000') {
+        return array('code'=>'success', 'message'=>$res['res_msg'], 'response'=>$res);
+    } else {
+        return array('code'=>'fail', 'message'=>$res['res_cd'].':'.$res['res_msg'], 'response'=>$res);
+    }
+    
+    return array();
 }
 
 function subscription_process_payment($od) {
@@ -1204,7 +1253,8 @@ function nicepay_billing($od) {
         $message = $e->getMessage();
 	}
     
-    return array('code'=>$code, 'message'=>$message, 'response'=>$res);
+    // $res 형식은 json
+    return array('code'=>$code, 'message'=>$message, 'response'=>json_decode($res, true));
 }
 
 function inicis_billing($od) {
@@ -1253,16 +1303,21 @@ function inicis_billing($od) {
     $hashData = hash("sha512", $plainTxt);
 
 	$postdata["hashData"] = $hashData;
-
-	echo "plainTxt : ".$plainTxt."<br/><br/>";
-	echo "hashData : ".$hashData."<br/><br/>"; 
-
+    
+    $is_print = false;
+    
+    if ($is_print) {
+        echo "plainTxt : ".$plainTxt."<br/><br/>";
+        echo "hashData : ".$hashData."<br/><br/>"; 
+    }
 
 	$post_data = json_encode($postdata, JSON_UNESCAPED_UNICODE);
 	
-	echo "**** 요청전문 **** <br/>" ; 
-	echo str_replace(',', ',<br>', $post_data)."<br/><br/>" ; 
-	
+    if ($is_print) {
+        echo "**** 요청전문 **** <br/>" ; 
+        echo str_replace(',', ',<br>', $post_data)."<br/><br/>" ; 
+	}
+    
 	//step2. 요청전문 POST 전송
 	
     $url = "https://iniapi.inicis.com/v2/pg/billing";
@@ -1281,14 +1336,23 @@ function inicis_billing($od) {
 	
 	
     //step3. 결과출력
-	
-    echo "**** 응답전문 **** <br/>" ;
-	echo str_replace(',', ',<br>', $response)."<br><br>";
+	if ($is_print) {
+        echo "**** 응답전문 **** <br/>" ;
+        echo str_replace(',', ',<br>', $response)."<br><br>";
+    }
     
-    // 성공이면 pay 테이블에 insert 한다.
+    // 성공이면 pay 테이블에 insert 한다. $response 형식은 json
     
-    if (isset($response['resultCode']) && $response['resultCode'] === '00') {
+    $inicis_res = json_decode($response, true);
+    
+    if (isset($inicis_res['resultCode']) && $inicis_res['resultCode'] === '00') {
         
+        return array('code'=>'success', 'message'=>$inicis_res['resultMsg'], 'response'=>$inicis_res);
+        
+    } else {
+        
+        // 실패시
+        return array('code'=>'fail', 'message'=>$inicis_res['resultCode'].':'.$inicis_res['resultMsg'], 'response'=>$inicis_res);
     }
 }
 

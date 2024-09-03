@@ -274,6 +274,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `subscription_id` char(50) NOT NULL DEFAULT '',
   `py_name` varchar(20) NOT NULL DEFAULT '',
   `py_email` varchar(100) NOT NULL DEFAULT '',
 
@@ -300,6 +301,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_refund_price` int(11) NOT NULL DEFAULT '0',
   `py_bank_account` varchar(255) NOT NULL DEFAULT '',
   `py_receipt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `py_receipt_url` varchar(255) NOT NULL DEFAULT '',
   `py_coupon` int(11) NOT NULL DEFAULT '0',
   `py_misu` int(11) NOT NULL DEFAULT '0',
   `py_subscription_memo` text NOT NULL,
@@ -331,7 +333,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   
   `py_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
   PRIMARY KEY (`id`),
-  KEY `index2` (`mb_id`)
+  KEY `index2` (`mb_id`),
+  KEY `index3` (`subscription_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

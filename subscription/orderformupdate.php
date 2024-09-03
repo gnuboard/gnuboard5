@@ -378,9 +378,22 @@ $exists_order = sql_fetch($exists_sql);
 $pays = subscription_process_payment($exists_order);
 
 // 정기결제가 성공이면
-if (isset($pays['code']) && $pays['code'] === 'success') {
+if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
     
-    //subscription_order_pay($pays);
+    $insert_id = subscription_order_pay($exists_order, $pays);
+    
+    // 성공이면
+    if ($insert_id) {
+        
+        $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+        
+        $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."' WHERE od_id = '$od_id'";
+        
+        sql_query($updateQuery);
+        
+    } else {
+        // 실패시 처리
+    }
     
 } else {
     // 실패시 처리
