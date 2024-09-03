@@ -5,7 +5,7 @@ if($od['od_pg'] != 'lg') return;
 
 if($default['de_card_test']) {
     $mid = 'tsi_'.$config['cf_lg_mid'];
-    $service_url = "https://pgweb.tosspayments.com:7085/pg/wmp/mertadmin/jsp/escrow/rcvdlvinfo.jsp";
+    $service_url = "https://pgweb.tosspayments.com:9091/pg/wmp/mertadmin/jsp/escrow/rcvdlvinfo.jsp";
 } else {
     $mid = 'si_'.$config['cf_lg_mid'];
     $service_url = "https://pgweb.tosspayments.com/pg/wmp/mertadmin/jsp/escrow/rcvdlvinfo.jsp";
