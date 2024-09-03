@@ -5,7 +5,6 @@ namespace API\Service;
 use API\Database\Db;
 use API\v1\Model\Response\Write\File;
 
-
 class BoardFileService
 {
     public string $bo_table;
@@ -101,26 +100,22 @@ class BoardFileService
     {
         $this->createDirectoryIfNotExists();
 
-        foreach ($upload_files['files'] as $key => $file) {
+        $files = $upload_files['files'] ?? [];
+        foreach ($files as $key => $file) {
             if ($file->getError()) {
                 continue;
             }
-            /*
-            TODO: 개발해야함.
-            //=================================================================\
-            // 090714
-            // 이미지나 플래시 파일에 악성코드를 심어 업로드 하는 경우를 방지
-            // 에러메세지는 출력하지 않는다.
-            //-----------------------------------------------------------------
-            $timg = @getimagesize($file->getStream());
-            // image type
-            if ( preg_match("/\.({$config['cf_image_extension']})$/i", $file->getClientFilename()) ||
-                 preg_match("/\.({$config['cf_flash_extension']})$/i", $file->getClientFilename()) ) {
-                if ($timg['2'] < 1 || $timg['2'] > 18) {
-                    continue;
-                }
+
+            $timg = getimagesize($file->getFilePath());
+            if (!$timg) {
+                continue;
             }
-            */
+
+            // 이미지 확장자 속여서 악성코드 업로드 하는 경우를 방지
+            if ($timg[2] < 1 || $timg[2] > 18) {
+                continue;
+            }
+
             $exists_file = $this->fetchWriteFileByNo($wr_id, $key);
             if ($exists_file) {
                 $this->removeFileAndThumnnail($exists_file);
@@ -130,12 +125,12 @@ class BoardFileService
             $filename = moveUploadedFile($directory, $file);
 
             // 올라간 파일의 퍼미션을 변경합니다.
-            chmod($directory . "/" . $filename, G5_FILE_PERMISSION);
+            chmod($directory . '/' . $filename, G5_FILE_PERMISSION);
 
             if ($exists_file) {
-                $this->updateBoardFile($wr_id, $key, $file, $filename, $upload_files['file_contents'][$key]);
+                $this->updateBoardFile($wr_id, $key, $file, $filename, $upload_files['file_contents'][$key] ?? '');
             } else {
-                $this->insertBoardFile($wr_id, $key, $file, $filename, $upload_files['file_contents'][$key]);
+                $this->insertBoardFile($wr_id, $key, $file, $filename, $upload_files['file_contents'][$key] ?? '');
             }
         }
     }

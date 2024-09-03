@@ -20,7 +20,7 @@ class UploadFileRequest
      * 업로드 파일
      * @OA\Property(property="files[]", type="array", @OA\Items(type="string", format="binary", example=""))
      */
-    public array $files = [];
+    public $files = [];
 
     /**
      * 파일 설명
@@ -40,9 +40,9 @@ class UploadFileRequest
     private const ERROR_FILE_EXT = '\"%s\" 파일의 확장자가 허용된 확장자가 아니므로 업로드 하지 않습니다.';
 
     private array $disallowed_ext = [
-        'exe', 'bat', 'sh', 'php', 'com', 'cmd', 'vbs', 'vbe', 'js', 'jse', 'wsf', 'wsh', 'msc', 'scr',
+        'exe', 'bat', 'sh', 'php', 'com', 'cmd', 'vbs', 'vbe', 'ts' ,'mjs','js', 'jse', 'wsf', 'wsh', 'msc', 'scr',
         'pif', 'cpl', 'jar', 'vb', 'vbe', 'ws', 'bas', 'prg', 'scpt', 'scptd', 'app', 'ipa', 'apk', 'dll',
-        'sys', 'drv', 'bin', 'inf', 'reg', 'gadget'
+        'sys', 'drv', 'bin', 'inf', 'reg', 'gadget', 'html', 'htm', 'xml', 'xsl', 'xslt', 'xhtml'
     ];
     private array $board = [];
     private array $write = [];
@@ -126,7 +126,13 @@ class UploadFileRequest
             // 확장자 체크
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             // @todo 허용리스트로 변경이 필요합니다.
-            if (in_array(strtolower($ext), array_map('strtolower', $this->disallowed_ext))) {
+            
+            //php, php3, php4 ..php7 등 금지
+            if (strpos($filename, '.php') !== false) {
+                $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
+            }
+            
+            if(isset($this->disallowed_ext[strtolower($ext)])) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
         }
