@@ -111,7 +111,7 @@ $_SESSION['lgd_certify'] = $payReqMap;
 <title>LG유플러스 전자결제 본인확인서비스</title>
 <!-- 고객사 사이트가 https인 경우는 아래 http://을 https:// 으로 변경하시면 됩니다. -->
 <link rel="stylesheet" href="<?php echo G5_CSS_URL;?>/default.css">
-<script language="javascript" src="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https' : 'http'; ?>://xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
+<script language="javascript" src="https://xpay.tosspayments.com/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 

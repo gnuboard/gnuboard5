@@ -6,9 +6,9 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 ?>
 
 <?php if ($default['de_card_test']) {   // 테스트 결제시 ?>
-<script language="javascript" src="https://pretest.uplus.co.kr:9443/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
+<script language="javascript" src="https://js.tosspayments.com/xpay_crossplatform/sandbox/v1" type="text/javascript"></script>
 <?php } else {      //실 결제시 ?>
-<script language="javascript" src="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https' : 'http'; ?>://xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
+<script language="javascript" src="https://xpay.tosspayments.com/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
 <?php } ?>
 
 <script type="text/javascript">
