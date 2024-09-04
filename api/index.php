@@ -2,12 +2,13 @@
 
 /**
  * GnuBoard5 API with Slim Framework
- * 
+ *
  * @package g5-api
- * @version 1.0.0
+ * @version 0.0.2
  * @link
  */
 
+use API\EnvironmentConfig;
 use API\Handlers\HttpErrorHandler;
 use API\Handlers\ShutdownHandler;
 use API\Middleware\JsonBodyParserMiddleware;
@@ -17,7 +18,7 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
-//gnuboard 로딩
+// 그누보드 로딩
 $is_root = false;
 $g5_path = g5_root_path($is_root, 1);
 date_default_timezone_set('Asia/Seoul'); // 그누보드 5 기본 시간대.
@@ -25,21 +26,20 @@ date_default_timezone_set('Asia/Seoul'); // 그누보드 5 기본 시간대.
 require_once(dirname(__DIR__, 1) . '/config.php');   // 설정 파일
 unset($g5_path);
 
-include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
-include_once (G5_LIB_PATH.'/common.lib.php'); // 공통 라이브러리 // @todo 정리후 삭제대상
+include_once(G5_LIB_PATH . '/hook.lib.php');    // hook 함수 파일
+include_once(G5_LIB_PATH . '/common.lib.php'); // 공통 라이브러리 // @todo 정리후 삭제대상
 
 if (!include(G5_DATA_PATH . '/' . G5_DBCONFIG_FILE)) {
     header('Content-Type: application/json');
     echo json_encode('그누보드가 설치되어있지 않습니다.');
     exit;
 }
-//-------------------------
-// Create refresh token table
+
 create_refresh_token_table();
 
 // 응답 json 에 오류메시지를 같이 출력합니다.
-// - Should be set to false in production
 // 실서버에서는 false 이어야 합니다.
+// Should be set to false in production
 $displayErrorDetails = false;
 if (G5_DEBUG) {
     $displayErrorDetails = true;
@@ -67,8 +67,8 @@ $request = $serverRequestCreator->createServerRequestFromGlobals();
 // The routing middleware should be added earlier than the ErrorMiddleware
 // Otherwise exceptions thrown from it will not be handled by the middleware
 $app->addRoutingMiddleware();
+//$app->add(new CorsMiddleware());
 
-// Add JSON Body Parser Middleware
 $app->add(new JsonBodyParserMiddleware());
 
 // Error Handler
