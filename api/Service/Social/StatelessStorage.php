@@ -2,10 +2,12 @@
 
 namespace API\Service\Social;
 
+use Hybridauth\Storage\StorageInterface;
+
 /**
  * API 에서 사용을 위해 기본 세션 스토리지를 대체합니다.
  */
-class StatelessStorage implements \Hybridauth\Storage\StorageInterface {
+class StatelessStorage implements StorageInterface {
     private $data = [];
 
     public function get($key) {

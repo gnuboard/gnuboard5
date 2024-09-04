@@ -119,6 +119,7 @@ class SocialController
     public function socialLoginCallback(Request $request, Response $response, $args)
     {
         $provider = $args['provider'] ?? '';
+        $member = $request->getAttribute('member');
         $callback_base_url = G5_URL . '/api/v1/social/login-callback';
         $this->socialService->setProviderConfig($callback_base_url, true);
         $is_use = $this->socialService->socialUseCheck($provider);
@@ -142,16 +143,44 @@ class SocialController
         // 프로필조회
         $profile = $this->socialService->current_provider_instance->getUserProfile();
 
-        // 중복가입 체크
+        if ($this->socialService->checkDisallowMember($provider, $profile->identifier)) {
+            return api_response_json($response, ['message' => '탈퇴 또는 차단된 회원이므로 로그인 하실 수 없습니다.'], 403);
+        }
+
+        // 소셜 가입 확인
         $is_exist = $this->socialService->checkExistSocialMember($provider, $profile->identifier);
 
-        // 회원가입시 필요한 소셜 토큰 전송
-        if (!$is_exist) {
+        // 로그인 여부
+        $is_guest = empty($member['mb_no']);
+
+        //비로그인 & 소셜가입자  -> 로그인
+        if ($is_guest && $is_exist) {
+            $member = $this->socialService->fetchMemberByIdentifier($provider, $profile->identifier);
+            $claim = ['sub' => $member['mb_id']];
+            $login_access_token = $this->token_manager->create_token('access', $claim);
+            $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
+            $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
+            $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
+
+            $response_data = new GenerateTokenResponse(
+                [
+                    'access_token' => $login_access_token,
+                    'access_token_expire_at' => date('c', $access_token_decode->exp),
+                    'refresh_token' => $login_refresh_token,
+                    'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
+                    'token_type' => 'Bearer',
+                ]
+            );
+            return api_response_json($response, $response_data, 200);
+        }
+
+        // 비로그인 & 소셜 미가입자 -> 소셜로 회원가입 시작
+        if ($is_guest && !$is_exist) {
+            // 회원가입시 필요한 소셜 토큰 전송
             $token = $this->token_manager->create_token('access', [
                 'process_type' => 'social_register',
                 'social_token' => $social_access_token,
                 'provider' => $provider,
-                'identifier' => $profile->identifier,
                 'from_callback' => true
             ]);
             $response->withoutHeader('Authorization');
@@ -167,28 +196,16 @@ class SocialController
             return api_response_json($response, $data, 404);
         }
 
-        if ($this->socialService->checkDisallowMember($provider, $profile->identifier)) {
-            return api_response_json($response, ['message' => '탈퇴 또는 차단된 회원이므로 로그인 하실 수 없습니다.'], 403);
+        // 로그인 & 소셜 가입자 -> 가입되었습니다 안내
+        if (!$is_guest && $is_exist) {
+            return api_response_json($response, ['message' => '이미 가입된 회원입니다.'], 409);
         }
 
-        // login
-        $member = $this->socialService->fetchMemberByIdentifier($provider, $profile->identifier);
-        $claim = ['sub' => $member['mb_id']];
-        $login_access_token = $this->token_manager->create_token('access', $claim);
-        $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
-        $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
-        $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
-
-        $response_data = new GenerateTokenResponse(
-            [
-                'access_token' => $login_access_token,
-                'access_token_expire_at' => date('c', $access_token_decode->exp),
-                'refresh_token' => $login_refresh_token,
-                'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
-                'token_type' => 'Bearer',
-            ]
-        );
-        return api_response_json($response, $response_data, 200);
+        // 로그인 & 소셜 미가입자 -> 소셜로그인 연결
+        if (!$is_guest && !$is_exist) {
+            $this->socialService->linkSocialMember($provider, $profile, $member['mb_id']);
+            return api_response_json($response, ['message' => '소셜로그인이 연결되었습니다.']);
+        }
     }
 
     /**
@@ -247,7 +264,7 @@ class SocialController
         }
         $jwt_data = $this->token_manager->decode_token('access', $jwt_token);
         $process_type = $jwt_data->process_type ?? '';
-        $from_callback = $jwt_data->from_callback;
+        $from_callback = $jwt_data->from_callback ?? false;
 
         if ($process_type !== 'social_register') {
             throw new HttpBadRequestException($request, '잘못된 접근입니다.');
@@ -257,10 +274,10 @@ class SocialController
         $this->socialService->setProviderConfig($callback_base_url, $from_callback);
         $storage_data = [
             'access_token' => $jwt_data->social_token->access_token,
-            'refresh_token' => $jwt_data->social_token->refresh_token,
-            'expires_at' => $jwt_data->social_token->expires_at,
-            'expires_in' => $jwt_data->social_token->expires_in,
-            'token_type' => $jwt_data->social_token->token_type,
+            'refresh_token' => $jwt_data->social_token->refresh_token ?? '',
+            'expires_at' => $jwt_data->social_token->expires_at ?? '',
+            'expires_in' => $jwt_data->social_token->expires_in ?? '',
+            'token_type' => 'Bearer',
         ];
         $this->socialService->setProvider($provider, $storage_data);
         $profile = $this->socialService->current_provider_instance->getUserProfile();
@@ -277,11 +294,6 @@ class SocialController
         }
 
         $request_data = $request->getParsedBody() ?? [];
-
-        if (!$request_data) {
-            return api_response_json($response, ['message' => '회원가입 정보를 입력해주세요'], 400);
-        }
-
         $config = ConfigService::getConfig();
         $create_member_data = new CreateSocialMemberRequest($config, $request_data);
 
@@ -372,16 +384,20 @@ class SocialController
      */
     public function socialLoginWithAccessToken(Request $request, Response $response, $args)
     {
-        //provider 체크
+        //provider 확인
         $provider = $args['provider'] ?? '';
 
         if (!$provider) {
             throw new HttpBadRequestException($request, '소셜 로그인 provider 를 입력해주세요.');
         }
 
-        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
-        // access token 체크
+        // access token 확인
         $social_access_token = $request->getParsedBody()['access_token'] ?? '';
+
+        if (!$social_access_token) {
+            throw new HttpBadRequestException($request, '토큰이 없습니다.');
+        }
+
         $storage_data = [
             'access_token' => $social_access_token,
             'refresh_token' => '',
@@ -389,7 +405,7 @@ class SocialController
             'expires_in' => '',
             'token_type' => 'Bearer',
         ];
-
+        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
         $this->socialService->setProviderConfig($callback_base_url);
         $this->socialService->setProvider($provider, $storage_data);
         $is_use = $this->socialService->socialUseCheck($provider);
@@ -398,12 +414,6 @@ class SocialController
             throw new HttpBadRequestException($request, '해당 소셜 로그인 설정이 비활성화 되어 있습니다.');
         }
 
-        // access token 체크
-        $social_access_token = $request->getParsedBody()['access_token'] ?? '';
-
-        if (!$social_access_token) {
-            throw new HttpBadRequestException($request, '토큰이 없습니다.');
-        }
 
         $tokens = [
             'access_token' => $social_access_token,
@@ -427,14 +437,24 @@ class SocialController
             $token = $this->token_manager->create_token('access',
                 [
                     'process_type' => 'social_register',
+                    'social_token' => [
+                        'access_token' => $social_access_token
+                    ],
                     'provider' => $provider,
                     'identifier' => $profile->identifier,
                     'from_callback' => false
                 ]);
-            $response->withoutHeader('Authorization');
-            $response = $response->withHeader('Set-Cookie', 'Authorization=' . urlencode($token) . '; expires=' . (time() + 60 * 10) . '; path=/; httponly');
 
-            return api_response_json($response, ['message' => '소셜 회원가입을 진행 해주세요'], 404);
+            $response_data = [
+                'statusCode' => 404,
+                'error' => [
+                    'type' => 'user not found',
+                    'description' => '소셜 회원가입을 진행 해주세요',
+                ],
+                'token' => $token
+            ];
+
+            return api_response_json($response, $response_data, 404);
         }
 
         // 로그인
@@ -456,6 +476,122 @@ class SocialController
         );
 
         return api_response_json($response, $response_data);
+    }
+
+    /**
+     * @OA\Post (
+     *     path="/api/v1/social/unlink/{provider}",
+     *     tags={"소셜로그인"},
+     *     security={{"Oauth2Password": {}}},
+     *     summary="소셜로그인 연결 끊기 - 회원 탈퇴와 다릅니다.",
+     *     description="소셜로그인 연결 끊기",
+     *     @OA\Parameter(
+     *     name="provider",
+     *     in="path",
+     *     description="소셜 로그인 제공자",
+     *     required=true,
+     *     @OA\Schema(
+     *     type="string"
+     *  )
+     * ),
+     *     @OA\Response(response="200", description="소셜 연결 끊기 성공"),
+     *     @OA\Response(
+     *     response=400,
+     *     description="소셜 연결 끊기 실패"
+     * )
+     * )
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function socialUnlink(Request $request, Response $response, $args)
+    {
+        $member = $request->getAttribute('member');
+        $this->socialService->unlink($args['provider'], $member['mb_id']);
+
+        return api_response_json($response, ['message' => '소셜 연결이 해제되었습니다.']);
+    }
+
+    /**
+     * @OA\Post (
+     *     path="/api/v1/social/token-link/{provider}",
+     *     tags={"소셜로그인"},
+     *     security={{"Oauth2Password": {}}},
+     *     summary="토큰으로 기존회원 소셜로그인 연결하기",
+     *     description="토큰으로 소셜로그인 연결하기",
+     *     @OA\Parameter(
+     *     name="provider",
+     *     in="path",
+     *     description="소셜 로그인 제공자",
+     *     required=true,
+     *       @OA\Schema(
+     *       type="string"
+     *       )
+     *  ),
+     *     @OA\Response(response="200", description="소셜로그인 연결 성공"),
+     *     @OA\Response(
+     *     response=400,
+     *     description="소셜로그인 연결 실패"
+     *  )
+     * )
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     * @throws \Exception
+     */
+    public function socialLinkWithToken(Request $request, Response $response, $args)
+    {
+        $member = $request->getAttribute('member');
+        //provider 확인
+        $provider = $args['provider'] ?? '';
+
+        if (!$provider) {
+            throw new HttpBadRequestException($request, '소셜 로그인 provider 를 입력해주세요.');
+        }
+
+        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
+        // access token 확인
+        $social_access_token = $request->getParsedBody()['access_token'] ?? '';
+
+        if (!$social_access_token) {
+            throw new HttpBadRequestException($request, '토큰이 없습니다.');
+        }
+        $storage_data = [
+            'access_token' => $social_access_token,
+            'refresh_token' => '',
+            'expires_at' => '',
+            'expires_in' => '',
+            'token_type' => 'Bearer',
+        ];
+
+        $this->socialService->setProviderConfig($callback_base_url);
+        $this->socialService->setProvider($provider, $storage_data);
+        $is_use = $this->socialService->socialUseCheck($provider);
+
+        if (!$is_use) {
+            throw new HttpBadRequestException($request, '해당 소셜 로그인 설정이 비활성화 되어 있습니다.');
+        }
+
+        // 프로필 조회
+        try {
+            $profile = $this->socialService->current_provider_instance->getUserProfile();
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            error_log($e->getTraceAsString());
+            throw new HttpBadRequestException($request, '인증이 실패하였습니다.');
+        }
+
+        $is_exist = $this->socialService->checkExistSocialMember($provider, $profile->identifier);
+        if ($is_exist) {
+            return api_response_json($response, ['message' => '해당 소셜계정은 연결되어있습니다'], 409);
+        }
+
+        $this->socialService->linkSocialMember($args['provider'], $profile, $member['mb_id']);
+
+        return api_response_json($response, ['message' => '소셜로그인이 연결되었습니다.']);
     }
 
 }

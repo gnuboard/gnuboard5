@@ -5,7 +5,6 @@ namespace API\Service\Social;
 use API\Database\Db;
 use API\Service\ConfigService;
 use API\Service\MemberService;
-use GuzzleHttp\Exception\GuzzleException;
 use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
@@ -116,7 +115,7 @@ class SocialService
             // Twitter
             $social_config['Twitter'] = [
                 'enabled' => in_array('twitter', $social_list),
-//                'adapter' => in_array('twitter', $social_list) ? \API\Service\Social\Twitter::class : '',
+                //'adapter' => in_array('twitter', $social_list) ? \API\Service\Social\Twitter::class : '',
                 'callback' => $callback_base_url . '/twitter',
                 'supportRequestState' => false,
                 'keys' => [
@@ -225,10 +224,212 @@ class SocialService
     public function checkDisallowMember($provider, $identifier)
     {
         $member = $this->fetchMemberByIdentifier($provider, $identifier);
+        if (!$member) {
+            return false;
+        }
         // 로그인
         return ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
             || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME));
     }
+
+
+    /**
+     * 기존 회원에 소셜 로그인 연결하기
+     * @param string $provider 소셜 제공자이름
+     * @param Profile $profile 소셜 프로필
+     * @param string $mb_id 그누보드 회원아이디
+     * @return void
+     */
+    public function linkSocialMember($provider, $profile, $mb_id)
+    {
+        $social_profile = $this->convertGnuboardSocialData($provider, $profile);
+        $social_profile['mb_id'] = $mb_id;
+        $this->insertSocialProfile($social_profile);
+    }
+
+
+    /**
+     * @param $provider
+     * @param Profile $profile
+     * @param $member_data
+     * @return void
+     * @throws \RuntimeException 이미 가입된 회원, 소셜 회원가입 실패
+     */
+    public function signUpSocialMember($provider, $profile, $member_data)
+    {
+        $is_exist = $this->checkExistSocialMember($provider, $profile->identifier);
+
+        if ($is_exist) {
+            throw new \RuntimeException('이미 가입된 회원입니다.', 409);
+        }
+
+        $social_profile = $this->convertGnuboardSocialData($provider, $profile);
+        $generated_mb_id = $this->memberService->existsMemberIdRecursive($social_profile['mb_id']);
+        $social_profile['mb_id'] = $generated_mb_id;
+        $member_data = (array)$member_data;
+
+        if(empty($member_data['mb_email'])) {
+            $member_data['mb_email'] = $profile->email ?? '';
+        }
+
+        if (empty($member_data['mb_nick'])) {
+            // 닉네임이 없으면 소셜 닉네임으로 설정, 닉네임 중복되면 뒤에 숫자 추가
+            if (empty($social_profile['displayname'])) {
+                $random_nick = bin2hex(random_bytes(5));
+                $member_data['mb_nick'] = $this->memberService->existsMemberNicknameRecursive($random_nick);
+            } else {
+                $member_data['mb_nick'] = $this->memberService->existsMemberNicknameRecursive($social_profile['displayname']);
+            }
+        }
+
+        $member_data['mb_id'] = $social_profile['mb_id'];
+
+        // 트랜젝션이 지원안되는 DB 는 오류 코드로 처리
+        try {
+            Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
+            $profile_insert_id = $this->insertSocialProfile($social_profile);
+            if (!$profile_insert_id) {
+                throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
+            }
+
+            $member_insert_id = $this->memberService->insertMember($member_data);
+
+            if (!$member_insert_id) {
+                //rollback
+                $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
+                if (!$rollback_result) {
+                    throw new \RuntimeException('회원가입이 되지 않았습니다.,', 400);
+                }
+
+                throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
+            }
+
+            $member_icon_file_path = G5_DATA_PATH . '/member/' . substr($social_profile['mb_id'], 0, 2) . '/' . $social_profile['mb_id'] . '.gif';
+            $member_img_file_path = G5_DATA_PATH . '/member_image/' . substr($social_profile['mb_id'], 0, 2) . '/' . $social_profile['mb_id'] . '.gif';
+            $this->socialProfileImgUploader($member_icon_file_path, $profile->photoURL, $this->config['cf_member_icon_width'], $this->config['cf_member_icon_height']);
+            $this->socialProfileImgUploader($member_img_file_path, $profile->photoURL, $this->config['cf_member_img_width'], $this->config['cf_member_img_height']);
+        } catch (\Exception|\Throwable $e) {
+            $rollback_result = false;
+
+            if (isset($profile_insert_id) && !isset($member_insert_id)) {
+                $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
+            }
+
+            if (!$rollback_result) {
+                error_log('social sign up DB error: ' . $e->getMessage() . print_r($e->getTrace(), true));
+            } else {
+                error_log('social sign up error: ' . $e->getMessage() . print_r($e->getTrace(), true));
+            }
+
+            throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
+        } finally {
+            //pdo 에러 모드 복귀
+            Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        }
+    }
+
+    /**
+     * @param $dest_file_path
+     * @param $file_url
+     * @param $width
+     * @param $height
+     * @return void
+     */
+    function socialProfileImgUploader($dest_file_path, $file_url, $width, $height)
+    {
+        $dir_path = dirname($dest_file_path);
+        if (!mkdir($dir_path, G5_DIR_PERMISSION, true) && !is_dir($dir_path)) {
+            return;
+        }
+
+        list($image_width, $image_height, $ext) = getimagesize($file_url);
+        if ($width && $height) {
+            $ratio = max($width / $image_width, $height / $image_height);
+            $image_height = ceil($height / $ratio);
+            $x = ($image_width - $width / $ratio) / 2;
+            $image_width = ceil($width / $ratio);
+
+            // 최종이미지가 저장될 객체
+            $new_image = imagecreatetruecolor($width, $height);
+            if ($ext == 1) {
+                $image = imagecreatefromgif($file_url);
+            } else if ($ext == 3) {
+                $image = imagecreatefrompng($file_url);
+            } else if ($ext == 18) {
+                $image = imagecreatefromwebp($file_url);
+            } else {
+                $image = imagecreatefromjpeg($file_url);
+            }
+
+            if (!$image) {
+                return;
+            }
+
+            imagecopyresampled($new_image, $image,
+                0, 0,
+                $x, 0,
+                $width, $height,
+                $image_width, $image_height);
+
+            if (!imagegif($new_image, $dest_file_path)) {
+                throw new \RuntimeException('이미지 저장 실패', 400);
+            }
+
+            $result = chmod($dest_file_path, G5_FILE_PERMISSION);
+            if (!$result) {
+                throw new \RuntimeException('파일 권한 변경 실패', 400);
+            }
+
+            imagedestroy($new_image);
+        }
+    }
+
+    /**
+     * 소셜 config 에서 사용여부를 체크한다.
+     * @param string $provider_name
+     * @return bool
+     */
+    public function socialUseCheck($provider_name)
+    {
+        $provider_name = ucfirst($provider_name);
+        return isset($this->social_config['providers'][$provider_name]['enabled']) && $this->social_config['providers'][$provider_name]['enabled'];
+    }
+
+    /**
+     * 소셜로그인 연결 끊기
+     * @param $provider
+     * @param $mb_id
+     * @return void
+     */
+    public function unlink($provider, $mb_id)
+    {
+        $count = $this->countProfileByMemeberId($mb_id);
+        if ($count < 1) {
+            return;
+        }
+
+        // 템플릿 버전과 다른점
+        if ($count === 1) {
+            throw new \RuntimeException('연결된 계정이 하나뿐인 경우 해제할 수 없습니다.', 400);
+        }
+
+        $this->deleteSocialProfile($provider, $mb_id);
+    }
+
+
+    /**
+     * 회원의 모든 소셜 프로필 삭제
+     * @param $mb_id
+     * @return void
+     * @example - 회원 탈퇴시
+     */
+    public function leaveMember($mb_id)
+    {
+        $this->deleteAllSocialProfileByMemberId($mb_id);
+    }
+
+
+    //---------- DB query ------------------------
 
     public function fetchSocialProfileByIdentifier($provider, $identifier)
     {
@@ -253,64 +454,12 @@ class SocialService
         )->fetch();
     }
 
-    /**
-     * @param $provider
-     * @param Profile $profile
-     * @param $member_data
-     * @return void
-     * @throws \RuntimeException 이미 가입된 회원, 소셜 회원가입 실패
-     */
-    public function signUpSocialMember($provider, $profile, $member_data)
+    public function countProfileByMemeberId($mb_id)
     {
-        $is_exist = $this->checkExistSocialMember($provider, $profile->identifier);
-
-        if ($is_exist) {
-            throw new \RuntimeException('이미 가입된 회원입니다.', 409);
-        }
-
-        $social_profile = $this->convertGnuboardSocialData($provider, $profile);
-
-        // 트랜젝션이 지원안되는 DB 는 오류 코드로 처리
-        try {
-            Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
-            $profile_insert_id = $this->insertSocialProfile($social_profile);
-            if (!$profile_insert_id) {
-                throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
-            }
-
-            $member_data = (array)$member_data;
-            $member_data['mb_id'] = $social_profile['mb_id'];
-            $member_insert_id = $this->memberService->insertMember($member_data);
-
-            if (!$member_insert_id) {
-                //rollback
-                $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
-                if (!$rollback_result) {
-                    throw new \RuntimeException('회원가입이 되지 않았습니다.,', 400);
-                }
-
-                throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
-            }
-        } catch (\Exception|\Error $e) {
-            $rollback_result = false;
-
-            if (isset($profile_insert_id) && !isset($member_insert_id)) {
-                $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
-            }
-
-            if (!$rollback_result) {
-                error_log('social sign up DB error: ' . $e->getMessage() . print_r($e->getTrace(), true));
-            } else {
-                error_log('social sign up error: ' . $e->getMessage() . print_r($e->getTrace(), true));
-            }
-
-            throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
-        } finally {
-            //pdo 에러 모드 복귀
-            Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        }
+        $profile_table = $GLOBALS['g5']['social_profile_table'];
+        $query = "SELECT count(*) as cnt FROM {$profile_table} WHERE mb_id = ?";
+        return Db::getInstance()->run($query, [$mb_id])->fetchColumn();
     }
-
 
     /**
      * @param $data
@@ -328,93 +477,16 @@ class SocialService
         return Db::getInstance()->delete($social_table, ['identifier' => $identifier, 'provider' => $provider]);
     }
 
-
     /**
-     * @param $dest_path
-     * @param $file_url
-     * @param $width
-     * @param $height
-     * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * 한 회원의 모든 소셜 프로필 삭제
+     * @param string $mb_id 회원아이디
+     * @return int 삭제된 행의 수
      */
-    function socialProfileImgResize($dest_path, $file_url, $width, $height)
+    public function deleteAllSocialProfileByMemberId($mb_id)
     {
-        //todo : allow_url_fopen 이 활성화 되어 있지 않은 경우에 대한 처리 필요
-        try {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('GET', $file_url);
-            $image_file = $response->getBody()->getContents();
-        } catch (\Exception $e) {
-            error_log($file_url . 'social profile image download error');
-            error_log($e->getMessage());
-            return;
-        }
-        list($w, $h, $ext) = getimagesize($image_file);
-
-        if ($w && $h && $ext) {
-            $ratio = max($width / $w, $height / $h);
-            $h = ceil($height / $ratio);
-            $x = ($w - $width / $ratio) / 2;
-            $w = ceil($width / $ratio);
-
-            $tmp = imagecreatetruecolor($width, $height);
-
-            if ($ext == 1) {
-                $image = imagecreatefromgif($image_file);
-            } else if ($ext == 3) {
-                $image = imagecreatefrompng($image_file);
-            } else {
-                $image = imagecreatefromjpeg($image_file);
-            }
-
-            if (!$image) {
-                return;
-            }
-
-            imagecopyresampled($tmp, $image,
-                0, 0,
-                $x, 0,
-                $width, $height,
-                $w, $h);
-
-            switch ($ext) {
-                case '2':
-                    imagejpeg($tmp, $dest_path, G5_THUMB_JPG_QUALITY);
-                    break;
-                case '3':
-                    imagepng($tmp, $dest_path, 0);
-                    break;
-                case '1':
-                    imagegif($tmp, $dest_path);
-                    break;
-            }
-
-            chmod($dest_path, G5_FILE_PERMISSION);
-
-            /* cleanup memory */
-            imagedestroy($image);
-            imagedestroy($tmp);
-        }
+        $social_table = $GLOBALS['g5']['social_profile_table'];
+        return Db::getInstance()->delete($social_table, ['mb_id' => $mb_id]);
     }
 
-    /**
-     * allow_url_fopen 를 쓰지 않고 이미지를 메모리에 로드
-     * @return string
-     * @throws GuzzleException
-     */
-    public function getImageFromUrl($url)
-    {
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('GET', $url);
-        return $response->getBody()->getContents();
-    }
 
-    /**
-     * 소셜 config 에서 사용여부를 체크한다.
-     */
-    public function socialUseCheck($provider_name)
-    {
-        $provider_name = ucfirst($provider_name);
-        return isset($this->social_config['providers'][$provider_name]['enabled']) && $this->social_config['providers'][$provider_name]['enabled'];
-    }
 }
