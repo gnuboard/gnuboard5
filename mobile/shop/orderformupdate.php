@@ -698,6 +698,10 @@ if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
+            case 'nicepay':
+                $cancelAmt = (int)$pg_price;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+                break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;
                 $_REQUEST['Amt']               = $amount;
@@ -755,6 +759,10 @@ if(!$result) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                $cancelAmt = (int)$pg_price;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
                 break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;

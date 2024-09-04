@@ -2,8 +2,6 @@
 include_once('./_common.php');
 include_once(G5_MSHOP_PATH.'/settle_nicepay.inc.php');
 
-if (function_exists('add_log')) add_log($_POST);
-
 $authResultCode = isset($_POST['AuthResultCode']) ? clean_xss_tags($_POST['AuthResultCode']) : '';		// authentication result code 0000:success
 $authResultMsg = isset($_POST['AuthResultMsg']) ? clean_xss_tags($_POST['AuthResultMsg']) : '';		// authentication result message
 $mid = isset($_POST['MID']) ? clean_xss_tags($_POST['MID']) : '';							// merchant id

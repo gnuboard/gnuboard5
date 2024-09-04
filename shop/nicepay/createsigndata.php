@@ -12,8 +12,6 @@ if (! ($default['de_pg_service'] == 'nicepay' && $orderNumber)){
     die(json_encode(array('error'=>'올바른 방법으로 이용해 주십시오.')));
 }
 
-if (function_exists('add_log')) add_log($_POST, false, 'ajax');
-
 $price = preg_replace('#[^0-9]#', '', $_POST['price']);
 
 if (strlen($price) < 1) {

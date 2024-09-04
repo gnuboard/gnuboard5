@@ -84,8 +84,6 @@ $response = nicepay_reqPost($data, "https://pg-api.nicepay.co.kr/webapi/cash_rec
 
 $result = json_decode($response, true);
 
-if (function_exists('add_log')) add_log($result, true, 'rr');
-
 // 성공이면
 if (isset($result['ResultCode']) && $result['ResultCode'] === '7001') {
 
