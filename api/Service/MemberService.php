@@ -12,8 +12,7 @@ class MemberService
 
     public function __construct()
     {
-        global $g5;
-        $this->table = $g5['member_table'];
+        $this->table = $GLOBALS['g5']['member_table'];
     }
 
     /**
@@ -54,7 +53,7 @@ class MemberService
     public function updateMemberProfile(string $mb_id, object $data): void
     {
         // 닉네임 변경 허용이 안되면 mb_nick 프로퍼티가 없다.
-        if(isset($data->mb_nick)) {
+        if (isset($data->mb_nick)) {
             if ($this->existsMemberByNick($data->mb_nick, $mb_id)) {
                 throw new Exception("이미 사용중인 닉네임 입니다.", 409);
             }
@@ -218,6 +217,18 @@ class MemberService
     }
 
     /**
+     * 회원아이디 중복여부 확인
+     * @param string $mb_id
+     * @return bool
+     */
+    public function existsMemberById(string $mb_id): bool
+    {
+        $query = "SELECT EXISTS(SELECT 1 FROM {$this->table} WHERE mb_id = :mb_id) as exist";
+        $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
+        return $stmt->fetchColumn() == 1;
+    }
+
+    /**
      * 이메일 중복여부 확인
      * @param string $mb_email 이메일
      * @param string $mb_id 회원아이디
@@ -236,6 +247,57 @@ class MemberService
         ]);
 
         return $stmt->fetchColumn() > 0;
+    }
+
+    /**
+     *
+     * 중복되는 회원아이디가 있을 경우 숫자를 붙여서 재귀적으로 쿼리한다.
+     * @param $mb_id
+     * @return string|callable
+     * @throws Exception
+     * @example  소셜가입등에서 소셜 연결 끊기이후 다시 연동시에 id 가 중복되므로 사용해야됩니다.
+     */
+    function existsMemberIdRecursive($mb_id)
+    {
+        static $count = 0;
+
+        $mb_id_add = ($count > 0) ? $mb_id . (string)$count : $mb_id;
+
+        if (!$this->existsMemberById($mb_id_add)) {
+            return $mb_id_add;
+        }
+
+        if ($count >= 400) {
+            throw new \RuntimeException("다른 아이디로 가입해주세요.", 400);
+        }
+
+        $count++;
+        return $this->existsMemberIdRecursive($mb_id);
+    }
+
+
+    /**
+     *  중복되는 닉네임이 있을 경우 숫자를 붙여서 재귀적으로 쿼리한다.
+     * @param $mb_nick
+     * @return string|callable
+     * @example  소셜가입등에서 소셜 연결 끊기이후 다시 연동시에 id 가 중복되므로 사용해야됩니다.
+     */
+    function existsMemberNicknameRecursive($mb_nick)
+    {
+        static $count = 0;
+
+        $mb_nick_add = ($count > 0) ? $mb_nick . (string)$count : $mb_nick;
+
+        if (!$this->existsMemberByNick($mb_nick_add, ' ')) {
+            return $mb_nick_add;
+        }
+
+        if ($count >= 200) {
+            throw new \RuntimeException("닉네임으로 지정할 수없습니다.", 400);
+        }
+
+        $count++;
+        return $this->existsMemberNicknameRecursive($mb_nick);
     }
 
     /**
