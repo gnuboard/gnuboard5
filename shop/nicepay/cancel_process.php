@@ -36,8 +36,6 @@ try{
 		'CharSet' => 'utf-8'
 	);
 
-    if (function_exists('add_log')) add_log($data);
-
 	/*
 	****************************************************************************************
 	* <Cancel Request>	
@@ -46,9 +44,6 @@ try{
 	$response = nicepay_reqPost($data, "https://pg-api.nicepay.co.kr/webapi/cancel_process.jsp"); //Cancel API call
 
     $result = json_decode($response, true);
-    
-    if (function_exists('add_log')) add_log(array('1'=>1));
-    if (function_exists('add_log')) add_log($result, true, 'cc');
 	
 }catch(Exception $e){
 	$e->getMessage();

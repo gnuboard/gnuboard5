@@ -4,8 +4,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 // 나이스페이 공통 설정
 require_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
 
-if (function_exists('add_log')) add_log($_POST);
-
 /*
 ****************************************************************************************
 * <Authentication Result Parameter>
@@ -113,8 +111,6 @@ if($authResultCode === "0000"){
         }
 
         $respArr = json_decode($response, true);
-        
-        if (function_exists('add_log')) add_log($respArr);
 
         $ResultCode = nicepay_res('ResultCode', $respArr);
         $ResultMsg = nicepay_res('ResultMsg', $respArr);

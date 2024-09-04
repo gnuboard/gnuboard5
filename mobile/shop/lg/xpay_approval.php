@@ -141,7 +141,7 @@ include_once(G5_PATH.'/head.sub.php');
 <?php if ($default['de_card_test']) {   // 테스트 결제시 ?>
 <script language="javascript" src="https://js.tosspayments.com/xpay_crossplatform/sandbox/v1" type="text/javascript"></script>
 <?php } else {      //실 결제시 ?>
-<script language="javascript" src="//xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
+<script language="javascript" src="https://xpay.tosspayments.com/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
 <?php } ?>
 
 <script type="text/javascript">

@@ -1067,8 +1067,8 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <a href="http://testadmin8.kcp.co.kr/" target="_blank" class="btn_frmline">테스트 관리자</a>
                 </div>
                 <div class="scf_cardtest lg_cardtest">
-                    <a href="https://pgweb.uplus.co.kr/" target="_blank" class="btn_frmline">실결제 관리자</a>
-                    <a href="https://pgweb.uplus.co.kr/tmert" target="_blank" class="btn_frmline">테스트 관리자</a>
+                    <a href="https://pgweb.tosspayments.com/" target="_blank" class="btn_frmline">실결제 관리자</a>
+                    <a href="https://pgweb.tosspayments.com/tmert" target="_blank" class="btn_frmline">테스트 관리자</a>
                 </div>
                 <div class="scf_cardtest inicis_cardtest">
                     <a href="https://iniweb.inicis.com/" target="_blank" class="btn_frmline">상점 관리자</a>
