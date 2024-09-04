@@ -40,11 +40,17 @@ class ShutdownHandler
     public function __invoke()
     {
         $error = error_get_last();
-        if ($error && $error['type'] !== E_DEPRECATED) {
+
+        if ($error) {
+            // notice, warning, deprecated 는 로그로 확인
+            if ($error['type'] === E_NOTICE || $error['type'] === E_WARNING || $error['type'] === E_DEPRECATED) {
+                return;
+            }
+
+            $errorType = $error['type'];
+            $errorMessage = $error['message'];
             $errorFile = $error['file'];
             $errorLine = $error['line'];
-            $errorMessage = $error['message'];
-            $errorType = $error['type'];
             $message = 'An error while processing your request. Please try again later.';
 
             if ($this->displayErrorDetails) {
