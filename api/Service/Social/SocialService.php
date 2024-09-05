@@ -268,7 +268,7 @@ class SocialService
         $social_profile['mb_id'] = $generated_mb_id;
         $member_data = (array)$member_data;
 
-        if(empty($member_data['mb_email'])) {
+        if (empty($member_data['mb_email'])) {
             $member_data['mb_email'] = $profile->email ?? '';
         }
 
@@ -285,6 +285,7 @@ class SocialService
         $member_data['mb_id'] = $social_profile['mb_id'];
 
         // 트랜젝션이 지원안되는 DB 는 오류 코드로 처리
+        // 수동 트랜젝션 start
         try {
             Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
             $profile_insert_id = $this->insertSocialProfile($social_profile);
@@ -293,9 +294,8 @@ class SocialService
             }
 
             $member_insert_id = $this->memberService->insertMember($member_data);
-
+            //Throwable 오류 발생안하고 실패시(PDO stmt의 false) 롤백
             if (!$member_insert_id) {
-                //rollback
                 $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
                 if (!$rollback_result) {
                     throw new \RuntimeException('회원가입이 되지 않았습니다.,', 400);
@@ -303,28 +303,30 @@ class SocialService
 
                 throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
             }
+        } catch (\Exception|\Throwable $e) {
+            // 프로필 저장되고 멤버 실패시 (Throwable 오류발생 - 타입에러, ValueError 등 에러)
+            if (isset($profile_insert_id) && $profile_insert_id && !isset($member_insert_id)) {
+                $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
+                if (!$rollback_result) {
+                    error_log('social sign up DB rollback error: ' . (string)$profile_insert_id . $e->getMessage() . print_r($e->getTrace(), true));
+                }
+            }
+            throw new \RuntimeException('회원가입이 실패했습니다.', 400);
+        } finally {
+            //pdo 에러 모드 복귀
+            Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        }
+        // 수동 트랜젝션 end
 
+        try {
             $member_icon_file_path = G5_DATA_PATH . '/member/' . substr($social_profile['mb_id'], 0, 2) . '/' . $social_profile['mb_id'] . '.gif';
             $member_img_file_path = G5_DATA_PATH . '/member_image/' . substr($social_profile['mb_id'], 0, 2) . '/' . $social_profile['mb_id'] . '.gif';
             $this->socialProfileImgUploader($member_icon_file_path, $profile->photoURL, $this->config['cf_member_icon_width'], $this->config['cf_member_icon_height']);
             $this->socialProfileImgUploader($member_img_file_path, $profile->photoURL, $this->config['cf_member_img_width'], $this->config['cf_member_img_height']);
         } catch (\Exception|\Throwable $e) {
-            $rollback_result = false;
-
-            if (isset($profile_insert_id) && !isset($member_insert_id)) {
-                $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
-            }
-
-            if (!$rollback_result) {
-                error_log('social sign up DB error: ' . $e->getMessage() . print_r($e->getTrace(), true));
-            } else {
-                error_log('social sign up error: ' . $e->getMessage() . print_r($e->getTrace(), true));
-            }
-
-            throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
-        } finally {
-            //pdo 에러 모드 복귀
-            Db::getInstance()->getPdo()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            // 이미지 업로드 실패 (이미지가 없는 등)
+            error_log('social sign up image upload error: ' . $e->getMessage() . print_r($e->getTrace(), true));
+            // 회원가입에 영향없으므로 계속 진행
         }
     }
 
@@ -337,13 +339,21 @@ class SocialService
      */
     function socialProfileImgUploader($dest_file_path, $file_url, $width, $height)
     {
+        if (empty($file_url)) {
+            return;
+        }
+
+        if ($width && $height) {
+            return;
+        }
+
         $dir_path = dirname($dest_file_path);
         if (!mkdir($dir_path, G5_DIR_PERMISSION, true) && !is_dir($dir_path)) {
             return;
         }
 
         list($image_width, $image_height, $ext) = getimagesize($file_url);
-        if ($width && $height) {
+        if ($image_width && $image_height && $ext) {
             $ratio = max($width / $image_width, $height / $image_height);
             $image_height = ceil($height / $ratio);
             $x = ($image_width - $width / $ratio) / 2;
@@ -351,6 +361,9 @@ class SocialService
 
             // 최종이미지가 저장될 객체
             $new_image = imagecreatetruecolor($width, $height);
+            if (!$new_image) {
+                return;
+            }
             if ($ext == 1) {
                 $image = imagecreatefromgif($file_url);
             } else if ($ext == 3) {
@@ -365,22 +378,31 @@ class SocialService
                 return;
             }
 
-            imagecopyresampled($new_image, $image,
+            $result = imagecopyresampled(
+                $new_image,
+                $image,
                 0, 0,
                 $x, 0,
                 $width, $height,
-                $image_width, $image_height);
+                $image_width, $image_height
+            );
+            if (!$result) {
+                return;
+            }
 
             if (!imagegif($new_image, $dest_file_path)) {
-                throw new \RuntimeException('이미지 저장 실패', 400);
+                error_log('social profile image upload error: ' . $dest_file_path);
             }
 
             $result = chmod($dest_file_path, G5_FILE_PERMISSION);
             if (!$result) {
-                throw new \RuntimeException('파일 권한 변경 실패', 400);
+                error_log('social profile image upload error: chmod fail', $dest_file_path);
             }
 
-            imagedestroy($new_image);
+            if (\PHP_VERSION_ID > 80000) {
+                //php 8 부터 지원안함.
+                @imagedestroy($new_image);
+            }
         }
     }
 
