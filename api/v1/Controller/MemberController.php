@@ -10,6 +10,7 @@ use API\Exceptions\HttpUnprocessableEntityException;
 use API\Service\MemberImageService;
 use API\Service\MemberService;
 use API\Service\PointService;
+use API\Service\Social\SocialService;
 use API\v1\Model\Request\Member\ChangeCertificationEmailRequest;
 use API\v1\Model\Request\Member\CreateMemberRequest;
 use API\v1\Model\Request\Member\SearchPasswordResetMailReqeust;
@@ -29,12 +30,15 @@ class MemberController
     private MemberService $member_service;
     private MemberImageService $image_service;
     private PointService $point_service;
+    private SocialService $social_service;
 
     public function __construct(
         MemberService $member_service,
         MemberImageService $image_service,
-        PointService $point_service
+        PointService $point_service,
+        SocialService $social_service
     ) {
+        $this->social_service = $social_service;
         $this->member_service = $member_service;
         $this->image_service = $image_service;
         $this->point_service = $point_service;
@@ -450,6 +454,7 @@ class MemberController
                 throw new HttpForbiddenException($request, "최고 관리자는 탈퇴할 수 없습니다.");
             }
 
+            $this->social_service->leaveMember($member['mb_id']);
             $this->member_service->leaveMember($member);
 
             return api_response_json($response, array("message" => "회원탈퇴가 완료되었습니다."));
