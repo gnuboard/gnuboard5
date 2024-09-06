@@ -122,7 +122,7 @@ class BoardPermission
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_READ_WRITE);
         $this->checkAccessCert($member);
-        $this->checkReadSecretWrite($member, $write, $password);
+        $this->checkReadSecretWrite($member, $write, false, $password);
         $this->checkMemberPoint('read', $member, $write);
     }
 
@@ -594,9 +594,16 @@ class BoardPermission
 
     /**
      * 비밀글 읽기 권한 체크
+     * @param array $member
+     * @param array $write
+     * @param bool $writer_check
+     * false: 작성자가 달라도 비밀번호만 알고있으면 볼 수 있습니다. - 그누보드 5 기본값
+     * true 로그인회원과 작성자 일치시만 보기
+     * @param $password
+     * @return void
      * @throws Exception
      */
-    private function checkReadSecretWrite(array $member, array $write, $password = null): void
+    private function checkReadSecretWrite(array $member, array $write, bool $writer_check = false, $password = null): void
     {
         if (!str_contains($write['wr_option'], "secret")) {
             return;
@@ -608,8 +615,8 @@ class BoardPermission
             return;
         }
 
-        // 비회원 비밀글 읽기 권한 체크
-        if (!$mb_id && $password != null && trim($write['wr_password'])) {
+        // 비회원의 비밀글 읽기 권한 체크
+        if (empty($write['mb_id']) && $write['wr_password'] && !empty($password)) {
             $result = check_password($password, $write['wr_password']);
             if (!$result) {
                 $this->throwException(self::ERROR_NO_ACCESS_PASSWORD);
@@ -629,6 +636,19 @@ class BoardPermission
             }
         }
 
+        // 글쓴이가 아니라도 비밀번호를 알고있으면 읽을 수 있음
+        if (!$writer_check) {
+            $writer_id = $write['mb_id'] ?? '';
+            $writer = $this->member_service->fetchMemberById($writer_id);
+            if (!$writer) {
+                $this->throwException(self::ERROR_NO_ACCESS_PASSWORD);
+            }
+            if (check_password($password, $writer['mb_password'])) {
+                return;
+            }
+            $this->throwException(self::ERROR_NO_ACCESS_PASSWORD);
+        }
+
         $this->throwException(self::ERROR_NO_READ_SECRET);
     }
 
@@ -638,10 +658,14 @@ class BoardPermission
      * 비회원 글은 비밀번호가 필요합니다.
      * @param $mb_id
      * @param array $comment
+     * @param bool $writer_check
+     * false: 작성자가 달라도 비밀번호만 알고있으면 인증됩니다. 그누보드 5 기본값
+     * true 로그인회원과 작성자 일치시만 보기
      * @param ?string $password 비밀번호를 알고있을경우
+     *
      * @return bool
      */
-    public function canReadSecretComment($mb_id, array $comment, $password = null): bool
+    public function canReadSecretComment($mb_id, array $comment, bool $writer_check = false, $password = null): bool
     {
         if (!str_contains($comment['wr_option'], "secret")) {
             return true;
@@ -656,7 +680,7 @@ class BoardPermission
         }
 
         //비밀글 읽기 권한 체크
-        if (!empty($password) && trim($comment['wr_password'])) {
+        if (trim($comment['wr_password']) && !empty($password)) {
             if (check_password($password, $comment['wr_password'])) {
                 return true;
             }
@@ -667,56 +691,20 @@ class BoardPermission
             return true;
         }
 
-        return false;
-    }
-
-    /**
-     * 비밀댓글 읽기 권한 확인
-     * (비밀번호만 맞으면 회원이 작성해도 상관없이 권한부여)
-     * @param $mb_id
-     * @param array $comment
-     * @param ?string $password 비밀번호를 알고있을경우
-     * @return bool
-     */
-    public function canReadSecretCommenWithPassword($mb_id, array $comment, $password = null): bool
-    {
-        if (!str_contains($comment['wr_option'], "secret")) {
-            return true;
-        }
-
-        if (empty($password)) {
-            return false;
-        }
-
-        if (is_super_admin($this->config, $mb_id)) {
-            return true;
-        }
-
-        if ($this->isBoardManager($mb_id)) {
-            return true;
-        }
-
-        //비회원 비밀글 읽기 권한 체크
-        if (trim($comment['wr_password'])) {
-            if (check_password($password, $comment['wr_password'])) {
+        if (!$writer_check) {
+            $writer_id = $comment['mb_id'] ?? '';
+            $writer = $this->member_service->fetchMemberById($writer_id);
+            if (!$writer) {
+                return false;
+            }
+            if (check_password($password, $writer['mb_password'])) {
                 return true;
             }
-            return false;
-        }
-
-        // 그누보드 5 정책 - 회원이 쓴 댓글이지만 비밀번호만 알고있으면 읽을 수 있음
-        $writer_id = $comment['mb_id'] ?? '';
-        $writer = $this->member_service->fetchMemberById($writer_id);
-        if (!$writer) {
-            return false;
-        }
-
-        if (check_password($password, $writer['mb_password'])) {
-            return true;
         }
 
         return false;
     }
+
 
     /**
      * 답변글이 있는지 체크
@@ -739,7 +727,7 @@ class BoardPermission
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_READ_WRITE);
         $this->checkAccessCert($member);
-        $can_read = $this->canReadSecretCommenWithPassword($member['mb_id'], $comment, $password);
+        $can_read = $this->canReadSecretComment($member['mb_id'], $comment, false, $password);
         if (!$can_read) {
             $this->throwException(self::ERROR_NO_READ_SECRET);
         }
