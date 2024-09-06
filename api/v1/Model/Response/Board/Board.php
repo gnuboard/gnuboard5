@@ -39,6 +39,18 @@ class Board
     public string $bo_mobile_subject = '';
 
     /**
+     * 게시판 스킨
+     * @OA\Property(example="basic")
+     */
+    public string $bo_skin = '';
+    
+    /**
+     * 게시판 모바일 스킨
+     * @OA\Property(example="basic")
+     */
+    public string $bo_mobile_skin = '';
+
+    /**
      * 접속 허용 디바이스
      * @OA\Property(example="both")
      */
