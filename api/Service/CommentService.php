@@ -47,7 +47,7 @@ class CommentService
             $comment['save_content'] = $comment['wr_content'];
             $comment['mb_icon_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'icon');
             $comment['mb_image_path'] = $this->image_service->getMemberImagePath($comment['mb_id'], 'image');
-            $can_read_comment = $this->board_permission->canReadSecretComment($mb_id, $comment, $password);
+            $can_read_comment = $this->board_permission->canReadSecretCommenWithPassword($mb_id, $comment, $password);
             // 수정,삭제는 읽기 권한과 동일함.
             $comment['is_del'] = $can_read_comment;
             $comment['is_edit'] = $can_read_comment;
