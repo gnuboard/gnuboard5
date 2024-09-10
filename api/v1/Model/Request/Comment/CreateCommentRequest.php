@@ -10,11 +10,15 @@ use API\v1\Traits\SchemaHelperTrait;
  *     description="댓글 작성 모델",
  * )
  */
-
 #[\AllowDynamicProperties]
 class CreateCommentRequest
 {
     use SchemaHelperTrait;
+    /**
+     * 부모댓글 ID(대댓글일 경우)
+     * @OA\Property(example=0)
+     */
+    public int $comment_id = 0;
 
     /**
      * 댓글 내용
@@ -39,12 +43,6 @@ class CreateCommentRequest
      * @OA\Property(example="옵션")
      */
     public string $wr_option = '';
-
-    /**
-     * 부모댓글 ID(대댓글일 경우)
-     * @OA\Property(example=0)
-     */
-    public int $comment_id = 0;
 
     /**
      * 대댓글 여부
@@ -109,7 +107,6 @@ class CreateCommentRequest
             $this->wr_name = sanitize_input($this->wr_name, 37);
         } else {
             $this->wr_name = sanitize_input($this->wr_name, 20);
-            
         }
 
         if (!$member['mb_id'] && $this->wr_name === '') {

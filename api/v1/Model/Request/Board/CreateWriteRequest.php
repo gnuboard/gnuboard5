@@ -15,15 +15,14 @@ use Exception;
 class CreateWriteRequest
 {
     use SchemaHelperTrait;
-    
+
     public int $wr_num = 0;
 
     /**
-     * 게시글 답글여부
-     * @OA\Property(example="답글여부")
+     * 게시글 답글 단계
      */
-    public string $wr_reply;
-
+    public string $wr_reply = '';
+    
     private string $wr_seo_title = '';
 
     public function setWrSeoTitle(string $wr_seo_title): void
@@ -113,7 +112,7 @@ class CreateWriteRequest
     public string $wr_option = '';
 
     /**
-     * 
+     *
      * @OA\Property(example="게시글 내용이 html 일때 필수 'html1' 또는 'html2' - html2 는 \n 을 br 태그로 변환합니다. ")
      */
     public string $html = '';
@@ -143,8 +142,8 @@ class CreateWriteRequest
     public bool $notice = false;
 
     /**
-     * 부모글 ID(답글일 경우)
-     * @OA\Property(example=false)
+     * 부모글 ID(답글일 경우) 없으면 0
+     * @OA\Property(example=0)
      */
     public ?int $wr_parent = 0;
 
@@ -294,6 +293,7 @@ class CreateWriteRequest
     public function toArray()
     {
         return [
+            'wr_reply' => $this->wr_reply,
             'wr_num' => $this->wr_num,
             'wr_seo_title' => $this->wr_seo_title,
             'mb_id' => $this->mb_id,
