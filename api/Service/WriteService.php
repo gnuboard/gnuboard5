@@ -3,9 +3,13 @@
 namespace API\Service;
 
 use API\Database\Db;
+use API\v1\Model\Response\Write\FileResponse;
 use API\v1\Model\Response\Write\Thumbnail;
 use Exception;
 
+/**
+ * 게시물과 댓글관련
+ */
 class WriteService
 {
     public array $board;
@@ -87,34 +91,39 @@ class WriteService
         foreach ($input_data as $write) {
             $write['mb_icon_path'] = $this->image_service->getMemberImagePath($write['mb_id'], 'icon');
             $write['mb_image_path'] = $this->image_service->getMemberImagePath($write['mb_id'], 'image');
-            if ($use_show_file) {
-                $write['images'] = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
-                $write['normal_files'] = $this->file_service->getFilesByType((int)$write['wr_id'], 'file');
-            }
             $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
             $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
-
-            // @todo 썸네일
-            $write['thumbnail'] = new Thumbnail([]);
-            //게시판설정에서 내용보기 체크시
             $write['wr_password'] = '';
-            if ($use_show_content) {
-                if (strpos($write['wr_option'], 'secret') !== false) {
-                    $empty_write = array_map(function () {
-                        return '';
-                    }, $write);
-                    $write = array_merge($empty_write, [
-                        'wr_id' => $write['wr_id'],
-                        'wr_num' => $write['wr_num'],
-                        'wr_parent' => $write['wr_parent'],
-                        'wr_reply' => $write['wr_reply'],
-                        'wr_option' => $write['wr_option'],
-                        'ca_name' => $write['ca_name'],
-                        'wr_content' => '비밀글입니다.'
-                    ]);
-                }
-            } else {
+
+            // 게시판설정에서 내용보기 안할 때
+            if (!$use_show_content) {
                 $write['wr_content'] = '';
+            }
+
+            // 비밀글
+            if (strpos($write['wr_option'], 'secret') !== false) {
+                $empty_write = array_map(function () {
+                    return '';
+                }, $write);
+                $write = array_merge($empty_write, [
+                    'wr_id' => $write['wr_id'],
+                    'wr_num' => $write['wr_num'],
+                    'wr_parent' => $write['wr_parent'],
+                    'wr_reply' => $write['wr_reply'],
+                    'wr_option' => $write['wr_option'],
+                    'ca_name' => $write['ca_name'],
+                    'wr_content' => '비밀글입니다.'
+                ]);
+            } else {
+                // 썸네일
+                $thumb = $this->getBoardThumbnail($write, $board['bo_gallery_width'], $board['bo_gallery_height']) ?: [];
+                $write['thumbnail'] = new Thumbnail($thumb);
+
+                // 파일 보기
+                if ($use_show_file) {
+                    $write['images'] = new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image'));
+                    $write['normal_files'] = new FileResponse ($this->file_service->getFilesByType((int)$write['wr_id'], 'file'));
+                }
             }
 
             $result[] = $write;
@@ -399,10 +408,7 @@ class WriteService
         $min_wr_num = $this->fetchMinimumWriteNumber() - 1;
         $data->wr_num = $parent_write ? $parent_write['wr_num'] : $min_wr_num;
         $data->wr_parent = $parent_write['wr_id'] ?? 0;
-
-        // TODO: include url.lib.php 문제 해결 필요
-        // exist_seo_title_recursive('bbs', generate_seo_title($data->wr_subject), $this->table);
-        $data->setWrSeoTitle('');
+        $data->setWrSeoTitle($this->url_service->getSeoTtitleRecursive('bbs', $data['wr_subject'], $this->table));
         $data->setMbId($member['mb_id'] ?? '');
         $data->setWrDatetime(G5_TIME_YMDHIS);
         $data->setWrLast(G5_TIME_YMDHIS);
@@ -741,5 +747,56 @@ class WriteService
     {
         global $g5;
         $this->table = $g5['write_prefix'] . $bo_table;
+    }
+    
+    /**
+     * 1 개의 게시물에 등록된 썸네일 추출
+     *
+     * 첨부파일과 본문이미지 둘다 있으면 첨부파일 우선
+     * @param array $write
+     * @param int $width 썸네일 가로 사이즈
+     * @param ?int $hight 썸네일 세로 사이즈 없으면 가로 사이즈에 맞춤
+     * @return array ['src' => '썸네일 경로', 'ori' => '원본 이미지 경로', 'alt' => '이미지 설명'] 실패시 빈 배열
+     */
+    public function getBoardThumbnail(array $write, $width, $hight = null)
+    {
+        $attach_images = $this->file_service->getFilesByType($write['wr_id'] , 'image');
+        if (isset($attach_images[0])) {
+            //source 경로 추출
+            $source_path = G5_DATA_PATH . DIRECTORY_SEPARATOR . 'file' . DIRECTORY_SEPARATOR . $this->board['bo_table'];
+            $target_path = $source_path; //동일
+            $file_name = basename($attach_images[0]['bf_file'] ?? '');
+            $thumb_name = ThumbnailService::createThumbnail($file_name, $source_path, $target_path, $width, $hight);
+            //src - url
+            //ori - 원본
+            //alt - 설명
+            return [
+                'src' => $thumb_name ? G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $thumb_name : '',
+                'ori' => G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $attach_images[0]->bf_file,
+                'alt' => $attach_images[0]->bf_content === '' ? $attach_images[0]->bf_source : $attach_images[0]->bf_content
+            ];
+        }
+
+        $image_tag = ThumbnailService::getFirstImageTag($write['wr_content']);
+        //src 추출
+        preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"]/i', $image_tag, $matches);
+        $filefullpath = $matches[1] ?? '';
+        if (!$filefullpath) {
+            return [];
+        }
+
+        //alt 추출
+        preg_match('/alt="([^"]+)"/', $image_tag, $alt);
+        $alt = $alt[1] ?? '';
+        $ym_dir = date('Ym');
+        $save_path = G5_DATA_PATH . DIRECTORY_SEPARATOR . G5_EDITOR_DIR . DIRECTORY_SEPARATOR . $ym_dir;
+        $filename = basename($filefullpath);
+        $source_path = \dirname(\str_replace(G5_DATA_URL, G5_DATA_PATH, $filefullpath));
+        $thumb_name = ThumbnailService::createThumbnail($filename, $source_path, $save_path, $width, $hight);
+        return [
+            'src' => $thumb_name ? G5_DATA_URL . '/' . G5_EDITOR_DIR . '/' . $ym_dir . '/' . $thumb_name : '',
+            'ori' => $filefullpath,
+            'alt' => $alt
+        ];
     }
 }

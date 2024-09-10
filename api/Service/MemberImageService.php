@@ -93,7 +93,7 @@ class MemberImageService
                 throw new Exception("이미지 파일이 아닙니다.", 400);
             }
             if ($size[0] > $limit_width || $size[1] > $limit_height) {
-                $thumb = ThumbnailService::makeThumbnailImage($file_fullname, $file_dir, $file_dir, $limit_width, $limit_height, true, true);
+                $thumb = ThumbnailService::createThumbnail($file_fullname, $file_dir, $file_dir, $limit_width, $limit_height, true, true);
                 $thumbnail_path = $file_dir . '/' . $thumb;
 
                 if ($thumb) {

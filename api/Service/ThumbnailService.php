@@ -26,7 +26,7 @@ class ThumbnailService
      */
     public static function getThumbnailHtml($contents, $board_image_width, $thumb_width = 0)
     {
-        $config = getConfig();
+        $config = ConfigService::getConfig();
 
         if (!$thumb_width) {
             $thumb_width = $board_image_width;
@@ -68,7 +68,7 @@ class ThumbnailService
             $srcfile = G5_PATH . $data_path;
             $filename = basename($srcfile);
             $filepath = dirname($srcfile);
-            $thumb_file = self::makeThumbnailImage($filename, $filepath, $filepath, $thumb_width);
+            $thumb_file = self::createThumbnail($filename, $filepath, $filepath, $thumb_width);
 
             if (!$thumb_file) {
                 continue;
@@ -95,9 +95,9 @@ class ThumbnailService
 
 
     /**
-     * 원본의 확장자를 유지하면서 그대로 썸네일 파일을 생성합니다.
+     * 썸네일 파일을 생성합니다.
      *
-     * 폴더도 생성
+     * 원본 확장자를 유지, 저장 디렉토리도 같이생성
      * gif, jpeg/jpg, png, webp 에 대해서만 적용
      *
      * @param string $filename
@@ -112,7 +112,7 @@ class ThumbnailService
      * @param string $um_value 이미지 unsharp 마스크 적용값 amount, radius, threshold
      * @return false|string  썸네일 파일명| 생성 실패 시 false
      */
-    public static function makeThumbnailImage(
+    public static function createThumbnail(
         string $filename,
         $source_path,
         $target_path,
@@ -185,12 +185,11 @@ class ThumbnailService
             return false;
         }
 
-        // 썸네일 이미지가 있고, 원본파일보다 생성일자가 더 최신이면 기존 썸네일 이미지 반환
+        // 원본파일보다 생성일자가 더 최신이면 기존 썸네일 이미지 반환
         $thumb_file = "$target_path/thumb-{$thumb_name}_{$thumb_width}x{$thumb_height}.{$file_ext}";
-        if (file_exists($thumb_file)) {
-            $thumb_time = @filemtime($thumb_file) ?: 0;
+        $thumb_time = @filemtime($thumb_file) ?: 0;
+        if ($thumb_time !== 0) {
             $source_time = @filemtime($source_file) ?: 0;
-
             if ($is_create === false && $source_time < $thumb_time) {
                 return basename($thumb_file);
             }
@@ -496,7 +495,7 @@ class ThumbnailService
 
             chmod($thumb_file, G5_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
 
-            // 7. 결과 반환
+            // 6. 결과 반환
 
             // 썸네일 생성 실패.
             if (!$dst) {
@@ -509,7 +508,7 @@ class ThumbnailService
             error_log($e->getFile() . ' ' . $e->getLine() . ' ' . $e->getMessage());
             return false;
         } finally {
-            // 8. 메모리 할당 해제
+            // 7. 메모리 할당 해제
             ini_restore('memory_limit');
 
             // imagedestroy() php 7.4 이하만 동작
@@ -762,7 +761,7 @@ class ThumbnailService
     /**
      * getimagesize() 함수로 이미지 정보를 가져와 필요한 메모리 사용량을 계산한다.
      * @see https://www.php.net/manual/en/function.imagecreatefromjpeg.php#61709
-     * @param $image_info
+     * @param array $image_info getimagesize() 함수반환값인 이미지 정보배열
      *
      * @return int|false 이미지 메모리 사용량 MB 단위의 정수 리턴
      */
