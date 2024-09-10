@@ -17,6 +17,7 @@ use API\Service\EncryptionService;
 use API\Service\MemberImageService;
 use API\Service\PointService;
 use API\Service\ScrapService;
+use API\Service\ThumbnailService;
 use API\Service\WriteService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
@@ -29,6 +30,7 @@ use API\v1\Model\Response\Board\Board;
 use API\v1\Model\Response\Board\CreateWriteResponse;
 use API\v1\Model\Response\Board\GetWritesResponse;
 use API\v1\Model\Response\Write\CommentResponse;
+use API\v1\Model\Response\Write\FileResponse;
 use API\v1\Model\Response\Write\GetCommentsResponse;
 use API\v1\Model\Response\Write\GoodWriteResponse;
 use API\v1\Model\Response\Write\NeighborWrite;
@@ -214,23 +216,25 @@ class BoardController
         // 권한 체크
         try {
             $this->board_permission->readWrite($member, $write);
+            if (strpos($write['wr_option'], 'secret') !== false) {
+                $thumb = [];
+            } else {
+                $thumb = $this->write_service->getBoardThumbnail($write, $board['bo_gallery_width'], $board['bo_gallery_height']) ?: [];
+            }
 
-            // TODO: include 제거로 인한 썸네일 처리 오류 해결.
-            // get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
-            $thumb = [];
             $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
             $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
-
             $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
             $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
-            
+            $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $board['bo_image_width']);
+
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
-                'normal_files' => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
+                'images' => new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')),
+                'normal_files' => new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')),
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,
                 'next' => $next
@@ -294,15 +298,16 @@ class BoardController
             $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
-            
+
             $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
             $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
-            
+            $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $board['bo_image_width']);
+
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => $this->file_service->getFilesByType((int)$write['wr_id'], 'image'),
-                'normal_files' => $this->file_service->getFilesByType((int)$write['wr_id'], 'file'),
+                'images' => new FileResponse ($this->file_service->getFilesByType((int)$write['wr_id'], 'image')),
+                'normal_files' => new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')),
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,
                 'next' => $next
@@ -1066,11 +1071,14 @@ class BoardController
             $this->write_service->updateWriteGood($write['wr_id'], $good_type);
 
             $write = $this->write_service->fetchWrite((int)$write['wr_id']);
+            if (!$write) {
+                throw new HttpNotFoundException($request, "게시글 정보가 존재하지 않습니다.");
+            }
             $word = get_good_word($good_type);
             $response_data = new GoodWriteResponse([
-                "message" => "해당 글을 {$word}하였습니다.",
-                "good" => $write['wr_good'],
-                "nogood" => $write['wr_nogood']
+                'message' => "해당 글을 {$word}하였습니다.",
+                'good' => $write['wr_good'],
+                'nogood' => $write['wr_nogood']
             ]);
             return api_response_json($response, $response_data);
         } catch (Exception $e) {

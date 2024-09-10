@@ -5,8 +5,6 @@ namespace API\Service;
 use Psr\Http\Message\UploadedFileInterface;
 use Exception;
 
-require_once G5_LIB_PATH . '/thumbnail.lib.php';
-
 class MemberImageService
 {
     private const IMAGE_DIR = '/member_image';
@@ -91,8 +89,11 @@ class MemberImageService
         $origin_path = $file_dir . '/' . $file_fullname;
         if (file_exists($origin_path)) {
             $size = getimagesize($origin_path);
+            if($size === false) {
+                throw new Exception("이미지 파일이 아닙니다.", 400);
+            }
             if ($size[0] > $limit_width || $size[1] > $limit_height) {
-                $thumb = thumbnail($file_fullname, $file_dir, $file_dir, $limit_width, $limit_height, true, true);
+                $thumb = ThumbnailService::makeThumbnailImage($file_fullname, $file_dir, $file_dir, $limit_width, $limit_height, true, true);
                 $thumbnail_path = $file_dir . '/' . $thumb;
 
                 if ($thumb) {

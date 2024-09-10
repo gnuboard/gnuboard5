@@ -17,6 +17,11 @@ class BoardFileService
         $this->table = $g5['board_file_table'];
     }
 
+    /**
+     * BoardMiddleware 미들웨어에서 지정합니다.
+     * @param array $board
+     * @return void
+     */
     public function setBoard(array $board): void
     {
         $this->board = $board;
@@ -29,7 +34,10 @@ class BoardFileService
     }
 
     /**
-     * 게시글 파일 목록을 이미지와 파일로 분리하여 반환
+     *  게시글 파일 목록을 이미지와 파일로 분리하여 반환 url 을 생성합니다.
+     * @param int $wr_id
+     * @param string $type
+     * @return File[]
      */
     public function getFilesByType(int $wr_id, string $type)
     {
@@ -39,9 +47,9 @@ class BoardFileService
         $files = [];
         foreach ($fetch_files as $file) {
             if (preg_match("/\.(gif|jpg|jpeg|png|webp)$/i", $file['bf_file'])) {
-                $images[] = new File($file);
+                $images[] = $file;
             } else {
-                $files[] = new File($file);
+                $files[] = $file;
             }
         }
         return $type === 'image' ? $images : $files;
