@@ -411,7 +411,7 @@ class WriteService
         $min_wr_num = $this->fetchMinimumWriteNumber() - 1;
         $data->wr_num = $parent_write ? $parent_write['wr_num'] : $min_wr_num;
         $data->wr_parent = $parent_write['wr_id'] ?? 0;
-        $data->setWrSeoTitle($this->url_service->getSeoTtitleRecursive('bbs', $data['wr_subject'], $this->table));
+        $data->setWrSeoTitle($this->url_service->getSeoTtitleRecursive('bbs', $data->wr_subject, $this->table));
         $data->setMbId($member['mb_id'] ?? '');
         $data->setWrDatetime(G5_TIME_YMDHIS);
         $data->setWrLast(G5_TIME_YMDHIS);
