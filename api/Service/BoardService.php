@@ -21,12 +21,11 @@ class BoardService
     public function getCategories(): array
     {
         if (
-            !$this->board['bo_use_category']
-            || $this->board['bo_category_list'] === ""
+            !$this->board['bo_use_category'] || $this->board['bo_category_list'] === ''
         ) {
             return [];
         }
-        return explode("|", $this->board['bo_category_list']);
+        return explode('|', $this->board['bo_category_list']);
     }
 
     // ========================================
@@ -65,7 +64,7 @@ class BoardService
         global $g5;
         $query = "SELECT bo_table FROM `{$g5['board_table']}` ";
         $result = Db::getInstance()->run($query)->fetchAll();
-        if(!$result) {
+        if (!$result) {
             return [];
         }
         return $result;

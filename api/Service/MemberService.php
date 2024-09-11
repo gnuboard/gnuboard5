@@ -190,7 +190,7 @@ class MemberService
         }
 
         $query = "SELECT * FROM `{$this->table}` WHERE mb_id = :mb_id";
-        $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
+        $stmt = Db::getInstance()->run($query, ['mb_id' => $mb_id]);
         $cache[$mb_id] = $stmt->fetch();
         return $cache[$mb_id];
     }
@@ -209,8 +209,8 @@ class MemberService
                     AND mb_id <> :mb_id";
 
         $stmt = Db::getInstance()->run($query, [
-            "mb_nick" => $mb_nick,
-            "mb_id" => $mb_id
+            'mb_nick' => $mb_nick,
+            'mb_id' => $mb_id
         ]);
 
         return $stmt->fetchColumn() > 0;
@@ -224,7 +224,7 @@ class MemberService
     public function existsMemberById(string $mb_id): bool
     {
         $query = "SELECT EXISTS(SELECT 1 FROM {$this->table} WHERE mb_id = :mb_id) as exist";
-        $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
+        $stmt = Db::getInstance()->run($query, ['mb_id' => $mb_id]);
         return $stmt->fetchColumn() == 1;
     }
 

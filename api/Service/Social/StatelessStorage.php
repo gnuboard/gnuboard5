@@ -11,7 +11,7 @@ class StatelessStorage implements StorageInterface {
     private $data = [];
 
     public function get($key) {
-        return isset($this->data[$key]) ? $this->data[$key] : null;
+        return $this->data[$key] ?? null;
     }
 
     public function set($key, $value) {

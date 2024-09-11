@@ -249,13 +249,13 @@ class SocialService
 
 
     /**
-     * @param $provider
+     * @param string $provider
      * @param Profile $profile
      * @param $member_data
      * @return void
      * @throws \RuntimeException 이미 가입된 회원, 소셜 회원가입 실패
      */
-    public function signUpSocialMember($provider, $profile, $member_data)
+    public function signUpSocialMember(string $provider, Profile $profile, $member_data)
     {
         $is_exist = $this->checkExistSocialMember($provider, $profile->identifier);
 

@@ -17,11 +17,7 @@ class PopupService
     {
         $popup_table = $GLOBALS['g5']['new_win_table'];
         $query = "SELECT * FROM $popup_table WHERE nw_device = :device AND nw_begin_time <= NOW() AND nw_end_time >= NOW() ORDER BY nw_id DESC";
-        $result = Db::getInstance()->run($query, ['device' => $device])->fetchAll();
-        if (!$result) {
-            return false;
-        }
-        return $result;
+        return Db::getInstance()->run($query, ['device' => $device])->fetchAll();
     }
 
     /**

@@ -59,7 +59,7 @@ class PopupController
         $except_ids = $request->getQueryParams()['except_ids'] ?? '';
         // @todo cache
         $data = $this->popup_service->fetch_popup($device);
-        if (!$data || (is_countable($data) && count($data) === 0)) {
+        if (!$data || count($data) === 0) {
             return api_response_json($response, ['message' => '팝업이 없습니다.'], 404);
         }
 

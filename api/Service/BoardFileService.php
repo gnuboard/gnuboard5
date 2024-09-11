@@ -166,7 +166,7 @@ class BoardFileService
             'bf_no' => $bf_no,
             'bf_source' => $file->getClientFilename(),
             'bf_file' => $filename,
-            'bf_content' => $file_content ?? "",
+            'bf_content' => $file_content,
             'bf_filesize' => $file->getSize(),
             'bf_width' => 0,
             'bf_height' => 0,
@@ -184,7 +184,7 @@ class BoardFileService
         $values = [
             'bf_source' => $file->getClientFilename(),
             'bf_file' => $filename,
-            'bf_content' => $file_content ?? "",
+            'bf_content' => $file_content,
             'bf_filesize' => $file->getSize(),
             'bf_width' => 0,
             'bf_height' => 0,

@@ -18,7 +18,6 @@ class ConfigService
     }
 
     /**
-     * @TODO cache
      * @return mixed
      */
 

@@ -108,6 +108,7 @@ class ContentController
         if (empty($content)) {
             return api_response_json($response, ['message' => '콘텐츠가 없습니다.'], 404);
         }
+        
         $response_data = new ContentResponse($content);
         return api_response_json($response, $response_data);
     }

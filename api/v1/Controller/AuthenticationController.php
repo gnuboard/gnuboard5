@@ -37,8 +37,7 @@ class AuthenticationController
      *     path="/api/v1/token",
      *     summary="Access/Refresh Token 발급",
      *     tags={"인증"},
-     *     description="
-    Access Token & Refresh Token을 발급합니다.
+     *     description="Access Token & Refresh Token을 발급합니다.
     - Access Token은 API 요청에 사용되며, 일정 시간 후 만료됩니다.
     - Refresh Token은 Access Token 재발급에 필요하며 데이터베이스에 저장됩니다.
     ",
@@ -88,7 +87,7 @@ class AuthenticationController
             $refresh_token_decode = $this->token_manager->decode_token('refresh', $refresh_token);
         } catch (ExpiredException $e) {
             $this->auth_service->deleteRefreshToken($member['mb_id']);
-            throw $e;
+            throw $e; // Refresh Token 만료
         }
 
         // 기존 토큰 삭제 후 새로운 토큰 저장

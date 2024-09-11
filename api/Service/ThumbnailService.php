@@ -41,24 +41,29 @@ class ThumbnailService
         for ($i = 0;$i < count($matches[1]);$i++) {
             $img = $matches[1][$i];
             $img_tag = $matches[0][$i] ?? '';
-
             preg_match("/src=[\'\"]?([^>\'\"]+[^>\'\"]+)/i", $img, $match_img);
             $src = $match_img[1] ?? '';
             preg_match("/style=[\"\']?([^\"\'>]+)/i", $img, $match_img);
             $style = $match_img[1] ?? '';
-            preg_match("/width:\s*(\d+)px/", $style, $match_img);
-            $width = $match_img[1] ?? '';
-            preg_match("/height:\s*(\d+)px/", $style, $match_img);
-            $height = $match_img[1] ?? '';
-            preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img, $match_img);
+            $width = 0;
+            $height = 0;
+            if ($style) {
+                preg_match('/width:\s*([0-9]+)px/', $style, $match_img);
+                $width = $match_img[1] ?? '';
+                preg_match('/height:\s*([0-9]+)px/', $style, $match_img);
+                $height = $match_img[1] ?? '';
+                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img, $match_img);
+            }
             $alt = isset($match_img[1]) ? get_text($match_img[1]) : '';
 
             // 이미지 path 구함
             $url_parts = parse_url($src);
-            if (!$url_parts) {
+            if (!$url_parts || !isset($url_parts['path'])) {
                 continue;
             }
-            $url_path = $url_parts['path'] ?? '';
+
+            $url_path = $url_parts['path'];
+
             if (strpos($url_path, '/' . G5_DATA_DIR . '/') !== false) {
                 $data_path = preg_replace('/^\/.*\/' . G5_DATA_DIR . '/', '/' . G5_DATA_DIR, $url_path);
             } else {
@@ -82,7 +87,7 @@ class ThumbnailService
 
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if (strpos($img_tag, G5_DATA_DIR . '/' . G5_EDITOR_DIR) && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
-                $imgurl = str_replace(G5_URL, "", $src);
+                $imgurl = str_replace(G5_URL, '', $src);
                 $attr_href = run_replace('thumb_view_image_href', G5_BBS_URL . '/view_image.php?fn=' . rawurlencode($imgurl), $filename, '', $width, $height, $alt);
                 $thumb_tag = '<a href="' . $attr_href . '" target="_blank" class="view_image">' . $thumb_tag . '</a>';
             }
@@ -114,10 +119,10 @@ class ThumbnailService
      */
     public static function createThumbnail(
         string $filename,
-        $source_path,
-        $target_path,
-        $thumb_width,
-        $thumb_height = 0,
+        string $source_path,
+        string $target_path,
+        int $thumb_width,
+        int $thumb_height = 0,
         bool $is_create = false,
         bool $use_crop = false,
         string $crop_mode = 'center',
@@ -156,12 +161,12 @@ class ThumbnailService
 
         // 움직이는 gif 는 썸네일 생성하지 않음
         if ($file_ext === 'gif' && self::isAnimatedGif($source_file)) {
-            return basename($source_file);
+            return false;
         }
 
         // 움직이는 WebP 는 썸네일 생성하지 않음
         if ($file_ext === 'webp' && self::isAnimatedWebp($source_file)) {
-            return basename($source_file);
+            return false;
         }
 
         $is_dir = is_dir($target_path);
@@ -309,7 +314,7 @@ class ThumbnailService
             $src_h = $result_getimagesize[1];
 
             $ratio = $dst_h / $dst_w;
-
+            $use_ratio = !(defined('G5_USE_THUMB_RATIO') && false === G5_USE_THUMB_RATIO) || (defined('G5_THEME_USE_THUMB_RATIO') && false === G5_THEME_USE_THUMB_RATIO);
             if ($is_large) {
                 // 크롭 처리
                 if ($use_crop) {
@@ -332,9 +337,7 @@ class ThumbnailService
                             break;
                     }
                 } else { // 비율에 맞게 생성.
-                    if (!((defined('G5_USE_THUMB_RATIO') && false === G5_USE_THUMB_RATIO) ||
-                        (defined('G5_THEME_USE_THUMB_RATIO') && false === G5_THEME_USE_THUMB_RATIO)
-                    )) {
+                    if ($use_ratio) {
                         if ($src_w > $src_h) {
                             $tmp_h = round(($dst_w * $src_h) / $src_w);
                             $dst_y = round(($dst_h - $tmp_h) / 2);
@@ -347,8 +350,7 @@ class ThumbnailService
                     }
                 }
             } else {
-                if (((defined('G5_USE_THUMB_RATIO') && false === G5_USE_THUMB_RATIO)
-                    || (defined('G5_THEME_USE_THUMB_RATIO') && false === G5_THEME_USE_THUMB_RATIO))) {
+                if (!$use_ratio) {
                     //이미지 썸네일을 비율 유지 안함.
                     if ($src_w < $dst_w) {
                         if ($src_h >= $dst_h) {
@@ -429,7 +431,6 @@ class ThumbnailService
             } else {
                 // 크롭 아님
                 $dst = imagecreatetruecolor($dst_w, $dst_h);
-                $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
                 if ($file_ext === 'png') {
                     $bgcolor = imagecolorallocatealpha($dst, 0, 0, 0, 127);
                     imagefill($dst, 0, 0, $bgcolor);
@@ -446,9 +447,11 @@ class ThumbnailService
                         imagefill($dst, 0, 0, $current_transparent);
                         imagecolortransparent($dst, $current_transparent);
                     } else {
+                        $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
                         imagefill($dst, 0, 0, $bgcolor);
                     }
                 } else {
+                    $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
                     imagefill($dst, 0, 0, $bgcolor);
                 }
             }
@@ -704,7 +707,7 @@ class ThumbnailService
     public static function isAnimatedWebp($filename)
     {
         $result = false;
-        $file_handler = fopen($filename, "rb");
+        $file_handler = fopen($filename, 'rb');
         fseek($file_handler, 12);
         if (fread($file_handler, 4) === 'VP8X') {
             fseek($file_handler, 20);
@@ -813,7 +816,7 @@ class ThumbnailService
      * html 속 이미지 태그들 추출
      * @param $contents
      * @param $view
-     * @return false|\string[][]
+     * @return false|string[][]
      */
     public static function getImageTagFromHtml($contents, $view = true)
     {

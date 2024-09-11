@@ -18,15 +18,18 @@ class WriteService
     private PopularSearch $popular_service;
     private MemberImageService $image_service;
     private BoardFileService $file_service;
+    private UrlService $url_service;
 
     public function __construct(
         PopularSearch $popular_service,
         MemberImageService $image_service,
-        BoardFileService $file_service
+        BoardFileService $file_service,
+        UrlService $url_service
     ) {
         $this->file_service = $file_service;
         $this->image_service = $image_service;
         $this->popular_service = $popular_service;
+        $this->url_service = $url_service;
     }
 
     /**
@@ -439,10 +442,8 @@ class WriteService
      */
     public function updateWriteData(array $write, object $data): void
     {
-        // TODO include url.lib.php 문제 해결 필요
-        // exist_seo_title_recursive('bbs', generate_seo_title($data->wr_subject), $this->table, $write['wr_id']);
         $data = (array)$data;
-        $data['wr_seo_title'] = '';
+        $data['wr_seo_title'] = $this->url_service->generateSeoTitle($data['wr_subject']); 
         $data['wr_last'] = G5_TIME_YMDHIS;
 
         $this->updateWrite($write['wr_id'], $data);
@@ -511,8 +512,9 @@ class WriteService
     }
 
     /**
+     * @todo 다시 확인
      * 부모 아이디로 게시글 삭제
-     * @param int $wr_id 부모 게시글 아이디
+     * @param int $wr_parent
      * @return void
      */
     public function deleteWriteByParentId(int $wr_parent): void
@@ -620,7 +622,7 @@ class WriteService
     protected function getWhereSearchPart(array $search_params, &$params = []): string
     {
         if (!$search_params['is_search']) {
-            return "";
+            return '';
         }
 
         $spt = $search_params['spt'];
@@ -755,17 +757,17 @@ class WriteService
      * 첨부파일과 본문이미지 둘다 있으면 첨부파일 우선
      * @param array $write
      * @param int $width 썸네일 가로 사이즈
-     * @param ?int $hight 썸네일 세로 사이즈 없으면 가로 사이즈에 맞춤
+     * @param int $hight 썸네일 세로 사이즈 없으면 가로 사이즈에 맞춤
      * @return array ['src' => '썸네일 경로', 'ori' => '원본 이미지 경로', 'alt' => '이미지 설명'] 실패시 빈 배열
      */
-    public function getBoardThumbnail(array $write, $width, $hight = null)
+    public function getBoardThumbnail(array $write, $width, $hight = 0)
     {
         $attach_images = $this->file_service->getFilesByType($write['wr_id'] , 'image');
-        if (isset($attach_images[0])) {
+        if (isset($attach_images[0]['bf_file'])) {
             //source 경로 추출
             $source_path = G5_DATA_PATH . DIRECTORY_SEPARATOR . 'file' . DIRECTORY_SEPARATOR . $this->board['bo_table'];
             $target_path = $source_path; //동일
-            $file_name = basename($attach_images[0]['bf_file'] ?? '');
+            $file_name = basename($attach_images[0]['bf_file']);
             $thumb_name = ThumbnailService::createThumbnail($file_name, $source_path, $target_path, $width, $hight);
             //src - url
             //ori - 원본
@@ -773,7 +775,7 @@ class WriteService
             return [
                 'src' => $thumb_name ? G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $thumb_name : '',
                 'ori' => G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $attach_images[0]->bf_file,
-                'alt' => $attach_images[0]->bf_content === '' ? $attach_images[0]->bf_source : $attach_images[0]->bf_content
+                'alt' => $attach_images[0]['bf_content'] === '' ? $attach_images[0]['bf_source'] : $attach_images[0]['bf_content']
             ];
         }
 

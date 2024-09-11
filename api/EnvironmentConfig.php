@@ -34,7 +34,6 @@ class EnvironmentConfig
         // Load environment variables
         $this->dotenv = Dotenv::createImmutable(G5_PATH);
         $this->dotenv->load();
-
         $this->api_version = $_ENV['API_VERSION'] ?? self::DEFAULT_API_VERSION;
 
         if (!trim($_ENV['ACCESS_TOKEN_SECRET_KEY'])) {
@@ -64,13 +63,15 @@ class EnvironmentConfig
             $env_content .= "ACCESS_TOKEN_EXPIRE_MINUTES=" . self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES . PHP_EOL;
             $env_content .= "REFRESH_TOKEN_SECRET_KEY=" . self::createSecretTokenValue() . PHP_EOL;
             $env_content .= "REFRESH_TOKEN_EXPIRE_MINUTES=" . self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES . PHP_EOL;
+            $env_content .= "# 이메일 등 정보를 암호화하는데 쓰입니다." . PHP_EOL;
             $env_content .= "ENCRYPTION_KEY=" . self::createSecretTokenValue() . PHP_EOL;
             $env_content .= "AUTH_ISSUER=" . self::DEFAULT_AUTH_ISSUER . PHP_EOL;
             $env_content .= "AUTH_AUDIENCE=" . self::DEFAULT_AUTH_AUDIENCE . PHP_EOL;
-            $env_content .= "# CORS 설정\n";
-            $env_content .= "# 허용할 도메인을 , 로 구분하여 입력하세요. 도메인에 * 는 불가합니다." . PHP_EOL;
+            $env_content .= "# CORS 설정" . PHP_EOL;
+            $env_content .= "# 허용할 도메인을 , 로 구분하여 입력하세요." . PHP_EOL;
             $env_content .= "CORS_ALLOW_ORIGIN=" . G5_URL . PHP_EOL;
             $env_content .= 'CORS_ALLOW_METHODS="*"' . PHP_EOL;
+            $env_content .= 'CORS_ALLOW_CREDENTIALS="true"' . PHP_EOL;
 
             $result = file_put_contents($file_path, $env_content);
             if ($result === false) {
