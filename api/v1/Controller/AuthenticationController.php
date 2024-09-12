@@ -77,18 +77,13 @@ class AuthenticationController
         }
 
         // 토큰 생성
-        $claim = array('sub' => $member['mb_id']);
+        $claim = ['sub' => $member['mb_id']];
         $access_token = $this->token_manager->create_token('access', $claim);
         $refresh_token = $this->token_manager->create_token('refresh', $claim);
 
         // 토큰 디코딩
         $access_token_decode = $this->token_manager->decode_token('access', $access_token);
-        try {
-            $refresh_token_decode = $this->token_manager->decode_token('refresh', $refresh_token);
-        } catch (ExpiredException $e) {
-            $this->auth_service->deleteRefreshToken($member['mb_id']);
-            throw $e; // Refresh Token 만료
-        }
+        $refresh_token_decode = $this->token_manager->decode_token('refresh', $refresh_token);
 
         // 기존 토큰 삭제 후 새로운 토큰 저장
         $this->auth_service->deleteRefreshToken($member['mb_id']);
@@ -138,29 +133,30 @@ class AuthenticationController
             throw new HttpNotFoundException($request, '토큰이 존재하지 않습니다.');
         }
 
-        // 토큰 재생성
-        $claim = array('sub' => $token_info['mb_id']);
-        $access_token = $this->token_manager->create_token('access', $claim);
-        $refresh_token = $this->token_manager->create_token('refresh', $claim);
-
         // 토큰 디코딩
-        $access_token_decode = $this->token_manager->decode_token('access', $access_token);
         try {
-            $refresh_token_decode = $this->token_manager->decode_token('refresh', $refresh_token);
+            $old_refresh_token_decode = $this->token_manager->decode_token('refresh', $request_data->refresh_token);
         } catch (ExpiredException $e) {
             $this->auth_service->deleteRefreshToken($token_info['mb_id']);
             throw $e; // Refresh Token 만료
         }
 
+        // 토큰 재생성
+        $claim = ['sub' => $token_info['mb_id']];
+        $new_access_token = $this->token_manager->create_token('access', $claim);
+        $new_refresh_token = $this->token_manager->create_token('refresh', $claim);
+        $new_access_token_decode = $this->token_manager->decode_token('access', $new_access_token);
+        $new_refresh_token_decode = $this->token_manager->decode_token('refresh', $request_data->refresh_token);
+
         // 기존 토큰 갱신
-        $this->auth_service->updateRefreshToken($token_info['mb_id'], $refresh_token, $refresh_token_decode);
+        $this->auth_service->updateRefreshToken($token_info['mb_id'], $new_refresh_token, $old_refresh_token_decode);
 
         $response_data = new GenerateTokenResponse(
             [
-                'access_token' => $access_token,
-                'access_token_expire_at' => date('c', $access_token_decode->exp),
-                'refresh_token' => $refresh_token,
-                'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
+                'access_token' => $new_access_token,
+                'access_token_expire_at' => date('c', $new_access_token_decode->exp),
+                'refresh_token' => $new_refresh_token,
+                'refresh_token_expire_at' => date('c', $new_refresh_token_decode->exp),
                 'token_type' => 'Bearer',
             ]
         );
