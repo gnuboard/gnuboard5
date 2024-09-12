@@ -22,7 +22,7 @@ class GroupService
      */
     public function fetchGroups()
     {
-        $query = "SELECT * FROM {$this->group_table} ORDER BY gr_id";
+        $query = "SELECT * FROM {$this->group_table} ORDER BY gr_order";
         $stmt = Db::getInstance()->run($query);
 
         return $stmt->fetchAll();

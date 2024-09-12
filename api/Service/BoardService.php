@@ -39,7 +39,7 @@ class BoardService
      */
     public function fetchBoardsByGroupId(string $gr_id)
     {
-        $query = "SELECT * FROM {$this->table} WHERE gr_id = :gr_id";
+        $query = "SELECT * FROM {$this->table} WHERE gr_id = :gr_id ORDER BY bo_order";
         $stmt = Db::getInstance()->run($query, ['gr_id' => $gr_id]);
         return $stmt->fetchAll();
     }
