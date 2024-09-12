@@ -15,7 +15,7 @@ use Slim\App;
 $app->group('/polls', function (RouteCollectorProxy $group) {
     $group->get('/latest', [PollController::class, 'showLatest']);
     $group->get('/{po_id}', [PollController::class, 'show']);
-    $group->get('/{po_id}/{item}', [PollController::class, 'vote']);
+    $group->post('/{po_id}', [PollController::class, 'vote']);
     $group->post('/{po_id}/etc', [PollController::class, 'createEtc']);
     $group->delete('/{po_id}/etc/{pc_id}', [PollController::class, 'deleteEtc']);
 })->add(OptionalAccessTokenAuthMiddleware::class);

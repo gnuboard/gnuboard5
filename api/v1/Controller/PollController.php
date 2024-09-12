@@ -84,8 +84,8 @@ class PollController
     }
 
     /**
-     * @OA\Patch(
-     *      path="/api/v1/polls/{po_id}/{item}",
+     * @OA\Post (
+     *      path="/api/v1/polls/{po_id}",
      *      summary="설문조사 참여",
      *      description="설문조사 항목에 투표. 권한이 없거나 이미 참여한 경우는 투표할 수 없습니다. 포인트 설정이 되어있는 경우, 투표 시 포인트가 지급됩니다.",
      *      tags={"설문조사"},
@@ -96,7 +96,7 @@ class PollController
      *          description="설문조사 ID",
      *          @OA\Schema(type="integer")
      *      ),
-     *      @OA\Parameter(
+     *      @OA\RequestBody(
      *          name="item",
      *          in="path",
      *          required=true,
@@ -123,7 +123,7 @@ class PollController
     public function vote(Request $request, Response $response, array $args)
     {
         $po_id = $args['po_id'];
-        $item_id = $args['item'];
+        $item_id = $request->getParsedBody()['item'];
         /**
          * @var array $member
          */
@@ -136,7 +136,6 @@ class PollController
         if ($item_id < 1 || $item_id > 9) {
             return api_response_json($response, ['message' => '설문항목 번호가 잘못되었습니다.'], 400);
         }
-
 
         $poll = $this->poll_service->fetchPoll($po_id);
         if ($poll === null) {
@@ -202,7 +201,7 @@ class PollController
         if (!is_numeric($po_id)) {
             return api_response_json($response, ['message' => '설문조사 번호가 잘못되었습니다.'], 400);
         }
-        
+
         $is_guest = empty($member['mb_id']) == '';
         if ($is_guest) {
             $mb_id = '';

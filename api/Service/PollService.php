@@ -65,7 +65,7 @@ class PollService
         $poll_item_index = "po_cnt{$item_id}";
         $affect_rows = $db->update($poll_table, [
             $poll_item_index => $poll[$poll_item_index] + 1,
-            'po_ip' => $ip,
+            'po_ips' => $ip,
         ], [
             'po_id' => $po_id,
         ]);
@@ -83,7 +83,7 @@ class PollService
     public function checkAlreadyVote($poll, $member, $ip)
     {
         //member
-        if (isset($member['mb_id'])) {
+        if ($member['mb_id'] !== '') {
             $ids = explode(',', trim($poll['mb_ids']));
             return in_array($member['mb_id'], $ids);
         }
@@ -123,7 +123,7 @@ class PollService
             'mb_id' => $mb_id,
             'pc_datetime' => G5_TIME_YMDHIS
         ]);
-        return $query_result !== false ;
+        return $query_result !== false;
     }
 
     /**
