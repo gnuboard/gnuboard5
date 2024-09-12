@@ -112,10 +112,10 @@ class SocialService
                 //"approval_prompt" => "force",     // optional
             ];
 
-            // Twitter
+            // Twitter v1
             $social_config['Twitter'] = [
                 'enabled' => in_array('twitter', $social_list),
-                //'adapter' => in_array('twitter', $social_list) ? \API\Service\Social\Twitter::class : '',
+                'adapter' => in_array('twitter', $social_list) ? \Hybridauth\Provider\Twitter::class : '',
                 'callback' => $callback_base_url . '/twitter',
                 'supportRequestState' => false,
                 'keys' => [

@@ -398,6 +398,13 @@ class SocialController
             throw new HttpBadRequestException($request, '토큰이 없습니다.');
         }
 
+        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
+        $this->socialService->setProviderConfig($callback_base_url);
+        $is_use = $this->socialService->socialUseCheck($provider);
+        if (!$is_use) {
+            throw new HttpBadRequestException($request, '해당 소셜 로그인 설정이 비활성화 되어 있습니다.');
+        }
+
         $storage_data = [
             'access_token' => $social_access_token,
             'refresh_token' => '',
@@ -405,15 +412,7 @@ class SocialController
             'expires_in' => '',
             'token_type' => 'Bearer',
         ];
-        $callback_base_url = G5_URL . '/api/v1/social/login-callback';
-        $this->socialService->setProviderConfig($callback_base_url);
         $this->socialService->setProvider($provider, $storage_data);
-        $is_use = $this->socialService->socialUseCheck($provider);
-
-        if (!$is_use) {
-            throw new HttpBadRequestException($request, '해당 소셜 로그인 설정이 비활성화 되어 있습니다.');
-        }
-
 
         $tokens = [
             'access_token' => $social_access_token,
@@ -559,6 +558,13 @@ class SocialController
         if (!$social_access_token) {
             throw new HttpBadRequestException($request, '토큰이 없습니다.');
         }
+
+        $this->socialService->setProviderConfig($callback_base_url);
+        $is_use = $this->socialService->socialUseCheck($provider);
+        if (!$is_use) {
+            throw new HttpBadRequestException($request, '해당 소셜 로그인 설정이 비활성화 되어 있습니다.');
+        }
+
         $storage_data = [
             'access_token' => $social_access_token,
             'refresh_token' => '',
@@ -566,14 +572,7 @@ class SocialController
             'expires_in' => '',
             'token_type' => 'Bearer',
         ];
-
-        $this->socialService->setProviderConfig($callback_base_url);
         $this->socialService->setProvider($provider, $storage_data);
-        $is_use = $this->socialService->socialUseCheck($provider);
-
-        if (!$is_use) {
-            throw new HttpBadRequestException($request, '해당 소셜 로그인 설정이 비활성화 되어 있습니다.');
-        }
 
         // 프로필 조회
         try {
