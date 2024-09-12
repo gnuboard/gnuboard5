@@ -482,7 +482,6 @@ class BoardController
 
             $secret = $request_body['secret'] ?? false;
             $is_notice = $request_body['notice'] ?? false;
-
             $parent_write = [];
             if ($request_data->wr_parent) {
                 $parent_write = $this->write_service->fetchWrite($request_data->wr_parent);
@@ -497,7 +496,6 @@ class BoardController
             } else {
                 $this->board_permission->createWrite($member);
             }
-            // TODO: upload_max_filesize 제한 추가 필요
 
             // 게시글 등록
             $wr_id = $this->write_service->createWriteData($request_data, $member, $parent_write);
@@ -513,10 +511,6 @@ class BoardController
 
             // 게시글 등록 후 처리
             $this->point_service->addPoint($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
-
-            if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-                // naver_syndi_ping($board['bo_table'], $wr_id); // @todo 네이버 신디케이션
-            }
 
             if ($config['cf_email_use'] && $board['bo_use_email']) {
                 // TODO: 기존 코드를 API와 함께 사용할 수 있도록 변경 필요 (추후 Mail Class를 작업하면서 일괄 수정)
@@ -600,10 +594,6 @@ class BoardController
 
             $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], $is_notice);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
-
-            if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
-                // naver_syndi_ping($board['bo_table'], $write['wr_id']); // @todo 네이버 신디케이션
-            }
 
             run_event('api_update_write_after', $board, $write['wr_id']);
 
