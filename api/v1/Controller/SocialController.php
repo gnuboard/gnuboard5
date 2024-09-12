@@ -83,7 +83,7 @@ class SocialController
     /**
      * 웹뷰에서 쓰는 소셜 로그인 콜백
      * @OA\Get (
-     *     path="/api/v1/social/callback/{provider}",
+     *     path="/api/v1/social/login-callback/{provider}",
      *     tags={"소셜로그인"},
      *     summary="소셜 로그인 콜백 - 웹뷰에서 쓰는 API",
      *     description="소셜 로그인 콜백",
