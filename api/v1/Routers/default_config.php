@@ -7,7 +7,7 @@ use API\v1\Controller\ConfigController;
 use Slim\Routing\RouteCollectorProxy;
 
 
-$app->group('/config', function (RouteCollectorProxy $group) {
+$app->group('/v1/config', function (RouteCollectorProxy $group) {
     $group->get('/html', [ConfigController::class, 'getHtmlConfig']);
     $group->get('/policy', [ConfigController::class, 'getPolicyConfig']);
     $group->get('/member', [ConfigController::class, 'getMemberConfig']);

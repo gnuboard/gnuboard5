@@ -12,7 +12,7 @@ use Slim\App;
  */
 
 
-$app->group('/autosaves', function (RouteCollectorProxy $group) {
+$app->group('/v1/autosaves', function (RouteCollectorProxy $group) {
     $group->get('', [AutosaveController::class, 'index']);
     $group->post('', [AutosaveController::class, 'save']);
     $group->get('/count', [AutosaveController::class, 'getCount']);

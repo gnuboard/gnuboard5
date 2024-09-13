@@ -8,7 +8,7 @@ use API\v1\Controller\MemberController;
 use Slim\Routing\RouteCollectorProxy;
 
 
-$app->group('/members', function (RouteCollectorProxy $group) {
+$app->group('/v1/members', function (RouteCollectorProxy $group) {
     $group->get('/me', [MemberController::class, 'getMe'])->add(AccessTokenAuthMiddleware::class);
     $group->get('/{mb_id}', [MemberController::class, 'getMember'])->add(AccessTokenAuthMiddleware::class);
     $group->post('', [MemberController::class, 'create']);
@@ -17,7 +17,7 @@ $app->group('/members', function (RouteCollectorProxy $group) {
 })
 ->add(ConfigMiddleware::class);
 
-$app->group('/member', function (RouteCollectorProxy $group) {
+$app->group('/v1/member', function (RouteCollectorProxy $group) {
     $group->put('', [MemberController::class, 'update']);
     $group->post('/images', [MemberController::class, 'updateImages']);
     $group->delete('', [MemberController::class, 'leave']);

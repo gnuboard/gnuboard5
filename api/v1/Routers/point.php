@@ -7,6 +7,6 @@ use API\Middleware\ConfigMiddleware;
 use API\v1\Controller\PointController;
 
 
-$app->get('/member/points', [PointController::class, 'getPoints'])
+$app->get('/v1/member/points', [PointController::class, 'getPoints'])
     ->add(AccessTokenAuthMiddleware::class)
     ->add(ConfigMiddleware::class);

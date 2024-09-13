@@ -12,7 +12,7 @@ use Slim\App;
 /**
  * @var App $app
  */
-$app->group('/social', function (RouteCollectorProxy $group) {
+$app->group('/v1/social', function (RouteCollectorProxy $group) {
     // web, webview 앱
     $group->get('/login/{provider}', [SocialController::class, 'socialLogin']);
     $group->get('/login-callback/{provider}', [SocialController::class, 'socialLoginCallback'])->add(OptionalAccessTokenAuthMiddleware::class);

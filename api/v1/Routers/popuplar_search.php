@@ -11,6 +11,6 @@ use Slim\Routing\RouteCollectorProxy;
  * @var \Slim\App $app
  */
 
-$app->group('/populars', function (RouteCollectorProxy $group) {
+$app->group('/v1/populars', function (RouteCollectorProxy $group) {
     $group->get('', [PopularSearchController::class, 'show']);
 })->add(OptionalAccessTokenAuthMiddleware::class);

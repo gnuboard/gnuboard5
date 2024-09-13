@@ -11,6 +11,6 @@ use Slim\Routing\RouteCollectorProxy;
  * @var \Slim\App $app
  */
 
-$app->group('/newwins', function (RouteCollectorProxy $group) {
+$app->group('/v1/newwins', function (RouteCollectorProxy $group) {
     $group->get('', [PopupController::class, 'show']);
 })->add(OptionalAccessTokenAuthMiddleware::class);

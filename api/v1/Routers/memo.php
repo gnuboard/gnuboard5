@@ -13,7 +13,7 @@ use Slim\App;
  */
 
 
-$app->group('/member/memos', function (RouteCollectorProxy $group) {
+$app->group('/v1/member/memos', function (RouteCollectorProxy $group) {
     /**
      * 쪽지 목록 조회
      * 현재 로그인 회원의 쪽지 목록을 조회합니다.

@@ -10,7 +10,7 @@ use API\v1\Controller\ScrapController;
 use Slim\Routing\RouteCollectorProxy;
 
 
-$app->group('/member/scraps', function (RouteCollectorProxy $group) {
+$app->group('/v1/member/scraps', function (RouteCollectorProxy $group) {
     $group->get('', [ScrapController::class, 'getScraps']);
     $group->get('/{bo_table}/{wr_id}', [ScrapController::class, 'createPage'])
         ->add(WriteMiddleware::class)

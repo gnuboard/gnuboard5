@@ -9,10 +9,9 @@ use API\v1\Controller\BoardNewController;
 use Slim\Routing\RouteCollectorProxy;
 
 
-$app->group('/board-new', function (RouteCollectorProxy $group) {
+$app->group('/v1/board-new', function (RouteCollectorProxy $group) {
     $group->get('', [BoardNewController::class, 'getBoardNews'])
         ->add(OptionalAccessTokenAuthMiddleware::class);
     $group->delete('', [BoardNewController::class, 'deleteBoardNews'])
         ->add(AccessTokenAuthMiddleware::class);
-})
-    ->add(ConfigMiddleware::class);
+})->add(ConfigMiddleware::class);

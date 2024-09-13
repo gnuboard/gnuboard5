@@ -6,8 +6,7 @@ use API\Middleware\ConfigMiddleware;
 use API\v1\Controller\GroupController;
 use Slim\Routing\RouteCollectorProxy;
 
-$app->group('/groups', function (RouteCollectorProxy $group) {
+$app->group('/v1/groups', function (RouteCollectorProxy $group) {
     $group->get('', [GroupController::class, 'getGroups']);
     $group->get('/{gr_id}/boards', [GroupController::class, 'getBoards']);
-})
-    ->add(ConfigMiddleware::class);
+})->add(ConfigMiddleware::class);

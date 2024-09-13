@@ -19,6 +19,7 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
+
 // 그누보드 로딩
 $is_root = false;
 $g5_path = g5_root_path($is_root, 1);
@@ -90,15 +91,17 @@ $errorMiddleware->setDefaultErrorHandler($errorHandler);
  */
 // Set the base path for the API version
 $api_path = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
-$api_version = explode("/", str_replace($api_path, '', $_SERVER['REQUEST_URI']))[1];
-$app->setBasePath($api_path . '/' . $api_version);
+$app->setBasePath($api_path);
 
-// Include all Routers for the requested API version.
-$routerFiles = glob(__DIR__ . "/{$api_version}/Routers/*.php");
-foreach ($routerFiles as $routerFile) {
-    include $routerFile;
+$router_files = glob(__DIR__ . "/v1/Routers/*.php");
+foreach ($router_files as $router_file) {
+    include $router_file;
 }
 
+$plugin_router_files = glob(__DIR__ . '/Plugin/*/Routers/*.php');
+foreach ($plugin_router_files as $router_file) {
+    require $router_file;
+}
 /**
  * Route Cache (Optional)
  * To generate the route cache data, you need to set the file to one that does not exist in a writable directory.

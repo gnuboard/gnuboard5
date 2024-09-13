@@ -12,6 +12,6 @@ use Slim\App;
  * @var App $app
  */
 
-$app->group('/visit', function (RouteCollectorProxy $group) {
+$app->group('/v1/visit', function (RouteCollectorProxy $group) {
     $group->get('', [VisitController::class, 'show']);
 })->add(OptionalAccessTokenAuthMiddleware::class);

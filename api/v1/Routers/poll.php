@@ -12,7 +12,7 @@ use Slim\App;
  * @var App $app
  */
 
-$app->group('/polls', function (RouteCollectorProxy $group) {
+$app->group('/v1/polls', function (RouteCollectorProxy $group) {
     $group->get('/latest', [PollController::class, 'showLatest']);
     $group->get('/{po_id}', [PollController::class, 'show']);
     $group->post('/{po_id}', [PollController::class, 'vote']);

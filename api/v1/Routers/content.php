@@ -13,7 +13,7 @@ use Slim\App;
  * @var App $app
  */
 
-$app->group('/content', function (RouteCollectorProxy $group) {
+$app->group('/v1/content', function (RouteCollectorProxy $group) {
     $group->get('', [ContentController::class, 'index']);
     $group->get('/{co_id}', [ContentController::class, 'show']);
 })->add(OptionalAccessTokenAuthMiddleware::class);

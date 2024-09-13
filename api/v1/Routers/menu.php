@@ -12,6 +12,6 @@ use Slim\App;
  * @var App $app
  */
 
-$app->group('/menus', function (RouteCollectorProxy $group) {
+$app->group('/v1/menus', function (RouteCollectorProxy $group) {
     $group->get('', [MenuController::class, 'index']);
 })->add(OptionalAccessTokenAuthMiddleware::class);

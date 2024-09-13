@@ -49,6 +49,7 @@ class OASGenerator
     public function generate(string $root_path = G5_PATH): void
     {
         $api_dir = "{$root_path}/api/{$this->version}";
+        $plugin_dir = glob(G5_PATH . '/api/Plugin/*');
         $exception_dir = "{$root_path}/api/Exceptions";
         $handler_dir = "{$root_path}/api/Handlers";
         $openapi_file_path = "{$this->api_file_base_path}/{$this->filename}";
@@ -60,6 +61,7 @@ class OASGenerator
             $openapi = Generator::scan(
                 [
                     $api_dir,
+                    $plugin_dir,
                     $exception_dir,
                     $handler_dir,
                 ],
