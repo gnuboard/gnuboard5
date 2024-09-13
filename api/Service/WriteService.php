@@ -64,7 +64,7 @@ class WriteService
 
         $image_tag = ThumbnailService::getFirstImageTag($write['wr_content']);
         //src 추출
-        $result = preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"]/i', $image_tag, $matches);
+        preg_match('/<img[^>]+src=[\'"]([^\'"]+)[\'"]/i', $image_tag, $matches);
         $filefullpath = $matches[1] ?? '';
         if (!$filefullpath) {
             return [];
@@ -147,8 +147,8 @@ class WriteService
 
                 // 파일 보기
                 if ($use_show_file) {
-                    $write['images'] = new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image'));
-                    $write['normal_files'] = new FileResponse ($this->file_service->getFilesByType((int)$write['wr_id'], 'file'));
+                    $write['images'] = (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')))->files ?? [];
+                    $write['normal_files'] = (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [];
                 }
             }
 

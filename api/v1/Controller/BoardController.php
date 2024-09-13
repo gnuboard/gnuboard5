@@ -229,8 +229,8 @@ class BoardController
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')),
-                'normal_files' => new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')),
+                'images' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')))->files ?? [],
+                'normal_files' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [],
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,
                 'next' => $next
@@ -299,8 +299,8 @@ class BoardController
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => new FileResponse ($this->file_service->getFilesByType((int)$write['wr_id'], 'image')),
-                'normal_files' => new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')),
+                'images' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')))->files ?? [],
+                'normal_files' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [],
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,
                 'next' => $next
