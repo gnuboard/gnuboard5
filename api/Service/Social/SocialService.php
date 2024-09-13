@@ -3,6 +3,7 @@
 namespace API\Service\Social;
 
 use API\Database\Db;
+use API\Service\AuthenticationService;
 use API\Service\ConfigService;
 use API\Service\MemberService;
 use Hybridauth\Exception\InvalidArgumentException;
@@ -28,9 +29,13 @@ class SocialService
 
     private array $social_config = [];
 
+    private AuthenticationService $authentication_service;
 
-    public function __construct(MemberService $memberService)
-    {
+    public function __construct(
+        AuthenticationService $authentication_service,
+        MemberService $memberService
+    ) {
+        $this->authentication_service = $authentication_service;
         $this->config = ConfigService::getConfig();
         $this->memberService = $memberService;
     }
@@ -510,5 +515,16 @@ class SocialService
         return Db::getInstance()->delete($social_table, ['mb_id' => $mb_id]);
     }
 
+    /**
+     * 소셜 로그인 인증이후 서버로그인을 위한 토큰 생성
+     * @param $provider
+     * @param $profile
+     * @return array
+     */
+    public function getLoginTokenBySocialAuth($provider, $profile)
+    {
+        $member = $this->fetchMemberByIdentifier($provider, $profile->identifier);
+        return $this->authentication_service->generateLoginTokenByAuthMemberId($member['mb_id']);
+    }
 
 }

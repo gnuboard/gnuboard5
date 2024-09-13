@@ -155,22 +155,8 @@ class SocialController
 
         //비로그인 & 소셜가입자  -> 로그인
         if ($is_guest && $is_exist) {
-            $member = $this->socialService->fetchMemberByIdentifier($provider, $profile->identifier);
-            $claim = ['sub' => $member['mb_id']];
-            $login_access_token = $this->token_manager->create_token('access', $claim);
-            $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
-            $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
-            $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
-
-            $response_data = new GenerateTokenResponse(
-                [
-                    'access_token' => $login_access_token,
-                    'access_token_expire_at' => date('c', $access_token_decode->exp),
-                    'refresh_token' => $login_refresh_token,
-                    'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
-                    'token_type' => 'Bearer',
-                ]
-            );
+            $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile->identifier);
+            $response_data = new GenerateTokenResponse($login_token_data);
             return api_response_json($response, $response_data, 200);
         }
 
@@ -307,23 +293,9 @@ class SocialController
             return api_response_json($response, ['message' => $e->getMessage()], 400);
         }
 
-        // login
-        $member = $this->socialService->fetchMemberByIdentifier($provider, $profile->identifier);
-        $claim = ['sub' => $member['mb_id']];
-        $login_access_token = $this->token_manager->create_token('access', $claim);
-        $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
-        $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
-        $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
-
-        $response_data = new GenerateTokenResponse(
-            [
-                'access_token' => $login_access_token,
-                'access_token_expire_at' => date('c', $access_token_decode->exp),
-                'refresh_token' => $login_refresh_token,
-                'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
-                'token_type' => 'Bearer',
-            ]
-        );
+        // 로그인
+        $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile->identifier);
+        $response_data = new GenerateTokenResponse($login_token_data);
         $response->withoutHeader('Authorization');
 
         return api_response_json($response, $response_data);
@@ -457,22 +429,8 @@ class SocialController
         }
 
         // 로그인
-        $member = $this->socialService->fetchMemberByIdentifier($provider, $profile->identifier);
-        $claim = ['sub' => $member['mb_id']];
-        $login_access_token = $this->token_manager->create_token('access', $claim);
-        $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
-        $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
-        $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
-
-        $response_data = new GenerateTokenResponse(
-            [
-                'access_token' => $login_access_token,
-                'access_token_expire_at' => date('c', $access_token_decode->exp),
-                'refresh_token' => $login_refresh_token,
-                'refresh_token_expire_at' => date('c', $refresh_token_decode->exp),
-                'token_type' => 'Bearer',
-            ]
-        );
+        $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile->identifier);
+        $response_data = new GenerateTokenResponse($login_token_data);
 
         return api_response_json($response, $response_data);
     }
