@@ -146,7 +146,7 @@ class AuthenticationController
         $new_access_token = $this->token_manager->create_token('access', $claim);
         $new_refresh_token = $this->token_manager->create_token('refresh', $claim);
         $new_access_token_decode = $this->token_manager->decode_token('access', $new_access_token);
-        $new_refresh_token_decode = $this->token_manager->decode_token('refresh', $request_data->refresh_token);
+        $new_refresh_token_decode = $this->token_manager->decode_token('refresh', $new_refresh_token);
 
         // 기존 토큰 갱신
         $this->auth_service->updateRefreshToken($token_info['mb_id'], $new_refresh_token, $old_refresh_token_decode);
