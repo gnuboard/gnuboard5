@@ -44,7 +44,7 @@ class SocialService
      * @param bool $from_callback 웹 콜백에서 호출되었는지 여부
      * @return void
      */
-    function setProviderConfig($callback_base_url, $from_callback = false)
+    public function setProviderConfig($callback_base_url, $from_callback = false)
     {
         $config = $this->config;
         $social_list = explode(',', $config['cf_social_servicelist']) ?: [];
@@ -87,7 +87,7 @@ class SocialService
                     'id' => $from_callback ? $config['cf_facebook_appid'] : 'empty-id',
                     'secret' => $from_callback ? $config['cf_facebook_secret'] : 'empty-secret'
                 ],
-                'display' => "popup",
+                'display' => 'popup',
                 'scope' => 'email', // optional
                 'trustForwarded' => false
             ];
@@ -156,7 +156,7 @@ class SocialService
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
-    function setProvider(string $provider, $storage_data = null)
+    public function setProvider(string $provider, $storage_data = null)
     {
         // api 에서는 기본 세션저장소를 사용하지 않음.
         $storage = new StatelessStorage();
@@ -228,8 +228,8 @@ class SocialService
             return false;
         }
         // 로그인
-        return ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
-            || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME));
+        return ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date('Ymd', G5_SERVER_TIME))
+            || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date('Ymd', G5_SERVER_TIME));
     }
 
 
@@ -337,7 +337,7 @@ class SocialService
      * @param $height
      * @return void
      */
-    function socialProfileImgUploader($dest_file_path, $file_url, $width, $height)
+    public function socialProfileImgUploader($dest_file_path, $file_url, $width, $height)
     {
         if (empty($file_url)) {
             return;

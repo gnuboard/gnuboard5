@@ -85,7 +85,7 @@ class UploadFileRequest
     {
         foreach ($this->file_contents as $key => $content) {
             if (empty($content)) {
-                $this->file_contents[$key] = "";
+                $this->file_contents[$key] = '';
             }
         }
     }
@@ -97,7 +97,7 @@ class UploadFileRequest
     {
         $file_no = [];
         foreach ($this->file_dels as $key => $del) {
-            if ($del && ($del === true || $del === "true")) {
+            if ($del && ($del === true || $del === 'true')) {
                 $file_no[] = $key;
             }
         }

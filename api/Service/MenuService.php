@@ -17,7 +17,7 @@ class MenuService
         $menu_table = $GLOBALS['g5']['menu_table'];
         $query = "SELECT * FROM $menu_table WHERE me_use = 1";
         if ($is_mobile) {
-            $query .= " AND me_mobile_use = 1";
+            $query .= ' AND me_mobile_use = 1';
         }
         return Db::getInstance()->run($query)->fetchAll();
     }

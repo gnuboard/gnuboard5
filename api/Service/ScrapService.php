@@ -24,7 +24,7 @@ class ScrapService
     {
         $query = "SELECT count(*) FROM {$this->table} WHERE mb_id = :mb_id";
 
-        $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
+        $stmt = Db::getInstance()->run($query, ['mb_id' => $mb_id]);
         return $stmt->fetchColumn() ?: 0;
     }
 
@@ -39,9 +39,9 @@ class ScrapService
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id ORDER BY ms_id DESC LIMIT :offset, :per_page";
 
         $stmt = Db::getInstance()->run($query, [
-            "mb_id" => $mb_id,
-            "offset" => $page_params['offset'],
-            "per_page" => $page_params['per_page']
+            'mb_id' => $mb_id,
+            'offset' => $page_params['offset'],
+            'per_page' => $page_params['per_page']
         ]);
 
         return $stmt->fetchAll();
@@ -56,7 +56,7 @@ class ScrapService
     {
         $query = "SELECT * FROM {$this->table} WHERE ms_id = :ms_id";
 
-        $stmt = Db::getInstance()->run($query, ["ms_id" => $ms_id]);
+        $stmt = Db::getInstance()->run($query, ['ms_id' => $ms_id]);
         return $stmt->fetch();
     }
 
@@ -72,9 +72,9 @@ class ScrapService
         $query = "SELECT count(*) FROM {$this->table} WHERE mb_id = :mb_id AND bo_table = :bo_table AND wr_id = :wr_id";
 
         $stmt = Db::getInstance()->run($query, [
-            "mb_id" => $mb_id,
-            "bo_table" => $bo_table,
-            "wr_id" => $wr_id
+            'mb_id' => $mb_id,
+            'bo_table' => $bo_table,
+            'wr_id' => $wr_id
         ]);
         return $stmt->fetchColumn() > 0;
     }
@@ -91,10 +91,10 @@ class ScrapService
         $query = "INSERT INTO {$this->table} (mb_id, bo_table, wr_id, ms_datetime) VALUES (:mb_id, :bo_table, :wr_id, :ms_datetime)";
 
         Db::getInstance()->run($query, [
-            "mb_id" => $mb_id,
-            "bo_table" => $bo_table,
-            "wr_id" => $wr_id,
-            "ms_datetime" => date("Y-m-d H:i:s")
+            'mb_id' => $mb_id,
+            'bo_table' => $bo_table,
+            'wr_id' => $wr_id,
+            'ms_datetime' => date('Y-m-d H:i:s')
         ]);
     }
 
@@ -105,7 +105,7 @@ class ScrapService
      */
     public function deleteScrap(int $ms_id): void
     {
-        Db::getInstance()->delete($this->table, ["ms_id" => $ms_id]);
+        Db::getInstance()->delete($this->table, ['ms_id' => $ms_id]);
     }
 
     /**
@@ -116,7 +116,7 @@ class ScrapService
      */
     public function deleteScrapByWrite(string $bo_table, int $wr_id): void
     {
-        Db::getInstance()->delete($this->table, ["bo_table" => $bo_table, "wr_id" => $wr_id]);
+        Db::getInstance()->delete($this->table, ['bo_table' => $bo_table, 'wr_id' => $wr_id]);
     }
 
     public function setTable(string $table): void

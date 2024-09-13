@@ -253,7 +253,7 @@ class CreateSocialMemberRequest
         }
         
         if (!is_valid_utf8_string($this->mb_name)) {
-            $this->throwException("이름을 올바르게 입력해 주십시오.");
+            $this->throwException('이름을 올바르게 입력해 주십시오.');
         }
     }
 
@@ -269,18 +269,18 @@ class CreateSocialMemberRequest
         }
         
         if (!is_valid_utf8_string($this->mb_nick)) {
-            $this->throwException("닉네임을 올바르게 입력해 주십시오.");
+            $this->throwException('닉네임을 올바르게 입력해 주십시오.');
         }
         if (!is_valid_mb_nick($this->mb_nick)) {
-            $this->throwException("닉네임은 공백없이 한글, 영문, 숫자만 입력 가능합니다.");
+            $this->throwException('닉네임은 공백없이 한글, 영문, 숫자만 입력 가능합니다.');
         }
         if (is_prohibited_word($this->mb_nick, $config)) {
-            $this->throwException("이미 예약된 단어로 사용할 수 없는 닉네임 입니다.");
+            $this->throwException('이미 예약된 단어로 사용할 수 없는 닉네임 입니다.');
         }
         $member_service = new MemberService();
         // 모든 회원의 닉네임 중복 검사를 위해 mb_id 를 공백으로 구분.
         if($member_service->existsMemberByNick($this->mb_nick, ' ')) {
-            $this->throwException("이미 사용중인 닉네임 입니다.");
+            $this->throwException('이미 사용중인 닉네임 입니다.');
         }
     }
 
@@ -291,7 +291,7 @@ class CreateSocialMemberRequest
         }
         
         if (!is_valid_email($this->mb_email)) {
-            $this->throwException("잘못된 형식의 이메일 주소입니다.");
+            $this->throwException('잘못된 형식의 이메일 주소입니다.');
         }
         if (is_prohibited_email_domain($this->mb_email, $config)) {
             $this->throwException("{$this->mb_email} 메일은 사용할 수 없습니다.");
@@ -310,7 +310,7 @@ class CreateSocialMemberRequest
     protected function validateHp()
     {
         if (!is_valid_hp($this->mb_hp)) {
-            $this->throwException("휴대폰번호를 올바르게 입력해 주십시오.");
+            $this->throwException('휴대폰번호를 올바르게 입력해 주십시오.');
         }
     }
 

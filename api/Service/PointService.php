@@ -175,7 +175,7 @@ class PointService
      * @param string $po_id 사용포인트에서 제외할 포인트 아이디
      * @return void
      */
-    function calculateUsePoint(string $mb_id, int $point, string $po_id = '')
+    public function calculateUsePoint(string $mb_id, int $point, string $po_id = '')
     {
         $use_point = abs($point);
         $points = $this->fetchUnusedPoints($mb_id, $po_id);
@@ -333,7 +333,7 @@ class PointService
     {
         $query = "SELECT count(*) FROM {$this->table} WHERE mb_id = :mb_id ORDER BY po_id DESC";
 
-        $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
+        $stmt = Db::getInstance()->run($query, ['mb_id' => $mb_id]);
         return $stmt->fetchColumn() ?: 0;
     }
 
@@ -348,9 +348,9 @@ class PointService
         $query = "SELECT * FROM {$this->table} WHERE mb_id = :mb_id ORDER BY po_id DESC LIMIT :offset, :per_page";
 
         $stmt = Db::getInstance()->run($query, [
-            "mb_id" => $mb_id,
-            "offset" => $page_params['offset'],
-            "per_page" => $page_params['per_page']
+            'mb_id' => $mb_id,
+            'offset' => $page_params['offset'],
+            'per_page' => $page_params['per_page']
         ]);
 
         return $stmt->fetchAll();
@@ -394,7 +394,7 @@ class PointService
                     FROM {$this->table}
                     WHERE mb_id = :mb_id";
 
-        $stmt = Db::getInstance()->run($query, ["mb_id" => $mb_id]);
+        $stmt = Db::getInstance()->run($query, ['mb_id' => $mb_id]);
         $row = $stmt->fetch();
         return $row['sum_point'] ?? 0;
     }
@@ -436,9 +436,9 @@ class PointService
     protected function fetchUnusedPoints(string $mb_id, string $po_id = ''): array
     {
         if ($this->config['cf_point_term']) {
-            $order_by = "ORDER BY po_expire_date ASC, po_id ASC";
+            $order_by = 'ORDER BY po_expire_date ASC, po_id ASC';
         } else {
-            $order_by = "ORDER BY po_id ASC";
+            $order_by = 'ORDER BY po_id ASC';
         }
 
         $query = "SELECT po_id, po_point, po_use_point
@@ -459,15 +459,14 @@ class PointService
     /**
      * 만료일이 지나지 않은 사용한 포인트 조회
      * @param string $mb_id 회원 아이디
-     * @param string $po_id 제외할 포인트 아이디
      * @return array
      */
     protected function fetchNonExpiredUsedPoints(string $mb_id): array
     {
         if ($this->config['cf_point_term']) {
-            $order_by = "ORDER BY po_expire_date ASC, po_id ASC";
+            $order_by = 'ORDER BY po_expire_date ASC, po_id ASC';
         } else {
-            $order_by = "ORDER BY po_id ASC";
+            $order_by = 'ORDER BY po_id ASC';
         }
 
         $query = "SELECT po_id, po_point, po_use_point, po_expire_date
@@ -507,7 +506,7 @@ class PointService
     /**
      * 포인트 내역 추가
      * @param array $data 추가할 데이터
-     * @return int 추가된 포인트 아이디
+     * @return int 추가된 포인트 po_id
      */
     protected function insertPoint(array $data): int
     {

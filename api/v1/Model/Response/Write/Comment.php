@@ -30,61 +30,61 @@ class Comment
      * 작성자 이름
      * @OA\Property(example="댓글 작성자")
      */
-    public string $wr_name = "";
+    public string $wr_name = '';
 
     /**
      * 회원 ID
      * @OA\Property(example="test")
      */
-    public string $mb_id = "";
+    public string $mb_id = '';
 
     /**
      * 회원 이미지 경로
      * @OA\Property(example="/data/member_image\\te\\test.gif?1712194038")
      */
-    public string $mb_image_path = "";
+    public string $mb_image_path = '';
 
     /**
      * 회원 아이콘 경로
      * @OA\Property(example="/data/member\\te\\test.gif?1712194038")
      */
-    public string $mb_icon_path = "";
+    public string $mb_icon_path = '';
 
     /**
      * 댓글 내용
      * @OA\Property(example="댓글 내용입니다")
      */
-    public string $save_content = "";
+    public string $save_content = '';
 
     /**
      * 작성일시
      * @OA\Property(format="date-time")
      */
-    public string $wr_datetime = "";
+    public string $wr_datetime = '';
 
     /**
      * 마지막 수정일시
      * @OA\Property(format="date-time")
      */
-    public string $wr_last = "";
+    public string $wr_last = '';
 
     /**
      * 옵션
      * @OA\Property(example="html1")
      */
-    public string $wr_option = "";
+    public string $wr_option = '';
 
     /**
      * 작성자 이메일
      * @OA\Property(example="test@test.com")
      */
-    public string $wr_email = "";
+    public string $wr_email = '';
 
     /**
      * 대댓글
      * @OA\Property
      */
-    public string $wr_comment_reply = "";
+    public string $wr_comment_reply = '';
 
     /**
      * 답글 여부

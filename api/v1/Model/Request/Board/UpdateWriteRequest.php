@@ -130,7 +130,7 @@ class UpdateWriteRequest
      */
     public function validateCategory(array $board, bool $is_admin = false): void
     {
-        $categories = array_map('trim', explode("|", $board['bo_category_list'] . ($is_admin ? '|공지' : '')));
+        $categories = array_map('trim', explode('|', $board['bo_category_list'] . ($is_admin ? '|공지' : '')));
         if (!$board['bo_use_category'] || empty($categories)) {
             $this->ca_name = '';
             return;

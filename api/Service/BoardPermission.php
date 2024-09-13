@@ -67,7 +67,7 @@ class BoardPermission
     private const ERROR_NO_DELETE_COMMENT_REPLY = '이 글과 관련된 대댓글이 존재하므로 삭제할 수 없습니다.';
     private const ERROR_NO_GOOD_OWNER = '자신의 글에는 %s 하실 수 없습니다.';
     private const ERROR_NO_GOOD_SETTING = '이 게시판은 %s 기능을 사용하지 않습니다.';
-    private const ERROR_NO_GOOD_EXIST = "이미 %s 하신 글 입니다.";
+    private const ERROR_NO_GOOD_EXIST = '이미 %s 하신 글 입니다.';
 
 
     public function __construct(
@@ -378,8 +378,8 @@ class BoardPermission
      */
     private function verifyWriteOwnerAndLevel(array $member, array $write, string $type): void
     {
-        $message_level = "";
-        $message_owner = "";
+        $message_level = '';
+        $message_owner = '';
         switch ($type) {
             case 'update':
                 $message_level = self::ERROR_NO_UPDATE_LEVEL;
@@ -413,8 +413,8 @@ class BoardPermission
      */
     private function verifyCommentOwnerAndLevel(array $member, array $comment, string $type): void
     {
-        $message_level = "";
-        $message_owner = "";
+        $message_level = '';
+        $message_owner = '';
         switch ($type) {
             case 'update':
                 $message_level = self::ERROR_NO_UPDATE_COMMENT_LEVEL;
@@ -452,7 +452,7 @@ class BoardPermission
      */
     private function checkReplyNotice(int $parent_id): void
     {
-        $notice_ids = explode(",", $this->board['bo_notice']);
+        $notice_ids = explode(',', $this->board['bo_notice']);
         if (in_array($parent_id, $notice_ids)) {
             $this->throwException(self::ERROR_NO_REPLY_NOTICE);
         }
@@ -605,7 +605,7 @@ class BoardPermission
      */
     private function checkReadSecretWrite(array $member, array $write, bool $writer_check = false, $password = null): void
     {
-        if (!str_contains($write['wr_option'], "secret")) {
+        if (!str_contains($write['wr_option'], 'secret')) {
             return;
         }
 
@@ -667,7 +667,7 @@ class BoardPermission
      */
     public function canReadSecretComment($mb_id, array $comment, bool $writer_check = false, $password = null): bool
     {
-        if (!str_contains($comment['wr_option'], "secret")) {
+        if (!str_contains($comment['wr_option'], 'secret')) {
             return true;
         }
 

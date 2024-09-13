@@ -18,25 +18,25 @@ class MemberService
     /**
      * 회원가입 처리
      * @param object $data 회원가입 데이터
-     * @return int 회원번호
+     * @return false|string 회원번호
      * @throws Exception 회원가입 실패시 Exception 발생
      */
-    public function createMember(object $data): int
+    public function createMember(object $data)
     {
         $config = ConfigService::getConfig();
 
         if ($this->fetchMemberById($data->mb_id)) {
-            throw new Exception("이미 사용중인 회원아이디 입니다.", 409);
+            throw new Exception('이미 사용중인 회원아이디 입니다.', 409);
         }
         if ($this->existsMemberByNick($data->mb_nick, $data->mb_id)) {
-            throw new Exception("이미 사용중인 닉네임 입니다.", 409);
+            throw new Exception('이미 사용중인 닉네임 입니다.', 409);
         }
         if ($this->existsMemberByEmail($data->mb_email, $data->mb_id)) {
-            throw new Exception("이미 사용중인 이메일 입니다.", 409);
+            throw new Exception('이미 사용중인 이메일 입니다.', 409);
         }
         if ($config['cf_use_recommend'] && $data->mb_recommend) {
             if (!$this->fetchMemberById($data->mb_recommend)) {
-                throw new Exception("추천인이 존재하지 않습니다.", 404);
+                throw new Exception('추천인이 존재하지 않습니다.', 404);
             }
         }
 
@@ -55,11 +55,11 @@ class MemberService
         // 닉네임 변경 허용이 안되면 mb_nick 프로퍼티가 없다.
         if (isset($data->mb_nick)) {
             if ($this->existsMemberByNick($data->mb_nick, $mb_id)) {
-                throw new Exception("이미 사용중인 닉네임 입니다.", 409);
+                throw new Exception('이미 사용중인 닉네임 입니다.', 409);
             }
         }
         if ($this->existsMemberByEmail($data->mb_email, $mb_id)) {
-            throw new Exception("이미 사용중인 이메일 입니다.", 409);
+            throw new Exception('이미 사용중인 이메일 입니다.', 409);
         }
 
         $this->updateMember($mb_id, (array)$data);
@@ -75,11 +75,11 @@ class MemberService
     public function leaveMember(array $member)
     {
         $update_data = [
-            "mb_leave_date" => date("Ymd"),
-            "mb_memo" => date('Ymd', G5_SERVER_TIME) . " 탈퇴함\n" . addslashes($member['mb_memo']),
-            "mb_certify" => '',
-            "mb_adult" => 0,
-            "mb_dupinfo" => ''
+            'mb_leave_date' => date('Ymd'),
+            'mb_memo' => date('Ymd', G5_SERVER_TIME) . " 탈퇴함\n" . addslashes($member['mb_memo']),
+            'mb_certify' => '',
+            'mb_adult' => 0,
+            'mb_dupinfo' => ''
         ];
         $this->updateMember($member['mb_id'], $update_data);
 
@@ -102,14 +102,14 @@ class MemberService
     public function verifyMemberProfile(array $member, array $login_member): void
     {
         if (!$member) {
-            throw new Exception("회원정보가 존재하지 않습니다.", 404);
+            throw new Exception('회원정보가 존재하지 않습니다.', 404);
         }
         if ($login_member['mb_id'] != $member['mb_id']) {
             if (!$login_member['mb_open']) {
-                throw new Exception("자신의 정보를 공개하지 않으면 다른분의 정보를 조회할 수 없습니다.", 403);
+                throw new Exception('자신의 정보를 공개하지 않으면 다른분의 정보를 조회할 수 없습니다.', 403);
             }
             if (!$member['mb_open']) {
-                throw new Exception("해당 회원은 정보공개를 하지 않았습니다.", 403);
+                throw new Exception('해당 회원은 정보공개를 하지 않았습니다.', 403);
             }
         }
     }
@@ -124,16 +124,16 @@ class MemberService
     public function verifyEmailCertification($member, object $data): void
     {
         if (!$member) {
-            throw new Exception("회원정보가 존재하지 않습니다.", 404);
+            throw new Exception('회원정보가 존재하지 않습니다.', 404);
         }
         if (!check_password($data->password, $member['mb_password'])) {
-            throw new Exception("비밀번호가 일치하지 않습니다.", 403);
+            throw new Exception('비밀번호가 일치하지 않습니다.', 403);
         }
-        if (substr($member["mb_email_certify"], 0, 1) != '0') {
-            throw new Exception("이미 메일인증 하신 회원입니다.", 409);
+        if (substr($member['mb_email_certify'], 0, 1) != '0') {
+            throw new Exception('이미 메일인증 하신 회원입니다.', 409);
         }
         if ($this->existsMemberByEmail($data->email, $member['mb_id'])) {
-            throw new Exception("이미 사용중인 이메일 입니다.", 409);
+            throw new Exception('이미 사용중인 이메일 입니다.', 409);
         }
     }
 
@@ -149,11 +149,11 @@ class MemberService
         $count = count($members);
 
         if ($count > 1) {
-            throw new Exception("동일한 메일주소가 2개 이상 존재합니다. 관리자에게 문의하여 주십시오.", 409);
+            throw new Exception('동일한 메일주소가 2개 이상 존재합니다. 관리자에게 문의하여 주십시오.', 409);
         }
 
         if ($count == 0) {
-            throw new Exception("입력한 정보로 등록된 회원을 찾을 수 없습니다.", 404);
+            throw new Exception('입력한 정보로 등록된 회원을 찾을 수 없습니다.', 404);
         }
 
         return $members[0];
@@ -172,7 +172,7 @@ class MemberService
     {
         $query = "SELECT * FROM {$this->table} WHERE mb_email = :mb_email";
 
-        $stmt = Db::getInstance()->run($query, ["mb_email" => $mb_email]);
+        $stmt = Db::getInstance()->run($query, ['mb_email' => $mb_email]);
 
         return $stmt->fetchAll();
     }
@@ -242,8 +242,8 @@ class MemberService
                     AND mb_id <> :mb_id";
 
         $stmt = Db::getInstance()->run($query, [
-            "mb_email" => $mb_email,
-            "mb_id" => $mb_id
+            'mb_email' => $mb_email,
+            'mb_id' => $mb_id
         ]);
 
         return $stmt->fetchColumn() > 0;
@@ -257,7 +257,7 @@ class MemberService
      * @throws Exception
      * @example  소셜가입등에서 소셜 연결 끊기이후 다시 연동시에 id 가 중복되므로 사용해야됩니다.
      */
-    function existsMemberIdRecursive($mb_id)
+    public function existsMemberIdRecursive($mb_id)
     {
         static $count = 0;
 
@@ -268,7 +268,7 @@ class MemberService
         }
 
         if ($count >= 400) {
-            throw new \RuntimeException("다른 아이디로 가입해주세요.", 400);
+            throw new \RuntimeException('다른 아이디로 가입해주세요.', 400);
         }
 
         $count++;
@@ -280,9 +280,9 @@ class MemberService
      *  중복되는 닉네임이 있을 경우 숫자를 붙여서 재귀적으로 쿼리한다.
      * @param $mb_nick
      * @return string|callable
-     * @example  소셜가입등에서 소셜 연결 끊기이후 다시 연동시에 id 가 중복되므로 사용해야됩니다.
+     * @example  소셜가입등에서 소셜 연결 끊기이후 다시 연결시에 id 가 중복되므로 사용해야됩니다.
      */
-    function existsMemberNicknameRecursive($mb_nick)
+    public function existsMemberNicknameRecursive($mb_nick)
     {
         static $count = 0;
 
@@ -293,7 +293,7 @@ class MemberService
         }
 
         if ($count >= 200) {
-            throw new \RuntimeException("닉네임으로 지정할 수없습니다.", 400);
+            throw new \RuntimeException('닉네임으로 지정할 수없습니다.', 400);
         }
 
         $count++;
@@ -305,7 +305,7 @@ class MemberService
      * @param array $data 회원가입 데이터
      * @return string|false 회원 테이블 mb_no 번호
      */
-    public function insertMember(array $data): int
+    public function insertMember(array $data)
     {
         $insert_id = Db::getInstance()->insert($this->table, $data);
 
@@ -320,7 +320,7 @@ class MemberService
      */
     public function updateMember(string $mb_id, array $data): int
     {
-        $update_count = Db::getInstance()->update($this->table, $data, ["mb_id" => $mb_id]);
+        $update_count = Db::getInstance()->update($this->table, $data, ['mb_id' => $mb_id]);
 
         return $update_count;
     }

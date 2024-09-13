@@ -13,6 +13,7 @@ use API\Handlers\HttpErrorHandler;
 use API\Handlers\ShutdownHandler;
 use API\Middleware\JsonBodyParserMiddleware;
 use API\ResponseEmitter\ResponseEmitter;
+use API\Service\ConfigService;
 use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
@@ -46,7 +47,7 @@ if (G5_DEBUG) {
 }
 
 //@todo 임시 전역변수 정리후 삭제대상
-$config = getConfig();
+$config = ConfigService::getConfig();
 /**
  * Instantiate App
  */

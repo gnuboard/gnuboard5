@@ -99,17 +99,14 @@ class ScrapController
             }, $fetch_scraps);
 
             $response_data = new ScrapsResponse([
-                "total_records" => $total_records,
-                "total_pages" => $total_page,
-                "scraps" => $scraps
+                'total_records' => $total_records,
+                'total_pages' => $total_page,
+                'scraps' => $scraps
             ]);
 
             return api_response_json($response, $response_data);
         } catch (Exception $e) {
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            }
-
+            
             throw $e;
         }
     }
@@ -148,8 +145,8 @@ class ScrapController
             }
 
             $response_data = new CreateScrapPageResponse([
-                "board" => $board,
-                "write" => $write
+                'board' => $board,
+                'write' => $write
             ]);
             return api_response_json($response, $response_data);
         } catch (Exception $e) {
@@ -205,7 +202,7 @@ class ScrapController
                 $this->board_permission->createComment($member, $write);
 
                 $comment_id = $this->comment_service->createCommentData($write, $request_data, $member);
-                $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
+                $this->write_service->updateWrite($write['wr_id'], ['wr_comment' => $write['wr_comment'] + 1, 'wr_last' => G5_TIME_YMDHIS]);
 
                 $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
                 $this->board_service->increaseCommentCount();
@@ -216,9 +213,9 @@ class ScrapController
             $this->scrap_service->createScrap($member['mb_id'], $board['bo_table'], $write['wr_id']);
 
             $scrap_count = $this->scrap_service->fetchTotalScrapCount($member['mb_id']);
-            $this->member_service->updateMember($member['mb_id'], ["mb_scrap_cnt" => $scrap_count]);
+            $this->member_service->updateMember($member['mb_id'], ['mb_scrap_cnt' => $scrap_count]);
 
-            return api_response_json($response, ["message" => "스크랩이 추가되었습니다."]);
+            return api_response_json($response, ['message' => '스크랩이 추가되었습니다.']);
         } catch (Exception $e) {
             throw $e;
         }
@@ -258,9 +255,9 @@ class ScrapController
             $this->scrap_service->deleteScrap($scrap['ms_id']);
 
             $scrap_count = $this->scrap_service->fetchTotalScrapCount($member['mb_id']);
-            $this->member_service->updateMember($member['mb_id'], ["mb_scrap_cnt" => $scrap_count]);
+            $this->member_service->updateMember($member['mb_id'], ['mb_scrap_cnt' => $scrap_count]);
 
-            return api_response_json($response, ["message" => "스크랩이 삭제되었습니다."]);
+            return api_response_json($response, ['message' => '스크랩이 삭제되었습니다.']);
         } catch (Exception $e) {
             throw $e;
         }

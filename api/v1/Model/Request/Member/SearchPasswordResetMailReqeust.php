@@ -31,10 +31,10 @@ class SearchPasswordResetMailReqeust
     protected function validateEmail()
     {
         if (empty(trim($this->mb_email))) {
-            $this->throwException("이메일 주소를 입력해주세요.");
+            $this->throwException('이메일 주소를 입력해주세요.');
         }
         if (!is_valid_email($this->mb_email)) {
-            $this->throwException("잘못된 형식의 이메일 주소입니다.");
+            $this->throwException('잘못된 형식의 이메일 주소입니다.');
         }
     }
 }

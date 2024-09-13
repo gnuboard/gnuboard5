@@ -115,7 +115,7 @@ class HttpErrorHandler extends SlimErrorHandler
             $type = 'DB Error';
             $description = 'DB operator error';
             if ($this->displayErrorDetails) {
-                $description .= " : " . $exception->getMessage();
+                $description .= ' : ' . $exception->getMessage();
             }
 
             return $this->respondWithJson($type, $description, $status_code);

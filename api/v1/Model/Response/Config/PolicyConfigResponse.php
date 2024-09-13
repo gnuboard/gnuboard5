@@ -18,13 +18,13 @@ class PolicyConfigResponse
      * 이용약관
      * @OA\Property(example="이용약관 내용...")
      */
-    public string $cf_stipulation = "";
+    public string $cf_stipulation = '';
 
     /**
      * 개인정보 처리방침
      * @OA\Property(example="개인정보 처리방침 내용...")
      */
-    public string $cf_privacy = "";
+    public string $cf_privacy = '';
 
     public function __construct(array $config = [])
     {

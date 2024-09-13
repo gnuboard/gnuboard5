@@ -27,10 +27,14 @@ class JwtTokenManager
             : $this->env_config->access_token_secret_key;
     }
 
-    public function expire_minutes(string $type = 'access'): int
+    /**
+     * @param string $type
+     * @return int
+     */
+    public function expire_minutes(string $type = 'access')
     {
         return $type === 'refresh'
-            ? $this->env_config->refresh_token_expire_minutes
+            ? (int)$this->env_config->refresh_token_expire_minutes
             : $this->env_config->access_token_expire_minutes;
     }
 

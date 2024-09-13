@@ -46,7 +46,7 @@ class BoardFileService
         $images = [];
         $files = [];
         foreach ($fetch_files as $file) {
-            if (preg_match("/\.(gif|jpg|jpeg|png|webp)$/i", $file['bf_file'])) {
+            if (preg_match('/\.(gif|jpg|jpeg|png|webp)$/i', $file['bf_file'])) {
                 $images[] = $file;
             } else {
                 $files[] = $file;
@@ -248,7 +248,7 @@ class BoardFileService
             @unlink($delete_file);
         }
 
-        if (preg_match("/\.(gif|jpg|jpeg|png|webp)$/i", $bf_file['bf_file'])) {
+        if (preg_match('/\.(gif|jpg|jpeg|png|webp)$/i', $bf_file['bf_file'])) {
             delete_board_thumbnail($this->bo_table, $bf_file['bf_file']);
         }
     }

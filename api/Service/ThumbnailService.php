@@ -134,7 +134,7 @@ class ThumbnailService
             return false;
         }
 
-        $source_file = "$source_path" . DIRECTORY_SEPARATOR . "$filename";
+        $source_file = $source_path . DIRECTORY_SEPARATOR . $filename;
         if (!is_file($source_file)) {
             return false;
         }
@@ -826,7 +826,7 @@ class ThumbnailService
 
         // $contents 중 img 태그 추출
         if ($view) {
-            $pattern = "/<img([^>]*)>/iS";
+            $pattern = '/<img([^>]*)>/iS';
         } else {
             $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/i";
         }

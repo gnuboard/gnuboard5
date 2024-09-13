@@ -23,7 +23,7 @@ class AuthenticationService
     public function fetchRefreshToken(string $refresh_token)
     {
         $query = "SELECT * FROM {$this->table} WHERE refresh_token = :refresh_token";
-        $stmt = Db::getInstance()->run($query, ["refresh_token" => $refresh_token]);
+        $stmt = Db::getInstance()->run($query, ['refresh_token' => $refresh_token]);
 
         return $stmt->fetch();
     }
@@ -37,11 +37,11 @@ class AuthenticationService
     public function insertRefreshToken(string $mb_id, string $refresh_token, stdClass $decode): void
     {
         $data = [
-            "mb_id" => $mb_id,
-            "refresh_token" => $refresh_token,
-            "expires_at" => date('Y-m-d H:i:s', $decode->exp),
-            "created_at" => date('Y-m-d H:i:s', $decode->iat),
-            "updated_at" => date('Y-m-d H:i:s', $decode->iat),
+            'mb_id' => $mb_id,
+            'refresh_token' => $refresh_token,
+            'expires_at' => date('Y-m-d H:i:s', $decode->exp),
+            'created_at' => date('Y-m-d H:i:s', $decode->iat),
+            'updated_at' => date('Y-m-d H:i:s', $decode->iat),
         ];
         Db::getInstance()->insert($this->table, $data);
     }
@@ -56,11 +56,11 @@ class AuthenticationService
     public function updateRefreshToken(string $mb_id, string $refresh_token, stdClass $decode): void
     {
         $data = [
-            "refresh_token" => $refresh_token,
-            "expires_at" => date('Y-m-d H:i:s', $decode->exp),
-            "updated_at" => date('Y-m-d H:i:s', $decode->iat),
+            'refresh_token' => $refresh_token,
+            'expires_at' => date('Y-m-d H:i:s', $decode->exp),
+            'updated_at' => date('Y-m-d H:i:s', $decode->iat),
         ];
-        Db::getInstance()->update($this->table, $data, ["mb_id" => $mb_id]);
+        Db::getInstance()->update($this->table, $data, ['mb_id' => $mb_id]);
     }
 
     /**
@@ -70,6 +70,6 @@ class AuthenticationService
      */
     public function deleteRefreshToken(string $mb_id): void
     {
-        Db::getInstance()->delete($this->table, ["mb_id" => $mb_id]);
+        Db::getInstance()->delete($this->table, ['mb_id' => $mb_id]);
     }
 }

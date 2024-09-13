@@ -39,10 +39,10 @@ class ChangeCertificationEmailRequest
     protected function validateEmail(array $config)
     {
         if (empty(trim($this->email))) {
-            $this->throwException("이메일 주소를 입력해주세요.");
+            $this->throwException('이메일 주소를 입력해주세요.');
         }
         if (!is_valid_email($this->email)) {
-            $this->throwException("잘못된 형식의 이메일 주소입니다.");
+            $this->throwException('잘못된 형식의 이메일 주소입니다.');
         }
         if (is_prohibited_email_domain($this->email, $config)) {
             $this->throwException("{$this->email} 메일은 사용할 수 없습니다.");
@@ -52,7 +52,7 @@ class ChangeCertificationEmailRequest
     protected function validatePassword()
     {
         if (empty(trim($this->password))) {
-            $this->throwException("비밀번호를 입력해주세요.");
+            $this->throwException('비밀번호를 입력해주세요.');
         }
     }
 }

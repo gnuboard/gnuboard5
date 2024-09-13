@@ -181,10 +181,6 @@ class BoardController
                 throw new HttpForbiddenException($request, $e->getMessage());
             }
 
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            }
-
             throw $e;
         }
     }
@@ -219,7 +215,7 @@ class BoardController
             if (strpos($write['wr_option'], 'secret') !== false) {
                 $thumb = [];
             } else {
-                $thumb = $this->write_service->getBoardThumbnail($write, $board['bo_gallery_width'], $board['bo_gallery_height']) ?: [];
+                $thumb = $this->write_service->getBoardThumbnail($write, $board['bo_gallery_width'], $board['bo_gallery_height']);
             }
 
             $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
@@ -227,7 +223,7 @@ class BoardController
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
             $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
-            $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
+            $write['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $write['wr_ip']);
             $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $board['bo_image_width']);
 
             $write_data = array_merge($write, array(
@@ -263,7 +259,7 @@ class BoardController
      *      summary="게시글 조회 (비회원 비밀글)",
      *      tags={"게시판"},
      *      security={{"Oauth2Password": {}}},
-     *      description="게시판의 게시글 1건을 조회합니다.",
+     *      description="게시판의 게시글 1개를 조회합니다.",
      *       @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *       @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *       @OA\RequestBody(
@@ -290,9 +286,6 @@ class BoardController
         try {
             $password = $params['wr_password'] ?? '';
             $this->board_permission->readWrite($member, $write, $password);
-
-            // TODO: include 제거로 인한 썸네일 처리 오류 해결.
-            // get_list_thumbnail($board['bo_table'], $write['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
             $thumb = [];
             $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
             $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
@@ -300,7 +293,7 @@ class BoardController
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
             $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
-            $write['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
+            $write['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $write['wr_ip']);
             $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $board['bo_image_width']);
 
             $write_data = array_merge($write, array(
@@ -319,10 +312,6 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -368,7 +357,7 @@ class BoardController
             $per_page = $page_params->per_page;
 
             $comments = $this->comment_service->getComments($write['wr_id'], $member['mb_id'], $page, $per_page);
-            $total_count = $this->comment_service->fetchTotalRecords($write['wr_id']) ?: 1;
+            $total_count = $this->comment_service->fetchTotalRecords($write['wr_id']);
 
             $response_data = new GetCommentsResponse([
                 'current_page' => $page,
@@ -381,10 +370,6 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -432,10 +417,6 @@ class BoardController
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -519,15 +500,12 @@ class BoardController
 
             run_event('api_create_write_after', $board, $wr_id);
 
-            $response_data = new CreateWriteResponse("success", $wr_id);
+            $response_data = new CreateWriteResponse('success', $wr_id);
             return api_response_json($response, $response_data);
         } catch (Exception $e) {
+            
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -597,14 +575,10 @@ class BoardController
 
             run_event('api_update_write_after', $board, $write['wr_id']);
 
-            return api_response_json($response, array("message" => "게시글이 수정되었습니다."));
+            return api_response_json($response, array('message' => '게시글이 수정되었습니다.'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -669,16 +643,12 @@ class BoardController
 
             // 게시글에 파일 갯수 갱신
             $files = $this->file_service->fetchWriteFiles($write['wr_id']);
-            $this->write_service->updateWrite($write['wr_id'], ["wr_file" => count($files)]);
+            $this->write_service->updateWrite($write['wr_id'], ['wr_file' => count($files)]);
 
-            return api_response_json($response, array("message" => "파일 정보가 갱신되었습니다."));
+            return api_response_json($response, array('message' => '파일 정보가 갱신되었습니다.'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -712,11 +682,11 @@ class BoardController
         // 파일 정보 조회
         $file = $this->file_service->fetchWriteFileByNo($write['wr_id'], $request->getAttribute('bf_no'));
         if (!$file) {
-            throw new HttpNotFoundException($request, "파일정보가 존재하지 않습니다.");
+            throw new HttpNotFoundException($request, '파일정보가 존재하지 않습니다.');
         }
         $file_path = G5_DATA_PATH . '/file/' . $board['bo_table'] . '/' . $file['bf_file'];
         if (!file_exists($file_path)) {
-            throw new HttpNotFoundException($request, "파일이 존재하지 않습니다.");
+            throw new HttpNotFoundException($request, '파일이 존재하지 않습니다.');
         }
 
         // 권한 체크
@@ -813,7 +783,7 @@ class BoardController
 
             run_event('api_delete_write', $write, $board);
 
-            return api_response_json($response, array("message" => "게시글이 삭제되었습니다."));
+            return api_response_json($response, array('message' => '게시글이 삭제되었습니다.'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -862,10 +832,10 @@ class BoardController
             if ($request_data->comment_id) {
                 $parent_comment = $this->write_service->fetchWrite($request_data->comment_id);
                 if (!$parent_comment) {
-                    throw new HttpNotFoundException($request, "부모 댓글 정보가 존재하지 않습니다.");
+                    throw new HttpNotFoundException($request, '부모 댓글 정보가 존재하지 않습니다.');
                 }
                 if ($write['wr_id'] != $parent_comment['wr_parent']) {
-                    throw new HttpBadRequestException($request, "부모 댓글 정보가 올바르지 않습니다.");
+                    throw new HttpBadRequestException($request, '부모 댓글 정보가 올바르지 않습니다.');
                 }
             }
             unset($request_data->comment_id);
@@ -875,7 +845,7 @@ class BoardController
 
             // 댓글 등록
             $comment_id = $this->comment_service->createCommentData($write, $request_data, $member, $parent_comment);
-            $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] + 1, "wr_last" => G5_TIME_YMDHIS]);
+            $this->write_service->updateWrite($write['wr_id'], ['wr_comment' => $write['wr_comment'] + 1, 'wr_last' => G5_TIME_YMDHIS]);
 
             $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
             $this->board_service->increaseCommentCount();
@@ -888,14 +858,10 @@ class BoardController
 
             run_event('api_create_comment_after', $board, $write['wr_id'], $comment_id, $parent_comment);
 
-            return api_response_json($response, array("message" => "댓글이 등록되었습니다."));
+            return api_response_json($response, array('message' => '댓글이 등록되었습니다.'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -949,14 +915,10 @@ class BoardController
             // 댓글 수정
             $this->comment_service->updateCommentData($comment['wr_id'], $request_data);
 
-            return api_response_json($response, array("message" => "댓글이 수정되었습니다."));
+            return api_response_json($response, array('message' => '댓글이 수정되었습니다.'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
-            }
-
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
             }
 
             throw $e;
@@ -1013,10 +975,10 @@ class BoardController
 
             // 게시물에 대한 최근 시간을 다시 얻어 정보를 갱신한다. (wr_last, wr_comment)
             $last = $this->write_service->fetchWriteCommentLast($write);
-            $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
+            $this->write_service->updateWrite($write['wr_id'], ['wr_comment' => $write['wr_comment'] - 1, 'wr_last' => $last['wr_last']]);
             $this->board_new_service->deleteByComment($board['bo_table'], $comment['wr_id']);
 
-            return api_response_json($response, array("message" => "댓글이 삭제되었습니다."));
+            return api_response_json($response, array('message' => '댓글이 삭제되었습니다.'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -1051,7 +1013,7 @@ class BoardController
 
         try {
             if (!in_array($good_type, ['good', 'nogood'])) {
-                throw new HttpBadRequestException($request, "추천 타입이 올바르지 않습니다.");
+                throw new HttpBadRequestException($request, '추천 타입이 올바르지 않습니다.');
             }
             // 권한 체크
             $this->board_permission->goodWrite($member['mb_id'], $write, $good_type);
@@ -1062,7 +1024,7 @@ class BoardController
 
             $write = $this->write_service->fetchWrite((int)$write['wr_id']);
             if (!$write) {
-                throw new HttpNotFoundException($request, "게시글 정보가 존재하지 않습니다.");
+                throw new HttpNotFoundException($request, '게시글 정보가 존재하지 않습니다.');
             }
             $word = get_good_word($good_type);
             $response_data = new GoodWriteResponse([

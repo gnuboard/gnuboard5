@@ -78,7 +78,7 @@ class BoardNewService
      * 최신글 추가
      * @return string|false
      */
-    public function insert(string $bo_table, int $wr_id, int $wr_parent, string $mb_id = "")
+    public function insert(string $bo_table, int $wr_id, int $wr_parent, string $mb_id = '')
     {
         $data = [
             'bo_table' => $bo_table,

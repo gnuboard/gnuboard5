@@ -18,7 +18,7 @@ class File
      * 원본 파일명
      * @OA\Property
      */
-    public string $bf_source = "";
+    public string $bf_source = '';
 
     /**
      * 파일 크기
@@ -36,13 +36,13 @@ class File
      * 업로드 일시
      * @OA\Property(format="date-time")
      */
-    public string $bf_datetime = "";
+    public string $bf_datetime = '';
 
     /**
      * 파일 경로
      * @OA\Property
      */
-    public string $bf_file = "";
+    public string $bf_file = '';
 
     public function __construct(array $data = [])
     {

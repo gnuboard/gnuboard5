@@ -24,13 +24,13 @@ class Scrap
      * 회원 ID
      * @OA\Property(example="test")
      */
-    public string $mb_id = "";
+    public string $mb_id = '';
 
     /**
      * 게시판 ID
      * @OA\Property(example="test")
      */
-    public string $bo_table = "";
+    public string $bo_table = '';
 
     /**
      * 게시글 ID

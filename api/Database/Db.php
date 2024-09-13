@@ -8,7 +8,8 @@ use PDOException;
 
 /**
  * Class Db
- * PDO Wrapper
+ * PDO Wrapper 
+ * 
  */
 class Db
 {
@@ -46,7 +47,7 @@ class Db
                 $this->pdo->exec("SET SESSION sql_mode = 'ALLOW_INVALID_DATES'");
             }
         } catch (PDOException $e) {
-            throw new DbConnectException("Database connection failed", -1);
+            throw new DbConnectException('Database connection failed', -1);
         }
     }
 
@@ -191,6 +192,8 @@ class Db
     }
 
     /**
+     * 지정한 컬럼 기준으로 행을 지운다.
+     * ! 지정된 컬럼이 id 컬럼이 아니면 조건에 따라 여러행이 지워집니다.
      * @param string $table
      * @param string $id_column
      * @param string $id_value
@@ -214,7 +217,7 @@ class Db
     }
 
     /**
-     * 테이블의 모든 데이터를 지운다.
+     * 주의! 테이블의 모든 데이터를 지운다.
      * @param string $table
      * @return int
      */
@@ -235,7 +238,6 @@ class Db
         ob_start();
         $stmt->debugDumpParams();
         $paramInfo = ob_get_clean();
-        //@todo app에서 관리하는 로깅으로 변경필요.
         error_log("Parameter info: \n" . $paramInfo);
     }
 

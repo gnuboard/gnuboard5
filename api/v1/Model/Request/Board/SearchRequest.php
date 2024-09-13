@@ -30,8 +30,8 @@ class SearchRequest extends SearchParameters
 
     /**
      * @param WriteService $write_service 게시글 서비스 객체
+     * @param array $config 설정 데이터
      * @param array $data 요청 데이터
-     * @param array|null $config 설정 데이터
      */
     public function __construct(WriteService $write_service, array $config, array $data = [])
     {

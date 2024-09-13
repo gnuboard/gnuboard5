@@ -65,14 +65,14 @@ class AuthenticationController
             throw new HttpUnauthorizedException($request, '아이디 또는 비밀번호가 일치하지 않습니다.');
         }
 
-        if (($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
-            || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
+        if (($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date('Ymd', G5_SERVER_TIME))
+            || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date('Ymd', G5_SERVER_TIME))
         ) {
             throw new HttpForbiddenException($request, '탈퇴 또는 차단된 회원이므로 로그인하실 수 없습니다.');
         }
 
         // 메일인증 설정이 되어 있다면
-        if (is_use_email_certify() && !preg_match("/[1-9]/", $member['mb_email_certify'])) {
+        if (is_use_email_certify() && !preg_match('/[1-9]/', $member['mb_email_certify'])) {
             throw new HttpForbiddenException($request, "{$member['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다.");
         }
 

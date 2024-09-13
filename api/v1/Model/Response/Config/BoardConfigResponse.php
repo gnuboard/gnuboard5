@@ -84,7 +84,7 @@ class BoardConfigResponse
      * 새창 링크 (_self, _blank 등)
      * @OA\Property(example="_blank")
      */
-    public string $cf_link_target = "";
+    public string $cf_link_target = '';
 
     /**
      * 짧은주소 사용 여부
@@ -102,19 +102,19 @@ class BoardConfigResponse
      * 필터할 단어 (, 구분자)
      * @OA\Property(example="금지어,욕설")
      */
-    public string $cf_filter = "";
+    public string $cf_filter = '';
 
     /**
      * 접근 가능 IP
      * @OA\Property(example="192.168.0.1")
      */
-    public string $cf_possible_ip = "";
+    public string $cf_possible_ip = '';
 
     /**
      * 접근 차단 IP
      * @OA\Property(example="192.168.0.2")
      */
-    public string $cf_intercept_ip = "";
+    public string $cf_intercept_ip = '';
 
     public function __construct($config = [])
     {

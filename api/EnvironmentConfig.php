@@ -37,12 +37,12 @@ class EnvironmentConfig
         $this->api_version = $_ENV['API_VERSION'] ?? self::DEFAULT_API_VERSION;
 
         if (!trim($_ENV['ACCESS_TOKEN_SECRET_KEY'])) {
-            throw new \Exception("env ACCESS_TOKEN_SECRET_KEY is empty");
+            throw new \Exception('env ACCESS_TOKEN_SECRET_KEY is empty');
         }
         $this->access_token_secret_key = $_ENV['ACCESS_TOKEN_SECRET_KEY'];
         $this->access_token_expire_minutes = isset($_ENV['ACCESS_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['ACCESS_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES;
         if(!trim($_ENV['REFRESH_TOKEN_SECRET_KEY'])) {
-            throw new \Exception("env REFRESH_TOKEN_SECRET_KEY is empty");
+            throw new \Exception('env REFRESH_TOKEN_SECRET_KEY is empty');
         }
         $this->refresh_token_secret_key = $_ENV['REFRESH_TOKEN_SECRET_KEY'];
         $this->refresh_token_expire_minutes = isset($_ENV['REFRESH_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['REFRESH_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES;
@@ -58,24 +58,24 @@ class EnvironmentConfig
     {
         $file_path = G5_PATH . '/' . $this->env_file;
         if (!file_exists($file_path)) {
-            $env_content = "API_VERSION=" . self::DEFAULT_API_VERSION . PHP_EOL;
-            $env_content .= "ACCESS_TOKEN_SECRET_KEY=" . self::createSecretTokenValue() . PHP_EOL;
-            $env_content .= "ACCESS_TOKEN_EXPIRE_MINUTES=" . self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES . PHP_EOL;
-            $env_content .= "REFRESH_TOKEN_SECRET_KEY=" . self::createSecretTokenValue() . PHP_EOL;
-            $env_content .= "REFRESH_TOKEN_EXPIRE_MINUTES=" . self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES . PHP_EOL;
-            $env_content .= "# 이메일 등 정보를 암호화하는데 쓰입니다." . PHP_EOL;
-            $env_content .= "ENCRYPTION_KEY=" . self::createSecretTokenValue() . PHP_EOL;
-            $env_content .= "AUTH_ISSUER=" . self::DEFAULT_AUTH_ISSUER . PHP_EOL;
-            $env_content .= "AUTH_AUDIENCE=" . self::DEFAULT_AUTH_AUDIENCE . PHP_EOL;
-            $env_content .= "# CORS 설정" . PHP_EOL;
-            $env_content .= "# 허용할 도메인을 , 로 구분하여 입력하세요." . PHP_EOL;
-            $env_content .= "CORS_ALLOW_ORIGIN=" . G5_URL . PHP_EOL;
+            $env_content = 'API_VERSION=' . self::DEFAULT_API_VERSION . PHP_EOL;
+            $env_content .= 'ACCESS_TOKEN_SECRET_KEY=' . self::createSecretTokenValue() . PHP_EOL;
+            $env_content .= 'ACCESS_TOKEN_EXPIRE_MINUTES=' . self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES . PHP_EOL;
+            $env_content .= 'REFRESH_TOKEN_SECRET_KEY=' . self::createSecretTokenValue() . PHP_EOL;
+            $env_content .= 'REFRESH_TOKEN_EXPIRE_MINUTES=' . self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES . PHP_EOL;
+            $env_content .= '# 이메일 등 정보를 암호화하는데 쓰입니다.' . PHP_EOL;
+            $env_content .= 'ENCRYPTION_KEY=' . self::createSecretTokenValue() . PHP_EOL;
+            $env_content .= 'AUTH_ISSUER=' . self::DEFAULT_AUTH_ISSUER . PHP_EOL;
+            $env_content .= 'AUTH_AUDIENCE=' . self::DEFAULT_AUTH_AUDIENCE . PHP_EOL;
+            $env_content .= '# CORS 설정' . PHP_EOL;
+            $env_content .= '# 허용할 도메인을 , 로 구분하여 입력하세요.' . PHP_EOL;
+            $env_content .= 'CORS_ALLOW_ORIGIN=' . G5_URL . PHP_EOL;
             $env_content .= 'CORS_ALLOW_METHODS="*"' . PHP_EOL;
             $env_content .= 'CORS_ALLOW_CREDENTIALS="true"' . PHP_EOL;
 
             $result = file_put_contents($file_path, $env_content);
             if ($result === false) {
-                throw new Exception("Unable to create .env file");
+                throw new Exception('Unable to create .env file');
             }
         }
     }

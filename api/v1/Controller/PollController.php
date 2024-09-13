@@ -222,13 +222,18 @@ class PollController
 
             $admin_id = $config['cf_admin'];
             $admin_member = $this->member_service->fetchMemberById($admin_id);
-            $from_email = $member['mb_email'] ?: $admin_member['mb_email'];
+            $admin_email = $admin_member['mb_email'] ?? '';
+            if($admin_email === '') {
+                return api_response_json($response, ['message' => '관리자 메일이 없습니다.'], 400);
+            }
+            
+            $from_email = $member['mb_email'] ?: '';
             if ($is_guest) {
                 $name = 'guest';
             } else {
                 $name = $member['mb_nick'];
             }
-            mailer($name, $from_email, $admin_member['mb_email'], " [{$config['cf_title']}] 설문조사 기타의견 메일", $content, 1);
+            mailer($name, $from_email, $admin_email, " [{$config['cf_title']}] 설문조사 기타의견 메일", $content, 1);
         }
 
         return api_response_json($response, ['message' => '기타의견이 등록되었습니다']);

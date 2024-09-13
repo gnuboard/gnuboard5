@@ -75,7 +75,7 @@ class CommentService
                 $comment['is_secret_content'] = true;
             }
             $comment['wr_email'] = EncryptionService::encrypt($comment['wr_email']);
-            $comment['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $comment['wr_ip']);
+            $comment['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $comment['wr_ip']);
 
             $result[] = new Comment($comment);
         }
@@ -132,7 +132,7 @@ class CommentService
             }
 
             $comment['wr_email'] = EncryptionService::encrypt($comment['wr_email']);
-            $comment['wr_ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $comment['wr_ip']);
+            $comment['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $comment['wr_ip']);
 
             $result[] = new Comment($comment);
         }
@@ -161,6 +161,10 @@ class CommentService
         ])->fetchAll();
     }
 
+    /**
+     * @param int $wr_id
+     * @return int
+     */
     public function fetchTotalRecords(int $wr_id)
     {
         $query = "SELECT count(*) FROM `{$this->write_table}`
@@ -170,7 +174,7 @@ class CommentService
         $stmt = Db::getInstance()->run($query, [
             'wr_id' => $wr_id
         ]);
-        return $stmt->fetchColumn();
+        return $stmt->fetchColumn() ?: 0;
     }
 
     public function updateCommentData(int $comment_id, object $data): void
@@ -187,10 +191,10 @@ class CommentService
      * @param object $data 댓글의 입력 데이터
      * @param array $member
      * @param array $parent_comment
-     * @return int
+     * @return false|string
      * @throws Exception
      */
-    public function createCommentData(array $write, object $data, array $member = [], array $parent_comment = []): int
+    public function createCommentData(array $write, object $data, array $member = [], array $parent_comment = [])
     {
         $is_guest = $member['mb_id'] === '';
         $data->ca_name = $write['ca_name'];
@@ -232,7 +236,7 @@ class CommentService
      * 댓글 정보를 데이터베이스에 등록
      * @return string|false
      */
-    public function insertComment(object $data): string
+    public function insertComment(object $data)
     {
         return Db::getInstance()->insert($this->write_table, (array)$data);
     }
@@ -287,7 +291,7 @@ class CommentService
                 AND SUBSTRING(wr_comment_reply, :reply_len2, 1) <> ''";
 
         if ($parent['wr_comment_reply']) {
-            $query .= " AND wr_comment_reply LIKE :wr_comment_reply";
+            $query .= ' AND wr_comment_reply LIKE :wr_comment_reply';
             $values = array_merge($values, ['wr_comment_reply' => $parent['wr_comment_reply'] . '%']);
         }
 

@@ -93,10 +93,10 @@ class BoardNewController
         }
 
         $response_data = new BoardNewsResponse([
-            "total_records" => $total_records,
-            "total_pages" => $total_page,
-            "current_page" => $page_params->page,
-            "board_news" => $board_news,
+            'total_records' => $total_records,
+            'total_pages' => $total_page,
+            'current_page' => $page_params->page,
+            'board_news' => $board_news,
         ]);
         return api_response_json($response, $response_data);
     }
@@ -135,10 +135,10 @@ class BoardNewController
 
         try {
             if (!is_super_admin($config, $member['mb_id'])) {
-                throw new HttpForbiddenException($request, "최고관리자만 가능합니다.");
+                throw new HttpForbiddenException($request, '최고관리자만 가능합니다.');
             }
             if (empty($bn_ids)) {
-                throw new HttpUnprocessableEntityException($request, "삭제할 최신 게시글 ID가 필요합니다.");
+                throw new HttpUnprocessableEntityException($request, '삭제할 최신 게시글 ID가 필요합니다.');
             }
 
             foreach ($bn_ids as $bn_id) {
@@ -163,7 +163,7 @@ class BoardNewController
                     }
                     // 게시물 정보 갱신 (wr_last, wr_comment)
                     $last = $this->write_service->fetchWriteCommentLast($write);
-                    $this->write_service->updateWrite($write['wr_id'], ["wr_comment" => $write['wr_comment'] - 1, "wr_last" => $last['wr_last']]);
+                    $this->write_service->updateWrite($write['wr_id'], ['wr_comment' => $write['wr_comment'] - 1, 'wr_last' => $last['wr_last']]);
                     $this->service->deleteByComment($board['bo_table'], $write['wr_id']);
                 } else {
                     // 포인트 및 파일 삭제
@@ -199,6 +199,6 @@ class BoardNewController
             throw $e;
         }
 
-        return api_response_json($response, ["message" => "삭제되었습니다."]);
+        return api_response_json($response, ['message' => '삭제되었습니다.']);
     }
 }

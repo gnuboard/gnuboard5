@@ -17,7 +17,7 @@ class NeighborWrite
      * 게시글 제목
      * @OA\Property(example="제목")
      */
-    public string $wr_subject = "";
+    public string $wr_subject = '';
 
     /**
      * 게시글 ID
@@ -29,13 +29,13 @@ class NeighborWrite
      * 게시글 링크
      * @OA\Property(example="http://example.com/free/1")
      */
-    public string $href = "";
+    public string $href = '';
 
     /**
      * 게시글 작성일
      * @OA\Property(example="2021-01-01 00:00:00")
      */
-    public string $wr_datetime = "";
+    public string $wr_datetime = '';
 
     public function __construct(string $bo_table, array $data = [])
     {

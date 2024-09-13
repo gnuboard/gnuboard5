@@ -30,67 +30,67 @@ class Write
      * 답글
      * @OA\Property(example="")
      */
-    public string $wr_reply = "";
+    public string $wr_reply = '';
 
     /**
      * 글 제목
      * @OA\Property(example="제목입니다")
      */
-    public string $wr_subject = "";
+    public string $wr_subject = '';
 
     /**
      * 작성자 이름
      * @OA\Property(example="홍길동")
      */
-    public string $wr_name = "";
+    public string $wr_name = '';
 
     /**
      * 회원 아이디
      * @OA\Property(example="test")
      */
-    public string $mb_id = "";
+    public string $mb_id = '';
 
     /**
      * 회원 이미지 경로
      * @OA\Property(example="/data/member_image/te/test.gif?1712194038")
      */
-    public string $mb_image_path = "";
+    public string $mb_image_path = '';
 
     /**
      * 회원 아이콘 경로
      * @OA\Property(example="/data/member/te/test.gif?1712194038")
      */
-    public string $mb_icon_path = "";
+    public string $mb_icon_path = '';
 
     /**
      * 작성일시
      * @OA\Property(format="date-time")
      */
-    public string $wr_datetime = "";
+    public string $wr_datetime = '';
 
     /**
      * 작성자 이메일
      * @OA\Property(example="test@test.com")
      */
-    public string $wr_email = "";
+    public string $wr_email = '';
 
     /**
      * 글 내용
      * @OA\Property(example="<p>내용입니다.</p>")
      */
-    public string $wr_content = "";
+    public string $wr_content = '';
 
     /**
      * 링크1
      * @OA\Property(example="")
      */
-    public string $wr_link1 = "";
+    public string $wr_link1 = '';
 
     /**
      * 링크2
      * @OA\Property(example="")
      */
-    public string $wr_link2 = "";
+    public string $wr_link2 = '';
 
     /**
      * 댓글 수
@@ -108,7 +108,7 @@ class Write
      * 작성자 IP
      * @OA\Property(example="127.0.0.1")
      */
-    public string $wr_ip = "";
+    public string $wr_ip = '';
 
     /**
      * 추천 수
@@ -132,7 +132,7 @@ class Write
      * 옵션
      * @OA\Property(example="html1")
      */
-    public string $wr_option = "";
+    public string $wr_option = '';
 
     /**
      * 이미지 목록

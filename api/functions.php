@@ -171,7 +171,7 @@ function is_valid_utf8_string(string $str): bool
  */
 function is_valid_mb_id(string $mb_id): bool
 {
-    return (bool)!preg_match("/[^0-9a-z_]+/i", $mb_id);
+    return !preg_match('/[^0-9a-z_]+/i', $mb_id);
 }
 
 /**
@@ -193,13 +193,13 @@ function is_valid_mb_nick(string $nick): bool
  */
 function is_valid_hp(string $hp): bool
 {
-    $hp = preg_replace("/[^0-9]/", "", $hp);
+    $hp = preg_replace('/[^0-9]/', '', $hp);
 
     if (!$hp) {
         return false;
     }
 
-    return preg_match("/^01[0-9]{8,9}$/", $hp) === 1;
+    return preg_match('/^01[0-9]{8,9}$/', $hp) === 1;
 }
 
 /**
@@ -210,7 +210,7 @@ function is_valid_hp(string $hp): bool
  */
 function is_valid_email(string $email): bool
 {
-    return (bool)preg_match("/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/", $email);
+    return (bool)preg_match('/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/', $email);
 }
 
 /**
@@ -222,7 +222,7 @@ function is_valid_email(string $email): bool
  */
 function is_prohibited_email_domain(string $email, array $config): bool
 {
-    list($id, $domain) = explode("@", $email);
+    list($id, $domain) = explode('@', $email);
     if (trim($domain) === '') {
         return false;
     }
@@ -243,7 +243,7 @@ function is_prohibited_email_domain(string $email, array $config): bool
  */
 function is_prohibited_word(string $word, array $config): bool
 {
-    $pattern = "/[\,]?" . preg_quote($word) . "/i";
+    $pattern = '/[\,]?' . preg_quote($word) . '/i';
     return preg_match($pattern, $config['cf_prohibit_id']);
 }
 
@@ -264,7 +264,7 @@ function send_reset_password_mail(array $config, array $member, string $mb_nonce
     // 인증 링크 생성
     $href = G5_BBS_URL . '/password_lost_certify.php?mb_no=' . $member['mb_no'] . '&amp;mb_nonce=' . $mb_nonce;
 
-    $subject = "[" . $config['cf_title'] . "] 요청하신 회원정보 찾기 안내 메일입니다.";
+    $subject = '[' . $config['cf_title'] . '] 요청하신 회원정보 찾기 안내 메일입니다.';
 
     $content = '<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">';
     $content .= '<div style="border:1px solid #dedede">';
@@ -275,7 +275,7 @@ function send_reset_password_mail(array $config, array $member, string $mb_nonce
     $content .= '<a href="' . G5_URL . '" target="_blank">' . $config['cf_title'] . '</a>';
     $content .= '</span>';
     $content .= '<p style="margin:20px 0 0;padding:30px 30px 30px;border-bottom:1px solid #eee;line-height:1.7em">';
-    $content .= addslashes($member['mb_name']) . " (" . addslashes($member['mb_nick']) . ")" . " 회원님은 " . G5_TIME_YMDHIS . " 에 회원정보 찾기 요청을 하셨습니다.<br>";
+    $content .= addslashes($member['mb_name']) . ' (' . addslashes($member['mb_nick']) . ')' . ' 회원님은 ' . G5_TIME_YMDHIS . ' 에 회원정보 찾기 요청을 하셨습니다.<br>';
     $content .= '저희 사이트는 관리자라도 회원님의 비밀번호를 알 수 없기 때문에, 비밀번호를 알려드리는 대신 새로운 비밀번호를 생성하여 안내 해드리고 있습니다.<br>';
     $content .= '아래에서 변경될 비밀번호를 확인하신 후, <span style="color:#ff3061"><strong>비밀번호 변경</strong> 링크를 클릭 하십시오.</span><br>';
     $content .= '비밀번호가 변경되었다는 인증 메세지가 출력되면, 홈페이지에서 회원아이디와 변경된 비밀번호를 입력하시고 로그인 하십시오.<br>';
@@ -390,7 +390,7 @@ function sanitize_input(string $input, int $max_length, bool $strip_tags = false
     if ($strip_tags) {
         $input = trim(strip_tags($input));
     }
-    return preg_replace("#[\\\]+$#", "", $input);
+    return rtrim($input, '\\');
 }
 
 /**

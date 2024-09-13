@@ -24,9 +24,9 @@ class MemoService
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         if ($me_type === 'recv') {
-            $where = "me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
+            $where = 'me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
         } else {
-            $where = "me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
+            $where = 'me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
         }
 
         $query = "SELECT count(*) FROM $memo_table WHERE {$where}";
@@ -49,9 +49,9 @@ class MemoService
     public function fetchMemos(string $me_type, string $mb_id, int $page, int $per_page)
     {
         if ($me_type === 'recv') {
-            $where = "me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
+            $where = 'me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
         } else {
-            $where = "me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime";
+            $where = 'me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
         }
 
         $memo_table = $GLOBALS['g5']['memo_table'];
@@ -244,8 +244,9 @@ class MemoService
     /**
      * 안읽은 쪽지 수 업데이트
      * @param string $receiver_mb_id 받는 회원 아이디
+     * @return int
      */
-    public function update_not_read_memo_count(string $receiver_mb_id): int
+    public function update_not_read_memo_count(string $receiver_mb_id)
     {
         $not_read_memo_count = $this->not_read_memo_count($receiver_mb_id);
         $member_table = $GLOBALS['g5']['member_table'];
@@ -267,7 +268,7 @@ class MemoService
                          AND me_read_datetime = '0000-00-00 00:00:00'",
             ['mb_id' => $mb_id]
         )->fetch();
-        return $result['cnt'] ?? 0;
+        return $result['cnt'] ?: 0;
     }
 
 

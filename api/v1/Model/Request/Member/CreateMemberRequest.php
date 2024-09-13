@@ -279,63 +279,63 @@ class CreateMemberRequest
     protected function validateId(array $config)
     {
         if (empty(trim($this->mb_id))) {
-            $this->throwException("아이디를 입력해주세요.");
+            $this->throwException('아이디를 입력해주세요.');
         }
         if (!is_valid_mb_id($this->mb_id)) {
-            $this->throwException("회원아이디는 영문자, 숫자, _ 만 입력하세요.");
+            $this->throwException('회원아이디는 영문자, 숫자, _ 만 입력하세요.');
         }
         $min_length = 3;
         if (!has_min_length($this->mb_id, $min_length)) {
             $this->throwException("회원아이디는 최소 {$min_length}글자 이상 입력하세요.");
         }
         if (is_prohibited_word($this->mb_id, $config)) {
-            $this->throwException("이미 예약된 단어로 사용할 수 없는 아이디 입니다.");
+            $this->throwException('이미 예약된 단어로 사용할 수 없는 아이디 입니다.');
         }
     }
 
     protected function validatePassword()
     {
         if (empty(trim($this->mb_password))) {
-            $this->throwException("비밀번호를 입력해주세요.");
+            $this->throwException('비밀번호를 입력해주세요.');
         }
         if ($this->mb_password !== $this->mb_password_re) {
-            $this->throwException("비밀번호가 일치하지 않습니다.");
+            $this->throwException('비밀번호가 일치하지 않습니다.');
         }
     }
 
     protected function validateName()
     {
         if (empty(trim($this->mb_name))) {
-            $this->throwException("이름을 입력해주세요.");
+            $this->throwException('이름을 입력해주세요.');
         }
         if (!is_valid_utf8_string($this->mb_name)) {
-            $this->throwException("이름을 올바르게 입력해 주십시오.");
+            $this->throwException('이름을 올바르게 입력해 주십시오.');
         }
     }
 
     protected function validateNickName(array $config)
     {
         if (empty(trim($this->mb_nick))) {
-            $this->throwException("닉네임을 입력해주세요.");
+            $this->throwException('닉네임을 입력해주세요.');
         }
         if (!is_valid_utf8_string($this->mb_nick)) {
-            $this->throwException("닉네임을 올바르게 입력해 주십시오.");
+            $this->throwException('닉네임을 올바르게 입력해 주십시오.');
         }
         if (!is_valid_mb_nick($this->mb_nick)) {
-            $this->throwException("닉네임은 공백없이 한글, 영문, 숫자만 입력 가능합니다.");
+            $this->throwException('닉네임은 공백없이 한글, 영문, 숫자만 입력 가능합니다.');
         }
         if (is_prohibited_word($this->mb_nick, $config)) {
-            $this->throwException("이미 예약된 단어로 사용할 수 없는 닉네임 입니다.");
+            $this->throwException('이미 예약된 단어로 사용할 수 없는 닉네임 입니다.');
         }
     }
 
     protected function validateEmail(array $config)
     {
         if (empty(trim($this->mb_email))) {
-            $this->throwException("이메일 주소를 입력해주세요.");
+            $this->throwException('이메일 주소를 입력해주세요.');
         }
         if (!is_valid_email($this->mb_email)) {
-            $this->throwException("잘못된 형식의 이메일 주소입니다.");
+            $this->throwException('잘못된 형식의 이메일 주소입니다.');
         }
         if (is_prohibited_email_domain($this->mb_email, $config)) {
             $this->throwException("{$this->mb_email} 메일은 사용할 수 없습니다.");
@@ -345,14 +345,14 @@ class CreateMemberRequest
     protected function validateRecommend()
     {
         if (strtolower($this->mb_id) == strtolower($this->mb_recommend)) {
-            $this->throwException("본인을 추천인으로 등록할 수 없습니다.");
+            $this->throwException('본인을 추천인으로 등록할 수 없습니다.');
         }
     }
 
     protected function validateHp()
     {
         if (!is_valid_hp($this->mb_hp)) {
-            $this->throwException("휴대폰번호를 올바르게 입력해 주십시오.");
+            $this->throwException('휴대폰번호를 올바르게 입력해 주십시오.');
         }
     }
 

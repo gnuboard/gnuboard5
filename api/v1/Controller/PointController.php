@@ -15,7 +15,8 @@ class PointController
 {
     private PointService $point_service;
 
-    public function __construct(PointService $point_service) {
+    public function __construct(PointService $point_service)
+    {
         $this->point_service = $point_service;
     }
 
@@ -49,22 +50,18 @@ class PointController
 
             // 포인트 목록 조회
             $fetch_points = $this->point_service->fetchPoints($member['mb_id'], (array)$page_params);
-            $points = array_map(fn ($point) => new Point($point), $fetch_points);
+            $points = array_map(fn($point) => new Point($point), $fetch_points);
 
             $response_data = new PointsResponse([
-                "total_records" => $total_records,
-                "total_pages" => $total_page,
-                "total_points" => $member['mb_point'],
-                "page_sum_points" => $this->point_service->calculate_sum($fetch_points),
-                "points" => $points
+                'total_records' => $total_records,
+                'total_pages' => $total_page,
+                'total_points' => $member['mb_point'],
+                'page_sum_points' => $this->point_service->calculate_sum($fetch_points),
+                'points' => $points
             ]);
 
             return api_response_json($response, (array)$response_data);
         } catch (Exception $e) {
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            }
-
             throw $e;
         }
     }
