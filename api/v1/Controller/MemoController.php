@@ -216,7 +216,28 @@ class MemoController
     }
 
     /**
-     * 쪽지 삭제
+     *  쪽지 삭제
+     * @OA\Delete (
+     *      path="/api/v1/member/memos/{me_id}",
+     *      summary="쪽지 삭제",
+     *      tags={"쪽지"},
+     *      security={{"Oauth2Password": {}}},
+     *      @OA\Parameter (
+     *      name="me_id",
+     *      in="path",
+     *      description="쪽지 ID",
+     *      required=true,
+     *      @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(response="200", description="쪽지 삭제 완료", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *    @OA\Response(response="400", ref="#/components/responses/400"),
+     *    @OA\Response(response="403", ref="#/components/responses/403"),
+     *    @OA\Response(response="422", ref="#/components/responses/422")
+     * )
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
      */
     public function delete(Request $request, Response $response, $args)
     {

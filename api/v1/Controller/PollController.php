@@ -31,9 +31,9 @@ class PollController
     /**
      * @OA\Get (
      *      path="/api/v1/polls/latest",
-     *      summary="설문조사 조회",
+     *      summary="최신 설문조사 1건을 조회합니다.",
      *      tags={"설문조사"},
-     *      description="설문조사 정보를 조회합니다.",
+     *      description="최신 설문조사 1건을 조회합니다.",
      *     @OA\Response(response="200",
      *         description="마지막 투표결과 조회 성공",
      *         @OA\JsonContent(ref="#/components/schemas/GetItemResponse")
@@ -97,14 +97,13 @@ class PollController
      *          @OA\Schema(type="integer")
      *      ),
      *      @OA\RequestBody(
-     *          name="item",
-     *          in="path",
      *          required=true,
      *          description="설문항목 번호",
-     *          @OA\Schema(
-     *              type="integer",
-     *              minimum=1,
-     *              maximum=9
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="item", type="integer", description="설문항목 번호")
+     *              )
      *          )
      *      ),
      *     @OA\Response(response="200", description="투표완료", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
