@@ -16,9 +16,9 @@ use Hybridauth\User\Profile;
 class SocialService
 {
     /**
-     * @var MemberService $memberService
+     * @var MemberService $member_service
      */
-    private $memberService;
+    private $member_service;
     private $config;
 
     /**
@@ -33,11 +33,11 @@ class SocialService
 
     public function __construct(
         AuthenticationService $authentication_service,
-        MemberService $memberService
+        MemberService $member_service
     ) {
         $this->authentication_service = $authentication_service;
         $this->config = ConfigService::getConfig();
-        $this->memberService = $memberService;
+        $this->member_service = $member_service;
     }
 
     /**
@@ -269,7 +269,7 @@ class SocialService
         }
 
         $social_profile = $this->convertGnuboardSocialData($provider, $profile);
-        $generated_mb_id = $this->memberService->existsMemberIdRecursive($social_profile['mb_id']);
+        $generated_mb_id = $this->member_service->existsMemberIdRecursive($social_profile['mb_id']);
         $social_profile['mb_id'] = $generated_mb_id;
         $member_data = (array)$member_data;
 
@@ -281,9 +281,9 @@ class SocialService
             // 닉네임이 없으면 소셜 닉네임으로 설정, 닉네임 중복되면 뒤에 숫자 추가
             if (empty($social_profile['displayname'])) {
                 $random_nick = bin2hex(random_bytes(5));
-                $member_data['mb_nick'] = $this->memberService->existsMemberNicknameRecursive($random_nick);
+                $member_data['mb_nick'] = $this->member_service->existsMemberNicknameRecursive($random_nick);
             } else {
-                $member_data['mb_nick'] = $this->memberService->existsMemberNicknameRecursive($social_profile['displayname']);
+                $member_data['mb_nick'] = $this->member_service->existsMemberNicknameRecursive($social_profile['displayname']);
             }
         }
 
@@ -298,7 +298,7 @@ class SocialService
                 throw new \RuntimeException('회원가입이 되지 않았습니다.', 400);
             }
 
-            $member_insert_id = $this->memberService->insertMember($member_data);
+            $member_insert_id = $this->member_service->insertMember($member_data);
             //Throwable 오류 발생안하고 실패시(PDO stmt의 false) 롤백
             if (!$member_insert_id) {
                 $rollback_result = $this->deleteSocialProfile($provider, $profile->identifier);
@@ -517,8 +517,8 @@ class SocialService
 
     /**
      * 소셜 로그인 인증이후 서버로그인을 위한 토큰 생성
-     * @param $provider
-     * @param $profile
+     * @param string $provider
+     * @param Profile $profile
      * @return array
      */
     public function getLoginTokenBySocialAuth($provider, $profile)

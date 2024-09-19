@@ -155,7 +155,7 @@ class SocialController
 
         //비로그인 & 소셜가입자  -> 로그인
         if ($is_guest && $is_exist) {
-            $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile->identifier);
+            $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile);
             $response_data = new GenerateTokenResponse($login_token_data);
             return api_response_json($response, $response_data, 200);
         }
@@ -294,7 +294,7 @@ class SocialController
         }
 
         // 로그인
-        $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile->identifier);
+        $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile);
         $response_data = new GenerateTokenResponse($login_token_data);
         $response->withoutHeader('Authorization');
 
@@ -429,7 +429,7 @@ class SocialController
         }
 
         // 로그인
-        $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile->identifier);
+        $login_token_data = $this->socialService->getLoginTokenBySocialAuth($provider, $profile);
         $response_data = new GenerateTokenResponse($login_token_data);
 
         return api_response_json($response, $response_data);

@@ -3,20 +3,23 @@
 namespace API\Service;
 
 use API\Database\Db;
+use API\Service\Social\SocialService;
 use Exception;
 
 
 class MemberService
 {
     private string $table;
+    private SocialService $social_service;
 
-    public function __construct()
+    public function __construct(SocialService $social_service)
     {
+        $this->social_service = $social_service;
         $this->table = $GLOBALS['g5']['member_table'];
     }
 
     /**
-     * 회원가입 처리
+     * 회원가입
      * @param object $data 회원가입 데이터
      * @return false|string 회원번호
      * @throws Exception 회원가입 실패시 Exception 발생
@@ -44,7 +47,7 @@ class MemberService
     }
 
     /**
-     * 회원정보 갱신 처리
+     * 회원정보 갱신
      * @param string $mb_id 회원아이디
      * @param object $data 갱신 데이터
      * @return void
@@ -87,9 +90,7 @@ class MemberService
         run_event('member_leave', $member);
 
         //소셜로그인 해제
-        if (function_exists('social_member_link_delete')) {
-            social_member_link_delete($member['mb_id']);
-        }
+        $this->social_service->deleteAllSocialProfileByMemberId($member['mb_id']);
     }
 
     /**
