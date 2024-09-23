@@ -17,6 +17,7 @@
         "doctrine/annotations": "^2.0",
         "php-di/php-di": "^6.4",
         "hybridauth/hybridauth": "^3.11",
+        "google/auth": "^1.37",
         "ext-pdo": "*",
         "ext-gd": "*",
         "ext-curl": "*"
