@@ -72,6 +72,9 @@ class EnvironmentConfig
             $env_content .= 'CORS_ALLOW_ORIGIN=' . G5_URL . PHP_EOL;
             $env_content .= 'CORS_ALLOW_METHODS="*"' . PHP_EOL;
             $env_content .= 'CORS_ALLOW_CREDENTIALS="true"' . PHP_EOL;
+            $env_content .= 'FIREBASE_PROJECT_ID=""' . PHP_EOL;
+            $env_content .= 'FIREBASE_KEY_PATH=""' . PHP_EOL;
+
 
             $result = file_put_contents($file_path, $env_content);
             if ($result === false) {
