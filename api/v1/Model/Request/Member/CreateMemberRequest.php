@@ -89,13 +89,13 @@ class CreateMemberRequest
 
     /**
      * 지번주소
-     * @OA\Property(example="서울시 강남구")
+     * @OA\Property(example="ㅇㅇ도 ㅇㅇ시 ㅇㅇ구")
      */
     public string $mb_addr_jibeon = '';
 
     /**
      * 기본 주소
-     * @OA\Property(example="서울시 강남구 역삼동 123-45")
+     * @OA\Property(example="ㅇㅇ도 ㅇㅇ시 ㅇㅇ구 ㅇㅇ동 123-45")
      */
     public string $mb_addr1 = '';
 
