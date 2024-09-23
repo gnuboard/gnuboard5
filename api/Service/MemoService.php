@@ -76,7 +76,7 @@ class MemoService
      * @param string $receiver_ids
      * @return array ['available_ids' => [], 'not_available_ids' => []]
      */
-    public function getReciveMembers(string $receiver_ids)
+    public function getReceiveMembers(string $receiver_ids)
     {
         $member_table = $GLOBALS['g5']['member_table'];
         $send_target_ids = explode(',', $receiver_ids);
@@ -110,7 +110,7 @@ class MemoService
      */
     public function sendMemo($mb_id, $receiver_ids, $content, $ip)
     {
-        $result = $this->getReciveMembers($receiver_ids);
+        $result = $this->getReceiveMembers($receiver_ids);
         $member_result = $this->member_service->fetchMemberById($mb_id);
         if (!isset($member_result['mb_no'])) {
             throw new \Exception('회원 정보가 없습니다.', 400);
@@ -182,7 +182,7 @@ class MemoService
      * @param int $memo_id
      * @return bool
      */
-    public function readCheck($memo_id)
+    public function checkRead($memo_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $row_count = Db::getInstance()->update($memo_table, ['me_read_datetime' => G5_TIME_YMDHIS], ['me_id' => $memo_id]);
@@ -195,7 +195,7 @@ class MemoService
      * @param string $mb_id
      * @return array|int ['error' => '권한이 없습니다.', 'code' => 403] , 삭제된 row 수
      */
-    public function delete_memo(int $memo_id, string $mb_id)
+    public function deleteMemo(int $memo_id, string $mb_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $query = "SELECT * FROM $memo_table WHERE me_id = :me_id";
@@ -212,7 +212,7 @@ class MemoService
      * @param int $memo_id
      * @return array|void ['error' => '권한이 없습니다.', 'code' => 403]
      */
-    public function delete_memo_call(int $memo_id)
+    public function deleteMemoCall(int $memo_id)
     {
         $memoTable = $GLOBALS['g5']['memo_table'];
         $query = "SELECT * FROM $memoTable WHERE me_id = :me_id";
@@ -238,17 +238,17 @@ class MemoService
             ]
         );
 
-        $this->update_not_read_memo_count($memo['me_recv_mb_id']);
+        $this->updateNotReadMemoCount($memo['me_recv_mb_id']);
     }
 
     /**
-     * 안읽은 쪽지 수 업데이트
+     * 읽지 않은 쪽지 수 업데이트
      * @param string $receiver_mb_id 받는 회원 아이디
      * @return int
      */
-    public function update_not_read_memo_count(string $receiver_mb_id)
+    public function updateNotReadMemoCount(string $receiver_mb_id)
     {
-        $not_read_memo_count = $this->not_read_memo_count($receiver_mb_id);
+        $not_read_memo_count = $this->fetchNotReadMemoCount($receiver_mb_id);
         $member_table = $GLOBALS['g5']['member_table'];
         return Db::getInstance()->update($member_table, ['mb_memo_cnt' => $not_read_memo_count], ['mb_id' => $receiver_mb_id]);
     }
@@ -258,7 +258,7 @@ class MemoService
      * @param string $mb_id
      * @return int
      */
-    public function not_read_memo_count($mb_id)
+    public function fetchNotReadMemoCount($mb_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $result = Db::getInstance()->run(

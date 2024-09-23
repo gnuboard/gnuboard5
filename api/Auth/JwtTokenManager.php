@@ -20,7 +20,11 @@ class JwtTokenManager
         $this->env_config = $env_config;
     }
 
-    public function secret_key(string $type = 'access'): string
+    /**
+     * @param string $type
+     * @return string
+     */
+    public function secretKey(string $type = 'access'): string
     {
         return $type === 'refresh'
             ? $this->env_config->refresh_token_secret_key
@@ -31,7 +35,7 @@ class JwtTokenManager
      * @param string $type
      * @return int
      */
-    public function expire_minutes(string $type = 'access')
+    public function expireMinutes(string $type = 'access')
     {
         return $type === 'refresh'
             ? (int)$this->env_config->refresh_token_expire_minutes
@@ -39,19 +43,42 @@ class JwtTokenManager
     }
 
     /**
-     * Create JWT token
+     * JWT token 생성
+     * @param string $type
+     * @param array $add_claim
+     * @return string
      */
-    public function create_token(string $type, array $add_claim = []): string
+    public function createToken(string $type, array $add_claim = []): string
     {
         $payload = [
             'iss' => $this->env_config->auth_issuer,
             'aud' => $this->env_config->auth_audience,
             'iat' => time(),
             'nbf' => time(),
-            'exp' => time() + (60 * $this->expire_minutes($type)),
+            'exp' => time() + (60 * $this->expireMinutes($type)),
         ];
         $payload = array_merge($payload, $add_claim);
-        return JWT::encode($payload, $this->secret_key($type), self::ALGORITHM);
+        return JWT::encode($payload, $this->secretKey($type), self::ALGORITHM);
+    }
+
+    /**
+     * 만료시간을 지정해서 JWT 토큰을 생성
+     * @param string $type
+     * @param array $add_claim
+     * @param int $time unix time
+     * @return string
+     */
+    public function createTokenWithTime(string $type, array $add_claim, int $time): string
+    {
+        $payload = [
+            'iss' => $this->env_config->auth_issuer,
+            'aud' => $this->env_config->auth_audience,
+            'iat' => time(),
+            'nbf' => time(),
+            'exp' => $time,
+        ];
+        $payload = array_merge($payload, $add_claim);
+        return JWT::encode($payload, $this->secretKey($type), self::ALGORITHM);
     }
 
     /**
@@ -66,9 +93,9 @@ class JwtTokenManager
      * @throws \DomainException
      * @return stdClass
      */
-    public function decode_token(string $type, string $token, ?stdClass $headers = null): stdClass
+    public function decodeToken(string $type, string $token, ?stdClass $headers = null): stdClass
     {
         // JWT::$leeway = 60; // $leeway in seconds, if needed
-        return JWT::decode($token, new Key($this->secret_key($type), self::ALGORITHM), $headers);
+        return JWT::decode($token, new Key($this->secretKey($type), self::ALGORITHM), $headers);
     }
 }

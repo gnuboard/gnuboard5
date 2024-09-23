@@ -245,10 +245,6 @@ class BoardController
                 throw new HttpForbiddenException($request, $e->getMessage());
             }
 
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            }
-
             throw $e;
         }
     }
@@ -1026,7 +1022,7 @@ class BoardController
             if (!$write) {
                 throw new HttpNotFoundException($request, '게시글 정보가 존재하지 않습니다.');
             }
-            $word = get_good_word($good_type);
+            $word = $this->board_good_service->getGoodTypeWord($good_type);
             $response_data = new GoodWriteResponse([
                 'message' => "해당 글을 {$word}하였습니다.",
                 'good' => $write['wr_good'],

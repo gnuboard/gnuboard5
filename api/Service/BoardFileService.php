@@ -126,7 +126,7 @@ class BoardFileService
 
             $exists_file = $this->fetchWriteFileByNo($wr_id, $key);
             if ($exists_file) {
-                $this->removeFileAndThumnnail($exists_file);
+                $this->removeFileAndThumbnail($exists_file);
             }
 
             $directory = G5_DATA_PATH . '/file/' . $this->bo_table;
@@ -202,7 +202,7 @@ class BoardFileService
     {
         $files = $this->fetchWriteFiles($write['wr_id']);
         foreach ($files as $file) {
-            $this->removeFileAndThumnnail($file);
+            $this->removeFileAndThumbnail($file);
         }
         delete_editor_thumbnail($write['wr_content']);
         $this->deleteBoardFile($write['wr_id']);
@@ -215,7 +215,7 @@ class BoardFileService
     {
         $files = $this->fetchWriteFilesByIn($wr_id, $file_dels);
         foreach ($files as $file) {
-            $this->removeFileAndThumnnail($file);
+            $this->removeFileAndThumbnail($file);
             $this->deleteBoardFileByNo($wr_id, $file['bf_no']);
         }
     }
@@ -241,7 +241,7 @@ class BoardFileService
     /**
      * 파일 삭제 시 썸네일 삭제
      */
-    private function removeFileAndThumnnail(array $bf_file)
+    private function removeFileAndThumbnail(array $bf_file)
     {
         $delete_file = G5_DATA_PATH . '/file/' . $this->bo_table . '/' . str_replace('../', '', $bf_file['bf_file']);
         if (file_exists($delete_file)) {

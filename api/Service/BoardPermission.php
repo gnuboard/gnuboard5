@@ -128,6 +128,7 @@ class BoardPermission
 
     /**
      * 글 작성 권한 체크
+     * @throws Exception
      */
     public function createWrite(array $member): void
     {
@@ -140,6 +141,7 @@ class BoardPermission
 
     /**
      * 공지 게시글 작성권한 체크
+     * @throws Exception
      */
     public function createNotice(array $member): void
     {
@@ -150,6 +152,7 @@ class BoardPermission
 
     /**
      * 글 답변 권한 체크
+     * @throws Exception
      */
     public function createReply(array $member, array $write): void
     {
@@ -165,6 +168,7 @@ class BoardPermission
 
     /**
      * 글 수정 권한 체크
+     * @throws Exception
      */
     public function updateWrite(array $member, array $write): void
     {
@@ -181,6 +185,7 @@ class BoardPermission
 
     /**
      * 비회원 글 수정 권한 체크
+     * @throws Exception
      */
     public function updateWriteByNonMember(array $member, array $write, string $wr_password): void
     {
@@ -246,26 +251,29 @@ class BoardPermission
     public function goodWrite(string $mb_id, array $write, string $type)
     {
         if (!$this->isUsedGood($type)) {
-            $word = get_good_word($type);
+            $word = $this->board_good_service->getGoodTypeWord($type);
             $this->throwException(sprintf(self::ERROR_NO_GOOD_SETTING, $word));
         }
+
         $exists = $this->board_good_service->fetchGoodByMember($mb_id, $this->board['bo_table'], $write['wr_id']);
         if ($exists) {
-            $word = get_good_word($exists['bg_flag']);
+            $word = $this->board_good_service->getGoodTypeWord($exists['bg_flag']);
             $this->throwException(sprintf(self::ERROR_NO_GOOD_EXIST, $word));
         }
 
         if ($this->isBoardManager($mb_id)) {
             return;
         }
+
         if ($this->isOwner($write, $mb_id)) {
-            $word = get_good_word($type);
+            $word = $this->board_good_service->getGoodTypeWord($type);
             $this->throwException(sprintf(self::ERROR_NO_GOOD_OWNER, $word));
         }
     }
 
     /**
      * 글 삭제 권한 체크
+     * @throws Exception
      */
     public function deleteWrite(array $member, array $write): void
     {
@@ -280,6 +288,7 @@ class BoardPermission
 
     /**
      * 비회원 글 삭제 권한 체크
+     * @throws Exception
      */
     public function deleteWriteByNonMember(array $member, array $write, string $wr_password): void
     {
@@ -294,6 +303,7 @@ class BoardPermission
 
     /**
      * 댓글 작성 권한 체크
+     * @throws Exception
      */
     public function createComment(array $member, array $write): void
     {
@@ -306,6 +316,7 @@ class BoardPermission
 
     /**
      * 댓글 수정 권한 체크
+     * @throws Exception
      */
     public function updateComment(array $member, array $comment): void
     {
@@ -322,6 +333,7 @@ class BoardPermission
 
     /**
      * 비회원 댓글 수정 권한 체크
+     * @throws Exception
      */
     public function updateCommentByNonMember(array $member, array $comment, string $wr_password): void
     {
@@ -336,6 +348,7 @@ class BoardPermission
 
     /**
      * 댓글 삭제 권한 체크
+     * @throws Exception
      */
     public function deleteComment(array $member, array $comment): void
     {
@@ -350,6 +363,7 @@ class BoardPermission
 
     /**
      * 비회원 댓글 삭제 권한 체크
+     * @throws Exception
      */
     public function deleteCommentByNonMember(array $member, array $comment, string $wr_password): void
     {
@@ -437,6 +451,7 @@ class BoardPermission
 
     /**
      * 대댓글이 있는지 체크
+     * @throws Exception
      */
     private function hasCommentReply(array $write, string $message): void
     {
@@ -481,6 +496,7 @@ class BoardPermission
 
     /**
      * 답변 깊이 체크
+     * @throws Exception
      */
     private function checkReplyDepth(array $reply_array): void
     {
@@ -493,6 +509,7 @@ class BoardPermission
      *
      * 글읽기 포인트 체크
      * - 그누보드5에선 세션을 사용했지만 세션을 사용하지 않으므로 테이블의 내역을 체크한다.
+     * @throws Exception
      */
     private function checkMemberPoint(string $type, array $member, array $write): void
     {
@@ -547,6 +564,7 @@ class BoardPermission
 
     /**
      * 게시판 접근권한 체크
+     * @throws Exception
      */
     private function checkAccessBoardGroup(string $mb_id): void
     {
@@ -708,6 +726,7 @@ class BoardPermission
 
     /**
      * 답변글이 있는지 체크
+     * @throws Exception
      */
     private function hasWriteReply(array $write, string $message): void
     {
@@ -735,6 +754,7 @@ class BoardPermission
 
     /**
      * 댓글 수정/삭제 시 댓글 갯수 체크
+     * @throws Exception
      */
     private function checkCommentLimit(array $write, int $limit, string $message): void
     {
@@ -759,6 +779,7 @@ class BoardPermission
 
     /**
      * 게시글 비밀번호 체크
+     * @throws Exception
      */
     private function checkWritePassword(array $write, string $wr_password, string $message): void
     {
@@ -816,6 +837,6 @@ class BoardPermission
      */
     private function throwException(string $message): void
     {
-        throw new Exception($message, 403);
+        throw new \RuntimeException($message, 403);
     }
 }

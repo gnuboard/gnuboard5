@@ -4,7 +4,9 @@ namespace API\Service;
 
 use API\Database\Db;
 
-
+/**
+ * 게시글 추천/비추천
+ */
 class BoardGoodService
 {
     public string $table;
@@ -12,6 +14,11 @@ class BoardGoodService
     public function __construct()
     {
         $this->setTable();
+    }
+
+    public function getGoodTypeWord(string $good_type)
+    {
+        return $good_type === 'good' ? '추천' : '비추천';
     }
 
     public function setTable(): void

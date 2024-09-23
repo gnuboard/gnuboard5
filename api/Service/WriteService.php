@@ -138,7 +138,11 @@ class WriteService
                     'wr_reply' => $write['wr_reply'],
                     'wr_option' => $write['wr_option'],
                     'ca_name' => $write['ca_name'],
-                    'wr_content' => '비밀글입니다.'
+                    'wr_subject' => $write['wr_subject'],
+                    'wr_content' => $write['wr_content'] !== '' ? '비밀글입니다' : '',
+                    'mb_id' => $write['mb_id'],
+                    'wr_hit' => $write['wr_hit'],
+                    'wr_datetime' => $write['wr_datetime'],
                 ]);
             } else {
                 // 썸네일

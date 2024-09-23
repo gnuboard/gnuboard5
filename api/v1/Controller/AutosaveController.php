@@ -49,7 +49,7 @@ class AutosaveController
             return api_response_json($response, ['message' => '한번에 100개 이상 조회할 수 없습니다.'], 404);
         }
 
-        $response_data = $this->autosave_service->fetch_autosaves($mb_id, $page, $per_page);
+        $response_data = $this->autosave_service->getAutosaves($mb_id, $page, $per_page);
         if (!$response_data) {
             return api_response_json($response, ['message' => '임시저장된 글이 없습니다.'], 404);
         }
@@ -87,7 +87,7 @@ class AutosaveController
             return api_response_json($response, ['message' => '임시저장 아이디가 필요합니다.'], 422);
         }
 
-        $response_data = $this->autosave_service->fetch_autosave($mb_id, $as_id);
+        $response_data = $this->autosave_service->fetchAutosave($mb_id, $as_id);
         if (!$response_data) {
             return api_response_json($response, ['message' => '임시저장된 글이 없습니다.'], 404);
         }
@@ -114,9 +114,8 @@ class AutosaveController
     public function getCount(Request $request, Response $response)
     {
         $member = $request->getAttribute('member');
-        $count = $this->autosave_service->get_count($member['mb_id']);
+        $count = $this->autosave_service->getCount($member['mb_id']);
         return api_response_json($response, ['count' => $count]);
     }
-    
-    
+
 }

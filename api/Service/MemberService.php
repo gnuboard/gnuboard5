@@ -10,11 +10,9 @@ use Exception;
 class MemberService
 {
     private string $table;
-    private SocialService $social_service;
 
-    public function __construct(SocialService $social_service)
+    public function __construct()
     {
-        $this->social_service = $social_service;
         $this->table = $GLOBALS['g5']['member_table'];
     }
 
@@ -88,9 +86,6 @@ class MemberService
 
         // Hook - 회원탈퇴
         run_event('member_leave', $member);
-
-        //소셜로그인 해제
-        $this->social_service->deleteAllSocialProfileByMemberId($member['mb_id']);
     }
 
     /**

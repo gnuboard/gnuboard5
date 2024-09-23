@@ -12,7 +12,31 @@ class OptionalAccessTokenAuthMiddleware
 {
     private JwtTokenManager $token_manager;
     private MemberService $member_service;
-    private $default_member = array('mb_id' => '', 'mb_level' => 1, 'mb_name' => '', 'mb_point' => 0, 'mb_certify' => '', 'mb_email' => '', 'mb_open' => '', 'mb_homepage' => '', 'mb_tel' => '', 'mb_hp' => '', 'mb_zip1' => '', 'mb_zip2' => '', 'mb_addr1' => '', 'mb_addr2' => '', 'mb_addr3' => '', 'mb_addr_jibeon' => '', 'mb_signature' => '', 'mb_profile' => '');
+
+    /**
+     * guest
+     * @var array
+     */
+    private array $default_member = array(
+        'mb_id' => '',
+        'mb_level' => 1,
+        'mb_name' => '',
+        'mb_point' => 0,
+        'mb_certify' => '',
+        'mb_email' => '',
+        'mb_open' => 0,
+        'mb_homepage' => '',
+        'mb_tel' => '',
+        'mb_hp' => '',
+        'mb_zip1' => '',
+        'mb_zip2' => '',
+        'mb_addr1' => '',
+        'mb_addr2' => '',
+        'mb_addr3' => '',
+        'mb_addr_jibeon' => '',
+        'mb_signature' => '',
+        'mb_profile' => ''
+    );
 
     public function __construct(JwtTokenManager $token_manager, MemberService $member_service)
     {
@@ -22,9 +46,9 @@ class OptionalAccessTokenAuthMiddleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $token = $this->extract_token($request);
+        $token = $this->extractToken($request);
         if ($token) {
-            $decode = $this->token_manager->decode_token('access', $token);
+            $decode = $this->token_manager->decodeToken('access', $token);
             $member = $this->member_service->fetchMemberById($decode->sub);
             $request = $request->withAttribute('member', $member);
         } else {
@@ -34,7 +58,7 @@ class OptionalAccessTokenAuthMiddleware
         return $handler->handle($request);
     }
 
-    private function extract_token(Request $request): ?string
+    private function extractToken(Request $request): ?string
     {
         $token = $request->getHeaderLine('Authorization');
         $token = trim(str_replace('Bearer', '', $token));
