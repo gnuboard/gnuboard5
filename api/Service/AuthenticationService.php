@@ -29,10 +29,10 @@ class AuthenticationService
     public function generateLoginTokenByAuthMemberId(string $auth_mb_id): array
     {
         $claim = ['sub' => $auth_mb_id];
-        $login_access_token = $this->token_manager->create_token('access', $claim);
-        $access_token_decode = $this->token_manager->decode_token('access', $login_access_token);
-        $login_refresh_token = $this->token_manager->create_token('refresh', $claim);
-        $refresh_token_decode = $this->token_manager->decode_token('refresh', $login_refresh_token);
+        $login_access_token = $this->token_manager->createToken('access', $claim);
+        $access_token_decode = $this->token_manager->decodeToken('access', $login_access_token);
+        $login_refresh_token = $this->token_manager->createToken('refresh', $claim);
+        $refresh_token_decode = $this->token_manager->decodeToken('refresh', $login_refresh_token);
 
         $this->insertRefreshToken($auth_mb_id, $login_refresh_token, $refresh_token_decode);
         return [

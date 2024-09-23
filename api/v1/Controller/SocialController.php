@@ -163,7 +163,7 @@ class SocialController
         // 비로그인 & 소셜 미가입자 -> 소셜로 회원가입 시작
         if ($is_guest && !$is_exist) {
             // 회원가입시 필요한 소셜 토큰 전송
-            $token = $this->token_manager->create_token('access', [
+            $token = $this->token_manager->createToken('access', [
                 'process_type' => 'social_register',
                 'social_token' => $social_access_token,
                 'provider' => $provider,
@@ -248,7 +248,7 @@ class SocialController
         if (!$jwt_token) {
             $jwt_token = $request->getCookieParams()['Authorization'] ?? '';
         }
-        $jwt_data = $this->token_manager->decode_token('access', $jwt_token);
+        $jwt_data = $this->token_manager->decodeToken('access', $jwt_token);
         $process_type = $jwt_data->process_type ?? '';
         $from_callback = $jwt_data->from_callback ?? false;
 
@@ -405,7 +405,7 @@ class SocialController
 
         // 회원이 없을 경우 회원가입을 위한 소셜 토큰 전달
         if (!$is_exist) {
-            $token = $this->token_manager->create_token('access',
+            $token = $this->token_manager->createToken('access',
                 [
                     'process_type' => 'social_register',
                     'social_token' => [

@@ -29,14 +29,14 @@ class AccessTokenAuthMiddleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $token = $this->extract_token($request);
-        $decode = $this->token_manager->decode_token('access', $token);
-        $request = $request->withAttribute('member', $this->get_member($request, $decode->sub));
+        $token = $this->extractToken($request);
+        $decode = $this->token_manager->decodeToken('access', $token);
+        $request = $request->withAttribute('member', $this->getMember($request, $decode->sub));
 
         return $handler->handle($request);
     }
 
-    private function extract_token(Request $request): string
+    private function extractToken(Request $request): string
     {
         $token = $request->getHeaderLine('Authorization');
         $token = trim(str_replace('Bearer', '', $token));
@@ -48,7 +48,7 @@ class AccessTokenAuthMiddleware
         return $token;
     }
 
-    private function get_member(Request $request, string $mb_id): array
+    private function getMember(Request $request, string $mb_id): array
     {
         $member = $this->member_service->fetchMemberById($mb_id);
 
