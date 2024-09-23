@@ -153,15 +153,19 @@ class HttpErrorHandler extends SlimErrorHandler
      */
     private function respondWithJson($type, $description, $status_code = 200)
     {
-        $error = [
+        if($status_code >= 500) {
+            $description =  G5_DEBUG ? $description : 'Error occurred.';
+        }
+        
+        $error_info = [
             'statusCode' => $status_code,
             'error' => [
                 'type' => $type,
-                'description' => G5_DEBUG ? $description : 'Error occurred.',
+                'description' => $description,
             ],
         ];
         $response = $this->responseFactory->createResponse($status_code);
-        $payload = json_encode($error, \JSON_UNESCAPED_UNICODE);
+        $payload = json_encode($error_info, \JSON_UNESCAPED_UNICODE| \JSON_UNESCAPED_SLASHES);
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json')->withStatus($status_code);
     }
