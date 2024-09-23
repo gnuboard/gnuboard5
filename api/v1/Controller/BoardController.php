@@ -245,10 +245,6 @@ class BoardController
                 throw new HttpForbiddenException($request, $e->getMessage());
             }
 
-            if ($e->getCode() === 422) {
-                throw new HttpUnprocessableEntityException($request, $e->getMessage());
-            }
-
             throw $e;
         }
     }

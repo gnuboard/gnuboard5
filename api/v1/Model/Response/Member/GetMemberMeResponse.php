@@ -60,7 +60,7 @@ class GetMemberMeResponse extends GetMemberResponse
 
     /**
      * 이메일
-     * @OA\Property(example="te@domain.com")
+     * @OA\Property(example="test@domain.com")
      */
     public string $mb_email = '';
 
@@ -81,6 +81,12 @@ class GetMemberMeResponse extends GetMemberResponse
      * @OA\Property(example="123", readOnly=true)
      */
     public string $mb_zip1 = '';
+
+    /**
+     * 휴대폰번호
+     * @OA\Property(example="010-1234-5678")
+     */
+    public string $mb_hp = '';
 
     /**
      * 전화번호
