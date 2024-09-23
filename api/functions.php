@@ -400,11 +400,3 @@ function getConfig()
 {
     return \API\Service\ConfigService::getConfig();
 }
-
-/**
- * 추천/비추천 단어 반환
- */
-function get_good_word(string $good_type)
-{
-    return $good_type === 'good' ? '추천' : '비추천';
-}

@@ -246,7 +246,7 @@ class MemberController
     /**
      * @OA\Get(
      *      path="/api/v1/members/me",
-     *      summary="현재 로그인 회원정보 조회",
+     *      summary="현재 로그인 회원정보 조회 (내 프로필)",
      *      tags={"회원"},
      *      security={{"Oauth2Password": {}}},
      *      description="
