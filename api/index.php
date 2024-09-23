@@ -4,7 +4,7 @@
  * GnuBoard5 API with Slim Framework
  *
  * @package g5-api
- * @version 0.0.2
+ * @version 0.0.4
  * @link
  */
 
@@ -42,9 +42,9 @@ create_refresh_token_table();
 // 응답 json 에 오류메시지를 같이 출력합니다.
 // 실서버에서는 false 이어야 합니다.
 // Should be set to false in production
-$displayErrorDetails = false;
+$display_error_details = false;
 if (G5_DEBUG) {
-    $displayErrorDetails = true;
+    $display_error_details = true;
 }
 
 //@todo 임시 전역변수 정리후 삭제대상
@@ -60,8 +60,8 @@ $app = AppFactory::create();
 $container->set(EnvironmentConfig::class, new EnvironmentConfig());
 
 // PHP 서버 변수에서 값을 가져와 요청 객체를 생성합니다.
-$serverRequestCreator = ServerRequestCreatorFactory::create();
-$request = $serverRequestCreator->createServerRequestFromGlobals();
+$server_request_creator = ServerRequestCreatorFactory::create();
+$request = $server_request_creator->createServerRequestFromGlobals();
 
 /**
  * Add Middleware
@@ -74,17 +74,17 @@ $app->addRoutingMiddleware();
 $app->add(new JsonBodyParserMiddleware());
 
 // Error Handler
-$callableResolver = $app->getCallableResolver();
-$responseFactory = $app->getResponseFactory();
-$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+$callable_resolver = $app->getCallableResolver();
+$response_factory = $app->getResponseFactory();
+$error_handler = new HttpErrorHandler($callable_resolver, $response_factory);
 
 // Shutdown Handler
-$shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);
-register_shutdown_function($shutdownHandler);
+$shutdown_handler = new ShutdownHandler($request, $error_handler, $display_error_details);
+register_shutdown_function($shutdown_handler);
 
 // Error Middleware
-$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, true, true);
-$errorMiddleware->setDefaultErrorHandler($errorHandler);
+$error_middleware = $app->addErrorMiddleware($display_error_details, true, true);
+$error_middleware->setDefaultErrorHandler($error_handler);
 
 /**
  * Add Routers
@@ -121,5 +121,5 @@ $routeCollector->setCacheFile("{$cache_dir}/router-cache.php");
 
 // Run App & Custom Emit Response
 $response = $app->handle($request);
-$responseEmitter = new ResponseEmitter();
-$responseEmitter->emit($response);
+$response_emitter = new ResponseEmitter();
+$response_emitter->emit($response);
