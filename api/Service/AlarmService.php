@@ -11,6 +11,7 @@ class AlarmService
 
     private $google_service_credentials;
     private string $project_id;
+    private $fcm_token_table;
 
     private array $scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
 
@@ -18,6 +19,10 @@ class AlarmService
     {
         $this->project_id = $_ENV['FIREBASE_PROJECT_ID'] ?? '';
         $this->google_service_credentials = new ServiceAccountCredentials($this->scopes, $_ENV['FIREBASE_KEY_PATH'] ?? G5_DATA_PATH . '/fcm.json');
+        $this->fcm_token_table = $GLOBALS['g5']['fcm_token_table'] ?? G5_TABLE_PREFIX . 'fcm_token';
+        if($GLOBALS['g5']['fcm_token_table'] ?? '') {
+            $this->createFcmTokenTable();
+        }
     }
 
     /**
@@ -89,7 +94,7 @@ class AlarmService
                 'notification' => $notification
             ]
         ];
-        
+
         list($target, $target_value) = ($target_data);
         switch ($target) {
             case 'token':
@@ -118,7 +123,7 @@ class AlarmService
      */
     public function registerFcmToken($mb_id, $token, $platform, $ip)
     {
-        $fcm_token_table = $GLOBALS['g5']['fcm_token'] ?? G5_TABLE_PREFIX . 'fcm_token';
+        $fcm_token_table = $this->fcm_token_table;
         $query = "INSERT INTO $fcm_token_table SET
             mb_id = ?,
             ft_token = ?, 
@@ -136,7 +141,7 @@ class AlarmService
      */
     public function updateExpiresFcmToken($token)
     {
-        $fcm_token_table = $GLOBALS['g5']['fcm_token'];
+        $fcm_token_table = $this->fcm_token_table;
         $query = "UPDATE $fcm_token_table SET ft_expired_at = DATE_ADD(NOW(), INTERVAL 270 DAY) WHERE ft_token = ?";
         Db::getInstance()->run($query, [$token]);
     }
@@ -148,14 +153,37 @@ class AlarmService
      */
     public function deleteExpriesFcmToken()
     {
-        $fcm_token_table = $GLOBALS['g5']['fcm_token'];
+        $fcm_token_table = $this->fcm_token_table;
         $query = "DELETE FROM $fcm_token_table WHERE ft_expired_at < NOW()";
         Db::getInstance()->run($query);
     }
 
     public function deleteFcmToken($token)
     {
-        $fcm_token_table = $GLOBALS['g5']['fcm_token'];
+        $fcm_token_table = $this->fcm_token_table;
         Db::getInstance()->deleteById($fcm_token_table, 'ft_token', $token);
     }
+
+    public function createFcmTokenTable()
+    {
+        $fcm_token_table = $this->fcm_token_table;
+        if (!table_exist_check($fcm_token_table)) {
+            $sql = "CREATE TABLE IF NOT EXISTS `$fcm_token_table` (
+                    `ft_no` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `mb_id` varchar(20) NULL,
+                    `ft_token` varchar(328) NOT NULL,
+                    `ft_platform` ENUM('web', 'ios', 'android') NOT NULL,
+                    `ft_meta` varchar(255) NULL,
+                    `ft_created_at` datetime NOT NULL,
+                    `ft_expired_at` datetime NULL,
+                    `ft_last_access_at` datetime NULL,
+                    `ft_ip` varchar(45) NULL,
+                    PRIMARY KEY (`id`),
+                    KEY `ix_fcm_token_mb_id` (`mb_id`),
+                    KEY `ix_fcm_token_id` (`id`)
+                    ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+            Db::getInstance()->run($sql);
+        }
+    }
+
 }

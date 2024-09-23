@@ -83,8 +83,8 @@ class AlarmController
         $body = $request->getParsedBody()['body'];
         $image = $request->getParsedBody()['image'];
         $target_data = [$type, $value];
-        
-        $alarm_message = $this->alarm_service->createMessage($target_data, $title, $body . date('Y-m-d H:i:s') , $image);
+
+        $alarm_message = $this->alarm_service->createMessage($target_data, $title, $body . date('Y-m-d H:i:s'), $image);
         $result = $this->alarm_service->sendMessage($alarm_message);
         $response_data = [
             'result' => $result,
@@ -110,9 +110,10 @@ class AlarmController
      *          description="FCM 토큰"
      *          ),
      *          @OA\Property(
-     *          property="device_type",
+     *          property="platform",
      *          type="string",
-     *          description="디바이스 타입"
+     *          default="web,android,ios 중에 선택하세요",
+     *          description="platform"
      *          )
      *     )
      *    )
@@ -132,6 +133,7 @@ class AlarmController
         if (!isset($parsed_data['fcm_token'])) {
             throw new HttpUnprocessableEntityException($request, 'fcm 토큰이 없습니다.');
         }
+        
         if (!isset($parsed_data['platform'])) {
             throw new HttpUnprocessableEntityException($request, 'platform 이 없습니다.');
         }
