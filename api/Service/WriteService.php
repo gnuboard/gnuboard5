@@ -3,11 +3,9 @@
 namespace API\Service;
 
 use API\Database\Db;
-use API\Exceptions\HttpBadRequestException;
 use API\v1\Model\Response\Write\FileResponse;
 use API\v1\Model\Response\Write\Thumbnail;
 use Exception;
-use http\Exception\RuntimeException;
 
 /**
  * 게시물과 댓글관련

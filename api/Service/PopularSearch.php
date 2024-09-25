@@ -36,9 +36,7 @@ class PopularSearch
      * 인기 검색어 추가
      * @param string $keyword 검색어
      * @return bool
-     * @todo 중복 검색어 처리
      */
-    // @throws \PDOException 쿼리 실패시
     public function addKeyword(string $keyword): bool
     {
         $popular_search_table = $GLOBALS['g5']['popular_table'];
@@ -51,12 +49,6 @@ class PopularSearch
             ]);
             return $stmt->rowCount() > 0;
         } catch (\PDOException $e) {
-            // $error = Db::getInstance()->getPdo()->errorInfo();
-            // // 1062: MYSQL duplicate key 오류번호
-            // if (isset($error[1]) && $error[1] === 1062) {
-            //     return true;
-            // }
-            // throw $e;
             return false;
         }
     }

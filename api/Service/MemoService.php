@@ -81,8 +81,8 @@ class MemoService
         $member_table = $GLOBALS['g5']['member_table'];
         $send_target_ids = explode(',', $receiver_ids);
         $where_in_placeholder = Db::makeWhereInPlaceHolder($send_target_ids);
-        $member_Info_open_query = "SELECT mb_id, mb_open, mb_leave_date FROM {$member_table} WHERE mb_id IN ({$where_in_placeholder}) AND mb_open = 1";
-        $stmt = Db::getInstance()->run($member_Info_open_query, $send_target_ids);
+        $member_info_open_query = "SELECT mb_id, mb_open, mb_leave_date FROM {$member_table} WHERE mb_id IN ({$where_in_placeholder}) AND mb_open = 1";
+        $stmt = Db::getInstance()->run($member_info_open_query, $send_target_ids);
         $result = $stmt->fetchAll();
 
         $available_ids = [];
@@ -214,8 +214,8 @@ class MemoService
      */
     public function deleteMemoCall(int $memo_id)
     {
-        $memoTable = $GLOBALS['g5']['memo_table'];
-        $query = "SELECT * FROM $memoTable WHERE me_id = :me_id";
+        $memo_table = $GLOBALS['g5']['memo_table'];
+        $query = "SELECT * FROM $memo_table WHERE me_id = :me_id";
         $memo = Db::getInstance()->run($query, ['me_id' => $memo_id])->fetch();
         if (!isset($memo['me_recv_mb_id'])) {
             return ['error' => '해당 쪽지가 없습니다.', 'code' => 404];

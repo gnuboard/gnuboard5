@@ -59,21 +59,21 @@ class Naver extends OAuth2
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
-        $userProfile = new User\Profile();
-        $userProfile->identifier = $data->get('id');
-        $userProfile->firstName = $data->get('name');
-        $userProfile->displayName = $data->get('nickname');
-        $userProfile->photoURL = $data->get('profile_image');
-        $userProfile->gender = $data->get('gender');
-        $userProfile->email = $data->get('email');
+        $user_profile = new User\Profile();
+        $user_profile->identifier = $data->get('id');
+        $user_profile->firstName = $data->get('name');
+        $user_profile->displayName = $data->get('nickname');
+        $user_profile->photoURL = $data->get('profile_image');
+        $user_profile->gender = $data->get('gender');
+        $user_profile->email = $data->get('email');
 
-        $userProfile->emailVerified = $data->get('email_verified') ? $userProfile->email : '';
+        $user_profile->emailVerified = $data->get('email_verified') ? $user_profile->email : '';
 
         if ($this->config->get('photo_size')) {
-            $userProfile->photoURL .= '?sz=' . $this->config->get('photo_size');
+            $user_profile->photoURL .= '?sz=' . $this->config->get('photo_size');
         }
 
-        return $userProfile;
+        return $user_profile;
     }
 
 }

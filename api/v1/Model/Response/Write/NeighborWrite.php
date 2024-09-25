@@ -13,6 +13,7 @@ use API\v1\Traits\SchemaHelperTrait;
 class NeighborWrite
 {
     use SchemaHelperTrait;
+
     /**
      * 게시글 제목
      * @OA\Property(example="제목")
@@ -21,7 +22,7 @@ class NeighborWrite
 
     /**
      * 게시글 ID
-     * @OA\Property 
+     * @OA\Property
      */
     public int $wr_id = 0;
 
@@ -41,9 +42,8 @@ class NeighborWrite
     {
         $this->mapDataToProperties($this, $data);
 
-        // TODO: API URL 을 사용해야함.
-        if(isset($data['wr_id'])) {
-            $this->href = G5_URL . "/$bo_table/writes/{$data['wr_id']}";
+        if (isset($data['wr_id'])) {
+            $this->href = G5_URL . "/api/v1/$bo_table/writes/{$data['wr_id']}";
         }
     }
 }

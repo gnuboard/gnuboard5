@@ -51,6 +51,7 @@ class Kakao extends OAuth2
      * @throws \Hybridauth\Exception\HttpClientFailureException
      * @throws \Collection\Exception\HttpRequestFailedException
      * @throws \Hybridauth\Exception\InvalidAccessTokenException
+     * @throws HttpRequestFailedException
      */
     public function getUserProfile()
     {
@@ -62,16 +63,16 @@ class Kakao extends OAuth2
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
-        $userProfile = new User\Profile();
-        $userProfile->identifier = $data->get('id');
-        $userProfile->firstName = $data->get('nickname');
-        $userProfile->displayName = $data->get('nickname');
-        $userProfile->photoURL = $data->get('thumbnail_image_url');
-        $userProfile->gender = $data->get('gender');
-        $userProfile->email = $data->get('account_email');
-        $userProfile->emailVerified = $data->get('is_email_verified') ? $userProfile->email : '';
+        $user_profile = new User\Profile();
+        $user_profile->identifier = $data->get('id');
+        $user_profile->firstName = $data->get('nickname');
+        $user_profile->displayName = $data->get('nickname');
+        $user_profile->photoURL = $data->get('thumbnail_image_url');
+        $user_profile->gender = $data->get('gender');
+        $user_profile->email = $data->get('account_email');
+        $user_profile->emailVerified = $data->get('is_email_verified') ? $user_profile->email : '';
 
-        return $userProfile;
+        return $user_profile;
     }
 
 }

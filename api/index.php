@@ -56,9 +56,9 @@ $config = ConfigService::getConfig();
  * Instantiate App
  */
 
-$containerBuilder = new ContainerBuilder();
-$containerBuilder->useAutowiring(true);
-$container = $containerBuilder->build();
+$container_builder = new ContainerBuilder();
+$container_builder->useAutowiring(true);
+$container = $container_builder->build();
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
@@ -100,7 +100,7 @@ $error_middleware->setDefaultErrorHandler($error_handler);
 $api_path = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
 $app->setBasePath($api_path);
 
-$router_files = glob(__DIR__ . "/v1/Routers/*.php");
+$router_files = glob(__DIR__ . '/v1/Routers/*.php');
 foreach ($router_files as $router_file) {
     include $router_file;
 }
@@ -109,6 +109,11 @@ $plugin_router_files = glob(__DIR__ . '/Plugin/*/Routers/*.php');
 foreach ($plugin_router_files as $router_file) {
     require $router_file;
 }
+
+foreach (glob(__DIR__ . '/api/Event/**/event.php') as $event) {
+    require $event;
+}
+
 /**
  * Route Cache (Optional)
  * To generate the route cache data, you need to set the file to one that does not exist in a writable directory.

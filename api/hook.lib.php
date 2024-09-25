@@ -11,10 +11,17 @@ const G5_HOOK_DEFAULT_PRIORITY = 8;
 
 class ContainerHook extends GML_Hook
 {
+    /**
+     * @param  array $action
+     * @param $args
+     * @return mixed|void
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     protected function runAction($action, $args)
     {
         /**
-         * @var $app \Slim\App
+         * @var \Slim\App $app
          */
         global $app;
         $function = $action['function'];

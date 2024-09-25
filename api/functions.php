@@ -431,9 +431,9 @@ if (!function_exists('run_event')) {
                 $args[] = $arg;
             }
 
-            $numArgs = func_num_args();
+            $num_args = func_num_args();
 
-            for ($a = 2;$a < $numArgs;$a++) {
+            for ($a = 2;$a < $num_args;$a++) {
                 $args[] = func_get_arg($a);
             }
 
@@ -472,9 +472,9 @@ if (!function_exists('run_replace')) {
                 $args[] = $arg;
             }
 
-            $numArgs = func_num_args();
+            $num_args = func_num_args();
 
-            for ($a = 2;$a < $numArgs;$a++) {
+            for ($a = 2;$a < $num_args;$a++) {
                 $args[] = func_get_arg($a);
             }
 

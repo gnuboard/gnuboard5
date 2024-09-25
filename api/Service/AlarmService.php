@@ -80,7 +80,7 @@ class AlarmService
 
     /**
      *
-     * @param string $target topic, token, condition
+     * @param string $target_data topic, token, condition
      * @param string $title
      * @param string $body
      * @param ?string $image
@@ -115,7 +115,7 @@ class AlarmService
                 $data['message']['condition'] = $target_value;
                 break;
             default:
-                throw new \InvalidArgumentException("Invalid type: " . print_r($target_data, true));
+                throw new \InvalidArgumentException('Invalid type: ' . print_r($target_data, true));
         }
 
         return $data;
