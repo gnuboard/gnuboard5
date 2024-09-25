@@ -1,6 +1,6 @@
 <?php
 
-namespace API\Event\Alarm;
+namespace API\Hooks\Alarm;
 
 use API\Service\AlarmService;
 
