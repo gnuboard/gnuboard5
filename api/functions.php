@@ -1,7 +1,6 @@
 <?php
 /**
  * API Functions
- * TODO: 용도에 맞게 함수들을 별도의 파일로 분리하거나 클래스로 만들어 관리하는 것이 좋을 것 같다.
  */
 
 use API\Database\Db;
@@ -129,8 +128,8 @@ function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 
     // @see http://php.net/manual/en/function.random-bytes.php
-    $basename = $basename ?: bin2hex(random_bytes(8));
-    $filename = sprintf('%s.%0.8s', $basename, $extension);
+    $basename = $basename ?: bin2hex(random_bytes(16) . time());
+    $filename = "{$basename}.{$extension}";
 
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
@@ -399,4 +398,107 @@ function sanitize_input(string $input, int $max_length, bool $strip_tags = false
 function getConfig()
 {
     return \API\Service\ConfigService::getConfig();
+}
+
+
+// hook functions
+function add_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 0)
+{
+    if ($hook = ContainerHook::getInstance()) {
+        $hook->addAction($tag, $func, $priority, $args);
+    }
+}
+
+function run_event($tag, $arg = '')
+{
+    if ($hook = ContainerHook::getInstance()) {
+        $args = array();
+
+        if (is_array($arg)
+            &&
+            isset($arg[0])
+            &&
+            is_object($arg[0])
+            &&
+            1 == count($arg)
+        ) {
+            $args[] =& $arg[0];
+        } else {
+            $args[] = $arg;
+        }
+
+        $numArgs = func_num_args();
+
+        for ($a = 2;$a < $numArgs;$a++) {
+            $args[] = func_get_arg($a);
+        }
+
+        $hook->doAction($tag, $args, false);
+    }
+}
+
+function add_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 1)
+{
+    if ($hook = ContainerHook::getInstance()) {
+        return $hook->addFilter($tag, $func, $priority, $args);
+    }
+
+    return null;
+}
+
+function run_replace($tag, $arg = '')
+{
+    if ($hook = ContainerHook::getInstance()) {
+        $args = array();
+
+        if (is_array($arg)
+            &&
+            isset($arg[0])
+            &&
+            is_object($arg[0])
+            &&
+            1 == count($arg)
+        ) {
+            $args[] =& $arg[0];
+        } else {
+            $args[] = $arg;
+        }
+
+        $numArgs = func_num_args();
+
+        for ($a = 2;$a < $numArgs;$a++) {
+            $args[] = func_get_arg($a);
+        }
+
+        return $hook->apply_filters($tag, $args, false);
+    }
+
+    return null;
+}
+
+function delete_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
+{
+    if ($hook = ContainerHook::getInstance()) {
+        return $hook->remove_action($tag, $func, $priority);
+    }
+
+    return null;
+}
+
+function delete_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
+{
+    if ($hook = ContainerHook::getInstance()) {
+        return $hook->remove_filter($tag, $func, $priority);
+    }
+
+    return null;
+}
+
+function get_hook_datas($type = '', $is_callback = '')
+{
+    if ($hook = ContainerHook::getInstance()) {
+        return $hook->get_properties($type, $is_callback);
+    }
+
+    return null;
 }

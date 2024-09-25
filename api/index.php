@@ -14,7 +14,7 @@ use API\Handlers\ShutdownHandler;
 use API\Middleware\JsonBodyParserMiddleware;
 use API\ResponseEmitter\ResponseEmitter;
 use API\Service\ConfigService;
-use DI\Container;
+use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -28,7 +28,7 @@ date_default_timezone_set('Asia/Seoul'); // 그누보드 5 기본 시간대.
 require_once(dirname(__DIR__, 1) . '/config.php');   // 설정 파일
 unset($g5_path);
 
-include_once(G5_LIB_PATH . '/hook.lib.php');    // hook 함수 파일
+include_once(__DIR__ . '/hook.lib.php');    // hook
 include_once(G5_LIB_PATH . '/common.lib.php'); // 공통 라이브러리 // @todo 정리후 삭제대상
 
 if (!include(G5_DATA_PATH . '/' . G5_DBCONFIG_FILE)) {
@@ -37,7 +37,10 @@ if (!include(G5_DATA_PATH . '/' . G5_DBCONFIG_FILE)) {
     exit;
 }
 
-create_refresh_token_table();
+if (($GLOBALS['g5']['member_refresh_token_table'] ?? '') === '') {
+    create_refresh_token_table();
+}
+
 
 // 응답 json 에 오류메시지를 같이 출력합니다.
 // 실서버에서는 false 이어야 합니다.
@@ -52,7 +55,11 @@ $config = ConfigService::getConfig();
 /**
  * Instantiate App
  */
-$container = new Container();
+
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->useAutowiring(true);
+$container = $containerBuilder->build();
+
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 
