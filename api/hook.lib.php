@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) {
 include_once(G5_LIB_PATH . '/Hook/hook.class.php');
 include_once(G5_LIB_PATH . '/Hook/hook.extends.class.php');
 
-define('G5_HOOK_DEFAULT_PRIORITY', 8);
+const G5_HOOK_DEFAULT_PRIORITY = 8;
 
 class ContainerHook extends GML_Hook
 {

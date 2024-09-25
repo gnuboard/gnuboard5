@@ -26,62 +26,61 @@ class AlarmController
      *     description="FCM 테스트",
      *     @OA\RequestBody (
      *       required=true,
-     *     @OA\MediaType(
-     *     mediaType="application/json",
+     *      @OA\MediaType(
+     *      mediaType="application/json",
      *          @OA\Schema(
-     *     @OA\Property(
-     *     property="type",
-     *     type="string",
-     *     default="token",
-     *     description="타입"
-     *    ),
-     *     @OA\Property(
-     *     property="value",
-     *     type="string",
-     *     default="",
-     *     description="값"
-     *   ),
-     *     @OA\Property(
-     *      property="title",
-     *      type="string",
-     *      default="title",
-     *      description="title"
-     *    ),
-     *     @OA\Property(
-     *      property="body",
-     *      type="string",
-     *      default="body",
-     *      description="내용"
-     *    ),
-     *     @OA\Property(
-     *      property="image",
-     *      type="string",
-     *      default="",
-     *      description="이미지주소"
+     *              @OA\Property(
+     *              property="type",
+     *              type="string",
+     *              default="token",
+     *              description="타입"
+     *              ),
+     *              @OA\Property(
+     *               property="value",
+     *              type="string",
+     *              default="",
+     *              description="값"
+     *          ),
+     *          @OA\Property(
+     *              property="title",
+     *              type="string",
+     *              default="title",
+     *              description="title"
+     *          ),
+     *          @OA\Property(
+     *              property="body",
+     *              type="string",
+     *              default="body",
+     *              description="내용"
+     *          ),
+     *         @OA\Property(
+     *          property="image",
+     *          type="string",
+     *          default="",
+     *          description="이미지주소"
+     *         )
+     *      )
      *    )
-     * )
-     * )
      * ),
      *     @OA\Response(response="200", description="FCM 테스트 성공", @OA\JsonContent(type="object", @OA\Property(property="result", type="string", example="success"))),
      *     @OA\Response(response="422", ref="#/components/responses/422")
-     *    )
+     * )
      *
      *
      * @param Request $request
      * @param Response $response
      * @return Response
      */
-    //todo remove
     public function test(Request $request, Response $response): Response
     {
         if (!G5_DEBUG) {
-            throw new HttpForbiddenException($request, '접근 불가합니다.');
+            throw new HttpForbiddenException($request, '디버그 모드에서만 됩니다.');
         }
         $type = $request->getParsedBody()['type'];
         $value = $request->getParsedBody()['value'];
         $title = $request->getParsedBody()['title'];
         $body = $request->getParsedBody()['body'];
-        $image = $request->getParsedBody()['image'];
+        $image = $request->getParsedBody()['image'] ?? '';
         $target_data = [$type, $value];
 
         $alarm_message = $this->alarm_service->createMessage($target_data, $title, $body . date('Y-m-d H:i:s'), $image);
@@ -98,6 +97,7 @@ class AlarmController
      *     path="/api/v1/alarm",
      *     summary="FCM 토큰 등록",
      *     tags={"알림"},
+     *     security={{"Oauth2Password": {}}},
      *     description="FCM 토큰을 등록합니다.",
      *     @OA\RequestBody(
      *      required=true,
@@ -133,7 +133,7 @@ class AlarmController
         if (!isset($parsed_data['fcm_token'])) {
             throw new HttpUnprocessableEntityException($request, 'fcm 토큰이 없습니다.');
         }
-        
+
         if (!isset($parsed_data['platform'])) {
             throw new HttpUnprocessableEntityException($request, 'platform 이 없습니다.');
         }

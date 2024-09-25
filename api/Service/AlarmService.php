@@ -18,11 +18,16 @@ class AlarmService
     public function __construct()
     {
         $this->project_id = $_ENV['FIREBASE_PROJECT_ID'] ?? '';
-        $this->google_service_credentials = new ServiceAccountCredentials($this->scopes, $_ENV['FIREBASE_KEY_PATH'] ?? G5_DATA_PATH . '/fcm.json');
+
         $this->fcm_token_table = $GLOBALS['g5']['fcm_token_table'] ?? G5_TABLE_PREFIX . 'fcm_token';
-        if($GLOBALS['g5']['fcm_token_table'] ?? '') {
+        if (($GLOBALS['g5']['fcm_token_table'] ?? '') === '') {
             $this->createFcmTokenTable();
         }
+    }
+
+    public function setGoogleServiceCredentials()
+    {
+        $this->google_service_credentials = new ServiceAccountCredentials($this->scopes, $_ENV['FIREBASE_KEY_PATH'] ?? G5_DATA_PATH . '/fcm.json');
     }
 
     /**
@@ -31,11 +36,14 @@ class AlarmService
     public function getAuthToken()
     {
         if (!$this->google_service_credentials) {
-            return false;
+            $this->setGoogleServiceCredentials();
+            // 실패 확인
+            if (!$this->google_service_credentials) {
+                return false;
+            }
         }
 
         $fetch_result = $this->google_service_credentials->fetchAuthToken();
-        error_log('fcm auth token: ' . $fetch_result['access_token']);
         return $fetch_result['access_token'] ?? false;
     }
 
@@ -113,6 +121,17 @@ class AlarmService
         return $data;
     }
 
+    /**
+     * @param $target
+     * @param $data
+     * @return mixed
+     */
+    public function addData($target, $data)
+    {
+        $target['message']['data'] = $data;
+        return $target;
+    }
+
 
     /**
      * @param string $mb_id
@@ -128,6 +147,7 @@ class AlarmService
             mb_id = ?,
             ft_token = ?, 
             ft_platform = ?, 
+            ft_created_at = NOW(),
             ft_expired_at = DATE_ADD(NOW(), INTERVAL 270 DAY), 
             ft_last_access_at = NOW(), 
             ft_ip = ? ON DUPLICATE KEY UPDATE ft_last_access_at = NOW(), ft_ip = ?";
@@ -178,12 +198,21 @@ class AlarmService
                     `ft_expired_at` datetime NULL,
                     `ft_last_access_at` datetime NULL,
                     `ft_ip` varchar(45) NULL,
-                    PRIMARY KEY (`id`),
+                    PRIMARY KEY (`ft_no`),
+                    UNIQUE INDEX `ft_token` (`ft_token`) USING BTREE,
                     KEY `ix_fcm_token_mb_id` (`mb_id`),
-                    KEY `ix_fcm_token_id` (`id`)
-                    ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+                    KEY `ix_fcm_token_primary_key` (`ft_no`)
+                    ) AUTO_INCREMENT=1";
             Db::getInstance()->run($sql);
         }
+    }
+
+    public function fetchFcmToken($mb_id)
+    {
+        $fcm_token_table = $this->fcm_token_table;
+        $query = "SELECT ft_token FROM $fcm_token_table WHERE mb_id = ?";
+        $stmt = Db::getInstance()->run($query, [$mb_id]);
+        return $stmt->fetchAll();
     }
 
 }

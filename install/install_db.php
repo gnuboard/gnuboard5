@@ -616,6 +616,7 @@ fwrite($f, "\$g5['menu_table'] = G5_TABLE_PREFIX.'menu'; // 메뉴관리 테이�
 fwrite($f, "\$g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles'; // 소셜 로그인 테이블\n");
 fwrite($f, "\$g5['member_cert_history_table'] = G5_TABLE_PREFIX.'member_cert_history'; // 본인인증 변경내역 테이블\n");
 fwrite($f, "\$g5['member_refresh_token_table'] = G5_TABLE_PREFIX.'member_refresh_token'; // 리프레시 토큰 테이블\n");
+fwrite($f, "\$g5['fcm_token_table'] = G5_TABLE_PREFIX.'fcm_token'; // 파이어베이스FCM 토큰 테이블\n");
 
 if($g5_shop_install) {
     fwrite($f, "\n");

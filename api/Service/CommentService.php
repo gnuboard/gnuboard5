@@ -141,6 +141,32 @@ class CommentService
     }
 
     /**
+     * 현재글에서 기준 몇 번째 댓글인지 조회
+     * @param $parent_wr_id
+     * @param $comment_id
+     * @return int
+     */
+    public function fetchCommentOrder($parent_wr_id, $comment_id): int
+    {
+        $count_query = "SELECT count(*) FROM `{$this->write_table}`
+                    WHERE wr_parent = :parent_wr_id
+                        AND wr_is_comment = 1
+                        AND wr_id < :comment_id
+                    ORDER BY wr_comment, wr_comment_reply";
+
+        $count = Db::getInstance()->run($count_query, [
+            'parent_wr_id' => $parent_wr_id,
+            'comment_id' => $comment_id
+        ])->fetchColumn();
+
+        if (!$count) {
+            return 1;
+        }
+
+        return $count + 1;
+    }
+
+    /**
      * 게시글의 댓글목록 조회 쿼리
      */
     public function fetchComments(int $wr_id, $page, $per_page): array

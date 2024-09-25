@@ -494,12 +494,11 @@ class BoardController
                 // send_write_mail($config, $board, $wr_id, '', $request_data->wr_subject, $request_data->wr_content, $html);
             }
 
-            run_event('api_create_write_after', $board, $wr_id);
+            run_event('api_create_write_after', $group, $board, $wr_id);
 
             $response_data = new CreateWriteResponse('success', $wr_id);
             return api_response_json($response, $response_data);
         } catch (Exception $e) {
-            
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
             }
@@ -852,7 +851,7 @@ class BoardController
             // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
             // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
 
-            run_event('api_create_comment_after', $board, $write['wr_id'], $comment_id, $parent_comment);
+            run_event('api_create_comment_after', $board, $write, $comment_id, $parent_comment);
 
             return api_response_json($response, array('message' => '댓글이 등록되었습니다.'));
         } catch (Exception $e) {

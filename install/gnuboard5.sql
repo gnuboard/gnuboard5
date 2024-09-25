@@ -956,3 +956,26 @@ CREATE TABLE IF NOT EXISTS `g5_menu` (
   `me_mobile_use` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`me_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- ---------------------------------------------
+
+--
+-- Table FCM Token Table 'g5_fcm_token'
+--
+
+DROP TABLE IF EXISTS `g5_fcm_token`;
+CREATE TABLE IF NOT EXISTS `g5_fcm_token` (
+    `ft_no` int UNSIGNED NOT NULL AUTO_INCREMENT,
+    `mb_id` varchar(20) NULL,
+    `ft_token` varchar(328) NOT NULL,
+    `ft_platform` ENUM('web', 'ios', 'android') NOT NULL,
+    `ft_meta` varchar(255) NULL,
+    `ft_created_at` datetime NOT NULL,
+    `ft_expired_at` datetime NULL,
+    `ft_last_access_at` datetime NULL,
+    `ft_ip` varchar(45) NULL,
+    PRIMARY KEY (`ft_no`),
+    UNIQUE INDEX `ft_token` (`ft_token`) USING BTREE,
+    KEY `ix_fcm_token_mb_id` (`mb_id`),
+    KEY `ix_fcm_token_primary_key` (`ft_no`)
+) AUTO_INCREMENT=1;

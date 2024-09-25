@@ -149,7 +149,7 @@ class SocialService
         }
 
         // 설정 추가
-        add_event('social_provider_add', 'add_social_provider_config', G5_HOOK_DEFAULT_PRIORITY);
+        add_event('social_provider_add', 'add_social_provider_config');
     }
 
     /**

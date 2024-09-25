@@ -1,6 +1,7 @@
 <?php
 
 
+use API\Middleware\AccessTokenAuthMiddleware;
 use API\v1\Controller\AlarmController;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\App;
@@ -13,5 +14,6 @@ use Slim\App;
 
 $app->group('/v1/alarm', function (RouteCollectorProxy $group) {
     $group->post('/test', [AlarmController::class, 'test']);
-    $group->post('', [AlarmController::class, 'register'])->add(\API\Middleware\OptionalAccessTokenAuthMiddleware::class);
+    $group->post('', [AlarmController::class, 'register'])
+        ->add(AccessTokenAuthMiddleware::class);
 });
