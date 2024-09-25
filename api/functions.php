@@ -402,103 +402,118 @@ function getConfig()
 
 
 // hook functions
-function add_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 0)
-{
-    if ($hook = ContainerHook::getInstance()) {
-        $hook->addAction($tag, $func, $priority, $args);
+
+if (!function_exists('add_event')) {
+    function add_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 0)
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            $hook->addAction($tag, $func, $priority, $args);
+        }
     }
 }
 
-function run_event($tag, $arg = '')
-{
-    if ($hook = ContainerHook::getInstance()) {
-        $args = array();
+if (!function_exists('run_event')) {
+    function run_event($tag, $arg = '')
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            $args = array();
 
-        if (is_array($arg)
-            &&
-            isset($arg[0])
-            &&
-            is_object($arg[0])
-            &&
-            1 == count($arg)
-        ) {
-            $args[] =& $arg[0];
-        } else {
-            $args[] = $arg;
+            if (is_array($arg)
+                &&
+                isset($arg[0])
+                &&
+                is_object($arg[0])
+                &&
+                1 == count($arg)
+            ) {
+                $args[] =& $arg[0];
+            } else {
+                $args[] = $arg;
+            }
+
+            $numArgs = func_num_args();
+
+            for ($a = 2;$a < $numArgs;$a++) {
+                $args[] = func_get_arg($a);
+            }
+
+            $hook->doAction($tag, $args, false);
+        }
+    }
+}
+
+if (!function_exists('add_replace')) {
+    function add_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 1)
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            return $hook->addFilter($tag, $func, $priority, $args);
         }
 
-        $numArgs = func_num_args();
+        return null;
+    }
+}
 
-        for ($a = 2;$a < $numArgs;$a++) {
-            $args[] = func_get_arg($a);
+if (!function_exists('run_replace')) {
+    function run_replace($tag, $arg = '')
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            $args = array();
+
+            if (is_array($arg)
+                &&
+                isset($arg[0])
+                &&
+                is_object($arg[0])
+                &&
+                1 == count($arg)
+            ) {
+                $args[] =& $arg[0];
+            } else {
+                $args[] = $arg;
+            }
+
+            $numArgs = func_num_args();
+
+            for ($a = 2;$a < $numArgs;$a++) {
+                $args[] = func_get_arg($a);
+            }
+
+            return $hook->apply_filters($tag, $args, false);
         }
 
-        $hook->doAction($tag, $args, false);
+        return null;
     }
 }
 
-function add_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 1)
-{
-    if ($hook = ContainerHook::getInstance()) {
-        return $hook->addFilter($tag, $func, $priority, $args);
-    }
-
-    return null;
-}
-
-function run_replace($tag, $arg = '')
-{
-    if ($hook = ContainerHook::getInstance()) {
-        $args = array();
-
-        if (is_array($arg)
-            &&
-            isset($arg[0])
-            &&
-            is_object($arg[0])
-            &&
-            1 == count($arg)
-        ) {
-            $args[] =& $arg[0];
-        } else {
-            $args[] = $arg;
+if (!function_exists('delete_event')) {
+    function delete_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            return $hook->remove_action($tag, $func, $priority);
         }
 
-        $numArgs = func_num_args();
+        return null;
+    }
+}
 
-        for ($a = 2;$a < $numArgs;$a++) {
-            $args[] = func_get_arg($a);
+if (!function_exists('delete_replace')) {
+    function delete_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            return $hook->remove_filter($tag, $func, $priority);
         }
 
-        return $hook->apply_filters($tag, $args, false);
+        return null;
     }
-
-    return null;
 }
 
-function delete_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
-{
-    if ($hook = ContainerHook::getInstance()) {
-        return $hook->remove_action($tag, $func, $priority);
+if (!function_exists('get_hook_datas')) {
+    function get_hook_datas($type = '', $is_callback = '')
+    {
+        if ($hook = ContainerHook::getInstance()) {
+            return $hook->get_properties($type, $is_callback);
+        }
+
+        return null;
     }
-
-    return null;
-}
-
-function delete_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
-{
-    if ($hook = ContainerHook::getInstance()) {
-        return $hook->remove_filter($tag, $func, $priority);
-    }
-
-    return null;
-}
-
-function get_hook_datas($type = '', $is_callback = '')
-{
-    if ($hook = ContainerHook::getInstance()) {
-        return $hook->get_properties($type, $is_callback);
-    }
-
-    return null;
 }

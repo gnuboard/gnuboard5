@@ -2,8 +2,8 @@
 
 use API\OASGenerator;
 
-require_once '../../../vendor/autoload.php';
 require_once '../../../common.php';
+require_once '../../../vendor/autoload.php';
 
 $version = $_GET['version'] ?? null;
 $open_api = new OASGenerator($version);
