@@ -55,7 +55,7 @@ class WriteService
             //alt - 설명
             return [
                 'src' => $thumb_name ? G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $thumb_name : '',
-                'ori' => G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $attach_images[0]->bf_file,
+                'ori' => G5_DATA_URL . '/file/' . $this->board['bo_table'] . '/' . $attach_images[0]['bf_file'],
                 'alt' => $attach_images[0]['bf_content'] === '' ? $attach_images[0]['bf_source'] : $attach_images[0]['bf_content']
             ];
         }
