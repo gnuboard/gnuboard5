@@ -90,11 +90,6 @@ class BoardNewService
         return Db::getInstance()->insert($this->table, $data);
     }
 
-    public function delete()
-    {
-
-    }
-
     /**
      * 최신글 삭제 (게시글)
      */

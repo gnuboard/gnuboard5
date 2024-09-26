@@ -88,7 +88,7 @@ class ScrapController
             $scraps = array_map(function ($scrap) {
                 // 게시판 정보 및 게시글 정보 조회
                 // TODO: 추후에 조인이 가능하도록 수정해야할 필요가 있음.
-                $board = $this->board_service->fetchBoard($scrap['bo_table']);
+                $board = $this->board_service->getBoard($scrap['bo_table']);
                 if ($board) {
                     $this->write_service->setBoard($board);
                     $write = $this->write_service->fetchWrite((int)$scrap['wr_id']);

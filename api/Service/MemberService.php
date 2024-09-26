@@ -3,7 +3,6 @@
 namespace API\Service;
 
 use API\Database\Db;
-use API\Service\Social\SocialService;
 use Exception;
 
 

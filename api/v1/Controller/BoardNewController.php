@@ -147,7 +147,7 @@ class BoardNewController
                     continue;
                 }
                 // 게시판 정보 및 게시글 정보 조회
-                $board = $this->board_service->fetchBoard($board_new['bo_table']);
+                $board = $this->board_service->getBoard($board_new['bo_table']);
                 $this->board_service->setBoard($board);
                 $this->write_service->setBoard($board);
                 $this->comment_service->setBoard($board);

@@ -8,9 +8,13 @@ class BoardService
 {
     public array $board;
     public string $table;
+    private GroupService $group_service;
+    private MemberService $member_service;
 
-    public function __construct()
+    public function __construct(GroupService $groupService, MemberService $memberService)
     {
+        $this->group_service = $groupService;
+        $this->member_service = $memberService;
         $this->setTable();
     }
 
@@ -20,12 +24,85 @@ class BoardService
      */
     public function getCategories(): array
     {
-        if (
-            !$this->board['bo_use_category'] || $this->board['bo_category_list'] === ''
-        ) {
+        if (!$this->board['bo_use_category'] || $this->board['bo_category_list'] === '') {
             return [];
         }
         return explode('|', $this->board['bo_category_list']);
+    }
+
+    /**
+     * 관리자 정보 조회
+     * @param string $admin_type
+     * @param string $bo_table
+     * @return array|false
+     */
+    public function getAdminInfo(string $admin_type, string $bo_table)
+    {
+        $config = ConfigService::getConfig();
+        switch ($admin_type) {
+            case 'super':
+                return $config['cf_admin'];
+            case 'group':
+                if ($group_admin = $this->getGroupAdminByBoard($bo_table)) {
+                    return $this->member_service->fetchMemberById($group_admin);
+                }
+                break;
+            case 'board':
+                if ($board_admin = $this->getBoardAdmin($bo_table)) {
+                    return $this->member_service->fetchMemberById($board_admin);
+                }
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+
+    /**
+     * 게시판이 속하는 그룹의 그룹 관리자 조회
+     * @param string $bo_table 게시판 테이블명
+     * @return false|string
+     */
+    public function getGroupAdminByBoard($bo_table)
+    {
+        if (isset($this->board['bo_table']) && $this->board['bo_table'] === $bo_table) {
+            return $this->group_service->fetchGroupAdmin($this->board['gr_id']);
+        }
+
+        $board = $this->getBoard($bo_table);
+        if ($board) {
+            return $this->group_service->fetchGroupAdmin($board['gr_id']);
+        }
+
+        return false;
+    }
+
+    /**
+     * 게시판 관리자 조회
+     * @param string $bo_table
+     * @return false|string
+     */
+    public function getBoardAdmin($bo_table)
+    {
+        $board = $this->getBoard($bo_table);
+        if ($board) {
+            return $board['bo_admin'];
+        }
+        return false;
+    }
+
+    public function getBoard($bo_table)
+    {
+        static $cache = [];
+        if (isset($cache[$bo_table])) {
+            return $cache[$bo_table];
+        }
+        $board = $this->fetchBoard($bo_table);
+        if ($board) {
+            $cache[$bo_table] = $board;
+            return $board;
+        }
+        return false;
     }
 
     // ========================================

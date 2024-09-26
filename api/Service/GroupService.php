@@ -4,7 +4,9 @@ namespace API\Service;
 
 use API\Database\Db;
 
-
+/**
+ * 게시판그룹
+ */
 class GroupService
 {
     private string $group_table;
@@ -14,6 +16,17 @@ class GroupService
     {
         $this->group_table = $GLOBALS['g5']['group_table'];
         $this->group_member_table = $GLOBALS['g5']['group_member_table'];
+    }
+
+
+    /**
+     * @param string $gr_id 그룹 ID
+     * @return string|false
+     */
+    public function fetchGroupAdmin(string $gr_id)
+    {
+        $query = "SELECT gr_admin FROM `{$this->group_table}` WHERE gr_id = :gr_id";
+        return Db::getInstance()->run($query, ['gr_id' => $gr_id])->fetch();
     }
 
     /**

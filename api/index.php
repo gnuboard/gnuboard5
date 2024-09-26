@@ -4,7 +4,7 @@
  * GnuBoard5 API with Slim Framework
  *
  * @package g5-api
- * @version 0.1
+ * @version 0.2
  * @link
  */
 
@@ -110,7 +110,7 @@ foreach ($plugin_router_files as $router_file) {
     require $router_file;
 }
 
-foreach (glob(__DIR__ . '/api/Event/**/event.php') as $event) {
+foreach (glob(__DIR__ . '/api/Hooks/**/event.php') as $event) {
     require $event;
 }
 

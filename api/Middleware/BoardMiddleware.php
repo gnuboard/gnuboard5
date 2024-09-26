@@ -54,7 +54,7 @@ class BoardMiddleware
         }
         $routeArguments = $routeContext->getArguments();
         $bo_table = $routeArguments['bo_table'] ?? null;
-        $board = $this->board_service->fetchBoard($bo_table);
+        $board = $this->board_service->getBoard($bo_table);
 
         if (!$board) {
             throw new HttpNotFoundException($request, '존재하지 않는 게시판입니다.');
