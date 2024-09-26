@@ -107,11 +107,12 @@ foreach ($router_files as $router_file) {
 
 $plugin_router_files = glob(__DIR__ . '/Plugin/*/Routers/*.php');
 foreach ($plugin_router_files as $router_file) {
-    require $router_file;
+    include $router_file;
 }
 
-foreach (glob(__DIR__ . '/api/Hooks/**/event.php') as $event) {
-    require $event;
+$hooks_files = glob(__DIR__ . '/Hooks/**/event.php');
+foreach ($hooks_files as $event) {
+    include $event;
 }
 
 /**
