@@ -17,6 +17,7 @@ class BoardAllSearchRequest extends SearchParameters
     public string $sop = '';
     public string $onetable = '';
     public string $gr_id = '';
+    public bool $is_mobile = false;
 
     /**
      * 검색 여부
@@ -68,7 +69,7 @@ class BoardAllSearchRequest extends SearchParameters
     private function validatePerPage()
     {
         if ($this->per_page < 0) {
-            $this->per_page = 1;
+            $this->per_page = 0;
         }
 
         if ($this->per_page > 100) {

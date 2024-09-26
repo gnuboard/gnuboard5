@@ -10,7 +10,7 @@ class SearchService
     public array $board;
     public string $table;
 
-    private $per_page = 0;
+//    private $per_page = 0;
     private $config;
 
     private const CUT_CONTENT_LENGTH = 300;
@@ -34,8 +34,16 @@ class SearchService
         $sop = $search_param->sop;
         $gr_id = $search_param->gr_id;
         $onetable = $search_param->onetable;
-        $this->per_page = $search_param->per_page ?: $this->config['cf_write_pages'] ?: 10;
-        $per_page = $this->per_page;
+        $per_page = $search_param->per_page;
+
+        if ($search_param->per_page === 0) {
+            if ($search_param->is_mobile) {
+                $per_page = $this->config['cf_mobile_page_rows'];
+            } else {
+                $per_page = $this->config['cf_write_pages'];
+            }
+        }
+
         $page = $search_param->page;
 
         // 검색어를 구분자로 나눈다. 여기서는 공백
@@ -46,14 +54,15 @@ class SearchService
 
         $searchable_board_info = $this->fetchSearchableBoardInfo($member, $gr_id, $onetable);
         $searchable_tables = $searchable_board_info['tables'];
+        $searchable_levels = $searchable_board_info['read_level'];
 
-        if (empty($searchable_tables)) {
+        if (empty($searchable_tables) && empty($searchable_levels)) {
             return [];
         }
 
         [$search_condition, $search_condition_bind_param] = $this->generateSearchCondition($search_keyword, $sfl, $sop);
+        $board_list = $this->fetchBoardList($search_condition, $search_condition_bind_param, $searchable_tables, $per_page);
 
-        $board_list = $this->fetchBoardList($search_condition, $search_condition_bind_param, $searchable_tables);
         if ($board_list['total_count']) {
             $search_results = $this->fetchSearchResultsByPage($search_condition, $search_condition_bind_param, $board_list, $per_page, $page, $member);
         }
@@ -148,7 +157,7 @@ class SearchService
 
             $table_search_result['wr_subject'] = $subject;
             $table_search_result['wr_content'] = $content;
-            $table_search_result['wr_name'] = $row['wr_name']; //get_sideview($row['mb_id'], get_text(cut_str($row['wr_name'], $config['cf_cut_name'])), $row['wr_email'], $row['wr_homepage']);
+            $table_search_result['wr_name'] = $row['wr_name'];
             $table_search_result['wr_datetime'] = $row['wr_datetime'];
             $table_search_result['wr_id'] = $row['wr_id'];
             $table_search_result['bo_table'] = $row['bo_table'];
@@ -282,16 +291,14 @@ class SearchService
         return [$search_query, $bind_param];
     }
 
-
     /**
      * 검색된 게시판 목록
      * @param $search_query
      * @param $search_query_bind_param
      * @param $searchable_tables
-     * @param $searchable_levels
      * @return array
      */
-    public function fetchBoardList($search_query, $search_query_bind_param, $searchable_tables)
+    public function fetchBoardList($search_query, $search_query_bind_param, $searchable_tables, $per_page)
     {
         $board_list = [];
         $total_count = 0;
@@ -316,7 +323,7 @@ class SearchService
         return [
             'list' => $board_list,
             'total_count' => $total_count,
-            'total_page' => ceil($total_count / $this->per_page ?: 1)
+            'total_page' => ceil($total_count / $per_page ?: 1)
         ];
     }
 }

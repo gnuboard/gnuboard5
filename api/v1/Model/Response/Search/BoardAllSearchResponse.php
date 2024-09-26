@@ -25,7 +25,7 @@ class BoardAllSearchResponse
      *    )
      * )
      */
-    public ?array $board_list;
+    public array $board_list;
 
     /**
      * @OA\Property(
@@ -44,11 +44,23 @@ class BoardAllSearchResponse
      *    )
      * )
      */
-    public ?array $search_results;
+    public array $search_results;
 
-    public function __construct(?array $board_list, ?array $search_results)
+    /**
+     * @OA\Property
+     */
+    public int $page = 0;
+
+    /**
+     * @OA\Property
+     */
+    public int $total_count;
+
+    public function __construct($data)
     {
-        $this->board_list = $board_list;
-        $this->search_results = $search_results;
+        $this->board_list = $data['board_list'] ?? [];
+        $this->search_results = $data['search_results'] ?? [];
+        $this->page = $data['page'] ?? 1;
+        $this->total_count = $data['total_count'] ?? 0;
     }
 }

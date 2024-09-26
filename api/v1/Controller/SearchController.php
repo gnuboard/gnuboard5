@@ -4,15 +4,7 @@ namespace API\v1\Controller;
 
 use API\Service\SearchService;
 use API\v1\Model\Request\Board\BoardAllSearchRequest;
-use API\v1\Model\Request\Board\SearchRequest;
-use API\v1\Model\Response\Config\BoardConfigResponse;
-use API\v1\Model\Response\Config\HtmlConfigResponse;
-use API\v1\Model\Response\Config\MemberConfigResponse;
-use API\v1\Model\Response\Config\MemoConfigResponse;
-use API\v1\Model\Response\Config\PolicyConfigResponse;
 use API\v1\Model\Response\Search\BoardAllSearchResponse;
-use API\v1\Model\SearchParameters;
-use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
