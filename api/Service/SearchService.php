@@ -1,0 +1,322 @@
+<?php
+
+namespace API\Service;
+
+use API\Database\Db;
+use API\v1\Model\Request\Board\BoardAllSearchRequest;
+
+class SearchService
+{
+    public array $board;
+    public string $table;
+
+    private $per_page = 0;
+    private $config;
+
+    private const CUT_CONTENT_LENGTH = 300;
+    private MemberImageService $member_image_service;
+
+    public function __construct(MemberImageService $member_image_service)
+    {
+        $this->member_image_service = $member_image_service;
+        $this->config = ConfigService::getConfig();
+    }
+
+    /**
+     * @param BoardAllSearchRequest $search_param
+     * @param array $member
+     * @return array
+     */
+    public function getSearchResults($search_param, $member)
+    {
+        $sfl = $search_param->sfl;
+        $stx = $search_param->stx;
+        $sop = $search_param->sop;
+        $gr_id = $search_param->gr_id;
+        $onetable = $search_param->onetable;
+        $this->per_page = $search_param->per_page ?: $this->config['cf_write_pages'] ?: 10;
+        $per_page = $this->per_page;
+        $page = $search_param->page;
+
+        // 검색어를 구분자로 나눈다. 여기서는 공백
+        $search_keyword = explode(' ', strip_tags($stx));
+        if (\count($search_keyword) > 1) {
+            $search_keyword = \array_slice($search_keyword, 0, 2);
+        }
+
+        $searchable_board_info = $this->fetchSearchableBoardInfo($member, $gr_id, $onetable);
+        $searchable_tables = $searchable_board_info['tables'];
+
+        if (empty($searchable_tables)) {
+            return [];
+        }
+
+        [$search_condition, $search_condition_bind_param] = $this->generateSearchCondition($search_keyword, $sfl, $sop);
+
+        $board_list = $this->fetchBoardList($search_condition, $search_condition_bind_param, $searchable_tables);
+        if ($board_list['total_count']) {
+            $search_results = $this->fetchSearchResultsByPage($search_condition, $search_condition_bind_param, $board_list, $per_page, $page, $member);
+        }
+
+        return [
+            'board_list' => $board_list['list'],
+            'search_results' => $search_results ?? [],
+            'total_count' => $board_list['total_count'],
+            'total_page' => $board_list['total_page'],
+            'page' => $page
+        ];
+    }
+
+
+    public function fetchSearchResultsByPage($search_condition, $search_condition_bind_param, $search_board_list, $per_page, $page, $member)
+    {
+        global $g5;
+
+        $search_result = [];
+        $from_record = ($page - 1) * $per_page;
+        $total_rows = 0;
+
+        // UNION ALL 쿼리
+        $union_query = '';
+        $params = [];
+        foreach ($search_board_list['list'] as $board) {
+            $table = $board['table'];
+            $tmp_write_table = $g5['write_prefix'] . $table;
+
+            if ($union_query) {
+                $union_query .= ' UNION ALL ';
+            }
+            $union_query .= "
+                SELECT 
+                    ? AS bo_table,
+                    ? AS bo_read_level,
+                    wr_id, wr_parent, wr_subject, wr_content, wr_option, wr_datetime, 
+                    mb_id, wr_name, wr_email, wr_homepage, wr_is_comment 
+                FROM {$tmp_write_table} 
+                WHERE {$search_condition}
+            ";
+            $params[] = $table;
+            $params[] = $board['read_level'];
+            foreach ($search_condition_bind_param as $value) {
+                $params[] = $value;
+            }
+        }
+
+        $search_query = "
+        SELECT * FROM (
+            {$union_query}
+        ) AS united_search
+        ORDER BY wr_datetime DESC 
+        LIMIT ?, ?";
+
+        $params[] = $from_record;
+        $params[] = $per_page;
+
+        $stmt = Db::getInstance()->run($search_query, $params);
+
+        while ($row = $stmt->fetch()) {
+            $table = $row['bo_table'];
+            $read_level = $row['bo_read_level'];
+
+            $table_search_result = [
+                'wr_subject' => $row['wr_subject'],
+                'wr_content' => $row['wr_content'],
+                'wr_option' => $row['wr_option']
+            ];
+
+            if ($row['wr_is_comment']) {
+                $write_parent_query = "SELECT wr_subject, wr_option FROM {$g5['write_prefix']}{$table} WHERE wr_id = :wr_parent";
+                $parent_stmt = Db::getInstance()->run($write_parent_query, ['wr_parent' => $row['wr_parent']]);
+                $parent_row = $parent_stmt->fetch();
+                $table_search_result['wr_subject'] = get_text($parent_row['wr_subject']);
+                $table_search_result['wr_option'] .= $parent_row['wr_option'];
+            }
+
+            if (str_contains($table_search_result['wr_option'], 'secret')) {
+                $table_search_result['wr_content'] = '[비밀글 입니다.]';
+            }
+
+            $subject = get_text($table_search_result['wr_subject']);
+            if ($read_level <= $member['mb_level']) {
+                $content = strip_tags($table_search_result['wr_content']);
+                $content = get_text($content, 1);
+                $content = str_replace('&nbsp;', '', $content);
+                $content = cut_str($content, self::CUT_CONTENT_LENGTH, "…");
+            } else {
+                $content = '';
+            }
+
+            $table_search_result['wr_subject'] = $subject;
+            $table_search_result['wr_content'] = $content;
+            $table_search_result['wr_name'] = $row['wr_name']; //get_sideview($row['mb_id'], get_text(cut_str($row['wr_name'], $config['cf_cut_name'])), $row['wr_email'], $row['wr_homepage']);
+            $table_search_result['wr_datetime'] = $row['wr_datetime'];
+            $table_search_result['wr_id'] = $row['wr_id'];
+            $table_search_result['bo_table'] = $row['bo_table'];
+            $table_search_result['mb_icon_path'] = $this->member_image_service->getMemberImagePath($row['mb_id'], 'icon');
+            $table_search_result['mb_image_path'] = $this->member_image_service->getMemberImagePath($row['mb_id'], 'image');
+            $search_result[] = $table_search_result;
+            $total_rows++;
+
+            if ($total_rows >= $per_page) {
+                break;
+            }
+        }
+
+        return $search_result;
+    }
+
+
+    public function fetchSearchableBoardInfo($member, $gr_id = null, $onetable = null)
+    {
+        global $g5;
+
+        $query = "SELECT b.gr_id, b.bo_table, b.bo_read_level, g.gr_use_access, g.gr_admin
+            FROM {$g5['board_table']} b
+            LEFT JOIN {$g5['group_table']} g ON b.gr_id = g.gr_id
+            WHERE b.bo_use_search = 1 AND b.bo_list_level <= :mb_level";
+        $params = ['mb_level' => ($member['mb_level'] ?? 1)];
+
+        if ($gr_id) {
+            $query .= ' AND g.gr_id = :gr_id';
+            $params['gr_id'] = $gr_id;
+        }
+
+        if ($onetable) {
+            $query .= ' AND bo_table = :onetable';
+            $params['onetable'] = $onetable;
+        }
+        $query .= ' ORDER BY bo_order, g.gr_id, bo_table;';
+
+        $stmt = Db::getInstance()->run($query, $params);
+
+        $searchable_tables = [];
+        $searchable_levels = [];
+        $search_tables_result = $stmt->fetchAll();
+
+        if (is_super_admin($this->config, $member['mb_id'])) {
+            return [
+                'tables' => $searchable_tables,
+                'read_level' => $searchable_levels
+            ];
+        }
+
+        foreach ($search_tables_result as $search_table) {
+            // 그룹 접근 제한이 있는 경우
+            if ($search_table['gr_use_access']) {
+                // 그룹 관리자가 아닌 경우
+                if (!($search_table['gr_admin'] && $search_table['gr_admin'] === $member['mb_id'])) {
+                    // 비회원인 경우
+                    if ($member['mb_id'] == '') {
+                        continue;
+                    }
+
+                    $group_member_query = "SELECT COUNT(*) as cnt FROM {$g5['group_member_table']} 
+                             WHERE gr_id = :gr_id AND mb_id = :mb_id AND mb_id <> ''";
+                    $group_member_stmt = Db::getInstance()->run($group_member_query, ['gr_id' => $search_table['gr_id'], 'mb_id' => $member['mb_id'] ?? '']);
+                    $group_member_count = $group_member_stmt->fetch();
+                    if (!isset($group_member_count['cnt']) || !$group_member_count['cnt']) {
+                        continue;
+                    }
+                }
+            }
+
+            $searchable_tables[] = $search_table['bo_table'];
+            $searchable_levels[] = $search_table['bo_read_level'];
+        }
+
+        return [
+            'tables' => $searchable_tables,
+            'read_level' => $searchable_levels
+        ];
+    }
+
+    /**
+     * 검색 조건에 맞는 where 절 생성
+     * @param $search_words
+     * @param $sfl
+     * @param $sop
+     * @return array [search_query, bind_param]
+     */
+    private function generateSearchCondition($search_words, $sfl, $sop)
+    {
+        $bind_param = [];
+        $search_query = '(';
+        $operator1 = '';
+
+        foreach ($search_words as $word) {
+            if (trim($word) === '') {
+                continue;
+            }
+            $search_str = $word;
+            $search_query .= $operator1 . '(';
+            $operator2 = '';
+            $fields = explode('||', trim($sfl));
+            foreach ($fields as $field) {
+                $search_query .= $operator2;
+                switch ($field) {
+                    case 'mb_id':
+                    case 'wr_name':
+                        $search_query .= "$field = ?";
+                        $bind_param[] = $search_str;
+                        break;
+                    case 'wr_subject':
+                    case 'wr_content':
+                        if (preg_match('/[a-zA-Z]/', $search_str)) {
+                            $search_query .= 'INSTR(' . strtolower($field) . ',' . strtolower($field) . ')';
+                        } else {
+                            $search_query .= "INSTR({$field}, ?)";
+                            $bind_param[] = $search_str;
+                        }
+                        break;
+                    default:
+                        $search_query .= '1=0';
+                        break;
+                }
+                $operator2 = ' OR ';
+            }
+            $search_query .= ')';
+            $operator1 = " {$sop} ";
+        }
+        $search_query .= ')';
+
+        return [$search_query, $bind_param];
+    }
+
+
+    /**
+     * 검색된 게시판 목록
+     * @param $search_query
+     * @param $search_query_bind_param
+     * @param $searchable_tables
+     * @param $searchable_levels
+     * @return array
+     */
+    public function fetchBoardList($search_query, $search_query_bind_param, $searchable_tables)
+    {
+        $board_list = [];
+        $total_count = 0;
+        foreach ($searchable_tables as $table) {
+            $write_table = $GLOBALS['g5']['write_prefix'] . $table;
+            $query = "SELECT COUNT(*) as cnt FROM `{$write_table}`";
+            if ($search_query) {
+                $query .= " WHERE {$search_query}";
+            }
+
+            $row = Db::getInstance()->run($query, $search_query_bind_param)->fetch();
+
+            $total_count += $row['cnt'];
+            if ($row['cnt']) {
+                $board_list[] = [
+                    'table' => $table,
+                    'count' => $total_count
+                ];
+            }
+        }
+
+        return [
+            'list' => $board_list,
+            'total_count' => $total_count,
+            'total_page' => ceil($total_count / $this->per_page ?: 1)
+        ];
+    }
+}
