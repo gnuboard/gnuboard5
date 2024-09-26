@@ -136,7 +136,7 @@ class HttpErrorHandler extends SlimErrorHandler
         ) {
             $status_code = 400;
             $type = 'JWT Token error';
-            $description = 'jwt token error: '. $exception->getMessage();
+            $description = 'jwt token error: ' . $exception->getMessage();
             return $this->respondWithJson($type, $description, $status_code);
         }
 
@@ -146,17 +146,17 @@ class HttpErrorHandler extends SlimErrorHandler
 
     /**
      * 오류 응답 생성
-     * @param string $type  오류 유형
+     * @param string $type 오류 유형
      * @param string $description G5_DEBUG 환경변수에 따라 오류 설명을 노출할지 결정된다.
      * @param int $status_code HTTP 상태 코드
      * @return ResponseInterface
      */
-    private function respondWithJson($type, $description, $status_code = 200)
+    private function respondWithJson(string $type, string $description, int $status_code = 200)
     {
-        if($status_code >= 500) {
-            $description =  G5_DEBUG ? $description : 'Error occurred.';
+        if ($status_code >= 500) {
+            $description = G5_DEBUG ? $description : 'Error occurred.';
         }
-        
+
         $error_info = [
             'statusCode' => $status_code,
             'error' => [
@@ -165,7 +165,7 @@ class HttpErrorHandler extends SlimErrorHandler
             ],
         ];
         $response = $this->responseFactory->createResponse($status_code);
-        $payload = json_encode($error_info, \JSON_UNESCAPED_UNICODE| \JSON_UNESCAPED_SLASHES);
+        $payload = json_encode($error_info, \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES);
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json')->withStatus($status_code);
     }
