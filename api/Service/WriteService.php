@@ -440,7 +440,7 @@ class WriteService
             'wr_num' => $write['wr_num'],
         ];
 
-        $query = "SELECT {$order_func} (SUBSTRING(wr_reply, :reply_len1, 1)) as reply 
+        $query = "SELECT {$order_func}(SUBSTRING(wr_reply, :reply_len1, 1)) as reply 
                 FROM {$this->table} 
                 WHERE wr_num = :wr_num 
                 AND SUBSTRING(wr_reply, :reply_len2, 1) <> ''";
