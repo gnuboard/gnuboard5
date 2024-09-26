@@ -464,7 +464,7 @@ class WriteService
      */
     public function createWriteData(object $data, array $member = [], array $parent_write = [])
     {
-        $data->wr_num = $this->fetchMinimumWriteNumber() - 1;
+        $data->wr_num = $parent_write ? $parent_write['wr_num'] : $this->fetchMinimumWriteNumber() - 1;
         $data->wr_parent = $parent_write['wr_id'] ?? 0;
         $data->setWrSeoTitle($this->url_service->getSeoTtitleRecursive('bbs', $data->wr_subject, $this->table));
         $data->setMbId($member['mb_id'] ?? '');

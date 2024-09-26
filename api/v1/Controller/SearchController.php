@@ -53,7 +53,7 @@ class SearchController
 
         run_event('search', $search_param);
         
-        $data = new BoardAllSearchResponse($result['board_list'], $result['search_results']);
+        $data = new BoardAllSearchResponse($result);
         return api_response_json($response, $data);
         
     }

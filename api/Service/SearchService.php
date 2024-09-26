@@ -10,10 +10,9 @@ class SearchService
     public array $board;
     public string $table;
 
-//    private $per_page = 0;
     private $config;
 
-    private const CUT_CONTENT_LENGTH = 300;
+    private const CUT_CONTENT_LENGTH = 200;
     private MemberImageService $member_image_service;
 
     public function __construct(MemberImageService $member_image_service)
@@ -61,7 +60,7 @@ class SearchService
         }
 
         [$search_condition, $search_condition_bind_param] = $this->generateSearchCondition($search_keyword, $sfl, $sop);
-        $board_list = $this->fetchBoardList($search_condition, $search_condition_bind_param, $searchable_tables, $per_page);
+        $board_list = $this->fetchBoardList($search_condition, $search_condition_bind_param, $searchable_tables, $searchable_levels, $per_page);
 
         if ($board_list['total_count']) {
             $search_results = $this->fetchSearchResultsByPage($search_condition, $search_condition_bind_param, $board_list, $per_page, $page, $member);
@@ -296,13 +295,15 @@ class SearchService
      * @param $search_query
      * @param $search_query_bind_param
      * @param $searchable_tables
+     * @param $searchable_levels
+     * @param $per_page
      * @return array
      */
-    public function fetchBoardList($search_query, $search_query_bind_param, $searchable_tables, $per_page)
+    public function fetchBoardList($search_query, $search_query_bind_param, $searchable_tables, $searchable_levels, $per_page)
     {
         $board_list = [];
         $total_count = 0;
-        foreach ($searchable_tables as $table) {
+        foreach ($searchable_tables as $index => $table) {
             $write_table = $GLOBALS['g5']['write_prefix'] . $table;
             $query = "SELECT COUNT(*) as cnt FROM `{$write_table}`";
             if ($search_query) {
@@ -315,6 +316,7 @@ class SearchService
             if ($row['cnt']) {
                 $board_list[] = [
                     'table' => $table,
+                    'read_level' => $searchable_levels[$index],
                     'count' => $total_count
                 ];
             }
