@@ -99,7 +99,7 @@ class Db
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($params);
         if (G5_DEBUG) {
-            $this->logging_last_stmt($stmt);
+            $this->logging_last_stmt($stmt, $params);
         }
         return $stmt;
     }
@@ -228,17 +228,18 @@ class Db
 
 
     /**
-     * 마지막 실행된 쿼리를 로그파일에 기록.
+     * 실행된 쿼리를 로그파일에 기록.
      * @param $stmt
+     * @param $params
      * @return void
      */
-    public function logging_last_stmt($stmt)
+    public function logging_last_stmt($stmt, $params)
     {
-        error_log($stmt->queryString);
-        ob_start();
-        $stmt->debugDumpParams();
-        $paramInfo = ob_get_clean();
-        error_log("Parameter info: \n" . $paramInfo);
+        error_log('---------------');
+        error_log('Query: '. $stmt->queryString);
+        if($params) {
+            error_log('Params: '.  print_r($params, true));
+        }
     }
 
 
