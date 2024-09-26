@@ -7,6 +7,8 @@ use API\Service\AlarmService;
 class AlarmHooks
 {
 
+    private AlarmService $alarm_service;
+
     public function __construct(AlarmService $alarm_service)
     {
         $this->alarm_service = $alarm_service;

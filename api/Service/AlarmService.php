@@ -80,7 +80,7 @@ class AlarmService
 
     /**
      *
-     * @param string $target_data topic, token, condition
+     * @param array $target_data [topic => value], [token => value], [condition => value]
      * @param string $title
      * @param string $body
      * @param ?string $image
