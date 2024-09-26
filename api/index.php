@@ -4,13 +4,14 @@
  * GnuBoard5 API with Slim Framework
  *
  * @package g5-api
- * @version 0.2
+ * @version 0.6
  * @link
  */
 
 use API\EnvironmentConfig;
 use API\Handlers\HttpErrorHandler;
 use API\Handlers\ShutdownHandler;
+use API\Middleware\IpCheckMiddleware;
 use API\Middleware\JsonBodyParserMiddleware;
 use API\ResponseEmitter\ResponseEmitter;
 use API\Service\ConfigService;
@@ -79,6 +80,7 @@ $app->addRoutingMiddleware();
 //$app->add(new CorsMiddleware());
 
 $app->add(new JsonBodyParserMiddleware());
+$app->add(new IpCheckMiddleware());
 
 // Error Handler
 $callable_resolver = $app->getCallableResolver();

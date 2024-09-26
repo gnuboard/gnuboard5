@@ -238,7 +238,7 @@ class CreateSocialMemberRequest
         $this->mb_email = get_email_address($this->mb_email);
         $this->mb_nick_date = date('Y-m-d');
         $this->mb_hp = hyphen_hp_number($this->mb_hp);
-        $this->mb_ip = $_SERVER['REMOTE_ADDR']; // todo ip
+        $this->mb_ip = $_SERVER['REMOTE_ADDR'];
         $this->mb_level = $config['cf_register_level'] ?? 2; // 2 member 기본 레벨.
         $this->mb_datetime = date('Y-m-d H:i:s');
 

@@ -150,6 +150,7 @@ class MemoController
 
         $request_data = $request->getParsedBody();
 
+        
         if (!isset($request_data['me_recv_mb_id'])) {
             return api_response_json($response, ['message' => 'me_recv_mb_id 필드가 필요합니다.'], 422);
         }
@@ -159,7 +160,7 @@ class MemoController
         }
 
         $receiver_mb_id = $request_data['me_recv_mb_id'];
-        $ip = $request->getServerParams()['REMOTE_ADDR']; // @todo 클라우드 플레어, LB 등을 고려한 ip 함수 추가 필요.
+        $ip = $request->getServerParams()['REMOTE_ADDR'];
         try {
             $sending_memo_id = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
         } catch (\Exception $e) {
@@ -174,6 +175,8 @@ class MemoController
                 $memo_id);
         }
         $this->memo_service->updateNotReadMemoCount($receiver_mb_id);
+        
+        run_event('api_send_memo_after', $mb_id, $receiver_mb_id, $request_data);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
     }
