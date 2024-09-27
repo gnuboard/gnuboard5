@@ -270,11 +270,11 @@ class SearchService
                     case 'wr_subject':
                     case 'wr_content':
                         if (preg_match('/[a-zA-Z]/', $search_str)) {
-                            $search_query .= 'INSTR(' . strtolower($field) . ',' . strtolower($field) . ')';
-                        } else {
-                            $search_query .= "INSTR({$field}, ?)";
-                            $bind_param[] = $search_str;
+                            $field = strtolower($field);
+                            $search_str = strtolower($search_str);
                         }
+                        $search_query .= "INSTR({$field}, ?)";
+                        $bind_param[] = $search_str;
                         break;
                     default:
                         $search_query .= '1=0';
