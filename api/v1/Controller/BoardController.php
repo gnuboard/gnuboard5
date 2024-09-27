@@ -453,6 +453,15 @@ class BoardController
 
 
         try {
+            //작성 제한 시간 체크
+            $cookies = $request->getCookieParams();
+            if(isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])){
+                $last_write_time = $cookies['last_write_time'];
+                if($last_write_time + $config['cf_delay_sec'] > time()){
+                    throw new HttpBadRequestException($request, '너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+                }
+            }
+            
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateWriteRequest($this->board_permission, $member, $request_body);
@@ -814,11 +823,22 @@ class BoardController
      */
     public function createComment(Request $request, Response $response): Response
     {
+        $config = $request->getAttribute('config');
         $board = $request->getAttribute('board');
+        $group = $request->getAttribute('group');
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
         try {
+            //작성 제한 시간 체크
+            $cookies = $request->getCookieParams();
+            if(isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])){
+                $last_write_time = $cookies['last_write_time'];
+                if($last_write_time + $config['cf_delay_sec'] > time()){
+                    throw new HttpBadRequestException($request, '너무 빠른 시간내에 댓글을 연속해서 올릴 수 없습니다.');
+                }
+            }
+            
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateCommentRequest($board, $member, $request_body);

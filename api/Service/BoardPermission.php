@@ -136,7 +136,6 @@ class BoardPermission
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_CREATE_LEVEL);
         $this->checkAccessCert($member);
-        // TODO: 게시글 연속 등록 방지 추가
     }
 
     /**
@@ -163,7 +162,6 @@ class BoardPermission
         $this->checkReplyNotice($write['wr_id']);
         $this->checkReplyDepth($write);
         $this->checkReplySecret($member, $write);
-        // TODO: 게시글 연속 등록 방지 추가
     }
 
     /**
@@ -311,7 +309,6 @@ class BoardPermission
         $this->checkAccessBoardGroup($member['mb_id']);
         $this->checkMemberLevel($member, $level, self::ERROR_NO_CREATE_COMMENT_LEVEL);
         $this->checkMemberPoint('comment', $member, $write);
-        // TODO: 게시글 연속 등록 방지 추가
     }
 
     /**
