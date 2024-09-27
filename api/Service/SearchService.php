@@ -202,6 +202,11 @@ class SearchService
         $search_tables_result = $stmt->fetchAll();
 
         if (is_super_admin($this->config, $member['mb_id'])) {
+            foreach ($search_tables_result as $search_table) {
+                $searchable_tables[] = $search_table['bo_table'];
+                $searchable_levels[] = $search_table['bo_read_level'];
+            }
+
             return [
                 'tables' => $searchable_tables,
                 'read_level' => $searchable_levels

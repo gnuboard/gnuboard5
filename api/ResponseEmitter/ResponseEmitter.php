@@ -14,8 +14,7 @@ class ResponseEmitter extends SlimResponseEmitter
     {
         $allow_origin = explode(',', trim($_ENV['CORS_ALLOW_ORIGIN'] ?? ''));
         $allow_methds = explode(',', trim($_ENV['CORS_ALLOW_METHODS'] ?? ''));
-        $response = $response
-            ->withHeader('Access-Control-Allow-Credentials', trim($_ENV['CORS_ALLOW_CREDENTIALS'] ?? 'false'))
+        $response = $response->withHeader('Access-Control-Allow-Credentials', trim($_ENV['CORS_ALLOW_CREDENTIALS'] ?? 'false'))
             ->withHeader('Access-Control-Allow-Origin', $allow_origin)
             ->withHeader(
                 'Access-Control-Allow-Headers',
