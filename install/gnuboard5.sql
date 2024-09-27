@@ -979,3 +979,23 @@ CREATE TABLE IF NOT EXISTS `g5_fcm_token` (
     KEY `ix_fcm_token_mb_id` (`mb_id`),
     KEY `ix_fcm_token_primary_key` (`ft_no`)
 ) AUTO_INCREMENT=1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table refresh_token Table 'g5_refresh_token'
+--
+
+DROP TABLE IF EXISTS `g5_refresh_token`;
+CREATE TABLE IF NOT EXISTS `g5_refresh_token` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `mb_id` varchar(20) NOT NULL,
+    `refresh_token` text NOT NULL,
+    `expires_at` datetime NOT NULL,
+    `created_at` datetime NOT NULL,
+    `updated_at` datetime NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `ix_member_refresh_token_mb_id` (`mb_id`),
+    KEY `ix_member_refresh_token_id` (`id`)
+)
