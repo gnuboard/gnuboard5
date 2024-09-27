@@ -25,7 +25,7 @@ class EnvironmentConfig
     private Dotenv $dotenv;
 
     /**
-     * @throws Random\RandomException
+     * @throws \Random\RandomException
      */
     public function __construct()
     {

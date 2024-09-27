@@ -11,6 +11,10 @@ use IPTools\Range;
 class IpCheckMiddleware
 {
 
+    /**
+     * @see https://www.cloudflare.com/ko-kr/ips/
+     * @var string[] 
+     */
     private $cloudflare_ipv4 = [
         '173.245.48.0/20',
         '103.21.244.0/22',
@@ -29,6 +33,10 @@ class IpCheckMiddleware
         '131.0.72.0/22',
     ];
 
+    /**
+     * @see https://www.cloudflare.com/ko-kr/ips/
+     * @var string[] 
+     */
     private $cloudflare_ipv6 = [
         '2400:cb00::/32',
         '2606:4700::/32',
@@ -42,7 +50,6 @@ class IpCheckMiddleware
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $ip = $_SERVER['REMOTE_ADDR'];
-
 
         // HTTP_CF_CONNECTING_IP 헤더 & Cloudflare IP 대역 요청이면 REMOTE_ADDR를 HTTP_CF_CONNECTING_IP로 변경
         if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {

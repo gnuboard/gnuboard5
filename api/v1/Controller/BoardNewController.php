@@ -125,6 +125,7 @@ class BoardNewController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function deleteBoardNews(Request $request, Response $response): Response
     {

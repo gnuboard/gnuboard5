@@ -2,7 +2,6 @@
 
 namespace API\v1\Controller;
 
-use API\Exceptions\HttpUnprocessableEntityException;
 use API\Exceptions\HttpBadRequestException;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpNotFoundException;
@@ -12,7 +11,6 @@ use API\Service\BoardGoodService;
 use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
-use API\Service\ConfigService;
 use API\Service\EncryptionService;
 use API\Service\MemberImageService;
 use API\Service\PointService;
@@ -201,6 +199,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function getWrite(Request $request, Response $response): Response
     {
@@ -270,6 +269,7 @@ class BoardController
      *      @OA\Response(response="404", ref="#/components/responses/404"),
      *      @OA\Response(response="422", ref="#/components/responses/422")
      * )
+     * @throws Exception
      */
     public function getSecretWrite(Request $request, Response $response): Response
     {
@@ -331,6 +331,7 @@ class BoardController
      *      @OA\Response(response="404", ref="#/components/responses/404"),
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      * )
+     * @throws Exception
      */
     public function getComments(Request $request, Response $response)
     {
@@ -394,6 +395,7 @@ class BoardController
      *      @OA\Response(response="404", ref="#/components/responses/404"),
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      * )
+     * @throws Exception
      */
     public function getComment(Request $request, Response $response)
     {
@@ -441,6 +443,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function createWrite(Request $request, Response $response): Response
     {
@@ -449,19 +452,18 @@ class BoardController
         $group = $request->getAttribute('group');
         $board = $request->getAttribute('board');
 
-        run_event('api_create_write_before', $board);
-
+        run_event('api_create_write_before', $board, $group);
 
         try {
             //작성 제한 시간 체크
             $cookies = $request->getCookieParams();
-            if(isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])){
+            if (isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])) {
                 $last_write_time = $cookies['last_write_time'];
-                if($last_write_time + $config['cf_delay_sec'] > time()){
+                if ($last_write_time + $config['cf_delay_sec'] > time()) {
                     throw new HttpBadRequestException($request, '너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
                 }
             }
-            
+
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateWriteRequest($this->board_permission, $member, $request_body);
@@ -498,12 +500,7 @@ class BoardController
             // 게시글 등록 후 처리
             $this->point_service->addPoint($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $board['bo_table'], $wr_id, '쓰기');
 
-            if ($config['cf_email_use'] && $board['bo_use_email']) {
-                // TODO: 기존 코드를 API와 함께 사용할 수 있도록 변경 필요 (추후 Mail Class를 작업하면서 일괄 수정)
-                // send_write_mail($config, $board, $wr_id, '', $request_data->wr_subject, $request_data->wr_content, $html);
-            }
-
-            run_event('api_create_write_after', $group, $board, $wr_id);
+            run_event('api_create_write_after', $board, $group, $wr_id, $parent_write);
 
             $response_data = new CreateWriteResponse('success', $wr_id);
             return api_response_json($response, $response_data);
@@ -623,6 +620,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function uploadFiles(Request $request, Response $response): Response
     {
@@ -630,11 +628,11 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
+        $data = $request->getParsedBody();
+        $uploaded = $request->getUploadedFiles();
+
         try {
             // 데이터 검증 및 처리
-            $data = $request->getParsedBody();
-            $uploaded = $request->getUploadedFiles();
-
             $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded, $data);
 
             // 권한 체크
@@ -738,6 +736,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function deleteWrite(Request $request, Response $response): Response
     {
@@ -785,7 +784,7 @@ class BoardController
 
             $this->board_service->decreaseWriteAndCommentCount($count_writes, $count_comments);
 
-            run_event('api_delete_write', $write, $board);
+            run_event('api_delete_write_after', $write, $board);
 
             return api_response_json($response, array('message' => '게시글이 삭제되었습니다.'));
         } catch (Exception $e) {
@@ -820,6 +819,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function createComment(Request $request, Response $response): Response
     {
@@ -832,13 +832,13 @@ class BoardController
         try {
             //작성 제한 시간 체크
             $cookies = $request->getCookieParams();
-            if(isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])){
+            if (isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])) {
                 $last_write_time = $cookies['last_write_time'];
-                if($last_write_time + $config['cf_delay_sec'] > time()){
+                if ($last_write_time + $config['cf_delay_sec'] > time()) {
                     throw new HttpBadRequestException($request, '너무 빠른 시간내에 댓글을 연속해서 올릴 수 없습니다.');
                 }
             }
-            
+
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateCommentRequest($board, $member, $request_body);
@@ -868,9 +868,6 @@ class BoardController
             $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'],
                 $comment_id, '댓글');
 
-            // TODO: 메일발송 (write_comment_update.php - line 210 ~ 261)
-            // TODO: SNS 등록 (write_comment_update.php - line 263 ~ 270)
-
             run_event('api_create_comment_after', $board, $write, $comment_id, $parent_comment);
 
             return api_response_json($response, array('message' => '댓글이 등록되었습니다.'));
@@ -879,6 +876,9 @@ class BoardController
                 throw new HttpForbiddenException($request, $e->getMessage());
             }
 
+            if ($e->getCode() === 400) {
+                throw new HttpBadRequestException($request, $e->getMessage());
+            }
             throw $e;
         }
     }
@@ -907,6 +907,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function updateComment(Request $request, Response $response): Response
     {
@@ -963,6 +964,7 @@ class BoardController
      *      @OA\Response(response="422", ref="#/components/responses/422"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function deleteComment(Request $request, Response $response): Response
     {
@@ -1018,6 +1020,7 @@ class BoardController
      *      @OA\Response(response="404", ref="#/components/responses/404"),
      *      @OA\Response(response="500", ref="#/components/responses/500"),
      * )
+     * @throws Exception
      */
     public function goodWrite(Request $request, Response $response, array $args): Response
     {
@@ -1026,10 +1029,11 @@ class BoardController
         $member = $request->getAttribute('member');
         $good_type = $args['good_type'] ?? '';
 
+        if (!in_array($good_type, ['good', 'nogood'])) {
+            throw new HttpBadRequestException($request, '추천 타입이 올바르지 않습니다.');
+        }
+        
         try {
-            if (!in_array($good_type, ['good', 'nogood'])) {
-                throw new HttpBadRequestException($request, '추천 타입이 올바르지 않습니다.');
-            }
             // 권한 체크
             $this->board_permission->goodWrite($member['mb_id'], $write, $good_type);
 

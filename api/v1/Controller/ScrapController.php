@@ -87,7 +87,6 @@ class ScrapController
             $fetch_scraps = $this->scrap_service->fetchScraps($member['mb_id'], (array)$page_params);
             $scraps = array_map(function ($scrap) {
                 // 게시판 정보 및 게시글 정보 조회
-                // TODO: 추후에 조인이 가능하도록 수정해야할 필요가 있음.
                 $board = $this->board_service->getBoard($scrap['bo_table']);
                 if ($board) {
                     $this->write_service->setBoard($board);
@@ -217,6 +216,9 @@ class ScrapController
 
             return api_response_json($response, ['message' => '스크랩이 추가되었습니다.']);
         } catch (Exception $e) {
+            if ($e->getCode() === 400) {
+                throw new HttpBadRequestException($request, $e->getMessage());
+            }
             throw $e;
         }
     }

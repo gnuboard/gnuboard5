@@ -77,7 +77,6 @@ $request = $server_request_creator->createServerRequestFromGlobals();
 // The routing middleware should be added earlier than the ErrorMiddleware
 // Otherwise exceptions thrown from it will not be handled by the middleware
 $app->addRoutingMiddleware();
-//$app->add(new CorsMiddleware());
 
 $app->add(new JsonBodyParserMiddleware());
 $app->add(new IpCheckMiddleware());

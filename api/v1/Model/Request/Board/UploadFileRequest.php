@@ -52,8 +52,8 @@ class UploadFileRequest
      * @param array $write 게시글 정보
      * @param array $uploaded_files 업로드된 파일
      * @param array $data 파일관련 데이터
-     * @throws Exception 파일 업로드 오류, 크기, 확장자 오류
      * @return void
+     * @throws Exception 파일 업로드 오류, 크기, 확장자 오류
      */
     public function __construct(
         BoardFileService $file_service,
@@ -97,7 +97,7 @@ class UploadFileRequest
     {
         $file_no = [];
         foreach ($this->file_dels as $key => $del) {
-            if ($del && ($del === true || $del === 'true')) {
+            if ($del === true || $del === 'true') {
                 $file_no[] = $key;
             }
         }
@@ -123,16 +123,16 @@ class UploadFileRequest
                     sprintf(self::ERROR_FILE_SIZE, $filename, number_format($filesize), number_format($this->board['bo_upload_size']))
                 );
             }
+            
             // 확장자 체크
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-            // @todo 허용리스트로 변경이 필요합니다.
-            
+
             //php, php3, php4 ..php7 등 금지
             if (strpos($filename, '.php') !== false) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
-            
-            if(isset($this->disallowed_ext[strtolower($ext)])) {
+
+            if (isset($this->disallowed_ext[strtolower($ext)])) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
         }

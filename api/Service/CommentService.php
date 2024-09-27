@@ -218,7 +218,7 @@ class CommentService
      * @param array $member
      * @param array $parent_comment
      * @return false|string
-     * @throws Exception
+     * @throws Exception 대댓글이 더 이상 작성할 수 없을 때
      */
     public function createCommentData(array $write, object $data, array $member = [], array $parent_comment = [])
     {
@@ -270,6 +270,7 @@ class CommentService
     /**
      * 대댓글 wr_comment_reply 생성
      * - Exception 관련 코드를 Permission으로 이동하고 싶었으나 코드 중복이 발생하여 이동하지 않음
+     * @throws Exception 대댓글이 더 이상 작성할 수 없을 때
      */
     public function setReplyCharacter(array $parent_comment): string
     {
@@ -288,7 +289,7 @@ class CommentService
         if (!$last_reply) {
             $reply_char = $begin_reply_char;
         } else if ($last_reply == $end_reply_char) {
-            throw new Exception('더 이상 대댓글을 작성하실 수 없습니다. 대댓글은 26개 까지만 가능합니다.');
+            throw new Exception('더 이상 대댓글을 작성하실 수 없습니다. 대댓글은 26개 까지만 가능합니다.', 400);
         } else {
             $reply_char = chr(ord($last_reply) + $reply_number);
         }

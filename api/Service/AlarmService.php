@@ -124,7 +124,7 @@ class AlarmService
     /**
      * @param $target
      * @param $data
-     * @return mixed
+     * @return array
      */
     public function addData($target, $data)
     {

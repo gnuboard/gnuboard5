@@ -12,7 +12,7 @@ class SearchController
 {
     private SearchService $search_service;
 
-    function __construct(SearchService $searchService)
+    public function __construct(SearchService $searchService)
     {
         $this->search_service = $searchService;
     }

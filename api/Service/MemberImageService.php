@@ -39,7 +39,7 @@ class MemberImageService
      * @param UploadedFileInterface $file 업로드 파일
      * @return void
      * @throws \RandomException
-     * @throw \Exception
+     * @throws Exception
      */
     public function updateMemberImage(array $config, string $mb_id, string $image_type, UploadedFileInterface $file)
     {

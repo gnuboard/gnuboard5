@@ -49,7 +49,7 @@ class Kakao extends OAuth2
      * @return User\Profile
      * @throws UnexpectedApiResponseException
      * @throws \Hybridauth\Exception\HttpClientFailureException
-     * @throws \Collection\Exception\HttpRequestFailedException
+     * @throws \Hybridauth\Exception\HttpRequestFailedException
      * @throws \Hybridauth\Exception\InvalidAccessTokenException
      * @throws HttpRequestFailedException
      */

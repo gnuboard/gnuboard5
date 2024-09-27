@@ -76,6 +76,16 @@ class SearchService
     }
 
 
+    /**
+     * 검색가능한 게시판과 조건 조합으로 각 게시판의 결과 쿼리를 수행
+     * @param $search_condition
+     * @param $search_condition_bind_param
+     * @param $search_board_list
+     * @param $per_page
+     * @param $page
+     * @param $member
+     * @return array 검색결과
+     */
     public function fetchSearchResultsByPage($search_condition, $search_condition_bind_param, $search_board_list, $per_page, $page, $member)
     {
         global $g5;
@@ -174,6 +184,14 @@ class SearchService
     }
 
 
+    /**
+     * 검색 가능한 게시판을 찾는다
+     * 게시판관리자에서 검색체크, 그룹설정 게시판에서 회원의 그룹 소속여부, 게시판 보기 레벨을 확인
+     * @param $member
+     * @param $gr_id
+     * @param $onetable
+     * @return array[]
+     */
     public function fetchSearchableBoardInfo($member, $gr_id = null, $onetable = null)
     {
         global $g5;
@@ -223,6 +241,7 @@ class SearchService
                         continue;
                     }
 
+                    // 그룹에 속해있지 않은 경우
                     $group_member_query = "SELECT COUNT(*) as cnt FROM {$g5['group_member_table']} 
                              WHERE gr_id = :gr_id AND mb_id = :mb_id AND mb_id <> ''";
                     $group_member_stmt = Db::getInstance()->run($group_member_query, ['gr_id' => $search_table['gr_id'], 'mb_id' => $member['mb_id'] ?? '']);
@@ -296,13 +315,13 @@ class SearchService
     }
 
     /**
-     * 검색된 게시판 목록
+     * 검색된 게시판에서 검색된 게시글 수를 가져온다
      * @param $search_query
      * @param $search_query_bind_param
      * @param $searchable_tables
      * @param $searchable_levels
      * @param $per_page
-     * @return array
+     * @return array [list, total_count, total_page]
      */
     public function fetchBoardList($search_query, $search_query_bind_param, $searchable_tables, $searchable_levels, $per_page)
     {
