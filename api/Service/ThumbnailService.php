@@ -3,6 +3,8 @@
 
 namespace API\Service;
 
+use function ord;
+
 use const PHP_VERSION_ID;
 
 /**
@@ -88,14 +90,14 @@ class ThumbnailService
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if (strpos($img_tag, G5_DATA_DIR . '/' . G5_EDITOR_DIR) && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
                 $imgurl = str_replace(G5_URL, '', $src);
-                $attr_href = run_replace('thumb_view_image_href', G5_BBS_URL . '/view_image.php?fn=' . rawurlencode($imgurl), $filename, '', $width, $height, $alt);
+                $attr_href = run_replace('api_thumb_view_image_href', G5_BBS_URL . '/view_image.php?fn=' . rawurlencode($imgurl), $filename, '', $width, $height, $alt);
                 $thumb_tag = '<a href="' . $attr_href . '" target="_blank" class="view_image">' . $thumb_tag . '</a>';
             }
 
             $contents = str_replace($img_tag, $thumb_tag, $contents);
         }
 
-        return run_replace('get_view_thumbnail', $contents);
+        return run_replace('api_get_view_thumbnail', $contents);
     }
 
 
@@ -756,7 +758,7 @@ class ThumbnailService
 
         $cache[$key] = $count > 1;
 
-        run_event('is_animated_gif_after', $filename, $cache[$key]);
+        run_event('api_is_animated_gif_after', $filename, $cache[$key]);
 
         return $cache[$key];
     }

@@ -84,7 +84,7 @@ class MemberService
         $this->updateMember($member['mb_id'], $update_data);
 
         // Hook - 회원탈퇴
-        run_event('member_leave', $member);
+        run_event('api_member_leave_after', $member);
     }
 
     /**

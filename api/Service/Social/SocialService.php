@@ -144,12 +144,12 @@ class SocialService
             ];
 
             $this->social_config['providers'] = $social_config;
-//            $this->social_config['debug_mode'] = G5_DEBUG;
-//            $this->social_config['debug_file'] = G5_DATA_PATH . '/hybridauth.log';
+            $this->social_config['debug_mode'] = G5_DEBUG;
+            $this->social_config['debug_file'] = G5_DATA_PATH . '/social_loggin_hybridauth.log';
         }
 
         // 설정 추가
-        add_event('social_provider_add', 'add_social_provider_config');
+        add_event('api_social_provider_add', 'add_social_provider_config');
     }
 
     /**

@@ -14,7 +14,15 @@ class AlarmHooks
         $this->alarm_service = $alarm_service;
     }
 
-    public function sender_after_comment($board, $write, $comment_id, $parent_comment)
+    /**
+     * 댓글 작성 후 파이어베이스 푸시 메시지 전송
+     * @param $board
+     * @param $write
+     * @param $comment_id
+     * @param $parent_comment
+     * @return false|void
+     */
+    public function sendFcmAfterCreatComment($board, $write, $comment_id, $parent_comment)
     {
         global $app;
 
