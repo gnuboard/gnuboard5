@@ -142,12 +142,22 @@ class SearchService
                 'wr_option' => $row['wr_option']
             ];
 
+            $table_search_result['type'] = 'write';
+
             if ($row['wr_is_comment']) {
                 $write_parent_query = "SELECT wr_subject, wr_option FROM {$g5['write_prefix']}{$table} WHERE wr_id = :wr_parent";
                 $parent_stmt = Db::getInstance()->run($write_parent_query, ['wr_parent' => $row['wr_parent']]);
                 $parent_row = $parent_stmt->fetch();
                 $table_search_result['wr_subject'] = get_text($parent_row['wr_subject']);
-                $table_search_result['wr_option'] .= $parent_row['wr_option'];
+                if (empty($table_search_result['wr_option'])) {
+                    $table_search_result['wr_option'] = $parent_row['wr_option'];
+                } else {
+                    $temp_wr_option = explode(',', $table_search_result['wr_option']) ?: [];
+                    $temp_wr_option[] = $parent_row['wr_option'];
+                    $table_search_result['wr_option'] = implode(',', $temp_wr_option);
+                }
+                $table_search_result['type'] = 'comment';
+                $table_search_result['wr_parent'] = $row['wr_parent'];
             }
 
             if (str_contains($table_search_result['wr_option'], 'secret')) {
