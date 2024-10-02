@@ -30,6 +30,39 @@ class BoardService
         return explode('|', $this->board['bo_category_list']);
     }
 
+    public function isBoardAdmin($bo_table, $mb_id)
+    {
+        $board = $this->getBoard($bo_table);
+        if (!$board) {
+            return false;
+        }
+        return $board['bo_admin'] === $mb_id;
+    }
+
+    public function isBoardGroupAdmin($bo_table, $mb_id)
+    {
+        return $this->getGroupAdminByBoard($bo_table) === $mb_id;
+    }
+
+    public function isAdmin(string $admin_type, string $mb_id, string $bo_table)
+    {
+        $config = ConfigService::getConfig();
+        switch ($admin_type) {
+            case 'super':
+                return is_super_admin($config, $mb_id);
+            case 'group':
+                return $this->getGroupAdminByBoard($bo_table) === $mb_id;
+            case 'board':
+                $board = $this->getBoard($bo_table);
+                if (!$board) {
+                    return false;
+                }
+                return $board['bo_admin'] === $mb_id;
+            default:
+                return false;
+        }
+    }
+
     /**
      * 관리자 정보 조회
      * @param string $admin_type
@@ -66,12 +99,12 @@ class BoardService
     public function getGroupAdminByBoard($bo_table)
     {
         if (isset($this->board['bo_table']) && $this->board['bo_table'] === $bo_table) {
-            return $this->group_service->fetchGroupAdmin($this->board['gr_id']);
+            return $this->group_service->fetchGroup($this->board['gr_id'])['gr_admin'];
         }
 
         $board = $this->getBoard($bo_table);
         if ($board) {
-            return $this->group_service->fetchGroupAdmin($board['gr_id']);
+            return $this->group_service->fetchGroup($this->board['gr_id'])['gr_admin'];
         }
 
         return false;

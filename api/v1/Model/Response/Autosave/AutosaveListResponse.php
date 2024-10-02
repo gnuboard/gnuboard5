@@ -15,7 +15,7 @@ class AutosaveListResponse
 
     /**
      * @var Autosave[]
-     * @OA\Property(property="autosaves", type="array", @OA\Items(ref="#/components/schemas/Autosave"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Autosave"))
      */
     public $autosaves = [];
 

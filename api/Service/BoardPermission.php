@@ -116,7 +116,7 @@ class BoardPermission
      * 글 읽기 권한 체크
      * @throws Exception
      */
-    public function readWrite(array $member, array $write, string $password = null): void
+    public function readWrite(array $member, array $write, ?string $password = null): void
     {
         $level = (int)$this->board['bo_read_level'];
         $this->checkAccessBoardGroup($member['mb_id']);
@@ -614,11 +614,11 @@ class BoardPermission
      * @param bool $writer_check
      * false: 작성자가 달라도 비밀번호만 알고있으면 볼 수 있습니다. - 그누보드 5 기본값
      * true 로그인회원과 작성자 일치시만 보기
-     * @param $password
+     * @param ?string $password
      * @return void
      * @throws Exception
      */
-    private function checkReadSecretWrite(array $member, array $write, bool $writer_check = false, $password = null): void
+    private function checkReadSecretWrite(array $member, array $write, bool $writer_check = false, ?string $password = null): void
     {
         if (!str_contains($write['wr_option'], 'secret')) {
             return;
@@ -737,7 +737,7 @@ class BoardPermission
      * 댓글 읽기 권한 체크
      * @throws Exception
      */
-    public function readComment(array $member, array $comment, string $password = null): void
+    public function readComment(array $member, array $comment, ?string $password = null): void
     {
         $level = (int)$this->board['bo_read_level'];
         $this->checkAccessBoardGroup($member['mb_id']);

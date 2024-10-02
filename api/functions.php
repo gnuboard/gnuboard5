@@ -123,7 +123,7 @@ function g5_root_path($is_root = true, $depth = 1)
  * @return string The filename of moved file
  * @throws \Random\RandomException
  */
-function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile, string $basename = null)
+function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile, ?string $basename = null)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 
