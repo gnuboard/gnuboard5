@@ -123,7 +123,7 @@ class SearchService
         $search_query = "
         SELECT * FROM (
             {$union_query}
-        ) AS united_search
+        ) AS union_search
         ORDER BY wr_datetime DESC 
         LIMIT ?, ?";
 
@@ -147,12 +147,23 @@ class SearchService
             if ($row['wr_is_comment']) {
                 // 댓글의 원글
                 $write_parent_query = "SELECT wr_subject, wr_option FROM {$g5['write_prefix']}{$table} WHERE wr_id = :wr_parent";
-                $parent_stmt = Db::getInstance()->run($write_parent_query, ['wr_parent' => $row['wr_parent']]);
-                $parent_row = $parent_stmt->fetch();
-                $table_search_result['wr_subject'] = get_text($parent_row['wr_subject']);
-                $table_search_result['wr_parent_option'] = $parent_row['wr_option'];
+                $parent_result = Db::getInstance()->run($write_parent_query, ['wr_parent' => $row['wr_parent']])->fetch();
                 $table_search_result['type'] = 'comment';
+                $table_search_result['wr_subject'] = $parent_result['wr_subject'];
+                $table_search_result['wr_parent_option'] = $parent_result['wr_option'];
                 $table_search_result['wr_parent'] = $row['wr_parent'];
+
+                // 댓글의 순서
+                $comment_order_query = "SELECT wr_id FROM {$g5['write_prefix']}{$table} WHERE wr_parent = :wr_parent AND wr_is_comment = 1 ORDER BY wr_comment, wr_comment_reply";
+                $comment_order_result = Db::getInstance()->run($comment_order_query, ['wr_parent' => $row['wr_parent']])->fetchAll();
+                $comment_order = 1;
+                foreach ($comment_order_result as $comment) {
+                    if ($comment['wr_id'] === $row['wr_id']) {
+                        break;
+                    }
+                    ++$comment_order;
+                }
+                $table_search_result['comment_order'] = $comment_order;
             }
 
             if (str_contains($table_search_result['wr_option'], 'secret')) {
