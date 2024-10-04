@@ -339,10 +339,21 @@ class CommentService
     }
 
     /**
-     * 댓글 삭제
+     * 댓글 1개 삭제
      */
     public function deleteCommentById(int $wr_id): void
     {
         Db::getInstance()->delete($this->write_table, ['wr_id' => $wr_id]);
     }
+
+    /**
+     * 특정 게시글에 달린 모든 댓글 삭제
+     * @param int $wr_parent_id 게시물 번호
+     * @return void
+     */
+    public function deleteAllCommentByParent(int $wr_parent_id): void
+    {
+        Db::getInstance()->delete($this->write_table, ['wr_parent' => $wr_parent_id, 'wr_is_comment' => 1]);
+    }
+
 }

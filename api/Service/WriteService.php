@@ -570,14 +570,12 @@ class WriteService
     /**
      * @param int $wr_parent
      * @return void
-     * @todo 다시 확인
-     * 부모 아이디로 게시글 삭제
+     * 원글과 연관된 답글모두 삭제
      *
-     * @example 게시글 삭제시 댓글을 일괄 삭제
      */
     public function deleteWriteByParentId(int $wr_parent): void
     {
-        Db::getInstance()->delete($this->table, ['wr_parent' => $wr_parent]);
+        Db::getInstance()->delete($this->table, ['wr_parent' => $wr_parent, 'wr_is_comment' => 0]);
     }
 
     /**

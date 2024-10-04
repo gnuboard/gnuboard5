@@ -186,9 +186,9 @@ class BoardNewController
                         }
                     }
                     // 게시글/댓글 및 최신글/스크랩 삭제
-                    $this->write_service->deleteWriteByParentId($write['wr_id']);
                     $this->service->deleteByWrite($board['bo_table'], $write['wr_id']);
                     $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
+                    $this->comment_service->deleteAllCommentByParent($write['wr_id']);
                     // 공지사항 삭제
                     $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
                     $this->board_service->updateBoard(['bo_notice' => $bo_notice]);

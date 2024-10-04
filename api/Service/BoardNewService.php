@@ -95,7 +95,7 @@ class BoardNewService
      */
     public function deleteByWrite(string $bo_table, int $wr_id): void
     {
-        Db::getInstance()->delete($this->table, ['bo_table' => $bo_table, 'wr_parent' => $wr_id]);
+        Db::getInstance()->delete($this->table, ['bo_table' => $bo_table, 'wr_parent' => $wr_id, 'wr_is_comment' => 0]);
     }
 
     /**
