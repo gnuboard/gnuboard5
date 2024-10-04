@@ -18,19 +18,19 @@ class UploadFileRequest
 
     /**
      * 업로드 파일
-     * @OA\Property(property="files[]", type="array", @OA\Items(type="string", format="binary", example=""))
+     * @OA\Property(type="array", @OA\Items(type="string", format="binary", example=""))
      */
     public $files = [];
 
     /**
      * 파일 설명
-     * @OA\Property(property="file_contents[]", type="array", @OA\Items(type="string", example=""))
+     * @OA\Property(type="array", @OA\Items(type="string", example=""))
      */
     public array $file_contents = [];
 
     /**
      * 기존 파일 삭제여부 (true: 삭제, false: 유지)
-     * @OA\Property(property="file_dels[]", type="array", @OA\Items(type="boolean", example="false"))
+     * @OA\Property(type="array", @OA\Items(type="boolean", example="false"))
      */
     public array $file_dels = [];
 

@@ -5,9 +5,8 @@ use API\v1\Controller\CurrentConnectController;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
- * @var Slim\App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
-
 $app->group('/v1/members/current-connect', function (RouteCollectorProxy $group) {
     $group->get('', [CurrentConnectController::class, 'index']);
     $group->post('', [CurrentConnectController::class, 'create'])->add(OptionalAccessTokenAuthMiddleware::class);

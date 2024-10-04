@@ -24,6 +24,9 @@ class AlarmHooks
      */
     public function sendFcmAfterCreatComment($board, $write, $comment_id, $parent_comment)
     {
+        /**
+         * @var \Slim\App<\Psr\Container\ContainerInterface> $app
+         */
         global $app;
 
         /**

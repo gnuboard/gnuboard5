@@ -6,7 +6,7 @@ use API\v1\Controller\AuthenticationController;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
- * @var App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
 $app->group('/v1/token', function (RouteCollectorProxy $group) {
     $group->post('', [AuthenticationController::class, 'generateToken']);

@@ -10,7 +10,7 @@ use API\v1\Controller\ScrapController;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
- * @var App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
 $app->group('/v1/member/scraps', function (RouteCollectorProxy $group) {
     $group->get('', [ScrapController::class, 'getScraps']);

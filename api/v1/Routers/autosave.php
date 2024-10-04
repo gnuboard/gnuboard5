@@ -4,14 +4,11 @@
 use API\Middleware\AccessTokenAuthMiddleware;
 use API\v1\Controller\AutosaveController;
 use Slim\Routing\RouteCollectorProxy;
-use Slim\App;
 
 
 /**
- * @var App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
-
-
 $app->group('/v1/autosaves', function (RouteCollectorProxy $group) {
     $group->get('', [AutosaveController::class, 'index']);
     $group->post('', [AutosaveController::class, 'save']);

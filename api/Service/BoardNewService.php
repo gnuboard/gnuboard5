@@ -70,7 +70,7 @@ class BoardNewService
     public function fetchById(int $bn_id)
     {
         $query = "SELECT * FROM {$this->table} WHERE bn_id = :bn_id";
-        $stmt = Db::getInstance()->run($query, [':bn_id' => $bn_id]);
+        $stmt = Db::getInstance()->run($query, ['bn_id' => $bn_id]);
         return $stmt->fetch();
     }
 

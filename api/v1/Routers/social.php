@@ -7,10 +7,9 @@ use API\Middleware\AccessTokenAuthMiddleware;
 use API\Middleware\OptionalAccessTokenAuthMiddleware;
 use API\v1\Controller\SocialController;
 use Slim\Routing\RouteCollectorProxy;
-use Slim\App;
 
 /**
- * @var App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
 $app->group('/v1/social', function (RouteCollectorProxy $group) {
     // web, webview 앱

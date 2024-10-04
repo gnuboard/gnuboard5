@@ -8,7 +8,7 @@ use API\v1\Controller\PopupController;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
- * @var \Slim\App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
 
 $app->group('/v1/newwins', function (RouteCollectorProxy $group) {

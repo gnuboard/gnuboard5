@@ -599,7 +599,7 @@ class WriteService
         // 카테고리
         if ($category) {
             $query_parts[] = 'ca_name = :ca_name';
-            $params[':ca_name'] = $category;
+            $params['ca_name'] = $category;
         }
 
         if (empty($keyword) && $keyword !== '0') {
@@ -686,8 +686,8 @@ class WriteService
         $spt = $search_params['spt'];
         $search_part = $search_params['search_part'];
 
-        $params[':min_wr_num'] = $spt;
-        $params[':max_wr_num'] = $spt + $search_part;
+        $params['min_wr_num'] = $spt;
+        $params['max_wr_num'] = $spt + $search_part;
 
         return ' AND (wr_num BETWEEN :min_wr_num AND :max_wr_num)';
     }

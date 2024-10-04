@@ -9,7 +9,7 @@ use API\v1\Controller\BoardNewController;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
- * @var App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
 $app->group('/v1/board-new', function (RouteCollectorProxy $group) {
     $group->get('', [BoardNewController::class, 'getBoardNews'])

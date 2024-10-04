@@ -7,7 +7,9 @@ use API\Middleware\ConfigMiddleware;
 use API\v1\Controller\MemberController;
 use Slim\Routing\RouteCollectorProxy;
 
-
+/**
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
+ */
 $app->group('/v1/members', function (RouteCollectorProxy $group) {
     $group->get('/me', [MemberController::class, 'getMe'])->add(AccessTokenAuthMiddleware::class);
     $group->get('/{mb_id}', [MemberController::class, 'getMember'])->add(AccessTokenAuthMiddleware::class);

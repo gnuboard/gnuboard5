@@ -12,7 +12,7 @@ use API\v1\Controller\BoardController;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
- * @var App $app
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
 $app->group('/v1/boards/{bo_table}', function (RouteCollectorProxy $group){
     $group->get('', [BoardController::class, 'getBoard']);

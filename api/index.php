@@ -62,6 +62,10 @@ $container_builder->useAutowiring(true);
 $container = $container_builder->build();
 
 AppFactory::setContainer($container);
+
+/**
+ * @var \Slim\App<\Psr\Container\ContainerInterface> $app
+ */
 $app = AppFactory::create();
 
 //env 설정
