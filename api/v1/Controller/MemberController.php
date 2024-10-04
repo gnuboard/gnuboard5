@@ -6,7 +6,6 @@ use API\Exceptions\HttpBadRequestException;
 use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
-use API\Service\MailService;
 use API\Service\MemberImageService;
 use API\Service\MemberService;
 use API\Service\PointService;
@@ -28,20 +27,17 @@ class MemberController
     private MemberImageService $image_service;
     private PointService $point_service;
     private SocialService $social_service;
-    private MailService $mail_service;
 
     public function __construct(
         MemberService $member_service,
         MemberImageService $image_service,
         PointService $point_service,
-        SocialService $social_service,
-        MailService $mail_service
+        SocialService $social_service
     ) {
         $this->social_service = $social_service;
         $this->member_service = $member_service;
         $this->image_service = $image_service;
         $this->point_service = $point_service;
-        $this->mail_service = $mail_service;
     }
 
     /**
@@ -123,54 +119,22 @@ class MemberController
 
         // 인증메일 발송
         if ($config['cf_use_email_certify']) {
-            $subject = "[{$config['cf_title']}] 인증확인 메일입니다.";
-
             // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-            $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+            $mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));
 
-            $this->member_service->updateMember($data->mb_id, ['mb_email_certify2' => $mb_md5]);
-
-            $certify_href = G5_BBS_URL . "/email_certify.php?mb_id={$data->mb_id}&amp;mb_md5={$mb_md5}";
-            $w = '';
-            ob_start();
-            include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
-            $content = ob_get_clean();
-
-            $content = run_replace('api_register_form_update_mail_certify_content', $content, $data->mb_id);
-
-            $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $data->mb_email, $subject, $content, 1);
-            
-            // 가입축하메일 발송
+            $this->member_service->updateMember($data->mb_id, ['mb_email_certify2' => $mb_nonce]);
+            $this->member_service->sendAuthMail($data->mb_id, $data->mb_name, $data->mb_email, $mb_nonce, true);
         } elseif ($config['cf_email_mb_member']) {
-            $subject = "[{$config['cf_title']}] 회원가입을 축하드립니다.";
-
-            ob_start();
-            //$mb_name
-            $mb_id = $data->mb_id;
-            $mb_nick = $data->mb_nick;
-            $mb_recommend = $data->mb_recommend ?? '';
-            $mb_name = $data->mb_name;
-            include_once __DIR__ . '../../../../bbs/register_form_update_mail1.php';
-            $content = ob_get_clean();
-
-            $content = run_replace('api_register_form_update_mail_mb_content', $content, $data->mb_id);
-
-            $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $data->mb_email, $subject, $content, 1);
+            // 가입 축하메일 발송
+            $this->member_service->sendRegisterMail((array)$data);
         }
 
         // 최고관리자님께 메일 발송
         if ($config['cf_email_mb_super_admin']) {
-            $subject = run_replace('api_register_form_update_mail_admin_subject', '[' . $config['cf_title'] . '] ' . $data->mb_nick . ' 님께서 회원으로 가입하셨습니다.', $data->mb_id,
-                $data->mb_nick);
-
-            ob_start();
-            include_once(__DIR__ . '../../../../bbs/register_form_update_mail2.php');
-            $content = ob_get_clean();
-
-            $content = run_replace('api_register_form_update_mail_admin_content', $content, $data->mb_id);
-
-            $this->mail_service->send($data->mb_nick, $data->mb_email, $config['cf_admin_email'], $subject, $content, 1);
+            $this->member_service->sendRegisterMailForSuperAdmin((array)$data);
         }
+
+        run_event('api_after_create_member', $data);
 
         $response_data = new CreateMemberResponse('회원가입이 완료되었습니다.', $data);
         return api_response_json($response, $response_data);
@@ -217,22 +181,11 @@ class MemberController
 
             $this->member_service->verifyEmailCertification($member, $data);
 
-            // 인증메일 발송
-            $subject = "[{$config['cf_title']}] 인증확인 메일입니다.";
-
             // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-            $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+            $mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));
+            $this->member_service->sendAuthMail($mb_id, $member['mb_name'], $data->email, $mb_nonce);
 
-            $certify_href = G5_BBS_URL . '/email_certify.php?mb_id=' . $mb_id . '&amp;mb_md5=' . $mb_md5;
-            $w = 'u';
-            $mb_name = $member['mb_name'];
-            ob_start();
-            include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
-            $content = ob_get_clean();
-
-            $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $data->email, $subject, $content, 1);
-
-            $this->member_service->updateMember($mb_id, ['mb_email' => $data->email, 'mb_email_certify2' => $mb_md5]);
+            $this->member_service->updateMember($mb_id, ['mb_email' => $data->email, 'mb_email_certify2' => $mb_nonce]);
 
             return api_response_json($response, array('message' => "{$data->email} 주소로 인증메일이 재전송되었습니다."));
         } catch (Exception $e) {
@@ -490,17 +443,16 @@ class MemberController
                 throw new HttpForbiddenException($request, '관리자 아이디는 접근 불가합니다.');
             }
 
-            // TODO: 메일관련 공통 함수로 변경이 필요하다.
             // 임시비밀번호 발급
             $change_password = rand(100000, 999999);
-            $mb_lost_certify = get_encrypt_string($change_password);
             $mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));  // 일회용 난수 생성
+            $mb_lost_certify = get_encrypt_string($change_password);
 
             $this->member_service->updateMember($member['mb_id'], ['mb_lost_certify' => "{$mb_nonce} {$mb_lost_certify}"]);
 
-            send_reset_password_mail($config, $member, $mb_nonce, $change_password);
+            $this->member_service->sendMailResetPassword($member, $mb_nonce, $change_password);
 
-            run_event('api_password_lost2_after', $member, $mb_nonce, $mb_lost_certify);
+            run_event('api_password_lost_after', $member, $mb_nonce, $change_password, $mb_lost_certify);
 
             return api_response_json($response, ['message' => '비밀번호를 변경할 수 있는 링크가 ' . $request_data->mb_email . ' 메일로 발송되었습니다.']);
         } catch (Exception $e) {

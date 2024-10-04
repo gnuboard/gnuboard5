@@ -9,9 +9,11 @@ use Exception;
 class MemberService
 {
     private string $table;
+    private MailService $mail_service;
 
-    public function __construct()
+    public function __construct(MailService $mail_service)
     {
+        $this->mail_service = $mail_service;
         $this->table = $GLOBALS['g5']['member_table'];
     }
 
@@ -152,6 +154,121 @@ class MemberService
         }
 
         return $members[0];
+    }
+
+    /**
+     * 인증 메일 발송
+     * @param string $mb_id 받는 회원아이디
+     * @param string $mb_name 받는 회원이름
+     * @param string $email 받는 이메일
+     * @param string $nonce 인증용 난수
+     * @param bool $is_register 회원가입인지 재인증인지 여부
+     * @return void
+     */
+
+    public function sendAuthMail($mb_id, $mb_name, $email, $nonce, $is_register = false)
+    {
+        $config = ConfigService::getConfig();
+        // 인증메일 발송
+        $subject = "[{$config['cf_title']}] 인증확인 메일입니다.";
+
+
+        $certify_href = G5_BBS_URL . '/email_certify.php?mb_id=' . $mb_id . '&amp;mb_md5=' . $nonce;
+        if ($is_register) {
+            $w = '';
+        } else {
+            $w = 'u';
+        }
+        ob_start();
+
+        //$mb_name, $w 사용 
+
+        include_once G5_BBS_PATH . '/register_form_update_mail3.php';
+        $content = ob_get_clean();
+
+        $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $email, $subject, $content, 1);
+    }
+
+    /**
+     * 가입메일 발송
+     * @param array $member
+     * @return void
+     */
+    public function sendRegisterMail(array $member)
+    {
+        $config = ConfigService::getConfig();
+        $subject = "[{$config['cf_title']}] 회원가입을 축하드립니다.";
+
+        ob_start();
+        //$mb_name
+        $mb_id = $member['mb_id'];
+        $mb_nick = $member['mb_nick'];
+        $mb_recommend = $member['mb_recommend'] ?? '';
+        $mb_name = $member['mb_name'];
+        include_once G5_BBS_PATH . '/register_form_update_mail1.php';
+        $content = ob_get_clean();
+
+        $content = run_replace('api_register_form_update_mail_mb_content', $content, $member['mb_id']);
+
+        $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $member['mb_email'], $subject, $content, 1);
+    }
+
+    public function sendRegisterMailForSuperAdmin($member)
+    {
+        $config = ConfigService::getConfig();
+        $subject = run_replace('api_register_form_update_mail_admin_subject', '[' . $config['cf_title'] . '] ' . $member['mb_nick'] . ' 님께서 회원으로 가입하셨습니다.', $member['mb_id'],
+            $member['mb_nick']);
+
+        ob_start();
+        include_once(G5_BBS_PATH . '/register_form_update_mail2.php');
+        $content = ob_get_clean();
+
+        $content = run_replace('api_register_form_update_mail_admin_content', $content, $member['mb_id']);
+
+        $this->mail_service->send($member['mb_nick'], $member['mb_email'], $config['cf_admin_email'], $subject, $content, 1);
+    }
+
+    /**
+     * 임시비밀번호 메일 발송
+     * @param array $member 회원정보
+     * @param string $mb_nonce 인증용 난수
+     * @param string $change_password 변경될 비밀번호
+     * @return void
+     */
+    public function sendMailResetPassword(array $member, string $mb_nonce, string $change_password)
+    {
+        // 인증 링크 생성
+        $href = G5_BBS_URL . '/password_lost_certify.php?mb_no=' . $member['mb_no'] . '&amp;mb_nonce=' . $mb_nonce;
+
+        $config = ConfigService::getConfig();
+        $subject = "[{$config['cf_title']}  요청하신 회원정보 찾기 안내 메일입니다.";
+
+        $content = '<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">';
+        $content .= '<div style="border:1px solid #dedede">';
+        $content .= '<h1 style="padding:30px 30px 0;background:#f7f7f7;color:#555;font-size:1.4em">';
+        $content .= '회원정보 찾기 안내';
+        $content .= '</h1>';
+        $content .= '<span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">';
+        $content .= '<a href="' . G5_URL . '" target="_blank">' . $config['cf_title'] . '</a>';
+        $content .= '</span>';
+        $content .= '<p style="margin:20px 0 0;padding:30px 30px 30px;border-bottom:1px solid #eee;line-height:1.7em">';
+        $content .= addslashes($member['mb_name']) . ' (' . addslashes($member['mb_nick']) . ')' . ' 회원님은 ' . G5_TIME_YMDHIS . ' 에 회원정보 찾기 요청을 하셨습니다.<br>';
+        $content .= '저희 사이트는 관리자라도 회원님의 비밀번호를 알 수 없기 때문에, 비밀번호를 알려드리는 대신 새로운 비밀번호를 생성하여 안내 해드리고 있습니다.<br>';
+        $content .= '아래에서 변경될 비밀번호를 확인하신 후, <span style="color:#ff3061"><strong>비밀번호 변경</strong> 링크를 클릭 하십시오.</span><br>';
+        $content .= '비밀번호가 변경되었다는 인증 메세지가 출력되면, 홈페이지에서 회원아이디와 변경된 비밀번호를 입력하시고 로그인 하십시오.<br>';
+        $content .= '로그인 후에는 정보수정 메뉴에서 새로운 비밀번호로 변경해 주십시오.';
+        $content .= '</p>';
+        $content .= '<p style="margin:0;padding:30px 30px 30px;border-bottom:1px solid #eee;line-height:1.7em">';
+        $content .= '<span style="display:inline-block;width:100px">회원아이디</span> ' . $member['mb_id'] . '<br>';
+        $content .= '<span style="display:inline-block;width:100px">변경될 비밀번호</span> <strong style="color:#ff3061">' . $change_password . '</strong>';
+        $content .= '</p>';
+        $content .= '<a href="' . $href . '" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">비밀번호 변경</a>';
+        $content .= '</div>';
+        $content .= '</div>';
+
+        $content = run_replace('api_reset_mail_content', $content, $href, $member, $mb_nonce, $change_password);
+
+        $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $member['mb_email'], $subject, $content, 1);
     }
 
     // ========================================
