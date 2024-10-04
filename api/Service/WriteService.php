@@ -246,7 +246,7 @@ class WriteService
      */
     public function fetchWritesAndComments(int $wr_id)
     {
-        $query = "SELECT * FROM {$this->table} WHERE wr_parent = :wr_id order by wr_id";
+        $query = "SELECT * FROM {$this->table} WHERE wr_parent = :wr_id ORDER BY wr_id";
         $stmt = Db::getInstance()->run($query, ['wr_id' => $wr_id]);
 
         return $stmt->fetchAll();

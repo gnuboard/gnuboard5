@@ -22,7 +22,8 @@
         "ext-bcmath": "*",
         "ext-pdo": "*",
         "ext-gd": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "phpmailer/phpmailer": "^6.9"
     },
     "autoload": {
         "psr-4": {

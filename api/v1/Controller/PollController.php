@@ -2,8 +2,7 @@
 
 namespace API\v1\Controller;
 
-require_once G5_LIB_PATH . '/mailer.lib.php';
-
+use API\Service\MailService;
 use API\Service\MemberService;
 use API\Service\PollService;
 use API\v1\Model\Response\Poll\PollResponse;
@@ -226,13 +225,15 @@ class PollController
                 return api_response_json($response, ['message' => '관리자 메일이 없습니다.'], 400);
             }
 
-            $from_email = $member['mb_email'] ?: '';
+            $from_email = $member['mb_email'] ?: $admin_email;
             if ($is_guest) {
                 $name = 'guest';
             } else {
                 $name = $member['mb_nick'];
             }
-            mailer($name, $from_email, $admin_email, " [{$config['cf_title']}] 설문조사 기타의견 메일", $content, 1);
+
+            $mailer = new MailService();
+            $mailer->send($name, $from_email, $admin_email, " [{$config['cf_title']}] 설문조사 기타의견 메일", $content, 1);
         }
 
         return api_response_json($response, ['message' => '기타의견이 등록되었습니다']);

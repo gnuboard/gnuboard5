@@ -6,7 +6,7 @@ use API\Exceptions\HttpBadRequestException;
 use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
-use API\Exceptions\HttpUnprocessableEntityException;
+use API\Service\MailService;
 use API\Service\MemberImageService;
 use API\Service\MemberService;
 use API\Service\PointService;
@@ -22,26 +22,26 @@ use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-
-require_once G5_LIB_PATH . '/mailer.lib.php';
-
 class MemberController
 {
     private MemberService $member_service;
     private MemberImageService $image_service;
     private PointService $point_service;
     private SocialService $social_service;
+    private MailService $mail_service;
 
     public function __construct(
         MemberService $member_service,
         MemberImageService $image_service,
         PointService $point_service,
-        SocialService $social_service
+        SocialService $social_service,
+        MailService $mail_service
     ) {
         $this->social_service = $social_service;
         $this->member_service = $member_service;
         $this->image_service = $image_service;
         $this->point_service = $point_service;
+        $this->mail_service = $mail_service;
     }
 
     /**
@@ -122,7 +122,6 @@ class MemberController
         }
 
         // 인증메일 발송
-        // TODO: 메일관련 공통 함수로 변경이 필요하다.
         if ($config['cf_use_email_certify']) {
             $subject = "[{$config['cf_title']}] 인증확인 메일입니다.";
 
@@ -137,33 +136,40 @@ class MemberController
             include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
             $content = ob_get_clean();
 
-            $content = run_replace('register_form_update_mail_certify_content', $content, $data->mb_id);
+            $content = run_replace('api_register_form_update_mail_certify_content', $content, $data->mb_id);
 
-            mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+            $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $data->mb_email, $subject, $content, 1);
+            
             // 가입축하메일 발송
         } elseif ($config['cf_email_mb_member']) {
             $subject = "[{$config['cf_title']}] 회원가입을 축하드립니다.";
 
             ob_start();
+            //$mb_name
+            $mb_id = $data->mb_id;
+            $mb_nick = $data->mb_nick;
+            $mb_recommend = $data->mb_recommend ?? '';
+            $mb_name = $data->mb_name;
             include_once __DIR__ . '../../../../bbs/register_form_update_mail1.php';
             $content = ob_get_clean();
 
-            $content = run_replace('register_form_update_mail_mb_content', $content, $data->mb_id);
+            $content = run_replace('api_register_form_update_mail_mb_content', $content, $data->mb_id);
 
-            mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+            $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $data->mb_email, $subject, $content, 1);
         }
 
         // 최고관리자님께 메일 발송
         if ($config['cf_email_mb_super_admin']) {
-            $subject = run_replace('register_form_update_mail_admin_subject', '[' . $config['cf_title'] . '] ' . $mb_nick . ' 님께서 회원으로 가입하셨습니다.', $data->mb_id, $mb_nick);
+            $subject = run_replace('api_register_form_update_mail_admin_subject', '[' . $config['cf_title'] . '] ' . $data->mb_nick . ' 님께서 회원으로 가입하셨습니다.', $data->mb_id,
+                $data->mb_nick);
 
             ob_start();
             include_once(__DIR__ . '../../../../bbs/register_form_update_mail2.php');
             $content = ob_get_clean();
 
-            $content = run_replace('register_form_update_mail_admin_content', $content, $data->mb_id);
+            $content = run_replace('api_register_form_update_mail_admin_content', $content, $data->mb_id);
 
-            mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
+            $this->mail_service->send($data->mb_nick, $data->mb_email, $config['cf_admin_email'], $subject, $content, 1);
         }
 
         $response_data = new CreateMemberResponse('회원가입이 완료되었습니다.', $data);
@@ -205,6 +211,9 @@ class MemberController
         try {
             $data = new ChangeCertificationEmailRequest($config, $request_body);
             $member = $this->member_service->fetchMemberById($mb_id);
+            if (!$member) {
+                throw new HttpBadRequestException($request, '회원정보가 존재하지 않습니다.');
+            }
 
             $this->member_service->verifyEmailCertification($member, $data);
 
@@ -221,7 +230,7 @@ class MemberController
             include_once(__DIR__ . '../../../../bbs/register_form_update_mail3.php');
             $content = ob_get_clean();
 
-            mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $data->email, $subject, $content, 1);
+            $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $data->email, $subject, $content, 1);
 
             $this->member_service->updateMember($mb_id, ['mb_email' => $data->email, 'mb_email_certify2' => $mb_md5]);
 
