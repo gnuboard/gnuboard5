@@ -132,6 +132,7 @@ class WriteService
                 $write = array_merge($empty_write, [
                     'wr_id' => $write['wr_id'],
                     'wr_num' => $write['wr_num'],
+                    'wr_name' => $write['wr_name'],
                     'wr_parent' => $write['wr_parent'],
                     'wr_reply' => $write['wr_reply'],
                     'wr_option' => $write['wr_option'],
@@ -571,6 +572,8 @@ class WriteService
      * @return void
      * @todo 다시 확인
      * 부모 아이디로 게시글 삭제
+     *
+     * @example 게시글 삭제시 댓글을 일괄 삭제
      */
     public function deleteWriteByParentId(int $wr_parent): void
     {
