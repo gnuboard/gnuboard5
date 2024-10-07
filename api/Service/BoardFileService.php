@@ -28,6 +28,11 @@ class BoardFileService
         $this->setBoTable($board['bo_table']);
     }
 
+    /**
+     * 게시판 테이블명 지정
+     * @param string $bo_table
+     * @return void
+     */
     public function setBoTable(string $bo_table): void
     {
         $this->bo_table = $bo_table;
@@ -41,12 +46,21 @@ class BoardFileService
      */
     public function getFilesByType(int $wr_id, string $type)
     {
-        $fetch_files = $this->fetchWriteFiles($wr_id);
+        static $fetch_files = [];
+        if (!isset($fetch_files[$wr_id])) {
+            $result = $this->fetchWriteFiles($wr_id);
+            if (!$result) {
+                return [];
+            }
+            $fetch_files[$wr_id] = $result;
+        }
 
         $images = [];
         $files = [];
+        $allow_images = allow_images();
+
         foreach ($fetch_files as $file) {
-            if (preg_match('/\.(gif|jpg|jpeg|png|webp)$/i', $file['bf_file'])) {
+            if (isset($allow_images[$file['bf_type']])) {
                 $images[] = $file;
             } else {
                 $files[] = $file;
@@ -56,13 +70,13 @@ class BoardFileService
     }
 
     /**
-     * 게시글 파일 목록 조회
+     *  게시글 파일 목록 조회
      */
     public function fetchWriteFiles(int $wr_id): array
     {
         $values = ['bo_table' => $this->bo_table, 'wr_id' => $wr_id];
         $query = "SELECT * FROM {$this->table} WHERE bo_table = :bo_table AND wr_id = :wr_id ORDER BY bf_no";
-        return Db::getInstance()->run($query, $values)->fetchAll();
+        return Db::getInstance()->run($query, $values)->fetchAll() ?: [];
     }
 
     /**
@@ -98,11 +112,15 @@ class BoardFileService
         $query = "SELECT * FROM {$this->table} WHERE bo_table = :bo_table AND wr_id = :wr_id AND bf_no IN ($placeholders)";
         $stmt = Db::getInstance()->run($query, $values);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll() ?: [];
     }
 
     /**
-     * 게시글 파일 업로드
+     *  게시글 파일 업로드
+     * @param int $wr_id
+     * @param array $upload_files
+     * @return void
+     * @throws \Random\RandomException
      */
     public function uploadFiles(int $wr_id, array $upload_files)
     {
@@ -114,14 +132,17 @@ class BoardFileService
                 continue;
             }
 
-            $timg = getimagesize($file->getFilePath());
-            if (!$timg) {
-                continue;
-            }
+            $mime_type = $file->getClientMediaType();
+            if (strpos($mime_type, 'image') !== false) {
+                $timg = getimagesize($file->getFilePath());
+                if (!$timg) {
+                    continue;
+                }
 
-            // 이미지 확장자 속여서 악성코드 업로드 하는 경우를 방지
-            if ($timg[2] < 1 || $timg[2] > 18) {
-                continue;
+                // 이미지 확장자 속여서 악성코드 업로드 하는 경우를 방지
+                if ($timg[2] < 1 || $timg[2] > 18) {
+                    continue;
+                }
             }
 
             $exists_file = $this->fetchWriteFileByNo($wr_id, $key);
@@ -145,6 +166,7 @@ class BoardFileService
 
     /**
      * 파일 업로드 경로 생성
+     * @return void
      */
     public function createDirectoryIfNotExists()
     {
@@ -157,6 +179,7 @@ class BoardFileService
 
     /**
      * 파일 업로드 데이터 삽입
+     * @return void
      */
     public function insertBoardFile(int $wr_id, int $bf_no, object $file, string $filename, string $file_content)
     {
@@ -178,6 +201,7 @@ class BoardFileService
 
     /**
      * 파일 업로드 데이터 갱신
+     * return void
      */
     public function updateBoardFile(int $wr_id, int $bf_no, object $file, string $filename, string $file_content)
     {
@@ -197,6 +221,7 @@ class BoardFileService
 
     /**
      * 게시글의 모든 파일&데이터 삭제
+     * return void
      */
     public function deleteWriteFiles(array $write)
     {
@@ -210,6 +235,7 @@ class BoardFileService
 
     /**
      * 파일 업로드 시 기존 파일 삭제
+     * return void
      */
     public function deleteWriteFilesByNo(int $wr_id, array $file_dels)
     {
@@ -222,6 +248,7 @@ class BoardFileService
 
     /**
      * 게시글 파일 삭제
+     * return void
      */
     public function deleteBoardFile(int $wr_id): void
     {
@@ -231,6 +258,7 @@ class BoardFileService
 
     /**
      * 게시글 파일 삭제(bf_no)
+     * return void
      */
     public function deleteBoardFileByNo(int $wr_id, int $bf_no): void
     {
@@ -240,6 +268,7 @@ class BoardFileService
 
     /**
      * 파일 삭제 시 썸네일 삭제
+     * return void
      */
     private function removeFileAndThumbnail(array $bf_file)
     {
@@ -248,8 +277,9 @@ class BoardFileService
             @unlink($delete_file);
         }
 
-        if (preg_match('/\.(gif|jpg|jpeg|png|webp)$/i', $bf_file['bf_file'])) {
-            delete_board_thumbnail($this->bo_table, $bf_file['bf_file']);
+        $allow_images = allow_images();
+        if (isset($allow_images[$bf_file['bf_type']])) {
+            delete_editor_thumbnail($bf_file['bf_content']);
         }
     }
 }
