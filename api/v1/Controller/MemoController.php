@@ -3,6 +3,7 @@
 namespace API\v1\Controller;
 
 use API\Exceptions\HttpBadRequestException;
+use API\Service\ConfigService;
 use API\Service\MemoService;
 use API\Service\PointService;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -145,7 +146,7 @@ class MemoController
     public function send(Request $request, Response $response)
     {
         $member = $request->getAttribute('member');
-        $config = get_config();
+        $config = ConfigService::getConfig();
         $mb_id = $member['mb_id'];
 
         $request_data = $request->getParsedBody();

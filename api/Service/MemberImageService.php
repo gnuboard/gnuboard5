@@ -9,7 +9,6 @@ class MemberImageService
 {
     private const IMAGE_DIR = '/member_image';
     private const ICON_DIR = '/member';
-    private array $allowed_media_types = ['image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/x-png', 'image/png'];
 
     /**
      * 회원 이미지 파일을 체크 후 경로 반환
@@ -19,13 +18,13 @@ class MemberImageService
      */
     public function getMemberImagePath(string $mb_id, string $type = 'image')
     {
-        if(!$mb_id) {
+        if (!$mb_id) {
             return '';
         }
         $dir = ($type === 'icon') ? self::ICON_DIR : self::IMAGE_DIR;
         $mb_dir = substr($mb_id, 0, 2);
         $path = G5_DATA_PATH . "{$dir}/{$mb_dir}/{$mb_id}.gif";
-        if(file_exists($path)) {
+        if (file_exists($path)) {
             return G5_DATA_URL . "{$dir}/{$mb_dir}/{$mb_id}.gif";
         }
         return '';
@@ -62,8 +61,9 @@ class MemberImageService
         }
 
         // 이미지파일 확장자 검사
-        if (!in_array($file->getClientMediaType(), $this->allowed_media_types)) {
-            throw new Exception('gif, jpeg, png 이미지 파일만 업로드 가능합니다.', 400);
+        //check gif
+        if ($file->getClientMediaType() !== 'image/gif') {
+            throw new Exception('gif 파일만 업로드 가능합니다.', 400);
         }
 
         // 이미지 크기 검사 (byte)
@@ -89,7 +89,7 @@ class MemberImageService
         $origin_path = $file_dir . '/' . $file_fullname;
         if (file_exists($origin_path)) {
             $size = getimagesize($origin_path);
-            if($size === false) {
+            if ($size === false) {
                 throw new Exception('이미지 파일이 아닙니다.', 400);
             }
             if ($size[0] > $limit_width || $size[1] > $limit_height) {

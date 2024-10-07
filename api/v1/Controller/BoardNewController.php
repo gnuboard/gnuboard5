@@ -190,7 +190,7 @@ class BoardNewController
                     $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
                     $this->comment_service->deleteAllCommentByParent($write['wr_id']);
                     // 공지사항 삭제
-                    $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
+                    $bo_notice = $this->board_service->getBoardNoticeIds($board['bo_notice'], $write['wr_id'], false);
                     $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
                     // 글/댓글 숫자 감소
                     $this->board_service->decreaseWriteAndCommentCount($count_writes, $count_comments);

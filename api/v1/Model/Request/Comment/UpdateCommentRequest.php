@@ -35,7 +35,7 @@ class UpdateCommentRequest
     /**
      * @param array $member 회원 정보
      * @param array $data 댓글 데이터
-     * @throws Exception 내용, 비밀번호 오류
+     * @throws \Exception 내용, 비밀번호 오류
      * @return void
      */
     public function __construct(array $member, array $data = [])

@@ -138,6 +138,44 @@ class BoardService
         return false;
     }
 
+    /**
+     * 게시판 공지글 ID 조회
+     * 그누보드 5 의 board_notice 함수
+     * @param $bo_notice
+     * @param $wr_id
+     * @param bool $is_insert
+     * @return mixed|string
+     */
+    function getBoardNoticeIds($bo_notice, $wr_id, $is_insert = false)
+    {
+        $notice_array = explode(',', trim($bo_notice));
+
+        if ($is_insert && isset($notice_array[$wr_id])) {
+            return $bo_notice;
+        }
+
+        $notice_array = array_merge(array($wr_id), $notice_array);
+        $notice_array = array_unique($notice_array);
+        if($notice_array === false) {
+            return '';
+        }
+        
+        foreach ($notice_array as $key => $value) {
+            if (!trim($value)) {
+                unset($notice_array[$key]);
+            }
+        }
+        
+        if (!$is_insert) {
+            foreach ($notice_array as $key => $value) {
+                if ((int)$value == (int)$wr_id) {
+                    unset($notice_array[$key]);
+                }
+            }
+        }
+        return implode(',', $notice_array);
+    }
+
     // ========================================
     // Database Queries
     // ========================================

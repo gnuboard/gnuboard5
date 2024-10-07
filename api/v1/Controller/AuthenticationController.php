@@ -6,7 +6,6 @@ use API\Auth\JwtTokenManager;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpNotFoundException;
 use API\Exceptions\HttpUnauthorizedException;
-use API\Exceptions\HttpUnprocessableEntityException;
 use API\Service\AuthenticationService;
 use API\Service\MemberService;
 use API\v1\Model\Request\Authentication\GenerateTokenRequest;

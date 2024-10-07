@@ -10,9 +10,7 @@ class ScrapService
 
     public function __construct()
     {
-        global $g5;
-
-        $this->setTable($g5['scrap_table']);
+        $this->setTable();
     }
 
     /**
@@ -99,7 +97,7 @@ class ScrapService
     }
 
     /**
-     * 스크랩 삭제 
+     * 스크랩 삭제
      * @param int $ms_id 스크랩 ID
      * @return void
      */
@@ -119,8 +117,8 @@ class ScrapService
         Db::getInstance()->delete($this->table, ['bo_table' => $bo_table, 'wr_id' => $wr_id]);
     }
 
-    public function setTable(string $table): void
+    public function setTable(): void
     {
-        $this->table = $table;
+        $this->table = $GLOBALS['g5']['scrap_table'];
     }
 }

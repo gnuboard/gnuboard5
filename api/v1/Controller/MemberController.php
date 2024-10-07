@@ -85,8 +85,8 @@ class MemberController
                 // 중복체크
                 if (get_session('ss_cert_type') && get_session('ss_cert_dupinfo')) {
                     // 중복체크
-                    $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$data->mb_id}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
-                    $row = sql_fetch($sql);
+                    $query = " select mb_id from {$g5['member_table']} where mb_id <> '{$data->mb_id}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
+                    $row = sql_fetch($query);
                     if (!empty($row['mb_id'])) {
                         return api_response_json($response, array("message" => "입력하신 본인확인 정보로 가입된 내역이 존재합니다."), 404);
                     }

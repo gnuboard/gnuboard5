@@ -9,11 +9,21 @@ class ContentService
 
     /**
      * 콘텐츠 조회
-     * @param int $co_id
+     * @param $co_id
      * @return array|null
-     * @todo cache 추가
      */
     public static function getContent($co_id)
+    {
+        $result = self::fetchContent($co_id);
+        return $result ?? null;
+    }
+
+    /**
+     * 콘텐츠 조회
+     * @param int $co_id
+     * @return array|null
+     */
+    private static function fetchContent($co_id)
     {
         $content_table = $GLOBALS['g5']['content_table'];
         $query = "SELECT * FROM  $content_table WHERE co_id = :co_id";

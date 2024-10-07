@@ -17,24 +17,23 @@ class VisitService
         global $g5;
         $db = Db::getInstance();
         // 오늘
-        $sql = "SELECT vs_count AS cnt FROM {$g5['visit_sum_table']} WHERE vs_date = '" . G5_TIME_YMD . "' ";
-
-        $row = $db->run($sql)->fetch();
+        $query = "SELECT vs_count AS cnt FROM {$g5['visit_sum_table']} WHERE vs_date = '" . G5_TIME_YMD . "' ";
+        $row = $db->run($query)->fetch();
         $vi_today = $row['cnt'] ?? 0;
 
         // 어제
-        $sql = "SELECT vs_count AS cnt FROM {$g5['visit_sum_table']} WHERE vs_date = DATE_SUB('" . G5_TIME_YMD . "', INTERVAL 1 DAY) ";
-        $row = $db->run($sql)->fetch();
+        $query = "SELECT vs_count AS cnt FROM {$g5['visit_sum_table']} WHERE vs_date = DATE_SUB('" . G5_TIME_YMD . "', INTERVAL 1 DAY) ";
+        $row = $db->run($query)->fetch();
         $vi_yesterday = $row['cnt'] ?? 0;
 
         // 최대
-        $sql = "SELECT max(vs_count) AS cnt FROM {$g5['visit_sum_table']} ";
-        $row = $db->run($sql)->fetch();
+        $query = "SELECT max(vs_count) AS cnt FROM {$g5['visit_sum_table']} ";
+        $row = $db->run($query)->fetch();
         $vi_max = $row['cnt'] ?? 0;
 
         // 전체
-        $sql = "SELECT sum(vs_count) AS total FROM {$g5['visit_sum_table']} ";
-        $row = $db->run($sql)->fetch();
+        $query = "SELECT sum(vs_count) AS total FROM {$g5['visit_sum_table']} ";
+        $row = $db->run($query)->fetch();
         $vi_sum = $row['total'] ?? 0;
 
         return [

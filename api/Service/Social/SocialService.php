@@ -369,13 +369,13 @@ class SocialService
             if (!$new_image) {
                 return;
             }
-            if ($ext == 1) {
+            if ($ext == 1) { // gif
                 $image = imagecreatefromgif($file_url);
-            } else if ($ext == 3) {
+            } else if ($ext == 3) { // png
                 $image = imagecreatefrompng($file_url);
-            } else if ($ext == 18) {
+            } else if ($ext == 18) { // webp
                 $image = imagecreatefromwebp($file_url);
-            } else {
+            } else { // jpg
                 $image = imagecreatefromjpeg($file_url);
             }
 

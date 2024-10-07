@@ -490,7 +490,7 @@ class BoardController
             $this->write_service->updateWriteParentId($wr_id, $wr_id);
 
             if ($is_notice) {
-                $bo_notice = board_notice($board['bo_notice'], $wr_id, true);
+                $bo_notice = $this->board_service->getBoardNoticeIds($board['bo_notice'], $wr_id, true);
                 $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
             }
 
@@ -571,7 +571,7 @@ class BoardController
             $this->write_service->updateWriteData($write, $request_data);
             $this->write_service->updateCategoryByParentId($write['wr_id'], $request_data->ca_name);
 
-            $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], $is_notice);
+            $bo_notice = $this->board_service->getBoardNoticeIds($board['bo_notice'], $write['wr_id'], $is_notice);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
 
             run_event('api_update_write_after', $board, $write['wr_id']);
@@ -777,9 +777,9 @@ class BoardController
 
             $this->board_new_service->deleteByWrite($board['bo_table'], $write['wr_id']);
             $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
-
-            $bo_notice = board_notice($board['bo_notice'], $write['wr_id'], false);
             $this->comment_service->deleteAllCommentByParent($write['wr_id']);
+            
+            $bo_notice = $this->board_service->getBoardNoticeIds($board['bo_notice'], $write['wr_id'], false);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
 
             $this->board_service->decreaseWriteAndCommentCount($count_writes, $count_comments);

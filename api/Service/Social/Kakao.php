@@ -51,7 +51,6 @@ class Kakao extends OAuth2
      * @throws \Hybridauth\Exception\HttpClientFailureException
      * @throws \Hybridauth\Exception\HttpRequestFailedException
      * @throws \Hybridauth\Exception\InvalidAccessTokenException
-     * @throws HttpRequestFailedException
      */
     public function getUserProfile()
     {

@@ -3,7 +3,6 @@
 namespace API\Service;
 
 use API\Database\Db;
-use API\Service\MemberService;
 
 class PointService
 {
@@ -15,12 +14,11 @@ class PointService
         ConfigService $config_service,
         MemberService $member_service
     ) {
-        global $g5;
 
         $this->config = $config_service::getConfig();
         $this->member_service = $member_service;
 
-        $this->setTable($g5['point_table']);
+        $this->setTable();
     }
 
     /**
@@ -138,14 +136,14 @@ class PointService
             // 소멸포인트가 있으면 내역 추가
             $expire_point = $this->fetchExpirePointSum($mb_id);
             if ($expire_point > 0) {
-                $mb = $this->member_service->fetchMemberById($mb_id);
+                $member_data = $this->member_service->fetchMemberById($mb_id);
                 $point = $expire_point * (-1);
                 $data = [
                     'mb_id' => $mb_id,
                     'po_datetime' => date('Y-m-d H:i:s'),
                     'po_content' => '포인트 소멸',
                     'po_point' => $point,
-                    'po_mb_point' => $mb['mb_point'] + $point,
+                    'po_mb_point' => $member_data['mb_point'] + $point,
                     'po_expired' => 1,
                     'po_expire_date' => date('Y-m-d'),
                     'po_rel_table' => '@expire',
@@ -259,7 +257,7 @@ class PointService
 
             if (
                 $po_expired == 100
-                && ($po_expire_date == '9999-12-31' || $po_expire_date >= G5_TIME_YMD)
+                && ($po_expire_date === '9999-12-31' || $po_expire_date >= G5_TIME_YMD)
             ) {
                 $po_expired = 0;
             }
@@ -531,9 +529,9 @@ class PointService
         }
         $set_clause = implode(', ', $set_clause);
 
-        $sql = "UPDATE {$this->table} SET {$set_clause} WHERE po_id = :po_id";
+        $query = "UPDATE {$this->table} SET {$set_clause} WHERE po_id = :po_id";
 
-        Db::getInstance()->run($sql, array_merge($params, ['po_id' => $po_id]));
+        Db::getInstance()->run($query, array_merge($params, ['po_id' => $po_id]));
     }
 
     /**
@@ -603,8 +601,8 @@ class PointService
     // Getters and Setters
     // ========================================
 
-    public function setTable(string $table): void
+    public function setTable(): void
     {
-        $this->table = $table;
+        $this->table = $GLOBALS['g5']['point_table'];
     }
 }

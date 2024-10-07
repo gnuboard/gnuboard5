@@ -57,7 +57,7 @@ class GetWritesResponse
      *     @OA\Items(ref="#/components/schemas/Write")
      * )
      *
-     * @var \API\v1\Model\Response\Board\Write[]
+     * @var \API\v1\Model\Response\Write\Write[]
      */
     public array $notice_writes = [];
 
@@ -68,7 +68,7 @@ class GetWritesResponse
      *     @OA\Items(ref="#/components/schemas/Write")
      * )
      *
-     * @var \API\v1\Model\Response\Board\Write[]
+     * @var \API\v1\Model\Response\Write\Write[]
      */
     public array $writes = [];
 

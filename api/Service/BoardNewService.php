@@ -59,7 +59,7 @@ class BoardNewService
         $search_values['per_page'] = $page_params['per_page'];
 
         $stmt = Db::getInstance()->run($query, $search_values);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll() ?: [];
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace API\v1\Controller;
 
-use API\Exceptions\HttpUnprocessableEntityException;
 use API\Service\PointService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Response\Point\Point;

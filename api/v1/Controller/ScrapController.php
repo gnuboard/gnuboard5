@@ -6,7 +6,6 @@ use API\Exceptions\HttpBadRequestException;
 use API\Exceptions\HttpConflictException;
 use API\Exceptions\HttpForbiddenException;
 use API\Exceptions\HttpNotFoundException;
-use API\Exceptions\HttpUnprocessableEntityException;
 use API\Service\BoardNewService;
 use API\Service\BoardPermission;
 use API\Service\BoardService;
@@ -105,7 +104,6 @@ class ScrapController
 
             return api_response_json($response, $response_data);
         } catch (Exception $e) {
-            
             throw $e;
         }
     }
@@ -206,7 +204,8 @@ class ScrapController
                 $this->board_new_service->insert($board['bo_table'], $comment_id, $write['wr_id'], $member['mb_id']);
                 $this->board_service->increaseCommentCount();
 
-                $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'], $comment_id, '댓글');
+                $this->point_service->addPoint($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$write['wr_id']}-{$comment_id} 댓글쓰기", $board['bo_table'],
+                    $comment_id, '댓글');
             }
 
             $this->scrap_service->createScrap($member['mb_id'], $board['bo_table'], $write['wr_id']);

@@ -188,7 +188,7 @@ class AlarmService
     {
         $fcm_token_table = $this->fcm_token_table;
         if (!table_exist_check($fcm_token_table)) {
-            $sql = "CREATE TABLE IF NOT EXISTS `$fcm_token_table` (
+            $query = "CREATE TABLE IF NOT EXISTS `$fcm_token_table` (
                     `ft_no` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NULL,
                     `ft_token` varchar(328) NOT NULL,
@@ -203,7 +203,7 @@ class AlarmService
                     KEY `ix_fcm_token_mb_id` (`mb_id`),
                     KEY `ix_fcm_token_primary_key` (`ft_no`)
                     ) AUTO_INCREMENT=1";
-            Db::getInstance()->run($sql);
+            Db::getInstance()->run($query);
         }
     }
 

@@ -183,7 +183,7 @@ class WriteService
         $placeholders = Db::makeWhereInPlaceHolder($notice_ids);
         $query = "SELECT * FROM {$this->table} WHERE wr_id IN ($placeholders) AND wr_option NOT LIKE '%secret%'";
 
-        return Db::getInstance()->run($query, $notice_ids)->fetchAll();
+        return Db::getInstance()->run($query, $notice_ids)->fetchAll() ?: [];
     }
 
     /**
