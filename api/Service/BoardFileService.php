@@ -49,9 +49,7 @@ class BoardFileService
         static $fetch_files = [];
         if (!isset($fetch_files[$wr_id])) {
             $result = $this->fetchWriteFiles($wr_id);
-            if (!$result) {
-                return [];
-            }
+            // 게시글이 변경될 수 있으므로 1 요청 내 캐시만 한다.
             $fetch_files[$wr_id] = $result;
         }
 
