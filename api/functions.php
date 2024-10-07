@@ -4,11 +4,11 @@
  */
 
 use API\Database\Db;
+use API\Service\ConfigService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\UploadedFileInterface;
 
 define('EXISTS_EXIF_EXTENSION', function_exists('exif_read_data'));
-
 
 /**
  * API Response JSON
@@ -33,7 +33,7 @@ function create_refresh_token_table()
 {
     $refresh_token_table_name = $GLOBALS['g5']['member_refresh_token_table'] ?? G5_TABLE_PREFIX . 'member_refresh_token';
     if (!table_exist_check($refresh_token_table_name)) {
-        $sql = "CREATE TABLE IF NOT EXISTS `$refresh_token_table_name` (
+        $query = "CREATE TABLE IF NOT EXISTS `$refresh_token_table_name` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NOT NULL,
                     `refresh_token` text NOT NULL,
@@ -44,7 +44,7 @@ function create_refresh_token_table()
                     KEY `ix_member_refresh_token_mb_id` (`mb_id`),
                     KEY `ix_member_refresh_token_id` (`id`)
                     ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-        Db::getInstance()->run($sql);
+        Db::getInstance()->run($query);
     }
 }
 
@@ -137,6 +137,38 @@ function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile
 // ========================================
 // 회원정보 관련 유효성 검사 함수들
 // ========================================
+
+function allow_images()
+{
+    /**
+     * @var array $allow_images 이미지 확장자 목록
+     */
+    static $allow_images;
+    if ($allow_images) {
+        return $allow_images;
+    }
+
+    $config = ConfigService::getConfig();
+    //trim 을 사용하여 공백을 제거하고 explode 로 배열로 변환
+    $allow_images = array_map('trim', explode(',', $config['cf_image_extension']));
+    return $allow_images;
+}
+
+
+function allow_videos()
+{
+    /**
+     * @var array $allow_videos 동영상 확장자 목록
+     */
+    static $allow_videos;
+    if ($allow_videos) {
+        return $allow_videos;
+    }
+    $config = ConfigService::getConfig();
+    //trim 을 사용하여 공백을 제거하고 explode 로 배열로 변환
+    $allow_videos = array_map('trim', explode(',', $config['cf_movie_extension']));
+    return $allow_videos;
+}
 
 /**
  * 문자열의 최소 길이를 검증
@@ -249,6 +281,50 @@ function is_prohibited_word(string $word, array $config): bool
 // 기타 함수들
 // ========================================
 
+/*******************************************************************************
+ * 유일한 키를 얻는다.
+ *
+ * 결과 :
+ *
+ * 년월일시분초00 ~ 년월일시분초99
+ * 년(4) 월(2) 일(2) 시(2) 분(2) 초(2) 100분의1초(2)
+ * 총 16자리이며 년도는 2자리로 끊어서 사용해도 됩니다.
+ * 예) 2008062611570199 또는 08062611570199 (2100년까지만 유일키)
+ *
+ * 사용하는 곳 :
+ * 1. 게시판 글쓰기시 미리 유일키를 얻어 파일 업로드 필드에 넣는다.
+ * 2. 주문번호 생성시에 사용한다.
+ * 3. 기타 유일키가 필요한 곳에서 사용한다.
+ *******************************************************************************/
+// 기존의 get_unique_id() 함수를 사용하지 않고 get_uniqid() 를 사용한다.
+function get_uid()
+{
+    global $g5;
+    $unique_table = $g5['uniqid_table'];
+
+    Db::getInstance()->run("LOCK TABLE {$unique_table} WRITE ");
+
+    while (1) {
+        // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
+        $key = date('YmdHis', time()) . str_pad((int)((float)microtime() * 100), 2, '0', STR_PAD_LEFT);
+
+        $result = Db::getInstance()->insert($unique_table, [
+            'uq_id' => $key,
+            'uq_ip' => $_SERVER['REMOTE_ADDR']
+        ]);
+
+        if ($result) {
+            break;
+        } // 쿼리가 정상이면 빠진다.
+
+        // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
+        usleep(10000); // 100분의 1초를 쉰다
+    }
+
+    Db::getInstance()->run('UNLOCK TABLES');
+    return $key;
+}
+
 /**
  * 최고관리자 여부
  */
@@ -277,7 +353,7 @@ function sanitize_input(string $input, int $max_length, bool $strip_tags = false
  */
 function getConfig()
 {
-    return \API\Service\ConfigService::getConfig();
+    return ConfigService::getConfig();
 }
 
 // hook 함수들
