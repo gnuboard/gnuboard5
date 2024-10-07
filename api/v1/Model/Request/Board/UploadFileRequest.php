@@ -123,7 +123,7 @@ class UploadFileRequest
                     sprintf(self::ERROR_FILE_SIZE, $filename, number_format($filesize), number_format($this->board['bo_upload_size']))
                 );
             }
-            
+
             // 확장자 체크
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
@@ -132,7 +132,7 @@ class UploadFileRequest
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
 
-            if (isset($this->disallowed_ext[strtolower($ext)])) {
+            if (in_array(strtolower($ext), $this->disallowed_ext)) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
         }

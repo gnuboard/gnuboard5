@@ -119,13 +119,10 @@ class WriteService
             $write['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $write['wr_ip']);
             $write['wr_password'] = '';
 
-            // 게시판설정에서 내용보기 안할 때
-            if (!$use_show_content) {
-                $write['wr_content'] = '';
-            }
+            $is_secret = strpos($write['wr_option'], 'secret') !== false;
 
             // 비밀글
-            if (strpos($write['wr_option'], 'secret') !== false) {
+            if ($is_secret) {
                 $empty_write = array_map(function () {
                     return '';
                 }, $write);
@@ -138,7 +135,7 @@ class WriteService
                     'wr_option' => $write['wr_option'],
                     'ca_name' => $write['ca_name'],
                     'wr_subject' => $write['wr_subject'],
-                    'wr_content' => $write['wr_content'] !== '' ? '비밀글입니다' : '',
+                    'wr_content' => $use_show_content ? '비밀글입니다' : '',
                     'mb_id' => $write['mb_id'],
                     'wr_hit' => $write['wr_hit'],
                     'wr_datetime' => $write['wr_datetime'],
@@ -153,6 +150,11 @@ class WriteService
                     $write['images'] = (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')))->files ?? [];
                     $write['normal_files'] = (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [];
                 }
+            }
+
+            // 게시판설정에서 내용보기 안할 때
+            if (!$use_show_content) {
+                $write['wr_content'] = '';
             }
 
             $result[] = $write;
