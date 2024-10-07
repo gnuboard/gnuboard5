@@ -74,13 +74,14 @@ class CurrentConnectController
      *     tags={"현재 접속자"},
      *     summary="현재 접속자 생성",
      *     description="현재 접속자 생성",
-     *           @OA\RequestBody(
-     *           required=true,
-     *           @OA\MediaType(
-     *               mediaType="application/json",
-     *               @OA\Schema(ref="#/components/schemas/CurrentConnectCreateRequest"),
-     *           )
-     *       ),
+     *     security={{"Oauth2Password": {}}},
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *         mediaType="application/json",
+     *           @OA\Schema(ref="#/components/schemas/CurrentConnectCreateRequest"),
+     *        )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="성공",
