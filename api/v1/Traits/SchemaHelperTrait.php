@@ -3,7 +3,6 @@
 namespace API\v1\Traits;
 
 use API\Exceptions\ValidateException;
-use Exception;
 
 /**
  * API Request/Response Class 처리 트레이트

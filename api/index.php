@@ -30,7 +30,8 @@ require_once(dirname(__DIR__, 1) . '/config.php');   // 설정 파일
 unset($g5_path);
 
 include_once(__DIR__ . '/hook.lib.php');    // hook
-include_once(G5_LIB_PATH . '/common.lib.php'); // 공통 라이브러리 // @todo 정리후 삭제대상
+include_once(dirname(__DIR__, 1) . '/lib/pbkdf2.compat.php');
+include_once(G5_LIB_PATH . '/common.lib.php'); // 공통 라이브러리
 
 if (!include(G5_DATA_PATH . '/' . G5_DBCONFIG_FILE)) {
     header('Content-Type: application/json');

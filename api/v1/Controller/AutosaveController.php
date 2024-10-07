@@ -2,14 +2,18 @@
 
 namespace API\v1\Controller;
 
+use API\Exceptions\HttpBadRequestException;
+use API\Exceptions\HttpNotFoundException;
+use API\Exceptions\HttpUnprocessableEntityException;
 use API\Service\AutosaveService;
+use API\v1\Model\Request\Autosave\CreateAutosaveRequest;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class AutosaveController
 {
 
-    private $autosave_service;
+    private AutosaveService $autosave_service;
 
     public function __construct()
     {
@@ -46,14 +50,94 @@ class AutosaveController
         }
 
         if ($per_page > 100) {
-            return api_response_json($response, ['message' => '한번에 100개 이상 조회할 수 없습니다.'], 404);
+            throw new HttpBadRequestException($request, '한번에 100개 이상 조회할 수 없습니다.');
         }
 
         $response_data = $this->autosave_service->getAutosaves($mb_id, $page, $per_page);
         if (!$response_data) {
-            return api_response_json($response, ['message' => '임시저장된 글이 없습니다.'], 404);
+            throw new HttpNotFoundException($request, '임시저장된 글이 없습니다.');
         }
         return api_response_json($response, $response_data);
+    }
+
+    /**
+     * 임시저장 글 저장
+     * @OA\Post (
+     *   path="/api/v1/autosaves",
+     *   summary="임시저장 글 저장",
+     *   tags={"자동 임시저장"},
+     *   security={{"Oauth2Password": {}}},
+     *   @OA\RequestBody(
+     *    required=true,
+     *     @OA\MediaType(
+     *     mediaType="application/json",
+     *     @OA\Schema(ref="#/components/schemas/CreateAutosaveRequest")
+     *     )
+     *   ),
+     *   @OA\Response (
+     *    response="200",
+     *    description="임시저장 성공",
+     *    @OA\JsonContent(
+     *      @OA\Property(property="message", type="string"),
+     *      @OA\Property(property="as_id", type="string")
+     *    )
+     *   )
+     * )
+     */
+    public function save(Request $request, Response $response)
+    {
+        $member = $request->getAttribute('member');
+        $request_body = $request->getParsedBody();
+        $data = new createAutosaveRequest($request_body);
+
+        $result = $this->autosave_service->createAutosave((array)$data);
+
+        if (!$result) {
+            throw new HttpBadRequestException($request, '임시저장에 실패했습니다.');
+        }
+
+        return api_response_json($response, ['message' => '임시저장되었습니다.', 'as_id' => $result]);
+    }
+
+    /**
+     * 임시저장 글 삭제
+     * @OA\Delete (
+     * path="/api/v1/autosaves/{as_id}",
+     * summary="임시저장 글 삭제",
+     * tags={"자동 임시저장"},
+     * security={{"Oauth2Password": {}}},
+     * @OA\Parameter (
+     *   name="as_id",
+     *   in="path",
+     *   description="임시저장 아이디",
+     *   required=true,
+     *   @OA\Schema(type="integer")
+     * ),
+     * @OA\Response (
+     *   response="200",
+     *   description="임시저장 글 삭제 성공",
+     *   @OA\JsonContent(
+     *     @OA\Property(property="message", type="string")
+     *   )
+     *  )
+     * )
+     */
+    public function delete(Request $request, Response $response, array $args)
+    {
+        $member = $request->getAttribute('member');
+        $as_id = $args['as_id'] ?? '';
+
+        if (!$as_id) {
+            return throw new HttpUnprocessableEntityException($request, '임시저장 아이디가 필요합니다.');
+        }
+
+        $result = $this->autosave_service->deleteAutosave($member['mb_id'], $as_id);
+
+        if (!$result) {
+            throw new HttpBadRequestException($request, '임시저장 글 삭제에 실패했습니다.');
+        }
+
+        return api_response_json($response, ['message' => '임시저장 글이 삭제되었습니다.']);
     }
 
     /**
@@ -78,18 +162,17 @@ class AutosaveController
      */
     public function show(Request $request, Response $response)
     {
-        $params = $request->getQueryParams();
         $member = $request->getAttribute('member');
+        $as_id = $request->getAttribute('as_id');
         $mb_id = $member['mb_id'];
-        $as_id = $params['as_id'] ?? '';
 
         if (!$as_id) {
-            return api_response_json($response, ['message' => '임시저장 아이디가 필요합니다.'], 422);
+            return throw new HttpUnprocessableEntityException($request, '임시저장 아이디가 필요합니다.');
         }
 
         $response_data = $this->autosave_service->fetchAutosave($mb_id, $as_id);
         if (!$response_data) {
-            return api_response_json($response, ['message' => '임시저장된 글이 없습니다.'], 404);
+            throw new HttpNotFoundException($request, '임시저장된 글이 없습니다.');
         }
         return api_response_json($response, $response_data);
     }

@@ -33,16 +33,16 @@ class AutosaveService
      * @param string $mb_id
      * @return int 없으면 0
      */
-    public function getCount($mb_id)
+    public function getCount(string $mb_id)
     {
         return $this->fetchCount($mb_id);
     }
 
     /**
-     * @param int $mb_id
+     * @param string $mb_id
      * @return int
      */
-    public function fetchTotalAutosaves(int $mb_id)
+    public function fetchTotalAutosaves(string $mb_id)
     {
         $autosave_table = $GLOBALS['g5']['autosave_table'];
         $query = "SELECT count(*) FROM $autosave_table WHERE mb_id = :mb_id";
@@ -79,11 +79,11 @@ class AutosaveService
 
     /**
      * 임시저장된 글 조회
-     * @param $mb_id
-     * @param $as_id
+     * @param string $mb_id
+     * @param int $as_id
      * @return array|false
      */
-    public function fetchAutosave($mb_id, $as_id)
+    public function fetchAutosave(string $mb_id, int $as_id)
     {
         $autosave_table = $GLOBALS['g5']['autosave_table'];
         $query = "SELECT * FROM $autosave_table WHERE mb_id = :mb_id AND as_id = :as_id";
@@ -95,17 +95,53 @@ class AutosaveService
     }
 
     /**
+     * 임시저장 하기
+     * @param array $data
+     * @return false|string
+     */
+    public function createAutosave(array $data)
+    {
+        $autosave_table = $GLOBALS['g5']['autosave_table'];
+        $result = Db::getInstance()->insert($autosave_table, [
+            'mb_id' => $data['mb_id'],
+            'as_uid' => $data['as_uid'],
+            'as_subject' => $data['as_subject'],
+            'as_content' => $data['as_content'],
+            'as_datetime' => G5_TIME_YMDHIS,
+        ]);
+        
+        return $result;
+    }
+
+    /**
      * 임시저장된 글 갯수 DB 조회
      * @param string $mb_id
      * @return int 없으면 0
      */
-    public function fetchCount($mb_id)
+    public function fetchCount(string $mb_id)
     {
         $autosave_table = $GLOBALS['g5']['autosave_table'];
         $query = "SELECT count(*) FROM {$autosave_table} WHERE mb_id = :mb_id";
         $result = Db::getInstance()->run($query, [
             'mb_id' => $mb_id
-        ])->fetch();
-        return $result[0] ?? 0;
+        ])->fetchColumn();
+        return $result;
+    }
+
+    /**
+     * 임시저장된 글 삭제
+     * @param string $mb_id
+     * @param int $as_id
+     * @return int
+     */
+    public function deleteAutosave(string $mb_id, int $as_id)
+    {
+        $autosave_table = $GLOBALS['g5']['autosave_table'];
+        $result = Db::getInstance()->delete($autosave_table, [
+            'as_id' => $as_id,
+            'mb_id' => $mb_id
+        ]);
+
+        return $result;
     }
 }
