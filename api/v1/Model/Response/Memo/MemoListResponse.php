@@ -57,12 +57,17 @@ namespace API\v1\Model\Response\Memo;
  *                 property="me_send_ip",
  *                 type="string",
  *                 description="보낸 IP"
- *             )
+ *             ),
+ *             @OA\Property(
+ *                  property="me_is_read",
+ *                  type="bool",
+ *                  description="메모 읽음 여부"
+ *              )
  *         )
  *     )
  * )
  */
-class MemoList
+class MemoListResponse
 {
     /**
      * @OA\Property(

@@ -23,11 +23,13 @@ class MemoController
 
     /**
      * 쪽지 목록 조회
-     * 현재 로그인 회원의 쪽지 목록을 조회합니다.
+     * 현재 로그인한 회원의 모든 쪽지 목록을 조회합니다.
+     * 각 쪽지에 읽음/않읽음이 표시됩니다.
      * @OA\Get (
      *     path="/api/v1/member/memos",
      *     summary="쪽지 목록 조회",
      *     tags={"쪽지"},
+     *     description="현재 로그인한 회원의 모든 쪽지 목록을 조회합니다.",
      *     security={{"Oauth2Password": {}}},
      *     @OA\Parameter (
      *     name="page",
@@ -54,7 +56,7 @@ class MemoController
      *     response="200",
      *     description="쪽지 목록 조회 성공",
      *     @OA\JsonContent(ref="#/components/schemas/MemoListResponse")
-     *  ),
+     *    ),
      *      @OA\Response(response="400", ref="#/components/responses/400"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      *      @OA\Response(response="422", ref="#/components/responses/422")
@@ -96,7 +98,7 @@ class MemoController
         //메모 리스트 가져오기
         //count
         $total_records = $this->memo_service->fetchTotalCount($memo_type, $mb_id);
-        $memo_data = $this->memo_service->fetchMemos($memo_type, $mb_id, $page, $per_page);
+        $memo_data = $this->memo_service->getMemos($memo_type, $mb_id, $page, $per_page);
 
         $response_data = [
             'memos' => [
@@ -162,8 +164,9 @@ class MemoController
 
         $receiver_mb_id = $request_data['me_recv_mb_id'];
         $ip = $request->getServerParams()['REMOTE_ADDR'];
+        $sended_memo_ids = [];
         try {
-            $sending_memo_id = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
+            $sended_memo_ids = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
         } catch (\Exception $e) {
             if($e->getCode() == 400) {
                 throw new HttpBadRequestException($request, $e->getMessage());
@@ -171,7 +174,7 @@ class MemoController
         }
         
         // 쪽지 포인트 차감
-        foreach ($sending_memo_id as $memo_id) {
+        foreach ($sended_memo_ids as $memo_id) {
             $this->point_service->addPoint($mb_id, (int)$config['cf_memo_send_point'] * (-1), $receiver_mb_id . '(' . $receiver_mb_id . ')님께 쪽지 발송', '@memo', $receiver_mb_id,
                 $memo_id);
         }
