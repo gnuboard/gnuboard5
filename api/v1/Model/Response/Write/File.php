@@ -7,7 +7,7 @@ use API\v1\Traits\SchemaHelperTrait;
 /**
  * @OA\Schema(
  *     type="object",
- *     description="파일 정보",
+ *     description="게시판 첨부파일 정보",
  * )
  */
 class File
@@ -47,6 +47,6 @@ class File
     public function __construct(array $data = [])
     {
         $this->mapDataToProperties($this, $data);
-        $this->bf_file = G5_URL . "/api/v1/boards/{$data['bo_table']}/writes/{$data['wr_id']}/files/{$data['bf_no']}";
+        $this->bf_file = isset($data['wr_id']) && $data['wr_id'] ? G5_URL . "/api/v1/boards/{$data['bo_table']}/writes/{$data['wr_id']}/files/{$data['bf_no']}" : '';
     }
 }

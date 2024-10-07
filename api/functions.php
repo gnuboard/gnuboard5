@@ -155,6 +155,12 @@ function get_allow_image_ext()
     $config = ConfigService::getConfig();
     //공백을 제거하고 배열로 변환
     $allow_image_ext_list = array_map('trim', explode('|', $config['cf_image_extension']));
+
+    //php 확장자 제거
+    $allow_image_ext_list = array_filter($allow_image_ext_list, function ($ext) {
+        return stripos($ext, 'php') === false;
+    });
+
     return $allow_image_ext_list;
 }
 
@@ -174,6 +180,11 @@ function get_allow_video_ext()
     $config = ConfigService::getConfig();
     //공백을 제거하고 배열로 변환
     $allow_video_ext_list = array_map('trim', explode('|', $config['cf_movie_extension']));
+
+    //php 확장자 제거
+    $allow_video_ext_list = array_filter($allow_video_ext_list, function ($ext) {
+        return stripos($ext, 'php') === false;
+    });
     return $allow_video_ext_list;
 }
 

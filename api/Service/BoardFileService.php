@@ -57,9 +57,9 @@ class BoardFileService
 
         $images = [];
         $files = [];
-        $allow_image_ext = get_allow_image_ext();
 
-        foreach ($fetch_files as $file) {
+        $allow_image_ext = get_allow_image_ext();
+        foreach ($fetch_files[$wr_id] as $file) {
             $ext = strtolower(pathinfo($file['bf_file'], PATHINFO_EXTENSION));
             if (isset($allow_image_ext[$ext])) {
                 $images[] = $file;
