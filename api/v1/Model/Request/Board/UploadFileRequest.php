@@ -128,11 +128,11 @@ class UploadFileRequest
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
             //php, php3, php4 ..php7 등 금지
-            if (strpos($filename, '.php') !== false) {
+            if (stripos($filename, '.php') !== false) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
 
-            if (in_array(strtolower($ext), $this->disallowed_ext)) {
+            if (in_array($ext, $this->disallowed_ext)) {
                 $this->throwException(sprintf(self::ERROR_FILE_EXT, $filename));
             }
         }
