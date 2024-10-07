@@ -89,8 +89,7 @@ class AutosaveController
         $member = $request->getAttribute('member');
         $request_body = $request->getParsedBody();
         $data = new createAutosaveRequest($request_body);
-
-        $result = $this->autosave_service->createAutosave((array)$data);
+        $result = $this->autosave_service->createAutosave($member['mb_id'], (array)$data);
 
         if (!$result) {
             throw new HttpBadRequestException($request, '임시저장에 실패했습니다.');
@@ -128,7 +127,7 @@ class AutosaveController
         $as_id = $args['as_id'] ?? '';
 
         if (!$as_id) {
-            return throw new HttpUnprocessableEntityException($request, '임시저장 아이디가 필요합니다.');
+            throw new HttpUnprocessableEntityException($request, '임시저장 아이디가 필요합니다.');
         }
 
         $result = $this->autosave_service->deleteAutosave($member['mb_id'], $as_id);
@@ -167,7 +166,7 @@ class AutosaveController
         $mb_id = $member['mb_id'];
 
         if (!$as_id) {
-            return throw new HttpUnprocessableEntityException($request, '임시저장 아이디가 필요합니다.');
+            throw new HttpUnprocessableEntityException($request, '임시저장 아이디가 필요합니다.');
         }
 
         $response_data = $this->autosave_service->fetchAutosave($mb_id, $as_id);

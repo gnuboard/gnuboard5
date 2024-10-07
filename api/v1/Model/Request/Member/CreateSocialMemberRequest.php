@@ -2,6 +2,7 @@
 
 namespace API\v1\Model\Request\Member;
 
+use API\Service\MailService;
 use API\Service\MemberService;
 use API\v1\Traits\SchemaHelperTrait;
 
@@ -251,7 +252,7 @@ class CreateSocialMemberRequest
         if (empty(trim($this->mb_name))) {
             return '';
         }
-        
+
         if (!is_valid_utf8_string($this->mb_name)) {
             $this->throwException('이름을 올바르게 입력해 주십시오.');
         }
@@ -267,7 +268,7 @@ class CreateSocialMemberRequest
         if (empty(trim($this->mb_nick))) {
             return '';
         }
-        
+
         if (!is_valid_utf8_string($this->mb_nick)) {
             $this->throwException('닉네임을 올바르게 입력해 주십시오.');
         }
@@ -277,9 +278,10 @@ class CreateSocialMemberRequest
         if (is_prohibited_word($this->mb_nick, $config)) {
             $this->throwException('이미 예약된 단어로 사용할 수 없는 닉네임 입니다.');
         }
-        $member_service = new MemberService();
+        $mail = new MailService();
+        $member_service = new MemberService($mail);
         // 모든 회원의 닉네임 중복 검사를 위해 mb_id 를 공백으로 구분.
-        if($member_service->existsMemberByNick($this->mb_nick, ' ')) {
+        if ($member_service->existsMemberByNick($this->mb_nick, ' ')) {
             $this->throwException('이미 사용중인 닉네임 입니다.');
         }
     }
@@ -289,7 +291,7 @@ class CreateSocialMemberRequest
         if (empty(trim($this->mb_email))) {
             return '';
         }
-        
+
         if (!is_valid_email($this->mb_email)) {
             $this->throwException('잘못된 형식의 이메일 주소입니다.');
         }

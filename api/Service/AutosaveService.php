@@ -96,20 +96,21 @@ class AutosaveService
 
     /**
      * 임시저장 하기
+     * @param string $mb_id
      * @param array $data
      * @return false|string
      */
-    public function createAutosave(array $data)
+    public function createAutosave(string $mb_id, array $data)
     {
         $autosave_table = $GLOBALS['g5']['autosave_table'];
         $result = Db::getInstance()->insert($autosave_table, [
-            'mb_id' => $data['mb_id'],
+            'mb_id' => $mb_id,
             'as_uid' => $data['as_uid'],
             'as_subject' => $data['as_subject'],
             'as_content' => $data['as_content'],
             'as_datetime' => G5_TIME_YMDHIS,
         ]);
-        
+
         return $result;
     }
 

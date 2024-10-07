@@ -175,7 +175,7 @@ class SearchService
                 $content = strip_tags($table_search_result['wr_content']);
                 $content = get_text($content, 1);
                 $content = str_replace('&nbsp;', '', $content);
-                $content = cut_str($content, self::CUT_CONTENT_LENGTH, "…");
+                $content = cut_str($content, self::CUT_CONTENT_LENGTH, '…');
             } else {
                 $content = '';
             }

@@ -70,7 +70,7 @@ class IpCheckMiddleware
         }
 
         if (!isset($_SERVER['SERVER_ADDR'])) {
-            $_SERVER['SERVER_ADDR'] = isset($_SERVER['LOCAL_ADDR']) ? $_SERVER['LOCAL_ADDR'] : '';
+            $_SERVER['SERVER_ADDR'] = $_SERVER['LOCAL_ADDR'] ?? '';
         }
 
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6)) {

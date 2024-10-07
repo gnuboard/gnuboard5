@@ -80,9 +80,14 @@ class BoardNewController
         foreach ($fetch_board_news as $i => $new) {
             $this->write_service->setWriteTable($new['bo_table']);
             $write = $this->write_service->fetchWrite((int)$new['wr_id']);
+            if (!$write) {
+                continue;
+            }
             if ($write['wr_is_comment']) {
                 $comment = $this->write_service->fetchWrite((int)$write['wr_parent']);
-                $new['wr_subject'] = $comment['wr_subject'];
+                if ($comment) {
+                    $new['wr_subject'] = $comment['wr_subject'] ?? $write['wr_subject'];
+                }
             } else {
                 $new['wr_subject'] = $write['wr_subject'];
             }
@@ -154,6 +159,10 @@ class BoardNewController
                 $this->comment_service->setBoard($board);
                 $this->file_service->setBoard($board);
                 $write = $this->write_service->fetchWrite((int)$board_new['wr_id']);
+                if (!$write) {
+                    continue;
+                }
+
 
                 if ($write['wr_is_comment']) {
                     // 댓글 삭제
@@ -164,7 +173,9 @@ class BoardNewController
                     }
                     // 게시물 정보 갱신 (wr_last, wr_comment)
                     $last = $this->write_service->fetchWriteCommentLast($write);
-                    $this->write_service->updateWrite($write['wr_id'], ['wr_comment' => $write['wr_comment'] - 1, 'wr_last' => $last['wr_last']]);
+                    if ($last) {
+                        $this->write_service->updateWrite($write['wr_id'], ['wr_comment' => $write['wr_comment'] - 1, 'wr_last' => $last['wr_last']]);
+                    }
                     $this->service->deleteByComment($board['bo_table'], $write['wr_id']);
                 } else {
                     // 포인트 및 파일 삭제

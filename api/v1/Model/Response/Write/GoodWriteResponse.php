@@ -29,7 +29,7 @@ class GoodWriteResponse extends BaseResponse
 
     public function __construct(array $data = [])
     {
-        parent::__construct($data);
+        parent::__construct($data['message'] ?? '');
         $this->mapDataToProperties($this, $data);
     }
 }

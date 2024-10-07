@@ -146,7 +146,7 @@ class BoardService
      * @param bool $is_insert
      * @return mixed|string
      */
-    function getBoardNoticeIds($bo_notice, $wr_id, $is_insert = false)
+    public function getBoardNoticeIds($bo_notice, $wr_id, $is_insert = false)
     {
         $notice_array = explode(',', trim($bo_notice));
 

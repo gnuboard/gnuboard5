@@ -344,7 +344,7 @@ class CreateMemberRequest
 
     protected function validateRecommend()
     {
-        if (strtolower($this->mb_id) == strtolower($this->mb_recommend)) {
+        if (strtolower($this->mb_id) === strtolower($this->mb_recommend)) {
             $this->throwException('본인을 추천인으로 등록할 수 없습니다.');
         }
     }

@@ -13,19 +13,7 @@ use API\v1\Traits\SchemaHelperTrait;
 class CreateAutosaveRequest
 {
     use SchemaHelperTrait;
-
-    /**
-     * @OA\Property(
-     *     description="회원 아이디",
-     * )
-     */
-
-    public string $mb_id = '';
-    /**
-     * @OA\Property(
-     *     description="제목",
-     * )
-     */
+    
 
     public string $as_subject = '';
 

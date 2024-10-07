@@ -4,14 +4,19 @@ namespace API\v1\Traits;
 
 use API\Exceptions\ValidateException;
 
+use function filter_var;
+use function gettype;
+use function is_array;
+use function property_exists;
+
 /**
- * API Request/Response Class 처리 트레이트
+ * API Request/Response 클래스의 속성 매핑 트레이트
  */
 trait SchemaHelperTrait
 {
     /**
-     * 주어진 데이터를 클래스 속성에 매핑
-     * 
+     * 입력된 데이터를 클래스 속성에 매핑
+     *
      * @param object $object 데이터를 매핑할 클래스 객체
      * @param array $data 입력 데이터 배열
      */
@@ -39,7 +44,7 @@ trait SchemaHelperTrait
                             $object->$key = is_array($value) ? $value : array($value);
                             break;
                         case 'string':
-                            $object->$key = (string) $value;
+                            $object->$key = (string)$value;
                             break;
                         default:
                             $object->$key = $value;
@@ -53,7 +58,7 @@ trait SchemaHelperTrait
 
     /**
      * 예외를 던지는 유틸리티 메서드
-     * 
+     *
      * @param string $message 예외 메시지
      * @throws ValidateException 예외 발생
      */

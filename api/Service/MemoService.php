@@ -127,7 +127,7 @@ class MemoService
         }
 
         $memo_table = $GLOBALS['g5']['memo_table'];
-        $send_memo_id = [];
+        $send_memo_ids = [];
         foreach ($result['available_ids'] as $receiver_id) {
             // 받는 회원
             $last_insert_id = Db::getInstance()->insert($memo_table, [
@@ -152,11 +152,11 @@ class MemoService
                     'me_send_ip' => $ip
                 ]);
 
-                $send_memo_id[] = $last_insert_id;
+                $send_memo_ids[] = $last_insert_id;
             }
         }
 
-        return $send_memo_id;
+        return $send_memo_ids;
     }
 
     /**

@@ -397,7 +397,7 @@ if (!function_exists('run_event')) {
                 &&
                 is_object($arg[0])
                 &&
-                1 == count($arg)
+                count($arg) == 1
             ) {
                 $args[] =& $arg[0];
             } else {
@@ -438,7 +438,7 @@ if (!function_exists('run_replace')) {
                 &&
                 is_object($arg[0])
                 &&
-                1 == count($arg)
+                count($arg) == 1
             ) {
                 $args[] =& $arg[0];
             } else {
