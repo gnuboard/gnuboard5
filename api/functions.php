@@ -138,36 +138,43 @@ function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile
 // 회원정보 관련 유효성 검사 함수들
 // ========================================
 
-function allow_images()
+/**
+ * 관리자페이지에서 지정한 허용된 이미지 확장자 목록을 가져옵니다.
+ * @return array
+ */
+function get_allow_image_ext()
 {
     /**
-     * @var array $allow_images 이미지 확장자 목록
+     * @var array $allow_image_ext_list 이미지 확장자 목록
      */
-    static $allow_images;
-    if ($allow_images) {
-        return $allow_images;
+    static $allow_image_ext_list;
+    if ($allow_image_ext_list) {
+        return $allow_image_ext_list;
     }
 
     $config = ConfigService::getConfig();
-    //trim 을 사용하여 공백을 제거하고 explode 로 배열로 변환
-    $allow_images = array_map('trim', explode(',', $config['cf_image_extension']));
-    return $allow_images;
+    //공백을 제거하고 배열로 변환
+    $allow_image_ext_list = array_map('trim', explode('|', $config['cf_image_extension']));
+    return $allow_image_ext_list;
 }
 
-
-function allow_videos()
+/**
+ * 관리자페이지에서 지정한 허용된 동영상 확장자 목록을 가져옵니다.
+ * @return array
+ */
+function get_allow_video_ext()
 {
     /**
-     * @var array $allow_videos 동영상 확장자 목록
+     * @var array $allow_video_ext_list 동영상 확장자 목록
      */
-    static $allow_videos;
-    if ($allow_videos) {
-        return $allow_videos;
+    static $allow_video_ext_list;
+    if ($allow_video_ext_list) {
+        return $allow_video_ext_list;
     }
     $config = ConfigService::getConfig();
-    //trim 을 사용하여 공백을 제거하고 explode 로 배열로 변환
-    $allow_videos = array_map('trim', explode(',', $config['cf_movie_extension']));
-    return $allow_videos;
+    //공백을 제거하고 배열로 변환
+    $allow_video_ext_list = array_map('trim', explode('|', $config['cf_movie_extension']));
+    return $allow_video_ext_list;
 }
 
 /**

@@ -57,10 +57,11 @@ class BoardFileService
 
         $images = [];
         $files = [];
-        $allow_images = allow_images();
+        $allow_image_ext = get_allow_image_ext();
 
         foreach ($fetch_files as $file) {
-            if (isset($allow_images[$file['bf_type']])) {
+            $ext = strtolower(pathinfo($file['bf_file'], PATHINFO_EXTENSION));
+            if (isset($allow_image_ext[$ext])) {
                 $images[] = $file;
             } else {
                 $files[] = $file;
@@ -277,8 +278,9 @@ class BoardFileService
             @unlink($delete_file);
         }
 
-        $allow_images = allow_images();
-        if (isset($allow_images[$bf_file['bf_type']])) {
+        $allow_image_ext = get_allow_image_ext();
+        $ext = strtolower(pathinfo($bf_file['bf_file'], PATHINFO_EXTENSION));
+        if (isset($allow_image_ext[$ext])) {
             delete_editor_thumbnail($bf_file['bf_content']);
         }
     }
