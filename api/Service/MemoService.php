@@ -230,7 +230,7 @@ class MemoService
     /**
      * 메모 알림을 삭제합니다.
      * @param int $memo_id
-     * @return void 
+     * @return void
      * @throws \Exception 권한이 없습니다.
      */
     public function deleteMemoCall(int $memo_id)
@@ -240,10 +240,6 @@ class MemoService
         $memo = Db::getInstance()->run($query, ['me_id' => $memo_id])->fetch();
         if (!isset($memo['me_recv_mb_id'])) {
             throw new \Exception('해당 쪽지가 없습니다.', 404);
-        }
-
-        if ($memo['me_read_datetime'] === '0000-00-00 00:00:00') {
-            return;
         }
 
         //reset mb_memo_call
@@ -259,11 +255,11 @@ class MemoService
             ]
         );
 
-        $this->updateNotReadMemoCount($memo['me_recv_mb_id']);
+        $this->decreseNotReadMemoCount($memo['me_recv_mb_id']);
     }
 
     /**
-     * 읽지 않은 쪽지 수 업데이트
+     * 읽지 않은 쪽지 갯수 업데이트
      * @param string $receiver_mb_id 받는 회원 아이디
      * @return int
      */
@@ -275,7 +271,23 @@ class MemoService
     }
 
     /**
-     * 읽지 않은 쪽지 수 조회
+     * 읽지 않은 쪽지 갯수 감소
+     * @param string $receiver_mb_id
+     * @return int|void
+     */
+    public function decreseNotReadMemoCount(string $receiver_mb_id)
+    {
+        $not_read_memo_count = $this->fetchNotReadMemoCount($receiver_mb_id);
+        if ($not_read_memo_count === 0) {
+            return;
+        }
+
+        $member_table = $GLOBALS['g5']['member_table'];
+        return Db::getInstance()->update($member_table, ['mb_memo_cnt' => $not_read_memo_count - 1], ['mb_id' => $receiver_mb_id]);
+    }
+
+    /**
+     * 읽지 않은 쪽지 갯수 조회
      * @param string $mb_id
      * @return int
      */
