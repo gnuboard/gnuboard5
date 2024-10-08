@@ -636,7 +636,7 @@ class BoardController
             $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded_data, $request_data);
 
             // 권한 체크
-            if($member['mb_id']) {
+            if ($member['mb_id']) {
                 $this->board_permission->uploadFiles($member, $write);
             } else {
                 $this->board_permission->uploadFilesByGuest($member, $write, $request_data['wr_password'] ?? '');
@@ -667,11 +667,26 @@ class BoardController
      *      summary="게시글 파일 다운로드",
      *      tags={"게시판"},
      *      security={{"Oauth2Password": {}}},
-     *      description="게시글의 파일을 다운로드합니다.",
+     *      description="게시글의 파일을 다운로드합니다. (0byte 인 파일이 업로드 된경우 API 는 작동하나 스웨거에서는 다운로드가 안됩니다.)",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\PathParameter(name="bf_no", description="파일 번호", @OA\Schema(type="integer")),
-     *      @OA\Response(response="200", description="첨부파일 다운로드 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
+     *      @OA\Response(
+     *          response=200,
+     *          description="파일 다운로드 성공",
+     *          @OA\Header(
+     *              header="Content-Disposition",
+     *              description="첨부 파일명",
+     *              @OA\Schema(type="string")
+     *          ),
+     *          @OA\MediaType(
+     *              mediaType="application/octet-stream",
+     *              @OA\Schema(
+     *                  type="string",
+     *                  format="binary"
+     *              )
+     *          )
+     *      ),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      *      @OA\Response(response="404", ref="#/components/responses/404"),
@@ -706,16 +721,18 @@ class BoardController
         $file_name = $file['bf_source'];
         $encoded_file_name = rawurlencode($file_name);
 
-        $response = $response->withHeader('Content-Description', 'web site');
-        $response = $response->withHeader('Content-Type', 'application/octet-stream');
-        $response = $response->withHeader('Content-Disposition', 'attachment; filename=' . $encoded_file_name);
-        $response = $response->withHeader('Content-Transfer-Encoding', 'binary');
-        $response = $response->withHeader('Content-Length', $file_size);
-        $response = $response->withHeader('Expires', '0');
+        $response = $response
+            ->withHeader('Content-Description', 'web site')
+            ->withHeader('Content-Type', 'application/octet-stream')
+            ->withHeader('Content-Disposition', 'attachment; filename="' . $encoded_file_name . '"')
+            ->withHeader('Content-Transfer-Encoding', 'binary')
+            ->withHeader('Expires', '0')
+            ->withHeader('Cache-Control', 'must-revalidate')
+            ->withHeader('Pragma', 'public')
+            ->withHeader('Content-Length', $file_size);
         $file = fopen($file_path, 'rb');
-        $response = $response->withBody(new Stream($file));
-
-        return $response;
+        
+        return $response->withBody(new Stream($file));
     }
 
     /**
@@ -782,7 +799,7 @@ class BoardController
             $this->board_new_service->deleteByWrite($board['bo_table'], $write['wr_id']);
             $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
             $this->comment_service->deleteAllCommentByParent($write['wr_id']);
-            
+
             $bo_notice = $this->board_service->getBoardNoticeIds($board['bo_notice'], $write['wr_id'], false);
             $this->board_service->updateBoard(['bo_notice' => $bo_notice]);
 
@@ -1036,7 +1053,7 @@ class BoardController
         if (!in_array($good_type, ['good', 'nogood'])) {
             throw new HttpBadRequestException($request, '추천 타입이 올바르지 않습니다.');
         }
-        
+
         try {
             // 권한 체크
             $this->board_permission->goodWrite($member['mb_id'], $write, $good_type);
