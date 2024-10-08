@@ -5,7 +5,8 @@ namespace API\Service\Social;
 use Hybridauth\Storage\StorageInterface;
 
 /**
- * API 에서 사용을 위해 기본 세션 스토리지를 대체합니다.
+ * API 에서 사용을 위해 기본 세션 스토리지를 대체하는 무상태 스토리지입니다.
+ * 현재요청에서만 사용되며, 다음 요청시에는 초기화됩니다.
  */
 class StatelessStorage implements StorageInterface {
     private $data = [];

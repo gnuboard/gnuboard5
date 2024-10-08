@@ -3,6 +3,8 @@
 namespace API\Hooks\Alarm;
 
 use API\Service\AlarmService;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class AlarmHooks
 {
@@ -21,6 +23,8 @@ class AlarmHooks
      * @param $comment_id
      * @param $parent_comment
      * @return false|void
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function sendFcmAfterCreatComment($board, $write, $comment_id, $parent_comment)
     {

@@ -259,6 +259,9 @@ class MemberController
         $mb_id = $args['mb_id'];
         $login_member = $request->getAttribute('member');
         $member = $this->member_service->fetchMemberById($mb_id);
+        if(!$member) {
+            throw new HttpNotFoundException($request, '회원정보가 존재하지 않습니다.');
+        }
 
         $this->member_service->verifyMemberProfile($member, $login_member);
 

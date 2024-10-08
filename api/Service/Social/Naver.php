@@ -26,6 +26,10 @@ class Naver extends OAuth2
 
     protected $apiDocumentation = 'https://developers.naver.com/docs/login/api';
 
+    /**
+     * {@inheritdoc}
+     * @return void
+     */
     protected function initialize()
     {
         parent::initialize();

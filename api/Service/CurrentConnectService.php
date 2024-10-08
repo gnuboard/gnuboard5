@@ -6,6 +6,11 @@ use API\Database\Db;
 
 class CurrentConnectService
 {
+    /**
+     * 현재 접속자 수 조회
+     * @param bool $is_show_only_member 접속자 중 회원만 보기
+     * @return int
+     */
     public function fetchTotalCount(bool $is_show_only_member)
     {
         $config = ConfigService::getConfig();
@@ -27,7 +32,10 @@ class CurrentConnectService
     }
 
     /**
-     * @return array
+     * 현재 접속자 목록 조회
+     * @param bool $is_show_only_member 접속자 중 회원만 보기
+     * @param int $page
+     * @return array|false
      */
     public function fetchCurrentConnect(bool $is_show_only_member, int $page = 1)
     {
@@ -55,6 +63,7 @@ class CurrentConnectService
     }
 
     /**
+     * 현재 접속자 정보 DB 저장
      * @param string $mb_id
      * @param array $data
      * @return void

@@ -23,12 +23,12 @@ class CommentMiddleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        // RouteContext를 사용하여 경로 매개변수 가져오기
-        $routeContext = RouteContext::fromRequest($request)->getRoute();
-        if ($routeContext === null) {
+        // route_context 를 사용하여 경로 매개변수 가져오기
+        $route_context = RouteContext::fromRequest($request)->getRoute();
+        if ($route_context === null) {
             throw new HttpNotFoundException($request, 'url을 찾을 수 없습니다.');
         }
-        $comment_id = $routeContext->getArguments()['comment_id'] ?? null;
+        $comment_id = $route_context->getArguments()['comment_id'] ?? null;
         $comment = $this->write_service->fetchWrite((int)$comment_id);
         if (!$comment) {
             throw new HttpNotFoundException($request, '존재하지 않는 댓글입니다.');

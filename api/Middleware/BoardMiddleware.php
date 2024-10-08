@@ -47,13 +47,13 @@ class BoardMiddleware
     {
         $config = ConfigService::getConfig();
 
-        // RouteContext를 사용하여 경로 매개변수 가져오기
-        $routeContext = RouteContext::fromRequest($request)->getRoute();
-        if ($routeContext === null) {
-            throw new HttpNotFoundException($request, 'url 을 찾을 수없습니다.');
+        // route_context 사용하여 경로 매개변수 가져오기
+        $route_context = RouteContext::fromRequest($request)->getRoute();
+        if ($route_context === null) {
+            throw new HttpNotFoundException($request, 'url 을 찾을 수 없습니다.');
         }
-        $routeArguments = $routeContext->getArguments();
-        $bo_table = $routeArguments['bo_table'] ?? null;
+        $route_arguments = $route_context->getArguments();
+        $bo_table = $route_arguments['bo_table'] ?? null;
         $board = $this->board_service->getBoard($bo_table);
 
         if (!$board) {

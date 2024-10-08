@@ -24,11 +24,11 @@ class WriteMiddleware
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         // RouteContext를 사용하여 경로 매개변수 가져오기
-        $routeContext = RouteContext::fromRequest($request)->getRoute();
-        if ($routeContext === null) {
-            throw new HttpNotFoundException($request, 'url 을 찾을 수없습니다.');
+        $route_context = RouteContext::fromRequest($request)->getRoute();
+        if ($route_context === null) {
+            throw new HttpNotFoundException($request, 'url 을 찾을 수 없습니다.');
         }
-        $wr_id = $routeContext->getArguments()['wr_id'] ?? null;
+        $wr_id = $route_context->getArguments()['wr_id'] ?? null;
         $write = $this->write_service->fetchWrite((int)$wr_id);
 
         if (!$write) {

@@ -203,6 +203,12 @@ class CommentService
         return $stmt->fetchColumn() ?: 0;
     }
 
+    /**
+     * 댓글을 DB에 업데이트
+     * @param int $comment_id
+     * @param object $data
+     * @return void
+     */
     public function updateCommentData(int $comment_id, object $data): void
     {
         $data->wr_last = G5_TIME_YMDHIS;

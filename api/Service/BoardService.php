@@ -30,7 +30,13 @@ class BoardService
         return explode('|', $this->board['bo_category_list']);
     }
 
-    public function isBoardAdmin($bo_table, $mb_id)
+    /**
+     * 회원아이디로 해당회원이 게시판 관리자인지 확인
+     * @param string $bo_table
+     * @param string $mb_id
+     * @return bool
+     */
+    public function isBoardAdmin(string $bo_table, string $mb_id)
     {
         $board = $this->getBoard($bo_table);
         if (!$board) {
@@ -39,7 +45,13 @@ class BoardService
         return $board['bo_admin'] === $mb_id;
     }
 
-    public function isBoardGroupAdmin($bo_table, $mb_id)
+    /**
+     * 회원아이디로 해당회원이 게시판이 속한 그룹의 관리자인지 확인
+     * @param string $bo_table
+     * @param string $mb_id
+     * @return bool
+     */
+    public function isBoardGroupAdmin(string $bo_table, string $mb_id)
     {
         return $this->getGroupAdminByBoard($bo_table) === $mb_id;
     }

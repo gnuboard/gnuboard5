@@ -218,7 +218,15 @@ class BoardPermission
         $this->verifyWriteOwnerAndLevel($member, $write, 'upload');
     }
 
-    public function uploadFilesByGuest($member, array $write, $password)
+    /**
+     * 비회원 업로드 권한 체크
+     * @param array $member
+     * @param array $write
+     * @param string $password
+     * @return void
+     * @throws Exception
+     */
+    public function uploadFilesByGuest(array $member, array $write, string $password)
     {
         if (is_super_admin($this->config, $member['mb_id'])) {
             return;
@@ -396,6 +404,15 @@ class BoardPermission
             || $this->isBoardAdmin($mb_id);
     }
 
+    /**
+     * 비회원의 글 수정/삭제, 파일 업로드 권한 체크
+     * @param array $member
+     * @param array $write
+     * @param string $type
+     * @param string $password
+     * @return void
+     * @throws Exception
+     */
     private function verifyWriteOwnerByGuest(array $member, array $write, string $type, string $password): void
     {
         $message_level = '';

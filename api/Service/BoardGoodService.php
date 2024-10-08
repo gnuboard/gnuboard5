@@ -16,11 +16,20 @@ class BoardGoodService
         $this->setTable();
     }
 
+    /**
+     * $good_type 에 따라 추천/비추천 단어 반환
+     * @param string $good_type good 이면 추천 아니면 비추천
+     * @return string
+     */
     public function getGoodTypeWord(string $good_type)
     {
         return $good_type === 'good' ? '추천' : '비추천';
     }
 
+    /**
+     *  추천 테이블명 (good table) 설정
+     * @return void
+     */
     public function setTable(): void
     {
         global $g5;

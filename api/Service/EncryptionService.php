@@ -3,12 +3,17 @@
 namespace API\Service;
 
 /**
- * 그누보드 5의 str_encrypt 클래스 용도와 동일한 암호화, 복호화 기능을 제공합니다.
+ * 문자열의 암호화, 복호화 기능을 제공합니다.
  */
 class EncryptionService
 {
     private static $secret_key = '';
-    
+
+    /**
+     * 암호화
+     * @param string $plain_text
+     * @return string
+     */
     public static function encrypt($plain_text)
     {
         if(!self::$secret_key) {
@@ -20,6 +25,11 @@ class EncryptionService
         return base64_encode($iv . $enc_text);
     }
 
+    /**
+     * 복호화
+     * @param string $enc_text_base64
+     * @return false|string
+     */
     public static function decrypt($enc_text_base64)
     {
         if(!self::$secret_key) {

@@ -29,6 +29,10 @@ class PollService
         return $cache[$po_id];
     }
 
+    /**
+     * 최신 투표 조회
+     * @return array|null
+     */
     public function get_latest_poll()
     {
         $poll_table = $GLOBALS['g5']['poll_table'];

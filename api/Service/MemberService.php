@@ -190,7 +190,7 @@ class MemberService
     }
 
     /**
-     * 가입메일 발송
+     * 회원에게 가입메일 발송
      * @param array $member
      * @return void
      */
@@ -213,6 +213,11 @@ class MemberService
         $this->mail_service->send($config['cf_admin_email_name'], $config['cf_admin_email'], $member['mb_email'], $subject, $content, 1);
     }
 
+    /**
+     * 최고관리자에게 회원이 가입했음을 알리는 메일 발송
+     * @param array $member 가입한 회원
+     * @return void
+     */
     public function sendRegisterMailForSuperAdmin($member)
     {
         $config = ConfigService::getConfig();
@@ -405,7 +410,7 @@ class MemberService
         }
 
         if ($count >= 200) {
-            throw new \RuntimeException('닉네임으로 지정할 수없습니다.', 400);
+            throw new \RuntimeException('닉네임으로 지정할 수 없습니다.', 400);
         }
 
         $count++;

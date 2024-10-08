@@ -58,6 +58,11 @@ class OptionalAccessTokenAuthMiddleware
         return $handler->handle($request);
     }
 
+    /**
+     * 요청 헤더에서 JWT 토큰 추출
+     * @param Request $request
+     * @return string|null
+     */
     private function extractToken(Request $request): ?string
     {
         $token = $request->getHeaderLine('Authorization');

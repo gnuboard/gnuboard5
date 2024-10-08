@@ -15,11 +15,19 @@ class MailService
         $this->mail = $this->mailSetting();
     }
 
+    /**
+     * PHPMailer 객체 반환
+     * @return PHPMailer|null
+     */
     public function getMail()
     {
         return $this->mail;
     }
 
+    /**
+     * PHPMailer 설정
+     * @return PHPMailer|null
+     */
     public function mailSetting()
     {
         $is_debug_mode = G5_DEBUG ? SMTP::DEBUG_LOWLEVEL : SMTP::DEBUG_OFF;

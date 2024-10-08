@@ -377,6 +377,14 @@ function getConfig()
 // hook 함수들
 
 if (!function_exists('add_event')) {
+    /**
+     * 태그이름으로 이벤트 등록
+     * @param string $tag 태그 이름
+     * @param callable $func 콜백 함수
+     * @param $priority
+     * @param $args
+     * @return void
+     */
     function add_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY, $args = 0)
     {
         if ($hook = ContainerHook::getInstance()) {
@@ -386,6 +394,12 @@ if (!function_exists('add_event')) {
 }
 
 if (!function_exists('run_event')) {
+    /**
+     * 태그이름으로 등록된 이벤트 실행
+     * @param string $tag 태그 이름
+     * @param array|mixed $arg 함수 파라미터 갯수
+     * @return void
+     */
     function run_event($tag, $arg = '')
     {
         if ($hook = ContainerHook::getInstance()) {
@@ -416,6 +430,14 @@ if (!function_exists('run_event')) {
 }
 
 if (!function_exists('add_replace')) {
+    /**
+     * 태그이름으로 치환함수 등록
+     * @param string $tag 태그 이름
+     * @param callable $func 콜백 함수
+     * @param int $priority 우선순위
+     * @param int $args 함수 파라미터 갯수
+     * @return null
+     */
     function add_replace($tag, $func, int $priority = G5_HOOK_DEFAULT_PRIORITY, int $args = 1)
     {
         if ($hook = ContainerHook::getInstance()) {
@@ -427,6 +449,12 @@ if (!function_exists('add_replace')) {
 }
 
 if (!function_exists('run_replace')) {
+    /**
+     * 태그이름으로 등록된 치환함수 실행
+     * @param string $tag 태그 이름
+     * @param int $arg 함수 파라미터 갯수
+     * @return null|mixed
+     */
     function run_replace($tag, $arg = '')
     {
         if ($hook = ContainerHook::getInstance()) {
@@ -459,6 +487,13 @@ if (!function_exists('run_replace')) {
 }
 
 if (!function_exists('delete_event')) {
+    /**
+     * 태그이름으로 등록된 이벤트 삭제
+     * @param string $tag 태그 이름
+     * @param callable $func 콜백 함수
+     * @param int $priority 우선순위
+     * @return null
+     */
     function delete_event($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
     {
         if ($hook = ContainerHook::getInstance()) {
@@ -470,6 +505,13 @@ if (!function_exists('delete_event')) {
 }
 
 if (!function_exists('delete_replace')) {
+    /**
+     * 태그이름으로 등록된 치환함수 삭제
+     * @param string $tag 태그 이름
+     * @param callable $func 콜백 함수
+     * @param int $priority
+     * @return null
+     */
     function delete_replace($tag, $func, $priority = G5_HOOK_DEFAULT_PRIORITY)
     {
         if ($hook = ContainerHook::getInstance()) {
@@ -481,6 +523,12 @@ if (!function_exists('delete_replace')) {
 }
 
 if (!function_exists('get_hook_datas')) {
+    /**
+     * 훅 데이터 가져오기 등록된 이벤트와 치환함수 목록을 가져온다.
+     * @param string $type 'event' 이면 이벤트 목록 나머지는 replace (치환함수) 목록
+     * @param bool $is_callback
+     * @return null
+     */
     function get_hook_datas($type = '', $is_callback = '')
     {
         if ($hook = ContainerHook::getInstance()) {

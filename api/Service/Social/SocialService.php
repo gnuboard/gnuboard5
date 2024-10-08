@@ -149,7 +149,7 @@ class SocialService
         }
 
         // 설정 추가
-        add_event('api_social_provider_add', 'add_social_provider_config');
+        run_event('api_social_provider_add', $this->social_config);
     }
 
     /**
@@ -259,6 +259,7 @@ class SocialService
      * @param $member_data
      * @return void
      * @throws \RuntimeException 이미 가입된 회원, 소셜 회원가입 실패
+     * @throws \Exception
      */
     public function signUpSocialMember(string $provider, Profile $profile, $member_data)
     {
@@ -458,6 +459,12 @@ class SocialService
 
     //---------- DB query ------------------------
 
+    /**
+     * 소셜제공자에서 주는 소셜식별자로 소셜 프로필 조회
+     * @param string $provider 소셜 제공자이름
+     * @param string $identifier 소셜 제공자에서 주는 식별자
+     * @return mixed
+     */
     public function fetchSocialProfileByIdentifier($provider, $identifier)
     {
         $social_table = $GLOBALS['g5']['social_profile_table'];
@@ -467,7 +474,7 @@ class SocialService
     }
 
     /**
-     * 소셜로그인 고유번호로 회원 조회
+     * 소셜로그인 소셜식별자로 회원 조회
      * @param $provider
      * @param $identifier
      * @return mixed
@@ -481,7 +488,11 @@ class SocialService
         )->fetch();
     }
 
-    public function countProfileByMemeberId($mb_id)
+    /**
+     * @param string $mb_id
+     * @return mixed
+     */
+    public function countProfileByMemeberId(string $mb_id)
     {
         $profile_table = $GLOBALS['g5']['social_profile_table'];
         $query = "SELECT count(*) as cnt FROM {$profile_table} WHERE mb_id = ?";
@@ -489,15 +500,22 @@ class SocialService
     }
 
     /**
-     * @param $data
+     * 소셜 프로필 추가
+     * @param array $data
      * @return false|string
      */
-    public function insertSocialProfile($data)
+    public function insertSocialProfile(array $data)
     {
         $social_table = $GLOBALS['g5']['social_profile_table'];
         return Db::getInstance()->insert($social_table, $data);
     }
 
+    /**
+     * 소셜 프로필삭제
+     * @param string $provider 소셜 제공자
+     * @param string $identifier 소셜식별자
+     * @return int
+     */
     public function deleteSocialProfile($provider, $identifier)
     {
         $social_table = $GLOBALS['g5']['social_profile_table'];

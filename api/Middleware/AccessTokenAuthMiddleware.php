@@ -12,9 +12,8 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 /**
  * Access Token Authentication Middleware
- *
- * Add this middleware to routes that require access token authentication
- * Append member information to the request as an attribute
+ * 
+ * 토큰에 저장된 id 를 기준으로 member 를 request attribute 에 추가합니다.
  */
 class AccessTokenAuthMiddleware
 {
@@ -48,6 +47,12 @@ class AccessTokenAuthMiddleware
         return $token;
     }
 
+    /**
+     * mb_id 로 회원정보 가져오기
+     * @param Request $request
+     * @param string $mb_id
+     * @return array
+     */
     private function getMember(Request $request, string $mb_id): array
     {
         $member = $this->member_service->fetchMemberById($mb_id);

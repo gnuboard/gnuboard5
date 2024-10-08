@@ -83,6 +83,10 @@ class WriteService
         ];
     }
 
+    /**
+     * 공지글 가져오기
+     * @return array
+     */
     public function getNotice()
     {
         $notices = $this->fetchNoticeWrites();
@@ -90,7 +94,7 @@ class WriteService
     }
 
     /**
-     * 게시글 목록 가져오기
+     * 게시글 목록 가져오기 - (공지제외)
      * @param array $board
      * @param $search_params
      * @param $page_params
@@ -103,6 +107,7 @@ class WriteService
     }
 
     /**
+     * DB 에서 가져온 게시글 데이터 처리 - 비밀글, 썸네일, 파일첨부
      * @param array $board 게시판 정보
      * @param array $input_data 게시글, 게시글 목록
      * @return array
@@ -388,7 +393,11 @@ class WriteService
     }
 
     /**
-     * 이웃 게시글 조회
+     * 이웃게시글 조회 (이전글, 다음글)
+     * @param string $where
+     * @param string $order_by
+     * @param array $values
+     * @return array|false
      */
     protected function fetchNeighborWrite(string $where, string $order_by, array $values)
     {
@@ -797,12 +806,22 @@ class WriteService
     // Getters and Setters
     // ========================================
 
+    /**
+     * 현재 요청내 사용할 게시판 데이터 지정
+     * @param array $board 게시판 정보
+     * @return void
+     */
     public function setBoard(array $board): void
     {
         $this->board = $board;
         $this->setWriteTable($board['bo_table']);
     }
 
+    /**
+     * 게시판 테이블 설정
+     * @param string $bo_table
+     * @return void
+     */
     public function setWriteTable(string $bo_table): void
     {
         global $g5;

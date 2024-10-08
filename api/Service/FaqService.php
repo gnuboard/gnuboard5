@@ -70,8 +70,9 @@ class FaqService
     }
 
     /**
-     * @param $faq_ca_id
-     * @param $stx
+     * FAQ 검색
+     * @param int $faq_ca_id
+     * @param string $stx
      * @return array|false
      */
     public function searchFaq($faq_ca_id, $stx)
@@ -85,6 +86,12 @@ class FaqService
         ])->fetchAll();
     }
 
+    /**
+     * FAQ 조회
+     * @param int $faq_ca_id 카테고리 ID
+     * @param string $stx 검색어
+     * @return array|false
+     */
     public function getFaq($faq_ca_id, $stx)
     {
         if ($stx) {

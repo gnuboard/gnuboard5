@@ -25,6 +25,10 @@ class AlarmService
         }
     }
 
+    /**
+     * 파이어베이스 구글 서비스 계정 인증
+     * @return void
+     */
     public function setGoogleServiceCredentials()
     {
         $this->google_service_credentials = new ServiceAccountCredentials($this->scopes, $_ENV['FIREBASE_KEY_PATH'] ?? G5_DATA_PATH . '/fcm.json');
@@ -178,12 +182,21 @@ class AlarmService
         Db::getInstance()->run($query);
     }
 
+    /**
+     * 토큰 삭제
+     * @param string $token
+     * @return void
+     */
     public function deleteFcmToken($token)
     {
         $fcm_token_table = $this->fcm_token_table;
         Db::getInstance()->deleteById($fcm_token_table, 'ft_token', $token);
     }
 
+    /**
+     * fcm_token 테이블 생성
+     * @return void
+     */
     public function createFcmTokenTable()
     {
         $fcm_token_table = $this->fcm_token_table;
@@ -207,6 +220,11 @@ class AlarmService
         }
     }
 
+    /**
+     * 회원의 fcm_token 가져오기
+     * @param $mb_id
+     * @return array|false
+     */
     public function fetchFcmToken($mb_id)
     {
         $fcm_token_table = $this->fcm_token_table;

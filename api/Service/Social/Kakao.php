@@ -26,6 +26,10 @@ class Kakao extends OAuth2
 
     protected $apiDocumentation = 'https://developers.kakao.com/docs/latest/ko/kakaologin/common';
 
+    /**
+     * {@inheritdoc}
+     * @return void
+     */
     protected function initialize()
     {
         parent::initialize();

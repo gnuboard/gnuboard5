@@ -47,6 +47,9 @@ class IpCheckMiddleware
         '2c0f:f248::/32',
     ];
 
+    /**
+     * @throws \Exception
+     */
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $ip = $_SERVER['REMOTE_ADDR'];

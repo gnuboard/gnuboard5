@@ -11,10 +11,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * 최신 투표 1건 조회
- * @param Request $request
- * @param Response $response
- * @return ResponseInterface
+ * 투표 컨트롤러
  */
 class PollController
 {

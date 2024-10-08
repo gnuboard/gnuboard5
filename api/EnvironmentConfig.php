@@ -26,6 +26,7 @@ class EnvironmentConfig
 
     /**
      * @throws \Random\RandomException
+     * @throws Exception
      */
     public function __construct()
     {
@@ -37,12 +38,12 @@ class EnvironmentConfig
         $this->api_version = $_ENV['API_VERSION'] ?? self::DEFAULT_API_VERSION;
 
         if (!trim($_ENV['ACCESS_TOKEN_SECRET_KEY'])) {
-            throw new \Exception('env ACCESS_TOKEN_SECRET_KEY is empty');
+            throw new Exception('env ACCESS_TOKEN_SECRET_KEY is empty');
         }
         $this->access_token_secret_key = $_ENV['ACCESS_TOKEN_SECRET_KEY'];
         $this->access_token_expire_minutes = isset($_ENV['ACCESS_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['ACCESS_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES;
         if(!trim($_ENV['REFRESH_TOKEN_SECRET_KEY'])) {
-            throw new \Exception('env REFRESH_TOKEN_SECRET_KEY is empty');
+            throw new Exception('env REFRESH_TOKEN_SECRET_KEY is empty');
         }
         $this->refresh_token_secret_key = $_ENV['REFRESH_TOKEN_SECRET_KEY'];
         $this->refresh_token_expire_minutes = isset($_ENV['REFRESH_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['REFRESH_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES;
@@ -51,7 +52,7 @@ class EnvironmentConfig
     }
 
     /**
-     * @throws \Exception .env 파일 생성 실패시
+     * @throws Exception .env 파일 생성 실패시
      * @throws \Random\RandomException Rand 함수 호출 실패시
      */
     public function createEnvFileIfNotExists(): void

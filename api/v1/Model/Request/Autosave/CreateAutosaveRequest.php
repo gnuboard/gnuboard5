@@ -13,7 +13,13 @@ use API\v1\Traits\SchemaHelperTrait;
 class CreateAutosaveRequest
 {
     use SchemaHelperTrait;
-    
+
+
+    /**
+     * @OA\Property(
+     *     description="제목",
+     * )
+     */
 
     public string $as_subject = '';
 
@@ -24,6 +30,12 @@ class CreateAutosaveRequest
      */
 
     public string $as_content = '';
+
+    /**
+     * @OA\Property(
+     *     description="uid",
+     * )
+     */
     public int $as_uid = 0;
 
     public function __construct(array $data = [])
