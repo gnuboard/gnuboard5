@@ -40,7 +40,7 @@ class BoardPermission
     private const ERROR_NO_REPLY_DEPTH = '더 이상 답변하실 수 없습니다. 답변은 10단계 까지만 가능합니다.';
     private const ERROR_NO_REPLY_COUNT = '더 이상 답변하실 수 없습니다. 답변은 26개 까지만 가능합니다.';
     private const ERROR_NO_REPLY_SECRET = '비밀글에는 작성자 또는 관리자만 답변이 가능합니다.';
-    private const ERROR_NO_REPLY_SECRET_NONMEMBER = '비회원의 비밀글에는 답변이 불가합니다.';
+    private const ERROR_NO_REPLY_SECRET_GUEST = '비회원의 비밀글에는 답변이 불가합니다.';
     private const ERROR_NO_UPDATE_LEVEL = '자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.';
     private const ERROR_NO_UPDATE_OWNER = '자신의 글이 아니므로 수정할 수 없습니다.';
     private const ERROR_NO_UPDATE_REPLY = '이 글과 관련된 답변글이 존재하므로 수정할 수 없습니다.';
@@ -185,7 +185,7 @@ class BoardPermission
      * 비회원 글 수정 권한 체크
      * @throws Exception
      */
-    public function updateWriteByNonMember(array $member, array $write, string $wr_password): void
+    public function updateWriteByGuest(array $member, array $write, string $wr_password): void
     {
         if ($this->isBoardManager($member['mb_id'])) {
             return;
@@ -199,7 +199,7 @@ class BoardPermission
     }
 
     /**
-     *  파일 업로드 권한 체크
+     * 파일 업로드 권한 체크
      * @param array $member
      * @param array $write
      * @return void
@@ -216,6 +216,19 @@ class BoardPermission
         $this->checkMemberLevel($member, $level, self::ERROR_NO_UPLOAD_LEVEL);
         $this->checkAccessCert($member);
         $this->verifyWriteOwnerAndLevel($member, $write, 'upload');
+    }
+
+    public function uploadFilesByGuest($member, array $write, $password)
+    {
+        if (is_super_admin($this->config, $member['mb_id'])) {
+            return;
+        }
+
+        $level = (int)$this->board['bo_upload_level'];
+        $this->checkAccessBoardGroup($member['mb_id']);
+        $this->checkMemberLevel($member, $level, self::ERROR_NO_UPLOAD_LEVEL);
+        $this->checkAccessCert($member);
+        $this->verifyWriteOwnerByGuest($member, $write, 'upload', $password);
     }
 
     /**
@@ -288,7 +301,7 @@ class BoardPermission
      * 비회원 글 삭제 권한 체크
      * @throws Exception
      */
-    public function deleteWriteByNonMember(array $member, array $write, string $wr_password): void
+    public function deleteWriteByGuest(array $member, array $write, string $wr_password): void
     {
         if ($this->isBoardManager($member['mb_id'])) {
             return;
@@ -332,7 +345,7 @@ class BoardPermission
      * 비회원 댓글 수정 권한 체크
      * @throws Exception
      */
-    public function updateCommentByNonMember(array $member, array $comment, string $wr_password): void
+    public function updateCommentByGuest(array $member, array $comment, string $wr_password): void
     {
         if ($this->isBoardManager($member['mb_id'])) {
             return;
@@ -362,7 +375,7 @@ class BoardPermission
      * 비회원 댓글 삭제 권한 체크
      * @throws Exception
      */
-    public function deleteCommentByNonMember(array $member, array $comment, string $wr_password): void
+    public function deleteCommentByGuest(array $member, array $comment, string $wr_password): void
     {
         if ($this->isBoardManager($member['mb_id'])) {
             return;
@@ -381,6 +394,40 @@ class BoardPermission
         return is_super_admin($this->config, $mb_id)
             || $this->isGroupAdmin($mb_id)
             || $this->isBoardAdmin($mb_id);
+    }
+
+    private function verifyWriteOwnerByGuest(array $member, array $write, string $type, string $password): void
+    {
+        $message_level = '';
+        $message_owner = '';
+        switch ($type) {
+            case 'update':
+                $message_level = self::ERROR_NO_UPDATE_LEVEL;
+                $message_owner = self::ERROR_NO_UPDATE_OWNER;
+                break;
+            case 'delete':
+                $message_level = self::ERROR_NO_DELETE_LEVEL;
+                $message_owner = self::ERROR_NO_DELETE_OWNER;
+                break;
+            case 'upload':
+                $message_level = self::ERROR_NO_UPLOAD_LEVEL;
+                $message_owner = self::ERROR_NO_UPLOAD_OWNER;
+                break;
+        }
+
+        if ($write['mb_id'] != '') {
+            $this->throwException('회원이 작성한 글은 접근할 수 없습니다.');
+        }
+
+        if (trim($password) === '') {
+            $this->throwException('비밀번호를 입력해주세요.');
+        }
+
+        if ($this->isGroupAdmin($member['mb_id']) || $this->isBoardAdmin($member['mb_id'])) {
+            $this->checkMemberLevel($member, 1, $message_level);
+        } elseif (!check_password($password, $write['wr_password'])) {
+            $this->throwException($message_owner);
+        }
     }
 
     /**
@@ -419,7 +466,7 @@ class BoardPermission
     }
 
     /**
-     * 글 수정/삭제 시 관리자/작성자 체크
+     * 댓글 수정/삭제 시 관리자/작성자 체크
      * @throws Exception
      */
     private function verifyCommentOwnerAndLevel(array $member, array $comment, string $type): void
@@ -486,7 +533,7 @@ class BoardPermission
                     $this->throwException(self::ERROR_NO_REPLY_SECRET);
                 }
             } else {
-                $this->throwException(self::ERROR_NO_REPLY_SECRET_NONMEMBER);
+                $this->throwException(self::ERROR_NO_REPLY_SECRET_GUEST);
             }
         }
     }

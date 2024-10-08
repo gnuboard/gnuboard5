@@ -563,7 +563,7 @@ class BoardController
                 $this->board_permission->updateWrite($member, $write);
             } else {
                 $wr_password = $request_body['wr_password'] ?? '';
-                $this->board_permission->updateWriteByNonMember($member, $write, $wr_password);
+                $this->board_permission->updateWriteByGuest($member, $write, $wr_password);
                 unset($request_data->wr_password);
             }
 
@@ -628,15 +628,19 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
-        $data = $request->getParsedBody();
-        $uploaded = $request->getUploadedFiles();
+        $request_data = $request->getParsedBody();
+        $uploaded_data = $request->getUploadedFiles();
 
         try {
             // 데이터 검증 및 처리
-            $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded, $data);
+            $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded_data, $request_data);
 
             // 권한 체크
-            $this->board_permission->uploadFiles($member, $write);
+            if($member['mb_id']) {
+                $this->board_permission->uploadFiles($member, $write);
+            } else {
+                $this->board_permission->uploadFilesByGuest($member, $write, $request_data['wr_password'] ?? '');
+            }
 
             // 파일 업로드
             $this->file_service->createDirectoryIfNotExists();
@@ -750,7 +754,7 @@ class BoardController
                 $this->board_permission->deleteWrite($member, $write);
             } else {
                 $wr_password = $request->getParsedBody()['wr_password'] ?? '';
-                $this->board_permission->deleteWriteByNonMember($member, $write, $wr_password);
+                $this->board_permission->deleteWriteByGuest($member, $write, $wr_password);
             }
 
             // 포인트&파일 삭제
@@ -924,7 +928,7 @@ class BoardController
                 $this->board_permission->updateComment($member, $comment);
             } else {
                 $wr_password = $request_body['wr_password'] ?? '';
-                $this->board_permission->updateCommentByNonMember($member, $comment, $wr_password);
+                $this->board_permission->updateCommentByGuest($member, $comment, $wr_password);
                 unset($request_data->wr_password);
             }
 
@@ -979,7 +983,7 @@ class BoardController
                 $this->board_permission->deleteComment($member, $comment);
             } else {
                 $wr_password = $request->getParsedBody()['wr_password'] ?? '';
-                $this->board_permission->deleteCommentByNonMember($member, $comment, $wr_password);
+                $this->board_permission->deleteCommentByGuest($member, $comment, $wr_password);
             }
 
             // 댓글 삭제

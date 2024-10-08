@@ -33,6 +33,12 @@ class UploadFileRequest
      * @OA\Property(property="file_dels[]", type="array", @OA\Items(type="boolean", example="false"))
      */
     public array $file_dels = [];
+    
+    /**
+     * 비밀번호
+     * @OA\Property (property="wr_password", example="")
+     */
+    public string $wr_password = '';
 
     private const ERROR_NO_UPLOAD_WRITE_FILES = '기존 파일을 삭제하신 후 첨부파일을 %s개 이하로 업로드 해주십시오.';
     private const ERROR_NO_UPLOAD_COUNT = '파일은 %s개 까지만 업로드 가능합니다.';
@@ -81,7 +87,7 @@ class UploadFileRequest
     /**
      * 파일 설명 기본값 설정
      */
-    public function setDefaultFileContents()
+    public function setDefaultFileContents(): void
     {
         foreach ($this->file_contents as $key => $content) {
             if (empty($content)) {
@@ -93,7 +99,7 @@ class UploadFileRequest
     /**
      * 파일 삭제여부 기본값 설정
      */
-    public function setDefaultFileDels()
+    public function setDefaultFileDels(): void
     {
         $file_no = [];
         foreach ($this->file_dels as $key => $del) {
