@@ -15,6 +15,23 @@ class MemoService
     }
 
     /**
+     * 회원 모든 쪽지를 조회한다
+     * @param string $me_type
+     * @param string $mb_id
+     * @param int $page
+     * @param int $per_page
+     * @return array
+     */
+    public function getMemos(string $me_type, string $mb_id, int $page, int $per_page)
+    {
+        $result = $this->fetchMemos($me_type, $mb_id, $page, $per_page);
+        foreach ($result as &$memo) {
+            $memo['me_is_read'] = $memo['me_read_datetime'] !== '0000-00-00 00:00:00';
+        }
+        return $result;
+    }
+
+    /**
      * 메모의 전체 카운트 수 조회
      * @param string $me_type
      * @param string $mb_id
@@ -40,6 +57,7 @@ class MemoService
     }
 
     /**
+     * 읽기여부 관계없이 회원의 모든 쪽지를 조회한다.
      * @param string $me_type
      * @param string $mb_id
      * @param int $page
@@ -49,9 +67,9 @@ class MemoService
     public function fetchMemos(string $me_type, string $mb_id, int $page, int $per_page)
     {
         if ($me_type === 'recv') {
-            $where = 'me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
+            $where = 'me_recv_mb_id = :mb_id AND me_type = :me_type';
         } else {
-            $where = 'me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
+            $where = 'me_send_mb_id = :mb_id AND me_type = :me_type';
         }
 
         $memo_table = $GLOBALS['g5']['memo_table'];
@@ -59,7 +77,6 @@ class MemoService
         $stmt = Db::getInstance()->run($query, [
             'mb_id' => $mb_id,
             'me_type' => $me_type,
-            'me_read_datetime' => '0000-00-00 00:00:00',
             'offset' => ($page - 1) * $per_page,
             'limit' => $per_page
         ]);
@@ -106,7 +123,8 @@ class MemoService
      * @param string $receiver_ids
      * @param string $content
      * @return array int[] 전송된 쪽지의 테이블 번호
-     * @throws \Exception
+     * @throws \Exception 회원 정보가 없습니다.
+     * @throws \Exception 쪽지를 전송할 회원이 없습니다.
      */
     public function sendMemo($mb_id, $receiver_ids, $content, $ip)
     {
@@ -164,6 +182,7 @@ class MemoService
      * @param int $memo_id
      * @param string $member_id
      * @return array
+     * @throws \Exception 읽기 권한이 없습니다.
      */
     public function fetchMemo($memo_id, $member_id)
     {
@@ -171,7 +190,7 @@ class MemoService
         $query = "SELECT * FROM $memo_table WHERE me_id = :me_id";
         $memo = Db::getInstance()->run($query, ['me_id' => $memo_id])->fetch();
         if (isset($memo['me_recv_mb_id']) && $memo['me_recv_mb_id'] !== $member_id) {
-            return ['error' => '권한이 없습니다.', 'code' => 403];
+            throw new \Exception('권한이 없습니다.', 403);
         }
 
         return $memo;
@@ -193,7 +212,8 @@ class MemoService
      *
      * @param int $memo_id
      * @param string $mb_id
-     * @return array|int ['error' => '권한이 없습니다.', 'code' => 403] , 삭제된 row 수
+     * @return int
+     * @throws \Exception 권한이 없습니다.
      */
     public function deleteMemo(int $memo_id, string $mb_id)
     {
@@ -201,7 +221,7 @@ class MemoService
         $query = "SELECT * FROM $memo_table WHERE me_id = :me_id";
         $memo = Db::getInstance()->run($query, ['me_id' => $memo_id])->fetch();
         if (isset($memo['me_recv_mb_id']) && $memo['me_recv_mb_id'] !== $mb_id) {
-            return ['error' => '권한이 없습니다.', 'code' => 403];
+            throw new \Exception('권한이 없습니다.', 403);
         }
 
         return Db::getInstance()->delete($memo_table, ['me_id' => $memo_id]);
@@ -210,7 +230,8 @@ class MemoService
     /**
      * 메모 알림을 삭제합니다.
      * @param int $memo_id
-     * @return array|void ['error' => '권한이 없습니다.', 'code' => 403]
+     * @return void 
+     * @throws \Exception 권한이 없습니다.
      */
     public function deleteMemoCall(int $memo_id)
     {
@@ -218,7 +239,7 @@ class MemoService
         $query = "SELECT * FROM $memo_table WHERE me_id = :me_id";
         $memo = Db::getInstance()->run($query, ['me_id' => $memo_id])->fetch();
         if (!isset($memo['me_recv_mb_id'])) {
-            return ['error' => '해당 쪽지가 없습니다.', 'code' => 404];
+            throw new \Exception('해당 쪽지가 없습니다.', 404);
         }
 
         if ($memo['me_read_datetime'] === '0000-00-00 00:00:00') {
@@ -258,7 +279,7 @@ class MemoService
      * @param string $mb_id
      * @return int
      */
-    public function fetchNotReadMemoCount($mb_id)
+    public function fetchNotReadMemoCount(string $mb_id)
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $result = Db::getInstance()->run(
@@ -270,6 +291,5 @@ class MemoService
         )->fetch();
         return $result['cnt'] ?: 0;
     }
-
 
 }

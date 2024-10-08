@@ -3,6 +3,7 @@
 namespace API\v1\Controller;
 
 use API\Exceptions\HttpBadRequestException;
+use API\Exceptions\HttpForbiddenException;
 use API\Service\ConfigService;
 use API\Service\MemoService;
 use API\Service\PointService;
@@ -153,7 +154,7 @@ class MemoController
 
         $request_data = $request->getParsedBody();
 
-        
+
         if (!isset($request_data['me_recv_mb_id'])) {
             return api_response_json($response, ['message' => 'me_recv_mb_id 필드가 필요합니다.'], 422);
         }
@@ -168,18 +169,18 @@ class MemoController
         try {
             $sended_memo_ids = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
         } catch (\Exception $e) {
-            if($e->getCode() == 400) {
+            if ($e->getCode() === 400) {
                 throw new HttpBadRequestException($request, $e->getMessage());
             }
         }
-        
+
         // 쪽지 포인트 차감
         foreach ($sended_memo_ids as $memo_id) {
             $this->point_service->addPoint($mb_id, (int)$config['cf_memo_send_point'] * (-1), $receiver_mb_id . '(' . $receiver_mb_id . ')님께 쪽지 발송', '@memo', $receiver_mb_id,
                 $memo_id);
         }
         $this->memo_service->updateNotReadMemoCount($receiver_mb_id);
-        
+
         run_event('api_send_memo_after', $mb_id, $receiver_mb_id, $request_data);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
@@ -219,10 +220,12 @@ class MemoController
             return api_response_json($response, ['message' => '숫자만 가능합니다.'], 422);
         }
 
-
-        $result = $this->memo_service->fetchMemo($memo_id, $mb_id);
-        if (isset($result['error'])) {
-            return api_response_json($response, ['message' => $result['error']], $result['code']);
+        try {
+            $result = $this->memo_service->fetchMemo($memo_id, $mb_id);
+        } catch (\Exception $e) {
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            }
         }
 
         $this->memo_service->checkRead($memo_id);
@@ -258,22 +261,23 @@ class MemoController
     {
         $member = $request->getAttribute('member');
         $mb_id = $member['mb_id'];
-
         $memo_id = $args['me_id'];
         if (!is_numeric($memo_id)) {
             return api_response_json($response, ['message' => 'memo_id 는 숫자만 가능합니다.'], 422);
         }
+        
+        try {
+            $this->memo_service->deleteMemoCall($memo_id);
+            $this->memo_service->deleteMemo($memo_id, $mb_id);
+        } catch (\Exception $e) {
+            if ($e->getCode() === 400) {
+                throw new HttpBadRequestException($request, $e->getMessage());
+            }
 
-        $result = $this->memo_service->deleteMemoCall($memo_id);
-        if (isset($result['error'])) {
-            return api_response_json($response, ['message' => $result['error']], $result['code']);
+            if ($e->getCode() === 403) {
+                throw new HttpForbiddenException($request, $e->getMessage());
+            }
         }
-
-        $result = $this->memo_service->deleteMemo($memo_id, $mb_id);
-        if (isset($result['error'])) {
-            return api_response_json($response, ['message' => $result['error']], $result['code']);
-        }
-
 
         return api_response_json($response, ['message' => '삭제되었습니다.']);
     }
