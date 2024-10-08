@@ -709,6 +709,8 @@ class BoardController
         if (!file_exists($file_path)) {
             throw new HttpNotFoundException($request, '파일이 존재하지 않습니다.');
         }
+        
+        $this->file_service->increaseDownloadCount($write['wr_id'], $request->getAttribute('bf_no'));
 
         // 권한 체크
         try {

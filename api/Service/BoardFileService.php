@@ -200,7 +200,7 @@ class BoardFileService
 
     /**
      * 파일 업로드 데이터 갱신
-     * return void
+     * @return void
      */
     public function updateBoardFile(int $wr_id, int $bf_no, object $file, string $filename, string $file_content)
     {
@@ -219,8 +219,19 @@ class BoardFileService
     }
 
     /**
+     * 파일 다운로드시 횟수 +1
+     * @return void
+     */
+    public function increaseDownloadCount(int $wr_id, int $bf_no)
+    {
+        $values = ['bo_table' => $this->bo_table, 'wr_id' => $wr_id, 'bf_no' => $bf_no];
+        $query = "UPDATE {$this->table} SET bf_download = bf_download + 1 WHERE bo_table = :bo_table AND wr_id = :wr_id AND bf_no = :bf_no";
+        Db::getInstance()->run($query, $values);
+    }
+
+    /**
      * 게시글의 모든 파일&데이터 삭제
-     * return void
+     * @return void
      */
     public function deleteWriteFiles(array $write)
     {
@@ -234,7 +245,7 @@ class BoardFileService
 
     /**
      * 파일 업로드 시 기존 파일 삭제
-     * return void
+     * @return void
      */
     public function deleteWriteFilesByNo(int $wr_id, array $file_dels)
     {
@@ -247,7 +258,8 @@ class BoardFileService
 
     /**
      * 게시글 파일 삭제
-     * return void
+     * @param int $wr_id
+     * @return void
      */
     public function deleteBoardFile(int $wr_id): void
     {
@@ -257,7 +269,9 @@ class BoardFileService
 
     /**
      * 게시글 파일 삭제(bf_no)
-     * return void
+     * @param int $wr_id
+     * @param int $bf_no
+     * @return void
      */
     public function deleteBoardFileByNo(int $wr_id, int $bf_no): void
     {
@@ -267,7 +281,7 @@ class BoardFileService
 
     /**
      * 파일 삭제 시 썸네일 삭제
-     * return void
+     * @return void
      */
     private function removeFileAndThumbnail(array $bf_file)
     {
