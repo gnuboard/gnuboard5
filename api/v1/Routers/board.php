@@ -7,6 +7,7 @@ use API\Middleware\BoardMiddleware;
 use API\Middleware\CommentMiddleware;
 use API\Middleware\ConfigMiddleware;
 use API\Middleware\OptionalAccessTokenAuthMiddleware;
+use API\Middleware\WriteDelayMiddleware;
 use API\Middleware\WriteMiddleware;
 use API\v1\Controller\BoardController;
 use Slim\Routing\RouteCollectorProxy;
@@ -14,12 +15,14 @@ use Slim\Routing\RouteCollectorProxy;
 /**
  * @var \Slim\App<\Psr\Container\ContainerInterface> $app
  */
-$app->group('/v1/boards/{bo_table}', function (RouteCollectorProxy $group){
+$app->group('/v1/boards/{bo_table}', function (RouteCollectorProxy $group) {
     $group->get('', [BoardController::class, 'getBoard']);
 
     $group->group('/writes', function (RouteCollectorProxy $group) {
+        $group->get('/guest-write-token', [BoardController::class, 'getGuestWriteToken']);
         $group->get('', [BoardController::class, 'getWrites']);
-        $group->post('', [BoardController::class, 'createWrite']);
+        $group->post('', [BoardController::class, 'createWrite'])
+            ->add(new WriteDelayMiddleware('write'));
 
         $group->group('/{wr_id}', function (RouteCollectorProxy $group) {
             $group->get('', [BoardController::class, 'getWrite']);
@@ -30,7 +33,9 @@ $app->group('/v1/boards/{bo_table}', function (RouteCollectorProxy $group){
             $group->post('/files', [BoardController::class, 'uploadFiles']);
             $group->get('/files/{bf_no}', [BoardController::class, 'downloadFile']);
 
-            $group->post('/comments', [BoardController::class, 'createComment']);
+            $group->post('/comments', [BoardController::class, 'createComment'])
+                ->add(new WriteDelayMiddleware('comment'));
+
             $group->get('/comments', [BoardController::class, 'getComments']);
             $group->group('/comments/{comment_id}', function (RouteCollectorProxy $group) {
                 $group->post('', [BoardController::class, 'getComment']);
@@ -38,13 +43,13 @@ $app->group('/v1/boards/{bo_table}', function (RouteCollectorProxy $group){
                 $group->delete('', [BoardController::class, 'deleteComment']);
             })->add(CommentMiddleware::class);
         })
-        ->add(WriteMiddleware::class);
+            ->add(WriteMiddleware::class);
     })
-    ->add(OptionalAccessTokenAuthMiddleware::class);
+        ->add(OptionalAccessTokenAuthMiddleware::class);
 
     $group->post('/writes/{wr_id}/{good_type}', [BoardController::class, 'goodWrite'])
         ->add(WriteMiddleware::class)
         ->add(AccessTokenAuthMiddleware::class);
 })
-->add(BoardMiddleware::class)
-->add(ConfigMiddleware::class);
+    ->add(BoardMiddleware::class)
+    ->add(ConfigMiddleware::class);

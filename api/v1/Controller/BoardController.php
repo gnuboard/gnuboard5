@@ -455,14 +455,6 @@ class BoardController
         run_event('api_create_write_before', $board, $group);
 
         try {
-            //작성 제한 시간 체크
-            $cookies = $request->getCookieParams();
-            if (isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])) {
-                $last_write_time = $cookies['last_write_time'];
-                if ($last_write_time + $config['cf_delay_sec'] > time()) {
-                    throw new HttpBadRequestException($request, '너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
-                }
-            }
 
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
@@ -503,7 +495,7 @@ class BoardController
             run_event('api_create_write_after', $board, $group, $wr_id, $parent_write);
 
             $response_data = new CreateWriteResponse('success', $wr_id);
-            return api_response_json($response, $response_data);
+            return api_response_json($response, $response_data, 201);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -853,14 +845,6 @@ class BoardController
         $member = $request->getAttribute('member');
 
         try {
-            //작성 제한 시간 체크
-            $cookies = $request->getCookieParams();
-            if (isset($cookies['last_write_time']) && !is_super_admin($config, $member['mb_id'])) {
-                $last_write_time = $cookies['last_write_time'];
-                if ($last_write_time + $config['cf_delay_sec'] > time()) {
-                    throw new HttpBadRequestException($request, '너무 빠른 시간내에 댓글을 연속해서 올릴 수 없습니다.');
-                }
-            }
 
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
@@ -893,7 +877,7 @@ class BoardController
 
             run_event('api_create_comment_after', $board, $write, $comment_id, $parent_comment);
 
-            return api_response_json($response, array('message' => '댓글이 등록되었습니다.'));
+            return api_response_json($response, ['message' => '댓글이 등록되었습니다.'], 201);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());

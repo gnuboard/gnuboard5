@@ -11,4 +11,5 @@ use Slim\Routing\RouteCollectorProxy;
 $app->group('/v1/token', function (RouteCollectorProxy $group) {
     $group->post('', [AuthenticationController::class, 'generateToken']);
     $group->post('/refresh', [AuthenticationController::class, 'refreshToken']);
+    $group->post('/guest', [AuthenticationController::class, 'generateTokenByGuest']);
 });

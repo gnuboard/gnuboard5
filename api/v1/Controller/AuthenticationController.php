@@ -10,6 +10,7 @@ use API\Service\AuthenticationService;
 use API\Service\MemberService;
 use API\v1\Model\Request\Authentication\GenerateTokenRequest;
 use API\v1\Model\Request\Authentication\RefreshTokenRequest;
+use API\v1\Model\Response\Authentication\GenerateGuestTokenResponse;
 use API\v1\Model\Response\Authentication\GenerateTokenResponse;
 use Firebase\JWT\ExpiredException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -158,6 +159,40 @@ class AuthenticationController
                 'token_type' => 'Bearer',
             ]
         );
+        return api_response_json($response, $response_data);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/v1/token/guest",
+     *     summary="Access/Refresh Token 발급",
+     *     tags={"인증"},
+     *     description="일회성 Access Token  발급합니다.
+    - Access Token은 API 요청에 사용되며, 일정 시간 후 만료됩니다.
+    ",
+     *     @OA\Response(response="200", description="Access Token 발급 성공", @OA\JsonContent(ref="#/components/schemas/GenerateGuestTokenResponse")),
+     *     @OA\Response(response="401", ref="#/components/responses/401"),
+     *     @OA\Response(response="403", ref="#/components/responses/403"),
+     *     @OA\Response(response="422", ref="#/components/responses/422"),
+     *     @OA\Response(response="500", ref="#/components/responses/500")
+     * )
+     */
+    public function generateTokenByGuest(Request $request, Response $response): Response
+    {
+        // 토큰 생성
+        $claim = ['sub' => '', 'role' => 'guest'];
+        $access_token = $this->token_manager->createToken('access', $claim);
+
+        // 토큰 디코딩
+        $access_token_decode = $this->token_manager->decodeToken('access', $access_token);
+
+        $response_data = new GenerateGuestTokenResponse(
+            [
+                'access_token' => $access_token,
+                'access_token_expire_at' => date('c', $access_token_decode->exp),
+                'token_type' => 'Bearer',
+            ]);
+
         return api_response_json($response, $response_data);
     }
 }
