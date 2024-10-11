@@ -38,7 +38,7 @@ class AlarmHooks
          */
         $comment_serivce = $app->getContainer()->get('API\Service\CommentService');
         $comment = $comment_serivce->fetchComment($comment_id);
-        if (!$comment['mb_id']) {
+        if (!$comment) {
             return false;
         }
 

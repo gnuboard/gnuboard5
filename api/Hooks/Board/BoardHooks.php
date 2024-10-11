@@ -106,10 +106,11 @@ class BoardHooks
             $result = Db::getInstance()->run($query, [$write['wr_id']])->fetchAll();
 
             foreach ($result as $row) {
-                if ($row['wr_email'] == $write['wr_email']) {
+                if ($row['wr_email'] === $write['wr_email']) {
                     continue;
                 }
-                if ($row['wr_email'] == $comment['wr_email']) {
+
+                if ($row['wr_email'] === ($comment['wr_email'] ?? '')) {
                     continue;
                 }
                 $to_emails[] = $row['wr_email'];

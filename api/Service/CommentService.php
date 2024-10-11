@@ -41,7 +41,7 @@ class CommentService
      */
     public function getComment(int $wr_id, string $mb_id, ?string $password): array
     {
-        $fetch_comments = [$this->fetchComment($wr_id)];
+        $fetch_comments = [$this->fetchComment($wr_id) ?: []] ;
         $result = [];
         foreach ($fetch_comments as $comment) {
             $comment['save_content'] = $comment['wr_content'];
@@ -86,7 +86,7 @@ class CommentService
     /**
      *  댓글 1개 조회 쿼리
      * @param int $wr_id
-     * @return array
+     * @return array|false
      */
     public function fetchComment(int $wr_id): array
     {
