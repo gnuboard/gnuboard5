@@ -3,6 +3,7 @@
 namespace API\Middleware;
 
 use API\Auth\JwtTokenManager;
+use API\Exceptions\HttpNotFoundException;
 use API\Service\MemberService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -48,14 +49,30 @@ class OptionalAccessTokenAuthMiddleware
     {
         $token = $this->extractToken($request);
         if ($token) {
-            $decode = $this->token_manager->decodeToken('access', $token);
-            $member = $this->member_service->fetchMemberById($decode->sub);
+            $member = $this->getMemberFromToken($token);
+            if (!$member) {
+                throw new HttpNotFoundException($request, 'Member not found.');
+            }
+
             $request = $request->withAttribute('member', $member);
         } else {
             $request = $request->withAttribute('member', $this->default_member);
         }
 
         return $handler->handle($request);
+    }
+
+    private function getMemberFromToken($token)
+    {
+        $decode = $this->token_manager->decodeToken('access', $token);
+
+        // 비회원
+        if (isset($decode->role) && $decode->role === 'guest') {
+            return $this->default_member;
+        }
+
+        // 회원
+        return $this->member_service->fetchMemberById($decode->sub);
     }
 
     /**
