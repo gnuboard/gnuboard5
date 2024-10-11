@@ -187,7 +187,7 @@ class MemberController
 
             $this->member_service->updateMember($mb_id, ['mb_email' => $data->email, 'mb_email_certify2' => $mb_nonce]);
 
-            return api_response_json($response, array('message' => "{$data->email} 주소로 인증메일이 재전송되었습니다."));
+            return api_response_json($response, ['message' => "{$data->email} 주소로 인증메일이 재전송되었습니다."]);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -259,7 +259,7 @@ class MemberController
         $mb_id = $args['mb_id'];
         $login_member = $request->getAttribute('member');
         $member = $this->member_service->fetchMemberById($mb_id);
-        if(!$member) {
+        if (!$member) {
             throw new HttpNotFoundException($request, '회원정보가 존재하지 않습니다.');
         }
 
@@ -306,7 +306,7 @@ class MemberController
 
             $this->member_service->updateMemberProfile($member['mb_id'], $data);
 
-            return api_response_json($response, array('message' => '회원정보가 수정되었습니다.'));
+            return api_response_json($response, ['message' => '회원정보가 수정되었습니다.']);
         } catch (Exception $e) {
             if ($e->getCode() === 409) {
                 throw new HttpConflictException($request, $e->getMessage());
@@ -350,24 +350,24 @@ class MemberController
         $config = $request->getAttribute('config');
         $member = $request->getAttribute('member');
 
-        $request_data = $request->getParsedBody();
-        $uploaded_files = $request->getUploadedFiles();
+        $request_body = $request->getParsedBody();
+        $request_uploaded_files = $request->getUploadedFiles();
 
         try {
-            if ($request_data['del_mb_img']) {
+            if ($request_body['del_mb_img']) {
                 $this->image_service->deleteMemberImage($member['mb_id'], 'image');
             }
-            if ($request_data['del_mb_icon']) {
+            if ($request_body['del_mb_icon']) {
                 $this->image_service->deleteMemberImage($member['mb_id'], 'icon');
             }
-            if (isset($uploaded_files['mb_img'])) {
-                $this->image_service->updateMemberImage($config, $member['mb_id'], 'image', $uploaded_files['mb_img']);
+            if (isset($request_uploaded_files['mb_img'])) {
+                $this->image_service->updateMemberImage($config, $member['mb_id'], 'image', $request_uploaded_files['mb_img']);
             }
-            if (isset($uploaded_files['mb_icon'])) {
-                $this->image_service->updateMemberImage($config, $member['mb_id'], 'icon', $uploaded_files['mb_icon']);
+            if (isset($request_uploaded_files['mb_icon'])) {
+                $this->image_service->updateMemberImage($config, $member['mb_id'], 'icon', $request_uploaded_files['mb_icon']);
             }
 
-            return api_response_json($response, array('message' => '회원 아이콘/이미지가 수정되었습니다.'));
+            return api_response_json($response, ['message' => '회원 아이콘/이미지가 수정되었습니다.']);
         } catch (Exception $e) {
             if ($e->getCode() === 400) {
                 throw new HttpBadRequestException($request, $e->getMessage());
@@ -406,7 +406,7 @@ class MemberController
             $this->social_service->leaveMember($member['mb_id']);
             $this->member_service->leaveMember($member);
 
-            return api_response_json($response, array('message' => '회원탈퇴가 완료되었습니다.'));
+            return api_response_json($response, ['message' => '회원탈퇴가 완료되었습니다.']);
         } catch (Exception $e) {
             throw $e;
         }

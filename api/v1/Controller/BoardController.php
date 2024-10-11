@@ -206,7 +206,7 @@ class BoardController
         $board = $request->getAttribute('board');
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
-        $params = $request->getQueryParams();
+        $query_params = $request->getQueryParams();
 
         // 권한 체크
         try {
@@ -217,8 +217,8 @@ class BoardController
                 $thumb = $this->write_service->getBoardThumbnail($write, $board['bo_gallery_width'], $board['bo_gallery_height']);
             }
 
-            $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
-            $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
+            $fetch_prev = $this->write_service->fetchPrevWrite($write, $query_params) ?: [];
+            $fetch_next = $this->write_service->fetchNextWrite($write, $query_params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
             $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
@@ -276,15 +276,15 @@ class BoardController
         $board = $request->getAttribute('board');
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
-        $params = $request->getParsedBody();
+        $request_body = $request->getParsedBody();
 
         // 권한 체크
         try {
-            $password = $params['wr_password'] ?? '';
+            $password = $request_body['wr_password'] ?? '';
             $this->board_permission->readWrite($member, $write, $password);
             $thumb = [];
-            $fetch_prev = $this->write_service->fetchPrevWrite($write, $params) ?: [];
-            $fetch_next = $this->write_service->fetchNextWrite($write, $params) ?: [];
+            $fetch_prev = $this->write_service->fetchPrevWrite($write, $request_body) ?: [];
+            $fetch_next = $this->write_service->fetchNextWrite($write, $request_body) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
@@ -620,18 +620,18 @@ class BoardController
         $write = $request->getAttribute('write');
         $member = $request->getAttribute('member');
 
-        $request_data = $request->getParsedBody();
-        $uploaded_data = $request->getUploadedFiles();
+        $request_body = $request->getParsedBody();
+        $request_uploaded_files = $request->getUploadedFiles();
 
         try {
             // 데이터 검증 및 처리
-            $upload_files = new UploadFileRequest($this->file_service, $board, $write, $uploaded_data, $request_data);
+            $upload_files = new UploadFileRequest($this->file_service, $board, $write, $request_uploaded_files, $request_body);
 
             // 권한 체크
             if ($member['mb_id']) {
                 $this->board_permission->uploadFiles($member, $write);
             } else {
-                $this->board_permission->uploadFilesByGuest($member, $write, $request_data['wr_password'] ?? '');
+                $this->board_permission->uploadFilesByGuest($member, $write, $request_body['wr_password'] ?? '');
             }
 
             // 파일 업로드
@@ -701,7 +701,7 @@ class BoardController
         if (!file_exists($file_path)) {
             throw new HttpNotFoundException($request, '파일이 존재하지 않습니다.');
         }
-        
+
         $this->file_service->increaseDownloadCount($write['wr_id'], $request->getAttribute('bf_no'));
 
         // 권한 체크
@@ -725,7 +725,7 @@ class BoardController
             ->withHeader('Pragma', 'public')
             ->withHeader('Content-Length', $file_size);
         $file = fopen($file_path, 'rb');
-        
+
         return $response->withBody(new Stream($file));
     }
 

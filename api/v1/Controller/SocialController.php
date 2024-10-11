@@ -279,9 +279,9 @@ class SocialController
             return api_response_json($response, ['message' => '이미 가입된 회원입니다.'], 409);
         }
 
-        $request_data = $request->getParsedBody() ?? [];
+        $request_body = $request->getParsedBody() ?? [];
         $config = ConfigService::getConfig();
-        $create_member_data = new CreateSocialMemberRequest($config, $request_data);
+        $create_member_data = new CreateSocialMemberRequest($config, $request_body);
 
         try {
             $this->socialService->signUpSocialMember($provider, $profile, $create_member_data);

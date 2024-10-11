@@ -76,11 +76,13 @@ class AlarmController
         if (!G5_DEBUG) {
             throw new HttpForbiddenException($request, '디버그 모드에서만 됩니다.');
         }
-        $type = $request->getParsedBody()['type'];
-        $value = $request->getParsedBody()['value'];
-        $title = $request->getParsedBody()['title'];
-        $body = $request->getParsedBody()['body'];
-        $image = $request->getParsedBody()['image'] ?? '';
+
+        $request_body = $request->getParsedBody();
+        $type = $request_body['type'];
+        $value = $request_body['value'];
+        $title = $request_body['title'];
+        $body = $request_body['body'];
+        $image = $request_body['image'] ?? '';
         $target_data = [$type, $value];
 
         $alarm_message = $this->alarm_service->createMessage($target_data, $title, $body . date('Y-m-d H:i:s'), $image);
@@ -88,6 +90,7 @@ class AlarmController
         $response_data = [
             'result' => $result,
         ];
+
         return api_response_json($response, $response_data);
     }
 
@@ -102,25 +105,29 @@ class AlarmController
      *     @OA\RequestBody(
      *      required=true,
      *      @OA\MediaType(
-     *      mediaType="application/json",
-     *      @OA\Schema(
+     *        mediaType="application/json",
+     *        @OA\Schema(
      *          @OA\Property(
-     *          property="fcm_token",
-     *          type="string",
-     *          description="FCM 토큰"
+     *            property="fcm_token",
+     *            type="string",
+     *            description="FCM 토큰"
      *          ),
      *          @OA\Property(
-     *          property="platform",
-     *          type="string",
-     *          default="web,android,ios 중에 선택하세요",
-     *          description="platform"
-     *          )
-     *     )
+     *            property="platform",
+     *            type="string",
+     *            default="web,android,ios 중에 선택하세요",
+     *            description="platform"
+     *        )
+     *      )
      *    )
      *  ),
-     *     @OA\Response(response="200", description="FCM 토큰 등록 성공", @OA\JsonContent(type="object", @OA\Property(property="message", type="string", example="토큰이 등록되었습니다."))),
+     *     @OA\Response(response="200", description="FCM 토큰 등록 성공",
+     *       @OA\JsonContent(type="object",
+     *         @OA\Property(property="message", type="string", example="토큰이 등록되었습니다.")
+     *      )
+     *     ),
      *     @OA\Response(response="422", ref="#/components/responses/422")
-     *     )
+     *  )
      *
      *
      * @param Request $request
@@ -129,19 +136,19 @@ class AlarmController
      */
     public function register(Request $request, Response $response): Response
     {
-        $parsed_data = $request->getParsedBody();
-        if (!isset($parsed_data['fcm_token'])) {
+        $request_body = $request->getParsedBody();
+        if (!isset($request_body['fcm_token'])) {
             throw new HttpUnprocessableEntityException($request, 'fcm 토큰이 없습니다.');
         }
 
-        if (!isset($parsed_data['platform'])) {
+        if (!isset($request_body['platform'])) {
             throw new HttpUnprocessableEntityException($request, 'platform 이 없습니다.');
         }
 
         $member = $request->getAttribute('member');
-        if (isset($parsed_data['fcm_token'], $parsed_data['platform'])) {
+        if (isset($request_body['fcm_token'], $request_body['platform'])) {
             $ip = $request->getServerParams()['REMOTE_ADDR'];
-            $this->alarm_service->registerFcmToken($member['mb_id'], $parsed_data['fcm_token'], $parsed_data['platform'], $ip);
+            $this->alarm_service->registerFcmToken($member['mb_id'], $request_body['fcm_token'], $request_body['platform'], $ip);
         }
 
         return api_response_json($response, ['message' => '토큰이 등록되었습니다.']);

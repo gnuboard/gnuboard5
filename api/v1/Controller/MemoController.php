@@ -120,26 +120,26 @@ class MemoController
      *     tags={"쪽지"},
      *     security={{"Oauth2Password": {}}},
      *     @OA\RequestBody (
-     *     required=true,
-     *     description="쪽지 전송",
-     *     @OA\JsonContent(
-     *     required={"me_recv_mb_id", "me_memo"},
-     *     @OA\Property(
-     *     property="me_recv_mb_id",
-     *     type="string",
-     *     description="받는 회원 ID"
-     *   ),
-     *     @OA\Property(
-     *     property="me_memo",
-     *     type="string",
-     *     description="쪽지 내용"
-     *     )
-     *    )
-     *   ),
+     *       required=true,
+     *       description="쪽지 전송",
+     *       @OA\JsonContent(
+     *         required={"me_recv_mb_id", "me_memo"},
+     *         @OA\Property(
+     *           property="me_recv_mb_id",
+     *           type="string",
+     *          description="받는 회원 ID"
+     *       ),
+     *       @OA\Property(
+     *        property="me_memo",
+     *        type="string",
+     *        description="쪽지 내용"
+     *       )
+     *      )
+     *     ),
      *     @OA\Response (
-     *     response="200",
-     *     description="쪽지 전송 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/BaseResponse")
+     *       response="200",
+     *       description="쪽지 전송 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/BaseResponse")
      *     ),
      *     @OA\Response(response="400", ref="#/components/responses/400"),
      *     @OA\Response(response="403", ref="#/components/responses/403"),
@@ -152,22 +152,22 @@ class MemoController
         $config = ConfigService::getConfig();
         $mb_id = $member['mb_id'];
 
-        $request_data = $request->getParsedBody();
+        $request_body = $request->getParsedBody();
 
 
-        if (!isset($request_data['me_recv_mb_id'])) {
+        if (!isset($request_body['me_recv_mb_id'])) {
             return api_response_json($response, ['message' => 'me_recv_mb_id 필드가 필요합니다.'], 422);
         }
 
-        if (!isset($request_data['me_memo'])) {
+        if (!isset($request_body['me_memo'])) {
             return api_response_json($response, ['message' => 'me_memo 필드가 필요합니다.'], 422);
         }
 
-        $receiver_mb_id = $request_data['me_recv_mb_id'];
+        $receiver_mb_id = $request_body['me_recv_mb_id'];
         $ip = $request->getServerParams()['REMOTE_ADDR'];
         $sended_memo_ids = [];
         try {
-            $sended_memo_ids = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_data['me_memo'], $ip);
+            $sended_memo_ids = $this->memo_service->sendMemo($mb_id, $receiver_mb_id, $request_body['me_memo'], $ip);
         } catch (\Exception $e) {
             if ($e->getCode() === 400) {
                 throw new HttpBadRequestException($request, $e->getMessage());
@@ -181,7 +181,7 @@ class MemoController
         }
         $this->memo_service->updateNotReadMemoCount($receiver_mb_id);
 
-        run_event('api_send_memo_after', $mb_id, $receiver_mb_id, $request_data);
+        run_event('api_send_memo_after', $mb_id, $receiver_mb_id, $request_body);
 
         return api_response_json($response, ['message' => '쪽지를 전송했습니다.']);
     }
@@ -194,17 +194,17 @@ class MemoController
      *     tags={"쪽지"},
      *     security={{"Oauth2Password": {}}},
      *     @OA\Parameter (
-     *     name="me_id",
-     *     in="path",
-     *     description="쪽지 ID",
-     *     required=true,
-     *     @OA\Schema(type="integer")
-     *   ),
+     *       name="me_id",
+     *       in="path",
+     *       description="쪽지 ID",
+     *       required=true,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response (
-     *     response="200",
-     *     description="쪽지 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/MemoResponse")
-     *  ),
+     *       response="200",
+     *       description="쪽지 조회 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/MemoResponse")
+     *     ),
      *     @OA\Response(response="400", ref="#/components/responses/400"),
      *     @OA\Response(response="403", ref="#/components/responses/403"),
      *     @OA\Response(response="422", ref="#/components/responses/422")
@@ -236,11 +236,11 @@ class MemoController
     /**
      *  쪽지 삭제
      * @OA\Delete (
-     *      path="/api/v1/member/memos/{me_id}",
-     *      summary="쪽지 삭제",
-     *      tags={"쪽지"},
-     *      security={{"Oauth2Password": {}}},
-     *      @OA\Parameter (
+     *    path="/api/v1/member/memos/{me_id}",
+     *    summary="쪽지 삭제",
+     *    tags={"쪽지"},
+     *    security={{"Oauth2Password": {}}},
+     *    @OA\Parameter (
      *      name="me_id",
      *      in="path",
      *      description="쪽지 ID",

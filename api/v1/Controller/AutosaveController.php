@@ -35,11 +35,11 @@ class AutosaveController
      */
     public function index(Request $request, Response $response)
     {
-        $body = $request->getParsedBody();
+        $request_body = $request->getParsedBody();
         $member = $request->getAttribute('member');
         $mb_id = $member['mb_id'];
-        $page = (int)($body['page'] ?? 1);
-        $per_page = (int)($body['per_page'] ?? 10);
+        $page = (int)($request_body['page'] ?? 1);
+        $per_page = (int)($request_body['per_page'] ?? 10);
 
         if ($page < 1) {
             $page = 1;
