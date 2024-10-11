@@ -30,12 +30,11 @@ class ThrottleService
 
         //th_scope: 적용범위 글쓰기면 'write' 댓글은 'comment' 등
         $query = "CREATE TABLE IF NOT EXISTS {$throttle_table} (
-            `th_token` varchar(255) NOT NULL COMMENT '엑세스 토큰', 
+            `th_token_hash` varchar(80) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL COMMENT '엑세스 토큰 해시', 
             `th_scope` varchar(50) NOT NULL COMMENT '적용 범위',
-            `th_created_at` DATETIME NOT NULL COMMENT '생성시각',
+            `th_created_at` DATETIME NOT NULL COMMENT '추가된 시각',
             `th_last_access_at` DATETIME NOT NULL COMMENT '마지막 접근시각',
-            PRIMARY KEY (`th_token`),
-            UNIQUE INDEX `th_token` (`th_token`) USING BTREE
+            PRIMARY KEY (`th_token_hash`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='토큰당 시간기준 요청제한 테이블'";
 
         Db::getInstance()->getPdo()->exec($query);
@@ -56,35 +55,40 @@ class ThrottleService
 
     /**
      * 토큰 추가 또는 갱신
-     * @param $token
-     * @param $scope
+     * @param string $token_hash sha256 해시된 토큰
+     * @param string $scope
      * @return void
      */
-    public function upsertToken($token, $scope)
+    public function upsertToken($token_hash, $scope)
     {
         $throttle_table = $GLOBALS['g5']['throttle_table'] ?? G5_TABLE_PREFIX . 'throttle';
         $query = "INSERT INTO {$throttle_table} 
-            (th_token, th_scope, th_created_at, th_last_access_at) 
-            VALUES (:th_token, :th_scope, :th_created_at, :th_last_access_at) ON DUPLICATE KEY UPDATE th_last_access_at = :up_th_last_access_at";
+            (th_token_hash, th_scope, th_created_at, th_last_access_at) 
+            VALUES (:th_token_hash, :th_scope, :th_created_at, :th_last_access_at) ON DUPLICATE KEY UPDATE th_last_access_at = :up_th_last_access_at";
         $stmt = Db::getInstance()->getPdo()->prepare($query);
         $stmt->execute([
-            'th_token' => $token,
+            'th_token_hash' => $token_hash,
             'th_scope' => $scope,
             'th_created_at' => G5_TIME_YMDHIS,
             'th_last_access_at' => G5_TIME_YMDHIS,
             'up_th_last_access_at' => G5_TIME_YMDHIS
         ]);
     }
+    
+    public function useThrottle()
+    {
+        return $this->limit_seconds <= 0 ? false : true;
+    }
 
     /**
      * 토큰당 요청 제한 걸렸는지 확인
-     * @param string $token
+     * @param string $token_hash
      * @return bool
      */
-    public function isThrottled($token, $type)
+    public function isThrottled($token_hash, $type)
     {
         $this->removeExpires();
-        $last_time = $this->fetchLastAccessTime($token, $type);
+        $last_time = $this->fetchLastAccessTime($token_hash, $type);
         // 마지막 접근시각이 있고 제한시간 내에 접근했다면
         if ($last_time && G5_TIME_YMDHIS - $last_time < $this->limit_seconds) {
             return true;
@@ -94,15 +98,15 @@ class ThrottleService
 
     /**
      * 토큰당 마지막 접근시각 조회
-     * @param $token
-     * @param $type
+     * @param string $token_hash
+     * @param string $type
      * @return int|false
      */
-    public function fetchLastAccessTime($token, $type)
+    public function fetchLastAccessTime($token_hash, $type)
     {
         $throttle_table = $GLOBALS['g5']['throttle_table'] ?? G5_TABLE_PREFIX . 'throttle';
-        $query = "SELECT th_last_access_at FROM {$throttle_table} WHERE th_token = :th_token AND th_scope = :th_scope";
-        $stmt = Db::getInstance()->run($query, ['th_token' => $token, 'th_scope' => $type]);
+        $query = "SELECT th_last_access_at FROM {$throttle_table} WHERE th_token_hash = :th_token_hash AND th_scope = :th_scope";
+        $stmt = Db::getInstance()->run($query, ['th_token_hash' => $token_hash, 'th_scope' => $type]);
         return $stmt->fetchColumn();
     }
 }

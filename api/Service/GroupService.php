@@ -72,6 +72,6 @@ class GroupService
 
         $query = "SELECT * FROM {$this->group_member_table} WHERE gr_id = :gr_id AND mb_id = :mb_id";
         $stmt = Db::getInstance()->run($query, ['gr_id' => $gr_id, 'mb_id' => $mb_id]);
-        return $stmt->fetch();
+        return $stmt->fetch() ?: [];
     }
 }

@@ -22,17 +22,22 @@ class WriteDelayMiddleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $token = $this->extractToken($request);
-        $result = $this->throttle_service->isThrottled($token, $this->type);
-        if ($result) {
-            throw new HttpConflictException($request, '너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+        if ($this->throttle_service->useThrottle()) {
+            $token = $this->extractToken($request);
+            $token_hash = hash('sha256', $token);
+            $result = $this->throttle_service->isThrottled($token_hash, $this->type);
+            if ($result) {
+                throw new HttpConflictException($request, '너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+            }
         }
 
         $response = $handler->handle($request);
 
         // 글쓰기가 성공했는지 확인 (상태 코드가 201인 경우)
-        if ($response->getStatusCode() === 201) {
-            $this->throttle_service->upsertToken($token, $this->type);
+        if ($this->throttle_service->useThrottle()) {
+            if (($response->getStatusCode() === 201) && isset($token_hash)) {
+                $this->throttle_service->upsertToken($token_hash, $this->type);
+            }
         }
 
         return $response;

@@ -165,7 +165,7 @@ class AuthenticationController
     /**
      * @OA\Post(
      *     path="/api/v1/token/guest",
-     *     summary="Access/Refresh Token 발급",
+     *     summary="Access Token 발급",
      *     tags={"인증"},
      *     description="일회성 Access Token  발급합니다.
     - Access Token은 API 요청에 사용되며, 일정 시간 후 만료됩니다.

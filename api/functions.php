@@ -36,7 +36,7 @@ function create_refresh_token_table()
         $query = "CREATE TABLE IF NOT EXISTS `$refresh_token_table_name` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `mb_id` varchar(20) NOT NULL,
-                    `refresh_token` text NOT NULL,
+                    `refresh_token` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL, 
                     `expires_at` datetime NOT NULL,
                     `created_at` datetime NOT NULL,
                     `updated_at` datetime NOT NULL,
