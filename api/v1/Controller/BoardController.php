@@ -11,11 +11,9 @@ use API\Service\BoardGoodService;
 use API\Service\BoardNewService;
 use API\Service\CommentService;
 use API\Service\BoardPermission;
-use API\Service\EncryptionService;
 use API\Service\MemberImageService;
 use API\Service\PointService;
 use API\Service\ScrapService;
-use API\Service\ThumbnailService;
 use API\Service\WriteService;
 use API\v1\Model\PageParameters;
 use API\v1\Model\Request\Board\CreateWriteRequest;
@@ -183,6 +181,7 @@ class BoardController
         }
     }
 
+
     /**
      * @OA\Get(
      *      path="/api/v1/boards/{bo_table}/writes/{wr_id}",
@@ -221,10 +220,8 @@ class BoardController
             $fetch_next = $this->write_service->fetchNextWrite($write, $query_params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
-            $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
-            $write['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $write['wr_ip']);
-            $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $board['bo_image_width']);
-
+            $images = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
+            $write = $this->write_service->getWrite($write, $images);
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
@@ -288,14 +285,12 @@ class BoardController
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
 
-            $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
-            $write['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $write['wr_ip']);
-            $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $board['bo_image_width']);
-
+            $images = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
+            $write = $this->write_service->getWrite($write, $images);
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')))->files ?? [],
+                'images' => (new FileResponse($images))->files ?? [],
                 'normal_files' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [],
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,
@@ -455,7 +450,6 @@ class BoardController
         run_event('api_create_write_before', $board, $group);
 
         try {
-
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateWriteRequest($this->board_permission, $member, $request_body);
@@ -845,7 +839,6 @@ class BoardController
         $member = $request->getAttribute('member');
 
         try {
-
             // 데이터 검증 및 처리
             $request_body = $request->getParsedBody();
             $request_data = new CreateCommentRequest($board, $member, $request_body);

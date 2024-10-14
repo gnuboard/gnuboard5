@@ -168,6 +168,27 @@ class WriteService
         return $result;
     }
 
+
+    /**
+     * 게시글 하나 가져오기
+     * @return array
+     */
+    public function getWrite(array $write, array $images)
+    {
+        // 그누보드 5에서는 첨부파일의 이미지를 본문 상단에 출력합니다.
+        $result = '';
+        foreach ($images as $value) {
+            $result .= '<img src=' . "'" . G5_DATA_URL . "/file/{$this->board['bo_table']}/{$value['bf_file']}' " . " alt='{$value['bf_content']}' /><br>";
+        }
+
+        $write['wr_email'] = EncryptionService::encrypt($write['wr_email']);
+        $write['wr_ip'] = preg_replace('/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/', G5_IP_DISPLAY, $write['wr_ip']);
+        $write['wr_content'] = $result . $write['wr_content'];
+        $write['wr_content'] = ThumbnailService::getThumbnailHtml($write['wr_content'], $this->board['bo_image_width']);
+
+        return $write;
+    }
+
     /**
      * 공지 게시글 목록 조회
      * @return array
