@@ -133,7 +133,7 @@ class SocialService
             // Payco
             $social_config['Payco'] = [
                 'enabled' => in_array('payco', $social_list),
-//                'adapter' => in_array('payco', $social_list) ? \API\Service\Social\Payco::class : '',
+                'adapter' => in_array('payco', $social_list) ? \API\Service\Social\Payco::class : '',
                 'callback' => $callback_base_url . '/payco',
                 'supportRequestState' => false,
                 'keys' => [
@@ -456,6 +456,18 @@ class SocialService
         $this->deleteAllSocialProfileByMemberId($mb_id);
     }
 
+    /**
+     * 소셜 로그인 인증이후 서버로그인을 위한 토큰 생성
+     * @param string $provider
+     * @param Profile $profile
+     * @return array
+     */
+    public function getLoginTokenBySocialAuth($provider, $profile)
+    {
+        $member = $this->fetchMemberByIdentifier($provider, $profile->identifier);
+        return $this->authentication_service->generateLoginTokenByAuthMemberId($member['mb_id']);
+    }
+
 
     //---------- DB query ------------------------
 
@@ -531,18 +543,6 @@ class SocialService
     {
         $social_table = $GLOBALS['g5']['social_profile_table'];
         return Db::getInstance()->delete($social_table, ['mb_id' => $mb_id]);
-    }
-
-    /**
-     * 소셜 로그인 인증이후 서버로그인을 위한 토큰 생성
-     * @param string $provider
-     * @param Profile $profile
-     * @return array
-     */
-    public function getLoginTokenBySocialAuth($provider, $profile)
-    {
-        $member = $this->fetchMemberByIdentifier($provider, $profile->identifier);
-        return $this->authentication_service->generateLoginTokenByAuthMemberId($member['mb_id']);
     }
 
 }
