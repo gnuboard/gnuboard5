@@ -29,6 +29,7 @@ use API\v1\Model\Response\Write\CommentResponse;
 use API\v1\Model\Response\Write\FileResponse;
 use API\v1\Model\Response\Write\GetCommentsResponse;
 use API\v1\Model\Response\Write\GoodWriteResponse;
+use API\v1\Model\Response\Write\ImageFileResponse;
 use API\v1\Model\Response\Write\NeighborWrite;
 use API\v1\Model\Response\Write\Thumbnail;
 use API\v1\Model\Response\Write\Write;
@@ -220,12 +221,12 @@ class BoardController
             $fetch_next = $this->write_service->fetchNextWrite($write, $query_params) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
-            $images = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
-            $write = $this->write_service->getWrite($write, $images);
+            $write = $this->write_service->getWrite($write);
+
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'image')))->files ?? [],
+                'images' => (new ImageFileResponse($this->file_service->getImageFiles((int)$write['wr_id'])))->files ?? [],
                 'normal_files' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [],
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,
@@ -284,13 +285,12 @@ class BoardController
             $fetch_next = $this->write_service->fetchNextWrite($write, $request_body) ?: [];
             $prev = new NeighborWrite($board['bo_table'], $fetch_prev);
             $next = new NeighborWrite($board['bo_table'], $fetch_next);
+            $write = $this->write_service->getWrite($write);
 
-            $images = $this->file_service->getFilesByType((int)$write['wr_id'], 'image');
-            $write = $this->write_service->getWrite($write, $images);
             $write_data = array_merge($write, array(
                 'mb_icon_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'icon'),
                 'mb_image_path' => $this->image_service->getMemberImagePath($write['mb_id'], 'image'),
-                'images' => (new FileResponse($images))->files ?? [],
+                'images' => (new ImageFileResponse($this->file_service->getImageFiles((int)$write['wr_id'])))->files ?? [],
                 'normal_files' => (new FileResponse($this->file_service->getFilesByType((int)$write['wr_id'], 'file')))->files ?? [],
                 'thumbnail' => new Thumbnail($thumb),
                 'prev' => $prev,

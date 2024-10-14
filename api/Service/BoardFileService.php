@@ -39,7 +39,27 @@ class BoardFileService
     }
 
     /**
-     *  게시글 파일 목록을 이미지와 파일로 분리하여 반환 url 을 생성합니다.
+     * 게시글의 첨부파일 이미지들 가져온다.
+     * @param int $wr_id
+     * @return File[]
+     */
+    public function getImageFiles(int $wr_id)
+    {
+        $images = $this->getFilesByType($wr_id, 'image');
+        $thumb_width = $this->board['bo_image_width'];
+        foreach ($images as &$image) {
+            $filename = basename($image['bf_file']);
+            $filepath = G5_DATA_PATH . '/file/' . $this->bo_table;
+            $thumb_file = ThumbnailService::createThumbnail($filename, $filepath, $filepath, $thumb_width);
+            $image['bf_file'] = G5_DATA_URL . "/file/{$this->bo_table}/{$thumb_file}";
+        }
+        unset($image);
+
+        return $images;
+    }
+
+    /**
+     *  게시글 파일 목록을 이미지와 파일로 분리하여 반환합니다.
      * @param int $wr_id
      * @param string $type
      * @return File[]
