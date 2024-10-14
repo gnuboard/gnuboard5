@@ -7,6 +7,7 @@ use API\Exceptions\HttpForbiddenException;
 use API\Service\ConfigService;
 use API\Service\MemoService;
 use API\Service\PointService;
+use API\v1\Model\Response\Memo\MemoResponse;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -221,7 +222,7 @@ class MemoController
         }
 
         try {
-            $result = $this->memo_service->fetchMemo($memo_id, $mb_id);
+            $result = $this->memo_service->fetchMemo($memo_id, $mb_id) ?: [];
         } catch (\Exception $e) {
             if ($e->getCode() === 403) {
                 throw new HttpForbiddenException($request, $e->getMessage());
@@ -229,6 +230,7 @@ class MemoController
         }
 
         $this->memo_service->checkRead($memo_id);
+        $result = new MemoResponse($result);
 
         return api_response_json($response, $result);
     }
@@ -265,7 +267,7 @@ class MemoController
         if (!is_numeric($memo_id)) {
             return api_response_json($response, ['message' => 'memo_id 는 숫자만 가능합니다.'], 422);
         }
-        
+
         try {
             $this->memo_service->deleteMemoCall($memo_id);
             $this->memo_service->deleteMemo($memo_id, $mb_id);

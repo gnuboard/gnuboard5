@@ -4,7 +4,7 @@
  * GnuBoard5 API with Slim Framework
  *
  * @package g5-api
- * @version 0.8.2
+ * @version 0.8.5
  * @link
  */
 
@@ -52,7 +52,7 @@ if (G5_DEBUG) {
     $display_error_details = true;
 }
 
-//@todo 임시 전역변수 정리후 삭제대상
+// common.lib.php 의 함수 내 $config 를 사용하기 위해 설정합니다.
 $config = ConfigService::getConfig();
 /**
  * Instantiate App
