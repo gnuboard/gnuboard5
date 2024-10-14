@@ -7,6 +7,9 @@ use API\Database\Db;
 
 class BoardNewService
 {
+    /**
+     * @var string 최신글(board_new_table) 테이블명
+     */
     public string $table;
     public string $board_table;
     public string $group_table;
@@ -95,7 +98,7 @@ class BoardNewService
      */
     public function deleteByWrite(string $bo_table, int $wr_id): void
     {
-        Db::getInstance()->delete($this->table, ['bo_table' => $bo_table, 'wr_parent' => $wr_id, 'wr_is_comment' => 0]);
+        Db::getInstance()->delete($this->table, ['bo_table' => $bo_table, 'wr_parent' => $wr_id]);
     }
 
     /**
