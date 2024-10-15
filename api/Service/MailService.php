@@ -32,8 +32,8 @@ class MailService
     {
         $is_debug_mode = G5_DEBUG ? SMTP::DEBUG_LOWLEVEL : SMTP::DEBUG_OFF;
         $host = G5_SMTP;
-        $username = G5_SMTP_USER;
-        $password = G5_SMTP_PASSWORD;
+        $username = defined('G5_SMTP_USER') ? G5_SMTP_USER : '';
+        $password = defined('G5_SMTP_PASSWORD') ? G5_SMTP_PASSWORD : '';
         $port = G5_SMTP_PORT;
 
         $mail = new PHPMailer(true);
