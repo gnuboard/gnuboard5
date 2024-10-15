@@ -41,18 +41,17 @@ class MemoService
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         if ($me_type === 'recv') {
-            $where = 'me_recv_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
+            $where = 'me_recv_mb_id = :mb_id AND me_type = :me_type';
         } else {
-            $where = 'me_send_mb_id = :mb_id AND me_type = :me_type AND me_read_datetime = :me_read_datetime';
+            $where = 'me_send_mb_id = :mb_id AND me_type = :me_type';
         }
 
         $query = "SELECT count(*) FROM $memo_table WHERE {$where}";
-        // 그누보드 5 에서는 me_read_datetime 컬럼이 '0000-00-00 00:00:00' 으로 초기화 되어 있음
         $stmt = Db::getInstance()->run($query, [
             'mb_id' => $mb_id,
-            'me_type' => $me_type,
-            'me_read_datetime' => '0000-00-00 00:00:00'
+            'me_type' => $me_type
         ]);
+
         return $stmt->fetchColumn() ?: 0;
     }
 
@@ -129,11 +128,6 @@ class MemoService
     public function sendMemo($mb_id, $receiver_ids, $content, $ip)
     {
         $result = $this->getReceiveMembers($receiver_ids);
-        $member_result = $this->member_service->fetchMemberById($mb_id);
-        if (!isset($member_result['mb_no'])) {
-            throw new \Exception('회원 정보가 없습니다.', 400);
-        }
-        $mb_no = $member_result['mb_no'];
 
         if (empty($result['available_ids'])) {
             throw new \Exception('쪽지를 전송할 회원이 없습니다.', 400);
@@ -154,7 +148,6 @@ class MemoService
                 'me_send_datetime' => G5_TIME_YMDHIS,
                 'me_memo' => $content,
                 'me_type' => 'recv',
-                'me_send_id' => $mb_no,
                 'me_send_ip' => $ip
             ]);
 
@@ -166,7 +159,7 @@ class MemoService
                     'me_send_datetime' => G5_TIME_YMDHIS,
                     'me_memo' => $content,
                     'me_type' => 'send',
-                    'me_send_id' => $mb_no,
+                    'me_send_id' => $last_insert_id,
                     'me_send_ip' => $ip
                 ]);
 
@@ -295,6 +288,7 @@ class MemoService
     {
         $memo_table = $GLOBALS['g5']['memo_table'];
         $result = Db::getInstance()->run(
+        // 그누보드 5 에서는 me_read_datetime 컬럼이 '0000-00-00 00:00:00' 으로 초기화 되어 있음
             "SELECT count(*) as cnt FROM $memo_table 
                        WHERE me_recv_mb_id = :mb_id
                          AND me_type = 'recv'

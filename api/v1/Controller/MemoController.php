@@ -53,15 +53,15 @@ class MemoController
      *       in="query",
      *       required=true,
      *       @OA\Schema(type="string")
-     *    ),
+     *     ),
      *     @OA\Response (
      *       response="200",
      *       description="쪽지 목록 조회 성공",
      *       @OA\JsonContent(ref="#/components/schemas/MemoListResponse")
-     *      ),
-     *      @OA\Response(response="400", ref="#/components/responses/400"),
-     *      @OA\Response(response="403", ref="#/components/responses/403"),
-     *      @OA\Response(response="422", ref="#/components/responses/422")
+     *     ),
+     *     @OA\Response(response="400", ref="#/components/responses/400"),
+     *     @OA\Response(response="403", ref="#/components/responses/403"),
+     *     @OA\Response(response="422", ref="#/components/responses/422")
      * )
      *
      *
