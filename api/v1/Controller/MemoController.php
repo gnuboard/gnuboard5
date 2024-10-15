@@ -34,31 +34,31 @@ class MemoController
      *     description="현재 로그인한 회원의 모든 쪽지 목록을 조회합니다.",
      *     security={{"Oauth2Password": {}}},
      *     @OA\Parameter (
-     *     name="page",
-     *     description="페이지 번호",
-     *     in="query",
-     *     required=false,
-     *     @OA\Schema(type="integer", minimum=1)
+     *       name="page",
+     *       description="페이지 번호",
+     *       in="query",
+     *       required=false,
+     *       @OA\Schema(type="integer", minimum=1)
+     *     ),
+     *     @OA\Parameter (
+     *       name="per_page",
+     *       description="페이지당 표시할 목록 수",
+     *       in="query",
+     *       required=false,
+     *       @OA\Schema(type="integer", maximum=100)
+     *     ),
+     *     @OA\Parameter (
+     *       name="me_type",
+     *       description="쪽지 타입 (recv: 받은 쪽지, send: 보낸 쪽지)",
+     *       in="query",
+     *       required=true,
+     *       @OA\Schema(type="string")
      *    ),
-     *     @OA\Parameter (
-     *     name="per_page",
-     *     description="페이지당 표시할 목록 수",
-     *     in="query",
-     *     required=false,
-     *     @OA\Schema(type="integer", maximum=100)
-     *   ),
-     *     @OA\Parameter (
-     *     name="me_type",
-     *     description="쪽지 타입 (recv: 받은 쪽지, send: 보낸 쪽지)",
-     *     in="query",
-     *     required=true,
-     *     @OA\Schema(type="string")
-     *  ),
      *     @OA\Response (
-     *     response="200",
-     *     description="쪽지 목록 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/MemoListResponse")
-     *    ),
+     *       response="200",
+     *       description="쪽지 목록 조회 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/MemoListResponse")
+     *      ),
      *      @OA\Response(response="400", ref="#/components/responses/400"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
      *      @OA\Response(response="422", ref="#/components/responses/422")
@@ -128,14 +128,14 @@ class MemoController
      *         @OA\Property(
      *           property="me_recv_mb_id",
      *           type="string",
-     *          description="받는 회원 ID"
-     *       ),
-     *       @OA\Property(
-     *        property="me_memo",
-     *        type="string",
-     *        description="쪽지 내용"
+     *           description="받는 회원 ID"
+     *         ),
+     *         @OA\Property(
+     *          property="me_memo",
+     *          type="string",
+     *          description="쪽지 내용"
+     *         )
      *       )
-     *      )
      *     ),
      *     @OA\Response (
      *       response="200",

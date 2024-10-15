@@ -34,17 +34,17 @@ class PopupController
      *      required=false,
      *     @OA\Schema(type="string", default="both (둘다)", enum={"pc", "mobile", "both"})),
      *     @OA\Parameter(
-     *     name="except_ids",
-     *     in="query",
-     *     description="제외할 팝업 ID",
-     *     required=false,
-     *     @OA\Schema(type="string")
-     *    ),
+     *       name="except_ids",
+     *       in="query",
+     *       description="제외할 팝업 ID",
+     *       required=false,
+     *       @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(response="200",
      *     description="팝업 조회 성공",
      *     @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/PopupResponse")
+     *       type="array",
+     *       @OA\Items(ref="#/components/schemas/PopupResponse")
      *     )
      *   ),
      *   @OA\Response(response="404", ref="#/components/responses/404", description="팝업이 없습니다.")
@@ -57,7 +57,6 @@ class PopupController
     {
         $device = $request->getAttribute('device') ?? 'both';
         $except_ids = $request->getQueryParams()['except_ids'] ?? '';
-        // @todo cache
         $data = $this->popup_service->fetch_popup($device);
         if (!$data || count($data) === 0) {
             return api_response_json($response, ['message' => '팝업이 없습니다.'], 404);

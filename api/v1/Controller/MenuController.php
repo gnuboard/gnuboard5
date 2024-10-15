@@ -24,12 +24,12 @@ class MenuController
      *     summary="메뉴 목록 조회",
      *     tags={"메뉴"},
      *     @OA\Response(
-     *         response=200,
-     *         description="Successful response",
-     *         @OA\JsonContent(
+     *       response=200,
+     *       description="Successful response",
+     *       @OA\JsonContent(
      *         type="array",
      *         @OA\Items(ref="#/components/schemas/MenuItem")
-     *         )
+     *       )
      *     )
      * )
      */

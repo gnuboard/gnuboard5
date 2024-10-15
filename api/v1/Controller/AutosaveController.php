@@ -26,11 +26,11 @@ class AutosaveController
      *     summary="임시저장된 글 목록 조회",
      *     tags={"자동 임시저장"},
      *     security={{"Oauth2Password": {}}},
-     * @OA\Response (
-     *     response="200",
-     *     description="임시저장된 글 목록 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/AutosaveListResponse")
-     * )
+     *     @OA\Response (
+     *       response="200",
+     *       description="임시저장된 글 목록 조회 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/AutosaveListResponse")
+     *     )
      * )
      */
     public function index(Request $request, Response $response)
@@ -145,18 +145,19 @@ class AutosaveController
      *     path="/api/v1/autosaves/{as_id}",
      *     summary="임시저장된 글 조회",
      *     tags={"자동 임시저장"},
-     *      security={{"Oauth2Password": {}}},
+     *     security={{"Oauth2Password": {}}},
      *     @OA\Parameter (
-     *      name="as_id",
-     *      in="path",
-     *      description="임시저장 아이디",
-     *      required=true,
-     *      @OA\Schema(type="integer")
-     *    ),
+     *       name="as_id",
+     *       in="path",
+     *       description="임시저장 아이디",
+     *       required=true,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response (
-     *      response="200",
-     *      description="임시저장된 글 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/Autosave"))
+     *       response="200",
+     *       description="임시저장된 글 조회 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/Autosave")
+     *     )
      * )
      */
     public function show(Request $request, Response $response)
@@ -179,17 +180,17 @@ class AutosaveController
     /**
      * 회원의 임시저장된글 카운트
      * @OA\Get (
-     *     path="/api/v1/autosaves/count",
-     *     summary="임시저장된 글 갯수 조회",
-     *     tags={"자동 임시저장"},
-     *     security={{"Oauth2Password": {}}},
-     *     @OA\Response (
+     *   path="/api/v1/autosaves/count",
+     *   summary="임시저장된 글 갯수 조회",
+     *   tags={"자동 임시저장"},
+     *   security={{"Oauth2Password": {}}},
+     *   @OA\Response (
      *     response="200",
      *     description="임시저장된 글 갯수 조회 성공",
-     *      @OA\JsonContent(
-     *          @OA\Property(property="count", type="integer")
-     *      )
-     *     )
+     *       @OA\JsonContent(
+     *         @OA\Property(property="count", type="integer")
+     *       )
+     *   )
      * )
      *
      */

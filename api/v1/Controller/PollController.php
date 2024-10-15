@@ -30,7 +30,7 @@ class PollController
      *      summary="최신 설문조사 1건을 조회합니다.",
      *      tags={"설문조사"},
      *      description="최신 설문조사 1건을 조회합니다.",
-     *     @OA\Response(response="200",
+     *      @OA\Response(response="200",
      *         description="마지막 투표결과 조회 성공",
      *         @OA\JsonContent(ref="#/components/schemas/GetItemResponse")
      *     ),
@@ -159,21 +159,21 @@ class PollController
      *     path="/api/v1/polls/{po_id}/etc",
      *     tags={"설문조사"},
      *     description="설문조사 기타의견을 추가합니다. 비회원가능",
+     *     security={{"Oauth2Password": {}}},
      *     @OA\Parameter (
-     *     name="po_id",
-     *     in="path",
-     *     description="설문조사 번호",
-     *     required=true,
-     *     @OA\Schema(type="integer")
-     *    ),
+     *       name="po_id",
+     *       in="path",
+     *       description="설문조사 번호",
+     *       required=true,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\RequestBody (
-     *     required=true,
-     *     @OA\JsonContent (
-     *     required={"content"},
-     *     @OA\Property(property="content", type="string", description="기타의견", example="기타의견 내용")
-     *     )
+     *       required=true,
+     *       @OA\JsonContent (
+     *       required={"content"},
+     *       @OA\Property(property="content", type="string", description="기타의견", example="기타의견 내용")
+     *       )
      *    ),
-     *      security={{"Oauth2Password": {}}},
      *     @OA\Response(response="200", description="투표완료", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *     @OA\Response(response=400, ref="#/components/responses/400"),
      *     @OA\Response(response=403, ref="#/components/responses/403"),
@@ -247,21 +247,21 @@ class PollController
      *     path="/api/v1/polls/{po_id}/etc/{pc_id}",
      *     tags={"설문조사"},
      *     description="설문조사 기타의견을 삭제합니다. 회원, 관리자만 가능",
-     *     @OA\Parameter (
-     *     name="po_id",
-     *     in="path",
-     *     description="설문조사 번호",
-     *     required=true,
-     *     @OA\Schema(type="integer")
-     *   ),
-     *    @OA\Parameter (
-     *     name="pc_id",
-     *     in="path",
-     *     description="기타 의견 번호",
-     *     required=true,
-     *     @OA\Schema(type="integer")
-     *  ),
      *     security={{"Oauth2Password": {}}},
+     *     @OA\Parameter (
+     *       name="po_id",
+     *       in="path",
+     *       description="설문조사 번호",
+     *       required=true,
+     *       @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter (
+     *       name="pc_id",
+     *       in="path",
+     *       description="기타 의견 번호",
+     *       required=true,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response(response="200", description="삭제 되었습니다.", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *     @OA\Response(response=400, ref="#/components/responses/400"),
      *     @OA\Response(response=403, ref="#/components/responses/403")

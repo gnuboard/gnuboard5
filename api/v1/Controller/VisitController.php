@@ -23,14 +23,14 @@ class VisitController
      * @param Response $response
      * @return ResponseInterface
      * @OA\Get (
-     *     path="/api/v1/visit",
-     *     summary="방문자 수 조회",
-     *     tags={"방문자"},
-     *     description="방문자 수를 조회합니다.",
-     *     @OA\Response(response="200",
+     *   path="/api/v1/visit",
+     *   summary="방문자 수 조회",
+     *   tags={"방문자"},
+     *   description="방문자 수를 조회합니다.",
+     *   @OA\Response(response="200",
      *     description="방문자 수 조회 성공",
      *     @OA\JsonContent(ref="#/components/schemas/VisitCountResponse")
-     *    )
+     *   )
      * )
      */
     public function show(Request $request, Response $response)

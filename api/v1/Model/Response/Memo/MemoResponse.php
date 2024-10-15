@@ -9,14 +9,15 @@ namespace API\v1\Model\Response\Memo;
  *     description="쪽지 조회 응답",
  * )
  */
-class Memo
+class MemoResponse
 {
+    
     /**
-     * 
+     *
      * @OA\Property(
-     *          property="memos",
+     *          property="memo",
      *          type="array",
-     *          description="쪽지 목록",
+     *          description="쪽지",
      *          @OA\Items(
      *              @OA\Property(
      *                  property="me_id",
@@ -66,5 +67,11 @@ class Memo
      *          )
      *      )
      */
-    public array $memos;
+    public array $memo = [];
+
+    public function __construct($data)
+    {
+        $this->memo = $data;
+        
+    }
 }

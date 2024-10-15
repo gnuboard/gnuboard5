@@ -28,38 +28,38 @@ class FaqController
      *     tags={"FAQ"},
      *     description="FAQ 목록을 조회합니다.",
      *     @OA\Parameter(
-     *     name="page",
-     *     in="query",
-     *     description="페이지 번호",
-     *     required=false,
-     *     @OA\Schema(type="integer")
-     *  ),
+     *       name="page",
+     *       in="query",
+     *       description="페이지 번호",
+     *       required=false,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Parameter(
-     *     name="per_page",
-     *     in="query",
-     *     description="페이지당 조회 개수",
-     *     required=false,
-     *     @OA\Schema(type="integer")
-     * ),
+     *       name="per_page",
+     *       in="query",
+     *       description="페이지당 조회 개수",
+     *       required=false,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Parameter(
-     *     name="is_mobile",
-     *     in="query",
-     *     description="모바일 여부",
-     *     required=false,
-     *     @OA\Schema(type="boolean")
-     * ),
+     *       name="is_mobile",
+     *       in="query",
+     *       description="모바일 여부",
+     *       required=false,
+     *       @OA\Schema(type="boolean")
+     *     ),
      *     @OA\Parameter(
-     *     name="use_html",
-     *     in="query",
-     *     description="HTML 사용 여부",
-     *     required=false,
-     *     @OA\Schema(type="boolean")
-     * ),
+     *       name="use_html",
+     *       in="query",
+     *       description="HTML 사용 여부",
+     *       required=false,
+     *       @OA\Schema(type="boolean")
+     *     ),
      *     @OA\Response(
-     *     response=200,
-     *     description="FAQ 목록 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/FaqCategoryResponse")
-     *    ),
+     *       response=200,
+     *       description="FAQ 목록 조회 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/FaqCategoryResponse")
+     *     ),
      *     @OA\Response(response=404, ref="#/components/responses/404")
      * )
      */
@@ -98,24 +98,24 @@ class FaqController
      *     tags={"FAQ"},
      *     description="FAQ 분류를 조회하거나 검색합니다.",
      *     @OA\Parameter(
-     *     name="ca_id",
-     *     in="path",
-     *     description="FAQ 분류 ID",
-     *     required=true,
-     *     @OA\Schema(type="integer")
-     *    ),
+     *       name="ca_id",
+     *       in="path",
+     *       description="FAQ 분류 ID",
+     *       required=true,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Parameter(
-     *     name="stx",
-     *     in="query",
-     *     description="검색어",
-     *     required=false,
-     *     @OA\Schema(type="string")
-     *   ),
+     *       name="stx",
+     *       in="query",
+     *       description="검색어",
+     *       required=false,
+     *       @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
-     *     response=200,
-     *     description="FAQ 분류 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/FaqListResponse")
-     *   ),
+     *       response=200,
+     *       description="FAQ 분류 조회 성공",
+     *       @OA\JsonContent(ref="#/components/schemas/FaqListResponse")
+     *     ),
      *     @OA\Response(response=404, ref="#/components/responses/404")
      * )
      */

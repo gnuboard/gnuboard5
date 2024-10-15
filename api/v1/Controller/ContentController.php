@@ -24,28 +24,28 @@ class ContentController
      *     summary="콘텐츠 목록 조회",
      *     description="콘텐츠 목록 조회",
      *     @OA\Parameter(
-     *     name="page",
-     *     in="query",
-     *     description="페이지 번호",
-     *     required=false,
-     *     @OA\Schema(
-     *     type="integer"
-     *   )
-     * ),
+     *       name="page",
+     *       in="query",
+     *       description="페이지 번호",
+     *       required=false,
+     *       @OA\Schema(
+     *         type="integer"
+     *       )
+     *     ),
      *     @OA\Parameter(
-     *     name="per_page",
-     *     in="query",
-     *     description="페이지당 레코드 수",
-     *     required=false,
-     *     @OA\Schema(
-     *     type="integer"
-     *      )
-     *   ),
+     *       name="per_page",
+     *       in="query",
+     *       description="페이지당 레코드 수",
+     *       required=false,
+     *       @OA\Schema(
+     *         type="integer"
+     *       )
+     *     ),
      *     @OA\Response(
-     *     response=200,
-     *     description="성공",
-     *     @OA\JsonContent(ref="#/components/schemas/ContentListResponse")
-     *    ),
+     *       response=200,
+     *       description="성공",
+     *       @OA\JsonContent(ref="#/components/schemas/ContentListResponse")
+     *     ),
      *     @OA\Response(response="404", ref="#/components/responses/404"),
      *     @OA\Response(response="422", ref="#/components/responses/422")
      * )
@@ -80,19 +80,19 @@ class ContentController
      *     tags={"콘텐츠"},
      *     summary="콘텐츠 상세 조회",
      *     description="콘텐츠 상세 조회",
-     *      @OA\Parameter(
-     *      name="co_id",
-     *      in="path",
-     *      description="콘텐츠 ID",
-     *      required=true,
-     *      @OA\Schema(
-     *      type="string"
-     *      )
+     *     @OA\Parameter(
+     *       name="co_id",
+     *       in="path",
+     *       description="콘텐츠 ID",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string"
+     *       )
      *     ),
      *     @OA\Response(
-     *      response=200,
-     *      description="성공",
-     *      @OA\JsonContent(ref="#/components/schemas/ContentResponse")
+     *       response=200,
+     *       description="성공",
+     *       @OA\JsonContent(ref="#/components/schemas/ContentResponse")
      *     ),
      *     @OA\Response(response="404", ref="#/components/responses/404"),
      *     @OA\Response(response="422", ref="#/components/responses/422")

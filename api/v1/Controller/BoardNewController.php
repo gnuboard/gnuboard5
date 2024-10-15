@@ -117,13 +117,13 @@ class BoardNewController
     - 최고관리자만 가능
     ",
      *      @OA\Parameter(
-     *          name="bn_ids[]", in="query",
-     *          description="삭제할 최신 게시글 ID",
-     *          required=true,
-     *          @OA\Schema(
-     *             type="array",
-     *             @OA\Items(type="integer")
-     *         )
+     *        name="bn_ids[]", in="query",
+     *        description="삭제할 최신 게시글 ID",
+     *        required=true,
+     *        @OA\Schema(
+     *          type="array",
+     *          @OA\Items(type="integer")
+     *        )
      *      ),
      *      @OA\Response(response="200", description="최신 게시글 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="403", ref="#/components/responses/403"),

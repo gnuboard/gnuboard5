@@ -111,13 +111,13 @@ class AuthenticationController
     Refresh Token을 사용하여 새로운 Access Token을 발급합니다.
     - Refresh Token도 함께 갱신되며 데이터베이스에 저장됩니다.
     ",
-     *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="application/x-www-form-urlencoded",
-     *              @OA\Schema(ref="#/components/schemas/RefreshTokenRequest"),
-     *          )
-     *      ),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *         mediaType="application/x-www-form-urlencoded",
+     *         @OA\Schema(ref="#/components/schemas/RefreshTokenRequest"),
+     *       )
+     *     ),
      *     @OA\Response(response="200", description="Access Token 재발급 성공", @OA\JsonContent(ref="#/components/schemas/GenerateTokenResponse")),
      *     @OA\Response(response="422", ref="#/components/responses/422"),
      *     @OA\Response(response="500", ref="#/components/responses/500"),

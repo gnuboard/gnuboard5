@@ -26,42 +26,42 @@ class AlarmController
      *     description="FCM 테스트",
      *     @OA\RequestBody (
      *       required=true,
-     *      @OA\MediaType(
-     *      mediaType="application/json",
-     *          @OA\Schema(
-     *              @OA\Property(
-     *              property="type",
-     *              type="string",
-     *              default="token",
-     *              description="타입"
-     *              ),
-     *              @OA\Property(
-     *               property="value",
-     *              type="string",
-     *              default="",
-     *              description="값"
-     *          ),
-     *          @OA\Property(
-     *              property="title",
-     *              type="string",
-     *              default="title",
-     *              description="title"
-     *          ),
-     *          @OA\Property(
-     *              property="body",
-     *              type="string",
-     *              default="body",
-     *              description="내용"
-     *          ),
-     *         @OA\Property(
-     *          property="image",
-     *          type="string",
-     *          default="",
-     *          description="이미지주소"
+     *       @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *           @OA\Property(
+     *             property="type",
+     *             type="string",
+     *             default="token",
+     *             description="타입"
+     *           ),
+     *           @OA\Property(
+     *             property="value",
+     *             type="string",
+     *             default="",
+     *             description="값"
+     *           ),
+     *           @OA\Property(
+     *             property="title",
+     *             type="string",
+     *             default="title",
+     *             description="title"
+     *           ),
+     *           @OA\Property(
+     *             property="body",
+     *             type="string",
+     *             default="body",
+     *             description="내용"
+     *           ),
+     *           @OA\Property(
+     *             property="image",
+     *             type="string",
+     *             default="",
+     *             description="이미지주소"
+     *           )
      *         )
-     *      )
-     *    )
-     * ),
+     *       )
+     *     ),
      *     @OA\Response(response="200", description="FCM 테스트 성공", @OA\JsonContent(type="object", @OA\Property(property="result", type="string", example="success"))),
      *     @OA\Response(response="422", ref="#/components/responses/422")
      * )
@@ -103,28 +103,28 @@ class AlarmController
      *     security={{"Oauth2Password": {}}},
      *     description="FCM 토큰을 등록합니다.",
      *     @OA\RequestBody(
-     *      required=true,
-     *      @OA\MediaType(
-     *        mediaType="application/json",
-     *        @OA\Schema(
-     *          @OA\Property(
-     *            property="fcm_token",
-     *            type="string",
-     *            description="FCM 토큰"
-     *          ),
-     *          @OA\Property(
-     *            property="platform",
-     *            type="string",
-     *            default="web,android,ios 중에 선택하세요",
-     *            description="platform"
-     *        )
-     *      )
-     *    )
-     *  ),
+     *       required=true,
+     *       @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *           @OA\Property(
+     *             property="fcm_token",
+     *             type="string",
+     *             description="FCM 토큰"
+     *           ),
+     *           @OA\Property(
+     *             property="platform",
+     *             type="string",
+     *             default="web,android,ios 중에 선택하세요",
+     *             description="platform"
+     *           )
+     *         )
+     *       )
+     *     ),
      *     @OA\Response(response="200", description="FCM 토큰 등록 성공",
      *       @OA\JsonContent(type="object",
      *         @OA\Property(property="message", type="string", example="토큰이 등록되었습니다.")
-     *      )
+     *       )
      *     ),
      *     @OA\Response(response="422", ref="#/components/responses/422")
      *  )

@@ -27,12 +27,12 @@ class PopularSearchController
      *     tags={"인기 검색어"},
      *     description="인기검색어 목록을 조회합니다.",
      *     @OA\Parameter(
-     *     name="days",
-     *     in="query",
-     *     description="몇 일전 검색어부터 조회할지 (기본값 3)",
-     *     required=false,
-     *     @OA\Schema(type="integer")
-     *    ),
+     *       name="days",
+     *       in="query",
+     *       description="몇 일전 검색어부터 조회할지 (기본값 3)",
+     *       required=false,
+     *       @OA\Schema(type="integer")
+     *     ),
      *     @OA\Parameter(
      *      name="limit",
      *      in="query",

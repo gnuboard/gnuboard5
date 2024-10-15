@@ -55,7 +55,6 @@ class MenuService
      * @param $is_mobile
      * @return array
      *
-     * @todo cache 적용
      */
     public function getMenu($is_mobile = false): array
     {

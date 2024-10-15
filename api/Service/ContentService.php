@@ -40,7 +40,6 @@ class ContentService
      * 콘텐츠 리스트 조회
      * @param int $page
      * @param int $per_page
-     * @todo cache 추가
      */
     public static function getContentList($page, $per_page)
     {

@@ -253,14 +253,14 @@ class BoardController
      *      tags={"게시판"},
      *      security={{"Oauth2Password": {}}},
      *      description="게시판의 게시글 1개를 조회합니다.",
-     *       @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
-     *       @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
-     *       @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
+     *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
+     *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
+     *      @OA\RequestBody(
+     *        required=true,
+     *        @OA\JsonContent(
      *          @OA\Property(property="wr_password", type="string", description="게시글 비밀번호"),
-     *         ),
-     *     ),
+     *        ),
+     *      ),
      *      @OA\Response(response="200", description="게시판 비밀글 조회 성공", @OA\JsonContent(ref="#/components/schemas/Write")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
@@ -379,10 +379,10 @@ class BoardController
      *      @OA\PathParameter(name="wr_id", description="게시글 번호", @OA\Schema(type="integer")),
      *      @OA\PathParameter(name="comment_id", description="댓글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
-     *       required=false,
-     *       @OA\JsonContent(
-     *       @OA\Property(property="wr_password", type="string", description="게시글 비밀번호"),
-     *       )
+     *        required=false,
+     *        @OA\JsonContent(
+     *          @OA\Property(property="wr_password", type="string", description="게시글 비밀번호"),
+     *        )
      *      ),
      *      @OA\Response(response="200", description="댓글 조회 성공", @OA\JsonContent(ref="#/components/schemas/CommentResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
@@ -425,11 +425,11 @@ class BoardController
      *      description="지정된 게시판에 새 글을 작성합니다.",
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/CreateWriteRequest"),
-     *          )
+     *        required=true,
+     *        @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(ref="#/components/schemas/CreateWriteRequest"),
+     *        )
      *      ),
      *      @OA\Response(response="200", description="게시글 작성 성공", @OA\JsonContent(ref="#/components/schemas/CreateWriteResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
@@ -509,11 +509,11 @@ class BoardController
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/UpdateWriteRequest"),
-     *          )
+     *        required=true,
+     *        @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(ref="#/components/schemas/UpdateWriteRequest"),
+     *        )
      *      ),
      *      @OA\Response(response="200", description="게시글 수정 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
@@ -589,15 +589,15 @@ class BoardController
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="multipart/form-data",
-     *              encoding={
-     *                  "file_contents[]": {"explode": true},
-     *                  "file_dels[]": {"explode": true}
-     *              },
-     *              @OA\Schema(ref="#/components/schemas/UploadFileRequest"),
-     *          )
+     *        required=true,
+     *        @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          encoding={
+     *            "file_contents[]": {"explode": true},
+     *            "file_dels[]": {"explode": true}
+     *          },
+     *          @OA\Schema(ref="#/components/schemas/UploadFileRequest"),
+     *        )
      *      ),
      *      @OA\Response(response="200", description="게시글 파일 업로드 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
@@ -658,20 +658,20 @@ class BoardController
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\PathParameter(name="bf_no", description="파일 번호", @OA\Schema(type="integer")),
      *      @OA\Response(
-     *          response=200,
-     *          description="파일 다운로드 성공",
-     *          @OA\Header(
-     *              header="Content-Disposition",
-     *              description="첨부 파일명",
-     *              @OA\Schema(type="string")
-     *          ),
-     *          @OA\MediaType(
-     *              mediaType="application/octet-stream",
-     *              @OA\Schema(
-     *                  type="string",
-     *                  format="binary"
-     *              )
-     *          )
+     *        response=200,
+     *        description="파일 다운로드 성공",
+     *        @OA\Header(
+     *         header="Content-Disposition",
+     *         description="첨부 파일명",
+     *         @OA\Schema(type="string")
+     *         ),
+     *         @OA\MediaType(
+     *           mediaType="application/octet-stream",
+     *           @OA\Schema(
+     *             type="string",
+     *             format="binary"
+     *           )
+     *         )
      *      ),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
      *      @OA\Response(response="403", ref="#/components/responses/403"),
@@ -733,10 +733,10 @@ class BoardController
      *      @OA\PathParameter(name="bo_table", description="게시판 코드", @OA\Schema(type="string")),
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(@OA\Property(property="wr_password", type="string", description="게시글 비밀번호(비회원 글일 경우 필수)"))
-     *           )
+     *        @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(@OA\Property(property="wr_password", type="string", description="게시글 비밀번호(비회원 글일 경우 필수)"))
+     *        )
      *      ),
      *      @OA\Response(response="200", description="게시글 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
@@ -894,11 +894,11 @@ class BoardController
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\PathParameter(name="comment_id", description="댓글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(ref="#/components/schemas/UpdateCommentRequest"),
-     *          )
+     *        required=true,
+     *        @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(ref="#/components/schemas/UpdateCommentRequest"),
+     *        )
      *      ),
      *      @OA\Response(response="200", description="댓글 수정 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),
@@ -952,10 +952,10 @@ class BoardController
      *      @OA\PathParameter(name="wr_id", description="글 번호", @OA\Schema(type="integer")),
      *      @OA\PathParameter(name="comment_id", description="댓글 번호", @OA\Schema(type="integer")),
      *      @OA\RequestBody(
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *              @OA\Schema(@OA\Property(property="wr_password", type="string", description="댓글 비밀번호(비회원 댓글일 경우 필수)"))
-     *           )
+     *        @OA\MediaType(
+     *          mediaType="application/json",
+     *          @OA\Schema(@OA\Property(property="wr_password", type="string", description="댓글 비밀번호(비회원 댓글일 경우 필수)"))
+     *        )
      *      ),
      *      @OA\Response(response="200", description="댓글 삭제 성공", @OA\JsonContent(ref="#/components/schemas/BaseResponse")),
      *      @OA\Response(response="401", ref="#/components/responses/401"),

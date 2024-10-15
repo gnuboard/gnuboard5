@@ -9,8 +9,6 @@ class VisitService
     /**
      * 오늘, 어제, 최대, 전체 방문자 수를 반환합니다.
      * @return array
-     * @todo cache
-     * @todo 지난 10분간 캐시된 데이터를 반환합니다.
      */
     public function fetchCommonVisitCount()
     {

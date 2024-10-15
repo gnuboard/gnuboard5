@@ -37,14 +37,14 @@ class SocialController
      *     summary="소셜 로그인 - 웹뷰에서 쓰는 API",
      *     description="소셜 로그인",
      *     @OA\Parameter(
-     *     name="provider",
-     *     in="path",
-     *     description="소셜 로그인 제공자",
-     *     required=true,
-     *     @OA\Schema(
-     *     type="string"
-     *    )
-     *  ),
+     *       name="provider",
+     *       in="path",
+     *       description="소셜 로그인 제공자",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
      *     @OA\Response(
      *     response=200,
      *     description="소셜 로그인 페이지로 이동"
@@ -88,25 +88,25 @@ class SocialController
      *     summary="소셜 로그인 콜백 - 웹뷰에서 쓰는 API",
      *     description="소셜 로그인 콜백",
      *     @OA\Parameter(
-     *     name="provider",
-     *     in="path",
-     *     description="소셜 로그인 제공자",
-     *     required=true,
-     *     @OA\Schema(
-     *     type="string"
-     *    )
-     *  ),
+     *       name="provider",
+     *       in="path",
+     *       description="소셜 로그인 제공자",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
      *     @OA\Response(response="200", description="그누보드 서버로그인을 위한 Access/Refresh Token 발급 성공",
-     *          @OA\JsonContent(ref="#/components/schemas/GenerateTokenResponse")
-     *   ),
+     *       @OA\JsonContent(ref="#/components/schemas/GenerateTokenResponse")
+     *     ),
      *     @OA\Response(
      *      response=400,
      *      description="해당 소셜 로그인 설정이 비활성화 되어 있습니다."
-     *  ),
+     *     ),
      *     @OA\Response(
      *     response=403,
      *     description="탈퇴 또는 차단된 회원이므로 로그인 하실 수 없습니다."
-     *  ),
+     *   ),
      * )
      *
      * @param Response $response
@@ -201,26 +201,26 @@ class SocialController
      *     summary="소셜 회원가입",
      *     description="소셜 회원가입",
      *     @OA\Parameter(
-     *     name="provider",
-     *     in="path",
-     *     description="소셜 로그인 제공자",
-     *     required=true,
-     *     @OA\Schema(
-     *     type="string"
-     *   )
-     * ),
+     *       name="provider",
+     *       in="path",
+     *       description="소셜 로그인 제공자",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
      *     @OA\RequestBody(
-     *     required=true,
-     *     @OA\MediaType(
-     *      mediaType="application/json",
-     *     @OA\Schema(ref="#/components/schemas/CreateSocialMemberRequest")
-     *     )
-     *  ),
+     *       required=true,
+     *       @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(ref="#/components/schemas/CreateSocialMemberRequest")
+     *       )
+     *     ),
      *     @OA\Response(response="200", description="소셜 회원가입 후 로그인 Access/Refresh Token 발급 성공", @OA\JsonContent(ref="#/components/schemas/GenerateTokenResponse")),
      *     @OA\Response(
-     *     response=409,
-     *     description="이미 가입된 회원입니다."
-     *  )
+     *       response=409,
+     *       description="이미 가입된 회원입니다."
+     *     )
      * )
      *
      *
@@ -310,39 +310,39 @@ class SocialController
      *     summary="엑세스 토큰으로 소셜 로그인",
      *     description="엑세스 토큰으로 소셜 로그인",
      *     @OA\Parameter(
-     *     name="provider",
-     *     in="path",
-     *     description="소셜 로그인 제공자",
-     *     required=true,
-     *     @OA\Schema(
-     *     type="string"
-     *   )
-     * ),
+     *       name="provider",
+     *       in="path",
+     *       description="소셜 로그인 제공자",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
      *     @OA\RequestBody(
-     *     required=true,
-     *     @OA\MediaType(
-     *     mediaType="application/json",
-     *     @OA\Schema(
-     *      type="object",
-     *      required={"access_token"},
-     *        @OA\Property(
-     *        property="access_token",
-     *        type="string",
-     *        description="소셜 로그인 access token"
+     *       required=true,
+     *       @OA\MediaType(
+     *       mediaType="application/json",
+     *       @OA\Schema(
+     *         type="object",
+     *         required={"access_token"},
+     *         @OA\Property(
+     *           property="access_token",
+     *           type="string",
+     *           description="소셜 로그인 access token"
      *        )
      *      )
      *   )
      * ),
      *     @OA\Response(response="200", description="그누보드 서버로그인을 위한 Access/Refresh Token 발급 성공",
-     *          @OA\JsonContent(ref="#/components/schemas/GenerateTokenResponse")
-     *    ),
+     *       @OA\JsonContent(ref="#/components/schemas/GenerateTokenResponse")
+     *     ),
      *     @OA\Response(
-     *     response=404,
-     *     description="회원이 없습니다. 회원가입이 필요합니다."
-     *   ),
+     *       response=404,
+     *       description="회원이 없습니다. 회원가입이 필요합니다."
+     *     ),
      *     @OA\Response(
-     *      response=403,
-     *      description="탈퇴 또는 차단 회원입니다."
+     *       response=403,
+     *       description="탈퇴 또는 차단 회원입니다."
      *    )
      * )
      *
@@ -443,19 +443,19 @@ class SocialController
      *     summary="소셜로그인 연결 끊기 - 회원 탈퇴와 다릅니다.",
      *     description="소셜로그인 연결 끊기",
      *     @OA\Parameter(
-     *     name="provider",
-     *     in="path",
-     *     description="소셜 로그인 제공자",
-     *     required=true,
-     *     @OA\Schema(
-     *     type="string"
-     *  )
-     * ),
+     *       name="provider",
+     *       in="path",
+     *       description="소셜 로그인 제공자",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string"
+     *       )
+     *     ),
      *     @OA\Response(response="200", description="소셜 연결 끊기 성공"),
      *     @OA\Response(
-     *     response=400,
-     *     description="소셜 연결 끊기 실패"
-     * )
+     *       response=400,
+     *       description="소셜 연결 끊기 실패"
+     *     )
      * )
      *
      * @param Request $request
@@ -479,19 +479,19 @@ class SocialController
      *     summary="토큰으로 기존회원 소셜로그인 연결하기",
      *     description="토큰으로 소셜로그인 연결하기",
      *     @OA\Parameter(
-     *     name="provider",
-     *     in="path",
-     *     description="소셜 로그인 제공자",
-     *     required=true,
+     *       name="provider",
+     *       in="path",
+     *       description="소셜 로그인 제공자",
+     *       required=true,
      *       @OA\Schema(
-     *       type="string"
+     *         type="string"
      *       )
-     *  ),
+     *    ),
      *     @OA\Response(response="200", description="소셜로그인 연결 성공"),
      *     @OA\Response(
-     *     response=400,
-     *     description="소셜로그인 연결 실패"
-     *  )
+     *       response=400,
+     *       description="소셜로그인 연결 실패"
+     *    )
      * )
      * @param Request $request
      * @param Response $response

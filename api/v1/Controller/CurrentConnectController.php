@@ -26,22 +26,22 @@ class CurrentConnectController
      *     summary="현재 접속자 목록 조회",
      *     description="현재 접속자 목록 조회",
      *     @OA\Parameter(
-     *      name="page",
-     *      in="query",
-     *      description="페이지 번호",
-     *      required=false,
-     *      @OA\Schema(type="integer")
+     *       name="page",
+     *       in="query",
+     *       description="페이지 번호",
+     *       required=false,
+     *       @OA\Schema(type="integer")
      *    ),
      *    @OA\Parameter(
-     *     name="show_only_member",
-     *     in="query",
-     *     description="회원만 보기 여부 Y/N",
-     *     required=false,
-     *     @OA\Schema(type="string")
-     *   ),
+     *      name="show_only_member",
+     *      in="query",
+     *      description="회원만 보기 여부 Y/N",
+     *      required=false,
+     *      @OA\Schema(type="string")
+     *    ),
      *    @OA\Response(response="200",
-     *     description="현재 접속자 목록 조회 성공",
-     *     @OA\JsonContent(ref="#/components/schemas/CurrentConnectListResponse")
+     *      description="현재 접속자 목록 조회 성공",
+     *      @OA\JsonContent(ref="#/components/schemas/CurrentConnectListResponse")
      *    )
      * )
      *

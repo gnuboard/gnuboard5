@@ -33,12 +33,12 @@ class SearchController
      *     @OA\Parameter(ref="#/components/parameters/per_page"),
      *     @OA\Parameter(ref="#/components/parameters/is_mobile"),
      *     @OA\Parameter(
-     *      name="onetable",
-     *      in="query",
-     *      description="단일테이블",
-     *      required=false,
+     *       name="onetable",
+     *       in="query",
+     *       description="단일테이블",
+     *       required=false,
      *       @OA\Schema(
-     *       type="string"
+     *         type="string"
      *       )
      *     ),
      *     @OA\Response(response="200", description="검색어 조회 성공", @OA\JsonContent(ref="#/components/schemas/BoardAllSearchResponse")),
