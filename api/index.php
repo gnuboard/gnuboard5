@@ -39,6 +39,13 @@ if (!include(G5_DATA_PATH . '/' . G5_DBCONFIG_FILE)) {
     exit;
 }
 
+if(defined('USE_API') && !USE_API) {
+    // config 파일에 USE_API 상수가 false
+    header('Content-Type: application/json');
+    echo json_encode('API 사용 설정이 되어있지 않습니다. 설정파일을 확인해주세요'); 
+    exit;
+}
+
 if (($GLOBALS['g5']['member_refresh_token_table'] ?? '') === '') {
     create_refresh_token_table();
 }
