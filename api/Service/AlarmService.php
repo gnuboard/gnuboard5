@@ -74,6 +74,11 @@ class AlarmService
                 'json' => $data,
             ]);
         } catch (GuzzleException $e) {
+            // 만료, 비활성 토큰 삭제
+            if ($e->getCode() == 404) {
+                $this->deleteFcmToken($data['token']);
+            }
+
             error_log('fcm send fail: ' . $e->getMessage() . ' data' . json_encode($data));
             return false;
         }
