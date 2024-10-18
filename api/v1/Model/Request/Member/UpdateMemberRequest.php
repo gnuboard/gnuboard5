@@ -32,6 +32,13 @@ class UpdateMemberRequest
      */
     public string $mb_nick = '';
 
+
+    /**
+     * 이름
+     * @OA\Property(example="홍길동")
+     */
+    public string $mb_name = '';
+
     /**
      * 닉네임 변경일
      * @OA\Property(example="2021-01-01", readOnly=true)
@@ -216,6 +223,7 @@ class UpdateMemberRequest
             $this->validateNickName($config);
             $this->processNickDate($config, $member);
         }
+        
         if ($member['mb_email'] !== $this->mb_email) {
             $this->validateEmail($config);
             $this->mb_email = get_email_address($this->mb_email);
@@ -285,7 +293,7 @@ class UpdateMemberRequest
     protected function processZipCode()
     {
         $this->mb_zip1 = substr($this->mb_zip, 0, 3);
-        $this->mb_zip2 = substr($this->mb_zip, 4, 3);
+        $this->mb_zip2 = substr($this->mb_zip, 3, 3);
         unset($this->mb_zip);
     }
 }
