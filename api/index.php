@@ -4,7 +4,7 @@
  * GnuBoard5 API with Slim Framework
  *
  * @package g5-api
- * @version 0.8.5
+ * @version 1.0
  * @link
  */
 
