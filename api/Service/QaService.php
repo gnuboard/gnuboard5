@@ -168,7 +168,7 @@ class QaService
 
     public function updateQaRelate($qa_id)
     {
-        Db::getInstance()->update($this->qa_table, ['qa_relate' => $qa_id], ['qa_parent' => $qa_id]);
+        Db::getInstance()->update($this->qa_table, ['qa_related' => $qa_id, 'qa_parent' => $qa_id], ['qa_id' => $qa_id]);
     }
 
     public function fileUpload(array $data)

@@ -178,6 +178,7 @@ class QaController
         }
 
         $last_insert_id = $this->qa_service->createQa((array)$request_data);
+        $this->qa_service->updateQaRelate($last_insert_id);
 
         return api_response_json($response, ['qa_id' => $last_insert_id]);
     }
