@@ -183,6 +183,10 @@ define('G5_SMTP_PORT', '25');
 define('G5_SMTP_USER', '');
 define('G5_SMTP_PASSWORD', '');
 
+// API 사용 설정
+// API 를 사용하지 않을 경우 false 로 설정
+define('USE_API', true);
+
 /********************
     기타 상수
 ********************/
