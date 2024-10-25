@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `g5_board_file` (
   `bf_width` int(11) NOT NULL default '0',
   `bf_height` smallint(6) NOT NULL default '0',
   `bf_type` tinyint(4) NOT NULL default '0',
-  `bf_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `bf_datetime` datetime DEFAULT NULL,
   PRIMARY KEY  (`bo_table`,`wr_id`,`bf_no`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `g5_board_good` (
   `wr_id` int(11) NOT NULL default '0',
   `mb_id` varchar(20) NOT NULL default '',
   `bg_flag` varchar(255) NOT NULL default '',
-  `bg_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `bg_datetime` datetime DEFAULT NULL,
   PRIMARY KEY  (`bg_id`),
   UNIQUE KEY `fkey1` (`bo_table`,`wr_id`,`mb_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `g5_board_new` (
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
   `wr_parent` int(11) NOT NULL default '0',
-  `bn_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `bn_datetime` datetime DEFAULT NULL,
   `mb_id` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`bn_id`),
   KEY `mb_id` (`mb_id`)
@@ -381,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `g5_member_cert_history` (
   `ch_hp` varchar(255) NOT NULL DEFAULT '',
   `ch_birth` varchar(255) NOT NULL DEFAULT '',
   `ch_type` varchar(20) NOT NULL DEFAULT '',
-  `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ch_datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`ch_id`),
   KEY `mb_id` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -434,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `g5_group_member` (
   `gm_id` int(11) NOT NULL auto_increment,
   `gr_id` varchar(255) NOT NULL default '',
   `mb_id` varchar(20) NOT NULL default '',
-  `gm_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `gm_datetime` datetime DEFAULT NULL,
   PRIMARY KEY  (`gm_id`),
   KEY `gr_id` (`gr_id`),
   KEY `mb_id` (`mb_id`)
@@ -451,7 +451,7 @@ CREATE TABLE IF NOT EXISTS `g5_login` (
   `lo_id` int(11) NOT NULL AUTO_INCREMENT,
   `lo_ip` varchar(100) NOT NULL default '',
   `mb_id` varchar(20) NOT NULL default '',
-  `lo_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `lo_datetime` datetime DEFAULT NULL,
   `lo_location` text NOT NULL,
   `lo_url` text NOT NULL,
   PRIMARY KEY (`lo_id`),
@@ -469,7 +469,7 @@ CREATE TABLE IF NOT EXISTS `g5_mail` (
   `ma_id` int(11) NOT NULL auto_increment,
   `ma_subject` varchar(255) NOT NULL default '',
   `ma_content` mediumtext NOT NULL,
-  `ma_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ma_time` datetime DEFAULT NULL,
   `ma_ip` varchar(255) NOT NULL default '',
   `ma_last_option` text NOT NULL,
   PRIMARY KEY  (`ma_id`)
@@ -508,13 +508,13 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_signature` text NOT NULL,
   `mb_recommend` varchar(255) NOT NULL default '',
   `mb_point` int(11) NOT NULL default '0',
-  `mb_today_login` datetime NOT NULL default '0000-00-00 00:00:00',
+  `mb_today_login` datetime DEFAULT NULL,
   `mb_login_ip` varchar(255) NOT NULL default '',
-  `mb_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `mb_datetime` datetime DEFAULT NULL,
   `mb_ip` varchar(255) NOT NULL default '',
   `mb_leave_date` varchar(8) NOT NULL default '',
   `mb_intercept_date` varchar(8) NOT NULL default '',
-  `mb_email_certify` datetime NOT NULL default '0000-00-00 00:00:00',
+  `mb_email_certify` datetime DEFAULT NULL,
   `mb_email_certify2` varchar(255) NOT NULL default '',
   `mb_memo` text NOT NULL,
   `mb_lost_certify` varchar(255) NOT NULL,
@@ -553,8 +553,8 @@ CREATE TABLE IF NOT EXISTS `g5_memo` (
   `me_id` INT(11) NOT NULL AUTO_INCREMENT,
   `me_recv_mb_id` varchar(20) NOT NULL default '',
   `me_send_mb_id` varchar(20) NOT NULL default '',
-  `me_send_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-  `me_read_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `me_send_datetime` datetime DEFAULT NULL,
+  `me_read_datetime` datetime DEFAULT NULL,
   `me_memo` text NOT NULL,
   `me_send_id` INT(11) NOT NULL DEFAULT '0',
   `me_type` ENUM('send','recv') NOT NULL DEFAULT 'recv',
@@ -573,7 +573,7 @@ DROP TABLE IF EXISTS `g5_point`;
 CREATE TABLE IF NOT EXISTS `g5_point` (
   `po_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(20) NOT NULL default '',
-  `po_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `po_datetime` datetime DEFAULT NULL,
   `po_content` varchar(255) NOT NULL default '',
   `po_point` int(11) NOT NULL default '0',
   `po_use_point` int(11) NOT NULL default '0',
@@ -639,7 +639,7 @@ CREATE TABLE IF NOT EXISTS `g5_poll_etc` (
   `mb_id` varchar(20) NOT NULL default '',
   `pc_name` varchar(255) NOT NULL default '',
   `pc_idea` varchar(255) NOT NULL default '',
-  `pc_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `pc_datetime` datetime DEFAULT NULL,
   PRIMARY KEY  (`pc_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -671,7 +671,7 @@ CREATE TABLE IF NOT EXISTS `g5_scrap` (
   `mb_id` varchar(20) NOT NULL default '',
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` varchar(15) NOT NULL default '',
-  `ms_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ms_datetime` datetime DEFAULT NULL,
   PRIMARY KEY  (`ms_id`),
   KEY `mb_id` (`mb_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -821,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `g5_qa_content` (
   `qa_file2` varchar(255) NOT NULL DEFAULT '',
   `qa_source2` varchar(255) NOT NULL DEFAULT '',
   `qa_ip` varchar(255) NOT NULL DEFAULT '',
-  `qa_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `qa_datetime` datetime DEFAULT NULL,
   `qa_1` varchar(255) NOT NULL DEFAULT '',
   `qa_2` varchar(255) NOT NULL DEFAULT '',
   `qa_3` varchar(255) NOT NULL DEFAULT '',
@@ -907,8 +907,8 @@ CREATE TABLE IF NOT EXISTS `g5_member_social_profiles` (
   `photourl` varchar(255) NOT NULL DEFAULT '',
   `displayname` varchar(150) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
-  `mp_register_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `mp_latest_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `mp_register_day` datetime DEFAULT NULL,
+  `mp_latest_day` datetime DEFAULT NULL,
   UNIQUE KEY `mp_no` (`mp_no`),
   KEY `mb_id` (`mb_id`),
   KEY `provider` (`provider`)
@@ -925,8 +925,8 @@ CREATE TABLE IF NOT EXISTS `g5_new_win` (
   `nw_id` int(11) NOT NULL AUTO_INCREMENT,
   `nw_division` varchar(10) NOT NULL DEFAULT 'both',
   `nw_device` varchar(10) NOT NULL DEFAULT 'both',
-  `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `nw_begin_time` datetime DEFAULT NULL,
+  `nw_end_time` datetime DEFAULT NULL,
   `nw_disable_hours` int(11) NOT NULL DEFAULT '0',
   `nw_left` int(11) NOT NULL DEFAULT '0',
   `nw_top` int(11) NOT NULL DEFAULT '0',
