@@ -148,7 +148,12 @@ else // 장바구니에 담기
     $post_io_ids = (isset($_POST['io_id']) && is_array($_POST['io_id'])) ? $_POST['io_id'] : array();
     $post_io_types = (isset($_POST['io_type']) && is_array($_POST['io_type'])) ? $_POST['io_type'] : array();
     $post_ct_qtys = (isset($_POST['ct_qty']) && is_array($_POST['ct_qty'])) ? $_POST['ct_qty'] : array();
-
+    
+    if ($count && $sw_direct) {
+        // 바로구매에 있던 장바구니 자료를 지운다.
+        sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
+    }
+    
     for($i=0; $i<$count; $i++) {
         // 보관함의 상품을 담을 때 체크되지 않은 상품 건너뜀
         if($act == 'multi' && ! (isset($post_chk_it_id[$i]) && $post_chk_it_id[$i]))
@@ -179,10 +184,6 @@ else // 장바구니에 담기
         $it = get_shop_item($it_id, false);
         if(!$it['it_id'])
             alert('상품정보가 존재하지 않습니다.');
-
-        // 바로구매에 있던 장바구니 자료를 지운다.
-        if($i == 0 && $sw_direct)
-            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
 
         // 최소, 최대 수량 체크
         if($it['it_buy_min_qty'] || $it['it_buy_max_qty']) {

@@ -909,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `g5_member_social_profiles` (
   `description` varchar(255) NOT NULL DEFAULT '',
   `mp_register_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `mp_latest_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  UNIQUE KEY `mp_no` (`mp_no`),
+  PRIMARY KEY (`mp_no`),
   KEY `mb_id` (`mb_id`),
   KEY `provider` (`provider`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

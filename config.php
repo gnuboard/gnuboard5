@@ -234,5 +234,10 @@ define('G5_VISIT_BROWSCAP_USE', false);
 */
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
+// Cloudflare 사용시 REMOTE_ADDR 에 사용자 IP 적용과 https 사용 여부
+if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    include_once(G5_LIB_PATH.'/cloudflare.lib.php');    // cloudflare 의 ip 대역인지 체크
+}
+
 // KAKAO 우편번호 서비스 CDN
 define('G5_POSTCODE_JS', '<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');
