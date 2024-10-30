@@ -173,7 +173,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         <td colspan="6">
                             <ul>
                                 <li>배송 주기: <?php echo $ct_subscription_number; ?><?php echo $ct_date_format; ?> (구독단위 : <?php echo $ct_date_format; ?>)</li>
-                                <?php if ($ct_firstshipment_date) { ?>
+                                <?php if (! is_null_date($ct_firstshipment_date)) { ?>
                                 <li>첫 발송일: <?php echo date('Y년 m월 d일', strtotime($ct_firstshipment_date)); ?>(<?php echo get_weekend_yoil($ct_firstshipment_date); ?>)</li>
                                 <?php } ?>
                             </ul>

@@ -1243,6 +1243,8 @@ function nicepay_billing($od) {
                             'buyerEmail' => $buyerEmail
                         );
     
+    if (function_exists('add_log') add_log($request_data);
+    
 	try {
 		$res = requestPost(
 			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/payments",
@@ -1259,6 +1261,9 @@ function nicepay_billing($od) {
 	}
     
     $nice_response = json_decode($res, true);
+    
+    if (function_exists('add_log') add_log($nice_response);
+    
     run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $request_data);
     
     // $res 형식은 json
@@ -1364,6 +1369,15 @@ function inicis_billing($od) {
         // 실패시
         return array('code'=>'fail', 'message'=>$inicis_res['resultCode'].':'.$inicis_res['resultMsg'], 'response'=>$inicis_res);
     }
+}
+
+function is_null_date($datetime){
+    
+    if (! $datetime || $datetime == null || strpos($datetime, '0000-00-00') !== false) {
+        return true;
+    }
+    
+    return false;
 }
 
 // 금액표시

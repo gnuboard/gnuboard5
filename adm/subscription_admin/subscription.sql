@@ -425,6 +425,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
   `od_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
   `od_firstshipment_date` datetime DEFAULT NULL,
+  `od_time` datetime DEFAULT NULL,
   PRIMARY KEY (`od_id`),
   KEY `index2` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

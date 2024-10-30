@@ -18,7 +18,7 @@ if (get_subs_option('su_card_test')) {
     set_subs_option('su_inicis_mid', "SIR".get_subs_option('su_inicis_mid'));
     
     $inicis_iniapi_key = get_subs_option('su_inicis_iniapi_key');
-    $inicis_iniapi_iv = get_subs_option('su_inicis_iniapi_iv')
+    $inicis_iniapi_iv = get_subs_option('su_inicis_iniapi_iv');
     
     // 실 결제 URL
     $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';

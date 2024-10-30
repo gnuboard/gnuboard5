@@ -385,7 +385,9 @@ if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
     // 성공이면
     if ($insert_id) {
         
-        $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+        // $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+        
+        $nextBillingDate = calculateNextBillingDate($exists_order);
         
         $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."' WHERE od_id = '$od_id'";
         
