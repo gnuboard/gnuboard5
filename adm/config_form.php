@@ -414,6 +414,12 @@ if (!isset($config['cf_cert_use_seed'])) {
             ADD COLUMN `cf_cert_use_seed` TINYINT(4) NOT NULL DEFAULT '1' AFTER `cf_cert_kg_mid`; ";
     sql_query($sql, false);
 }
+if (!isset($config['cf_cert_kcp_enckey'])) {
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_cert_kcp_enckey` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`; ";
+    sql_query($sql, false);
+}
+
 if (!$config['cf_faq_skin']) {
     $config['cf_faq_skin'] = "basic";
 }
@@ -1064,6 +1070,13 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
                             <span class="sitecode">SM</span>
                             <input type="text" name="cf_cert_kcp_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcp_cd']); ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.kr/main/service/p_cert.php" target="_blank" class="btn_frmline">NHN KCP 휴대폰 본인확인 서비스 신청페이지</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_enckey">NHN KCP 가맹점 인증키</label></th>
+                        <td class="cf_cert_service">
+                            <?php echo help('NHN_KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키 발급 후에 인증키 정보를 입력해 주세요.<br>입력하지 않거나 잘못 입력시 휴대폰 본인확인을 취소 하셨습니다. 라고 메시지가 나오면서 창이 닫히는 오류가 발생됩니다.') ?>
+                            <input type="text" name="cf_cert_kcp_enckey" value="<?php echo get_sanitize_input($config['cf_cert_kcp_enckey']); ?>" id="cf_cert_kcp_enckey" class="frm_input" maxlength="100" size="40"> <a href="https://partner.kcp.co.kr" target="_blank" class="btn_frmline">NHN KCP 상점관리자</a>
                         </td>
                     </tr>
                     <tr>

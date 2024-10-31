@@ -295,6 +295,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_use_seed` tinyint(4) NOT NULL DEFAULT '1',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
+  `cf_cert_kcp_enckey` varchar(100) NOT NULL DEFAULT '',
   `cf_lg_mid` varchar(100) NOT NULL DEFAULT '',
   `cf_lg_mert_key` varchar(100) NOT NULL DEFAULT '',
   `cf_cert_limit` int(11) NOT NULL DEFAULT '0',

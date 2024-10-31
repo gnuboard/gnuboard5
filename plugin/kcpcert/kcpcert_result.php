@@ -12,6 +12,7 @@ $enc_data      = "";
 $req_tx        = "";
 
 $enc_cert_data = "";
+$enc_cert_data2 = "";
 $cert_info     = "";
 
 $tran_cd       = "";
@@ -67,6 +68,11 @@ for($i=0; $i<count($key); $i++)
     {
         $enc_cert_data = f_get_parm_str ( $valParam );
     }
+    
+    if ( $nmParam == "enc_cert_data2" )
+    {
+        $enc_cert_data2 = f_get_parm_str ( $valParam );
+    }
 
     if ( $nmParam == "dn_hash" )
     {
@@ -98,7 +104,7 @@ if( $cert_enc_use == "Y" )
         // 해당 데이터의 위변조를 방지합니다
          $veri_str = $site_cd.$ordr_idxx.$cert_no; // 사이트 코드 + 주문번호 + 인증거래번호
 
-        if ( $ct_cert->check_valid_hash ( $home_dir , $dn_hash , $veri_str ) != "1" )
+        if ( $ct_cert->check_valid_hash ( $home_dir , $kcp_enc_key, $dn_hash , $veri_str ) != "1" )
         {
             if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
                 // 검증 실패시 처리 영역
@@ -122,7 +128,7 @@ if( $cert_enc_use == "Y" )
         // site_cd 와 cert_no 를 가지고 복화화 하는 함수 입니다.
         // 정상적으로 복호화 된경우에만 인증데이터를 가져올수 있습니다.
         $opt = "1" ; // 복호화 인코딩 옵션 ( UTF - 8 사용시 "1" )
-        $ct_cert->decrypt_enc_cert( $home_dir , $site_cd , $cert_no , $enc_cert_data , $opt );
+        $ct_cert->decrypt_enc_cert( $home_dir , $kcp_enc_key, $site_cd , $cert_no , $enc_cert_data2 , $opt );
 
         $comm_id        = $ct_cert->mf_get_key_value("comm_id"    );                // 이동통신사 코드
         $phone_no       = $ct_cert->mf_get_key_value("phone_no"   );                // 전화번호
