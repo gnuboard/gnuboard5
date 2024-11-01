@@ -14,12 +14,15 @@ $web_siteid = '';
 if ($config['cf_cert_use'] == 2) { // 실서비스
     $site_cd = 'SM'.$config['cf_cert_kcp_cd'];
     $cert_url = 'https://cert.kcp.co.kr/kcp_cert/cert_view.jsp';
+    $kcp_enc_key = $config['cf_cert_kcp_enckey'];
 } else if ($config['cf_cert_use'] == 1) { // 테스트사용
     $site_cd = 'S6186';
     $cert_url = 'https://testcert.kcp.co.kr/kcp_cert/cert_view.jsp';
+    $kcp_enc_key = 'E66DCEB95BFBD45DF9DFAEEBCB092B5DC2EB3BF0';
 } else { // 사용안함
     $site_cd = '';
     $cert_url = '';
+    $kcp_enc_key = '';
 }
 
 if(!$site_cd)
