@@ -1,8 +1,6 @@
 <?php
-if (!defined('_GNUBOARD_')) exit;
-
 // CloudFlare를 사용시, 사용자 환경에 맞는 $_SERVER['REMOTE_ADDR']과 $_SERVER['HTTPS'] 사용 여부를 수정합니다.
-class G5CheckCloudFlare {
+class G5CloudflareRequestHandler {
     public static function check_cloudflare_ips($user_ip){
         
         // 클라우드플레어 IP, https://www.cloudflare.com/ips
@@ -100,7 +98,7 @@ class G5CheckCloudFlare {
     }
 
 }
-if ($_SERVER['HTTP_CF_CONNECTING_IP'] && G5CheckCloudFlare::check_cloudflare_ips($_SERVER['REMOTE_ADDR'])) {
+if ($_SERVER['HTTP_CF_CONNECTING_IP'] && G5CloudflareRequestHandler::check_cloudflare_ips($_SERVER['REMOTE_ADDR'])) {
     $_SERVER['REMOTE_ADDR'] = preg_replace('/[^0-9a-fA-F:.]/', '', $_SERVER['HTTP_CF_CONNECTING_IP']);
     
     // Cloudflare 환경을 고려한 https 사용여부

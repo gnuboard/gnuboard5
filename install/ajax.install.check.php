@@ -1,5 +1,6 @@
 <?php
 $g5_path['path'] = '..';
+include_once('install_common.php');
 include_once('../config.php');
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
 include_once('../lib/common.lib.php');    // 공통 라이브러리

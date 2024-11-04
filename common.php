@@ -29,6 +29,10 @@ for ($i=0; $i<$ext_cnt; $i++) {
 }
 //==========================================================================================================================
 
+// Cloudflare 사용시 REMOTE_ADDR 에 사용자 IP 적용과 https 사용 여부
+if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    include_once('cloudflare.check.php');    // cloudflare 의 ip 대역인지 체크
+}
 
 function g5_path()
 {
