@@ -1243,7 +1243,9 @@ function nicepay_billing($od) {
                             'buyerEmail' => $buyerEmail
                         );
     
-    if (function_exists('add_log') add_log($request_data);
+    if (function_exists('add_log')) {
+        add_log($request_data);
+    }
     
 	try {
 		$res = requestPost(
@@ -1262,7 +1264,9 @@ function nicepay_billing($od) {
     
     $nice_response = json_decode($res, true);
     
-    if (function_exists('add_log') add_log($nice_response);
+    if (function_exists('add_log')) {
+        add_log($nice_response);
+    }
     
     run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $request_data);
     
