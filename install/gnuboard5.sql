@@ -984,14 +984,14 @@ CREATE TABLE IF NOT EXISTS `g5_fcm_token` (
 -- --------------------------------------------------------
 
 --
--- Table refresh_token Table 'g5_refresh_token'
+-- Table refresh_token Table 'g5_member_refresh_token'
 --
 
-DROP TABLE IF EXISTS `g5_refresh_token`;
-CREATE TABLE IF NOT EXISTS `g5_refresh_token` (
+DROP TABLE IF EXISTS `g5_member_refresh_token`;
+CREATE TABLE IF NOT EXISTS `g5_member_refresh_token` (
     `id` int NOT NULL AUTO_INCREMENT,
     `mb_id` varchar(20) NOT NULL,
-    `refresh_token` text NOT NULL,
+    `refresh_token` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
     `expires_at` datetime NOT NULL,
     `created_at` datetime NOT NULL,
     `updated_at` datetime NOT NULL,
