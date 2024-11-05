@@ -46,12 +46,9 @@ class BoardFileService
     public function getImageFiles(int $wr_id)
     {
         $images = $this->getFilesByType($wr_id, 'image');
-        $thumb_width = $this->board['bo_image_width'];
         foreach ($images as &$image) {
             $filename = basename($image['bf_file']);
-            $filepath = G5_DATA_PATH . '/file/' . $this->bo_table;
-            $thumb_file = ThumbnailService::createThumbnail($filename, $filepath, $filepath, $thumb_width);
-            $image['bf_file'] = G5_DATA_URL . "/file/{$this->bo_table}/{$thumb_file}";
+            $image['bf_file'] = G5_DATA_URL . "/file/{$this->bo_table}/{$filename}";
         }
         unset($image);
 
