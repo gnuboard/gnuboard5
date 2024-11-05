@@ -165,6 +165,12 @@ class Board
     public int $bo_use_category = 0;
 
     /**
+     * 전체검색 사용 여부
+     * @OA\Property(example=1)
+     */
+    public int $bo_use_search = 0;
+
+    /**
      * 파일 업로드 갯수
      * @OA\Property(example=2)
      */
