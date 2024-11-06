@@ -19,7 +19,7 @@ if (get_subs_option('su_card_test')) {
     // 실 사용이면
     // $nicepay_clientid = 'SR_'.get_subs_option('su_nice_clientid');
     $nicepay_clientid = get_subs_option('su_nice_clientid');
-    $nicepay_secretkey = get_subs_option('su_nicepay_secretkey');
+    $nicepay_secretkey = get_subs_option('su_nice_secretkey');
     
     $nicepay_url = 'https://api.nicepay.co.kr/v1/subscribe';
 }

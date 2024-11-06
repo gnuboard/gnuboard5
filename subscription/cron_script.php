@@ -8,7 +8,10 @@ if ($is_db_success) {
     sql_query($sql);
 }
 
-$sql = "select * from `{$g5['g5_subscription_order_table']} where card_billkey != '' and od_enable_status = 1 and next_billing_date <= '".G5_TIME_YMDHIS."' ";
+$tomorrow = date('Y-m-d', strtotime('+1 day', G5_SERVER_TIME));
+
+$sql = "select * from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and od_enable_status = 1 and next_billing_date <= '".G5_TIME_YMDHIS."' limit 1000";
+
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -32,7 +35,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     }
     */
     
-    $pays = subscription_process_payment($row);
+    print_r2($row);
+    
+    $pays = subscription_process_payment($row, $row['od_pg']);
+    
+    print_r2($pays);
+    return;
     
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
@@ -42,11 +50,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 성공이면
         if ($insert_id) {
             
-            $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+            $nextBillingDate = calculateNextBillingDate($row);
             
             $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."' WHERE od_id = '$od_id'";
             
             sql_query($updateQuery);
+            
+            $od_name = $row['od_name'];
+            $od_email = $row['od_email'];
+            
+            include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
+            include_once(G5_SUBSCRIPTION_PATH.'/cron_ordermail2.inc.php');
             
         } else {
             // 실패시 처리
@@ -55,5 +69,5 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     } else {
         // 실패시 처리
     }
-
+    
 }

@@ -395,10 +395,19 @@ if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
     } else {
         // 실패시 처리
+        //alert('fail1');
+        
+        echo 'fail1';
+        exit;
     }
     
 } else {
     // 실패시 처리
+    
+    //alert('fail2');
+    
+    echo 'fail2';
+    exit;
 }
 
 // 주문정보 입력 오류시 결제 취소

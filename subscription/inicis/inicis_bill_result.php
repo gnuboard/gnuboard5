@@ -85,17 +85,17 @@ try {
                 // ############################################################
 
                 $resultMap = json_decode($authResultString, true);
-
-                print_r2($resultMap);
-
+                
                 /*************************  결제보안 추가 2016-05-18 START ****************************/
-                $secureMap = [
+                $secureMap = array(
                     'mid' => $mid,
                     'tstamp' => $timestamp,
                     'MOID' => $resultMap['MOID'],
                     'TotPrice' => $resultMap['TotPrice'],
-                ];
-
+                );
+                
+                run_event('subscription_inicis_bill_result', $resultMap, $secureMap);
+                
                 // signature 데이터 생성
                 $secureSignature = $util->makeSignatureAuth($secureMap);
                 /*************************  결제보안 추가 2016-05-18 END ****************************/

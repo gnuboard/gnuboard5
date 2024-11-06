@@ -144,6 +144,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tr class="pg_info_fld nicepay_info_fld">
             <th scope="row"><label for="su_nice_secretkey">나이스페이 secretKey</label></th>
             <td>
+                <?php echo help("나이스페이 clientId 또는 secretKey 값이 틀릴경우 사용자 정보가 존재하지 않습니다 라는 메시지가 발생됩니다."); ?>
                 <input type="text" name="su_nice_secretkey" value="<?php echo get_sanitize_input(get_subs_option('su_nice_secretkey')); ?>" id="su_nice_secretkey" class="frm_input" size="40" maxlength="50">
             </td>
         </tr>

@@ -1056,9 +1056,14 @@ function subscription_order_pay($od, $pg_data) {
 function calculateNextBillingDate($od){
     
     // 현재 날짜를 DateTime 객체로 변환
-    $timestamp = strtotime($od['next_billing_date']);
-    $interval = $od['od_subscription_date_format'];
-    $plus = abs($od['od_subscription_date_format']);
+    if (is_null_date($od['next_billing_date'])) {
+        $timestamp = G5_SERVER_TIME;
+    } else {
+        $timestamp = strtotime($od['next_billing_date']);
+    }
+    
+    $interval = $od['od_subscription_date_format'] ? $od['od_subscription_date_format'] : 'day';
+    $plus = abs($od['od_subscription_number']);
         
     // 주어진 interval에 따라 날짜를 증가시킴
     switch ($interval) {
@@ -1079,7 +1084,7 @@ function calculateNextBillingDate($od){
     }
 
     // 다음 청구일을 YYYY-MM-DD 형식으로 반환
-    return date('Y-m-d', $timestamp);
+    return date('Y-m-d H:i:s', $timestamp);
     
 }
 
@@ -1187,9 +1192,9 @@ function kcp_billing($od) {
     return array();
 }
 
-function subscription_process_payment($od) {
+function subscription_process_payment($od, $od_pg_service='') {
     
-    $subscription_pg_service = get_subs_option('su_pg_service');
+    $subscription_pg_service = $od_pg_service ? $od_pg_service : get_subs_option('su_pg_service');
     
     if ($subscription_pg_service === 'kcp') {
         return kcp_billing($od);
@@ -1264,6 +1269,12 @@ function nicepay_billing($od) {
     
     $nice_response = json_decode($res, true);
     
+    // resultCode 가 0000 and tid 가 없으면 결제실패이다
+    if (!($nice_response['resultCode'] === '0000' && isset($nice_response['tid']) && $nice_response['tid'])) {
+        $code = 'fail';
+        $message = $nice_response['resultMsg'];
+    }
+    
     if (function_exists('add_log')) {
         add_log($nice_response);
     }
@@ -1282,11 +1293,11 @@ function inicis_billing($od) {
     //step1. 요청을 위한 파라미터 설정
     $key = $inicis_iniapi_key;
 	$iv = $inicis_iniapi_iv;
-    $mid = "INIBillTst";
-	$type = "billing";
-	$paymethod = "Card";
-	$timestamp = date("YmdHis", G5_SERVER_TIME);
-	$clientIp = $_SERVER['SERVER_ADDR'];
+    $mid = get_subs_option('su_inicis_mid');
+	$type = "billing";      // 요청서비스 ["billing" 고정]
+	$paymethod = "Card";    // 지불수단 코드 [card:신용카드, HPP:휴대폰]
+	$timestamp = date("YmdHis", G5_SERVER_TIME);    // 전문생성시간 [YYYYMMDDhhmmss]
+	$clientIp = $_SERVER['SERVER_ADDR'];    // 가맹점 요청 서버IP (추후 거래 확인 등에 사용됨)
 
 	$postdata = array();
 	$postdata["mid"] = $mid;
@@ -1299,8 +1310,9 @@ function inicis_billing($od) {
     
 	//// Data 상세
     $detail = array();
-	$detail["url"] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['REQUEST_URI'];
-	$detail["moid"] = $mid."_".$timestamp;
+	// $detail["url"] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['REQUEST_URI'];
+    $detail["url"] = G5_SUBSCRIPTION_URL;
+	$detail["moid"] = $od['od_id'];
 	$detail["goodName"] = $goodsname['full_name'];
 	$detail["buyerName"] = $od['od_name'];
 	$detail["buyerEmail"] = $od['od_email'];
@@ -1384,6 +1396,21 @@ function is_null_date($datetime){
     return false;
 }
 
+function mask_card_number($string) {
+    // 문자열 길이 확인
+    $length = strlen($string);
+    
+    // 시작과 끝에 남길 자리 수 설정
+    $start = 6;
+    $end = 1;
+    
+    // 마스킹할 부분의 길이 계산
+    $maskLength = $length - ($start + $end);
+    
+    // 문자열을 마스킹된 형태로 변환
+    return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
 // 금액표시
 // $it : 상품 배열
 function get_subscription_price($it)
@@ -1392,5 +1419,5 @@ function get_subscription_price($it)
 
     $price = $it['it_price'];
 
-    return (int)$price;
+    return run_replace('get_subscription_price', (int)$price, $it);
 }

@@ -120,8 +120,7 @@ $od_tno = $resObject['tid'];
 // messageSource=nicepay
 // status=issued
 
-// 나이스페이인 경우 카드번호 받지 않음
-$card_number = '';
+$card_number = mask_card_number($cardNo);
 $card_billkey = $resObject['bid'];
 $tno = $resObject['tid'];
 $amount = $_POST['good_mny'] ? (int) $_POST['good_mny'] : 0;
