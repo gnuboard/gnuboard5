@@ -337,16 +337,19 @@ class WriteService
     }
 
     /**
-     * 게시글의 댓글 목록 조회
+     * 글작성자의 댓글을 제외한 게시글의 댓글 목록수 조회
      * @param array $write 게시글 정보
      * @return array|false
      */
-    public function fetchCommentsByWrite(array $write)
+    public function fetchCountCommentsByWrite(array $write)
     {
-        $query = "SELECT * FROM {$this->table} WHERE wr_parent = :wr_id AND wr_is_comment = 1";
+        $query = "SELECT COUNT(*) FROM {$this->table}
+                    WHERE wr_parent = :wr_id
+                    AND mb_id <> '{$write['mb_id']}'
+                    AND wr_is_comment = 1";
         $stmt = Db::getInstance()->run($query, ['wr_id' => $write['wr_id']]);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchColumn();
     }
 
     /**
