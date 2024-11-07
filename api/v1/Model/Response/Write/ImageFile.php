@@ -15,34 +15,18 @@ class ImageFile
     use SchemaHelperTrait;
 
     /**
-     * 원본 파일명
+     * 원본 이미지 주소
      * @OA\Property
      */
-    public string $bf_source = '';
+    public string $original = '';
+
 
     /**
-     * 파일 크기
+     * 썸네일 이미지 주소
      * @OA\Property
      */
-    public int $bf_filesize = 0;
+    public string $thumbnail = '';
 
-    /**
-     * 다운로드 수
-     * @OA\Property
-     */
-    public int $bf_download = 0;
-
-    /**
-     * 업로드 일시
-     * @OA\Property(format="date-time")
-     */
-    public string $bf_datetime = '';
-
-    /**
-     * 파일 경로
-     * @OA\Property
-     */
-    public string $bf_file = '';
 
     public function __construct(array $data = [])
     {
