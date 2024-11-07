@@ -22,7 +22,7 @@ class SocialService
     private $config;
 
     /**
-     * PHP 는 매번 초기화 되므로 현재 요청의 로그인 하는 provider 객체가 지정된다.
+     * PHP 는 매번 초기화 되므로 현재 로그인 요청의 provider 객체가 지정된다.
      * @var \Hybridauth\Adapter\AbstractAdapter
      */
     public $current_provider_instance;

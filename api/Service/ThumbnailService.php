@@ -14,7 +14,7 @@ class ThumbnailService
 {
 
     /**
-     * @var ?int 현재 설정된 php.ini 의 메모리 제한
+     * @var ?int 현재 설정된 php.ini 의 메모리 제한값 (memory_limit)
      */
     private static $current_memory_mb;
 
@@ -203,7 +203,7 @@ class ThumbnailService
         }
 
         if (self::$current_memory_mb === null) {
-            self::$current_memory_mb = self::convertMemoryLimitToMB(ini_get('memory_limit')) ?: 0; //계산 불가시 0
+            self::$current_memory_mb = self::convertMemoryLimitToMB(ini_get('memory_limit')) ?: 0; //계산 실패시 0
         }
 
         if (self::$current_memory_mb !== -1) {
@@ -513,7 +513,7 @@ class ThumbnailService
             error_log($e->getFile() . ' ' . $e->getLine() . ' ' . $e->getMessage());
             return false;
         } finally {
-            // 7. 메모리 할당 해제
+            // 7. 메모리 제한값 원래대로 변경
             ini_restore('memory_limit');
 
             // imagedestroy() php 7.4 이하만 동작
@@ -792,23 +792,24 @@ class ThumbnailService
     }
 
     /**
+     * 입력된 php.ini memory_limit 값을 MB 단위로 변환 
      * @param string $memory_limit_size
-     * @return int | false  무제한(-1) 또는 계산 실패시 false
+     * @return int | false  무제한(-1) 은 -1 , 계산 실패시 false
      */
     public static function convertMemoryLimitToMB(string $memory_limit_size)
     {
-        $memory_limit_number = filter_var($memory_limit_size, FILTER_SANITIZE_NUMBER_INT);
+        $memory_limit_value = filter_var($memory_limit_size, FILTER_SANITIZE_NUMBER_INT);
         $memory_unit = strtoupper(preg_replace('/[^a-zA-Z]/', '', $memory_limit_size));
-        if ($memory_limit_number === -1) {
+        if ($memory_limit_value === -1) {
             return -1;
         }
 
         if ($memory_unit === 'M') {
-            return (int)$memory_limit_number;
+            return (int)$memory_limit_value;
         }
 
         if ($memory_unit === 'G') {
-            return (int)$memory_limit_number * 1024;
+            return (int)$memory_limit_value * 1024;
         }
 
         return false;

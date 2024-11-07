@@ -42,10 +42,11 @@ class Db
                 ]
             );
 
-            //mysql 0000 허용
+            // 호환성을 위해 mysql 8버전대에서도 0000 날짜 허용
             if ($db_settings['driver'] === 'mysql') {
                 $this->pdo->exec("SET SESSION sql_mode = 'ALLOW_INVALID_DATES'");
             }
+
         } catch (PDOException $e) {
             throw new DbConnectException('Database connection failed', -1);
         }
