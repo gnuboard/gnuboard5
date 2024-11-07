@@ -45,6 +45,9 @@ class AlarmHooks
         /**
          * @var \API\Service\MemberService $member_service
          */
+        if ($comment['mb_id'] === $write['mb_id']) {
+            return;
+        }
         $member_service = $app->getContainer()->get('API\Service\MemberService');
         $member = $member_service->fetchMemberById($comment['mb_id']);
         $title = $write['wr_subject'] . '에 댓글이 달렸습니다.';
