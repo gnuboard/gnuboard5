@@ -819,8 +819,7 @@ class BoardPermission
      */
     private function checkCommentLimit(array $write, int $limit, string $message): void
     {
-        $comments = $this->write_service->fetchCommentsByWrite($write);
-        $comments_count = count($comments);
+        $comments_count = $this->write_service->fetchCountCommentsByWrite($write);
         if ($comments_count >= $limit) {
             $this->throwException(sprintf($message, $limit));
         }
