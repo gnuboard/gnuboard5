@@ -42,7 +42,7 @@ class EnvironmentConfig
         }
         $this->access_token_secret_key = $_ENV['ACCESS_TOKEN_SECRET_KEY'];
         $this->access_token_expire_minutes = isset($_ENV['ACCESS_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['ACCESS_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES;
-        if(!trim($_ENV['REFRESH_TOKEN_SECRET_KEY'])) {
+        if (!trim($_ENV['REFRESH_TOKEN_SECRET_KEY'])) {
             throw new Exception('env REFRESH_TOKEN_SECRET_KEY is empty');
         }
         $this->refresh_token_secret_key = $_ENV['REFRESH_TOKEN_SECRET_KEY'];

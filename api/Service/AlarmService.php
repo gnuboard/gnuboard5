@@ -31,7 +31,15 @@ class AlarmService
      */
     public function setGoogleServiceCredentials()
     {
-        $this->google_service_credentials = new ServiceAccountCredentials($this->scopes, $_ENV['FIREBASE_KEY_PATH'] ?? G5_DATA_PATH . '/fcm.json');
+        $json_key = $_ENV['FIREBASE_KEY_PATH'] ?? '';
+        $json_key = trim($json_key);
+        if ($json_key === '') {
+            $json_key = G5_DATA_PATH . '/fcm.json';
+        }
+
+        if (file_exists($json_key)) {
+            $this->google_service_credentials = new ServiceAccountCredentials($this->scopes, $json_key);
+        }
     }
 
     /**
@@ -39,7 +47,7 @@ class AlarmService
      */
     public function getAuthToken()
     {
-        if (!$this->google_service_credentials) {
+        if ($this->project_id && !$this->google_service_credentials) {
             $this->setGoogleServiceCredentials();
             // 실패 확인
             if (!$this->google_service_credentials) {
