@@ -138,10 +138,10 @@ class Write
      * 이미지 목록
      * @OA\Property(
      *     type="array",
-     *     @OA\Items(ref="#/components/schemas/File")
+     *     @OA\Items(ref="#/components/schemas/ImageFile")
      * )
      * 
-     * @var \API\v1\Model\Response\Write\File[]
+     * @var \API\v1\Model\Response\Write\ImageFile[]
      */
     public array $images = [];
 
