@@ -966,8 +966,7 @@ function get_weekend_yoil($date) {
 }
 
 // 상품명과 건수를 반환
-function get_subscription_goods($cart_id)
-{
+function get_subscription_goods($cart_id) {
     global $g5;
 
     // 상품명만들기
@@ -981,12 +980,22 @@ function get_subscription_goods($cart_id)
 
     // 상품건수
     $row = sql_fetch(" select count(*) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ");
-    $cnt = $row['cnt'] - 1;
-    if ($cnt)
+    $cnt = ($row['cnt']) ? (int) $row['cnt'] - 1 : 0;
+    
+    if ($cnt) {
         $goods['full_name'] .= ' 외 '.$cnt.'건';
+    }
+    
     $goods['count'] = $row['cnt'];
 
     return $goods;
+}
+
+function get_subscription_order_goods($od_id) {
+    global $g5;
+    
+    $sql = " select * from {$g5['g5_subscription_cart_table']} where od_id = '$od_id'";
+    $cart = sql_fetch($sql);
 }
 
 function subscription_order_pay($od, $pg_data) {
@@ -1088,13 +1097,25 @@ function calculateNextBillingDate($od){
     
 }
 
+function get_nicepay_api_url(){
+    
+    // 테스트인(샌드박스) 경우 나이스페이 api url
+    if (get_subs_option('su_card_test')) {
+        return 'https://sandbox-api.nicepay.co.kr';
+    }
+    
+    // 실서버(운영계) 나이스페이 api url
+    return 'https://api.nicepay.co.kr';
+}
+
 function expire_nicepay_billing($bid) {
 	global $clientId;
 	global $secretKey;
-
+    
+    // 
 	try {
 		$res = requestPost(
-			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/expire",
+			get_nicepay_api_url()."/v1/subscribe/" . $bid . "/expire",
 			json_encode(
 				array("orderId" => uniqid())
 			),
@@ -1107,7 +1128,7 @@ function expire_nicepay_billing($bid) {
 	}
 }
 
-function kcp_billing($od) {
+function kcp_billing($od, $tmp_cart_id='') {
     global $g5;
     
     include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
@@ -1116,7 +1137,8 @@ function kcp_billing($od) {
     // 인증서 정보(직렬화)
     $kcp_cert_info      = get_subs_option('su_kcp_cert_info');
     
-    $goodsname = get_subscription_goods($od['od_id']);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
     $cust_ip            = "";
     $currency           = '410'; // 화폐 단위
@@ -1192,37 +1214,38 @@ function kcp_billing($od) {
     return array();
 }
 
-function subscription_process_payment($od, $od_pg_service='') {
+function subscription_process_payment($od, $od_pg_service='', $tmp_cart_id='') {
     
     $subscription_pg_service = $od_pg_service ? $od_pg_service : get_subs_option('su_pg_service');
     
     if ($subscription_pg_service === 'kcp') {
-        return kcp_billing($od);
+        return kcp_billing($od, $tmp_cart_id);
     } else if ($subscription_pg_service === 'inicis') {
-        return inicis_billing($od);
+        return inicis_billing($od, $tmp_cart_id);
     } else if ($subscription_pg_service === 'nicepay') {
-        return nicepay_billing($od);
+        return nicepay_billing($od, $tmp_cart_id);
     }
     
     return null;
 }
 
-function nicepay_billing($od) {
+function nicepay_billing($od, $tmp_cart_id='') {
     global $g5;
     
     include_once(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
     
-	$clientId = $nicepay_clientid;
-	$secretKey = $nicepay_secretkey;
+	$clientId = get_subs_option('su_nice_clientid');
+	$secretKey = get_subs_option('su_nice_secretkey');
     
-    $goodsname = get_subscription_goods($od['od_id']);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
     $res = null;
     
     $bid = $od['card_billkey'];
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
-    $nice_orderId = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid();
+    $nice_orderId = substr($od['od_id'].'_'.get_string_encrypt($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
     $edi_date = date('c', G5_SERVER_TIME);
     $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
     $buyerName = $od['od_name'];
@@ -1249,12 +1272,12 @@ function nicepay_billing($od) {
                         );
     
     if (function_exists('add_log')) {
-        add_log($request_data);
+        add_log($request_data, false, 'nice');
     }
     
 	try {
 		$res = requestPost(
-			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/payments",
+			get_nicepay_api_url()."/v1/subscribe/" . $bid . "/payments",
 			json_encode($request_data),
 			$clientId . ':' . $secretKey
 		);
@@ -1276,7 +1299,7 @@ function nicepay_billing($od) {
     }
     
     if (function_exists('add_log')) {
-        add_log($nice_response);
+        add_log($nice_response, false, 'nice');
     }
     
     run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $request_data);
@@ -1285,7 +1308,7 @@ function nicepay_billing($od) {
     return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
 }
 
-function inicis_billing($od) {
+function inicis_billing($od, $tmp_cart_id='') {
     global $g5;
     
     include_once(G5_SUBSCRIPTION_PATH.'/settle_inicis.inc.php');
@@ -1306,7 +1329,8 @@ function inicis_billing($od) {
     $postdata["timestamp"] = $timestamp;
 	$postdata["clientIp"] = $clientIp;
     
-    $goodsname = get_subscription_goods($od['od_id']);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
 	//// Data 상세
     $detail = array();

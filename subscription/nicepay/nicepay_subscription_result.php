@@ -79,7 +79,7 @@ $plainText = 'cardNo='.$cardNo.
 
 try {
     $res = requestPost(
-        'https://sandbox-api.nicepay.co.kr/v1/subscribe/regist',
+        get_nicepay_api_url().'/v1/subscribe/regist',
         json_encode(
             ['encData' => encrypt($plainText, $key, $iv),
                 'orderId' => get_session('subs_order_id'),

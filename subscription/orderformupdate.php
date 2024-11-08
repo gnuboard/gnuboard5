@@ -375,7 +375,7 @@ $result = sql_query($sql, false);
 $exists_sql = "select * from {$g5['g5_subscription_order_table']} where od_id = '$od_id'";
 $exists_order = sql_fetch($exists_sql);
 
-$pays = subscription_process_payment($exists_order);
+$pays = subscription_process_payment($exists_order, get_subs_option('su_pg_service'), $tmp_cart_id);
 
 // 정기결제가 성공이면
 if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
