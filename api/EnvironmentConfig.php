@@ -42,6 +42,7 @@ class EnvironmentConfig
         }
         $this->access_token_secret_key = $_ENV['ACCESS_TOKEN_SECRET_KEY'];
         $this->access_token_expire_minutes = isset($_ENV['ACCESS_TOKEN_EXPIRE_MINUTES']) ? (int)$_ENV['ACCESS_TOKEN_EXPIRE_MINUTES'] : self::DEFAULT_ACCESS_TOKEN_EXPIRE_MINUTES;
+
         if (!trim($_ENV['REFRESH_TOKEN_SECRET_KEY'])) {
             throw new Exception('env REFRESH_TOKEN_SECRET_KEY is empty');
         }
@@ -66,14 +67,16 @@ class EnvironmentConfig
             $env_content .= 'REFRESH_TOKEN_EXPIRE_MINUTES=' . self::DEFAULT_REFRESH_TOKEN_EXPIRE_MINUTES . PHP_EOL;
             $env_content .= '# 이메일 등 정보를 암호화하는데 쓰입니다.' . PHP_EOL;
             $env_content .= 'ENCRYPTION_KEY=' . self::createSecretTokenValue() . PHP_EOL;
+            $env_content .= '# JWT iss, aud .' . PHP_EOL;
             $env_content .= 'AUTH_ISSUER=' . self::DEFAULT_AUTH_ISSUER . PHP_EOL;
             $env_content .= 'AUTH_AUDIENCE=' . self::DEFAULT_AUTH_AUDIENCE . PHP_EOL;
             $env_content .= '# CORS 설정' . PHP_EOL;
-            $env_content .= '# 허용할 도메인을 , 로 구분하여 입력하세요.' . PHP_EOL;
+            $env_content .= '# 허용할 도메인을 , 로 구분하여 입력해주세요.' . PHP_EOL;
             $env_content .= 'CORS_ALLOW_ORIGIN=' . G5_URL . PHP_EOL;
             $env_content .= 'CORS_ALLOW_METHODS="*"' . PHP_EOL;
             $env_content .= 'CORS_ALLOW_CREDENTIALS="true"' . PHP_EOL;
             $env_content .= 'FIREBASE_PROJECT_ID=""' . PHP_EOL;
+            $env_content .= '# FIREBASE_KEY_PATH 서비스키 파일 기본경로는 data/fcm.json 입니다.' . PHP_EOL;
             $env_content .= 'FIREBASE_KEY_PATH=""' . PHP_EOL;
 
 
