@@ -120,7 +120,7 @@ $od_tno = $resObject['tid'];
 // messageSource=nicepay
 // status=issued
 
-$card_number = mask_card_number($cardNo);
+$card_mask_number = mask_card_number($cardNo);
 $card_billkey = $resObject['bid'];
 $tno = $resObject['tid'];
 $amount = $_POST['good_mny'] ? (int) $_POST['good_mny'] : 0;

@@ -113,7 +113,7 @@ if ($sel_field == '') {
     $sel_field = 'od_id';
 }
 if ($sort1 == '') {
-    $sort1 = 'od_id';
+    $sort1 = 'id';
 }
 if ($sort2 == '') {
     $sort2 = 'desc';
@@ -159,7 +159,9 @@ if (function_exists('pg_setting_check')) {
     pg_setting_check(true);
 }
 ?>
-
+<div class="admin_pg_notice od_test_caution">
+    정기결제내역은 구독내역의 주기에 따라 결제된 내역을 확인할수 있다.
+</div>
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     <span class="btn_ov01"><span class="ov_txt">전체 주문내역</span><span class="ov_num"> <?php echo number_format($total_count); ?>건</span></span>
@@ -271,7 +273,9 @@ if (function_exists('pg_setting_check')) {
             <label for="chkall" class="sound_only">주문 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col" id="th_ordnum" rowspan="2" colspan="2"><a href="<?php echo title_sort('od_id', 1)."&amp;$qstr1"; ?>">주문번호</a></th>
+        <th scope="col"rowspan="3" ><a href="#">주문상품</a></th>
+        <th scope="col" rowspan="2"><a href="#">주문날짜</a></th>
+        <th scope="col" id="th_ordnum" rowspan="2"><a href="<?php echo title_sort('od_id', 1)."&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col" id="th_odrer">주문자</th>
         <th scope="col" id="th_odrertel">주문자전화</th>
         <th scope="col" id="th_recvr">받는분</th>
@@ -355,6 +359,8 @@ if (function_exists('pg_setting_check')) {
             $bg .= 'cancel';
             $td_color = 1;
         }
+        
+        $goods = get_subscription_pay_full_goods($row['od_id']);
         ?>
     <tr class="orderlist<?php echo ' '.$bg; ?>">
         <td rowspan="3" class="td_chk">
@@ -362,7 +368,17 @@ if (function_exists('pg_setting_check')) {
             <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
             <input type="checkbox" name="chk[]" value="<?php echo $i; ?>" id="chk_<?php echo $i; ?>">
         </td>
-        <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
+        <td rowspan="3">
+            <div>
+                <?php echo $goods['thumb']; ?>
+                <br>
+                <?php echo $goods['full_name']; ?>
+            </div>
+        </td>
+        <td headers="th_ordnum" class="td_odrnum2" rowspan="2">
+            <?php echo $row['py_receipt_time']; ?>
+        </td>
+        <td headers="th_ordnum" class="td_odrnum2" rowspan="2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
             <?php echo $od_paytype; ?>
         </td>

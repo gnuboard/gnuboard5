@@ -83,8 +83,8 @@ if ($res_cd !== '0000') {
 // [join_cd] =>
 
 // 승인결과
-// KCP는 카드번호 모름
-$card_number = '';
+// KCP는 카드번호 모름( 카드정보 data 를 넘겨주지 않는다 )
+$card_mask_number = '';
 $card_billkey = $response['batch_key'];
 $card_name = $response['card_name'];
 // NHN_KCP는 tno값이 없다.

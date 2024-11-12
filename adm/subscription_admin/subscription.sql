@@ -308,6 +308,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_mod_history` text NOT NULL,
   `py_status` varchar(255) NOT NULL DEFAULT '',
   
+  `py_round_no` int(10) NOT NULL DEFAULT '1',
   `py_hope_date` date NOT NULL DEFAULT '0000-00-00',
   
   `py_settle_case` varchar(255) NOT NULL DEFAULT '',
@@ -420,8 +421,9 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',
   `od_free_mny` int(11) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
-  `card_number` varchar(50) NOT NULL DEFAULT '',
+  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
   `card_billkey` varchar(100) NOT NULL DEFAULT '',
+  `od_pays_total` int(10) NOT NULL DEFAULT '0',
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
   `od_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
   `od_firstshipment_date` datetime DEFAULT NULL,

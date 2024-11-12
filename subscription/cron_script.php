@@ -1,6 +1,12 @@
 <?php
 include_once('./_common.php');
 
+$t = isset($_REQUEST['t']) ? $_REQUEST['t'] : '';
+
+if (! $t) {
+    die('abc');
+}
+
 $is_db_success = true;
 
 if ($is_db_success) {
@@ -35,24 +41,32 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     }
     */
     
-    print_r2($row);
+    /*
+            $nextBillingDate = calculateNextBillingDate($row);
+            
+            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."' WHERE od_id = '".$row['od_id']."'";
+            
+            echo $updateQuery;
+            
+            sql_query($updateQuery);
+    */
     
     $pays = subscription_process_payment($row, $row['od_pg']);
     
-    print_r2($pays);
-    return;
+    print_r($pays);
     
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
-        $insert_id = subscription_order_pay($row, $pays);
+        $pay_round_no = (int) $row['od_pays_total'] + 1;
+        $insert_id = subscription_order_pay($row, $pays, $pay_round_no);
         
         // 성공이면
         if ($insert_id) {
             
             $nextBillingDate = calculateNextBillingDate($row);
             
-            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."' WHERE od_id = '$od_id'";
+            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '".$row['od_id']."'";
             
             sql_query($updateQuery);
             
@@ -64,10 +78,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             
         } else {
             // 실패시 처리
+            
+            if (function_exists('add_log')) {
+                add_log(array('error'=>'fail1'), false, '_subscription_fail_');
+            }
         }
         
     } else {
         // 실패시 처리
+        
+        if (function_exists('add_log')) {
+            add_log(array('error'=>'fail2'), false, '_subscription_fail_');
+        }
     }
-    
 }

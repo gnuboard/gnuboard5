@@ -147,11 +147,12 @@ $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
-if (function_exists('pg_setting_check')) {
-    pg_setting_check(true);
-}
+// 정기결제 설정이 테스트로 되어 있는지 체크
+subscription_pg_setting_check(true);
 ?>
-
+<div class="admin_pg_notice od_test_caution">
+    구독내역은 정기결제 카드 등록을 관리
+</div>
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     <span class="btn_ov01"><span class="ov_txt">전체 주문내역</span><span class="ov_num"> <?php echo number_format($total_count); ?>건</span></span>

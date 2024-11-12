@@ -4,6 +4,9 @@ if (!defined('_GNUBOARD_')) {
     exit;
 } // 개별 페이지 접근 불가
 
+// pc자동결제 메뉴얼 https://developer.kcp.co.kr/page/document/webauto
+// mobile 자동결제 메뉴얼 https://developer.kcp.co.kr/page/document/mobileauto
+
 // 테스트이면
 if (get_subs_option('su_card_test')) {
     // 사이트 코드

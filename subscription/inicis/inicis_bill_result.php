@@ -124,8 +124,8 @@ try {
                     $CARD_Interest = $resultMap['CARD_Interest'];
                     $payMethodDetail = $resultMap['payMethodDetail'];
 
-                    // 마스킹 된 카드번호
-                    $card_number = $resultMap['CARD_Num'];
+                    // 마스킹 된 카드번호 : 숫자6자리 마스킹* 9자리 끝자리숫자1 자리 이렇게 마스킹 되어 넘겨 받는다. 
+                    $card_mask_number = $resultMap['CARD_Num'];
                     $card_billkey = $CARD_BillKey;
                 } else {
                     $page_return_url = G5_SUBSCRIPTION_URL.'/orderform.php';

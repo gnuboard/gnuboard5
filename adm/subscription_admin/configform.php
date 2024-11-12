@@ -49,6 +49,19 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             </td>
         </tr>
         <tr>
+            <th scope="row"><label>크론 등록 과정</label></th>
+            <td>
+                <ul>
+                
+                    <li>
+                    <a href="cron-job.org" target="_blank">cron-job.org</a> 과 같은 웹사이트에서 cron을 등록합니다.
+                    </li>
+                    <li>cron-job.org 사이트의 경우 로그인 후 CREATE CRONJOB 버튼을 눌러 URL 항목에<?php echo G5_SUBSCRIPTION_URL; ?>/cron_script.php 을 등록합니다.</li>
+                    
+                </ul>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label>마지막 크론실행시간</label></th>
             <td>
                 <?php echo get_subs_option('su_cron_updatetime'); ?>

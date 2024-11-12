@@ -36,7 +36,7 @@ if(!isset($check_tmp['od_subscription_date_format'])){
 }
 
 // 변수 초기화
-$card_number = '';
+$card_mask_number = '';
 $card_billkey = '';
 $od_other_pay_type = '';
 
@@ -300,7 +300,7 @@ $inserts = array(
     'od_settle_case' => $od_settle_case,
     'od_other_pay_type' => $od_other_pay_type,
     'od_test' => get_subs_option('su_card_use'),
-    'card_number' => $card_number,
+    'card_mask_number' => $card_mask_number,
     'card_billkey' => $card_billkey,
     'od_subscription_number' => $od_subscription_number,
     'od_firstshipment_date' => $od_firstshipment_date,
@@ -377,10 +377,14 @@ $exists_order = sql_fetch($exists_sql);
 
 $pays = subscription_process_payment($exists_order, get_subs_option('su_pg_service'), $tmp_cart_id);
 
+print_r($pays);
+
 // 정기결제가 성공이면
 if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
     
-    $insert_id = subscription_order_pay($exists_order, $pays);
+    $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
+    
+    $insert_id = subscription_order_pay($exists_order, $pays, $pay_round_no);
     
     // 성공이면
     if ($insert_id) {
@@ -389,7 +393,7 @@ if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
         $nextBillingDate = calculateNextBillingDate($exists_order);
         
-        $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."' WHERE od_id = '$od_id'";
+        $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '$od_id'";
         
         sql_query($updateQuery);
         
@@ -510,6 +514,8 @@ $result = sql_query($sql, false);
 // }
 
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))).'&nbsp;';
+
+$od = $exists_order;
 
 include_once G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php';
 include_once G5_SUBSCRIPTION_PATH.'/ordermail2.inc.php';

@@ -24,4 +24,4 @@ if (isset($token)) {
 }
 
 include_once(G5_ADMIN_PATH.'/admin.lib.php');
-include_once('./admin.subscription.lib.php');
+include_once('admin.subscription.lib.php');

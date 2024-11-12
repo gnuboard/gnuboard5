@@ -998,7 +998,7 @@ function get_subscription_order_goods($od_id) {
     $cart = sql_fetch($sql);
 }
 
-function subscription_order_pay($od, $pg_data) {
+function subscription_order_pay($od, $pg_data, $pay_round_no) {
     global $g5;
     
     // $od['py_receipt_price'] ?
@@ -1041,9 +1041,9 @@ function subscription_order_pay($od, $pg_data) {
         'py_test' => $od['od_test'],
         'py_pg' => $od['od_pg'],
         'py_tno' => $pg_data['tid'],
-        'py_receipt_time' => G5_TIME_YMDHIS,
+        'py_time' => G5_TIME_YMDHIS,
         'py_app_no' => $py_app_no,
-        
+        'py_round_no' => $pay_round_no
         );
      
      
@@ -1131,7 +1131,7 @@ function expire_nicepay_billing($bid) {
 function kcp_billing($od, $tmp_cart_id='') {
     global $g5;
     
-    include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+    include(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
     
     $site_cd            = get_subs_option('su_kcp_mid'); // 사이트 코드
     // 인증서 정보(직렬화)
@@ -1170,6 +1170,10 @@ function kcp_billing($od, $tmp_cart_id='') {
         "bt_group_id"    => $bt_group_id
     );
     
+    if (function_exists('add_log')) {
+        add_log($data, false, 'kcp');
+    }
+    
     $req_data = json_encode($data);
     
     $header_data = array( "Content-Type: application/json", "charset=utf-8" );
@@ -1185,6 +1189,10 @@ function kcp_billing($od, $tmp_cart_id='') {
     
     // API RES
     $res_data  = curl_exec($ch);
+    
+    if (function_exists('add_log')) {
+        add_log($res_data, false, 'kcp');
+    }
     
     curl_close($ch);
     
@@ -1232,7 +1240,7 @@ function subscription_process_payment($od, $od_pg_service='', $tmp_cart_id='') {
 function nicepay_billing($od, $tmp_cart_id='') {
     global $g5;
     
-    include_once(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
+    include(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
     
 	$clientId = get_subs_option('su_nice_clientid');
 	$secretKey = get_subs_option('su_nice_secretkey');
@@ -1433,6 +1441,26 @@ function mask_card_number($string) {
     
     // 문자열을 마스킹된 형태로 변환
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function print_subscription_pg_name($od, $pg_name='') {
+    $txt = '';
+    
+    if (isset($od['od_pg'])) {
+        $txt = get_text($od['od_pg']);
+    }
+    
+    return $txt;
+}
+
+function print_subscription_card_info($od) {
+    $txt = '';
+    
+    if (isset($od['card_mask_number'])) {
+        $txt = get_text($od['od_card_name']).' '.get_text($od['card_mask_number']);
+    }
+    
+    return $txt;
 }
 
 // 금액표시
