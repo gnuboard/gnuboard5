@@ -72,6 +72,53 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_cart` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `g5_subscription_cart`
+--
+
+-- DROP TABLE IF EXISTS `g5_subscription_pay_basket`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_pay_basket` (
+  `pb_id` int(11) NOT NULL AUTO_INCREMENT,
+  `od_id` bigint(20) unsigned NOT NULL,
+  `pay_id` int(11) unsigned NOT NULL,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
+  `it_name` varchar(255) NOT NULL DEFAULT '',
+  `it_sc_type` tinyint(4) NOT NULL DEFAULT '0',
+  `it_sc_method` tinyint(4) NOT NULL DEFAULT '0',
+  `it_sc_price` int(11) NOT NULL DEFAULT '0',
+  `it_sc_minimum` int(11) NOT NULL DEFAULT '0',
+  `it_sc_qty` int(11) NOT NULL DEFAULT '0',
+  `pb_status` varchar(255) NOT NULL DEFAULT '',
+  `pb_history` text NOT NULL,
+  `pb_price` int(11) NOT NULL DEFAULT '0',
+  `pb_point` int(11) NOT NULL DEFAULT '0',
+  `cp_price` int(11) NOT NULL DEFAULT '0',
+  `pb_point_use` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_stock_use` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_option` varchar(255) NOT NULL DEFAULT '',
+  `pb_qty` int(11) NOT NULL DEFAULT '0',
+  `pb_notax` tinyint(4) NOT NULL DEFAULT '0',
+  `io_id` varchar(255) NOT NULL DEFAULT '',
+  `io_type` tinyint(4) NOT NULL DEFAULT '0',
+  `io_price` int(11) NOT NULL DEFAULT '0',
+  `pb_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pb_ip` varchar(25) NOT NULL DEFAULT '',
+  `pb_send_cost` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_direct` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_select` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_select_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pb_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_firstshipment_date` DATETIME DEFAULT NULL,
+  `pb_date_format` CHAR(4) NOT NULL DEFAULT '',
+  PRIMARY KEY (`pb_id`),
+  KEY `od_id` (`od_id`),
+  KEY `it_id` (`it_id`),
+  KEY `pb_status` (`pb_status`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `g5_subscription_category`
 --
 

@@ -1059,7 +1059,59 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     
     sql_query($sql);
     
-    return sql_insert_id();
+    $insert_id = sql_insert_id();
+    
+    if ($insert_id) {
+        // 상품명만들기
+        $result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$od['od_id']."' order by ct_id asc ");
+        
+        // 결제 될때 당시 결제된 장바구니 정보를 따로 저장한다. (pay_basket 테이블에)
+        for ($i = 0; $row = sql_fetch_array($result); ++$i) {
+            $inserts = array(
+                'od_id' => $row['od_id'],
+                'pay_id' => $insert_id,
+                'mb_id' => $row['mb_id'],
+                'it_id' => $row['it_id'],
+                'it_name' => $row['it_name'],
+                'it_sc_type' => $row['it_sc_type'],
+                'it_sc_method' => $row['it_sc_method'],
+                'it_sc_price' => $row['it_sc_price'],
+                'it_sc_minimum' => $row['it_sc_minimum'],
+                'it_sc_qty' => $row['it_sc_qty'],
+                'pb_status' => $row['ct_status'],
+                'pb_history' => $row['ct_history'],
+                'pb_price' => $row['ct_price'],
+                'pb_point' => $row['ct_point'],
+                'cp_price' => $row['cp_price'],
+                'pb_point_use' => $row['ct_point_use'],
+                'pb_stock_use' => $row['ct_stock_use'],
+                'pb_option' => $row['ct_option'],
+                'pb_qty' => $row['ct_qty'],
+                'pb_notax' => $row['ct_notax'],
+                'io_id' => $row['io_id'],
+                'io_type' => $row['io_type'],
+                'io_price' => $row['io_price'],
+                'pb_time' => $row['ct_time'],
+                'pb_ip' => $row['ct_ip'],
+                'pb_send_cost' => $row['ct_send_cost'],
+                'pb_direct' => $row['ct_direct'],
+                'pb_select' => $row['ct_select'],
+                'pb_select_time' => $row['ct_select_time'],
+                'pb_subscription_number' => $row['ct_subscription_number'],
+                'pb_firstshipment_date' => $row['ct_firstshipment_date'],
+                'pb_date_format' => $row['ct_date_format']
+                );
+            
+            // 주문서에 입력
+            $sql = "INSERT INTO `{$g5['g5_subscription_pay_basket_table']}`($columns) VALUES ('$values')";
+            
+            echo $sql;
+            
+            sql_query($sql, false);
+        }
+    }
+    
+    return $insert_id;
 }
 
 function calculateNextBillingDate($od){
@@ -1441,6 +1493,18 @@ function mask_card_number($string) {
     
     // 문자열을 마스킹된 형태로 변환
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function get_Ko_DayOfWeek($day, $is_print_yoil=''){
+
+    // 입력된 날짜를 strtotime으로 변환하여 유효성 검사
+    $timestamp = strtotime($day);
+    if (!$timestamp) return '';
+    
+    $yoil = array("일","월","화","수","목","금","토");
+
+    return ($yoil[date('w', $timestamp)]).$is_print_yoil;
+
 }
 
 function print_subscription_pg_name($od, $pg_name='') {

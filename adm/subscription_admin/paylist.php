@@ -8,7 +8,7 @@ $g5['title'] = '정기결제 결제내역';
 include_once G5_ADMIN_PATH.'/admin.head.php';
 include_once G5_PLUGIN_PATH.'/jquery-ui/datepicker.php';
 
-$where = [];
+$where = array();
 
 $doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
 $sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], ['od_id', 'od_cart_price', 'od_receipt_price', 'od_cancel_price', 'od_misu', 'od_cash'])) ? $_GET['sort1'] : '';
@@ -289,11 +289,11 @@ if (function_exists('pg_setting_check')) {
     <tr>
         <th scope="col" id="th_odrid">회원ID</th>
         <th scope="col" id="th_odrcnt">주문상품수</th>
-        <th scope="col" id="th_odrall">정기결제회차</th>
+        <th scope="col" id="th_odrall">결제수단(PG사)</th>
     </tr>
     <tr>
-        <th scope="col" id="odrstat">주문상태</th>
-        <th scope="col" id="odrpay">결제수단 (PG사)</th>
+        <th scope="col" id="odrstat">정기결제회차</th>
+        <th scope="col" id="odrpay">주문상태</th>
         <th scope="col" id="delino">운송장번호</th>
         <th scope="col" id="delicom">배송회사</th>
         <th scope="col" id="delidate">배송일시</th>
@@ -307,8 +307,8 @@ if (function_exists('pg_setting_check')) {
         
         // 결제 수단
         $s_receipt_way = $s_br = '';
-        if ($row['od_settle_case']) {
-            $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $row);
+        if ($row['py_settle_case']) {
+            $s_receipt_way = check_pay_name_replace($row['py_settle_case'], $row);
             $s_br = '<br />';
         } else {
             $s_receipt_way = '결제수단없음';
@@ -391,7 +391,7 @@ if (function_exists('pg_setting_check')) {
         <td rowspan="3" class="td_num_right"><?php echo number_format($row['couponprice']); ?></td>
         <td rowspan="3" class="td_num_right"><?php echo number_format($row['py_misu']); ?></td>
         <td rowspan="3" class="td_mng td_mng_s">
-            <a href="./payform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod btn btn_02"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
+            <a href="./payform.php?id=<?php echo $row['id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod btn btn_02"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
@@ -402,17 +402,23 @@ if (function_exists('pg_setting_check')) {
             비회원
             <?php } ?>
         </td>
-        <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
-        <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
+        <td headers="th_odrcnt">
+            <?php echo $row['od_cart_count']; ?>건<br>
+            <?php echo $od_cnt; ?>건
+        </td>
+        <td headers="th_odrall">
+            <input type="hidden" name="current_settle_case[<?php echo $i; ?>]" value="<?php echo $row['py_settle_case']; ?>">
+            <?php echo $s_receipt_way.' ('.$row['py_pg'].')'; ?>
+        </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td headers="odrstat" class="odrstat">
-            <input type="hidden" name="current_status[<?php echo $i; ?>]" value="<?php echo $row['od_status']; ?>">
-            <?php echo $row['od_status']; ?>
+            <?php echo get_text($row['py_round_no']); ?> 회
         </td>
         <td headers="odrpay" class="odrpay">
-            <input type="hidden" name="current_settle_case[<?php echo $i; ?>]" value="<?php echo $row['od_settle_case']; ?>">
-            <?php echo $s_receipt_way.' ('.$row['od_pg'].')'; ?>
+            주문상태 : <br>
+            <input type="hidden" name="current_status[<?php echo $i; ?>]" value="<?php echo $row['py_status']; ?>">
+            <?php echo $row['py_status']; ?>
         </td>
         <td headers="delino" class="delino">
             <?php if ($od_status == '준비') { ?>

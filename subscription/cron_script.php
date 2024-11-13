@@ -4,7 +4,7 @@ include_once('./_common.php');
 $t = isset($_REQUEST['t']) ? $_REQUEST['t'] : '';
 
 if (! $t) {
-    die('abc');
+    // die('abc');
 }
 
 $is_db_success = true;

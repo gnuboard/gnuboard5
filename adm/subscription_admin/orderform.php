@@ -565,6 +565,24 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <input type="text" name="od_send_cost2" value="<?php echo $od['od_send_cost2']; ?>" id="od_send_cost2" class="frm_input" size="10"> 원
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row"><label for="od_send_cost2">현재 회차</label></th>
+                    <td>
+                        <?php echo $od['od_pays_total']; ?> 회
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="od_send_cost2">카드정보</label></th>
+                    <td>
+                        <?php echo $od['od_card_name']; ?> <?php echo $od['card_mask_number']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="od_send_cost2">다음 결제일</label></th>
+                    <td>
+                        <?php echo $od['next_billing_date']; ?> (<?php echo get_Ko_DayOfWeek($od['next_billing_date']); ?>)
+                    </td>
+                </tr>
                 <?php
                 if ($od['od_misu'] == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
                 ?>
@@ -620,27 +638,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 }
                 ?>
                 </tbody>
-                </table>
-            </div>
-        </section>
-        
-        <section id="" >
-            <h3>정기결제내역</h3>
-            
-            <?php
-            $sql = "select * from `{$g5['g5_subscription_pay_table']}` where od_id = '$od_id' order by id desc";
-            $pay_result = sql_query($sql);
-            
-            for ($i = 0; $pays=sql_fetch_array($pay_result); ++$i) {
-            }
-            ?>
-            <div class="tbl_frm01">
-                <table>
-                    <tr>
-                        <td><?php echo $pays['py_pg']; ?></td>
-                        <td><?php echo $pays['py_pg']; ?></td>
-                        <td><?php echo $pays['py_receipt_time']; ?></td>
-                    </tr>
                 </table>
             </div>
         </section>
@@ -859,6 +856,41 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </form>
 </section>
 
+<section id="" >
+    <h3>정기결제내역</h3>
+    
+    <?php
+    $sql = "select * from `{$g5['g5_subscription_pay_table']}` where od_id = '$od_id' order by id desc";
+    $pay_result = sql_query($sql);
+    
+    $pay_rows = array();
+    
+    for ($i = 0; $pays=sql_fetch_array($pay_result); ++$i) {
+        $pay_rows[] = $pays;
+    }
+    ?>
+    <div class="tbl_frm01">
+        <table>
+            <tr>
+                <th>회차</th>
+                <th>결제PG사</th>
+                <th>결제된날짜</th>
+                <th>결제금액</th>
+                <th>보기</th>
+            </tr>
+            <?php foreach($pay_rows as $key=>$v) { ?>
+            <tr>
+                <td><?php echo $v['py_round_no']; ?></td>
+                <td><?php echo $v['py_pg']; ?></td>
+                <td><?php echo $v['py_receipt_time']; ?></td>
+                <td></td>
+                <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?id=<?php echo $v['id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
+            </tr>
+            <?php } ?>
+        </table>
+    </div>
+</section>
+        
 <section id="anc_sodr_memo">
     <h2 class="h2_frm">상점메모</h2>
     <?php echo $pg_anchor; ?>

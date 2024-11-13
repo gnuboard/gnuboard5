@@ -10,6 +10,7 @@ auth_check_menu($auth, $sub_menu, "w");
 $g5['title'] = "주문 내역 수정";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
+$id = isset($_REQUEST['id']) ? preg_replace('/[^a-z0-9_\-]/i', '', $_REQUEST['id']) : '';
 $fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['fr_date']) : '';
 $to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['to_date']) : '';
 $od_status = isset($_REQUEST['od_status']) ? clean_xss_tags($_REQUEST['od_status'], 1, 1) : '';
@@ -31,12 +32,16 @@ $search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : 
 save_order_point("완료");
 
 
+if (! $id) {
+    alert("잘못된 요청입니다. id");
+}
+
 //------------------------------------------------------------------------------
 // 주문서 정보
 //------------------------------------------------------------------------------
-$sql = " select * from {$g5['g5_subscription_pay_table']} where od_id = '$od_id' ";
+$sql = " select * from {$g5['g5_subscription_pay_table']} where id = '$id' ";
 $od = sql_fetch($sql);
-if (! (isset($od['od_id']) && $od['od_id'])) {
+if (! (isset($od['id']) && $od['id'])) {
     alert("해당 주문번호로 주문서가 존재하지 않습니다.");
 }
 
