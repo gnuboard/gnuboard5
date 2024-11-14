@@ -1,5 +1,7 @@
 <?php
-$sub_menu = '400200';
+if (!(defined('G5_IS_SUBSCRIPTION_ADMIN_PAGE') && $sub_menu)) {
+    $sub_menu = '400200';
+}
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");

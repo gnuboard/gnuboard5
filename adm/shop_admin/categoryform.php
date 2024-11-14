@@ -1,5 +1,7 @@
 <?php
-$sub_menu = '400200';
+if (!(defined('G5_IS_SUBSCRIPTION_ADMIN_PAGE') && $sub_menu)) {
+    $sub_menu = '400200';
+}
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
@@ -243,6 +245,24 @@ else {
                 <label for="ca_adult_use_no">사용안함</label>
             </td>
         </tr>
+        <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+        <tr>
+            <th scope="row"><label for="ca_id">정기결제 스킨사용</label></th>
+            <td>
+                <tr>
+                    <th scope="row"><label for="ca_skin">출력스킨</label></th>
+                    <td>
+                        <?php
+                        ?>
+                        <input type="radio" name="ca_adult_use" value="0" id="ca_adult_use_no" <?php if(!$ca['ca_adult_use']) echo 'checked="checked"'; ?>>
+                        <label for="ca_adult_use_no">사용안함</label>
+                        <input type="radio" name="ca_adult_use" value="1" id="ca_adult_use_yes" <?php if($ca['ca_adult_use']) echo 'checked="checked"'; ?>>
+                        <label for="ca_adult_use_yes">사용함</label>
+                    </td>
+                </tr>
+            </td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="ca_skin">출력스킨</label></th>
             <td>

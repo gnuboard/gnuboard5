@@ -78,6 +78,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <!-- } 회원정보 개요 끝 -->
 
 	<div id="smb_my_list">
+    
+        <?php run_event('g5_shop_mypage_sub_top'); ?>
+        
 	    <!-- 최근 주문내역 시작 { -->
 	    <section id="smb_my_od">
 	        <h2>주문내역조회</h2>
@@ -94,7 +97,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 	        </div>
 	    </section>
 	    <!-- } 최근 주문내역 끝 -->
-	
+	    
+        <?php run_event('g5_shop_mypage_sub_middle'); ?>
+        
 	    <!-- 최근 위시리스트 시작 { -->
 	    <section id="smb_my_wish">
 	        <h2>최근 위시리스트</h2>
@@ -162,6 +167,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             </form>
 	    </section>
 	    <!-- } 최근 위시리스트 끝 -->
+        
+        <?php run_event('g5_shop_mypage_sub_bottom'); ?>
+        
 	</div>
 </div>
 

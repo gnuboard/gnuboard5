@@ -1102,6 +1102,9 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
                 'pb_date_format' => $row['ct_date_format']
                 );
             
+            $columns = implode(', ', array_keys($inserts));
+            $values = implode("', '", array_values($inserts));
+            
             // 주문서에 입력
             $sql = "INSERT INTO `{$g5['g5_subscription_pay_basket_table']}`($columns) VALUES ('$values')";
             
@@ -1493,6 +1496,55 @@ function mask_card_number($string) {
     
     // 문자열을 마스킹된 형태로 변환
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
+    global $g5;
+    
+    static $cache = array();
+
+    $key = md5($pay_id);
+
+    if( $is_cache && isset($cache[$key]) ){
+        return $cache[$key];
+    }
+    
+    $goods = array(
+        'full_name' => '',
+        'thumb' => '',
+        );
+    
+    // 상품명만들기
+    
+    $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_subscription_item_table']} b where a.it_id = b.it_id and a.od_id = '$pay_id' order by ct_id ";
+        
+    $result = sql_query($sql);
+    
+    $tmp = array();
+    
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        
+        $row['thumbnail'] = get_subscription_it_image($row['it_id'], 65, 65, true);
+        
+        // 대표 상품명과 대표 썸네일을 지정한다.
+        if ($i === 0) {
+            $goods['full_name'] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "", addslashes($row['it_name']));
+            $goods['thumb'] = $row['thumbnail'];
+        }
+        
+        $tmp[$i] = $row;
+    }
+    
+    $goods['data'] = $tmp;
+    $total_tmp = count($tmp);
+    
+    if ($tmp && $total_tmp > 1) {
+        $goods['full_name'] .= ' 외 '.((int)$total_tmp - 1).'건';
+    }
+    
+    $cache[$key] = $goods;
+    
+    return $cache[$key];
 }
 
 function get_Ko_DayOfWeek($day, $is_print_yoil=''){

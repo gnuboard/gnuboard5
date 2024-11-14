@@ -31,7 +31,6 @@ $search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : 
 // 완료된 주문에 포인트를 적립한다.
 save_order_point("완료");
 
-
 if (! $id) {
     alert("잘못된 요청입니다. id");
 }
@@ -40,14 +39,16 @@ if (! $id) {
 // 주문서 정보
 //------------------------------------------------------------------------------
 $sql = " select * from {$g5['g5_subscription_pay_table']} where id = '$id' ";
-$od = sql_fetch($sql);
-if (! (isset($od['id']) && $od['id'])) {
+$pay = sql_fetch($sql);
+
+$od = $pay;
+
+if (! (isset($pay['id']) && $pay['id'])) {
     alert("해당 주문번호로 주문서가 존재하지 않습니다.");
 }
 
 $od['mb_id'] = $od['mb_id'] ? $od['mb_id'] : "비회원";
 //------------------------------------------------------------------------------
-
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>
@@ -67,17 +68,73 @@ if($default['de_escrow_use'])
     $qstr1 .= "&amp;od_escrow=$od_escrow";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
+$sql = "select * from {$g5['g5_subscription_pay_basket_table']} where pay_id = '{$pay['id']}' ";
+$pay_basket = sql_fetch($sql);
+
+if (!(isset($pay_basket['pb_id']) && $pay_basket['pb_id'])) {
+    $result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$od['od_id']."' order by ct_id asc ");
+    
+    // 결제 될때 당시 결제된 장바구니 정보를 따로 저장한다. (pay_basket 테이블에)
+    for ($i = 0; $row = sql_fetch_array($result); ++$i) {
+        $inserts = array(
+            'od_id' => $row['od_id'],
+            'pay_id' => $pay['id'],
+            'mb_id' => $row['mb_id'],
+            'it_id' => $row['it_id'],
+            'it_name' => $row['it_name'],
+            'it_sc_type' => $row['it_sc_type'],
+            'it_sc_method' => $row['it_sc_method'],
+            'it_sc_price' => $row['it_sc_price'],
+            'it_sc_minimum' => $row['it_sc_minimum'],
+            'it_sc_qty' => $row['it_sc_qty'],
+            'pb_status' => $row['ct_status'],
+            'pb_history' => $row['ct_history'],
+            'pb_price' => $row['ct_price'],
+            'pb_point' => $row['ct_point'],
+            'cp_price' => $row['cp_price'],
+            'pb_point_use' => $row['ct_point_use'],
+            'pb_stock_use' => $row['ct_stock_use'],
+            'pb_option' => $row['ct_option'],
+            'pb_qty' => $row['ct_qty'],
+            'pb_notax' => $row['ct_notax'],
+            'io_id' => $row['io_id'],
+            'io_type' => $row['io_type'],
+            'io_price' => $row['io_price'],
+            'pb_time' => $row['ct_time'],
+            'pb_ip' => $row['ct_ip'],
+            'pb_send_cost' => $row['ct_send_cost'],
+            'pb_direct' => $row['ct_direct'],
+            'pb_select' => $row['ct_select'],
+            'pb_select_time' => $row['ct_select_time'],
+            'pb_subscription_number' => $row['ct_subscription_number'],
+            'pb_firstshipment_date' => $row['ct_firstshipment_date'],
+            'pb_date_format' => $row['ct_date_format']
+            );
+        
+            
+        $columns = implode(', ', array_keys($inserts));
+        $values = implode("', '", array_values($inserts));
+        
+        // 주문서에 입력
+        $sql = "INSERT INTO `{$g5['g5_subscription_pay_basket_table']}`($columns) VALUES ('$values')";
+        
+        echo $sql;
+        
+        sql_query($sql, false);
+    }
+}
+
 // 상품목록
 $sql = " select it_id,
                 it_name,
                 cp_price,
-                ct_notax,
-                ct_send_cost,
+                pb_notax,
+                pb_send_cost,
                 it_sc_type
-           from {$g5['g5_subscription_cart_table']}
-          where od_id = '{$od['od_id']}'
+           from {$g5['g5_subscription_pay_basket_table']}
+          where pay_id = '{$pay['id']}'
           group by it_id
-          order by ct_id ";
+          order by pb_id ";
 $result = sql_query($sql);
 
 $print_od_deposit_name = $od['od_deposit_name'];
@@ -144,33 +201,33 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             $image = get_it_image($row['it_id'], 50, 50);
 
             // 상품의 옵션정보
-            $sql = " select ct_id, it_id, ct_price, ct_point, ct_qty, ct_option, ct_status, cp_price, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
-                        from {$g5['g5_subscription_cart_table']}
-                        where od_id = '{$od['od_id']}'
+            $sql = " select pb_id, it_id, pb_price, pb_point, pb_qty, pb_option, pb_status, cp_price, pb_stock_use, pb_point_use, pb_send_cost, io_type, io_price
+                        from {$g5['g5_subscription_pay_basket_table']}
+                        where pay_id = '{$pay['id']}'
                           and it_id = '{$row['it_id']}'
-                        order by io_type asc, ct_id asc ";
+                        order by io_type asc, pb_id asc ";
             $res = sql_query($sql);
             $rowspan = sql_num_rows($res);
 
             // 합계금액 계산
-            $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                            SUM(ct_qty) as qty
-                        from {$g5['g5_subscription_cart_table']}
+            $sql = " select SUM(IF(io_type = 1, (io_price * pb_qty), ((pb_price + io_price) * pb_qty))) as price,
+                            SUM(pb_qty) as qty
+                        from {$g5['g5_subscription_pay_basket_table']}
                         where it_id = '{$row['it_id']}'
-                          and od_id = '{$od['od_id']}' ";
+                          and pay_id = '{$pay['id']}' ";
             $sum = sql_fetch($sql);
 
             // 배송비
-            switch($row['ct_send_cost'])
+            switch($row['pb_send_cost'])
             {
                 case 1:
-                    $ct_send_cost = '착불';
+                    $pb_send_cost = '착불';
                     break;
                 case 2:
-                    $ct_send_cost = '무료';
+                    $pb_send_cost = '무료';
                     break;
                 default:
-                    $ct_send_cost = '선불';
+                    $pb_send_cost = '선불';
                     break;
             }
 
@@ -179,24 +236,24 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $od['od_id']);
 
                 if($sendcost == 0)
-                    $ct_send_cost = '무료';
+                    $pb_send_cost = '무료';
             }
 
             for($k=0; $opt=sql_fetch_array($res); $k++) {
                 if($opt['io_type'])
                     $opt_price = $opt['io_price'];
                 else
-                    $opt_price = $opt['ct_price'] + $opt['io_price'];
+                    $opt_price = $opt['pb_price'] + $opt['io_price'];
 
                 // 소계
-                $ct_price['stotal'] = $opt_price * $opt['ct_qty'];
-                $ct_point['stotal'] = $opt['ct_point'] * $opt['ct_qty'];
+                $pb_price['stotal'] = $opt_price * $opt['pb_qty'];
+                $pb_point['stotal'] = $opt['pb_point'] * $opt['pb_qty'];
             ?>
             <tr>
                 <?php if($k == 0) { ?>
                 <td rowspan="<?php echo $rowspan; ?>" class="td_left">
                     <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
-                    <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
+                    <?php if($od['od_tax_flag'] && $row['pb_notax']) echo '[비과세상품]'; ?>
                 </td>
                 <td rowspan="<?php echo $rowspan; ?>" class="td_chk">
                     <label for="sit_sel_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 옵션 전체선택</label>
@@ -204,23 +261,23 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </td>
                 <?php } ?>
                 <td class="td_left">
-                    <label for="ct_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?></label>
-                    <input type="checkbox" name="ct_chk[<?php echo $chk_cnt; ?>]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>" class="sct_sel_<?php echo $i; ?>">
-                    <input type="hidden" name="ct_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['ct_id']; ?>">
-                    <?php echo get_text($opt['ct_option']); ?>
+                    <label for="pb_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['pb_option']); ?></label>
+                    <input type="checkbox" name="pb_chk[<?php echo $chk_cnt; ?>]" id="pb_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>" class="spb_sel_<?php echo $i; ?>">
+                    <input type="hidden" name="pb_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['pb_id']; ?>">
+                    <?php echo get_text($opt['pb_option']); ?>
                 </td>
-                <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
+                <td class="td_mngsmall"><?php echo $opt['pb_status']; ?></td>
                 <td class="td_num">
-                    <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?> 수량</label>
-                    <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
+                    <label for="pb_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['pb_option']); ?> 수량</label>
+                    <input type="text" name="pb_qty[<?php echo $chk_cnt; ?>]" id="pb_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['pb_qty']; ?>" required class="frm_input required" size="5">
                 </td>
                 <td class="td_num_right "><?php echo number_format($opt_price); ?></td>
-                <td class="td_num_right"><?php echo number_format($ct_price['stotal']); ?></td>
+                <td class="td_num_right"><?php echo number_format($pb_price['stotal']); ?></td>
                 <td class="td_num_right"><?php echo number_format($opt['cp_price']); ?></td>
-                <td class=" td_num_right"><?php echo number_format($ct_point['stotal']); ?></td>
-                <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
-                <td class="td_mngsmall"><?php echo get_yn($opt['ct_point_use']); ?></td>
-                <td class="td_mngsmall"><?php echo get_yn($opt['ct_stock_use']); ?></td>
+                <td class=" td_num_right"><?php echo number_format($pb_point['stotal']); ?></td>
+                <td class="td_sendcost_by"><?php echo $pb_send_cost; ?></td>
+                <td class="td_mngsmall"><?php echo get_yn($opt['pb_point_use']); ?></td>
+                <td class="td_mngsmall"><?php echo get_yn($opt['pb_stock_use']); ?></td>
             </tr>
             <?php
                 $chk_cnt++;
@@ -237,14 +294,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <p>
             <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
             <strong>주문 및 장바구니 상태 변경</strong>
-            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value" class="btn_02 color_01">
-            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value" class="btn_02 color_02">
-            <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value" class="btn_02 color_03">
-            <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value" class="btn_02 color_04">
-            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value" class="btn_02 color_05">
-            <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value" class="btn_02 color_06">
-            <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value" class="btn_02 color_06">
-            <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value" class="btn_02 color_06">
+            <input type="submit" name="pb_status" value="주문" onclick="document.pressed=this.value" class="btn_02 color_01">
+            <input type="submit" name="pb_status" value="입금" onclick="document.pressed=this.value" class="btn_02 color_02">
+            <input type="submit" name="pb_status" value="준비" onclick="document.pressed=this.value" class="btn_02 color_03">
+            <input type="submit" name="pb_status" value="배송" onclick="document.pressed=this.value" class="btn_02 color_04">
+            <input type="submit" name="pb_status" value="완료" onclick="document.pressed=this.value" class="btn_02 color_05">
+            <input type="submit" name="pb_status" value="취소" onclick="document.pressed=this.value" class="btn_02 color_06">
+            <input type="submit" name="pb_status" value="반품" onclick="document.pressed=this.value" class="btn_02 color_06">
+            <input type="submit" name="pb_status" value="품절" onclick="document.pressed=this.value" class="btn_02 color_06">
         </p>
     </div>
 
@@ -1029,17 +1086,17 @@ $(function() {
     $("#sit_select_all").click(function() {
         if($(this).is(":checked")) {
             $("input[name='it_sel[]']").attr("checked", true);
-            $("input[name^=ct_chk]").attr("checked", true);
+            $("input[name^=pb_chk]").attr("checked", true);
         } else {
             $("input[name='it_sel[]']").attr("checked", false);
-            $("input[name^=ct_chk]").attr("checked", false);
+            $("input[name^=pb_chk]").attr("checked", false);
         }
     });
 
     // 상품의 옵션선택
     $("input[name='it_sel[]']").click(function() {
         var cls = $(this).attr("id").replace("sit_", "sct_");
-        var $chk = $("input[name^=ct_chk]."+cls);
+        var $chk = $("input[name^=pb_chk]."+cls);
         if($(this).is(":checked"))
             $chk.attr("checked", true);
         else
@@ -1067,7 +1124,7 @@ function form_submit(f)
     var status = document.pressed;
 
     for (i=0; i<f.chk_cnt.value; i++) {
-        if (document.getElementById('ct_chk_'+i).checked == true)
+        if (document.getElementById('pb_chk_'+i).checked == true)
             check = true;
     }
 
@@ -1080,9 +1137,9 @@ function form_submit(f)
 
     <?php if (is_cancel_subscription_pg_order($od)) { ?>
     if(status == "취소" || status == "반품" || status == "품절") {
-        var $ct_chk = $("input[name^=ct_chk]");
-        var chk_cnt = $ct_chk.length;
-        var chked_cnt = $ct_chk.filter(":checked").length;
+        var $pb_chk = $("input[name^=pb_chk]");
+        var chk_cnt = $pb_chk.length;
+        var chked_cnt = $pb_chk.filter(":checked").length;
         <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
         var cancel_pg = "카카오페이";
         <?php } else { ?>
