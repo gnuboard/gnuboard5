@@ -21,8 +21,9 @@ else {
     $tmp_cart_id = get_session('subs_cart_id');
 }
 
-if (get_subscription_cart_count($tmp_cart_id) == 0)
+if (get_subscription_cart_count($tmp_cart_id) == 0) {
     alert('장바구니가 비어 있습니다.', G5_SUBSCRIPTION_URL.'/cart.php');
+}
 
 if (function_exists('before_check_subscription_cart_price')) {
     if(! before_check_subscription_cart_price($tmp_cart_id) ) alert('장바구니 금액에 변동사항이 있습니다.\n장바구니를 다시 확인해 주세요.', G5_SUBSCRIPTION_URL.'/cart.php');

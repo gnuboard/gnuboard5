@@ -80,13 +80,14 @@ $sql = " select a.ct_id,
                         a.ct_status,
                         a.ct_send_cost,
                         a.it_sc_type,
-                        b.sc_id,
-                        b.sc_id2,
-                        b.sc_id3
-                   from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
+                        b.ca_id,
+                        b.ca_id2,
+                        b.ca_id3
+                   from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
                   where a.od_id = '$s_cart_id' ";
 $sql .= ' group by a.it_id ';
 $sql .= ' order by a.ct_id ';
+
 $result = sql_query($sql);
 
 $it_send_cost = 0;

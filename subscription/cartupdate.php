@@ -1,5 +1,4 @@
 <?php
-
 include_once './_common.php';
 
 // print_r2($_POST); exit;
@@ -42,7 +41,7 @@ if ($act == 'buy') {
     }
 
     // 선택필드 초기화
-    $sql = " update {$g5['g5_subscription_subscription_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
+    $sql = " update {$g5['g5_subscription_cart_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
     sql_query($sql);
 
     $fldcnt = count($post_it_ids);
@@ -237,7 +236,7 @@ if ($act == 'buy') {
 
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = [];
-        $sql = " select * from {$g5['g5_subscription_item_option_table']} where it_id = '$it_id' and io_use = 1 order by io_no asc ";
+        $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_use = 1 order by io_no asc ";
         $result = sql_query($sql);
         $lst_count = 0;
         for ($k = 0; $row = sql_fetch_array($result); ++$k) {

@@ -185,7 +185,7 @@ function get_subscription_it_stock_qty($it_id)
 {
     global $g5;
 
-    $sql = " select it_stock_qty from {$g5['g5_subscription_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_stock_qty from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
     
     $row = sql_fetch($sql);
     $jaego = (int)$row['it_stock_qty'];
@@ -367,7 +367,7 @@ function subscription_cart_item_clean() {
 }
 
 function subscription_is_soldout($it_id, $is_cache=false) {
-    return false;
+    return is_soldout($it_id, $is_cache);
 }
 
 function subscription_member_cert_check($id, $type){
@@ -383,7 +383,7 @@ function get_subscription_category($sc_id) {
     
     $add_query = '';
     
-    $sql = " select * from {$g5['g5_subscription_category_table']} where sc_id = '{$sc_id}' $add_query ";
+    $sql = " select * from {$g5['g5_shop_category_table']} where sc_id = '{$sc_id}' $add_query ";
     return sql_fetch($sql);
 }
 
@@ -402,7 +402,7 @@ function get_subscription_item($it_id, $is_cache=false, $add_query='') {
     $item = $is_cache ? $g5_object->get('subscription', $it_id, $add_query_key) : null;
 
     if( !$item ){
-        $sql = " select * from {$g5['g5_subscription_item_table']} where it_id = '{$it_id}' $add_query ";
+        $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '{$it_id}' and it_class_num IN (1, 2) $add_query ";
         $item = sql_fetch($sql);
 
         $g5_object->set('subscription', $it_id, $item, $add_query_key);
@@ -424,9 +424,9 @@ function get_subscription_item_with_category($it_id, $seo_title='', $add_query='
     global $g5, $default;
 
     if( $seo_title ){
-        $sql = " select a.*, b.sc_name, b.sc_use from {$g5['g5_subscription_item_table']} a, {$g5['g5_subscription_category_table']} b where a.it_seo_title = '".sql_real_escape_string(generate_seo_title($seo_title))."' and a.sc_id = b.sc_id $add_query";
+        $sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_seo_title = '".sql_real_escape_string(generate_seo_title($seo_title))."' and a.ca_id = b.ca_id $add_query";
     } else {
-        $sql = " select a.*, b.sc_name, b.sc_use from {$g5['g5_subscription_item_table']} a, {$g5['g5_subscription_category_table']} b where a.it_id = '$it_id' and a.sc_id = b.sc_id $add_query";
+        $sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id $add_query";
     }
     
     $item = sql_fetch($sql);
@@ -445,117 +445,30 @@ function subscription_seo_title_update($it_id, $is_edit=false){
     $item = get_subscription_item($it_id, $subscription_item_cache);
 
     if( (! $item['it_seo_title'] || $is_edit) && $item['it_name'] ){
-        $it_seo_title = exist_seo_title_recursive('subscription', generate_seo_title($item['it_name']), $g5['g5_subscription_item_table'], $item['it_id']);
+        $it_seo_title = exist_seo_title_recursive('subscription', generate_seo_title($item['it_name']), $g5['g5_shop_item_table'], $item['it_id']);
 
         if( isset($item['it_seo_title']) && $it_seo_title !== $item['it_seo_title'] ){
-            $sql = " update `{$g5['g5_subscription_item_table']}` set it_seo_title = '{$it_seo_title}' where it_id = '{$item['it_id']}' ";
+            $sql = " update `{$g5['g5_shop_item_table']}` set it_seo_title = '{$it_seo_title}' where it_id = '{$item['it_id']}' ";
             sql_query($sql);
         }
     }
 }
 
-class SubscriptionList
-{
-    // 상품유형 : 기본적으로 1~5 까지 사용할수 있으며 0 으로 설정하는 경우 상품유형별로 노출하지 않습니다.
-    // 분류나 이벤트로 노출하는 경우 상품유형을 0 으로 설정하면 됩니다.
-    protected $type;
-
-    protected $list_skin;
-    protected $list_mod;
-    protected $list_row;
-    protected $img_width;
-    protected $img_height;
-
-    // 상품상세보기 경로
-    protected $href = "";
-
-    // select 에 사용되는 필드
-    protected $fields = "*";
-
-    // 분류코드로만 사용하는 경우 상품유형($type)을 0 으로 설정하면 됩니다.
-    protected $sc_id = "";
-    protected $sc_id2 = "";
-    protected $sc_id3 = "";
-
-    // 노출순서
-    protected $order_by = "it_order, it_id desc";
-
-    // 스킨의 기본 css 를 다른것으로 사용하고자 할 경우에 사용합니다.
-    protected $css = "";
-
-    // 상품의 사용여부를 따져 노출합니다. 0 인 경우 모든 상품을 노출합니다.
-    protected $use = 1;
-
-    // 모바일에서 노출하고자 할 경우에 true 로 설정합니다.
-    protected $is_mobile = false;
-
-    // 기본으로 보여지는 필드들
-    protected $view_it_id    = false;       // 상품코드
-    protected $view_it_img   = true;        // 상품이미지
-    protected $view_it_name  = true;        // 상품명
-    protected $view_it_basic = true;        // 기본설명
-    protected $view_it_price = true;        // 판매가격
-    protected $view_it_cust_price = false;  // 소비자가
-    protected $view_it_icon = false;        // 아이콘
-    protected $view_sns = false;            // SNS
-    protected $view_star = false;           // 별점
-
-    // 몇번째 class 호출인지를 저장합니다.
-    protected $count = 0;
-
-    // true 인 경우 페이지를 구한다.
-    protected $is_page = false;
-
-    // 페이지 표시를 위하여 총 상품수를 구합니다.
-    public $total_count = 0;
-
-    // sql limit 의 시작 레코드
-    protected $from_record = 0;
-
-    // 외부에서 쿼리문을 넘겨줄 경우에 담아두는 변수
-    protected $query = "";
-
+class SubscriptionList extends item_list {
+    
     // $type        : 상품유형 (기본으로 1~5까지 사용)
     // $list_skin   : 상품리스트를 노출할 스킨을 설정합니다. 스킨위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php
     // $list_mod    : 1줄에 몇개의 상품을 노출할지를 설정합니다.
     // $list_row    : 상품을 몇줄에 노출할지를 설정합니다.
     // $img_width   : 상품이미지의 폭을 설정합니다.
     // $img_height  : 상품이미지의 높이을 설정합니다. 0 으로 설정하는 경우 썸네일 이미지의 높이는 폭에 비례하여 생성합니다.
-    //function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0, $sc_id='') {
+    //function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0, $ca_id='') {
     function __construct($list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0) {
-        $this->list_skin  = $list_skin;
-        $this->list_mod   = $list_mod;
-        $this->list_row   = $list_row;
-        $this->img_width  = $img_width;
-        $this->img_height = $img_height;
+        parent::__construct($list_skin, $list_mod, $list_row, $img_width, $img_height);
         $this->set_href(G5_SUBSCRIPTION_URL.'/item.php?it_id=');
         $this->count++;
     }
-
-    function set_type($type) {
-        $this->type = $type;
-        if ($type) {
-            $this->set_list_skin($this->list_skin);
-            $this->set_list_mod($this->list_mod);
-            $this->set_list_row($this->list_row);
-            $this->set_img_size($this->img_width, $this->img_height);
-        }
-    }
-
-    // 분류코드로 검색을 하고자 하는 경우 아래와 같이 인수를 넘겨줍니다.
-    // 1단계 분류는 (분류코드, 1)
-    // 2단계 분류는 (분류코드, 2)
-    // 3단계 분류는 (분류코드, 3)
-    function set_category($sc_id, $level=1) {
-        if ($level == 2) {
-            $this->sc_id2 = $sc_id;
-        } else if ($level == 3) {
-            $this->sc_id3 = $sc_id;
-        } else {
-            $this->sc_id = $sc_id;
-        }
-    }
-
+    
     // 리스트 스킨을 바꾸고자 하는 경우에 사용합니다.
     // 리스트 스킨의 위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php 입니다.
     // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
@@ -567,99 +480,62 @@ class SubscriptionList
             $this->list_skin = $list_skin ? $list_skin : G5_SUBSCRIPTION_SKIN_PATH.'/'.preg_replace('/[^A-Za-z0-9 _ .-]/', '', $default['de_type'.$this->type.'_list_skin']);
         }
     }
-
-    // 1줄에 몇개를 노출할지를 사용한다.
-    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
-    function set_list_mod($list_mod) {
-        global $default;
-        if ($this->is_mobile) {
-            $this->list_mod = $list_mod ? $list_mod : $default['de_mobile_type'.$this->type.'_list_mod'];
-        } else {
-            $this->list_mod = $list_mod ? $list_mod : $default['de_type'.$this->type.'_list_mod'];
-        }
-    }
-
-    // 몇줄을 노출할지를 사용한다.
-    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
-    function set_list_row($list_row) {
-        global $default;
-        if ($this->is_mobile) {
-            $this->list_row = $list_row ? $list_row : $default['de_mobile_type'.$this->type.'_list_row'];
-        } else {
-            $this->list_row = $list_row ? $list_row : $default['de_type'.$this->type.'_list_row'];
-        }
-        if (!$this->list_row)
-            $this->list_row = 1;
-    }
-
-    // 노출이미지(썸네일생성)의 폭, 높이를 설정합니다. 높이를 0 으로 설정하는 경우 쎰네일 비율에 따릅니다.
-    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
-    function set_img_size($img_width, $img_height=0) {
-        global $default;
-        if ($this->is_mobile) {
-            $this->img_width = $img_width ? $img_width : $default['de_mobile_type'.$this->type.'_img_width'];
-            $this->img_height = $img_height ? $img_height : $default['de_mobile_type'.$this->type.'_img_height'];
-        } else {
-            $this->img_width = $img_width ? $img_width : $default['de_type'.$this->type.'_img_width'];
-            $this->img_height = $img_height ? $img_height : $default['de_type'.$this->type.'_img_height'];
-        }
-    }
-
-    // 특정 필드만 select 하는 경우에는 필드명을 , 로 구분하여 "field1, field2, field3, ... fieldn" 으로 인수를 넘겨줍니다.
-    function set_fields($str) {
-        $this->fields = $str;
-    }
-
-    // 특정 필드로 정렬을 하는 경우 필드와 정렬순서를 , 로 구분하여 "field1 desc, field2 asc, ... fieldn desc " 으로 인수를 넘겨줍니다.
-    function set_order_by($str) {
-        $this->order_by = $str;
-    }
-
-    // 사용하는 상품외에 모든 상품을 노출하려면 0 을 인수로 넘겨줍니다.
-    function set_use($use) {
-        $this->use = $use;
-    }
-
-    // 모바일로 사용하려는 경우 true 를 인수로 넘겨줍니다.
-    function set_mobile($mobile=true) {
-        $this->is_mobile = $mobile;
-    }
-
-    // 스킨에서 특정 필드를 노출하거나 하지 않게 할수 있습니다.
-    // 가령 소비자가는 처음에 노출되지 않도록 설정되어 있지만 노출을 하려면
-    // ("it_cust_price", true) 와 같이 인수를 넘겨줍니다.
-    // 이때 인수로 넘겨주는 값은 스킨에 정의된 필드만 가능하다는 것입니다.
-    function set_view($field, $view=true) {
-        $this->{"view_".$field} = $view;
-    }
-
-    // anchor 태그에 하이퍼링크를 다른 주소로 걸거나 아예 링크를 걸지 않을 수 있습니다.
-    // 인수를 "" 공백으로 넘기면 링크를 걸지 않습니다.
-    function set_href($href) {
-        $this->href = $href;
-    }
-
-    // ul 태그의 css 를 교체할수 있다. "sct sct_abc" 를 인수로 넘기게 되면
-    // 기존의 ul 태그에 걸린 css 는 무시되며 인수로 넘긴 css 가 사용됩니다.
-    function set_css($css) {
-        $this->css = $css;
-    }
-
-    // 페이지를 노출하기 위해 true 로 설정할때 사용합니다.
-    function set_is_page($is_page) {
-        $this->is_page = $is_page;
-    }
-
-    // select ... limit 의 시작값
-    function set_from_record($from_record) {
-        $this->from_record = $from_record;
-    }
-
+    
     // 외부에서 쿼리문을 넘겨줄 경우에 담아둡니다.
-    function set_query($query) {
-        $this->query = $query;
-    }
+    function set_query($query='') {
+        
+        global $g5, $config, $member, $default;
+        
+        if ($query) {
+            $this->query = $query;
+        } else {
+            
+            $where = array();
+            if ($this->use) {
+                $where[] = " it_use = '1' ";
+            }
 
+            if ($this->type) {
+                $where[] = " it_type{$this->type} = '1' ";
+            }
+            
+            $where[] = " it_class_num IN (1, 2) ";
+            
+            if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+                $where_ca_id = array();
+                if ($this->ca_id) {
+                    $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
+                }
+                if ($this->ca_id2) {
+                    $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
+                }
+                if ($this->ca_id3) {
+                    $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
+                }
+                $where[] = " ( " . implode(" or ", $where_ca_id) . " ) ";
+            }
+
+            if ($this->order_by) {
+                $sql_order = " order by {$this->order_by} ";
+            }
+
+            if ($this->event) {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_event_item_table']}` a left join `{$g5['g5_shop_item_table']}` b on (a.it_id = b.it_id) ";
+                $where[] = " a.ev_id = '{$this->event}' ";
+            } else {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_item_table']}` ";
+            }
+            $sql_where = " where " . implode(" and ", $where);
+            $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
+            
+            $this->query = $sql_select . $sql_common . $sql_where . $sql_order . $sql_limit;
+        }
+
+    }
+    
+    /*
     // class 에 설정된 값으로 최종 실행합니다.
     function run() {
 
@@ -684,31 +560,39 @@ class SubscriptionList
                 $where[] = " it_type{$this->type} = '1' ";
             }
 
-            if ($this->sc_id || $this->sc_id2 || $this->sc_id3) {
-                $where_sc_id = array();
-                if ($this->sc_id) {
-                    $where_sc_id[] = " sc_id like '{$this->sc_id}%' ";
+            if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+                $where_ca_id = array();
+                if ($this->ca_id) {
+                    $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
                 }
-                if ($this->sc_id2) {
-                    $where_sc_id[] = " sc_id2 like '{$this->sc_id2}%' ";
+                if ($this->ca_id2) {
+                    $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
                 }
-                if ($this->sc_id3) {
-                    $where_sc_id[] = " sc_id3 like '{$this->sc_id3}%' ";
+                if ($this->ca_id3) {
+                    $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
                 }
-                $where[] = " ( " . implode(" or ", $where_sc_id) . " ) ";
+                $where[] = " ( " . implode(" or ", $where_ca_id) . " ) ";
             }
 
             if ($this->order_by) {
                 $sql_order = " order by {$this->order_by} ";
             }
 
-		$sql_select = " select {$this->fields} ";
-		$sql_common = " from `{$g5['g5_subscription_item_table']}` ";
-
+            if ($this->event) {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_event_item_table']}` a left join `{$g5['g5_shop_item_table']}` b on (a.it_id = b.it_id) ";
+                $where[] = " a.ev_id = '{$this->event}' ";
+            } else {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_item_table']}` ";
+            }
             $sql_where = " where " . implode(" and ", $where);
             $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
 
             $sql = $sql_select . $sql_common . $sql_where . $sql_order . $sql_limit;
+            
+            echo $sql;
+            
             $result = sql_query($sql);
 
             if ($this->is_page) {
@@ -722,7 +606,7 @@ class SubscriptionList
             while ($row=sql_fetch_array($result)) {
                 
                 if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
-                    subscription_seo_title_update($row['it_id']);
+                    shop_seo_title_update($row['it_id']);
                 }
                 
                 $row['it_basic'] = conv_content($row['it_basic'], 1);
@@ -735,7 +619,7 @@ class SubscriptionList
         }
 
         $file = $this->list_skin;
-
+        
         if ($this->list_skin == "") {
             return $this->count."번 item_list() 의 스킨파일이 지정되지 않았습니다.";
         } else if (!file_exists($file)) {
@@ -749,6 +633,7 @@ class SubscriptionList
             return $content;
         }
     }
+    */
 }
 
 // 상품이미지에 유형 아이콘 출력
@@ -949,7 +834,7 @@ function get_subscription_category_array($is_cache=false){
 function get_subscription_category_sql($sc_id, $len){
     global $g5;
 
-    $sql = " select * from {$g5['g5_subscription_category_table']}
+    $sql = " select * from {$g5['g5_shop_category_table']}
                 where sc_use = '1' ";
     if($sc_id)
         $sql .= " and sc_id like '$sc_id%' ";
@@ -958,11 +843,9 @@ function get_subscription_category_sql($sc_id, $len){
     return $sql;
 }
 
-function get_weekend_yoil($date) {
+function get_weekend_yoil($date, $full=0) {
     
-    $yoil = array("일","월","화","수","목","금","토");
-    
-    return $yoil[date('w', strtotime($date))];
+    return get_yoil($date, $full);
 }
 
 // 상품명과 건수를 반환
@@ -970,7 +853,7 @@ function get_subscription_goods($cart_id) {
     global $g5;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_subscription_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
     
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
@@ -1516,7 +1399,7 @@ function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
     
     // 상품명만들기
     
-    $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_subscription_item_table']} b where a.it_id = b.it_id and a.od_id = '$pay_id' order by ct_id ";
+    $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$pay_id' order by ct_id ";
         
     $result = sql_query($sql);
     

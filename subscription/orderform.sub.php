@@ -38,32 +38,24 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     
                     // $s_cart_id 로 현재 장바구니 자료 쿼리
                     $sql = " select a.ct_id,
-                        a.it_id,
-                        a.it_name,
-                        a.ct_price,
-                        a.ct_point,
-                        a.ct_qty,
-                        a.ct_status,
-                        a.ct_send_cost,
-                        a.it_sc_type,
-                        a.ct_subscription_number,
-                        a.ct_firstshipment_date,
-                        a.ct_date_format,
-                        b.sc_id,
-                        b.sc_id2,
-                        b.sc_id3,
-                        b.it_notax,
-                        b.it_subscription_date_format,
-                        b.it_subscription_expiration_date,
-                        b.it_subscription_number,
-                        b.it_subscription_iteration,
-                        b.it_check_firstshipment_day,
-                        b.it_expire_firstshipmen_day
-                   from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
-                  where a.od_id = '$s_cart_id'
-                    and a.ct_select = '1' ";
-                    $sql .= ' group by a.it_id ';
-                    $sql .= ' order by a.ct_id ';
+                                    a.it_id,
+                                    a.it_name,
+                                    a.ct_price,
+                                    a.ct_point,
+                                    a.ct_qty,
+                                    a.ct_status,
+                                    a.ct_send_cost,
+                                    a.it_sc_type,
+                                    b.ca_id,
+                                    b.ca_id2,
+                                    b.ca_id3,
+                                    b.it_notax
+                               from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+                              where a.od_id = '$s_cart_id'
+                                and a.ct_select = '1' ";
+                    $sql .= " group by a.it_id ";
+                    $sql .= " order by a.ct_id ";
+
                     $result = sql_query($sql);
 
                     $good_info = '';
@@ -388,6 +380,10 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             </section>
             <!-- } 받으시는 분 입력 끝 -->
             <?php run_event('subscription_add_form_html'); ?>
+            
+            <section id="sod_frm_subscription_input">
+                정기구독정보 입력
+            </section>
         </div>
 
         <div class="sod_right">
@@ -516,14 +512,16 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
 
                         echo '<fieldset id="sod_frm_paysel">';
                         echo '<legend>결제방법 선택</legend>';
-
+                        
+                        /*
                         // 무통장입금 사용
                         if (get_subs_option('su_bank_use')) {
                             ++$multi_settle;
                             echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" ' . $checked . '> <label for="od_settle_bank" class="lb_icon bank_icon">무통장입금</label>' . PHP_EOL;
                             $checked = '';
                         }
-
+                        */
+                        
                         // 신용카드 사용
                         if (get_subs_option('su_card_use')) {
                             ++$multi_settle;

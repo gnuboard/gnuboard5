@@ -363,8 +363,8 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 
 				<div id="sit_ov_btn">
 					<?php if ($is_orderable) { ?>
-						<button type="submit" onclick="document.pressed=this.value;" value="장바구니" class="sit_btn_cart">장바구니</button>
-						<button type="submit" onclick="document.pressed=this.value;" value="바로구매" class="sit_btn_buy">바로구매</button>
+						<button type="submit" onclick="document.pressed=this.value;" value="정기구독카트" class="sit_btn_cart">정기구독카트</button>
+						<button type="submit" onclick="document.pressed=this.value;" value="정기구독구매" class="sit_btn_buy">정기구독구매</button>
 					<?php } ?>
 					<a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" class="sit_btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span></a>
 
@@ -547,7 +547,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 		f.action = "<?php echo $action_url; ?>";
 		f.target = "";
 
-		if (document.pressed == "장바구니") {
+		if (document.pressed == "정기구독카트") {
 			f.sw_direct.value = 0;
 		} else { // 바로구매
 			f.sw_direct.value = 1;
@@ -567,8 +567,8 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 		}
         
         if (!$("#it_subscription_number_select").val()) {
-			alert("배송주기를 입력해 주세요.");
-			return false;
+			//alert("배송주기를 입력해 주세요.");
+			//return false;
         }
         
 		var val, io_type, result = true;

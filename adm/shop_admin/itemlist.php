@@ -84,6 +84,12 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 ?>
 
+<?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+<div class="admin_pg_notice od_test_caution">
+    정기결제가 활성화 된 경우 분류에서 쇼핑몰과 정기결제를 선택해서 사용할수 있습니다.
+</div>
+<?php } ?>
+    
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     <span class="btn_ov01"><span class="ov_txt">등록된 상품</span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>

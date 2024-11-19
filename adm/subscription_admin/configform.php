@@ -80,6 +80,122 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             </td>
         </tr>
         <tr>
+            <th scope="row">구독정보입력</th>
+            <td>
+                <div>
+                출력형식 : 
+<select name="it_subscription_number">
+<option value="0">셀렉트박스</option>
+<option value="1">버튼식</option>
+</select>
+<br>
+                <input type="number" name="number" >배송되기 몇일 전에 자동결제 합니다.
+                <br>
+                <input type="checkbox" name="" >다음 결제일 변경 수정가능
+                <br>
+                <input type="checkbox" name="" >다음 결제일 변경 가능일
+                <br>
+                <input type="checkbox" name="" >휴일(토요일, 월요일) 에는 결제 안함 (휴일을 지난 다음날 평일에 결제합니다.)
+                <br>
+                </div>
+                <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
+                <div id="sit_supply_frm">
+                    <table>
+                        <tr class="not-remove">
+                            <th>사용체크</th>
+                            <th>결제주기 선택</th>
+                            <th></th>
+                            <th>출력텍스트</th>
+                            <th>삭제</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" disabled value="1">
+                            </td>
+                            <td>
+                                <span class="default_format">
+                                    <input type="number" class="frm_input" value="1">
+                                </span>
+                            </td>
+                            <td>
+                            <select name="subscription_date_format">
+                                <option value="day">일</option>
+                                <option value="week">주</option>
+                                <option value="month">월</option>
+                                <option value="year">년</option>
+                            </select>
+                            </td>
+                            <td>
+                                <input type="text" class="frm_input" name="subscription_date_format">
+                            </td>
+                            <td>
+                                삭제
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="btn_list01 btn_list">
+                    <button type="button" id="sel_option_delete" class="btn btn_02">선택삭제</button>
+                </div>
+                <script>
+                    $("#add_supply_row").click(function() {
+                        var $el = $("#sit_supply_frm tr:last"),
+                            newRow = $el.clone();
+                        
+                        // 복사된 tr 내부의 값 초기화
+                        newRow.removeClass("not-remove");
+                        newRow.find('input[type="checkbox"]').prop('checked', false).removeAttr("disabled"); // 체크박스 해제
+                        newRow.find('input[type="text"]').val(''); // 텍스트 초기화
+                        newRow.find('select').val('day'); // 기본 선택값 설정 (필요 시 변경 가능)
+
+                        $el.after(newRow);
+
+                        // supply_sequence();
+                    });
+                    
+                    // 선택삭제
+                    $(document).on("click", "#sel_option_delete", function() {
+                        var $el = $("input[name='opt_chk[]']:checked");
+                        if($el.length < 1) {
+                            alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
+                            return false;
+                        }
+                        
+                        if ($el.closest("tr").hasClass("not-remove")) {
+                        } else {
+                            $el.closest("tr").remove();
+                        }
+                    });
+                    
+                    $(document).on("change", "select[name='subscription_date_format']", function (e) {
+                        // 선택된 값 가져오기
+                        var $this = $(this),
+                            $closest = $this.closest("tr").find(".default_format"),
+                            selectedValue = $(this).val();
+
+                        // 콘솔에 선택된 값 출력
+                        console.log("선택된 값: " + selectedValue);
+
+                        // 추가 동작: 값에 따라 다른 동작 수행
+                        switch (selectedValue) {
+                            case 'day':
+                                $closest.html('<input type="number" class="frm_input" value="1">');
+                                break;
+                            case 'week':
+                                $closest.html('<select name="dayOfWeek"><option value="">선택안함</option><option value="mon">월요일</option><option value="tue">화요일</option><option value="wed">수요일</option><option value="thu">목요일</option><option value="fri">금요일</option><option value="sat">토요일</option><option value="sun">일요일</option></select>');
+                                break;
+                            case 'month':
+                                $closest.html('<input type="number" min="0" max="31" value="0">');
+                                break;
+                            case 'year':
+                                $closest.html('<input type="number" class="frm_input" value="1" disabled>');
+                                break;
+                        }
+                    });
+                </script>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="su_pg_service">결제대행사</label></th>
             <td>
                 <input type="hidden" name="su_pg_service" id="su_pg_service" value="<?php echo get_subs_option('su_pg_service'); ?>" >

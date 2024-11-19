@@ -56,18 +56,19 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     $ct_qty = $row['sum_ct_qty'];
 
     // 해당 상품이 품절 또는 판매중지 상태인지 체크합니다.
-    $sql = " select it_soldout, it_use, sc_id, sc_id2, sc_id3 from {$g5['g5_subscription_item_table']} where it_id = '".$row['it_id']."' ";
+    $sql = " select it_soldout, it_use, ca_id, ca_id2, ca_id3 from {$g5['g5_shop_item_table']} where it_id = '".$row['it_id']."' and it_class_num IN (1, 2) ";
+    
     $item = sql_fetch($sql);
     
     $category_str = '';
 
     // 분류에서 판매가능한지 체크합니다.
-    if( $item['it_use'] && ($item['sc_id'] || $item['sc_id2'] || $item['sc_id3']) ){
-        $sql = " select sc_use from {$g5['g5_subscription_category_table']} where (sc_id = '".$item['sc_id']."' or sc_id = '".$item['sc_id2']."' or sc_id = '".$item['sc_id3']."') ";
+    if( $item['it_use'] && ($item['ca_id'] || $item['ca_id2'] || $item['ca_id3']) ){
+        $sql = " select ca_use from {$g5['g5_shop_category_table']} where (ca_id = '".$item['ca_id']."' or ca_id = '".$item['ca_id2']."' or ca_id = '".$item['ca_id3']."') ";
         $result2 = sql_query($sql);
 
         while($ca=sql_fetch_array($result2)){
-            if ( ! $ca['sc_use']) {
+            if ( ! $ca['ca_use']) {
                 $item['it_use'] = false;
                 $category_str = '분류에서 ';
             }
