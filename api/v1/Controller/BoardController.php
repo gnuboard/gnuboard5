@@ -784,6 +784,7 @@ class BoardController
                 }
             }
 
+            $this->write_service->deleteWriteByParentId($write['wr_id']);
             $this->board_new_service->deleteByWrite($board['bo_table'], $write['wr_id']);
             $this->scrap_service->deleteScrapByWrite($board['bo_table'], $write['wr_id']);
             $this->comment_service->deleteAllCommentByParent($write['wr_id']);
