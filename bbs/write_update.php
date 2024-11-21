@@ -31,6 +31,9 @@ $wr_subject = '';
 if (isset($_POST['wr_subject'])) {
     $wr_subject = substr(trim($_POST['wr_subject']),0,255);
     $wr_subject = preg_replace("#[\\\]+$#", "", $wr_subject);
+    if (function_exists('normalize_utf8_string')) {
+        $wr_subject = normalize_utf8_string($wr_subject);
+    }
 }
 if ($wr_subject == '') {
     $msg[] = '<strong>제목</strong>을 입력하세요.';
@@ -40,6 +43,9 @@ $wr_content = '';
 if (isset($_POST['wr_content'])) {
     $wr_content = substr(trim($_POST['wr_content']),0,65536);
     $wr_content = preg_replace("#[\\\]+$#", "", $wr_content);
+    if (function_exists('normalize_utf8_string')) {
+        $wr_content = normalize_utf8_string($wr_content);
+    }
 }
 if ($wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';

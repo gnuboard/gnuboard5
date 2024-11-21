@@ -2280,6 +2280,24 @@ function _callback_bad_tag_convert($matches){
     return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 없는 다른 아이디로 접속하세요.</div>";
 }
 
+function normalize_utf8_string($string) {
+    // utf8mb4 환경과 mb_ord 함수가 지원되지 않는 환경에서는 제외한다.
+    if (G5_DB_CHARSET === 'utf8mb4' || !function_exists('mb_ord')) {
+        return $string;
+    }
+    
+    // Unicode 특수 문자를 일반 문자로 변환
+    $normalized = preg_replace_callback('/[\x{1D400}-\x{1D7FF}]/u', '_callback_normalizeString', $string);
+
+    return $normalized;
+}
+
+function _callback_normalizeString($matches){
+    $charCode = mb_ord($matches[0], 'UTF-8');
+    // 변환 테이블에서 일반 문자로 매핑
+    return chr(($charCode - 0x1D400) % 26 + ord('A'));
+}
+
 // 토큰 생성
 function _token()
 {
