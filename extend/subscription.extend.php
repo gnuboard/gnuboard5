@@ -80,6 +80,17 @@ function set_subs_option($key, $value) {
     }
 }
 
+function get_subscription_info_inputs() {
+    
+    $opts = get_subs_option('su_opt_settings');
+    
+    if ($opts) {
+        return unserialize(base64_decode($opts));
+    }
+    
+    return null;
+}
+
 // 보안서버주소 설정
 if (G5_HTTPS_DOMAIN) {
     define('G5_HTTPS_SUBSCRIPTION_URL', G5_HTTPS_DOMAIN.'/'.G5_SUBSCRIPTION_DIR);

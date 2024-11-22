@@ -2,6 +2,26 @@
 $sub_menu = '600100';
 include_once('./_common.php');
 
+/*
+print_r($_POST);
+
+$opts = array();
+$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
+$opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
+
+if ($opt_ids) {
+    foreach($opt_ids as $index=>$value) {
+        foreach($opts_keys as $key) {
+            $opts[$index][$key] = (isset($_POST[$key]) && isset($_POST[$key][$index])) ? $_POST[$key][$index] : '';
+        }
+    }
+}
+
+print_r($opts);
+
+exit;
+*/
+
 check_demo();
 
 auth_check_menu($auth, $sub_menu, "w");
@@ -35,6 +55,20 @@ foreach( $check_sanitize_keys as $key ){
 
 $sql = "select * from `{$g5['g5_subscription_config_table']}` limit 1";
 $exist = sql_fetch($sql);
+
+$opts = array();
+$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
+$opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
+
+if ($opt_ids) {
+    foreach($opt_ids as $index=>$value) {
+        foreach($opts_keys as $key) {
+            $opts[$index][$key] = (isset($_POST[$key]) && isset($_POST[$key][$index])) ? $_POST[$key][$index] : '';
+        }
+    }
+}
+
+$inserts['su_opt_settings'] = base64_encode(serialize($opts));
 
 if (isset($exist['su_id']) && $exist['su_id']) {
     $valueSets = array();
