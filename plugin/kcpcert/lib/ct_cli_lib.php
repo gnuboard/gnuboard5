@@ -18,23 +18,39 @@ class   C_CT_CLI
     {
         $this->m_dec_data="";
     }
-
+    
+    function get_bin_dirname()
+    {
+        global $config;
+        
+        $bin_path = ((int)$config['cf_cert_use'] === 2 && !$config['cf_cert_kcp_enckey']) ? 'bin_old' : 'bin';
+        
+        return $bin_path;
+    }
     // hash 처리 영역
     function make_hash_data( $home_dir , $key , $str )
     {
         if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if(PHP_INT_MAX == 2147483647) // 32-bit
-                $bin_exe = $home_dir . '/bin/ct_cli';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli';
             else
-                $bin_exe = $home_dir . '/bin/ct_cli_x64';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_x64';
         } else {
-            $bin_exe = $home_dir . '/bin/ct_cli_exe.exe';
+            $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_exe.exe';
         }
-        $hash_data = $this -> mf_exec( $bin_exe ,
-                                       "lf_CT_CLI__make_hash_data",
-                                       $key,
-                                       $str
-                                     );
+        
+        if ($key) {
+            $hash_data = $this -> mf_exec( $bin_exe ,
+                                           "lf_CT_CLI__make_hash_data",
+                                           $key,
+                                           $str
+                                         );
+        } else {
+            $hash_data = $this -> mf_exec( $bin_exe ,
+                                           "lf_CT_CLI__make_hash_data",
+                                           $str
+                                         );
+        }
 
         if ( $hash_data == "" ) { $hash_data = "HS01"; }
 
@@ -46,18 +62,27 @@ class   C_CT_CLI
     {
         if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if(PHP_INT_MAX == 2147483647) // 32-bit
-                $bin_exe = $home_dir . '/bin/ct_cli';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli';
             else
-                $bin_exe = $home_dir . '/bin/ct_cli_x64';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_x64';
         } else {
-            $bin_exe = $home_dir . '/bin/ct_cli_exe.exe';
+            $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_exe.exe';
         }
-        $ret_val = $this -> mf_exec( $bin_exe ,
-                                     "lf_CT_CLI__check_valid_hash" ,
-                                     $key,
-                                     $hash_data ,
-                                     $str
-                                    );
+        
+        if ($key) {
+            $ret_val = $this -> mf_exec( $bin_exe ,
+                                         "lf_CT_CLI__check_valid_hash" ,
+                                         $key,
+                                         $hash_data ,
+                                         $str
+                                        );
+        } else {
+            $ret_val = $this -> mf_exec( $bin_exe ,
+                                         "lf_CT_CLI__check_valid_hash" ,
+                                         $hash_data ,
+                                         $str
+                                        );
+        }
 
         if ( $ret_val == "" ) { $ret_val = "HS02"; }
 
@@ -69,29 +94,48 @@ class   C_CT_CLI
     {
         if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if(PHP_INT_MAX == 2147483647) // 32-bit
-                $bin_exe = $home_dir . '/bin/ct_cli';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli';
             else
-                $bin_exe = $home_dir . '/bin/ct_cli_x64';
-
-            $dec_data = $this -> mf_exec( $bin_exe ,
-                                         "lf_CT_CLI__decrypt_enc_cert" ,
-                                          $key,
-                                          $site_cd ,
-                                          $cert_no ,
-                                          $enc_cert_data ,
-                                          $opt
-                                        );
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_x64';
+            
+            if ($key) {
+                $dec_data = $this -> mf_exec( $bin_exe ,
+                                             "lf_CT_CLI__decrypt_enc_cert" ,
+                                              $key,
+                                              $site_cd ,
+                                              $cert_no ,
+                                              $enc_cert_data ,
+                                              $opt
+                                            );
+            } else {
+                $dec_data = $this -> mf_exec( $bin_exe ,
+                                             "lf_CT_CLI__decrypt_enc_cert" ,
+                                              $site_cd ,
+                                              $cert_no ,
+                                              $enc_cert_data ,
+                                              $opt
+                                            );
+            }
 
         } else {
-            $bin_exe = $home_dir . '/bin/ct_cli_exe.exe';
-
-            $dec_data = $this -> mf_exec( $bin_exe ,
-                                         "lf_CT_CLI__decrypt_enc_cert" ,
-                                          $key,
-                                          $site_cd ,
-                                          $cert_no ,
-                                          $enc_cert_data
-                                        );
+            $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_exe.exe';
+            
+            if ($key) {
+                $dec_data = $this -> mf_exec( $bin_exe ,
+                                             "lf_CT_CLI__decrypt_enc_cert" ,
+                                              $key,
+                                              $site_cd ,
+                                              $cert_no ,
+                                              $enc_cert_data
+                                            );
+            } else {
+                $dec_data = $this -> mf_exec( $bin_exe ,
+                                             "lf_CT_CLI__decrypt_enc_cert" ,
+                                              $site_cd ,
+                                              $cert_no ,
+                                              $enc_cert_data
+                                            );
+            }
         }
 
         if ( $dec_data == "" ) { $dec_data = "HS03"; }
@@ -104,11 +148,11 @@ class   C_CT_CLI
     {
         if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if(PHP_INT_MAX == 2147483647) // 32-bit
-                $bin_exe = $home_dir . '/bin/ct_cli';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli';
             else
-                $bin_exe = $home_dir . '/bin/ct_cli_x64';
+                $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_x64';
         } else {
-            $bin_exe = $home_dir . '/bin/ct_cli_exe.exe';
+            $bin_exe = $home_dir . '/'.$this->get_bin_dirname().'/ct_cli_exe.exe';
         }
         
         $ver_data = $this -> mf_exec( $bin_exe , 

@@ -90,9 +90,6 @@ $ct_cert->mf_clear();
 <!-- cert_enc_use 필수 (고정값 : 메뉴얼 참고) -->
 <input type="hidden" name="cert_enc_use" value="Y"/>
 
-<!-- 리턴 암호화 고도화 -->
-<input type="hidden" name="cert_enc_use_ext" value="Y"/>
-
 <?php if(is_mobile()) { ?>
 <!-- cert_able_yn input 비활성화 설정 -->
 <input type="hidden" name="cert_able_yn" value=""/>
@@ -114,7 +111,11 @@ $ct_cert->mf_clear();
 <input type="hidden" name="param_opt_2"  value="opt2"/>
 <input type="hidden" name="param_opt_3"  value="opt3"/>
 
+<?php if ($config['cf_cert_kcp_enckey']) { ?>
+<!-- 리턴 암호화 고도화 -->
+<input type="hidden" name="cert_enc_use_ext" value="Y"/>
 <input type='hidden' name='kcp_cert_lib_ver' value="<?php echo $ct_cert->get_kcp_lib_ver( $home_dir ); ?>"/>
+<?php } ?>
 </form>
 
 <script>
