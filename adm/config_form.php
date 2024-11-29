@@ -418,6 +418,8 @@ if (!isset($config['cf_cert_kcp_enckey'])) {
     $sql = "ALTER TABLE `{$g5['config_table']}` 
             ADD COLUMN `cf_cert_kcp_enckey` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`; ";
     sql_query($sql, false);
+    
+    $config['cf_cert_kcp_enckey'] = '';
 }
 
 if (!$config['cf_faq_skin']) {
@@ -1075,7 +1077,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_enckey">NHN KCP 가맹점 인증키</label></th>
                         <td class="cf_cert_service">
-                            <?php echo help('NHN_KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키 발급 후에 인증키 정보를 입력해 주세요.<br>입력하지 않거나 잘못 입력시 휴대폰 본인확인을 취소 하셨습니다. 라고 메시지가 나오면서 창이 닫히는 오류가 발생됩니다.') ?>
+                            <?php echo help('(선택사항, 추후 NHN_KCP 상점관리자에서 인증키 발급 메뉴 오픈일정 이후부터 적용되는 내용입니다.)<br>NHN_KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키 발급 후에 인증키 정보를 입력') ?>
                             <input type="text" name="cf_cert_kcp_enckey" value="<?php echo get_sanitize_input($config['cf_cert_kcp_enckey']); ?>" id="cf_cert_kcp_enckey" class="frm_input" maxlength="100" size="40"> <a href="https://partner.kcp.co.kr" target="_blank" class="btn_frmline">NHN KCP 상점관리자</a>
                         </td>
                     </tr>
@@ -1682,16 +1684,19 @@ if ($config['cf_cert_use']) {
 
     // kcp일 때
     if ($config['cf_cert_hp'] == 'kcp') {
+        
+        $bin_path = ((int)$config['cf_cert_use'] === 2 && !$config['cf_cert_kcp_enckey']) ? 'bin_old' : 'bin';
+        
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if (PHP_INT_MAX == 2147483647) { // 32-bit
-                $exe = G5_KCPCERT_PATH . '/bin/ct_cli';
+                $exe = G5_KCPCERT_PATH . '/'.$bin_path.'/ct_cli';
             } else {
-                $exe = G5_KCPCERT_PATH . '/bin/ct_cli_x64';
+                $exe = G5_KCPCERT_PATH . '/'.$bin_path.'/ct_cli_x64';
             }
         } else {
-            $exe = G5_KCPCERT_PATH . '/bin/ct_cli_exe.exe';
+            $exe = G5_KCPCERT_PATH . '/'.$bin_path.'/ct_cli_exe.exe';
         }
-
+        
         echo module_exec_check($exe, 'ct_cli');
     }
 

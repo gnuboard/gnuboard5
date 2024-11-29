@@ -104,16 +104,24 @@ if( $cert_enc_use == "Y" )
         // 해당 데이터의 위변조를 방지합니다
          $veri_str = $site_cd.$ordr_idxx.$cert_no; // 사이트 코드 + 주문번호 + 인증거래번호
 
+        $enc_cert_real_data = $enc_cert_data2;
+        $bin_path = 'bin';
+        
+        if ((int)$config['cf_cert_use'] === 2 && !$config['cf_cert_kcp_enckey']) {
+            $bin_path = 'bin_old';
+            $enc_cert_real_data = $enc_cert_data;
+        }
+        
         if ( $ct_cert->check_valid_hash ( $home_dir , $kcp_enc_key, $dn_hash , $veri_str ) != "1" )
         {
             if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
                 // 검증 실패시 처리 영역
                 if(PHP_INT_MAX == 2147483647) // 32-bit
-                    $bin_exe = '/bin/ct_cli';
+                    $bin_exe = '/'.$bin_path.'/ct_cli';
                 else
-                    $bin_exe = '/bin/ct_cli_x64';
+                    $bin_exe = '/'.$bin_path.'/ct_cli_x64';
             } else {
-                $bin_exe = '/bin/ct_cli_exe.exe';
+                $bin_exe = '/'.$bin_path.'/ct_cli_exe.exe';
             }
 
             echo "dn_hash 변조 위험있음 (".G5_KCPCERT_PATH.$bin_exe." 파일에 실행권한이 있는지 확인하세요.)";
@@ -122,13 +130,13 @@ if( $cert_enc_use == "Y" )
         }
 
         // 가맹점 DB 처리 페이지 영역
-
+            
         // 인증데이터 복호화 함수
         // 해당 함수는 암호화된 enc_cert_data 를
         // site_cd 와 cert_no 를 가지고 복화화 하는 함수 입니다.
         // 정상적으로 복호화 된경우에만 인증데이터를 가져올수 있습니다.
         $opt = "1" ; // 복호화 인코딩 옵션 ( UTF - 8 사용시 "1" )
-        $ct_cert->decrypt_enc_cert( $home_dir , $kcp_enc_key, $site_cd , $cert_no , $enc_cert_data2 , $opt );
+        $ct_cert->decrypt_enc_cert( $home_dir , $kcp_enc_key, $site_cd , $cert_no , $enc_cert_real_data , $opt );
 
         $comm_id        = $ct_cert->mf_get_key_value("comm_id"    );                // 이동통신사 코드
         $phone_no       = $ct_cert->mf_get_key_value("phone_no"   );                // 전화번호
