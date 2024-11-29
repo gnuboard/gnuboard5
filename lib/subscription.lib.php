@@ -1366,6 +1366,14 @@ function is_null_date($datetime){
     return false;
 }
 
+// 한글 요일
+function get_hangul_date_format($str)
+{
+    $formats = array ('day' => '일', 'week' => '주', 'month' => '월', 'year' => '년');
+
+    return isset($formats[$str]) ? $formats[$str] : '';
+}
+
 function mask_card_number($string) {
     // 문자열 길이 확인
     $length = strlen($string);

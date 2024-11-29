@@ -2,6 +2,32 @@
 include_once './_common.php';
 include_once G5_LIB_PATH.'/mailer.lib.php';
 
+$od_subscription_select_data = isset($_POST['od_subscription_select_data']) ? $_POST['od_subscription_select_data'] : '';
+
+if (!$od_subscription_select_data) {
+    alert('배송주기를 선택해 주세요.');
+}
+
+$arr_subs_data = explode('||', $od_subscription_select_data);
+
+$subscription_info_inputs = get_subscription_info_inputs();
+
+$key = $arr_subs_data[0];
+
+$subscription_selected_data = isset($subscription_info_inputs[$key]) ? $subscription_info_inputs[$key] : array();
+
+if (!($subscription_selected_data && $subscription_selected_data['opt_input'] == $arr_subs_data[1] && $subscription_selected_data['opt_date_format'] == $arr_subs_data[2])) {
+    echo "틀림";
+} else {
+    echo "맞음";
+}
+
+print_r($subscription_selected_data);
+exit;
+
+echo var_export($_POST, true);
+exit;
+
 // print_r2($_POST);
 // exit;
 
@@ -305,6 +331,7 @@ $inserts = array(
     'od_subscription_number' => $od_subscription_number,
     'od_firstshipment_date' => $od_firstshipment_date,
     'od_subscription_date_format' => $od_subscription_date_format,
+    'od_subscription_selected_data' => base64_encode(serialize($subscription_selected_data)),
 );
 
 // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php

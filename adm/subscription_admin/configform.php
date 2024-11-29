@@ -111,13 +111,22 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <input type="checkbox" name="" >휴일(토요일, 월요일) 에는 결제 안함 (휴일을 지난 다음날 평일에 결제합니다.)
                 <br>
                 </div>
+				<div>
+					<div class="local_desc01 local_desc">
+						<dl>
+							<dt>정기결제 주문폼</dt>
+							<dd>{입력} {결제주기}</dd>
+						</dl>
+					   <p><span class="frm_info">이것은 헬프문입니다.</span></p>
+					</div>
+				</div>
                 <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
                 <div id="sit_supply_frm">
                     <table>
                         <tr class="not-remove">
                             <th>삭제체크</th>
+                            <th>입력</th>
                             <th>결제주기 선택</th>
-                            <th></th>
                             <th>출력텍스트</th>
                             <th>사용여부</th>
                         </tr>
@@ -183,11 +192,12 @@ Array
                         if ($subscription_info_inputs) { ?>
                         <?php
                         foreach ($subscription_info_inputs as $opt) {
+                            $disabled_attr = ($i === 0) ? 'disabled' : '';
                         ?>
                         <tr class="trtr" data-jbox-content="">
                             <td>
                                 <input type="hidden" name="opt_id[]" value="<?php echo $opt['opt_id']; ?>" >
-                                <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" disabled>
+                                <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" <?php echo $disabled_attr; ?>>
                             </td>
                             <td>
                                 <span class="default_format">
@@ -203,7 +213,7 @@ Array
                             </select>
                             </td>
                             <td>
-                                <input type="text" class="frm_input subscription_print_format" name="opt_print[]" title="" value="<?php echo $opt['opt_print']; ?>">
+                                <input type="text" class="frm_input subscription_print_format" name="opt_print[]" title="" value="<?php echo $opt['opt_print']; ?>" size="40">
                             </td>
                             <td>
                                 <select name="opt_use[]" id="spl_use_<?php echo $i; ?>">
@@ -340,6 +350,17 @@ Array
                         return arr_yoil[str];
                     }
                     
+                    function getHangulDateFormat(str) {
+                        var formats = {
+                            day: '일',
+                            week: '주',
+                            month: '월',
+                            year: '년'
+                        };
+
+                        return formats[str] || '{결제주기}';
+                    }
+
                     function subcription_change_event($selector, is_change_format=0) {
                         const $row = $selector.closest("tr");
                         const $defaultFormatInput = $row.find(".default_format");
@@ -355,19 +376,26 @@ Array
                             month_content = "매월 결제한 일에 정기결제합니다.",
                             year_content = "매년 결제한 일에 정기결제합니다.";
                         
-                        var $opt_print_val = $opt_input.val();
+                        var $opt_input_val = $opt_input.val(),
+                            $opt_print_val = $opt_print.val();
                         
-                        if ($opt_print_val && is_change_format === 2) {
-                            day_content = "매 "+ $opt_print_val +"일 마다 정기결제합니다.";
-                            week_content = "매주 "+ get_yoil($opt_print_val) +" 마다 정기결제합니다.";
-                            month_content = "매월 "+ $opt_print_val +"일에 정기결제합니다.";
+                        if ($opt_input_val && is_change_format === 2) {
+                            day_content = "매 "+ $opt_input_val +"일 마다 정기결제합니다.";
+                            week_content = "매주 "+ get_yoil($opt_input_val) +" 마다 정기결제합니다.";
+                            month_content = "매월 "+ $opt_input_val +"일에 정기결제합니다.";
                         }
+                        
+                        $opt_print_val = $opt_print_val.replace("{입력}", $opt_input_val);
+                        $opt_print_val = $opt_print_val.replace("{결제주기}", getHangulDateFormat(selectedValue));
+
+                        var add_content = "<br>"+$opt_print_val;
+                        
                         
                         // 데이터와 템플릿 정의
                         const templates = {
                             day: {
                                 input: '<input type="number" name="opt_input[]" class="frm_input" value="1">',
-                                content: day_content
+                                content: day_content + add_content
                             },
                             week: {
                                 input: `
@@ -381,15 +409,15 @@ Array
                                         <option value="sat">토요일</option>
                                         <option value="sun">일요일</option>
                                     </select>`,
-                                content: week_content
+                                content: week_content + add_content
                             },
                             month: {
                                 input: '<input type="number" name="opt_input[]" class="frm_input" min="0" max="31" value="0">',
-                                content: month_content
+                                content: month_content + add_content
                             },
                             year: {
                                 input: '<input type="number" name="opt_input[]" class="frm_input" value="1" disabled>',
-                                content: year_content
+                                content: year_content + add_content
                             }
                         };
                         
@@ -405,15 +433,17 @@ Array
                         }
                     }
                     
-                    $(document).on("change", '[name="opt_input[]"]', function (e) {
+                    $(document).on("change input", '[name="opt_input[]"]', function (e) {
                         
                         console.log('is_close', $(this).val());
                         subcription_change_event($(this), 2);
                         
                     });
                     
-                    $(document).on("change", 'input[name="opt_print[]"]', function (e) {
+                    $(document).on("change input", 'input[name="opt_print[]"]', function (e) {
                         var $this = $(this);
+                        
+                        console.log('is_print', $(this).val());
                         
                         subcription_change_event($(this), 2);
                         

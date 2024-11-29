@@ -381,8 +381,42 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             <!-- } 받으시는 분 입력 끝 -->
             <?php run_event('subscription_add_form_html'); ?>
             
+            <?php
+            
+            $subscription_info_inputs = get_subscription_info_inputs();
+            ?>
             <section id="sod_frm_subscription_input">
-                정기구독정보 입력
+                <h2>정기구독정보 입력</h2>
+
+                <div class="tbl_frm01 tbl_wrap">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th scope="row"><label for="">배송주기</label></th>
+                                <td>
+                                <select id="od_subscription_number_select" name="od_subscription_select_data">
+                                    <option value="" selected="" disabled="">선택해주세요</option>
+                                <?php
+                                foreach ($subscription_info_inputs as $key=>$opt) {
+									if (! $opt['opt_use']) {
+										continue;
+									}
+
+									$opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+
+									if ($opt['opt_input'] || $opt['opt_date_format']) {
+										$opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+										$opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+									}
+                                ?>
+                                    <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
+                                <?php } ?>
+                                </select>
+                                </td>
+                            </tr>
+                        <tbody>
+                    </table>
+                </div>
             </section>
         </div>
 
@@ -826,7 +860,16 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             errfld.focus();
             return false;
         }
-
+        
+        var od_subscription_select_val = jQuery("#od_subscription_number_select :selected").val();
+        
+        if (!od_subscription_select_val) {
+            alert("배송주기를 선택해주세요");
+            jQuery("#od_subscription_number_select").focus();
+            
+            return false;
+        }
+            
         var settle_case = document.getElementsByName("od_settle_case");
         var settle_check = false;
         var settle_method = "";
