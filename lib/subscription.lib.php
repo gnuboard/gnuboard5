@@ -1175,6 +1175,51 @@ function subscription_process_payment($od, $od_pg_service='', $tmp_cart_id='') {
     return null;
 }
 
+function subscription_pg_cardname($od_card_name, $card=array()) {
+    
+    if ($od_card_name && strpos($od_card_name, '카드') === false) {
+        $od_card_name .= '카드';
+    }
+    
+    return $od_card_name;
+}
+
+function check_subscription_pay_method($od_settle_case) {
+    global $default;
+    
+    /*
+    $is_block = 0;
+
+    if ($od_settle_case === '무통장') {
+        if (! $default['de_bank_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '계좌이체') {
+        if (! $default['de_iche_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '가상계좌') {
+        if (! $default['de_vbank_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '휴대폰') {
+        if (! $default['de_hp_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '신용카드') {
+        if (! $default['de_card_use']) {
+            $is_block = 1;
+        }
+    }
+
+    if ($is_block) {
+        alert($od_settle_case.' 은 결제수단에서 사용이 금지되어 있습니다.', G5_SHOP_URL);
+        die('');
+    }
+    */
+    
+}
+
 function nicepay_billing($od, $tmp_cart_id='') {
     global $g5;
     
@@ -1255,7 +1300,7 @@ function nicepay_billing($od, $tmp_cart_id='') {
 }
 
 function inicis_billing($od, $tmp_cart_id='') {
-    global $g5;
+    global $g5, $inicis_iniapi_key, $inicis_iniapi_iv;
     
     include_once(G5_SUBSCRIPTION_PATH.'/settle_inicis.inc.php');
         
@@ -1387,6 +1432,31 @@ function mask_card_number($string) {
     
     // 문자열을 마스킹된 형태로 변환
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function add_subscription_order_history($content, $arg=array()){
+    global $g5;
+    
+    $inserts = array(
+        'hs_parent' => isset($arg['hs_parent']) ? (int) $arg['hs_parent'] : 0,
+        'hs_type' => isset($arg['type']) ? $arg['type'] : '',
+        'hs_category' => isset($arg['hs_category']) ? $arg['hs_category'] : '',
+        'od_id' => isset($arg['od_id']) ? $arg['od_id'] : '',
+        'mb_id' => isset($arg['mb_id']) ? $arg['mb_id'] : '',
+        'hs_content' => $content,
+        'hs_time' => G5_TIME_YMDHIS,
+        );
+    
+    // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php
+    $columns = implode(', ', array_keys($inserts));
+    $values = implode("', '", array_values($inserts));
+
+    // 주문서에 입력
+    $sql = "INSERT INTO `{$g5['g5_subscription_order_history_table']}`($columns) VALUES ('$values')";
+    
+    $result = sql_query($sql, false);
+    
+    return sql_insert_id();
 }
 
 function get_subscription_pay_full_goods($pay_id, $is_cache=false) {

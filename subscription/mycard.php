@@ -1,5 +1,14 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once('./_common.php');
+
+if (!$is_member)
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SUBSCRIPTION_URL."/mycard.php"));
+
+// 읽지 않은 쪽지수
+$memo_not_read = isset($member['mb_memo_cnt']) ? (int) $member['mb_memo_cnt'] : 0;
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.G5_SUBSCRIPTION_SKIN_URL.'/style.css">', 0);
 
 $g5['title'] = '마이페이지';
 include_once('./_head.php');
@@ -58,22 +67,21 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 	            </a>
 	        </li>
             
-            <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) {
-                
-                $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
-                
-                // $sql = "select count(*) as total from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
-                
-                $sql = " SELECT COUNT(DISTINCT CONCAT(od_card_name, card_mask_number)) AS num
-                        FROM `{$g5['g5_subscription_order_table']}`
-                        WHERE card_billkey != '' 
-                          AND mb_id = 'admin' 
-                          AND od_settle_case = '신용카드' 
-                          AND od_card_name != '' ";
-                
-                $total = sql_fetch($sql);
-                
-                $total_card_num = isset($total['num']) ? (int) $total['num'] : 0;
+            <?php
+            $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
+            
+            // $sql = "select count(*) as total from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
+            
+            $sql = " SELECT COUNT(DISTINCT CONCAT(od_card_name, card_mask_number)) AS num
+                    FROM `{$g5['g5_subscription_order_table']}`
+                    WHERE card_billkey != '' 
+                      AND mb_id = 'admin' 
+                      AND od_settle_case = '신용카드' 
+                      AND od_card_name != '' ";
+            
+            $total = sql_fetch($sql);
+            
+            $total_card_num = isset($total['num']) ? (int) $total['num'] : 0;
             ?>
 	        <li>
 	            <a href="<?php echo G5_SUBSCRIPTION_URL ?>/mycard.php" class="subscription-card-manage">
@@ -81,7 +89,6 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 	            	<strong class="card-manage"><?php echo number_format($total_card_num); ?></strong>
 	            </a>
 	        </li>
-            <?php } ?>
 	    </ul>
 	    
         <h3>내정보</h3>
@@ -103,73 +110,36 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <!-- } 회원정보 개요 끝 -->
 
 	<div id="smb_my_list">
-    
-        <?php run_event('g5_shop_mypage_sub_top'); ?>
         
-	    <!-- 최근 주문내역 시작 { -->
-	    <section id="smb_my_od">
-	        <h2>주문내역조회</h2>
-	        <?php
-	        // 최근 주문내역
-	        define("_ORDERINQUIRY_", true);
-	
-	        $limit = " limit 0, 5 ";
-	        include G5_SHOP_PATH.'/orderinquiry.sub.php';
-	        ?>
-	
-	        <div class="smb_my_more">
-	            <a href="./orderinquiry.php">더보기</a>
-	        </div>
-	    </section>
-	    <!-- } 최근 주문내역 끝 -->
-	    
-        <?php run_event('g5_shop_mypage_sub_middle'); ?>
-        
-	    <!-- 최근 위시리스트 시작 { -->
+	    <!-- 등록된 카드 시작 { -->
 	    <section id="smb_my_wish">
-	        <h2>최근 위시리스트</h2>
-            <form name="fwishlist" method="post" action="./cartupdate.php">
+	        <h2>정기구독 등록된 카드 <span class="total-card-num"><?php echo $total_card_num; ?></span></h2>
+            <form name="fwishlist" method="post" action="./manage_card_update.php">
             <input type="hidden" name="act" value="multi">
             <input type="hidden" name="sw_direct" value="">
             <input type="hidden" name="prog" value="wish">
                 <ul>
                 <?php
-                $sql = " select *
-                           from {$g5['g5_shop_wish_table']} a,
-                                {$g5['g5_shop_item_table']} b
-                          where a.mb_id = '{$member['mb_id']}'
-                            and a.it_id  = b.it_id
-                          order by a.wi_id desc
-                          limit 0, 8 ";
+                $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test, od_time from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
+                
                 $result = sql_query($sql);
-                for ($i=0; $row = sql_fetch_array($result); $i++)
-                {
-                    $image = get_it_image($row['it_id'], 100, 100, true);
-
-                    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
-                    $tmp = sql_fetch($sql);
-                    $out_cd = (isset($tmp['cnt']) && $tmp['cnt']) ? 'no' : '';
+                for ($i=0; $row = sql_fetch_array($result); $i++) {
+                    $card_num_str = $row['card_mask_number'] ? ' ('.substr($row['card_mask_number'], 0, 4).')' : '';
                 ?>
 
                 <li>
                     <div class="smb_my_chk">
-                        <?php if(is_soldout($row['it_id'])) { //품절검사 ?> 품절
-                        <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
                         <div class="chk_box">
                             <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" id="chk_it_id_<?php echo $i; ?>" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');" class="selec_chk">
                             <label for="chk_it_id_<?php echo $i; ?>"><span></span><b class="sound_only"><?php echo $row['it_name']; ?></b></label>
                         </div>
-                        <?php } ?>
-                        <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
-                        <input type="hidden" name="io_type[<?php echo $row['it_id']; ?>][0]" value="0">
-                        <input type="hidden" name="io_id[<?php echo $row['it_id']; ?>][0]" value="">
-                        <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
-                        <input type="hidden" name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
                     </div>
-                    <div class="smb_my_img"><?php echo $image; ?></div>
-                    <div class="smb_my_tit"><a href="<?php echo shop_item_url($row['it_id']); ?>"><?php echo stripslashes($row['it_name']); ?></a></div>
-                    <div class="smb_my_price"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></div>
-                    <div class="smb_my_date"><?php echo $row['wi_time']; ?></div>
+                    <div class="smb_my_img jumbotron-icon">
+                        <i class="fa fa-credit-card fa-4" aria-hidden="true"></i>
+                    </div>
+                    <div class="smb_my_tit"><?php echo $row['od_card_name'].$card_num_str; ?></div>
+                    <div class="smb_my_date">등록일:<br><?php echo $row['od_time']; ?></div>
+                    <div><?php echo $row['od_pg']; ?></div>
                     <a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>" class="wish_del"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a>
                 </li>
 
@@ -177,17 +147,12 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
                 }
 
                 if ($i == 0)
-                    echo '<li class="empty_li">보관 내역이 없습니다.</li>';
+                    echo '<li class="empty_li">등록된 카드가 없습니다.</li>';
                 ?>
                 </ul>
-        
-                <div class="smb_my_more">
-                    <a href="./wishlist.php">더보기</a>
-                </div>
                 
                 <div id="smb_ws_act">
-                    <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">장바구니</button>
-                    <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">주문하기</button>
+                    <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">카드 삭제하기</button>
                 </div>
             </form>
 	    </section>

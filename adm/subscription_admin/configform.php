@@ -35,6 +35,11 @@ add_stylesheet('<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/StephanWagner
 
 $subscription_info_inputs = get_subscription_info_inputs();
 
+$subscription_use_inputs = get_subscription_use_inputs();
+
+//print_r2($subscription_use_inputs);
+//exit;
+
 // print_r2($subscription_info_inputs);
 // exit;
 $g5['title'] = '정기결제설정';
@@ -259,6 +264,77 @@ Array
                 <div class="btn_list01 btn_list">
                     <button type="button" id="sel_option_delete" class="btn btn_02">선택삭제</button>
                 </div>
+                
+                <div>
+                    <h3>이용횟수</h3>
+                
+                    <div id="use_number_addfrm_btn"><button type="button" id="add_use_number" class="btn_frmline">이용횟수 옵션추가</button></div>
+                    <div id="use_number_frm">
+                        <table>
+                            <tr class="not-remove">
+                                <th>삭제체크</th>
+                                <th>입력</th>
+                                <th>출력텍스트</th>
+                                <th>사용여부</th>
+                            </tr>
+                            <?php
+                            $i = 0;
+                            if ($subscription_use_inputs) { ?>
+                            <?php
+                            foreach ($subscription_use_inputs as $use) {
+                                $disabled_attr = ($i === 0) ? 'disabled' : '';
+                            ?>
+                            <tr class="trtr" data-jbox-content="">
+                                <td>
+                                    <input type="hidden" name="use_id[]" value="<?php echo $use['use_id']; ?>" >
+                                    <input type="checkbox" name="use_chk[]" id="use_chk_<?php echo $i; ?>" <?php echo $disabled_attr; ?>>
+                                </td>
+                                <td>
+                                    <span class="default_format">
+                                        <input type="number" name="use_input[]" class="frm_input" value="<?php echo $use['use_input']; ?>">
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" class="frm_input subscription_print_format" name="use_print[]" title="" value="<?php echo $use['use_print']; ?>" size="40">
+                                </td>
+                                <td>
+                                    <select name="num_use[]" id="num_use_<?php echo $i; ?>">
+                                        <?php echo option_selected("1", $use['num_use'], "사용함"); ?>
+                                        <?php echo option_selected("0", $use['num_use'], "사용안함"); ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <?php $i++;
+                            } // end foreach ?>
+                            <?php } else { ?>
+                            <tr class="trtr" data-jbox-content="">
+                                <td>
+                                    <input type="hidden" name="use_id[]" value="1" >
+                                    <input type="checkbox" name="use_chk[]" id="use_chk_<?php echo $i; ?>" disabled value="1">
+                                </td>
+                                <td>
+                                    <span class="default_format">
+                                        <input type="number" name="use_input[]" class="frm_input" value="1">
+                                    </span>
+                                </td>
+                                <td>
+                                    <input type="text" class="frm_input subscription_print_format" name="use_print[]" title="">
+                                </td>
+                                <td>
+                                    <select name="num_use[]" id="num_use_<?php echo $i; ?>">
+                                        <option value="1">사용함</option>
+                                        <option value="0">사용안함</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <?php } // end if ?>
+                        </table>
+                    </div>
+                    <div class="btn_list01 btn_list">
+                        <button type="button" id="use_option_delete" class="btn btn_02">선택삭제</button>
+                    </div>
+                    
+                </div>
                 <script>
                     
                     /*
@@ -361,7 +437,7 @@ Array
                         return formats[str] || '{결제주기}';
                     }
 
-                    function subcription_change_event($selector, is_change_format=0) {
+                    function subcription_opt_change_event($selector, is_change_format=0) {
                         const $row = $selector.closest("tr");
                         const $defaultFormatInput = $row.find(".default_format");
                         const $opt_print = $row.find('[name="opt_print[]"]');
@@ -436,7 +512,7 @@ Array
                     $(document).on("change input", '[name="opt_input[]"]', function (e) {
                         
                         console.log('is_close', $(this).val());
-                        subcription_change_event($(this), 2);
+                        subcription_opt_change_event($(this), 2);
                         
                     });
                     
@@ -445,16 +521,99 @@ Array
                         
                         console.log('is_print', $(this).val());
                         
-                        subcription_change_event($(this), 2);
+                        subcription_opt_change_event($(this), 2);
                         
                     });
                     
                     $(document).on("change", "select[name='opt_date_format[]']", function (e) {
                         
-                        subcription_change_event($(this), 1);
+                        subcription_opt_change_event($(this), 1);
                             
                     });
+                    
+                    $("#add_use_number").click(function() {
+                        var $el = $("#use_number_frm tr:last"),
+                            newRow = $el.clone();
+                        
+                        var values = $("input[name='use_id[]']").map(function() {
+                            return parseInt($(this).val(), 10); // 값을 정수로 변환
+                        }).get(); // jQuery 객체를 일반 배열로 변환
+
+                        var maxValue = Math.max.apply(null, values);
+                        
+                        // 복사된 tr 내부의 값 초기화
+                        newRow.removeClass("not-remove");
+                        newRow.find('input[name="use_id[]"]').val(maxValue + 1);
+                        newRow.find('input[type="checkbox"]').prop('checked', false).removeAttr("disabled"); // 체크박스 해제
+                        newRow.find('input[type="text"]').val(''); // 텍스트 초기화
+                        newRow.find('input[type="number"]').val(''); // 텍스트 초기화
+                        // newRow.find('select[name="opt_date_format[]"]').val('day'); // 기본 선택값 설정 (필요 시 변경 가능)
+
+                        $el.after(newRow);
+                        jBox_tooltip_attach(newRow);
+                        
+                        // supply_sequence();
+                    });
+                    
+                    $("#use_number_frm .trtr").each(function(index, item){
+                        var $this = $(this);
+                        
+                        jBox_tooltip_attach($this);
+                    });
+                    
+                    $(document).on("change input", '[name="use_input[]"]', function (e) {
+                        
+                        console.log('is_close2', $(this).val());
+                        subcription_use_change_event($(this), 2);
+                        
+                    });
+                    
+                    $(document).on("change input", 'input[name="use_print[]"]', function (e) {
+                        var $this = $(this);
+                        
+                        console.log('is_print2', $(this).val());
+                        
+                        subcription_use_change_event($(this), 2);
+                        
+                    });
+                    
+                    function subcription_use_change_event($selector, is_change_format=0) {
+                        const $row = $selector.closest("tr");
+                        const $use_print = $row.find('[name="use_print[]"]');
+                        const $use_input = $row.find('[name="use_input[]"]');
+                        
+                        console.log( $row );
+                        
+                        var content = "입력한 횟수를 위의 선택된 결제주기에 결제합니다.",
+                            add_content = "";
+                        
+                        var $use_input_val = $use_input.val(),
+                            $use_print_val = $use_print.val();
+                        
+                        if ($use_input_val && is_change_format === 2) {
+                            content = $use_input_val + "회를 위의 선택된 결제주기에 결제합니다.";
+                        }
+                        
+                        console.log( $use_print_val );
+                        
+                        if ($use_print_val) {
+                            
+                            $use_print_val = $use_print_val.replace("{입력}", $use_input_val);
+                            add_content = "<br>"+$use_print_val;
+                        }
+                        
+                        // 선택 값에 따른 동작
+                        const template = content + add_content;
+                        
+                        if (template) {
+                            $row.attr("data-jbox-content", template);
+                            $row.trigger("changeinput");
+                        }
+                    }
+                    
+                    
                 </script>
+                
             </td>
         </tr>
         <tr>

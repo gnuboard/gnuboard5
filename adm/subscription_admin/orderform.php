@@ -922,6 +922,63 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </form>
 </section>
 
+<section id="anc_sodr_memo" class="subscription_history">
+    <h2 class="h2_frm">정기구독 히스토리</h2>
+    <?php echo $pg_anchor; ?>
+    <div class="local_desc02 local_desc">
+        <p>
+            해당 정기구독에 대한 history 내역입니다.
+        </p>
+    </div>
+    
+    <?php
+    $sql = "select * from `{$g5['g5_subscription_order_history_table']}` where hs_type = 'subscription_order' and od_id = '$od_id' order by hs_id desc ";
+    $result = sql_query($sql);
+    
+    $hs = array();
+    
+    for ($i=0; $row=sql_fetch_array($result); $i++){
+        $hs[] = $row;
+    }
+    ?>
+    
+    <?php if ($hs) { ?>
+        <ul class="order-historys">
+            <?php foreach($hs as $h) { ?>
+            <li rel="<?php echo $h['hs_id']; ?>" class="history">
+                <div class="history-content">
+                    <p><?php echo conv_content($h['hs_content'], 1); ?></p>
+                </div>
+            </li>
+            <p class="history-btns">
+                <span class="history-date"><?php echo $h['hs_time']; ?></span>
+                <a href="#" class="delete-history" role="button">삭제하기</a>
+            </p>
+            <?php } ?>
+        </ul>
+    <?php } ?>
+        
+    <form name="frmorderform2" action="./order_history_update.php" method="post">
+    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="mod_type" value="memo">
+
+    <div class="tbl_wrap">
+        <label for="od_subscription_memo" class="sound_only">히스토리 추가하기</label>
+        <textarea name="od_subscription_history" id="od_subscription_history" rows="8"></textarea>
+    </div>
+
+    <div class="btn_confirm01 btn_confirm">
+        <input type="submit" value="히스토리 추가하기" class="btn_submit btn">
+    </div>
+
+    </form>
+</section>
+
 <section>
     <h2 class="h2_frm">주문자/배송지 정보</h2>
     <?php echo $pg_anchor; ?>

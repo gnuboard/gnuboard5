@@ -3,8 +3,10 @@ $sub_menu = '600100';
 include_once('./_common.php');
 
 /*
+
 print_r($_POST);
 
+exit;
 $opts = array();
 $opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
 $opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
@@ -68,7 +70,20 @@ if ($opt_ids) {
     }
 }
 
+$uses = array();
+$uses_keys = array('use_id', 'use_chk', 'use_input', 'use_print', 'num_use');
+$use_ids = isset($_POST['use_id']) ? $_POST['use_id'] : array();
+
+if ($use_ids) {
+    foreach($use_ids as $index=>$value) {
+        foreach($uses_keys as $key) {
+            $uses[$index][$key] = (isset($_POST[$key]) && isset($_POST[$key][$index])) ? $_POST[$key][$index] : '';
+        }
+    }
+}
+
 $inserts['su_opt_settings'] = base64_encode(serialize($opts));
+$inserts['su_use_settings'] = base64_encode(serialize($uses));
 
 if (isset($exist['su_id']) && $exist['su_id']) {
     $valueSets = array();

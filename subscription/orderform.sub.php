@@ -382,8 +382,11 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             <?php run_event('subscription_add_form_html'); ?>
             
             <?php
-            
+            // 배송주기
             $subscription_info_inputs = get_subscription_info_inputs();
+            
+            // 이용횟수
+            $subscription_use_inputs = get_subscription_use_inputs();
             ?>
             <section id="sod_frm_subscription_input">
                 <h2>정기구독정보 입력</h2>
@@ -394,7 +397,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             <tr>
                                 <th scope="row"><label for="">배송주기</label></th>
                                 <td>
-                                <select id="od_subscription_number_select" name="od_subscription_select_data">
+                                <select id="od_subscription_select_data" name="od_subscription_select_data">
                                     <option value="" selected="" disabled="">선택해주세요</option>
                                 <?php
                                 foreach ($subscription_info_inputs as $key=>$opt) {
@@ -410,6 +413,28 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
 									}
                                 ?>
                                     <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
+                                <?php } ?>
+                                </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><label for="">이용횟수</label></th>
+                                <td>
+                                <select id="od_subscription_select_number" name="od_subscription_select_number">
+                                    <option value="" selected="" disabled="">선택해주세요</option>
+                                <?php
+                                foreach ($subscription_use_inputs as $key=>$use) {
+									if (! $use['num_use']) {
+										continue;
+									}
+
+									$use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+
+									if ($use['use_input']) {
+										$use_print = str_replace("{입력}", $use['use_input'], $use_print);
+									}
+                                ?>
+                                    <option value="<?php echo get_text($key.'||'.$use['use_input']); ?>"><?php echo $use_print; ?></option>
                                 <?php } ?>
                                 </select>
                                 </td>
@@ -534,10 +559,30 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     <span>총 주문금액</span>
                     <strong class="print_price"><?php echo number_format($tot_price); ?></strong>원
                 </div>
+<?php
 
-                <div id="od_pay_sl">
+$sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test, od_time from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' and od_pg = '".get_subs_option('su_pg_service')."' GROUP BY od_card_name, card_mask_number ";
+
+$result = sql_query($sql);
+$mcards = array();
+
+for ($i=0; $row = sql_fetch_array($result); $i++) {
+    $mcards[] = $row;
+}
+?>
+                <div id="od_pay_sl" class="is_subscription_pays">
+                    <ul>
+                        <?php
+                        foreach($mcards as $card) {
+                            $card_num_str = $card['card_mask_number'] ? ' ('.substr($card['card_mask_number'], 0, 4).')' : '';
+                        ?>
+                            <li>
+                                <?php echo $card['od_card_name'].$card_num_str; ?>
+                            </li>
+                        <?php } ?>
+                    </ul>
                     <div class="od_pay_buttons_el">
-                        <h3>결제수단</h3>
+                        <h3>결제수단 선택</h3>
                         <?php
                         $multi_settle = 0;
                         $checked = '';
@@ -559,7 +604,20 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         // 신용카드 사용
                         if (get_subs_option('su_card_use')) {
                             ++$multi_settle;
-                            echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" ' . $checked . '> <label for="od_settle_card" class="lb_icon card_icon">신용카드</label>' . PHP_EOL;
+                            
+                            if ($mcards) {
+                                
+                                echo '<input type="hidden" id="od_select_card_number" name="od_select_card_number" value="" >';
+                                
+                                $j = 0;
+                                
+                                foreach($mcards as $card) {
+                                    echo '<input type="radio" id="od_subscription_card_'.$j.'" class="od_subscription_
+                                    ids" name="od_settle_case" value="'.$card['od_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
+                                    $j++;
+                                }
+                            }
+                            echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" ' . $checked . '> <label for="od_settle_card" class="lb_icon card_icon">새 신용카드 등록</label>' . PHP_EOL;
                             $checked = '';
                         }
 
@@ -574,11 +632,15 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     </div>
             </section>
             <!-- } 결제 정보 입력 끝 -->
-
+            
             <?php
             // 결제대행사별 코드 include (주문버튼)
             require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/orderform.3.php';
             ?>
+            
+            <div>
+                약관동의
+            </div>
         </div>
 
     </div>
@@ -587,7 +649,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
     var zipcode = "";
     var form_action_url = "<?php echo $order_action_url; ?>";
 
-    $(function() {
+    jQuery(function($) {
         var $cp_btn_el;
         var $cp_row_el;
 
@@ -662,6 +724,15 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             var url = this.href;
             window.open(url, "win_address", "left=100,top=100,width=800,height=600,scrollbars=1");
             return false;
+        });
+        
+        // 결제수단 선택 (기존의 카드를 선택시)
+        $(document).on("click", ".subscription_card", function() {
+            var od_id_number = $(this).prev("input[name='od_settle_case']").val();
+            
+            if (od_id_number) {
+                $("#od_select_card_number").val(od_id_number);
+            }
         });
     });
 
@@ -861,11 +932,11 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             return false;
         }
         
-        var od_subscription_select_val = jQuery("#od_subscription_number_select :selected").val();
+        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val();
         
         if (!od_subscription_select_val) {
             alert("배송주기를 선택해주세요");
-            jQuery("#od_subscription_number_select").focus();
+            jQuery("#od_subscription_select_data").focus();
             
             return false;
         }
@@ -882,7 +953,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             }
         }
         if (!settle_check) {
-            alert("결제방식을 선택하십시오.");
+            alert("결제수단을 선택하십시오.");
             return false;
         }
 
@@ -898,22 +969,15 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
         var temp_point = 0;
 
         var tot_price = od_price + send_cost + send_cost2 - send_coupon - temp_point;
-
-        if (document.getElementById("od_settle_iche")) {
-            if (document.getElementById("od_settle_iche").checked) {
-                if (tot_price < 150) {
-                    alert("계좌이체는 150원 이상 결제가 가능합니다.");
-                    return false;
-                }
-            }
-        }
-
-        if (document.getElementById("od_settle_card")) {
-            if (document.getElementById("od_settle_card").checked) {
-                if (tot_price < 1000) {
-                    alert("신용카드는 1000원 이상 결제가 가능합니다.");
-                    return false;
-                }
+        
+        var is_subscription_card_checked = $(".od_subscription_ids").is(':checked');
+        
+        var is_settle_card = $("#od_settle_card").is(':checked') || is_subscription_card_checked;
+        
+        if (is_settle_card) {
+            if (tot_price < 1000) {
+                alert("신용카드는 1000원 이상 결제가 가능합니다.");
+                return false;
             }
         }
 
@@ -944,29 +1008,28 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         f.pay_method.value = "AUTH:CARD";
                         break;
                     default:
-                        f.pay_method.value = "무통장";
-                        break;
+                        f.pay_method.value = is_subscription_card_checked ? "exist_card" : "무통장";
                 }
             <?php } elseif (get_subs_option('su_pg_service') == 'inicis') { ?>
                 switch (settle_method) {
-                    case "무통장":
-                        f.gopaymethod.value = "무통장";
-                        break;
+
                     case "신용카드":
-                    default:
                         f.gopaymethod.value = "Card";
                         f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
                         break;
+                    default:
+                        f.gopaymethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
+                        f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
 
                 }
             <?php } elseif (get_subs_option('su_pg_service') == 'nicepay') { ?>
                 switch (settle_method) {
 
                     case "신용카드":
-                        //f.PayMethod.value = "CARD";
+                        f.PayMethod.value = "CARD";
                         break;
                     default:
-                        f.PayMethod.value = "무통장";
+                        f.PayMethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
                         break;
                 }
             <?php } ?>
@@ -1006,7 +1069,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 f.buyeremail.value = f.od_email.value;
                 f.buyertel.value = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
 
-                if (f.gopaymethod.value == "무통장") {
+                if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
                     f.submit();
                     return false;
                 }

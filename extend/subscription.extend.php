@@ -38,6 +38,8 @@ $g5['g5_subscription_pay_basket_table']            = $g5['subscription_prefix'] 
 $g5['g5_subscription_order_table']            = $g5['subscription_prefix'] . 'order';
 $g5['g5_subscription_order_data_table']   = $g5['subscription_prefix'] . 'order_data'; // 결제정보 임시저장 테이블
 
+$g5['g5_subscription_order_history_table'] = $g5['subscription_prefix'] . 'order_history'; // 주문정보 히스토리 테이블
+
 $subscriptions_default = array(
 'su_card_test' => 1,
 'su_inicis_mid' => '',
@@ -86,6 +88,17 @@ function get_subscription_info_inputs() {
     
     if ($opts) {
         return unserialize(base64_decode($opts));
+    }
+    
+    return null;
+}
+
+function get_subscription_use_inputs() {
+    
+    $uses = get_subs_option('su_use_settings');
+    
+    if ($uses) {
+        return unserialize(base64_decode($uses));
     }
     
     return null;

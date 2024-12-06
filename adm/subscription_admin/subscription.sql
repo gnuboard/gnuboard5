@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_cron_updatetime` datetime DEFAULT NULL,
   `su_cron_execute_hour` tinyint(2) NOT NULL DEFAULT '0',
   `su_opt_settings` text NOT NULL,
+  `su_use_settings` text NOT NULL,
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -222,6 +223,28 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
+  `hs_id` bigint(20) NOT NULL auto_increment,
+  `hs_parent` bigint(20) NOT NULL DEFAULT '0',
+  `hs_type` varchar(20) NOT NULL DEFAULT '',
+  `hs_category` varchar(100) NOT NULL DEFAULT '',
+  `od_id` bigint(20) unsigned NOT NULL,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `hs_content` text NOT NULL,
+  `hs_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`hs_id`),
+  KEY `mb_id` (`mb_id`),
+  KEY `hs_type` (`hs_type`),
+  KEY `hs_category` (`hs_category`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_shop_order`
+--
+
+-- DROP TABLE IF EXISTS `g5_subscription_order`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',  
@@ -278,6 +301,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `card_billkey` varchar(100) NOT NULL DEFAULT '',
   `od_pays_total` int(10) NOT NULL DEFAULT '0',
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
+  `od_subscription_selected_data` text NOT NULL,
   `od_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
   `od_firstshipment_date` datetime DEFAULT NULL,
   `od_time` datetime DEFAULT NULL,

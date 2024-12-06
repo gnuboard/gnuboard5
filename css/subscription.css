@@ -1,2 +1,5 @@
 .order-common-section{margin:0 0 30px;border:1px solid #e3e5e8;background:#fff}
 section.order-common-section h2 {border-bottom:1px solid #e2e4e7;font-size:1.167em;padding:20px}
+
+#od_pay_sl.is_subscription_pays .lb_icon{float:none;width:100%}
+#od_pay_sl .lb_icon.subscription_card {padding-top:1.1em}
