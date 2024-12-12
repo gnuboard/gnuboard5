@@ -1000,7 +1000,34 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     return $insert_id;
 }
 
-function calculateNextBillingDate($od){
+function getBusinessDaysBefore($date, $businessDays, $holidays=array()) {
+    // $date: 기준 날짜 (YYYY-MM-DD 형식의 문자열)
+    // $businessDays: 몇 영업일 전으로 이동할 것인지
+    // $holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+
+    // 기준 날짜를 타임스탬프로 변환
+    $timestamp = strtotime($date);
+
+    while ($businessDays > 0) {
+        // 하루 전으로 이동
+        $timestamp = strtotime('-1 day', $timestamp);
+        
+        // 요일 가져오기 (0: 일요일, 6: 토요일)
+        $dayOfWeek = date('w', $timestamp);
+        
+        // 날짜 포맷 (YYYY-MM-DD)
+        $formattedDate = date('Y-m-d', $timestamp);
+        
+        // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+        if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+            $businessDays--;
+        }
+    }
+
+    return date('Y-m-d', $timestamp);
+}
+
+function calculateNextBillingDate($od, $od_hope_date=null){
     
     // 현재 날짜를 DateTime 객체로 변환
     if (is_null_date($od['next_billing_date'])) {
@@ -1008,6 +1035,13 @@ function calculateNextBillingDate($od){
     } else {
         $timestamp = strtotime($od['next_billing_date']);
     }
+    
+    if ($od_hope_date) {
+        $nextdate = getBusinessDaysBefore($od_hope_date, (int) get_subs_option('su_before_pay_date'));
+        
+        return $nextdate.' 00:00:01';
+    }
+
     
     $interval = $od['od_subscription_date_format'] ? $od['od_subscription_date_format'] : 'day';
     $plus = abs($od['od_subscription_number']);

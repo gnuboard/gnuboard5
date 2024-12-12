@@ -45,6 +45,9 @@ $check_sanitize_keys = array(
 'su_nice_secretkey',            //나이스페이 비밀 키
 'su_card_test',                 //결제 테스트
 'su_cron_execute_hour',         // 매일 크론 실행 hour
+'su_hope_date_use',             // 희망배송일사용
+'su_hope_date_after',            // 희망배송일지정
+'su_before_pay_date'            // 배송일 이전 자동결제 설정일
 );
 
 $inserts = array();

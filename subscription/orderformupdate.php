@@ -3,7 +3,9 @@ include_once './_common.php';
 include_once G5_LIB_PATH.'/mailer.lib.php';
 
 $od_subscription_select_data = isset($_POST['od_subscription_select_data']) ? $_POST['od_subscription_select_data'] : '';
+$od_subscription_select_number = isset($_POST['od_subscription_select_number']) ? $_POST['od_subscription_select_number'] : '';
 $od_select_card_number = isset($_POST['od_select_card_number']) ? preg_replace('/[^a-z0-9_\-]/i', '', $_POST['od_select_card_number']) : '';
+$od_hope_date = isset($_POST['od_hope_date']) ? preg_replace('/[^0-9_\-]/i', '', $_POST['od_hope_date']) : '';
 
 if (!$od_subscription_select_data) {
     alert('배송주기를 선택해 주세요.');
@@ -371,15 +373,22 @@ $inserts = array(
     'od_subscription_selected_number' => base64_encode(serialize($subscription_selected_number)),
 );
 
+$result = sql_bind_insert($g5['g5_subscription_order_table'], $inserts);
+
+/*
+exit;
+
 // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php
 $columns = implode(', ', array_keys($inserts));
 $values = implode("', '", array_values($inserts));
 
+
+
 // 주문서에 입력
 $sql = "INSERT INTO `{$g5['g5_subscription_order_table']}`($columns) VALUES ('$values')";
 
-// echo $sql;
-// exit;
+echo $sql;
+exit;
 
 // // 주문서에 입력
 // $sql = " insert {$g5['g5_subscription_order_table']}
@@ -434,75 +443,107 @@ $sql = "INSERT INTO `{$g5['g5_subscription_order_table']}`($columns) VALUES ('$v
 //                 od_test           = '{$default['de_card_test']}'
 //                 ";
 $result = sql_query($sql, false);
+*/
+
+if (!$result) {
+    die('기록 안됨');
+}
 
 // 정말로 insert 가 되었는지 한번더 체크한다.
 $exists_sql = "select * from {$g5['g5_subscription_order_table']} where od_id = '$od_id'";
 $exists_order = sql_fetch($exists_sql);
 
-$pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
+// 희망배송일과 배송일 이전 자동결제 설정일이 있으면 다음회차에 결제를 하고, 그렇지 않으면 1회차 결제를 한다.
+$is_first_pay = true;
 
-// 정기결제가 성공이면
-if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
-    
-    add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
-        'hs_type' => 'subscription_order',
-        'hs_category' => 'admin',
-        'od_id' => $od_id,
-        'mb_id' => $member['mb_id'],
-        'hs_date' => G5_TIME_YMDHIS
-    ));
+if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_before_pay_date') > 0) {
+    $is_first_pay = false;
+}
+
+if ($is_first_pay) {
+
+    $pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
+
+    // 정기결제가 성공이면
+    if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
-    $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
-    
-    $insert_id = subscription_order_pay($exists_order, $pays, $pay_round_no);
-    
-    // 성공이면
-    if ($insert_id) {
+        add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
+            'hs_type' => 'subscription_order',
+            'hs_category' => 'admin',
+            'od_id' => $od_id,
+            'mb_id' => $member['mb_id'],
+            'hs_date' => G5_TIME_YMDHIS
+        ));
+            
+        $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
         
-        // $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+        $insert_id = subscription_order_pay($exists_order, $pays, $pay_round_no);
         
-        $nextBillingDate = calculateNextBillingDate($exists_order);
-        
-        $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '$od_id'";
-        
-        sql_query($updateQuery);
+        // 성공이면
+        if ($insert_id) {
+            
+            // $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+            
+            $nextBillingDate = calculateNextBillingDate($exists_order);
+            
+            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '$od_id'";
+            
+            sql_query($updateQuery);
+            
+        } else {
+            // 실패시 처리
+            //alert('fail1');
+            
+            // echo 'fail1';
+            //exit;
+            
+            add_subscription_order_history('정기구독 1회차 결제에 성공했으나, 데이터베이스 기록이 실패했습니다.', array(
+                'hs_type' => 'subscription_order',
+                'hs_category' => 'admin',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id'],
+                'hs_date' => G5_TIME_YMDHIS
+            ));
+            
+        }
         
     } else {
         // 실패시 처리
-        //alert('fail1');
         
-        // echo 'fail1';
-        //exit;
+        //alert('fail2');
         
-        add_subscription_order_history('정기구독 1회차 결제에 성공했으나, 데이터베이스 기록이 실패했습니다.', array(
-            'hs_type' => 'subscription_order',
-            'hs_category' => 'admin',
-            'od_id' => $od_id,
-            'mb_id' => $member['mb_id'],
-            'hs_date' => G5_TIME_YMDHIS
-        ));
+        add_subscription_order_history('정기구독 1회차 결제에 실패했습니다.', array(
+                'hs_type' => 'subscription_order',
+                'hs_category' => 'admin',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id'],
+                'hs_date' => G5_TIME_YMDHIS
+            ));
         
+        print_r($pays);
+        
+        echo 'fail2';
+        exit;
     }
-    
-} else {
-    // 실패시 처리
-    
-    //alert('fail2');
-    
-    add_subscription_order_history('정기구독 1회차 결제에 실패했습니다.', array(
-            'hs_type' => 'subscription_order',
-            'hs_category' => 'admin',
-            'od_id' => $od_id,
-            'mb_id' => $member['mb_id'],
-            'hs_date' => G5_TIME_YMDHIS
-        ));
-    
-    print_r($pays);
-    
-    echo 'fail2';
-    exit;
-}
 
+} else {
+    
+    // 결제하지 않고 정기구독 1회차에 결제일자를 결정한다.
+    $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
+    
+    sql_bind_update(
+        $g5['g5_subscription_order_table'],
+        array('next_billing_date'=>$nextBillingDate,
+        'last_billed_date'=>G5_TIME_YMDHIS,
+        'od_pays_total'=>1),
+        array('od_id'=>$od_id)
+    );
+    
+    //$updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '1' WHERE od_id = '$od_id'";
+    
+    //sql_query($updateQuery);
+    
+}
 // 주문정보 입력 오류시 결제 취소
 // if (!$result || !(isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
 //     if ($tno) {

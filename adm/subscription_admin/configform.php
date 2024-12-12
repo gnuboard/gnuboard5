@@ -617,6 +617,30 @@ Array
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="su_hope_date_use">희망배송일사용</label></th>
+            <td>
+                <?php echo help("'예'로 설정한 경우 주문서에서 희망배송일을 입력 받습니다."); ?>
+                <select name="su_hope_date_use" id="su_hope_date_use">
+                    <option value="0" <?php echo get_selected(get_subs_option('su_hope_date_use'), 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected(get_subs_option('su_hope_date_use'), 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+             <th scope="row"><label for="su_hope_date_after">희망배송일지정</label></th>
+            <td>
+                <?php echo help("오늘을 포함하여 설정한 날 이후부터 일주일 동안을 달력 형식으로 노출하여 선택할수 있도록 합니다."); ?>
+                <input type="number" name="su_hope_date_after" value="<?php echo get_sanitize_input(get_subs_option('su_hope_date_after')); ?>" id="su_hope_date_after" class="frm_input" size="5"> 일
+            </td>
+        </tr>
+        <tr>
+             <th scope="row"><label for="su_hope_date_after">배송일 이전 자동결제 설정일</label></th>
+            <td>
+                <?php echo help("배송일 몇일 전에 자동결제 되도록 설정합니다."); ?>
+                <input type="number" name="su_before_pay_date" value="<?php echo get_sanitize_input(get_subs_option('su_before_pay_date')); ?>" id="su_before_pay_date" class="frm_input" size="5"> 일
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="su_pg_service">결제대행사</label></th>
             <td>
                 <input type="hidden" name="su_pg_service" id="su_pg_service" value="<?php echo get_subs_option('su_pg_service'); ?>" >

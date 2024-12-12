@@ -246,25 +246,6 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <th scope="row"><label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label></th>
                                 <td><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
                             </tr>
-
-                            <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용
-                            ?>
-                                <tr>
-                                    <th scope="row"><label for="od_hope_date">희망배송일</label></th>
-                                    <td>
-                                        <!-- <select name="od_hope_date" id="od_hope_date">
-                                        <option value="">선택하십시오.</option>
-                                        <?php
-                                                for ($i = 0; $i < 7; ++$i) {
-                                                    $sdate = date('Y-m-d', time() + 86400 * (get_subs_option('de_hope_date_after') + $i));
-                                                    echo '<option value="' . $sdate . '">' . $sdate . ' (' . get_yoil($sdate) . ')</option>' . PHP_EOL;
-                                                }
-                                        ?>
-                                        </select> -->
-                                        <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
-                                    </td>
-                                </tr>
-                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -439,6 +420,16 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 </select>
                                 </td>
                             </tr>
+                            <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용
+                            ?>
+                                <tr>
+                                    <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
+                                    <td class="jquery-datepicker">
+                                        <input type="hidden" name="od_hope_date" value="" id="od_hope_date" class="frm_input" maxlength="10">
+                                        <div id="od_hope_date_print" class="jquery-datepicker"></div>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         <tbody>
                     </table>
                 </div>
@@ -552,6 +543,19 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <th>추가배송비</th>
                                 <td><strong id="od_send_cost2">0</strong>원<br>(지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
                             </tr>
+                            <?php
+                            if (get_subs_option('su_hope_date_use') && get_subs_option('su_before_pay_date')) {
+                                
+                                // $str_date = strtotime('+'.$plus.' day', $timestamp);
+                            ?>
+                            <tr class="before_pay_date_tr">
+                                <td colspan="2" class="explain_before_pay_date">
+                                <span class="set_pay_date"></span> 1회차 결제
+                                등록된 수단으로 도착 <?php echo (int) get_subs_option('su_before_pay_date'); ?>영업일 전 자동결제 됩니다.
+                                </td>
+                            </tr>
+                            <?php } ?>
+                    
                         </tbody>
                     </table>
                 </div>
@@ -646,6 +650,19 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
     </div>
 </form>
 <script>
+    var holidays = [
+        '2024-01-01', // 신정
+        '2024-02-09', '2024-02-10', '2024-02-11', '2024-02-12', // 설날 연휴
+        '2024-03-01', // 삼일절
+        '2024-05-05', '2024-05-06', // 어린이날 대체 공휴일
+        '2024-06-06', // 현충일
+        '2024-08-15', // 광복절
+        '2024-09-16', '2024-09-17', '2024-09-18', // 추석 연휴
+        '2024-10-03', // 개천절
+        '2024-10-09', // 한글날
+        '2024-12-25'  // 성탄절
+    ];
+    
     var zipcode = "";
     var form_action_url = "<?php echo $order_action_url; ?>";
 
@@ -891,7 +908,17 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             alert(stock_msg);
             return false;
         }
-
+        
+        // alert($.datepicker.formatDate('dd MM, yy', $("#od_hope_date_print").datepicker( "getDate" )));
+        
+        // alert($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
+        
+        // return;
+        
+        if (! jQuery("#od_hope_date").val()) {
+            jQuery("#od_hope_date").val($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
+        }
+        
         errmsg = "";
         errfld = "";
         var deffld = "";
@@ -1134,8 +1161,57 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         calculate_sendcost(String(f.od_b_zip.value));
     }
 
-    <?php if (get_subs_option('de_hope_date_use')) { ?>
-        $(function() {
+    function getBusinessDaysBefore(date, businessDays) {
+        // date: 기준 날짜 (Date 객체)
+        // businessDays: 몇 영업일 전으로 이동할 것인지
+        // holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+        while (businessDays > 0) {
+            date.setDate(date.getDate() - 1); // 하루 전으로 이동
+            const dayOfWeek = date.getDay(); // 요일 (0: 일요일, 6: 토요일)
+            
+            // 날짜 포맷 (YYYY-MM-DD)
+            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            
+            // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+            if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+                businessDays--;
+            }
+        }
+
+        return date;
+    }
+
+    <?php if (get_subs_option('su_hope_date_use')) { ?>
+        jQuery(function($) {
+        
+            var $od_hope_date_print = $("#od_hope_date_print");
+            $od_hope_date_print.datepicker({
+                dateFormat: "yy-mm-dd",
+                inline: true,
+                yearRange: "c-99:c+99",
+			    beforeShowDay: function(date){      // 토요일 일요일 제외
+                    const dayOfWeek = date.getDay(); // 0: 일요일, 6: 토요일
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+                    // 🔒 주말(토, 일) 또는 공휴일이면 비활성화 (false 반환)
+                    if (dayOfWeek === 0 || dayOfWeek === 6 || holidays.includes(formattedDate)) {
+                        return [false, 'ui-state-disabled', '공휴일 또는 주말입니다.'];
+                    }
+                    
+                    // 🔓 그 외의 날짜는 활성화
+                    return [true, '', ''];
+                },
+                onSelect: function(dateText, inst) {
+                    console.log(dateText, inst);
+                    change_hope_date_val();
+                    
+                    $("#od_hope_date").val(dateText);
+                },
+                minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
+                maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+            });
+            
+            /*
             $("#od_hope_date").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -1145,6 +1221,40 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                 minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d;",
                 maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 6; ?>d;"
             });
+            */
+            
+            function change_hope_date_val() {
+                var before_pay_date = "<?php echo (int) get_subs_option('su_before_pay_date'); ?>";
+                
+                if (before_pay_date && parseInt(before_pay_date) > 0) {
+                    
+                    setTimeout(function(){
+                        var od_hope_date_print = $od_hope_date_print.datepicker("getDate");
+                        
+                        if (od_hope_date_print) {
+                            
+                            var resultDate = getBusinessDaysBefore(new Date(od_hope_date_print), parseInt(before_pay_date));
+                            
+                            // alert(resultDate);
+                            
+                            var daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+                            var year = resultDate.getFullYear();
+                            var month = resultDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
+                            var date = resultDate.getDate();
+                            var dayOfWeek = daysOfWeek[resultDate.getDay()]; // 요일 가져오기
+
+                            var formattedDate1 = `${month}월 ${date}일 (${dayOfWeek})`;
+                            var formattedDate2 = `${year}년 ${month}월 ${date}일 (${dayOfWeek})`;
+                            
+                            jQuery(".set_pay_date").text(formattedDate1);
+                            jQuery(".before_pay_date_tr").show();
+                        }
+                    }, 100);
+                }
+            }
+            
+            change_hope_date_val();
+            
         });
     <?php } ?>
 </script>

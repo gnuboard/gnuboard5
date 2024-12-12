@@ -1732,47 +1732,79 @@ function sql_data_seek($result, $offset=0)
 // mysql connect resource 지정 - 명랑폐인님 제안
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 {
-    global $g5, $g5_debug;
+    global $g5, $g5_debug, $is_admin;
 
     if(!$link)
         $link = $g5['connect_db'];
-
-    // Blind SQL Injection 취약점 해결
-    $sql = trim($sql);
-    // union의 사용을 허락하지 않습니다.
-    //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
-    $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
-    // `information_schema` DB로의 접근을 허락하지 않습니다.
-    $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
-
-    $is_debug = get_permission_debug_show();
     
-    $start_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
-
-    if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
-        if ($error) {
-            $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
-        } else {
+    if (is_object($sql)) {
+        
+        if (method_exists($sql, 'execute')) {
             try {
-                $result = @mysqli_query($link, $sql);
+                $result = $sql->execute();
             } catch (Exception $e) {
-                $result = null;
+                // error_log("SQLSTATE: " . $e->getSQLState());
+                // error_log("Error Code: " . $e->getErrorCode());
+                // error_log("Error Message: " . $e->getErrorMessage());
+                
+                if ($error) {
+                    if ($is_admin === 'super') {
+                        echo "Exception". $e ->getcode().": ".$e -> getMessage()."<br />".
+                        " in ". $e->getFile()." on line ". $e -> getLine()."<br />";
+                    }
+                    die("쿼리 실행 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                }
             }
         }
+        
     } else {
-        if ($error) {
-            $result = @mysql_query($sql, $link) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+
+        // Blind SQL Injection 취약점 해결
+        $sql = trim($sql);
+        // union의 사용을 허락하지 않습니다.
+        //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+        $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
+        // `information_schema` DB로의 접근을 허락하지 않습니다.
+        $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
+
+        $is_debug = get_permission_debug_show();
+        
+        $start_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
+
+        if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
+            if ($error) {
+                $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            } else {
+                try {
+                    $result = @mysqli_query($link, $sql);
+                } catch (Exception $e) {
+                    $result = null;
+                }
+            }
         } else {
-            $result = @mysql_query($sql, $link);
+            if ($error) {
+                $result = @mysql_query($sql, $link) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            } else {
+                $result = @mysql_query($sql, $link);
+            }
         }
     }
-
+    
     $end_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
     $error = null;
     $source = array();
     if ($is_debug || G5_COLLECT_QUERY) {
-        if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
+        if (is_object($sql)) {
+            $error = array(
+                'error_code' => $e ->getcode(),
+                'error_message' => $e -> getMessage().' in '. $e->getFile().' on line '. $e -> getLine(),
+            );
+            
+            $query = $sql;
+            $sql = $query->getQuery();
+            
+        } else if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
             $error = array(
                 'error_code' => mysqli_errno($link),
                 'error_message' => mysqli_error($link),

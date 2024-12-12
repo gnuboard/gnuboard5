@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_cron_execute_hour` tinyint(2) NOT NULL DEFAULT '0',
   `su_opt_settings` text NOT NULL,
   `su_use_settings` text NOT NULL,
+  `su_hope_date_use` tinyint(2) NOT NULL DEFAULT '0',
+  `su_hope_date_after` int(10) NOT NULL DEFAULT '0',
+  `su_before_pay_date` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -302,6 +305,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_pays_total` int(10) NOT NULL DEFAULT '0',
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
   `od_subscription_selected_data` text NOT NULL,
+  `od_subscription_selected_number` text NOT NULL,
   `od_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
   `od_firstshipment_date` datetime DEFAULT NULL,
   `od_time` datetime DEFAULT NULL,
