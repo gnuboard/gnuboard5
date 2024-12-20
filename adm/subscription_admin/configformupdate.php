@@ -47,7 +47,8 @@ $check_sanitize_keys = array(
 'su_cron_execute_hour',         // 매일 크론 실행 hour
 'su_hope_date_use',             // 희망배송일사용
 'su_hope_date_after',            // 희망배송일지정
-'su_before_pay_date'            // 배송일 이전 자동결제 설정일
+'su_before_pay_date',            // 배송일 이전 자동결제 설정일
+'su_output_display_type',       // 정기구독 입력 출력 형식
 );
 
 $inserts = array();

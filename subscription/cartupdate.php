@@ -399,10 +399,23 @@ if ($act == 'buy') {
 
 // 바로 구매일 경우
 if ($sw_direct) {
+    
+    $tmps = array(
+        'delivery_cycle' => isset($_POST['delivery_cycle']) ? $_POST['delivery_cycle'] : '',
+        'usage_count' => isset($_POST['usage_count']) ? $_POST['usage_count'] : '',
+        'hope_delivery_date' => isset($_POST['hope_delivery_date']) ? $_POST['hope_delivery_date'] : ''
+    );
+    
+    $aparams = (!empty($tmps)) ? base64_encode(serialize($tmps)) : '';
+    
+    // $aparams2 = isValidBase64($aparams) ? unserialize(base64_decode($aparams)) : '';
+    
+    $add_params = $aparams ? '&aparams='.$aparams : '';
+        
     if ($is_member) {
-        goto_url(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct");
-    } else {
-        goto_url(G5_BBS_URL.'/login.php?url='.urlencode(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct"));
+        goto_url(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct".$add_params);
+    } else {     
+        goto_url(G5_BBS_URL.'/login.php?url='.urlencode(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct".$add_params));
     }
 } else {
     goto_url(G5_SUBSCRIPTION_URL.'/cart.php');

@@ -92,7 +92,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 
                 <select name="su_cron_execute_hour" id="su_cron_execute_hour">
                     <?php for($i=0;$i<24;++$i) { ?>
-                    <option value="<?php echo $i; ?>" <?php echo get_selected(get_subs_option('su_cron_execute_hour'), $i) ?>><?php echo $i.' ~ '.$i + 1; ?> 시</option>
+                    <option value="<?php echo $i; ?>" <?php echo get_selected(get_subs_option('su_cron_execute_hour'), $i); ?>><?php echo $i.' ~ '.$i + 1; ?> 시</option>
                     <?php } ?>
                 </select>
             </td>
@@ -102,9 +102,9 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <td>
                 <div>
                 출력형식 : 
-<select name="it_subscription_number">
-<option value="0">셀렉트박스</option>
-<option value="1">버튼식</option>
+<select name="su_output_display_type">
+<?php echo option_selected(0, get_subs_option('su_output_display_type'), "셀렉트박스"); ?>
+<?php echo option_selected(1, get_subs_option('su_output_display_type'), "버튼식"); ?>
 </select>
 <br>
                 <input type="number" name="number" >배송되기 몇일 전에 자동결제 합니다.

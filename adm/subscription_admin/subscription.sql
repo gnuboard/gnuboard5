@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_hope_date_use` tinyint(2) NOT NULL DEFAULT '0',
   `su_hope_date_after` int(10) NOT NULL DEFAULT '0',
   `su_before_pay_date` int(10) NOT NULL DEFAULT '0',
+  `su_output_display_type` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

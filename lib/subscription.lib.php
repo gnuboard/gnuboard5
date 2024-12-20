@@ -1027,6 +1027,79 @@ function getBusinessDaysBefore($date, $businessDays, $holidays=array()) {
     return date('Y-m-d', $timestamp);
 }
 
+function subscription_serial_encode($data, $od=null) {
+    return base64_encode(serialize($data));
+}
+
+function subscription_serial_decode($data, $od=null) {
+    return unserialize(base64_decode($data));
+}
+
+function calculateNextBillingDate2($od, $od_hope_date=null){
+    
+    // 현재 날짜를 DateTime 객체로 변환
+    if (is_null_date($od['next_billing_date'])) {
+        $timestamp = G5_SERVER_TIME;
+    } else {
+        $timestamp = strtotime($od['next_billing_date']);
+    }
+    
+    /*
+    // 이 코드를 넣으면 안됨 제거해야 됨
+    if ($od_hope_date === null && !is_null_date($od['od_hope_date'])) {
+        $od_hope_date = $od['od_hope_date'];
+    }
+    */
+    
+    $od_subscription_selected_data = subscription_serial_decode($od['od_subscription_selected_data']);
+    $od_subscription_selected_number = subscription_serial_decode($od['od_subscription_selected_number']);
+    
+    $od_subscription_date_format = isset($od['od_subscription_date_format']) ? $od['od_subscription_date_format'] : null;
+    $od_subscription_number = isset($od['od_subscription_number']) ? $od['od_subscription_number'] : null;
+    
+    if (isset($od_subscription_selected_data['opt_date_format']) && $od_subscription_selected_data['opt_date_format']) {
+        $od_subscription_date_format = $od_subscription_selected_data['opt_date_format'];
+    }
+    
+    if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
+        $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
+    }
+    
+    $config_before_pay_date = (int) get_subs_option('su_before_pay_date');
+    
+    // 희망배송일이 있으면
+    if ($od_hope_date) {
+        $nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
+        
+        return $nextdate.' 09:00:01';
+    }
+    
+    $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
+    $plus = abs($od_subscription_number);
+        
+    // 주어진 interval에 따라 날짜를 증가시킴
+    switch ($interval) {
+        case 'day':
+            $timestamp = strtotime('+'.$plus.' day', $timestamp);
+            break;
+        case 'week':
+            $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            break;
+        case 'month':
+            $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            break;
+        case 'year':
+            $timestamp = strtotime('+'.$plus.' year', $timestamp);
+            break;
+        default:
+            throw new Exception("Unknown billing interval: $interval");
+    }
+
+    // 다음 청구일을 YYYY-MM-DD 형식으로 반환
+    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
+    
+}
+
 function calculateNextBillingDate($od, $od_hope_date=null){
     
     // 현재 날짜를 DateTime 객체로 변환
@@ -1366,7 +1439,10 @@ function inicis_billing($od, $tmp_cart_id='') {
 	$detail["buyerName"] = $od['od_name'];
 	$detail["buyerEmail"] = $od['od_email'];
 	$detail["buyerTel"] = $od['od_hp'];
+    
+    // 장바구니 금액이 변경될수 있으니, $od['od_receipt_price'] 가 아니라 장바구니 금액을 체크해서 가져와야 한다.
 	$detail["price"] = $od['od_receipt_price'];
+    
 	$detail["billKey"] = $od['card_billkey'];
 	$detail["authentification"] = "00";
 	$detail["cardQuota"] = "00";
@@ -1572,6 +1648,24 @@ function print_subscription_card_info($od) {
     }
     
     return $txt;
+}
+
+function isValidBase64($input) {
+    // 공백, 탭, 개행 제거
+    $input = preg_replace('/\s+/', '', $input);
+    
+    // URL 디코딩 (우회 방지)
+    $input = rawurldecode($input);
+    
+    // 길이 확인 (4의 배수)
+    if (strlen($input) % 4 !== 0) {
+        return false; // Base64는 4의 배수여야 함
+    }
+
+    // 정규식으로 Base64 확인
+    // $pattern = '/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/';
+    $pattern = '#^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$#';
+    return preg_match($pattern, $input) === 1;
 }
 
 // 금액표시

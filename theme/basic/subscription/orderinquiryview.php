@@ -23,13 +23,19 @@ if($od['od_pg'] == 'lg') {
         <?php
         $st_count1 = $st_count2 = 0;
         $custom_cancel = false;
-
+        
+        /*
         $sql = " select it_id, it_name, ct_send_cost, it_sc_type
                     from {$g5['g5_shop_cart_table']}
                     where od_id = '$od_id'
                     group by it_id
                     order by ct_id ";
         $result = sql_query($sql);
+        */
+        $result_row = sql_bind_select($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
+        array('od_id'=>$od_id),
+        array('groupBy'=>'it_id', 'orderBy'=>'ct_id')
+        );
         ?>
         
         <div class="tbl_head03 tbl_wrap">
@@ -47,7 +53,9 @@ if($od['od_pg'] == 'lg') {
 	            </thead>
 	            <tbody>
 	            <?php
-	            for($i=0; $row=sql_fetch_array($result); $i++) {
+	            //for($i=0; $row=sql_fetch_array($result); $i++) {
+                $i = 0;
+                foreach($result_row as $row) {
 	                $image = get_it_image($row['it_id'], 55, 55);
 	
 	                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
@@ -122,6 +130,8 @@ if($od['od_pg'] == 'lg') {
 	                    if($opt['ct_status'] == '주문')
 	                        $st_count2++;
 	                }
+                    
+                    $i++;
 	            }
 	
 	            // 주문 상품의 상태가 모두 주문이면 고객 취소 가능

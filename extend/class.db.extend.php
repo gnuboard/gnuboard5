@@ -83,13 +83,33 @@ class G5MySQLQuery
         $args = func_get_args();
         $types = '';
         $valueToBind = array();
-
+        
+        /*
         foreach ($args as $value) {
             if (is_string($value)) {
                 $types .= "s";
             } elseif (is_int($value)) {
                 $types .= "i";
             } elseif (is_double($value) || is_float($value)) {
+                $types .= "d";
+            } else {
+                $types .= "s";
+            }
+            $valueToBind[] = $value;
+        }
+        */
+        foreach ($args as $value) {
+            if (is_int($value)) {
+                $types .= "i";
+            } elseif (is_float($value)) {
+                $types .= "d";
+            } elseif (is_numeric($value) && ctype_digit($value)) {
+                // 숫자 문자열도 정수로 변환
+                $value = (int) $value;
+                $types .= "i";
+            } elseif (is_numeric($value)) {
+                // 숫자 문자열이지만 정수가 아닌 경우, float로 변환
+                $value = (float) $value;
                 $types .= "d";
             } else {
                 $types .= "s";
@@ -260,15 +280,28 @@ class G5MysqlCRUD
 
         $columnString = empty($columns) ? "*" : implode(",", $columns);
         
+        /*
         $limit = isset($readSettings['limit']) ? $readSettings['limit'] : null;
         $offset = isset($readSettings['offset']) ? $readSettings['offset'] : null;
+        $groupBy = isset($readSettings['groupBy']) ? $readSettings['groupBy'] : null;
         $orderBy = isset($readSettings['orderBy']) ? $readSettings['orderBy'] : null;
+        */
+        
+        $limit = isset($readSettings['limit']) ? preg_replace('/[^0-9]/', '', $readSettings['limit']) : null;
+        $offset = isset($readSettings['offset']) ? preg_replace('/[^0-9]/', '', $readSettings['offset']) : null;
+        $groupBy = isset($readSettings['groupBy']) ? preg_replace('/[^a-z0-9_ \,]/i', '', $readSettings['groupBy']) : null;
+        $orderBy = isset($readSettings['orderBy']) ? preg_replace('/[^a-z0-9_ \,]/i', '', $readSettings['orderBy']) : null;
+        
         $orderType = isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC";
 
         $query = "SELECT {$columnString} FROM {$table} ";
         
         if ($condition) {
             $query .= "WHERE {$conditionString} ";
+        }
+        
+        if ($groupBy) {
+            $query .= "GROUP BY {$groupBy} ";
         }
         
         if ($orderBy) {
@@ -282,7 +315,7 @@ class G5MysqlCRUD
         if ($offset) {
             $query .= "OFFSET ? ";
         }
-
+        
         $queryObj = new G5MySQLQuery($query, $link);
         
         $valueToBind = array_merge($values, ($limit ? array($limit) : array()), ($offset ? array($offset) : array()));
@@ -465,6 +498,7 @@ function sql_bind_update($table, $updates, $conditions = array(), $link = null){
 
 }
 
+/*
 function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0){
     
     $condition_array = array_keys($conditions);
@@ -482,6 +516,40 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
     return G5MysqlCRUD::read($table, $columns, $condition, $values, $readSettings, $link, $is_fetch);
     
 }
+*/
+
+function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0) {
+    
+    // 조건의 키 배열 가져오기
+    $condition_array = array_keys($conditions);
+    
+    // 조건에 연산자를 적용하기 위해 배열 구조 변경
+    $condition = array_map(function($item) use ($conditions) {
+        // 조건 값이 배열인지 확인 (예: ['>' => 100] 형식)
+        if (is_array($conditions[$item])) {
+            $operator = key($conditions[$item]); // 연산자 가져오기 (예: >, <, =, !=)
+            return "$item $operator ?";
+        } else {
+            return "$item = ?";
+        }
+    }, $condition_array);
+    
+    // 조건에 사용할 값만 추출 (연산자를 제외한 실제 값만 가져오기)
+    $values = array_map(function($value) {
+        if (is_array($value)) {
+            return current($value); // 연산자와 값 중 값만 추출
+        }
+        return $value;
+    }, array_values($conditions));
+    
+    // 컬럼이 문자열로 전달되었을 경우 배열로 변환
+    if (!is_array($columns)) {
+        $columns = explode(',', $columns);
+    }
+    
+    // G5MysqlCRUD 클래스의 read 메서드 호출
+    return G5MysqlCRUD::read($table, $columns, $condition, $values, $readSettings, $link, $is_fetch);
+}
 
 // 한 행만 리턴 (sql_fetch 와 같은 역할)
 function sql_bind_select_fetch($table, $columns, $conditions = array(), $readSettings = array(), $link = null){
@@ -492,6 +560,29 @@ function sql_bind_select_fetch($table, $columns, $conditions = array(), $readSet
 
 function sql_bind_delete($table, $conditions = array(), $link = null){
     
+    // 조건의 키 배열 가져오기
+    $condition_array = array_keys($conditions);
+    
+    // 조건에 연산자를 적용하기 위해 배열 구조 변경
+    $condition = array_map(function($item) use ($conditions) {
+        // 조건 값이 배열인지 확인 (예: ['>' => 100] 형식)
+        if (is_array($conditions[$item])) {
+            $operator = key($conditions[$item]); // 연산자 가져오기 (예: >, <, =, !=)
+            return "$item $operator ?";
+        } else {
+            return "$item = ?";
+        }
+    }, $condition_array);
+    
+    // 조건에 사용할 값만 추출 (연산자를 제외한 실제 값만 가져오기)
+    $values = array_map(function($value) {
+        if (is_array($value)) {
+            return current($value); // 연산자와 값 중 값만 추출
+        }
+        return $value;
+    }, array_values($conditions));
+    
+    /*
     $condition_array = array_keys($conditions);
     
     $condition = array_map(function($item) {
@@ -499,6 +590,7 @@ function sql_bind_delete($table, $conditions = array(), $link = null){
     }, $condition_array);
     
     $values = array_values($conditions);
+    */
     
     return G5MysqlCRUD::delete($table, $condition, $values, $link);
     

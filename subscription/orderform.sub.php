@@ -363,6 +363,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             <?php run_event('subscription_add_form_html'); ?>
             
             <?php
+            // 정기구독 설정 불러오기
             // 배송주기
             $subscription_info_inputs = get_subscription_info_inputs();
             
@@ -378,53 +379,94 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             <tr>
                                 <th scope="row"><label for="">배송주기</label></th>
                                 <td>
-                                <select id="od_subscription_select_data" name="od_subscription_select_data">
-                                    <option value="" selected="" disabled="">선택해주세요</option>
-                                <?php
-                                foreach ($subscription_info_inputs as $key=>$opt) {
-									if (! $opt['opt_use']) {
-										continue;
-									}
+                                <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
+                                    <div class="su-display-btns">
+                                    <?php 
+                                    foreach ($subscription_info_inputs as $key=>$opt) {
+                                        if (! $opt['opt_use']) {
+                                            continue;
+                                        }
 
-									$opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+                                        $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
 
-									if ($opt['opt_input'] || $opt['opt_date_format']) {
-										$opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
-										$opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
-									}
-                                ?>
-                                    <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
+                                        if ($opt['opt_input'] || $opt['opt_date_format']) {
+                                            $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                                            $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                                        }
+                                    ?>
+                                        <input type="radio" id="od_subscription_select_data_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_data" value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>">
+                                        <label for="od_subscription_select_data_<?php echo $key; ?>" class="select-icon"><span><?php echo $opt_print; ?></span></label>
+                                    <?php } ?>
+                                    </div>
+                                <?php } else {  // 셀렉트박스 ?>
+                                    <select id="od_subscription_select_data" class="frm_input" name="od_subscription_select_data">
+                                        <option value="" selected="" disabled="">선택해주세요</option>
+                                    <?php
+                                    foreach ($subscription_info_inputs as $key=>$opt) {
+                                        if (! $opt['opt_use']) {
+                                            continue;
+                                        }
+
+                                        $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+
+                                        if ($opt['opt_input'] || $opt['opt_date_format']) {
+                                            $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                                            $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                                        }
+                                    ?>
+                                        <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
+                                    <?php } ?>
+                                    </select>
                                 <?php } ?>
-                                </select>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"><label for="">이용횟수</label></th>
                                 <td>
-                                <select id="od_subscription_select_number" name="od_subscription_select_number">
-                                    <option value="" selected="" disabled="">선택해주세요</option>
-                                <?php
-                                foreach ($subscription_use_inputs as $key=>$use) {
-									if (! $use['num_use']) {
-										continue;
-									}
+                                <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
+                                    <input type="hidden" id="od_subscription_select_number" name="od_subscription_select_number">
+                                    <div class="su-display-btns">
+                                        <?php foreach ($subscription_use_inputs as $key=>$use) {
+                                        if (! $use['num_use']) {
+                                            continue;
+                                        }
 
-									$use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+                                        $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
 
-									if ($use['use_input']) {
-										$use_print = str_replace("{입력}", $use['use_input'], $use_print);
-									}
-                                ?>
-                                    <option value="<?php echo get_text($key.'||'.$use['use_input']); ?>"><?php echo $use_print; ?></option>
+                                        if ($use['use_input']) {
+                                            $use_print = str_replace("{입력}", $use['use_input'], $use_print);
+                                        }
+                                        ?>
+                                        <input type="radio" id="od_subscription_select_number_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_number" value="<?php echo get_text($key.'||'.$use['use_input']); ?>">
+                                        <label for="od_subscription_select_number_<?php echo $key; ?>" class="select-icon"><span><?php echo $use_print; ?></span></label>
+                                        <?php } ?>
+                                    </div>
+                                <?php } else {  // 셀렉트박스 ?>
+                                    <select id="od_subscription_select_number" class="frm_input" name="od_subscription_select_number">
+                                        <option value="" selected="" disabled="">선택해주세요</option>
+                                    <?php
+                                    foreach ($subscription_use_inputs as $key=>$use) {
+                                        if (! $use['num_use']) {
+                                            continue;
+                                        }
+
+                                        $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+
+                                        if ($use['use_input']) {
+                                            $use_print = str_replace("{입력}", $use['use_input'], $use_print);
+                                        }
+                                    ?>
+                                        <option value="<?php echo get_text($key.'||'.$use['use_input']); ?>"><?php echo $use_print; ?></option>
+                                    <?php } ?>
+                                    </select>
                                 <?php } ?>
-                                </select>
                                 </td>
                             </tr>
                             <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용
                             ?>
                                 <tr>
                                     <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
-                                    <td class="jquery-datepicker">
+                                    <td class="jquery-pg-datepicker">
                                         <input type="hidden" name="od_hope_date" value="" id="od_hope_date" class="frm_input" maxlength="10">
                                         <div id="od_hope_date_print" class="jquery-datepicker"></div>
                                     </td>
@@ -959,7 +1001,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             return false;
         }
         
-        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val();
+        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val();
         
         if (!od_subscription_select_val) {
             alert("배송주기를 선택해주세요");
