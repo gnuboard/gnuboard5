@@ -495,6 +495,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
                         </div>
                         <div class="form-box-btns">
                             <button type="submit" onclick="document.pressed=this.value;" value="정기구독신청" class="sit_btn_subscription sit_btn_buy">정기구독 신청하기</button>
+                            <!-- <a href="#" class="sit_btn_subscription sit_btn_buy">정기구독 신청하기</a> -->
                         </div>
                 </div>
 
@@ -850,7 +851,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
             });
             
             function change_hope_date_val() {
-                var before_pay_date = "<?php echo (int) get_subs_option('su_before_pay_date'); ?>";
+                var before_pay_date = "<?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>";
                 
                 if (before_pay_date && parseInt(before_pay_date) > 0) {
                     

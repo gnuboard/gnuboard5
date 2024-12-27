@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-print_r($_REQUEST);
+// print_r($_REQUEST);
 
 $od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
 
@@ -95,7 +95,7 @@ if($od['od_pg'] == 'lg') {
         $result = sql_query($sql);
         */
         
-        $result_row = sql_bind_select($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
+        $result_row = sql_bind_select_array($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
         array('od_id'=>$od_id),
         array('groupBy'=>'it_id', 'orderBy'=>'ct_id')
         );
@@ -123,7 +123,8 @@ if($od['od_pg'] == 'lg') {
             $i = 0;
             foreach($result_row as $row) {
                 $image = get_it_image($row['it_id'], 70, 70);
-
+                
+                /*
                 $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
                             from {$g5['g5_subscription_cart_table']}
                             where od_id = '$od_id'
@@ -131,7 +132,13 @@ if($od['od_pg'] == 'lg') {
                             order by io_type asc, ct_id asc ";
                 $res = sql_query($sql);
                 $rowspan = sql_num_rows($res) + 1;
-
+                */
+                
+                $result_row = sql_bind_select($g5['g5_subscription_cart_table'], 'ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price',
+                array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
+                array('orderBy'=>'io_type, ct_id')
+                );
+        
                 // 합계금액 계산
                 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                                 SUM(ct_qty) as qty

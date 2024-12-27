@@ -175,7 +175,17 @@ class G5MySQLQuery
             return true; // INSERT, UPDATE, DELETE 등 결과가 없는 쿼리의 경우 true 반환
         }
     }
-
+    
+    public function get_num_rows()
+    {
+        // https://www.php.net/manual/en/mysqli-stmt.num-rows.php
+        /* store the result in an internal buffer */
+        
+        mysqli_stmt_store_result($this->preparedQuery);
+        
+        return mysqli_stmt_num_rows($this->preparedQuery);
+    }
+    
     /**
      * Return the result of the query executed
      * 
@@ -263,7 +273,7 @@ class G5MysqlCRUD
      * 
      * @return array The readed / selected rows
      */
-    public static function read($table, $columns = array(), $condition = array(), $values = array(), $readSettings = array(), $link = null, $is_fetch = 0)
+    public static function read($table, $columns = array(), $condition = array(), $values = array(), $readSettings = array(), $link = null, $is_fetches = 0)
     {
         global $g5;
         
@@ -331,11 +341,17 @@ class G5MysqlCRUD
         
         $result = sql_query($queryObj);
         
-        if ($is_fetch) {
+        if ($is_fetches === 1) {
+            
+            // 한행
             return $queryObj->result_fetch($result);
+        } else if ($is_fetches === 2){
+            
+            // 여러행
+            return $queryObj->result($result);
         }
         
-        return $queryObj->result($result);
+        return $result;
     }
     
     /**
@@ -555,6 +571,13 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
 function sql_bind_select_fetch($table, $columns, $conditions = array(), $readSettings = array(), $link = null){
     
     return sql_bind_select($table, $columns, $conditions, $readSettings, $link, 1);
+    
+}
+
+// 결과값에서 mysqli_fetch_assoc 하여 여러 행을 리턴
+function sql_bind_select_array($table, $columns, $conditions = array(), $readSettings = array(), $link = null){
+    
+    return sql_bind_select($table, $columns, $conditions, $readSettings, $link, 2);
     
 }
 

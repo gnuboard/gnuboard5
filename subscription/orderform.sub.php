@@ -393,8 +393,10 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                             $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
                                             $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
                                         }
+                                        
+                                        $checked = (isset($aparams_array['delivery_cycle']) && $aparams_array['delivery_cycle'] === $key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']) ? 'checked' : '';
                                     ?>
-                                        <input type="radio" id="od_subscription_select_data_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_data" value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>">
+                                        <input type="radio" id="od_subscription_select_data_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_data" <?php echo $checked; ?> value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>">
                                         <label for="od_subscription_select_data_<?php echo $key; ?>" class="select-icon"><span><?php echo $opt_print; ?></span></label>
                                     <?php } ?>
                                     </div>
@@ -436,8 +438,10 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                         if ($use['use_input']) {
                                             $use_print = str_replace("{입력}", $use['use_input'], $use_print);
                                         }
+                                        
+                                        $checked = (isset($aparams_array['usage_count']) && $aparams_array['usage_count'] === $key.'||'.$use['use_input']) ? 'checked' : '';
                                         ?>
-                                        <input type="radio" id="od_subscription_select_number_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_number" value="<?php echo get_text($key.'||'.$use['use_input']); ?>">
+                                        <input type="radio" id="od_subscription_select_number_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_number" <?php echo $checked; ?> value="<?php echo get_text($key.'||'.$use['use_input']); ?>">
                                         <label for="od_subscription_select_number_<?php echo $key; ?>" class="select-icon"><span><?php echo $use_print; ?></span></label>
                                         <?php } ?>
                                     </div>
@@ -467,7 +471,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <tr>
                                     <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
                                     <td class="jquery-pg-datepicker">
-                                        <input type="hidden" name="od_hope_date" value="" id="od_hope_date" class="frm_input" maxlength="10">
+                                        <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">
                                         <div id="od_hope_date_print" class="jquery-datepicker"></div>
                                     </td>
                                 </tr>
@@ -586,14 +590,14 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <td><strong id="od_send_cost2">0</strong>원<br>(지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
                             </tr>
                             <?php
-                            if (get_subs_option('su_hope_date_use') && get_subs_option('su_before_pay_date')) {
+                            if (get_subs_option('su_hope_date_use') && get_subs_option('su_auto_payment_lead_days')) {
                                 
                                 // $str_date = strtotime('+'.$plus.' day', $timestamp);
                             ?>
                             <tr class="before_pay_date_tr">
                                 <td colspan="2" class="explain_before_pay_date">
                                 <span class="set_pay_date"></span> 1회차 결제
-                                등록된 수단으로 도착 <?php echo (int) get_subs_option('su_before_pay_date'); ?>영업일 전 자동결제 됩니다.
+                                등록된 수단으로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>영업일 전 자동결제 됩니다.
                                 </td>
                             </tr>
                             <?php } ?>
@@ -1091,6 +1095,16 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                         f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
 
                 }
+            <?php } elseif (get_subs_option('su_pg_service') == 'tosspayments') { ?>
+                switch (settle_method) {
+
+                    case "신용카드":
+                        f.gopaymethod.value = "Card";
+                        break;
+                    default:
+                        f.gopaymethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
+
+                }
             <?php } elseif (get_subs_option('su_pg_service') == 'nicepay') { ?>
                 switch (settle_method) {
 
@@ -1131,6 +1145,19 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                 } else {
                     f.submit();
                 }
+            <?php } ?>
+            <?php if (get_subs_option('su_pg_service') == 'tosspayments') { ?>
+                
+                if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
+                    f.submit();
+                    return false;
+                }
+                
+                requestBillingAuth({
+                  customerEmail: f.od_name.value,
+                  customerName: f.od_email.value
+                });
+                
             <?php } ?>
             <?php if (get_subs_option('su_pg_service') == 'inicis') { ?>
                 f.price.value = f.good_mny.value;
@@ -1253,6 +1280,10 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                 maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
             });
             
+            <?php if ($aparams_array['hope_delivery_date']) { ?>
+                $od_hope_date_print.datepicker("setDate", "<?php echo $aparams_array['hope_delivery_date']; ?>");
+            <?php } ?>
+                
             /*
             $("#od_hope_date").datepicker({
                 changeMonth: true,
@@ -1266,7 +1297,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             */
             
             function change_hope_date_val() {
-                var before_pay_date = "<?php echo (int) get_subs_option('su_before_pay_date'); ?>";
+                var before_pay_date = "<?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>";
                 
                 if (before_pay_date && parseInt(before_pay_date) > 0) {
                     

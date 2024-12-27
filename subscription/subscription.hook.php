@@ -69,6 +69,8 @@ function subscription_add_mypage_sub() {
                 $od_status = '<span class="status_06">주문취소</span>';
                 break;
         }
+        
+        $view_url = G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uid='.$uid;
     ?>
     <?php /*
     <tr>
@@ -91,13 +93,13 @@ function subscription_add_mypage_sub() {
                 <?php echo $row['goods']['full_name']; ?>
             </div>
         </td>
-        <td><a href="<?php echo G5_SUBSCRIPTION_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></td>
+        <td><a href="<?php echo $view_url; ?>"><?php echo $row['od_id']; ?></td>
         <td class="td_numbig"><?php echo substr($row['od_time'],2,9); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
         <td class="td_numbig text_right"><?php echo substr($row['next_billing_date'],2,9); ?> (<?php echo get_yoil($row['next_billing_date']); ?>)</td>
         <td class="td_numbig text_right"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td class="td_numbig text_right"><?php echo subscription_pg_cardname($row['od_card_name']); ?></td>
         <td class="td_numbig text_right"><?php echo $od_status; ?></td>
-        <td>보기</td>
+        <td><a href="<?php echo $view_url; ?>">보기</a></td>
     </tr>
     <?php
     }

@@ -43,12 +43,14 @@ $check_sanitize_keys = array(
 'su_inicis_sign_key',           //KG이니시스 웹결제 사인키
 'su_nice_clientid',             //나이스페이 클라이언트 키
 'su_nice_secretkey',            //나이스페이 비밀 키
+'su_tosspayments_mid',           // 토스페이먼츠 상점 아이디
+'su_tosspayments_api_secretkey',  // 토스페이먼츠 API 시크릿키
 'su_card_test',                 //결제 테스트
 'su_cron_execute_hour',         // 매일 크론 실행 hour
 'su_hope_date_use',             // 희망배송일사용
 'su_hope_date_after',            // 희망배송일지정
-'su_before_pay_date',            // 배송일 이전 자동결제 설정일
 'su_output_display_type',       // 정기구독 입력 출력 형식
+'su_auto_payment_lead_days',    // 배송일 이전 자동결제 설정일
 );
 
 $inserts = array();
@@ -97,6 +99,7 @@ if (isset($exist['su_id']) && $exist['su_id']) {
     }
 
     $sql = "UPDATE `{$g5['g5_subscription_config_table']}` SET ".implode(', ',$valueSets);
+    
 } else {
     $columns = implode(', ', array_keys($inserts));
     $values = implode("', '", array_values($inserts));

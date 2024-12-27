@@ -390,6 +390,8 @@ function get_subscription_category($sc_id) {
 function get_subscription_order($od_id) {
     global $g5;
     
+    return sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', array('od_id'=>$od_id));
+    
     $sql = " select * from {$g5['g5_subscription_order_table']} where od_id = '{$od_id}' ";
     return sql_fetch($sql);
 }
@@ -1000,29 +1002,79 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     return $insert_id;
 }
 
-function getBusinessDaysBefore($date, $businessDays, $holidays=array()) {
+function subscription_cron_token() {
+    global $g5;
+    
+    $str = isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '';
+    $str .= G5_TABLE_PREFIX.G5_SHOP_TABLE_PREFIX.G5_TOKEN_ENCRYPTION_KEY;
+    
+    return md5($str);
+}
+
+function get_next_delivery_date($od){
+    return calculateNextDeliveryDate($od);
+}
+
+function getBusinessDaysBefore($date, $businessDays = 0, $holidays=array()) {
     // $date: 기준 날짜 (YYYY-MM-DD 형식의 문자열)
     // $businessDays: 몇 영업일 전으로 이동할 것인지
     // $holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
 
     // 기준 날짜를 타임스탬프로 변환
     $timestamp = strtotime($date);
+    
+    if ($businessDays) {
+        while ($businessDays > 0) {
+            // 하루 전으로 이동
+            $timestamp = strtotime('-1 day', $timestamp);
+            
+            // 요일 가져오기 (0: 일요일, 6: 토요일)
+            $dayOfWeek = date('w', $timestamp);
+            
+            // 날짜 포맷 (YYYY-MM-DD)
+            $formattedDate = date('Y-m-d', $timestamp);
+            
+            // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+                $businessDays--;
+            }
+        }
+    } else {
+        // 영업일 검증 (0일일 때 배송일 확인)
+        while (true) {
+            $dayOfWeek = date('w', $timestamp);
+            $formattedDate = date('Y-m-d', $timestamp);
 
-    while ($businessDays > 0) {
-        // 하루 전으로 이동
-        $timestamp = strtotime('-1 day', $timestamp);
-        
-        // 요일 가져오기 (0: 일요일, 6: 토요일)
-        $dayOfWeek = date('w', $timestamp);
-        
-        // 날짜 포맷 (YYYY-MM-DD)
-        $formattedDate = date('Y-m-d', $timestamp);
-        
-        // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
-        if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
-            $businessDays--;
+            // 영업일이면 반환
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+                break;
+            }
+
+            // 주말 또는 공휴일이면 하루 전으로 이동
+            $prevTimestamp = strtotime('-1 day', $timestamp);
+            $nextTimestamp = strtotime('+1 day', $timestamp);
+            
+            $prevDayOfWeek = date('w', $prevTimestamp);
+            $nextDayOfWeek = date('w', $nextTimestamp);
+            
+            $prevDate = date('Y-m-d', $prevTimestamp);
+            $nextDate = date('Y-m-d', $nextTimestamp);
+            
+            // 이전 날짜가 영업일인지 확인
+            if ($prevDayOfWeek != 0 && $prevDayOfWeek != 6 && !in_array($prevDate, $holidays)) {
+                $timestamp = $prevTimestamp;
+            }
+            // 다음 날짜가 영업일인지 확인
+            elseif ($nextDayOfWeek != 0 && $nextDayOfWeek != 6 && !in_array($nextDate, $holidays)) {
+                $timestamp = $nextTimestamp;
+            } 
+            // 만약 전후 날짜가 모두 주말/공휴일이면 루프를 계속 진행
+            else {
+                $timestamp = strtotime('-1 day', $timestamp);
+            }
         }
     }
+
 
     return date('Y-m-d', $timestamp);
 }
@@ -1033,6 +1085,49 @@ function subscription_serial_encode($data, $od=null) {
 
 function subscription_serial_decode($data, $od=null) {
     return unserialize(base64_decode($data));
+}
+
+function calculateNextDeliveryDate($od){
+    
+    $od_date = !is_null_date($od['od_hope_date']) ? $od['od_hope_date'] : $od['od_time'];
+    
+    $od_subscription_selected_data = subscription_serial_decode($od['od_subscription_selected_data']);
+    $od_subscription_selected_number = subscription_serial_decode($od['od_subscription_selected_number']);
+    
+    $od_subscription_date_format = isset($od['od_subscription_date_format']) ? $od['od_subscription_date_format'] : null;
+    $od_subscription_number = isset($od['od_subscription_number']) ? $od['od_subscription_number'] : null;
+    
+    if (isset($od_subscription_selected_data['opt_date_format']) && $od_subscription_selected_data['opt_date_format']) {
+        $od_subscription_date_format = $od_subscription_selected_data['opt_date_format'];
+    }
+    
+    if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
+        $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
+    }
+    
+    $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
+    $plus = abs($od_subscription_number);
+        
+    // 주어진 interval에 따라 날짜를 증가시킴
+    switch ($interval) {
+        case 'day':
+            $timestamp = strtotime('+'.$plus.' day', $timestamp);
+            break;
+        case 'week':
+            $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            break;
+        case 'month':
+            $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            break;
+        case 'year':
+            $timestamp = strtotime('+'.$plus.' year', $timestamp);
+            break;
+        default:
+            throw new Exception("Unknown billing interval: $interval");
+    }
+
+    // 다음 청구일을 YYYY-MM-DD 형식으로 반환
+    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
 }
 
 function calculateNextBillingDate2($od, $od_hope_date=null){
@@ -1065,7 +1160,7 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
         $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
     }
     
-    $config_before_pay_date = (int) get_subs_option('su_before_pay_date');
+    $config_before_pay_date = (int) get_subs_option('su_auto_payment_lead_days');
     
     // 희망배송일이 있으면
     if ($od_hope_date) {
@@ -1110,7 +1205,7 @@ function calculateNextBillingDate($od, $od_hope_date=null){
     }
     
     if ($od_hope_date) {
-        $nextdate = getBusinessDaysBefore($od_hope_date, (int) get_subs_option('su_before_pay_date'));
+        $nextdate = getBusinessDaysBefore($od_hope_date, (int) get_subs_option('su_auto_payment_lead_days'));
         
         return $nextdate.' 00:00:01';
     }
@@ -1275,6 +1370,8 @@ function subscription_process_payment($od, $od_pg_service='', $tmp_cart_id='') {
         return kcp_billing($od, $tmp_cart_id);
     } else if ($subscription_pg_service === 'inicis') {
         return inicis_billing($od, $tmp_cart_id);
+    } else if ($subscription_pg_service === 'tosspayments') {
+        return tosspayments_billing($od, $tmp_cart_id);
     } else if ($subscription_pg_service === 'nicepay') {
         return nicepay_billing($od, $tmp_cart_id);
     }
@@ -1404,6 +1501,76 @@ function nicepay_billing($od, $tmp_cart_id='') {
     
     // $res 형식은 json
     return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
+}
+
+function get_subscription_billing_key($od) {
+    
+    return $od['card_billkey'];
+}
+
+function subscription_sendRequest($url, $authKey, $postData) {
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: $authKey",
+        "Content-Type: application/json"
+    ]);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    return $response;
+}
+
+function tosspayments_billing($od, $tmp_cart_id='') {
+    global $g5;
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/settle_tosspayments.inc.php');
+    
+    $apiSecretKey = get_subs_option('su_tosspayments_api_secretkey');
+    
+    $encryptedApiSecretKey = "Basic " . base64_encode($apiSecretKey . ":");
+
+    $billingKey = get_subscription_billing_key($od);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
+    
+    $data = array(
+        'customerKey' => $billingKey,
+        'amount' => $od['od_receipt_price'],
+        'orderId' => substr($od['od_id'].'_'.get_string_encrypt($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
+        'orderName' => $goodsname['full_name'],
+        'customerEmail' => $od['od_email'],
+        'customerName' => $od['od_name']
+        );
+    
+    $postData = json_encode(array(
+        'customerKey' => $od['od_id'],
+        'amount' => $data['amount'],
+        'orderId' => $data['orderId'],
+        'orderName' => $data['orderName'],
+        'customerEmail' => $data['customerEmail'],
+        'customerName' => $data['customerName']
+    ));
+    
+    $response = subscription_sendRequest("https://api.tosspayments.com/v1/billing/$billingKey", $encryptedApiSecretKey, $postData);
+    
+    $res_result = json_decode($response, true);
+    
+    print_r( $res_result );
+    
+    if (isset($res_result['code']) && $res_result['code']) {
+        // 자동결제 실패했음
+        
+        return array('code'=>$res_result['code'], 'message'=>$res_result['message']);
+        
+    }
+    
+    // 결제 성공시
+    return array('code'=>'success', 'message'=>'', 'response'=>$res_result);
 }
 
 function inicis_billing($od, $tmp_cart_id='') {

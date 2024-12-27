@@ -53,9 +53,6 @@ echo var_export($_POST, true);
 exit;
 */
 
-echo var_export($_POST, true);
-exit;
-
 // print_r2($_POST);
 // exit;
 
@@ -234,6 +231,9 @@ if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
         case 'inicis':
             include G5_SUBSCRIPTION_PATH.'/inicis/inicis_bill_result.php';
             break;
+        case 'tosspayments':
+            include G5_SUBSCRIPTION_PATH.'/tosspayments/tosspayments_bill_result.php';
+            break;
         case 'nicepay':
             include G5_SUBSCRIPTION_PATH.'/nicepay/nicepay_subscription_result.php';
             break;
@@ -266,6 +266,9 @@ if ($tno) {
         switch ($od_pg) {
             case 'inicis':
                 include G5_SUBSCRIPTION_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'tosspayments':
+                include G5_SUBSCRIPTION_PATH.'/tosspayments/tosspayments_cancel.php';
                 break;
             case 'nicepay':
                 $cancelAmt = (int) $pg_price;
@@ -459,7 +462,7 @@ $exists_order = sql_fetch($exists_sql);
 // 희망배송일과 배송일 이전 자동결제 설정일이 있으면 다음회차에 결제를 하고, 그렇지 않으면 1회차 결제를 한다.
 $is_first_pay = true;
 
-if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_before_pay_date') > 0) {
+if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_payment_lead_days') > 0) {
     $is_first_pay = false;
 }
 

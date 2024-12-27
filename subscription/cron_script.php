@@ -23,7 +23,7 @@ echo $sql;
 exit;
 */
 
-$result_row = sql_bind_select(
+$result_row = sql_bind_select_array(
     $g5['g5_subscription_order_table'],
     '*',
     array('card_billkey' => array('!=' => ''), 'od_enable_status' => 1, 'next_billing_date' => array('<=' => G5_TIME_YMDHIS)),

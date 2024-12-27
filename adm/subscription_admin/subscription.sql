@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_inicis_iniapi_key` varchar(30) NOT NULL DEFAULT '',
   `su_inicis_iniapi_iv` varchar(30) NOT NULL DEFAULT '',
   `su_inicis_sign_key` varchar(80) NOT NULL DEFAULT '',
+  `su_tosspayments_mid` varchar(30) NOT NULL DEFAULT '',
+  `su_tosspayments_api_secretkey` varchar(80) NOT NULL DEFAULT '',
   `su_nice_clientid` varchar(80) NOT NULL DEFAULT '',
   `su_nice_secretkey` varchar(80) NOT NULL DEFAULT '',
   `su_cron_updatetime` datetime DEFAULT NULL,
@@ -24,8 +26,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_use_settings` text NOT NULL,
   `su_hope_date_use` tinyint(2) NOT NULL DEFAULT '0',
   `su_hope_date_after` int(10) NOT NULL DEFAULT '0',
-  `su_before_pay_date` int(10) NOT NULL DEFAULT '0',
   `su_output_display_type` tinyint(2) NOT NULL DEFAULT '0',
+  `su_auto_payment_lead_days` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

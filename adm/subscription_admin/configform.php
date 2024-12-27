@@ -63,7 +63,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <th scope="row"><label>정기결제 CRON PATH</label></th>
             <td>
                 <p><?php echo G5_SUBSCRIPTION_URL.'/cron_script.php'; ?></p>
-                <p><?php echo G5_SUBSCRIPTION_PATH.'/cron_script.php'; ?></p>
+                <p><?php echo G5_SUBSCRIPTION_PATH.'/cron_script.php?t='.subscription_cron_token(); ?></p>
             </td>
         </tr>
         <tr>
@@ -107,13 +107,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <?php echo option_selected(1, get_subs_option('su_output_display_type'), "버튼식"); ?>
 </select>
 <br>
-                <input type="number" name="number" >배송되기 몇일 전에 자동결제 합니다.
-                <br>
                 <input type="checkbox" name="" >다음 결제일 변경 수정가능
                 <br>
                 <input type="checkbox" name="" >다음 결제일 변경 가능일
                 <br>
-                <input type="checkbox" name="" >휴일(토요일, 월요일) 에는 결제 안함 (휴일을 지난 다음날 평일에 결제합니다.)
+                <input type="checkbox" name="" >영업일에만 결제 사용 가능(체크시 토요일, 일요일 에는 결제를 하지 않습니다.);
                 <br>
                 </div>
 				<div>
@@ -637,7 +635,7 @@ Array
              <th scope="row"><label for="su_hope_date_after">배송일 이전 자동결제 설정일</label></th>
             <td>
                 <?php echo help("배송일 몇일 전에 자동결제 되도록 설정합니다."); ?>
-                <input type="number" name="su_before_pay_date" value="<?php echo get_sanitize_input(get_subs_option('su_before_pay_date')); ?>" id="su_before_pay_date" class="frm_input" size="5"> 일
+                <input type="number" name="su_auto_payment_lead_days" value="<?php echo get_sanitize_input(get_subs_option('su_auto_payment_lead_days')); ?>" id="su_auto_payment_lead_days" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>
@@ -647,6 +645,7 @@ Array
                 <?php echo help('정기결제에서 사용할 결제대행사를 선택합니다.'); ?>
                 <ul class="de_pg_tab">
                     <li class="<?php if(get_subs_option('su_pg_service') == 'kcp') echo 'tab-current'; ?>"><a href="#kcp_info_anchor" data-value="kcp" title="NHN KCP 선택하기" >NHN KCP</a></li>
+                    <li class="<?php if(get_subs_option('su_pg_service') == 'tosspayments') echo 'tab-current'; ?>"><a href="#tosspayment_info_anchor" data-value="tosspayments" title="토스페이먼츠 선택하기">토스페이먼츠</a></li>
                     <li class="<?php if(get_subs_option('su_pg_service') == 'inicis') echo 'tab-current'; ?>"><a href="#inicis_info_anchor" data-value="inicis" title="KG이니시스 선택하기">KG이니시스</a></li>
                     <li class="<?php if(get_subs_option('su_pg_service') == 'nicepay') echo 'tab-current'; ?>"><a href="#nicepay_info_anchor" data-value="nicepay" title="NICEPAY 선택하기">NICEPAY</a></li>
                 </ul>
@@ -675,6 +674,23 @@ Array
                 <textarea id="su_kcp_cert_info" name="su_kcp_cert_info" rows="7"><?php echo html_purifier(get_subs_option('su_kcp_cert_info')); ?></textarea>
             </td>
         </tr>
+        <tr class="pg_info_fld tosspayment_info_fld" id="tosspayment_info_anchor">
+            <th scope="row">
+                <label for="su_tosspayments_mid">토스페이먼츠 상점아이디</label><br>
+                <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="lg_btn">토스페이먼츠 신청하기</a>
+            </th>
+            <td>
+                <?php echo help("토스페이먼츠에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 토스페이먼츠에 사이트코드 변경 요청을 하십시오."); ?>
+                <span class="sitecode">si_</span> <input type="text" name="su_tosspayments_mid" value="<?php echo get_sanitize_input(get_subs_option('su_tosspayments_mid')); ?>" id="su_tosspayments_mid" class="frm_input code_input" size="10" maxlength="20"> 영문자, 숫자 혼용
+            </td>
+        </tr>
+        <tr class="pg_info_fld tosspayment_info_fld">
+            <th scope="row"><label for="su_tosspayments_api_secretkey">토스페이먼츠 API 시크릿키</label></th>
+            <td>
+                <?php echo help("토스페이먼츠 API 시크릿키는 토스페이먼츠 전체상점홈 -> 내개발정보확인 -> API키 -> API 개별 연동 키 에서 확인에서 확인하실 수 있습니다."); ?>
+                <input type="text" name="su_tosspayments_api_secretkey" value="<?php echo get_sanitize_input(get_subs_option('su_tosspayments_api_secretkey')); ?>" id="su_tosspayments_api_secretkey" class="frm_input " size="36" maxlength="50">
+            </td>
+        </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
             <th scope="row">
                 <label for="su_inicis_mid">KG이니시스 상점아이디</label><br>
@@ -682,7 +698,7 @@ Array
             </th>
             <td>
                 <?php echo help("KG이니시스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
-                <span class="sitecode">SIR</span> <input type="text" name="su_inicis_mid" value="<?php echo get_subs_option('su_inicis_mid'); ?>" id="su_inicis_mid" class="frm_input code_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
+                <span class="sitecode">SIR</span> <input type="text" name="su_inicis_mid" value="<?php echo get_sanitize_input(get_subs_option('su_inicis_mid')); ?>" id="su_inicis_mid" class="frm_input code_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
