@@ -1089,7 +1089,11 @@ function subscription_serial_decode($data, $od=null) {
 
 function calculateNextDeliveryDate($od){
     
-    $od_date = !is_null_date($od['od_hope_date']) ? $od['od_hope_date'] : $od['od_time'];
+    $timestamp = !is_null_date($od['od_hope_date']) ? strtotime($od['od_hope_date']) : strtotime($od['od_time']);
+    
+    if (isset($od['next_delivery_date']) && $od['next_delivery_date']) {
+        $timestamp = strtotime($od['next_delivery_date']);
+    }
     
     $od_subscription_selected_data = subscription_serial_decode($od['od_subscription_selected_data']);
     $od_subscription_selected_number = subscription_serial_decode($od['od_subscription_selected_number']);
@@ -1101,13 +1105,13 @@ function calculateNextDeliveryDate($od){
         $od_subscription_date_format = $od_subscription_selected_data['opt_date_format'];
     }
     
-    if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
-        $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
+    if (isset($od_subscription_selected_data['opt_input']) && $od_subscription_selected_data['opt_input']) {
+        $od_subscription_number = (int) $od_subscription_selected_data['opt_input'];
     }
     
     $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
     $plus = abs($od_subscription_number);
-        
+    
     // 주어진 interval에 따라 날짜를 증가시킴
     switch ($interval) {
         case 'day':
@@ -1156,9 +1160,14 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
         $od_subscription_date_format = $od_subscription_selected_data['opt_date_format'];
     }
     
-    if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
-        $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
+    if (isset($od_subscription_selected_data['opt_input']) && $od_subscription_selected_data['opt_input']) {
+        $od_subscription_number = (int) $od_subscription_selected_data['opt_input'];
     }
+    
+    // 아래 구문은 틀렸다
+    //if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
+    //    $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
+    //}
     
     $config_before_pay_date = (int) get_subs_option('su_auto_payment_lead_days');
     
@@ -1196,6 +1205,8 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
 }
 
 function calculateNextBillingDate($od, $od_hope_date=null){
+    
+    return calculateNextBillingDate2($od, $od_hope_date);
     
     // 현재 날짜를 DateTime 객체로 변환
     if (is_null_date($od['next_billing_date'])) {
@@ -1709,6 +1720,44 @@ function mask_card_number($string) {
     
     // 문자열을 마스킹된 형태로 변환
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function get_subscription_pg_id($pg_name=''){
+    
+    $pg = $pg_name ? $pg_name : get_subs_option('su_pg_service');
+    
+    $str = '';
+    
+    if ($pg === 'kcp') {
+        $str = get_subs_option('su_kcp_mid');
+    } else if ($pg === 'inicis') {
+        $str = get_subs_option('su_inicis_mid');
+    } else if ($pg === 'nicepay') {
+        $str = get_subs_option('su_nice_clientid');
+    } else if ($pg === 'tosspayments') {
+        $str = get_subs_option('su_tosspayments_mid');
+    }
+    
+    return $str;
+}
+
+function get_subscription_pg_apikey($pg_name=''){
+    
+    $pg = $pg_name ? $pg_name : get_subs_option('su_pg_service');
+    
+    $str = '';
+    
+    if ($pg === 'kcp') {
+        
+    } else if ($pg === 'inicis') {
+        $str = get_subs_option('su_inicis_mid');
+    } else if ($pg === 'nicepay') {
+        $str = get_subs_option('su_nice_clientid');
+    } else if ($pg === 'tosspayments') {
+        $str = get_subs_option('su_tosspayments_api_clientkey');
+    }
+    
+    return $str;
 }
 
 function add_subscription_order_history($content, $arg=array()){

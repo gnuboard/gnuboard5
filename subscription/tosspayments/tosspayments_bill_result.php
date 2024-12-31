@@ -24,7 +24,7 @@ if (isset($result['billingKey']) && $result['billingKey']) { // 성공이면
     $billingKeyMap[$orderNumber] = $result['billingKey'];
     
     // 토스페이먼츠 Version 2 에는 tno가 없다. 그래서 임의적으로 생성한다.
-    $tno = $result['mId'].'_'.preg_relace('[^0-9]', '', $result['authenticatedAt']);
+    $tno = $result['mId'].'_'.preg_replace('/[^0-9]/', '', $result['authenticatedAt']);
     
     // 카드 코드
     $card_code = isset($result['card']['issuerCode']) ? $result['card']['issuerCode'] : '';
@@ -51,6 +51,17 @@ if (isset($result['billingKey']) && $result['billingKey']) { // 성공이면
     // 실패시
     
     echo '<br>구독 에러가 일어났습니다. 에러 이유는 아래와 같습니다.';
+    
+    if (isset($result['code'])) {
+        echo '<br>code : ' . $result['code'];
+    }
+    
+    if (isset($result['message'])) {
+        echo '<br>message : ' . $result['message'];
+    }
+    
+    print_r( $response );
+    
     die('');
 }
 ?>

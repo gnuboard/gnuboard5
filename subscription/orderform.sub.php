@@ -611,10 +611,19 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 </div>
 <?php
 
-$sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test, od_time from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' and od_pg = '".get_subs_option('su_pg_service')."' GROUP BY od_card_name, card_mask_number ";
+// $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test, od_time from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' and od_pg = '".get_subs_option('su_pg_service')."' GROUP BY od_card_name, card_mask_number ";
 
-$result = sql_query($sql);
+// $result = sql_query($sql);
+
 $mcards = array();
+$result = sql_bind_select($g5['g5_subscription_mb_cardinfo_table'], 'ci_id, od_id, od_card_name, card_mask_number, od_test', array(
+'card_billkey' => array('!=' => ''),
+'mb_id' => $member['mb_id'],
+'pg_service' => get_subs_option('su_pg_service'),
+'pg_apikey' => get_subscription_pg_apikey()
+), array(
+'groupBy' => 'od_card_name, card_mask_number'
+));
 
 for ($i=0; $row = sql_fetch_array($result); $i++) {
     $mcards[] = $row;
@@ -663,7 +672,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                                 
                                 foreach($mcards as $card) {
                                     echo '<input type="radio" id="od_subscription_card_'.$j.'" class="od_subscription_
-                                    ids" name="od_settle_case" value="'.$card['od_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
+                                    ids" name="od_settle_case" value="'.$card['ci_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
                                     $j++;
                                 }
                             }

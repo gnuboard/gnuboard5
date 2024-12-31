@@ -37,6 +37,7 @@ $g5['g5_subscription_pay_table']            = $g5['subscription_prefix'] . 'pay'
 $g5['g5_subscription_pay_basket_table']            = $g5['subscription_prefix'] . 'pay_basket';     // 정기결제 결제 장바구니 기록 테이블
 $g5['g5_subscription_order_table']            = $g5['subscription_prefix'] . 'order';
 $g5['g5_subscription_order_data_table']   = $g5['subscription_prefix'] . 'order_data'; // 결제정보 임시저장 테이블
+$g5['g5_subscription_mb_cardinfo_table']   = $g5['subscription_prefix'] . 'mb_cardinfo'; // 사용자 카드번호 키 저장테이블
 
 $g5['g5_subscription_order_history_table'] = $g5['subscription_prefix'] . 'order_history'; // 주문정보 히스토리 테이블
 

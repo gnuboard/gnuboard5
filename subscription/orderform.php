@@ -8,7 +8,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 add_javascript('<script src="'.G5_JS_URL.'/subscription.order.js"></script>', 0);
 
 $sw_direct = isset($_REQUEST['sw_direct']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['sw_direct']) : '';
-$aparams_array = (isset($_REQUEST['aparams']) && isValidBase64($_REQUEST['aparams'])) ? unserialize(base64_decode($_REQUEST['aparams'])) : '';
+$aparams_array = (isset($_REQUEST['aparams']) && isValidBase64($_REQUEST['aparams'])) ? unserialize(base64_decode($_REQUEST['aparams'])) : array('hope_delivery_date'=>'');
 
 // $aparams2 = base64_decode($_REQUEST['aparams']);
 

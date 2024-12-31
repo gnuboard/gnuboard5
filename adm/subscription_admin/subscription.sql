@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_inicis_iniapi_iv` varchar(30) NOT NULL DEFAULT '',
   `su_inicis_sign_key` varchar(80) NOT NULL DEFAULT '',
   `su_tosspayments_mid` varchar(30) NOT NULL DEFAULT '',
+  `su_tosspayments_api_clientkey` varchar(80) NOT NULL DEFAULT '',
   `su_tosspayments_api_secretkey` varchar(80) NOT NULL DEFAULT '',
   `su_nice_clientid` varchar(80) NOT NULL DEFAULT '',
   `su_nice_secretkey` varchar(80) NOT NULL DEFAULT '',
@@ -247,13 +248,14 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_order`
+-- Table structure for table `g5_subscription_order`
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_id` bigint(20) unsigned NOT NULL,
-  `mb_id` varchar(255) NOT NULL DEFAULT '',  
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `ci_id` int(11) NOT NULL DEFAULT '0',
   `od_name` varchar(20) NOT NULL DEFAULT '',
   `od_email` varchar(100) NOT NULL DEFAULT '',
   `od_tel` varchar(20) NOT NULL DEFAULT '',
@@ -275,6 +277,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_b_addr3` varchar(255) NOT NULL DEFAULT '',
   `od_b_addr_jibeon` varchar(255) NOT NULL DEFAULT '',
   `od_memo` text NOT NULL,
+  `next_delivery_date` datetime DEFAULT NULL,
   `next_billing_date` datetime DEFAULT NULL,
   `od_enable_status` tinyint(3) NOT NULL DEFAULT '1',
   `last_billed_date` datetime DEFAULT NULL,
@@ -286,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_send_coupon` int(11) NOT NULL DEFAULT '0',  
   `od_receipt_price` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
-  `od_card_name` varchar(255) NOT NULL DEFAULT '',
+  `od_card_name` varchar(100) NOT NULL DEFAULT '',
   `od_receipt_time` datetime DEFAULT NULL,
   `od_coupon` int(11) NOT NULL DEFAULT '0',
   `od_subscription_memo` text NOT NULL,
@@ -314,6 +317,30 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_time` datetime DEFAULT NULL,
   PRIMARY KEY (`od_id`),
   KEY `index2` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_mb_cardinfo`
+--
+
+-- DROP TABLE IF EXISTS `g5_subscription_mb_cardinfo`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
+  `ci_id` int(11) NOT NULL auto_increment,
+  `mb_id` varchar(100) NOT NULL DEFAULT '',  
+  `pg_service` varchar(20) NOT NULL DEFAULT '',
+  `pg_id` varchar(50) NOT NULL DEFAULT '',
+  `pg_apikey` varchar(150) NOT NULL DEFAULT '',
+  `first_ordernumber` varchar(20) NOT NULL DEFAULT '',
+  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
+  `card_billkey` varchar(100) NOT NULL DEFAULT '',
+  `od_card_name` varchar(100) NOT NULL DEFAULT '',
+  `od_id` bigint(20) unsigned NOT NULL,
+  `od_test` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ci_id`),
+  KEY `index2` (`mb_id`),
+  UNIQUE KEY `unique_pg_service_apikey_billkey` (`pg_service`, `pg_apikey`, `card_billkey`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

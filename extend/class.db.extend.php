@@ -371,7 +371,34 @@ class G5MysqlCRUD
         if ($link === null) {
             $link = $g5['connect_db'];
         }
+        
+        $valuePlaceholders = array();
+        $bindValues = array();
 
+        foreach ($values as $value) {
+            // 서브쿼리 감지 (괄호와 SELECT 키워드 검사)
+            if (is_string($value) && 
+                (strpos($value, '(') !== false || stripos($value, 'SELECT') !== false || stripos($value, 'IFNULL') !== false)) {
+                $valuePlaceholders[] = $value; // 서브쿼리는 그대로 삽입
+            } else {
+                $valuePlaceholders[] = '?'; // 일반 값은 바인딩
+                $bindValues[] = $value;
+            }
+        }
+
+        // 컬럼과 값 설정
+        $columnString = implode(",", $columns);
+        $valueString = implode(",", $valuePlaceholders);
+
+        // SQL 쿼리 준비
+        $query = new G5MySQLQuery("INSERT INTO {$table} ({$columnString}) VALUES ({$valueString})");
+        
+        // 안전하게 일반 값만 바인딩
+        if (!empty($bindValues)) {
+            call_user_func_array(array($query, 'bind'), $bindValues);
+        }
+        
+        /*
         $valueParameter = array();
 
         foreach ($columns as $u) {
@@ -384,9 +411,10 @@ class G5MysqlCRUD
         $query = new G5MySQLQuery("INSERT INTO {$table} ({$columnString}) VALUES ({$valueParameter})");
         
         call_user_func_array(array($query, 'bind'), $values);
+        */
         
         // 실행된 쿼리 디버깅
-        // echo "실제 실행된 쿼리: " . $query->getQuery() . "\n";
+        echo "실제 실행된 쿼리: " . $query->getQuery() . "\n";
         
         // $query->execute();
         

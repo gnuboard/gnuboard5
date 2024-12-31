@@ -8,7 +8,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <script>
 // ------  SDK 초기화 ------
 <?php // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화 ?>
-const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+const clientKey = "<?php echo get_subs_option('su_tosspayments_api_clientkey'); ?>";
 const customerKey = "<?php echo $od_id; ?>";
 const tossPayments = TossPayments(clientKey);
 

@@ -44,6 +44,7 @@ $check_sanitize_keys = array(
 'su_nice_clientid',             //나이스페이 클라이언트 키
 'su_nice_secretkey',            //나이스페이 비밀 키
 'su_tosspayments_mid',           // 토스페이먼츠 상점 아이디
+'su_tosspayments_api_clientkey',    // 토스페이먼츠 API 클라이언트키
 'su_tosspayments_api_secretkey',  // 토스페이먼츠 API 시크릿키
 'su_card_test',                 //결제 테스트
 'su_cron_execute_hour',         // 매일 크론 실행 hour

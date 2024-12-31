@@ -685,6 +685,13 @@ Array
             </td>
         </tr>
         <tr class="pg_info_fld tosspayment_info_fld">
+            <th scope="row"><label for="su_tosspayments_api_clientkey">토스페이먼츠 API 클라이언트키</label></th>
+            <td>
+                <?php echo help("토스페이먼츠 API 클라이언트키는 토스페이먼츠 전체상점홈 -> 내개발정보확인 -> API키 -> API 개별 연동 키 에서 확인에서 확인하실 수 있습니다."); ?>
+                <input type="text" name="su_tosspayments_api_clientkey" value="<?php echo get_sanitize_input(get_subs_option('su_tosspayments_api_clientkey')); ?>" id="su_tosspayments_api_clientkey" class="frm_input " size="36" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld tosspayment_info_fld">
             <th scope="row"><label for="su_tosspayments_api_secretkey">토스페이먼츠 API 시크릿키</label></th>
             <td>
                 <?php echo help("토스페이먼츠 API 시크릿키는 토스페이먼츠 전체상점홈 -> 내개발정보확인 -> API키 -> API 개별 연동 키 에서 확인에서 확인하실 수 있습니다."); ?>

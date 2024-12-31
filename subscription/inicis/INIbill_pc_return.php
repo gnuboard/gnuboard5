@@ -38,7 +38,7 @@ if (empty($row)) {
 
 $data = unserialize(base64_decode($row['dt_data']));
 
-$params = [];
+$params = array();
 
 foreach ($data as $key => $value) {
     if (is_array($value)) {
