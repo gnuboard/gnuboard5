@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_tosspayments_api_secretkey` varchar(80) NOT NULL DEFAULT '',
   `su_nice_clientid` varchar(80) NOT NULL DEFAULT '',
   `su_nice_secretkey` varchar(80) NOT NULL DEFAULT '',
+  `su_nicepay_mid` varchar(80) NOT NULL DEFAULT '',
+  `su_nicepay_key` varchar(80) NOT NULL DEFAULT '',
   `su_cron_updatetime` datetime DEFAULT NULL,
   `su_cron_execute_hour` tinyint(2) NOT NULL DEFAULT '0',
   `su_opt_settings` text NOT NULL,

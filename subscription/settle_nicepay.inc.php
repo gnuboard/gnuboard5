@@ -17,6 +17,9 @@ if (get_subs_option('su_card_test')) {
     set_subs_option('su_nice_clientid', $nicepay_clientid);
     set_subs_option('su_nice_secretkey', $nicepay_secretkey);
     
+    set_subs_option('su_nicepay_mid', 'nictest04m');
+    set_subs_option('su_nicepay_key', 'b+zhZ4yOZ7FsH8pm5lhDfHZEb79tIwnjsdA0FBXh86yLc6BJeFVrZFXhAoJ3gEWgrWwN+lJMV0W4hvDdbe4Sjw==');
+    
 } else {
     // 실 사용이면
     // $nicepay_clientid = 'SR_'.get_subs_option('su_nice_clientid');

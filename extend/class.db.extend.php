@@ -377,9 +377,9 @@ class G5MysqlCRUD
 
         foreach ($values as $value) {
             // 서브쿼리 감지 (괄호와 SELECT 키워드 검사)
-            if (is_string($value) && 
-                (strpos($value, '(') !== false || stripos($value, 'SELECT') !== false || stripos($value, 'IFNULL') !== false)) {
-                $valuePlaceholders[] = $value; // 서브쿼리는 그대로 삽입
+            if (is_array($value) && isset($value['subquery'])) {
+                // 서브쿼리 처리
+                $valuePlaceholders[] = $value['subquery'];
             } else {
                 $valuePlaceholders[] = '?'; // 일반 값은 바인딩
                 $bindValues[] = $value;

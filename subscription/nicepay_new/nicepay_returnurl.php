@@ -1,4 +1,5 @@
 <?php
+
 include_once './_common.php';
 include_once G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php';
 
