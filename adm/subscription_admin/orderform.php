@@ -45,8 +45,8 @@ $od['mb_id'] = $od['mb_id'] ? $od['mb_id'] : "비회원";
 
 
 $pg_anchor = '<ul class="anchor">
-<li><a href="#anc_sodr_list">주문상품 목록</a></li>
-<li><a href="#anc_sodr_pay">주문결제 내역</a></li>
+<li><a href="#anc_sodr_list">구독상품 목록</a></li>
+<li><a href="#anc_sodr_pay">구독결제 내역</a></li>
 <li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 <li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
 <li><a href="#anc_sodr_memo">상점메모</a></li>
@@ -82,15 +82,15 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 ?>
 
 <section id="anc_sodr_list">
-    <h2 class="h2_frm">주문상품 목록</h2>
+    <h2 class="h2_frm">구독상품 목록</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
         <p>
-            현재 주문상태 <strong><?php echo $od['od_status'] ?></strong>
+            현재 구독상태 <strong><?php echo $od['od_status'] ?></strong>
             |
             주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
             |
-            주문총액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원
+            구독금액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원
         </p>
         <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
         <?php if($od['od_mobile']) { ?>
@@ -231,15 +231,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <div class="btn_list02 btn_list">
         <p>
             <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
-            <strong>주문 및 장바구니 상태 변경</strong>
-            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value" class="btn_02 color_01">
-            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value" class="btn_02 color_02">
-            <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value" class="btn_02 color_03">
-            <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value" class="btn_02 color_04">
-            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value" class="btn_02 color_05">
-            <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value" class="btn_02 color_06">
-            <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value" class="btn_02 color_06">
-            <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value" class="btn_02 color_06">
+            <strong>구독 상태 변경</strong>
+            <input type="submit" name="ct_status" value="활성화" onclick="document.pressed=this.value" class="btn_02 color_01">
+            <input type="submit" name="ct_status" value="비활성화" onclick="document.pressed=this.value" class="btn_02 color_06">
         </p>
     </div>
 
@@ -310,7 +304,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <thead>
         <tr>
             <th scope="col">주문번호</th>
-            <th scope="col">결제방법</th>
+            <th scope="col">지불수단</th>
             <th scope="col">주문총액</th>
             <th scope="col">배송비</th>
             <th scope="col">포인트결제</th>
@@ -336,7 +330,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 </section>
 
 <section class="">
-    <h2 class="h2_frm">결제상세정보</h2>
+    <h2 class="h2_frm">구독상세정보</h2>
     <?php echo $pg_anchor; ?>
 
     <form name="frmorderreceiptform" action="./orderformreceiptupdate.php" method="post" autocomplete="off">
@@ -355,7 +349,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <div class="compare_wrap">
 
         <section id="anc_sodr_chk" class="compare_left">
-            <h3>결제상세정보 확인</h3>
+            <h3>구독상세정보 확인</h3>
 
             <div class="tbl_frm01">
                 <table>
@@ -571,6 +565,24 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <input type="text" name="od_send_cost2" value="<?php echo $od['od_send_cost2']; ?>" id="od_send_cost2" class="frm_input" size="10"> 원
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row"><label for="od_send_cost2">현재 회차</label></th>
+                    <td>
+                        <?php echo $od['od_pays_total']; ?> 회
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="od_send_cost2">카드정보</label></th>
+                    <td>
+                        <?php echo $od['od_card_name']; ?> <?php echo $od['card_mask_number']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="od_send_cost2">다음 결제일</label></th>
+                    <td>
+                        <?php echo $od['next_billing_date']; ?> (<?php echo get_Ko_DayOfWeek($od['next_billing_date']); ?>)
+                    </td>
+                </tr>
                 <?php
                 if ($od['od_misu'] == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
                 ?>
@@ -629,7 +641,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </table>
             </div>
         </section>
-
+        
         <section id="anc_sodr_paymo" class="compare_right">
             <h3>결제상세정보 수정</h3>
 
@@ -717,21 +729,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     </td>
                 </tr>
                 <?php } ?>
-
+                
                 <?php if ($od['od_settle_case'] == '신용카드') { ?>
                 <tr>
                     <th scope="row" class="sodr_sppay"><label for="od_receipt_price">신용카드 결제금액</label></th>
                     <td>
                         <?php echo $html_receipt_chk; ?>
                         <input type="text" name="od_receipt_price" id="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" class="frm_input" size="10"> 원
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" class="sodr_sppay"><label for="od_receipt_time">카드 승인일시</label></th>
-                    <td>
-                        <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_card_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;">
-                        <label for="od_card_chk">현재 시간으로 설정</label><br>
-                        <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" size="19" maxlength="19">
                     </td>
                 </tr>
                 <?php } ?>
@@ -852,6 +856,34 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </form>
 </section>
 
+<section id="" >
+    <h3>정기결제내역</h3>
+    
+    <?php
+    $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
+    ?>
+    <div class="tbl_frm01">
+        <table>
+            <tr>
+                <th>회차</th>
+                <th>결제PG사</th>
+                <th>결제된날짜</th>
+                <th>결제금액</th>
+                <th>보기</th>
+            </tr>
+            <?php foreach($pay_rows as $key=>$v) { ?>
+            <tr>
+                <td><?php echo $v['py_round_no']; ?></td>
+                <td><?php echo $v['py_pg']; ?></td>
+                <td><?php echo $v['py_receipt_time']; ?></td>
+                <td></td>
+                <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?id=<?php echo $v['id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
+            </tr>
+            <?php } ?>
+        </table>
+    </div>
+</section>
+        
 <section id="anc_sodr_memo">
     <h2 class="h2_frm">상점메모</h2>
     <?php echo $pg_anchor; ?>
@@ -878,6 +910,63 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="메모 수정" class="btn_submit btn">
+    </div>
+
+    </form>
+</section>
+
+<section id="anc_sodr_memo" class="subscription_history">
+    <h2 class="h2_frm">정기구독 히스토리</h2>
+    <?php echo $pg_anchor; ?>
+    <div class="local_desc02 local_desc">
+        <p>
+            해당 정기구독에 대한 history 내역입니다.
+        </p>
+    </div>
+    
+    <?php
+    $sql = "select * from `{$g5['g5_subscription_order_history_table']}` where hs_type = 'subscription_order' and od_id = '$od_id' order by hs_id desc ";
+    $result = sql_query($sql);
+    
+    $hs = array();
+    
+    for ($i=0; $row=sql_fetch_array($result); $i++){
+        $hs[] = $row;
+    }
+    ?>
+    
+    <?php if ($hs) { ?>
+        <ul class="order-historys">
+            <?php foreach($hs as $h) { ?>
+            <li rel="<?php echo $h['hs_id']; ?>" class="history">
+                <div class="history-content">
+                    <p><?php echo conv_content($h['hs_content'], 1); ?></p>
+                </div>
+            </li>
+            <p class="history-btns">
+                <span class="history-date"><?php echo $h['hs_time']; ?></span>
+                <a href="#" class="delete-history" role="button">삭제하기</a>
+            </p>
+            <?php } ?>
+        </ul>
+    <?php } ?>
+        
+    <form name="frmorderform2" action="./order_history_update.php" method="post">
+    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="mod_type" value="memo">
+
+    <div class="tbl_wrap">
+        <label for="od_subscription_memo" class="sound_only">히스토리 추가하기</label>
+        <textarea name="od_subscription_history" id="od_subscription_history" rows="8"></textarea>
+    </div>
+
+    <div class="btn_confirm01 btn_confirm">
+        <input type="submit" value="히스토리 추가하기" class="btn_submit btn">
     </div>
 
     </form>

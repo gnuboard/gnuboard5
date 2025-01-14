@@ -102,6 +102,14 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
             <th scope="row" style="<?php echo $th_st; ?>">신용카드 입금액</th>
             <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_price); ?></td>
         </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">결제PG사</th>
+            <td style="<?php echo $td_st; ?>"><?php echo print_subscription_pg_name($od); ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">카드정보</th>
+            <td style="<?php echo $td_st; ?>"><?php echo print_subscription_card_info($od); ?></td>
+        </tr>
         <?php } ?>
 
         <?php if ($od_receipt_price > 0 && $od_settle_case == '계좌이체') { ?>

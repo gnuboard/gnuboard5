@@ -3,6 +3,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 include_once(G5_PLUGIN_PATH . '/jquery-ui/datepicker.php');
 
+add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
+
+add_javascript('<script src="'.G5_JS_URL.'/pg-calendar/js/pignose.calendar.full.min.js"></script>', 11);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/pg-calendar/css/pignose.calendar.min.css">', 11);
+
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/style.css">', 0);
 ?>
@@ -12,6 +18,10 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 		<input type="hidden" name="sw_direct">
 		<input type="hidden" name="url">
 
+        <input type="hidden" name="delivery_cycle" id="hidden_delivery_cycle">
+        <input type="hidden" name="usage_count" id="hidden_usage_count">
+        <input type="hidden" name="hope_delivery_date" id="hidden_hope_delivery_date">
+        
 		<div id="sit_ov_wrap">
 			<!-- 상품이미지 미리보기 시작 { -->
 			<div id="sit_pvi">
@@ -361,12 +371,164 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 					<p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
 				<?php } ?>
 
+                <?php // 정기결제 모달 시작 ?>
+                <div id="ex1" class="modal">
+                    <div>
+                        <h2 class="subscription-title">
+                            정기구독 배송일 선택
+                        </h2>
+                    </div>
+                    <div class="subscription-desc1">
+                        <ul>
+                            <li>구독 중 설명 설명 땡땡 가능합니다.</li>
+                            <li>설명 설명 땡땡 가능합니다.</li>
+                        </ul>
+                    </div>
+                    
+                    <?php if (get_subs_option('su_chk_user_delivery')) { ?>
+                        <div class="group_form_row">
+                            <div class="group_form_label"><?php echo subscription_item_delivery_title($it); ?></div>
+                            <div class="group_form_input">
+                                <input id="js-cycle" name="cycle" type="number" inputmode="numeric" placeholder="숫자" max="365" maxlength="3" value="" class="group_input">
+                                <div class="unit">일</div>
+                            </div>
+                        </div>
+                        <div class="group_form_row group_select">
+                            <div class="group_form_label">배송주기</div>
+                            <select id="js-multiple" name="multiple">
+                            <option selected="" disabled="">선택해주세요</option>
+                            <option value="1">1주기마다 (21일마다)</option>
+                            <option value="2">2주기마다 (42일마다)</option>
+                            <option value="3">3주기마다 (63일마다)</option>
+                            </select>
+                        </div>
+                    <?php } else {
+                        // 정기구독 설정 불러오기
+                        // 배송주기
+                        $subscription_info_inputs = get_subscription_info_inputs();
+
+                        // 이용횟수
+                        $subscription_use_inputs = get_subscription_use_inputs();
+                    ?>
+                        <h3>
+                            <label for="">배송주기</label>
+                        </h3>
+                        <div>
+                        <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
+                            <div class="su-display-btns">
+                            <?php 
+                            foreach ($subscription_info_inputs as $key=>$opt) {
+                                if (! $opt['opt_use']) {
+                                    continue;
+                                }
+
+                                $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+
+                                if ($opt['opt_input'] || $opt['opt_date_format']) {
+                                    $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                                    $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                                }
+                            ?>
+                                <input type="radio" id="od_subscription_select_data_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_data" value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>">
+                                <label for="od_subscription_select_data_<?php echo $key; ?>" class="select-icon"><span><?php echo $opt_print; ?></span></label>
+                            <?php } ?>
+                            </div>
+                        <?php } else {  // 셀렉트박스 ?>
+                            <select id="od_subscription_select_data" class="frm_input" name="od_subscription_select_data">
+                                <option value="" selected="" disabled="">선택해주세요</option>
+                            <?php
+                            foreach ($subscription_info_inputs as $key=>$opt) {
+                                if (! $opt['opt_use']) {
+                                    continue;
+                                }
+
+                                $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+
+                                if ($opt['opt_input'] || $opt['opt_date_format']) {
+                                    $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                                    $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                                }
+                            ?>
+                                <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
+                            <?php } ?>
+                            </select>
+                        <?php } ?>
+                     </div>
+                     <h3><label for="">이용횟수</label></h3>
+                     <div>
+                        <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
+                            <input type="hidden" id="od_subscription_select_number" name="od_subscription_select_number">
+                            <div class="su-display-btns">
+                                <?php foreach ($subscription_use_inputs as $key=>$use) {
+                                if (! $use['num_use']) {
+                                    continue;
+                                }
+
+                                $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+
+                                if ($use['use_input']) {
+                                    $use_print = str_replace("{입력}", $use['use_input'], $use_print);
+                                }
+                                ?>
+                                <input type="radio" id="od_subscription_select_number_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_number" value="<?php echo get_text($key.'||'.$use['use_input']); ?>">
+                                <label for="od_subscription_select_number_<?php echo $key; ?>" class="select-icon"><span><?php echo $use_print; ?></span></label>
+                                <?php } ?>
+                            </div>
+                        <?php } else {  // 셀렉트박스 ?>
+                            <select id="od_subscription_select_number" class="frm_input" name="od_subscription_select_number">
+                            <option value="" selected="" disabled="">선택해주세요</option>
+                            <?php
+                            foreach ($subscription_use_inputs as $key=>$use) {
+                            if (! $use['num_use']) {
+                            continue;
+                            }
+
+                            $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+
+                            if ($use['use_input']) {
+                            $use_print = str_replace("{입력}", $use['use_input'], $use_print);
+                            }
+                            ?>
+                            <option value="<?php echo get_text($key.'||'.$use['use_input']); ?>"><?php echo $use_print; ?></option>
+                            <?php } ?>
+                            </select>
+                        <?php } ?>
+                      </div>
+                      <?php } ?>
+                        <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용 ?>
+                        <h3><label for="od_hope_date_print">희망배송일</label></h3>
+                        <div class="jquery-datepicker">
+                                <input type="hidden" name="od_hope_date" value="" id="od_hope_date" class="frm_input" maxlength="10">
+                                <div id="od_hope_date_print" class="jquery-pg-datepicker"></div>
+
+                        </div>
+                        <?php } ?>
+                        <h3 class="underline">구매 전 확인해주세요</h3>
+                        <div class="subscription_desc2">
+                            <ul>
+                            <li>정기구독으로 설명 땡땡으로 설정됩니다.</li>
+                            <li>설명문2</li>
+                            <li>설명문3</li>
+                            <li>설명문4</li>
+                            <li>설명문5</li>
+                            </ul>
+                        </div>
+                        <div class="form-box-btns">
+                            <button type="submit" onclick="document.pressed=this.value;" value="정기구독신청" class="sit_btn_subscription sit_btn_buy">정기구독 신청하기</button>
+                            <!-- <a href="#" class="sit_btn_subscription sit_btn_buy">정기구독 신청하기</a> -->
+                        </div>
+                </div>
+
 				<div id="sit_ov_btn">
 					<?php if ($is_orderable) { ?>
-						<button type="submit" onclick="document.pressed=this.value;" value="장바구니" class="sit_btn_cart">장바구니</button>
-						<button type="submit" onclick="document.pressed=this.value;" value="바로구매" class="sit_btn_buy">바로구매</button>
+						<button type="submit" onclick="document.pressed=this.value;" value="정기구독카트" class="sit_btn_cart">정기구독카트</button>
+						<button type="submit" onclick="document.pressed=this.value;" value="정기구독구매" class="sit_btn_buy">정기구독구매</button>
+                        <!-- <button type="button" href="#ex1" rel="modal:open" onclick="document.pressed=this.value;" value="정기구독" class="sit_btn_buy">정기구독</button> -->
 					<?php } ?>
 					<a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" class="sit_btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span></a>
+                    <?php if ($is_orderable) { ?>
+                    <a href="#ex1" rel="modal:open" class="sit-btn-subscription">정기구독</a>
+                    <?php } ?>
 
 					<?php if (!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
 						<a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_alm">재입고알림</a>
@@ -417,7 +579,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 		<!-- } 다른 상품 보기 끝 -->
 	</form>
 </div>
-
+                
 <script>
 	function formatDateKo(date) {
 		return date.getFullYear() + '년 ' + (date.getMonth() + 1) + '월' + date.getDate() + '일';
@@ -546,13 +708,16 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 	function fitem_submit(f) {
 		f.action = "<?php echo $action_url; ?>";
 		f.target = "";
-
-		if (document.pressed == "장바구니") {
+        
+		if (document.pressed == "정기구독카트") {
 			f.sw_direct.value = 0;
-		} else { // 바로구매
+		} else { // 바로구매 또는 정기구독신청
 			f.sw_direct.value = 1;
 		}
 
+        if (document.pressed == "정기구독카트") {
+        }
+        
 		// 판매가격이 0 보다 작다면
 		if (document.getElementById("it_price").value < 0) {
 			alert("전화로 문의해 주시면 감사하겠습니다.");
@@ -567,8 +732,8 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 		}
         
         if (!$("#it_subscription_number_select").val()) {
-			alert("배송주기를 입력해 주세요.");
-			return false;
+			//alert("배송주기를 입력해 주세요.");
+			//return false;
         }
         
 		var val, io_type, result = true;
@@ -619,6 +784,157 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 
 		return true;
 	}
+    
+    <?php if (get_subs_option('su_hope_date_use')) { ?>
+        
+        var holidays = [
+            '2024-01-01', // 신정
+            '2024-02-09', '2024-02-10', '2024-02-11', '2024-02-12', // 설날 연휴
+            '2024-03-01', // 삼일절
+            '2024-05-05', '2024-05-06', // 어린이날 대체 공휴일
+            '2024-06-06', // 현충일
+            '2024-08-15', // 광복절
+            '2024-09-16', '2024-09-17', '2024-09-18', // 추석 연휴
+            '2024-10-03', // 개천절
+            '2024-10-09', // 한글날
+            '2024-12-25'  // 성탄절
+        ];
+    
+        function getBusinessDaysBefore(date, businessDays) {
+            // date: 기준 날짜 (Date 객체)
+            // businessDays: 몇 영업일 전으로 이동할 것인지
+            // holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+            while (businessDays > 0) {
+                date.setDate(date.getDate() - 1); // 하루 전으로 이동
+                const dayOfWeek = date.getDay(); // 요일 (0: 일요일, 6: 토요일)
+                
+                // 날짜 포맷 (YYYY-MM-DD)
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                
+                // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+                if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+                    businessDays--;
+                }
+            }
+
+            return date;
+        }
+
+        function getDateAfterDays(days) {
+          const today = new Date(); // 오늘 날짜를 가져옵니다.
+          today.setDate(today.getDate() + days); // 현재 날짜에 days(3일)를 더합니다.
+
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+          const day = String(today.getDate()).padStart(2, '0'); // 일도 2자리로 포맷팅
+
+          return `${year}-${month}-${day}`; // YYYY-MM-DD 형식으로 반환
+        }
+
+        jQuery(function($) {
+            
+            /*
+            $('#od_hope_date_print').pignoseCalendar({
+                lang: 'ko',
+                disabledWeekdays: [0, 6], // SUN (0), SAT (6)
+                disabledDates: holidays,
+                minDate: getDateAfterDays(<?php echo (int) get_subs_option('su_hope_date_after'); ?>),
+                maxDate: getDateAfterDays(<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>)
+            });
+            */
+
+            var $od_hope_date_print = $("#od_hope_date_print");
+            $od_hope_date_print.datepicker({
+                dateFormat: "yy-mm-dd",
+                inline: true,
+                yearRange: "c-99:c+99",
+			    beforeShowDay: function(date){      // 토요일 일요일 제외
+                    const dayOfWeek = date.getDay(); // 0: 일요일, 6: 토요일
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+                    // 🔒 주말(토, 일) 또는 공휴일이면 비활성화 (false 반환)
+                    if (dayOfWeek === 0 || dayOfWeek === 6 || holidays.includes(formattedDate)) {
+                        return [false, 'ui-state-disabled', '공휴일 또는 주말입니다.'];
+                    }
+                    
+                    // 🔓 그 외의 날짜는 활성화
+                    return [true, '', ''];
+                },
+                onSelect: function(dateText, inst) {
+                    console.log(dateText, inst);
+                    change_hope_date_val();
+                    
+                    $("#od_hope_date").val(dateText);
+                },
+                minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
+                maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+            });
+            
+            function change_hope_date_val() {
+                var before_pay_date = "<?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>";
+                
+                if (before_pay_date && parseInt(before_pay_date) > 0) {
+                    
+                    setTimeout(function(){
+                        var od_hope_date_print = $od_hope_date_print.datepicker("getDate");
+                        
+                        if (od_hope_date_print) {
+                            
+                            var resultDate = getBusinessDaysBefore(new Date(od_hope_date_print), parseInt(before_pay_date));
+                            
+                            // alert(resultDate);
+                            
+                            var daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+                            var year = resultDate.getFullYear();
+                            var month = resultDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
+                            var date = resultDate.getDate();
+                            var dayOfWeek = daysOfWeek[resultDate.getDay()]; // 요일 가져오기
+
+                            var formattedDate1 = `${month}월 ${date}일 (${dayOfWeek})`;
+                            var formattedDate2 = `${year}년 ${month}월 ${date}일 (${dayOfWeek})`;
+                            
+                            jQuery(".set_pay_date").text(formattedDate1);
+                            jQuery(".before_pay_date_tr").show();
+                        }
+                    }, 100);
+                }
+            }
+            
+            change_hope_date_val();
+
+        });
+        
+        $(".sit_btn_subscription").on("click", function(e){
+            e.preventDefault();
+            
+            // 1. 입력값 가져오기
+            const deliveryCycle = $("#od_subscription_select_data").val() || $("input[name='od_subscription_select_data']:checked").val();
+            const usageCount = $("#od_subscription_select_number").val()  || $("input[name='od_subscription_select_number']:checked").val();
+            const hopeDeliveryDate = $("#od_hope_date").val();
+            
+            // 2. 유효성 검사 (선택 사항)
+            if (!deliveryCycle) {
+                alert("배송주기를 선택해주세요.");
+                return;
+            }
+            if (!usageCount) {
+                alert("이용횟수를 선택해주세요.");
+                return;
+            }
+            if (!hopeDeliveryDate) {
+                alert("희망배송일을 입력해주세요.");
+                return;
+            }
+            
+            // 3. 숨겨진 폼에 값 할당
+            document.getElementById("hidden_delivery_cycle").value = deliveryCycle;
+            document.getElementById("hidden_usage_count").value = usageCount;
+            document.getElementById("hidden_hope_delivery_date").value = hopeDeliveryDate;
+        
+            $("form[name='fitem']").submit();
+        });
+    <?php } ?>
+    
 </script>
 <?php /* 2017 리뉴얼한 테마 적용 스크립트입니다. 기존 스크립트를 오버라이드 합니다. */ ?>
 <script src="<?php echo G5_JS_URL; ?>/shop.override.js"></script>

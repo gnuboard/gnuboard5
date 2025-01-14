@@ -185,7 +185,7 @@ function get_subscription_it_stock_qty($it_id)
 {
     global $g5;
 
-    $sql = " select it_stock_qty from {$g5['g5_subscription_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_stock_qty from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
     
     $row = sql_fetch($sql);
     $jaego = (int)$row['it_stock_qty'];
@@ -367,7 +367,7 @@ function subscription_cart_item_clean() {
 }
 
 function subscription_is_soldout($it_id, $is_cache=false) {
-    return false;
+    return is_soldout($it_id, $is_cache);
 }
 
 function subscription_member_cert_check($id, $type){
@@ -383,12 +383,14 @@ function get_subscription_category($sc_id) {
     
     $add_query = '';
     
-    $sql = " select * from {$g5['g5_subscription_category_table']} where sc_id = '{$sc_id}' $add_query ";
+    $sql = " select * from {$g5['g5_shop_category_table']} where sc_id = '{$sc_id}' $add_query ";
     return sql_fetch($sql);
 }
 
 function get_subscription_order($od_id) {
     global $g5;
+    
+    return sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', array('od_id'=>$od_id));
     
     $sql = " select * from {$g5['g5_subscription_order_table']} where od_id = '{$od_id}' ";
     return sql_fetch($sql);
@@ -402,7 +404,7 @@ function get_subscription_item($it_id, $is_cache=false, $add_query='') {
     $item = $is_cache ? $g5_object->get('subscription', $it_id, $add_query_key) : null;
 
     if( !$item ){
-        $sql = " select * from {$g5['g5_subscription_item_table']} where it_id = '{$it_id}' $add_query ";
+        $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '{$it_id}' and it_class_num IN (1, 2) $add_query ";
         $item = sql_fetch($sql);
 
         $g5_object->set('subscription', $it_id, $item, $add_query_key);
@@ -424,9 +426,9 @@ function get_subscription_item_with_category($it_id, $seo_title='', $add_query='
     global $g5, $default;
 
     if( $seo_title ){
-        $sql = " select a.*, b.sc_name, b.sc_use from {$g5['g5_subscription_item_table']} a, {$g5['g5_subscription_category_table']} b where a.it_seo_title = '".sql_real_escape_string(generate_seo_title($seo_title))."' and a.sc_id = b.sc_id $add_query";
+        $sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_seo_title = '".sql_real_escape_string(generate_seo_title($seo_title))."' and a.ca_id = b.ca_id $add_query";
     } else {
-        $sql = " select a.*, b.sc_name, b.sc_use from {$g5['g5_subscription_item_table']} a, {$g5['g5_subscription_category_table']} b where a.it_id = '$it_id' and a.sc_id = b.sc_id $add_query";
+        $sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id $add_query";
     }
     
     $item = sql_fetch($sql);
@@ -445,117 +447,30 @@ function subscription_seo_title_update($it_id, $is_edit=false){
     $item = get_subscription_item($it_id, $subscription_item_cache);
 
     if( (! $item['it_seo_title'] || $is_edit) && $item['it_name'] ){
-        $it_seo_title = exist_seo_title_recursive('subscription', generate_seo_title($item['it_name']), $g5['g5_subscription_item_table'], $item['it_id']);
+        $it_seo_title = exist_seo_title_recursive('subscription', generate_seo_title($item['it_name']), $g5['g5_shop_item_table'], $item['it_id']);
 
         if( isset($item['it_seo_title']) && $it_seo_title !== $item['it_seo_title'] ){
-            $sql = " update `{$g5['g5_subscription_item_table']}` set it_seo_title = '{$it_seo_title}' where it_id = '{$item['it_id']}' ";
+            $sql = " update `{$g5['g5_shop_item_table']}` set it_seo_title = '{$it_seo_title}' where it_id = '{$item['it_id']}' ";
             sql_query($sql);
         }
     }
 }
 
-class SubscriptionList
-{
-    // 상품유형 : 기본적으로 1~5 까지 사용할수 있으며 0 으로 설정하는 경우 상품유형별로 노출하지 않습니다.
-    // 분류나 이벤트로 노출하는 경우 상품유형을 0 으로 설정하면 됩니다.
-    protected $type;
-
-    protected $list_skin;
-    protected $list_mod;
-    protected $list_row;
-    protected $img_width;
-    protected $img_height;
-
-    // 상품상세보기 경로
-    protected $href = "";
-
-    // select 에 사용되는 필드
-    protected $fields = "*";
-
-    // 분류코드로만 사용하는 경우 상품유형($type)을 0 으로 설정하면 됩니다.
-    protected $sc_id = "";
-    protected $sc_id2 = "";
-    protected $sc_id3 = "";
-
-    // 노출순서
-    protected $order_by = "it_order, it_id desc";
-
-    // 스킨의 기본 css 를 다른것으로 사용하고자 할 경우에 사용합니다.
-    protected $css = "";
-
-    // 상품의 사용여부를 따져 노출합니다. 0 인 경우 모든 상품을 노출합니다.
-    protected $use = 1;
-
-    // 모바일에서 노출하고자 할 경우에 true 로 설정합니다.
-    protected $is_mobile = false;
-
-    // 기본으로 보여지는 필드들
-    protected $view_it_id    = false;       // 상품코드
-    protected $view_it_img   = true;        // 상품이미지
-    protected $view_it_name  = true;        // 상품명
-    protected $view_it_basic = true;        // 기본설명
-    protected $view_it_price = true;        // 판매가격
-    protected $view_it_cust_price = false;  // 소비자가
-    protected $view_it_icon = false;        // 아이콘
-    protected $view_sns = false;            // SNS
-    protected $view_star = false;           // 별점
-
-    // 몇번째 class 호출인지를 저장합니다.
-    protected $count = 0;
-
-    // true 인 경우 페이지를 구한다.
-    protected $is_page = false;
-
-    // 페이지 표시를 위하여 총 상품수를 구합니다.
-    public $total_count = 0;
-
-    // sql limit 의 시작 레코드
-    protected $from_record = 0;
-
-    // 외부에서 쿼리문을 넘겨줄 경우에 담아두는 변수
-    protected $query = "";
-
+class SubscriptionList extends item_list {
+    
     // $type        : 상품유형 (기본으로 1~5까지 사용)
     // $list_skin   : 상품리스트를 노출할 스킨을 설정합니다. 스킨위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php
     // $list_mod    : 1줄에 몇개의 상품을 노출할지를 설정합니다.
     // $list_row    : 상품을 몇줄에 노출할지를 설정합니다.
     // $img_width   : 상품이미지의 폭을 설정합니다.
     // $img_height  : 상품이미지의 높이을 설정합니다. 0 으로 설정하는 경우 썸네일 이미지의 높이는 폭에 비례하여 생성합니다.
-    //function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0, $sc_id='') {
+    //function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0, $ca_id='') {
     function __construct($list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0) {
-        $this->list_skin  = $list_skin;
-        $this->list_mod   = $list_mod;
-        $this->list_row   = $list_row;
-        $this->img_width  = $img_width;
-        $this->img_height = $img_height;
+        parent::__construct($list_skin, $list_mod, $list_row, $img_width, $img_height);
         $this->set_href(G5_SUBSCRIPTION_URL.'/item.php?it_id=');
         $this->count++;
     }
-
-    function set_type($type) {
-        $this->type = $type;
-        if ($type) {
-            $this->set_list_skin($this->list_skin);
-            $this->set_list_mod($this->list_mod);
-            $this->set_list_row($this->list_row);
-            $this->set_img_size($this->img_width, $this->img_height);
-        }
-    }
-
-    // 분류코드로 검색을 하고자 하는 경우 아래와 같이 인수를 넘겨줍니다.
-    // 1단계 분류는 (분류코드, 1)
-    // 2단계 분류는 (분류코드, 2)
-    // 3단계 분류는 (분류코드, 3)
-    function set_category($sc_id, $level=1) {
-        if ($level == 2) {
-            $this->sc_id2 = $sc_id;
-        } else if ($level == 3) {
-            $this->sc_id3 = $sc_id;
-        } else {
-            $this->sc_id = $sc_id;
-        }
-    }
-
+    
     // 리스트 스킨을 바꾸고자 하는 경우에 사용합니다.
     // 리스트 스킨의 위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php 입니다.
     // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
@@ -567,99 +482,62 @@ class SubscriptionList
             $this->list_skin = $list_skin ? $list_skin : G5_SUBSCRIPTION_SKIN_PATH.'/'.preg_replace('/[^A-Za-z0-9 _ .-]/', '', $default['de_type'.$this->type.'_list_skin']);
         }
     }
-
-    // 1줄에 몇개를 노출할지를 사용한다.
-    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
-    function set_list_mod($list_mod) {
-        global $default;
-        if ($this->is_mobile) {
-            $this->list_mod = $list_mod ? $list_mod : $default['de_mobile_type'.$this->type.'_list_mod'];
-        } else {
-            $this->list_mod = $list_mod ? $list_mod : $default['de_type'.$this->type.'_list_mod'];
-        }
-    }
-
-    // 몇줄을 노출할지를 사용한다.
-    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
-    function set_list_row($list_row) {
-        global $default;
-        if ($this->is_mobile) {
-            $this->list_row = $list_row ? $list_row : $default['de_mobile_type'.$this->type.'_list_row'];
-        } else {
-            $this->list_row = $list_row ? $list_row : $default['de_type'.$this->type.'_list_row'];
-        }
-        if (!$this->list_row)
-            $this->list_row = 1;
-    }
-
-    // 노출이미지(썸네일생성)의 폭, 높이를 설정합니다. 높이를 0 으로 설정하는 경우 쎰네일 비율에 따릅니다.
-    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
-    function set_img_size($img_width, $img_height=0) {
-        global $default;
-        if ($this->is_mobile) {
-            $this->img_width = $img_width ? $img_width : $default['de_mobile_type'.$this->type.'_img_width'];
-            $this->img_height = $img_height ? $img_height : $default['de_mobile_type'.$this->type.'_img_height'];
-        } else {
-            $this->img_width = $img_width ? $img_width : $default['de_type'.$this->type.'_img_width'];
-            $this->img_height = $img_height ? $img_height : $default['de_type'.$this->type.'_img_height'];
-        }
-    }
-
-    // 특정 필드만 select 하는 경우에는 필드명을 , 로 구분하여 "field1, field2, field3, ... fieldn" 으로 인수를 넘겨줍니다.
-    function set_fields($str) {
-        $this->fields = $str;
-    }
-
-    // 특정 필드로 정렬을 하는 경우 필드와 정렬순서를 , 로 구분하여 "field1 desc, field2 asc, ... fieldn desc " 으로 인수를 넘겨줍니다.
-    function set_order_by($str) {
-        $this->order_by = $str;
-    }
-
-    // 사용하는 상품외에 모든 상품을 노출하려면 0 을 인수로 넘겨줍니다.
-    function set_use($use) {
-        $this->use = $use;
-    }
-
-    // 모바일로 사용하려는 경우 true 를 인수로 넘겨줍니다.
-    function set_mobile($mobile=true) {
-        $this->is_mobile = $mobile;
-    }
-
-    // 스킨에서 특정 필드를 노출하거나 하지 않게 할수 있습니다.
-    // 가령 소비자가는 처음에 노출되지 않도록 설정되어 있지만 노출을 하려면
-    // ("it_cust_price", true) 와 같이 인수를 넘겨줍니다.
-    // 이때 인수로 넘겨주는 값은 스킨에 정의된 필드만 가능하다는 것입니다.
-    function set_view($field, $view=true) {
-        $this->{"view_".$field} = $view;
-    }
-
-    // anchor 태그에 하이퍼링크를 다른 주소로 걸거나 아예 링크를 걸지 않을 수 있습니다.
-    // 인수를 "" 공백으로 넘기면 링크를 걸지 않습니다.
-    function set_href($href) {
-        $this->href = $href;
-    }
-
-    // ul 태그의 css 를 교체할수 있다. "sct sct_abc" 를 인수로 넘기게 되면
-    // 기존의 ul 태그에 걸린 css 는 무시되며 인수로 넘긴 css 가 사용됩니다.
-    function set_css($css) {
-        $this->css = $css;
-    }
-
-    // 페이지를 노출하기 위해 true 로 설정할때 사용합니다.
-    function set_is_page($is_page) {
-        $this->is_page = $is_page;
-    }
-
-    // select ... limit 의 시작값
-    function set_from_record($from_record) {
-        $this->from_record = $from_record;
-    }
-
+    
     // 외부에서 쿼리문을 넘겨줄 경우에 담아둡니다.
-    function set_query($query) {
-        $this->query = $query;
-    }
+    function set_query($query='') {
+        
+        global $g5, $config, $member, $default;
+        
+        if ($query) {
+            $this->query = $query;
+        } else {
+            
+            $where = array();
+            if ($this->use) {
+                $where[] = " it_use = '1' ";
+            }
 
+            if ($this->type) {
+                $where[] = " it_type{$this->type} = '1' ";
+            }
+            
+            $where[] = " it_class_num IN (1, 2) ";
+            
+            if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+                $where_ca_id = array();
+                if ($this->ca_id) {
+                    $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
+                }
+                if ($this->ca_id2) {
+                    $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
+                }
+                if ($this->ca_id3) {
+                    $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
+                }
+                $where[] = " ( " . implode(" or ", $where_ca_id) . " ) ";
+            }
+
+            if ($this->order_by) {
+                $sql_order = " order by {$this->order_by} ";
+            }
+
+            if ($this->event) {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_event_item_table']}` a left join `{$g5['g5_shop_item_table']}` b on (a.it_id = b.it_id) ";
+                $where[] = " a.ev_id = '{$this->event}' ";
+            } else {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_item_table']}` ";
+            }
+            $sql_where = " where " . implode(" and ", $where);
+            $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
+            
+            $this->query = $sql_select . $sql_common . $sql_where . $sql_order . $sql_limit;
+        }
+
+    }
+    
+    /*
     // class 에 설정된 값으로 최종 실행합니다.
     function run() {
 
@@ -684,31 +562,39 @@ class SubscriptionList
                 $where[] = " it_type{$this->type} = '1' ";
             }
 
-            if ($this->sc_id || $this->sc_id2 || $this->sc_id3) {
-                $where_sc_id = array();
-                if ($this->sc_id) {
-                    $where_sc_id[] = " sc_id like '{$this->sc_id}%' ";
+            if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+                $where_ca_id = array();
+                if ($this->ca_id) {
+                    $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
                 }
-                if ($this->sc_id2) {
-                    $where_sc_id[] = " sc_id2 like '{$this->sc_id2}%' ";
+                if ($this->ca_id2) {
+                    $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
                 }
-                if ($this->sc_id3) {
-                    $where_sc_id[] = " sc_id3 like '{$this->sc_id3}%' ";
+                if ($this->ca_id3) {
+                    $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
                 }
-                $where[] = " ( " . implode(" or ", $where_sc_id) . " ) ";
+                $where[] = " ( " . implode(" or ", $where_ca_id) . " ) ";
             }
 
             if ($this->order_by) {
                 $sql_order = " order by {$this->order_by} ";
             }
 
-		$sql_select = " select {$this->fields} ";
-		$sql_common = " from `{$g5['g5_subscription_item_table']}` ";
-
+            if ($this->event) {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_event_item_table']}` a left join `{$g5['g5_shop_item_table']}` b on (a.it_id = b.it_id) ";
+                $where[] = " a.ev_id = '{$this->event}' ";
+            } else {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g5['g5_shop_item_table']}` ";
+            }
             $sql_where = " where " . implode(" and ", $where);
             $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
 
             $sql = $sql_select . $sql_common . $sql_where . $sql_order . $sql_limit;
+            
+            echo $sql;
+            
             $result = sql_query($sql);
 
             if ($this->is_page) {
@@ -722,7 +608,7 @@ class SubscriptionList
             while ($row=sql_fetch_array($result)) {
                 
                 if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
-                    subscription_seo_title_update($row['it_id']);
+                    shop_seo_title_update($row['it_id']);
                 }
                 
                 $row['it_basic'] = conv_content($row['it_basic'], 1);
@@ -735,7 +621,7 @@ class SubscriptionList
         }
 
         $file = $this->list_skin;
-
+        
         if ($this->list_skin == "") {
             return $this->count."번 item_list() 의 스킨파일이 지정되지 않았습니다.";
         } else if (!file_exists($file)) {
@@ -749,6 +635,7 @@ class SubscriptionList
             return $content;
         }
     }
+    */
 }
 
 // 상품이미지에 유형 아이콘 출력
@@ -949,7 +836,7 @@ function get_subscription_category_array($is_cache=false){
 function get_subscription_category_sql($sc_id, $len){
     global $g5;
 
-    $sql = " select * from {$g5['g5_subscription_category_table']}
+    $sql = " select * from {$g5['g5_shop_category_table']}
                 where sc_use = '1' ";
     if($sc_id)
         $sql .= " and sc_id like '$sc_id%' ";
@@ -958,20 +845,17 @@ function get_subscription_category_sql($sc_id, $len){
     return $sql;
 }
 
-function get_weekend_yoil($date) {
+function get_weekend_yoil($date, $full=0) {
     
-    $yoil = array("일","월","화","수","목","금","토");
-    
-    return $yoil[date('w', strtotime($date))];
+    return get_yoil($date, $full);
 }
 
 // 상품명과 건수를 반환
-function get_subscription_goods($cart_id)
-{
+function get_subscription_goods($cart_id) {
     global $g5;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_subscription_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
     
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
@@ -981,15 +865,25 @@ function get_subscription_goods($cart_id)
 
     // 상품건수
     $row = sql_fetch(" select count(*) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ");
-    $cnt = $row['cnt'] - 1;
-    if ($cnt)
+    $cnt = ($row['cnt']) ? (int) $row['cnt'] - 1 : 0;
+    
+    if ($cnt) {
         $goods['full_name'] .= ' 외 '.$cnt.'건';
+    }
+    
     $goods['count'] = $row['cnt'];
 
     return $goods;
 }
 
-function subscription_order_pay($od, $pg_data) {
+function get_subscription_order_goods($od_id) {
+    global $g5;
+    
+    $sql = " select * from {$g5['g5_subscription_cart_table']} where od_id = '$od_id'";
+    $cart = sql_fetch($sql);
+}
+
+function subscription_order_pay($od, $pg_data, $pay_round_no) {
     global $g5;
     
     // $od['py_receipt_price'] ?
@@ -1032,9 +926,9 @@ function subscription_order_pay($od, $pg_data) {
         'py_test' => $od['od_test'],
         'py_pg' => $od['od_pg'],
         'py_tno' => $pg_data['tid'],
-        'py_receipt_time' => G5_TIME_YMDHIS,
+        'py_time' => G5_TIME_YMDHIS,
         'py_app_no' => $py_app_no,
-        
+        'py_round_no' => $pay_round_no
         );
      
      
@@ -1050,15 +944,288 @@ function subscription_order_pay($od, $pg_data) {
     
     sql_query($sql);
     
-    return sql_insert_id();
+    $insert_id = sql_insert_id();
+    
+    if ($insert_id) {
+        // 상품명만들기
+        $result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$od['od_id']."' order by ct_id asc ");
+        
+        // 결제 될때 당시 결제된 장바구니 정보를 따로 저장한다. (pay_basket 테이블에)
+        for ($i = 0; $row = sql_fetch_array($result); ++$i) {
+            $inserts = array(
+                'od_id' => $row['od_id'],
+                'pay_id' => $insert_id,
+                'mb_id' => $row['mb_id'],
+                'it_id' => $row['it_id'],
+                'it_name' => $row['it_name'],
+                'it_sc_type' => $row['it_sc_type'],
+                'it_sc_method' => $row['it_sc_method'],
+                'it_sc_price' => $row['it_sc_price'],
+                'it_sc_minimum' => $row['it_sc_minimum'],
+                'it_sc_qty' => $row['it_sc_qty'],
+                'pb_status' => $row['ct_status'],
+                'pb_history' => $row['ct_history'],
+                'pb_price' => $row['ct_price'],
+                'pb_point' => $row['ct_point'],
+                'cp_price' => $row['cp_price'],
+                'pb_point_use' => $row['ct_point_use'],
+                'pb_stock_use' => $row['ct_stock_use'],
+                'pb_option' => $row['ct_option'],
+                'pb_qty' => $row['ct_qty'],
+                'pb_notax' => $row['ct_notax'],
+                'io_id' => $row['io_id'],
+                'io_type' => $row['io_type'],
+                'io_price' => $row['io_price'],
+                'pb_time' => $row['ct_time'],
+                'pb_ip' => $row['ct_ip'],
+                'pb_send_cost' => $row['ct_send_cost'],
+                'pb_direct' => $row['ct_direct'],
+                'pb_select' => $row['ct_select'],
+                'pb_select_time' => $row['ct_select_time'],
+                'pb_subscription_number' => $row['ct_subscription_number'],
+                'pb_firstshipment_date' => $row['ct_firstshipment_date'],
+                'pb_date_format' => $row['ct_date_format']
+                );
+            
+            $columns = implode(', ', array_keys($inserts));
+            $values = implode("', '", array_values($inserts));
+            
+            // 주문서에 입력
+            $sql = "INSERT INTO `{$g5['g5_subscription_pay_basket_table']}`($columns) VALUES ('$values')";
+            
+            echo $sql;
+            
+            sql_query($sql, false);
+        }
+    }
+    
+    return $insert_id;
 }
 
-function calculateNextBillingDate($od){
+function subscription_cron_token() {
+    global $g5;
+    
+    $str = isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '';
+    $str .= G5_TABLE_PREFIX.G5_SHOP_TABLE_PREFIX.G5_TOKEN_ENCRYPTION_KEY;
+    
+    return md5($str);
+}
+
+function get_next_delivery_date($od){
+    return calculateNextDeliveryDate($od);
+}
+
+function getBusinessDaysBefore($date, $businessDays = 0, $holidays=array()) {
+    // $date: 기준 날짜 (YYYY-MM-DD 형식의 문자열)
+    // $businessDays: 몇 영업일 전으로 이동할 것인지
+    // $holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+
+    // 기준 날짜를 타임스탬프로 변환
+    $timestamp = strtotime($date);
+    
+    if ($businessDays) {
+        while ($businessDays > 0) {
+            // 하루 전으로 이동
+            $timestamp = strtotime('-1 day', $timestamp);
+            
+            // 요일 가져오기 (0: 일요일, 6: 토요일)
+            $dayOfWeek = date('w', $timestamp);
+            
+            // 날짜 포맷 (YYYY-MM-DD)
+            $formattedDate = date('Y-m-d', $timestamp);
+            
+            // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+                $businessDays--;
+            }
+        }
+    } else {
+        // 영업일 검증 (0일일 때 배송일 확인)
+        while (true) {
+            $dayOfWeek = date('w', $timestamp);
+            $formattedDate = date('Y-m-d', $timestamp);
+
+            // 영업일이면 반환
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+                break;
+            }
+
+            // 주말 또는 공휴일이면 하루 전으로 이동
+            $prevTimestamp = strtotime('-1 day', $timestamp);
+            $nextTimestamp = strtotime('+1 day', $timestamp);
+            
+            $prevDayOfWeek = date('w', $prevTimestamp);
+            $nextDayOfWeek = date('w', $nextTimestamp);
+            
+            $prevDate = date('Y-m-d', $prevTimestamp);
+            $nextDate = date('Y-m-d', $nextTimestamp);
+            
+            // 이전 날짜가 영업일인지 확인
+            if ($prevDayOfWeek != 0 && $prevDayOfWeek != 6 && !in_array($prevDate, $holidays)) {
+                $timestamp = $prevTimestamp;
+            }
+            // 다음 날짜가 영업일인지 확인
+            elseif ($nextDayOfWeek != 0 && $nextDayOfWeek != 6 && !in_array($nextDate, $holidays)) {
+                $timestamp = $nextTimestamp;
+            } 
+            // 만약 전후 날짜가 모두 주말/공휴일이면 루프를 계속 진행
+            else {
+                $timestamp = strtotime('-1 day', $timestamp);
+            }
+        }
+    }
+
+
+    return date('Y-m-d', $timestamp).' 09:00:01';
+}
+
+function subscription_serial_encode($data, $od=null) {
+    return base64_encode(serialize($data));
+}
+
+function subscription_serial_decode($data, $od=null) {
+    return unserialize(base64_decode($data));
+}
+
+function calculateNextDeliveryDate($od){
+    
+    $timestamp = !is_null_date($od['od_hope_date']) ? strtotime($od['od_hope_date']) : strtotime($od['od_time']);
+    
+    if (isset($od['next_delivery_date']) && $od['next_delivery_date']) {
+        $timestamp = strtotime($od['next_delivery_date']);
+    }
+    
+    $od_subscription_selected_data = subscription_serial_decode($od['od_subscription_selected_data']);
+    $od_subscription_selected_number = subscription_serial_decode($od['od_subscription_selected_number']);
+    
+    $od_subscription_date_format = isset($od['od_subscription_date_format']) ? $od['od_subscription_date_format'] : null;
+    $od_subscription_number = isset($od['od_subscription_number']) ? $od['od_subscription_number'] : null;
+    
+    if (isset($od_subscription_selected_data['opt_date_format']) && $od_subscription_selected_data['opt_date_format']) {
+        $od_subscription_date_format = $od_subscription_selected_data['opt_date_format'];
+    }
+    
+    if (isset($od_subscription_selected_data['opt_input']) && $od_subscription_selected_data['opt_input']) {
+        $od_subscription_number = (int) $od_subscription_selected_data['opt_input'];
+    }
+    
+    $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
+    $plus = abs($od_subscription_number);
+    
+    // 주어진 interval에 따라 날짜를 증가시킴
+    switch ($interval) {
+        case 'day':
+            $timestamp = strtotime('+'.$plus.' day', $timestamp);
+            break;
+        case 'week':
+            $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            break;
+        case 'month':
+            $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            break;
+        case 'year':
+            $timestamp = strtotime('+'.$plus.' year', $timestamp);
+            break;
+        default:
+            throw new Exception("Unknown billing interval: $interval");
+    }
+
+    // 다음 청구일을 YYYY-MM-DD 형식으로 반환
+    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
+}
+
+function calculateNextBillingDate2($od, $od_hope_date=null){
     
     // 현재 날짜를 DateTime 객체로 변환
-    $timestamp = strtotime($od['next_billing_date']);
-    $interval = $od['od_subscription_date_format'];
-    $plus = abs($od['od_subscription_date_format']);
+    if (is_null_date($od['next_billing_date'])) {
+        $timestamp = G5_SERVER_TIME;
+    } else {
+        $timestamp = strtotime($od['next_billing_date']);
+    }
+    
+    /*
+    // 이 코드를 넣으면 안됨 제거해야 됨
+    if ($od_hope_date === null && !is_null_date($od['od_hope_date'])) {
+        $od_hope_date = $od['od_hope_date'];
+    }
+    */
+    
+    $od_subscription_selected_data = subscription_serial_decode($od['od_subscription_selected_data']);
+    $od_subscription_selected_number = subscription_serial_decode($od['od_subscription_selected_number']);
+    
+    $od_subscription_date_format = isset($od['od_subscription_date_format']) ? $od['od_subscription_date_format'] : null;
+    $od_subscription_number = isset($od['od_subscription_number']) ? $od['od_subscription_number'] : null;
+    
+    if (isset($od_subscription_selected_data['opt_date_format']) && $od_subscription_selected_data['opt_date_format']) {
+        $od_subscription_date_format = $od_subscription_selected_data['opt_date_format'];
+    }
+    
+    if (isset($od_subscription_selected_data['opt_input']) && $od_subscription_selected_data['opt_input']) {
+        $od_subscription_number = (int) $od_subscription_selected_data['opt_input'];
+    }
+    
+    // 아래 구문은 틀렸다
+    //if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
+    //    $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
+    //}
+    
+    $config_before_pay_date = (int) get_subs_option('su_auto_payment_lead_days');
+    
+    // 희망배송일이 있으면
+    if ($od_hope_date) {
+        //$nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
+        
+        //return $nextdate.' 09:00:01';
+    }
+    
+    $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
+    $plus = abs($od_subscription_number);
+    
+    // 주어진 interval에 따라 날짜를 증가시킴
+    switch ($interval) {
+        case 'day':
+            $timestamp = strtotime('+'.$plus.' day', $timestamp);
+            break;
+        case 'week':
+            $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            break;
+        case 'month':
+            $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            break;
+        case 'year':
+            $timestamp = strtotime('+'.$plus.' year', $timestamp);
+            break;
+        default:
+            throw new Exception("Unknown billing interval: $interval");
+    }
+    
+    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp));
+    
+    // 다음 청구일을 YYYY-MM-DD 형식으로 반환
+    // return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
+    
+}
+
+function calculateNextBillingDate($od, $od_hope_date=null){
+    
+    return calculateNextBillingDate2($od, $od_hope_date);
+    
+    // 현재 날짜를 DateTime 객체로 변환
+    if (is_null_date($od['next_billing_date'])) {
+        $timestamp = G5_SERVER_TIME;
+    } else {
+        $timestamp = strtotime($od['next_billing_date']);
+    }
+    
+    if ($od_hope_date) {
+        $nextdate = getBusinessDaysBefore($od_hope_date, (int) get_subs_option('su_auto_payment_lead_days'));
+        
+        return $nextdate.' 00:00:01';
+    }
+
+    
+    $interval = $od['od_subscription_date_format'] ? $od['od_subscription_date_format'] : 'day';
+    $plus = abs($od['od_subscription_number']);
         
     // 주어진 interval에 따라 날짜를 증가시킴
     switch ($interval) {
@@ -1079,17 +1246,29 @@ function calculateNextBillingDate($od){
     }
 
     // 다음 청구일을 YYYY-MM-DD 형식으로 반환
-    return date('Y-m-d', $timestamp);
+    return date('Y-m-d H:i:s', $timestamp);
     
+}
+
+function get_nicepay_api_url(){
+    
+    // 테스트인(샌드박스) 경우 나이스페이 api url
+    if (get_subs_option('su_card_test')) {
+        return 'https://sandbox-api.nicepay.co.kr';
+    }
+    
+    // 실서버(운영계) 나이스페이 api url
+    return 'https://api.nicepay.co.kr';
 }
 
 function expire_nicepay_billing($bid) {
 	global $clientId;
 	global $secretKey;
-
+    
+    // 
 	try {
 		$res = requestPost(
-			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/expire",
+			get_nicepay_api_url()."/v1/subscribe/" . $bid . "/expire",
 			json_encode(
 				array("orderId" => uniqid())
 			),
@@ -1102,7 +1281,7 @@ function expire_nicepay_billing($bid) {
 	}
 }
 
-function kcp_billing($od) {
+function kcp_billing($od, $tmp_cart_id='') {
     global $g5;
     
     include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
@@ -1111,7 +1290,64 @@ function kcp_billing($od) {
     // 인증서 정보(직렬화)
     $kcp_cert_info      = get_subs_option('su_kcp_cert_info');
     
-    $goodsname = get_subscription_goods($od['od_id']);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
+    
+    $cust_ip            = "";
+    $currency           = '410'; // 화폐 단위
+    $ordr_idxx          = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid(); // 주문번호 
+    $good_name          = $goodsname['full_name']; // 상품명
+    $buyr_name          = $od['od_name']; // 주문자명
+    $buyr_mail          = $od['od_email']; // 주문자 E-mail
+    $buyr_tel1          = $od['od_tel']; // 주문자 전화번호번호
+    $buyr_tel2          = $od['od_hp']; // 주문자 휴대폰번호
+
+    $bt_batch_key       = $od['card_billkey']; // 배치키 정보
+    $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
+
+    $posts = array(
+        'pay_method' => 'CARD',
+        'ordr_idxx' => $ordr_idxx,
+        'good_name' => $good_name,
+        'good_mny' => $od['od_receipt_price'],
+        'buyr_name' => $buyr_name,
+        'buyr_mail' => $buyr_mail,
+        'buyr_tel1' => $buyr_tel1,
+        'buyr_tel2' => $buyr_tel2,
+        'req_tx' => 'pay',  // req_tx : 요청종류 승인(pay)/취소,매입(mod) 요청시 사용
+        'currency' => $currency,
+        'mod_type' => '',   // 변경TYPE(승인취소시 필요)
+        'mod_desc' => '',   // 변경사유
+        'card_pay_method' => 'Batch',
+        'quotaopt' => "00",
+        'bt_group_id' => $bt_group_id,
+        'bt_batch_key' => $bt_batch_key,
+    );
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/kcp/pay_pp_cli_hub.php');
+    
+    run_event('subscription_order_pg_pay', 'kcp', $results, $posts);
+    
+    if (isset($results['res_cd']) && $results['res_cd'] === '0000') {
+        return array('code'=>'success', 'message'=>$results['res_msg'], 'response'=>$results);
+    } else {
+        return array('code'=>'fail', 'message'=>$results['res_cd'].':'.$results['res_msg'], 'response'=>$results);
+    }
+    
+    return array();
+}
+
+function kcp_new_billing($od, $tmp_cart_id='') {
+    global $g5;
+    
+    include(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+    
+    $site_cd            = get_subs_option('su_kcp_mid'); // 사이트 코드
+    // 인증서 정보(직렬화)
+    $kcp_cert_info      = get_subs_option('su_kcp_cert_info');
+    
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
     $cust_ip            = "";
     $currency           = '410'; // 화폐 단위
@@ -1143,6 +1379,10 @@ function kcp_billing($od) {
         "bt_group_id"    => $bt_group_id
     );
     
+    if (function_exists('add_log')) {
+        add_log($data, false, 'kcp');
+    }
+    
     $req_data = json_encode($data);
     
     $header_data = array( "Content-Type: application/json", "charset=utf-8" );
@@ -1158,6 +1398,10 @@ function kcp_billing($od) {
     
     // API RES
     $res_data  = curl_exec($ch);
+    
+    if (function_exists('add_log')) {
+        add_log($res_data, false, 'kcp');
+    }
     
     curl_close($ch);
     
@@ -1178,7 +1422,7 @@ function kcp_billing($od) {
     
     run_event('subscription_order_pg_pay', 'kcp', $res, $data);
     
-    if (isset($res['res_cd']) && $res['res_cd'] = '0000') {
+    if (isset($res['res_cd']) && $res['res_cd'] === '0000') {
         return array('code'=>'success', 'message'=>$res['res_msg'], 'response'=>$res);
     } else {
         return array('code'=>'fail', 'message'=>$res['res_cd'].':'.$res['res_msg'], 'response'=>$res);
@@ -1187,37 +1431,184 @@ function kcp_billing($od) {
     return array();
 }
 
-function subscription_process_payment($od) {
+function subscription_process_payment($od, $od_pg_service='', $tmp_cart_id='') {
     
-    $subscription_pg_service = get_subs_option('su_pg_service');
+    $subscription_pg_service = $od_pg_service ? $od_pg_service : get_subs_option('su_pg_service');
     
     if ($subscription_pg_service === 'kcp') {
-        return kcp_billing($od);
+        return kcp_billing($od, $tmp_cart_id);
     } else if ($subscription_pg_service === 'inicis') {
-        return inicis_billing($od);
+        return inicis_billing($od, $tmp_cart_id);
+    } else if ($subscription_pg_service === 'tosspayments') {
+        return tosspayments_billing($od, $tmp_cart_id);
     } else if ($subscription_pg_service === 'nicepay') {
-        return nicepay_billing($od);
+        return nicepay_billing($od, $tmp_cart_id);
     }
     
     return null;
 }
 
-function nicepay_billing($od) {
+function subscription_pg_cardname($od_card_name, $card=array()) {
+    
+    if ($od_card_name && strpos($od_card_name, '카드') === false) {
+        $od_card_name .= '카드';
+    }
+    
+    return $od_card_name;
+}
+
+function check_subscription_pay_method($od_settle_case) {
+    global $default;
+    
+    /*
+    $is_block = 0;
+
+    if ($od_settle_case === '무통장') {
+        if (! $default['de_bank_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '계좌이체') {
+        if (! $default['de_iche_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '가상계좌') {
+        if (! $default['de_vbank_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '휴대폰') {
+        if (! $default['de_hp_use']) {
+            $is_block = 1;
+        }
+    } else if ($od_settle_case === '신용카드') {
+        if (! $default['de_card_use']) {
+            $is_block = 1;
+        }
+    }
+
+    if ($is_block) {
+        alert($od_settle_case.' 은 결제수단에서 사용이 금지되어 있습니다.', G5_SHOP_URL);
+        die('');
+    }
+    */
+    
+}
+
+function nicepay_reqPost(Array $data, $url){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);					//connection timeout 15 
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));	//POST data
+	curl_setopt($ch, CURLOPT_POST, true);
+	$response = curl_exec($ch);
+	curl_close($ch);	 
+	return $response;
+}
+
+function nicepay_billing($od, $tmp_cart_id='') {
     global $g5;
     
-    include_once(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
+    include(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
     
-	$clientId = $nicepay_clientid;
-	$secretKey = $nicepay_secretkey;
+    // https://developers.nicepay.co.kr/manual-card-billing.php#parameter-card-billing-response
+    // 빌링 결제(승인) API 요청 URL
+    $postURL = "https://webapi.nicepay.co.kr/webapi/billing/billing_approve.jsp";
+
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
-    $goodsname = get_subscription_goods($od['od_id']);
+    /*
+    ****************************************************************************************
+    * (요청 값 정보)
+    * 아래 파라미터에 요청할 값을 알맞게 입력합니다. 
+    ****************************************************************************************
+    */
+    $bid 				= $od['card_billkey'];				// 빌키
+    $mid 				= get_subs_option('su_nicepay_mid');		// 가맹점 아이디
+    $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
+    $moid 				= $od['od_id'];				// 가맹점 주문번호
+    $amt 				= (int) $od['od_receipt_price'];				// 결제 금액
+    //$goodsName 			= $goodsname['full_name'];				// 상품명
+    
+    $goodsName 			= iconv("UTF-8", "EUC-KR", $goodsname['full_name']);				// 상품명
+    $cardInterest 		= '0';				// 무이자 여부, 가맹점 분담 무이자 할부 이벤트 사용 여부 (0: 미사용, 1: 사용(무이자))
+    $cardQuota 			= '00';				// 할부 개월 수, 할부개월 (00: 일시불, 02: 2개월, 03: 3개월, ...)
+    $buyerName 			= iconv("UTF-8", "EUC-KR", $od['od_name']);				// 구매자명
+    $buyerTel 			= $od['od_hp'];				// 구매자 전화번호
+    $buyerEmail 		= $od['od_email'];				// 구매자 이메일
+
+    /*
+    ****************************************************************************************
+    * (해쉬암호화 - 수정하지 마세요)
+    * SHA-256 해쉬암호화는 거래 위변조를 막기위한 방법입니다. 
+    ****************************************************************************************
+    */	
+    $ediDate = date("YmdHis", G5_SERVER_TIME);																					// API 요청 전문 생성일시
+    $merchantKey = get_subs_option('su_nicepay_key');	// 가맹점 키	
+    $signData = bin2hex(hash('sha256', $mid . $ediDate . $moid . $amt . $bid . $merchantKey, true));			// 위변조 데이터 검증 값 암호화
+
+    /*
+    ****************************************************************************************
+    * (API 요청부)
+    * 명세서를 참고하여 필요에 따라 파라미터와 값을 'key'=>'value' 형태로 추가해주세요
+    ****************************************************************************************
+    */
+    $data = Array(
+        'BID' => $bid,
+        'MID' => $mid,
+        'TID' => $tid,
+        'EdiDate' => $ediDate,
+        'Moid' => $moid,
+        'Amt' => $amt,
+        'GoodsName' => $goodsName,
+        'SignData' => $signData,
+        'CardInterest' => $cardInterest,
+        'CardQuota' => $cardQuota,
+        'CharSet' => 'utf-8'
+    );
+    
+    $response = nicepay_reqPost($data, $postURL); 				//API 호출, 결과 데이터가 $response 변수에 저장됩니다.
+
+    // $resp_utf = iconv("EUC-KR", "UTF-8", $response);
+    $resp_utf = $response; 
+    $nice_response = json_decode($resp_utf, true);
+    
+    // resultCode 가 3001이면 성공이고 그외이면 실패
+    if ($nice_response['ResultCode'] === '3001' && isset($nice_response['TID']) && $nice_response['TID']) {
+        $code = 'success';
+    } else {
+        $code = 'fail';
+        $message = $nice_response['ResultMsg'];
+    }
+    
+    if (function_exists('add_log')) {
+        add_log($nice_response, false, 'nice');
+    }
+    
+    run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $data);
+    
+    // $res 형식은 json
+    return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
+}
+
+function nicepay_new_billing($od, $tmp_cart_id='') {
+    global $g5;
+    
+    include(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
+    
+	$clientId = get_subs_option('su_nice_clientid');
+	$secretKey = get_subs_option('su_nice_secretkey');
+    
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
     $res = null;
     
     $bid = $od['card_billkey'];
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
-    $nice_orderId = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid();
+    $nice_orderId = substr($od['od_id'].'_'.get_string_encrypt($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
     $edi_date = date('c', G5_SERVER_TIME);
     $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
     $buyerName = $od['od_name'];
@@ -1244,12 +1635,12 @@ function nicepay_billing($od) {
                         );
     
     if (function_exists('add_log')) {
-        add_log($request_data);
+        add_log($request_data, false, 'nice');
     }
     
 	try {
 		$res = requestPost(
-			"https://sandbox-api.nicepay.co.kr/v1/subscribe/" . $bid . "/payments",
+			get_nicepay_api_url()."/v1/subscribe/" . $bid . "/payments",
 			json_encode($request_data),
 			$clientId . ':' . $secretKey
 		);
@@ -1264,8 +1655,14 @@ function nicepay_billing($od) {
     
     $nice_response = json_decode($res, true);
     
+    // resultCode 가 0000 and tid 가 없으면 결제실패이다
+    if (!($nice_response['resultCode'] === '0000' && isset($nice_response['tid']) && $nice_response['tid'])) {
+        $code = 'fail';
+        $message = $nice_response['resultMsg'];
+    }
+    
     if (function_exists('add_log')) {
-        add_log($nice_response);
+        add_log($nice_response, false, 'nice');
     }
     
     run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $request_data);
@@ -1274,19 +1671,89 @@ function nicepay_billing($od) {
     return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
 }
 
-function inicis_billing($od) {
+function get_subscription_billing_key($od) {
+    
+    return $od['card_billkey'];
+}
+
+function subscription_sendRequest($url, $authKey, $postData) {
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: $authKey",
+        "Content-Type: application/json"
+    ]);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    return $response;
+}
+
+function tosspayments_billing($od, $tmp_cart_id='') {
     global $g5;
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/settle_tosspayments.inc.php');
+    
+    $apiSecretKey = get_subs_option('su_tosspayments_api_secretkey');
+    
+    $encryptedApiSecretKey = "Basic " . base64_encode($apiSecretKey . ":");
+
+    $billingKey = get_subscription_billing_key($od);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
+    
+    $data = array(
+        'customerKey' => $billingKey,
+        'amount' => $od['od_receipt_price'],
+        'orderId' => substr($od['od_id'].'_'.get_string_encrypt($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
+        'orderName' => $goodsname['full_name'],
+        'customerEmail' => $od['od_email'],
+        'customerName' => $od['od_name']
+        );
+    
+    $postData = json_encode(array(
+        'customerKey' => $od['od_id'],
+        'amount' => $data['amount'],
+        'orderId' => $data['orderId'],
+        'orderName' => $data['orderName'],
+        'customerEmail' => $data['customerEmail'],
+        'customerName' => $data['customerName']
+    ));
+    
+    $response = subscription_sendRequest("https://api.tosspayments.com/v1/billing/$billingKey", $encryptedApiSecretKey, $postData);
+    
+    $res_result = json_decode($response, true);
+    
+    print_r( $res_result );
+    
+    if (isset($res_result['code']) && $res_result['code']) {
+        // 자동결제 실패했음
+        
+        return array('code'=>$res_result['code'], 'message'=>$res_result['message']);
+        
+    }
+    
+    // 결제 성공시
+    return array('code'=>'success', 'message'=>'', 'response'=>$res_result);
+}
+
+function inicis_billing($od, $tmp_cart_id='') {
+    global $g5, $inicis_iniapi_key, $inicis_iniapi_iv;
     
     include_once(G5_SUBSCRIPTION_PATH.'/settle_inicis.inc.php');
         
     //step1. 요청을 위한 파라미터 설정
     $key = $inicis_iniapi_key;
 	$iv = $inicis_iniapi_iv;
-    $mid = "INIBillTst";
-	$type = "billing";
-	$paymethod = "Card";
-	$timestamp = date("YmdHis", G5_SERVER_TIME);
-	$clientIp = $_SERVER['SERVER_ADDR'];
+    $mid = get_subs_option('su_inicis_mid');
+	$type = "billing";      // 요청서비스 ["billing" 고정]
+	$paymethod = "Card";    // 지불수단 코드 [card:신용카드, HPP:휴대폰]
+	$timestamp = date("YmdHis", G5_SERVER_TIME);    // 전문생성시간 [YYYYMMDDhhmmss]
+	$clientIp = $_SERVER['SERVER_ADDR'];    // 가맹점 요청 서버IP (추후 거래 확인 등에 사용됨)
 
 	$postdata = array();
 	$postdata["mid"] = $mid;
@@ -1295,17 +1762,22 @@ function inicis_billing($od) {
     $postdata["timestamp"] = $timestamp;
 	$postdata["clientIp"] = $clientIp;
     
-    $goodsname = get_subscription_goods($od['od_id']);
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
     
 	//// Data 상세
     $detail = array();
-	$detail["url"] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['REQUEST_URI'];
-	$detail["moid"] = $mid."_".$timestamp;
+	// $detail["url"] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['REQUEST_URI'];
+    $detail["url"] = G5_SUBSCRIPTION_URL;
+	$detail["moid"] = $od['od_id'];
 	$detail["goodName"] = $goodsname['full_name'];
 	$detail["buyerName"] = $od['od_name'];
 	$detail["buyerEmail"] = $od['od_email'];
 	$detail["buyerTel"] = $od['od_hp'];
+    
+    // 장바구니 금액이 변경될수 있으니, $od['od_receipt_price'] 가 아니라 장바구니 금액을 체크해서 가져와야 한다.
 	$detail["price"] = $od['od_receipt_price'];
+    
 	$detail["billKey"] = $od['card_billkey'];
 	$detail["authentification"] = "00";
 	$detail["cardQuota"] = "00";
@@ -1384,6 +1856,204 @@ function is_null_date($datetime){
     return false;
 }
 
+// 한글 요일
+function get_hangul_date_format($str)
+{
+    $formats = array ('day' => '일', 'week' => '주', 'month' => '월', 'year' => '년');
+
+    return isset($formats[$str]) ? $formats[$str] : '';
+}
+
+function mask_card_number($string) {
+    // 문자열 길이 확인
+    $length = strlen($string);
+    
+    // 시작과 끝에 남길 자리 수 설정
+    $start = 6;
+    $end = 1;
+    
+    // 마스킹할 부분의 길이 계산
+    $maskLength = $length - ($start + $end);
+    
+    // 문자열을 마스킹된 형태로 변환
+    return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function get_subscription_pg_id($pg_name=''){
+    
+    $pg = $pg_name ? $pg_name : get_subs_option('su_pg_service');
+    
+    $str = '';
+    
+    if ($pg === 'kcp') {
+        $str = get_subs_option('su_kcp_mid');
+    } else if ($pg === 'inicis') {
+        $str = get_subs_option('su_inicis_mid');
+    } else if ($pg === 'nicepay') {
+        $str = get_subs_option('su_nice_clientid');
+    } else if ($pg === 'tosspayments') {
+        $str = get_subs_option('su_tosspayments_mid');
+    }
+    
+    return $str;
+}
+
+function get_subscription_pg_apikey($pg_name=''){
+    
+    $pg = $pg_name ? $pg_name : get_subs_option('su_pg_service');
+    
+    $str = '';
+    
+    if ($pg === 'kcp') {
+        
+    } else if ($pg === 'inicis') {
+        $str = get_subs_option('su_inicis_mid');
+    } else if ($pg === 'nicepay') {
+        $str = get_subs_option('su_nice_clientid');
+    } else if ($pg === 'tosspayments') {
+        $str = get_subs_option('su_tosspayments_api_clientkey');
+    }
+    
+    return $str;
+}
+
+function add_subscription_order_history($content, $arg=array()){
+    global $g5;
+    
+    $inserts = array(
+        'hs_parent' => isset($arg['hs_parent']) ? (int) $arg['hs_parent'] : 0,
+        'hs_type' => isset($arg['type']) ? $arg['type'] : '',
+        'hs_category' => isset($arg['hs_category']) ? $arg['hs_category'] : '',
+        'od_id' => isset($arg['od_id']) ? $arg['od_id'] : '',
+        'mb_id' => isset($arg['mb_id']) ? $arg['mb_id'] : '',
+        'hs_content' => $content,
+        'hs_time' => G5_TIME_YMDHIS,
+        );
+    
+    // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php
+    $columns = implode(', ', array_keys($inserts));
+    $values = implode("', '", array_values($inserts));
+
+    // 주문서에 입력
+    $sql = "INSERT INTO `{$g5['g5_subscription_order_history_table']}`($columns) VALUES ('$values')";
+    
+    $result = sql_query($sql, false);
+    
+    return sql_insert_id();
+}
+
+function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
+    global $g5;
+    
+    static $cache = array();
+
+    $key = md5($pay_id);
+
+    if( $is_cache && isset($cache[$key]) ){
+        return $cache[$key];
+    }
+    
+    $goods = array(
+        'full_name' => '',
+        'thumb' => '',
+        );
+    
+    // 상품명만들기
+    
+    $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$pay_id' order by ct_id ";
+        
+    $result = sql_query($sql);
+    
+    $tmp = array();
+    
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        
+        $row['thumbnail'] = get_subscription_it_image($row['it_id'], 65, 65, true);
+        
+        // 대표 상품명과 대표 썸네일을 지정한다.
+        if ($i === 0) {
+            $goods['full_name'] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "", addslashes($row['it_name']));
+            $goods['thumb'] = $row['thumbnail'];
+        }
+        
+        $tmp[$i] = $row;
+    }
+    
+    $goods['data'] = $tmp;
+    $total_tmp = count($tmp);
+    
+    if ($tmp && $total_tmp > 1) {
+        $goods['full_name'] .= ' 외 '.((int)$total_tmp - 1).'건';
+    }
+    
+    $cache[$key] = $goods;
+    
+    return $cache[$key];
+}
+
+function get_Ko_DayOfWeek($day, $is_print_yoil=''){
+
+    // 입력된 날짜를 strtotime으로 변환하여 유효성 검사
+    $timestamp = strtotime($day);
+    if (!$timestamp) return '';
+    
+    $yoil = array("일","월","화","수","목","금","토");
+
+    return ($yoil[date('w', $timestamp)]).$is_print_yoil;
+
+}
+
+function print_subscription_pg_name($od, $pg_name='') {
+    $txt = '';
+    
+    if (isset($od['od_pg'])) {
+        $txt = get_text($od['od_pg']);
+    }
+    
+    return $txt;
+}
+
+function print_subscription_card_info($od) {
+    $txt = '';
+    
+    if (isset($od['card_mask_number'])) {
+        $txt = get_text($od['od_card_name']).' '.get_text($od['card_mask_number']);
+    }
+    
+    return $txt;
+}
+
+function subscription_item_delivery_title($it) {
+    $title = get_subs_option('su_user_delivery_title');
+    
+    return $title ? get_text($title) : '주기일입력';
+}
+
+function subscription_user_delivery_option($index) {
+    
+    $text = (int) get_subs_option('su_user_delivery_default_day') * (int) $index;
+    
+    return $index.'주기마다 ('.$text.'일마다)';
+}
+
+function isValidBase64($input) {
+    // 공백, 탭, 개행 제거
+    $input = preg_replace('/\s+/', '', $input);
+    
+    // URL 디코딩 (우회 방지)
+    $input = rawurldecode($input);
+    
+    // 길이 확인 (4의 배수)
+    if (strlen($input) % 4 !== 0) {
+        return false; // Base64는 4의 배수여야 함
+    }
+
+    // 정규식으로 Base64 확인
+    // $pattern = '/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/';
+    $pattern = '#^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$#';
+    return preg_match($pattern, $input) === 1;
+}
+
 // 금액표시
 // $it : 상품 배열
 function get_subscription_price($it)
@@ -1392,5 +2062,5 @@ function get_subscription_price($it)
 
     $price = $it['it_price'];
 
-    return (int)$price;
+    return run_replace('get_subscription_price', (int)$price, $it);
 }

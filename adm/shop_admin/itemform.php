@@ -330,6 +330,27 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <col class="grid_3">
         </colgroup>
         <tbody>
+        <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+        <tr>
+            <th scope="row"><label for="it_id">정기결제 사용여부</label></th>
+            <td>
+                <?php echo help('쇼핑몰일 경우 쇼핑몰에서만 결제가 가능하며,<br>정기결제인 경우 정기결제만 가능하며,<br>쇼핑몰 + 정기결제 일 경우 쇼핑몰과 정기결제 둘 다 결제가 가능합니다.'); ?>
+                
+                <input type="radio" name="it_class_num" value="0" id="it_class_num0" <?php if(!(isset($it['it_class_num']) && $it['it_class_num'])) echo 'checked="checked"'; ?>>
+                <label for="it_class_num0">쇼핑몰만 사용</label>
+                <input type="radio" name="it_class_num" value="1" id="it_class_num1" <?php if((isset($it['it_class_num']) && (int) $it['it_class_num'] === 1)) echo 'checked="checked"'; ?>>
+                <label for="it_class_num1">정기결제에서만 사용</label>
+                <input type="radio" name="it_class_num" value="2" id="it_class_num2" <?php if((isset($it['it_class_num']) && (int) $it['it_class_num'] === 2)) echo 'checked="checked"'; ?>>
+                <label for="it_class_num2">쇼핑몰 + 정기결제 둘 다 사용</label>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_class_num" value="1" id="chk_ca_it_class_num">
+                <label for="chk_ca_it_class_num">분류적용</label>
+                <input type="checkbox" name="chk_all_it_class_num" value="1" id="chk_all_it_class_num">
+                <label for="chk_all_it_class_num">전체적용</label>
+            </td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row">상품코드</th>
             <td colspan="2">

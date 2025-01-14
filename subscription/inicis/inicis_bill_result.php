@@ -85,17 +85,17 @@ try {
                 // ############################################################
 
                 $resultMap = json_decode($authResultString, true);
-
-                print_r2($resultMap);
-
+                
                 /*************************  결제보안 추가 2016-05-18 START ****************************/
-                $secureMap = [
+                $secureMap = array(
                     'mid' => $mid,
                     'tstamp' => $timestamp,
                     'MOID' => $resultMap['MOID'],
                     'TotPrice' => $resultMap['TotPrice'],
-                ];
-
+                );
+                
+                run_event('subscription_inicis_bill_result', $resultMap, $secureMap);
+                
                 // signature 데이터 생성
                 $secureSignature = $util->makeSignatureAuth($secureMap);
                 /*************************  결제보안 추가 2016-05-18 END ****************************/
@@ -123,10 +123,17 @@ try {
                     $payDevice = $resultMap['payDevice'];
                     $CARD_Interest = $resultMap['CARD_Interest'];
                     $payMethodDetail = $resultMap['payMethodDetail'];
+                    
+                    // 카드 코드
+                    $card_code = isset($resultMap['CARD_Code']) ? $resultMap['CARD_Code'] : '';
 
-                    // 마스킹 된 카드번호
-                    $card_number = $resultMap['CARD_Num'];
+                    // 마스킹 된 카드번호 : 숫자6자리 마스킹* 9자리 끝자리숫자1 자리 이렇게 마스킹 되어 넘겨 받는다. 
+                    $card_mask_number = $resultMap['CARD_Num'];
                     $card_billkey = $CARD_BillKey;
+                    
+                    // 카드이름의 경우 
+                    $card_name = ($card_code && isset($CARD_CODE[$card_code])) ? $CARD_CODE[$card_code] : $card_code;
+                    
                 } else {
                     $page_return_url = G5_SUBSCRIPTION_URL.'/orderform.php';
                     if (get_session('subs_direct')) {

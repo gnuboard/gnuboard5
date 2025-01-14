@@ -920,6 +920,11 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 #ssch_sort_all li:hover a {color:#3a8afd}
 #ssch_sort_all li:first-child a {border:0}
 
+/* 신용카드 아이콘 */
+.jumbotron-icon .fa-4 {
+    font-size: 7em;
+}
+
 /*쿠폰존 리스트*/
 .couponzone_list {margin:0 0 20px;position:relative}
 .couponzone_list h2 {padding:15px 20px;font-size:1.25em;border:1px solid #e3e5e8;background:#fff}

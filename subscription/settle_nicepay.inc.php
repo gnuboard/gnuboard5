@@ -11,17 +11,21 @@ if (!function_exists('curl_init')) {
 
 // 테스트이면
 if (get_subs_option('su_card_test')) {
-    $nicepay_clientid = 'S2_af4543a0be4d49a98122e01ec2059a56';
-    $nicepay_secretkey = '9eb85607103646da9f9c02b128f2e5ee';
+    $nicepay_clientid = get_subs_option('su_nice_clientid') ? get_subs_option('su_nice_clientid') : 'S2_af4543a0be4d49a98122e01ec2059a56';
+    $nicepay_secretkey = get_subs_option('su_nice_secretkey') ? get_subs_option('su_nice_secretkey') : '9eb85607103646da9f9c02b128f2e5ee';
     
-    $nicepay_url = 'https://sandbox-api.nicepay.co.kr/v1/subscribe';
+    set_subs_option('su_nice_clientid', $nicepay_clientid);
+    set_subs_option('su_nice_secretkey', $nicepay_secretkey);
+    
+    set_subs_option('su_nicepay_mid', 'nictest04m');
+    set_subs_option('su_nicepay_key', 'b+zhZ4yOZ7FsH8pm5lhDfHZEb79tIwnjsdA0FBXh86yLc6BJeFVrZFXhAoJ3gEWgrWwN+lJMV0W4hvDdbe4Sjw==');
+    
 } else {
     // 실 사용이면
     // $nicepay_clientid = 'SR_'.get_subs_option('su_nice_clientid');
     $nicepay_clientid = get_subs_option('su_nice_clientid');
-    $nicepay_secretkey = get_subs_option('su_nicepay_secretkey');
+    $nicepay_secretkey = get_subs_option('su_nice_secretkey');
     
-    $nicepay_url = 'https://api.nicepay.co.kr/v1/subscribe';
 }
 
 if (!function_exists('requestPost')) {

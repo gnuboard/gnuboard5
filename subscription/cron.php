@@ -1,5 +1,4 @@
 <?php
-
 include_once './_common.php';
 
 // 상품명과 건수를 반환

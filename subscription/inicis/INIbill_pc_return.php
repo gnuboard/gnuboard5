@@ -1,5 +1,4 @@
 <?php
-
 include_once './_common.php';
 include_once G5_SUBSCRIPTION_PATH.'/settle_inicis.inc.php';
 
@@ -39,7 +38,7 @@ if (empty($row)) {
 
 $data = unserialize(base64_decode($row['dt_data']));
 
-$params = [];
+$params = array();
 
 foreach ($data as $key => $value) {
     if (is_array($value)) {

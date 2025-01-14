@@ -79,6 +79,20 @@ flush(); usleep(50000);
 
 echo "<script>document.getElementById('subscription_job_03').innerHTML='정기결제 기본 설정 변경 후 사용하세요.';</script>";
 flush(); usleep(50000);
+
+$sql = " select * from {$g5['g5_shop_category_table']} limit 1 ";
+$ca = sql_fetch($sql);
+
+if (!isset($ca['ca_class_num'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}` ADD `ca_class_num` TINYINT NOT NULL DEFAULT '0' after `ca_id`, ADD INDEX (`ca_class_num`) ", false);
+}
+
+$sql = " select * from {$g5['g5_shop_item_table']} limit 1 ";
+$ca = sql_fetch($sql);
+
+if (!isset($ca['it_class_num'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}` ADD `it_class_num` TINYINT NOT NULL DEFAULT '0' after `it_id`, ADD INDEX (`it_class_num`) ", false);
+}
 ?>
 
 <script>document.getElementById('subscription_btn_next').disabled = false;</script>

@@ -24,18 +24,22 @@ if (!isset($g5['subscription_prefix'])) {
 }
 $g5['g5_subscription_config_table'] = $g5['subscription_prefix'] .'config';     // 정기결제 설정 테이블
 $g5['g5_subscription_cart_table']          = $g5['subscription_prefix'] . 'cart';
-$g5['g5_subscription_category_table']           = $g5['subscription_prefix'] . 'category';
-$g5['g5_subscription_item_table']         = $g5['subscription_prefix'] . 'item';
-$g5['g5_subscription_pay_table']            = $g5['subscription_prefix'] . 'pay';
+// $g5['g5_subscription_category_table']           = $g5['subscription_prefix'] . 'category';
+// $g5['g5_subscription_item_table']         = $g5['subscription_prefix'] . 'item';
+// $g5['g5_subscription_item_qa_table']    = $g5['subscription_prefix'] . 'item_qa'; // 상품 질문답변 테이블
+// $g5['g5_subscription_item_use_table']    = $g5['subscription_prefix'] . 'item_use'; // 상품 사용후기 테이블
+// $g5['g5_subscription_item_relation_table']    = $g5['subscription_prefix'] . 'item_relation'; // 관련 상품 테이블
+// $g5['g5_subscription_event_table']          = $g5['subscription_prefix'] . 'event'; // 이벤트 테이블
+// $g5['g5_subscription_event_item_table']    = $g5['subscription_prefix'] .'event_item'; // 상품, 이벤트 연결 테이블
+// $g5['g5_subscription_item_option_table'] = $g5['subscription_prefix'].'item_option'; // 상품옵션 테이블
+
+$g5['g5_subscription_pay_table']            = $g5['subscription_prefix'] . 'pay';                   // 정기결제 결제 테이블
+$g5['g5_subscription_pay_basket_table']            = $g5['subscription_prefix'] . 'pay_basket';     // 정기결제 결제 장바구니 기록 테이블
 $g5['g5_subscription_order_table']            = $g5['subscription_prefix'] . 'order';
 $g5['g5_subscription_order_data_table']   = $g5['subscription_prefix'] . 'order_data'; // 결제정보 임시저장 테이블
-$g5['g5_subscription_item_qa_table']    = $g5['subscription_prefix'] . 'item_qa'; // 상품 질문답변 테이블
-$g5['g5_subscription_item_use_table']    = $g5['subscription_prefix'] . 'item_use'; // 상품 사용후기 테이블
+$g5['g5_subscription_mb_cardinfo_table']   = $g5['subscription_prefix'] . 'mb_cardinfo'; // 사용자 카드번호 키 저장테이블
 
-$g5['g5_subscription_item_relation_table']    = $g5['subscription_prefix'] . 'item_relation'; // 관련 상품 테이블
-$g5['g5_subscription_event_table']          = $g5['subscription_prefix'] . 'event'; // 이벤트 테이블
-$g5['g5_subscription_event_item_table']    = $g5['subscription_prefix'] .'event_item'; // 상품, 이벤트 연결 테이블
-$g5['g5_subscription_item_option_table'] = $g5['subscription_prefix'].'item_option'; // 상품옵션 테이블
+$g5['g5_subscription_order_history_table'] = $g5['subscription_prefix'] . 'order_history'; // 주문정보 히스토리 테이블
 
 $subscriptions_default = array(
 'su_card_test' => 1,
@@ -77,6 +81,28 @@ function set_subs_option($key, $value) {
     if (isset($config['g5_subscriptions_options'][$key])) {
         $config['g5_subscriptions_options'][$key] = $value;
     }
+}
+
+function get_subscription_info_inputs() {
+    
+    $opts = get_subs_option('su_opt_settings');
+    
+    if ($opts) {
+        return unserialize(base64_decode($opts));
+    }
+    
+    return null;
+}
+
+function get_subscription_use_inputs() {
+    
+    $uses = get_subs_option('su_use_settings');
+    
+    if ($uses) {
+        return unserialize(base64_decode($uses));
+    }
+    
+    return null;
 }
 
 // 보안서버주소 설정
@@ -126,3 +152,5 @@ if(!defined('_THEME_PREVIEW_')) {
 }
 
 include_once(G5_LIB_PATH.'/subscription.lib.php');
+include_once(G5_SUBSCRIPTION_PATH.'/subscription.hook.php');
+include_once(G5_SUBSCRIPTION_ADMIN_PATH.'/admin.subscription.hook.php');

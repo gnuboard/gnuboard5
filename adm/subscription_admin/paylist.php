@@ -8,7 +8,7 @@ $g5['title'] = '정기결제 결제내역';
 include_once G5_ADMIN_PATH.'/admin.head.php';
 include_once G5_PLUGIN_PATH.'/jquery-ui/datepicker.php';
 
-$where = [];
+$where = array();
 
 $doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
 $sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], ['od_id', 'od_cart_price', 'od_receipt_price', 'od_cancel_price', 'od_misu', 'od_cash'])) ? $_GET['sort1'] : '';
@@ -113,7 +113,7 @@ if ($sel_field == '') {
     $sel_field = 'od_id';
 }
 if ($sort1 == '') {
-    $sort1 = 'od_id';
+    $sort1 = 'id';
 }
 if ($sort2 == '') {
     $sort2 = 'desc';
@@ -159,7 +159,9 @@ if (function_exists('pg_setting_check')) {
     pg_setting_check(true);
 }
 ?>
-
+<div class="admin_pg_notice od_test_caution">
+    정기결제내역은 구독내역의 주기에 따라 결제된 내역을 확인할수 있다.
+</div>
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     <span class="btn_ov01"><span class="ov_txt">전체 주문내역</span><span class="ov_num"> <?php echo number_format($total_count); ?>건</span></span>
@@ -271,7 +273,9 @@ if (function_exists('pg_setting_check')) {
             <label for="chkall" class="sound_only">주문 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col" id="th_ordnum" rowspan="2" colspan="2"><a href="<?php echo title_sort('od_id', 1)."&amp;$qstr1"; ?>">주문번호</a></th>
+        <th scope="col"rowspan="3" ><a href="#">주문상품</a></th>
+        <th scope="col" rowspan="2"><a href="#">주문날짜</a></th>
+        <th scope="col" id="th_ordnum" rowspan="2"><a href="<?php echo title_sort('od_id', 1)."&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col" id="th_odrer">주문자</th>
         <th scope="col" id="th_odrertel">주문자전화</th>
         <th scope="col" id="th_recvr">받는분</th>
@@ -285,11 +289,11 @@ if (function_exists('pg_setting_check')) {
     <tr>
         <th scope="col" id="th_odrid">회원ID</th>
         <th scope="col" id="th_odrcnt">주문상품수</th>
-        <th scope="col" id="th_odrall">정기결제회차</th>
+        <th scope="col" id="th_odrall">결제수단(PG사)</th>
     </tr>
     <tr>
-        <th scope="col" id="odrstat">주문상태</th>
-        <th scope="col" id="odrpay">결제수단 (PG사)</th>
+        <th scope="col" id="odrstat">정기결제회차</th>
+        <th scope="col" id="odrpay">주문상태</th>
         <th scope="col" id="delino">운송장번호</th>
         <th scope="col" id="delicom">배송회사</th>
         <th scope="col" id="delidate">배송일시</th>
@@ -303,8 +307,8 @@ if (function_exists('pg_setting_check')) {
         
         // 결제 수단
         $s_receipt_way = $s_br = '';
-        if ($row['od_settle_case']) {
-            $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $row);
+        if ($row['py_settle_case']) {
+            $s_receipt_way = check_pay_name_replace($row['py_settle_case'], $row);
             $s_br = '<br />';
         } else {
             $s_receipt_way = '결제수단없음';
@@ -355,6 +359,8 @@ if (function_exists('pg_setting_check')) {
             $bg .= 'cancel';
             $td_color = 1;
         }
+        
+        $goods = get_subscription_pay_full_goods($row['od_id']);
         ?>
     <tr class="orderlist<?php echo ' '.$bg; ?>">
         <td rowspan="3" class="td_chk">
@@ -362,7 +368,17 @@ if (function_exists('pg_setting_check')) {
             <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
             <input type="checkbox" name="chk[]" value="<?php echo $i; ?>" id="chk_<?php echo $i; ?>">
         </td>
-        <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
+        <td rowspan="3">
+            <div>
+                <?php echo $goods['thumb']; ?>
+                <br>
+                <?php echo $goods['full_name']; ?>
+            </div>
+        </td>
+        <td headers="th_ordnum" class="td_odrnum2" rowspan="2">
+            <?php echo $row['py_receipt_time']; ?>
+        </td>
+        <td headers="th_ordnum" class="td_odrnum2" rowspan="2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
             <?php echo $od_paytype; ?>
         </td>
@@ -375,7 +391,7 @@ if (function_exists('pg_setting_check')) {
         <td rowspan="3" class="td_num_right"><?php echo number_format($row['couponprice']); ?></td>
         <td rowspan="3" class="td_num_right"><?php echo number_format($row['py_misu']); ?></td>
         <td rowspan="3" class="td_mng td_mng_s">
-            <a href="./payform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod btn btn_02"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
+            <a href="./payform.php?id=<?php echo $row['id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod btn btn_02"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
@@ -386,17 +402,23 @@ if (function_exists('pg_setting_check')) {
             비회원
             <?php } ?>
         </td>
-        <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
-        <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
+        <td headers="th_odrcnt">
+            <?php echo $row['od_cart_count']; ?>건<br>
+            <?php echo $od_cnt; ?>건
+        </td>
+        <td headers="th_odrall">
+            <input type="hidden" name="current_settle_case[<?php echo $i; ?>]" value="<?php echo $row['py_settle_case']; ?>">
+            <?php echo $s_receipt_way.' ('.$row['py_pg'].')'; ?>
+        </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td headers="odrstat" class="odrstat">
-            <input type="hidden" name="current_status[<?php echo $i; ?>]" value="<?php echo $row['od_status']; ?>">
-            <?php echo $row['od_status']; ?>
+            <?php echo get_text($row['py_round_no']); ?> 회
         </td>
         <td headers="odrpay" class="odrpay">
-            <input type="hidden" name="current_settle_case[<?php echo $i; ?>]" value="<?php echo $row['od_settle_case']; ?>">
-            <?php echo $s_receipt_way.' ('.$row['od_pg'].')'; ?>
+            주문상태 : <br>
+            <input type="hidden" name="current_status[<?php echo $i; ?>]" value="<?php echo $row['py_status']; ?>">
+            <?php echo $row['py_status']; ?>
         </td>
         <td headers="delino" class="delino">
             <?php if ($od_status == '준비') { ?>

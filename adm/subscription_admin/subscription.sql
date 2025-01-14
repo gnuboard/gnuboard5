@@ -9,17 +9,34 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_id` int(11) NOT NULL auto_increment,
   `su_pg_service` varchar(80) NOT NULL DEFAULT '',
   `su_card_test` int(11) NOT NULL DEFAULT '0',
-  `su_kcp_mid` varchar(80) NOT NULL DEFAULT '',
+  `su_kcp_mid` varchar(30) NOT NULL DEFAULT '',
+  `su_kcp_site_key` varchar(60) NOT NULL DEFAULT '',
   `su_kcp_group_id` varchar(80) NOT NULL DEFAULT '',
   `su_kcp_cert_info` text NOT NULL,
   `su_inicis_mid` varchar(80) NOT NULL DEFAULT '',
   `su_inicis_iniapi_key` varchar(30) NOT NULL DEFAULT '',
   `su_inicis_iniapi_iv` varchar(30) NOT NULL DEFAULT '',
   `su_inicis_sign_key` varchar(80) NOT NULL DEFAULT '',
+  `su_tosspayments_mid` varchar(30) NOT NULL DEFAULT '',
+  `su_tosspayments_api_clientkey` varchar(80) NOT NULL DEFAULT '',
+  `su_tosspayments_api_secretkey` varchar(80) NOT NULL DEFAULT '',
   `su_nice_clientid` varchar(80) NOT NULL DEFAULT '',
   `su_nice_secretkey` varchar(80) NOT NULL DEFAULT '',
+  `su_nicepay_mid` varchar(80) NOT NULL DEFAULT '',
+  `su_nicepay_key` varchar(80) NOT NULL DEFAULT '',
   `su_cron_updatetime` datetime DEFAULT NULL,
   `su_cron_execute_hour` tinyint(2) NOT NULL DEFAULT '0',
+  `su_opt_settings` text NOT NULL,
+  `su_use_settings` text NOT NULL,
+  `su_hope_date_use` tinyint(2) NOT NULL DEFAULT '0',
+  `su_hope_date_after` int(10) NOT NULL DEFAULT '0',
+  `su_output_display_type` tinyint(2) NOT NULL DEFAULT '0',
+  `su_auto_payment_lead_days` tinyint(4) NOT NULL DEFAULT '0',
+  `su_chk_user_delivery` tinyint(2) NOT NULL DEFAULT '0',
+  `su_user_delivery_title` varchar(80) NOT NULL DEFAULT '',
+  `su_user_delivery_minimum` tinyint(4) NOT NULL DEFAULT '0',
+  `su_user_delivery_template` varchar(200) NOT NULL DEFAULT '',
+  `su_user_delivery_default_day` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -72,175 +89,51 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_cart` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_subscription_category`
+-- Table structure for table `g5_subscription_cart`
 --
 
--- DROP TABLE IF EXISTS `g5_subscription_category`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_category` (
-  `sc_id` varchar(10) NOT NULL DEFAULT '0',  
-  `sc_name` varchar(255) NOT NULL DEFAULT '',
-  `sc_order` int(11) NOT NULL DEFAULT '0',
-  `sc_skin_dir` varchar(255) NOT NULL DEFAULT '',
-  `sc_mobile_skin_dir` varchar(255) NOT NULL DEFAULT '',
-  `sc_skin` varchar(255) NOT NULL DEFAULT '',
-  `sc_mobile_skin` varchar(255) NOT NULL DEFAULT '',
-  `sc_img_width` int(11) NOT NULL DEFAULT '0',
-  `sc_img_height` int(11) NOT NULL DEFAULT '0',
-  `sc_mobile_img_width` int(11) NOT NULL DEFAULT '0',
-  `sc_mobile_img_height` int(11) NOT NULL DEFAULT '0',
-  `sc_sell_email` varchar(255) NOT NULL DEFAULT '',
-  `sc_use` tinyint(4) NOT NULL DEFAULT '0',
-  `sc_stock_qty` int(11) NOT NULL DEFAULT '0',
-  `sc_explan_html` tinyint(4) NOT NULL DEFAULT '0',
-  `sc_head_html` text NOT NULL,
-  `sc_tail_html` text NOT NULL,
-  `sc_mobile_head_html` text NOT NULL,
-  `sc_mobile_tail_html` text NOT NULL,
-  `sc_list_mod` int(11) NOT NULL DEFAULT '0',
-  `sc_list_row` int(11) NOT NULL DEFAULT '0',
-  `sc_mobile_list_mod` int(11) NOT NULL DEFAULT '0',
-  `sc_mobile_list_row` int(11) NOT NULL DEFAULT '0',
-  `sc_include_head` varchar(255) NOT NULL DEFAULT '',
-  `sc_include_tail` varchar(255) NOT NULL DEFAULT '',
-  `sc_mb_id` varchar(255) NOT NULL DEFAULT '',
-  `sc_cert_use` tinyint(4) NOT NULL DEFAULT '0',
-  `sc_adult_use` tinyint(4) NOT NULL DEFAULT '0',
-  `sc_nocoupon` tinyint(4) NOT NULL DEFAULT '0',
-  `sc_1_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_2_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_3_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_4_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_5_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_6_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_7_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_8_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_9_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_10_subj` varchar(255) NOT NULL DEFAULT '',
-  `sc_1` varchar(255) NOT NULL DEFAULT '',
-  `sc_2` varchar(255) NOT NULL DEFAULT '',
-  `sc_3` varchar(255) NOT NULL DEFAULT '',
-  `sc_4` varchar(255) NOT NULL DEFAULT '',
-  `sc_5` varchar(255) NOT NULL DEFAULT '',
-  `sc_6` varchar(255) NOT NULL DEFAULT '',
-  `sc_7` varchar(255) NOT NULL DEFAULT '',
-  `sc_8` varchar(255) NOT NULL DEFAULT '',
-  `sc_9` varchar(255) NOT NULL DEFAULT '',
-  `sc_10` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`sc_id`),
-  KEY `sc_order` (`sc_order`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_subscription_item`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_item`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_item` (
+-- DROP TABLE IF EXISTS `g5_subscription_pay_basket`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_pay_basket` (
+  `pb_id` int(11) NOT NULL AUTO_INCREMENT,
+  `od_id` bigint(20) unsigned NOT NULL,
+  `pay_id` int(11) unsigned NOT NULL,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
   `it_id` varchar(20) NOT NULL DEFAULT '',
-  `sc_id` varchar(10) NOT NULL DEFAULT '0',
-  `sc_id2` varchar(255) NOT NULL DEFAULT '',
-  `sc_id3` varchar(255) NOT NULL DEFAULT '',
-  `it_skin` varchar(255) NOT NULL DEFAULT '',
-  `it_mobile_skin` varchar(255) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
-  `it_seo_title` varchar(200) NOT NULL DEFAULT '',
-  `it_maker` varchar(255) NOT NULL DEFAULT '',
-  `it_origin` varchar(255) NOT NULL DEFAULT '',
-  `it_brand` varchar(255) NOT NULL DEFAULT '',
-  `it_model` varchar(255) NOT NULL DEFAULT '',
-  `it_option_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_supply_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_type1` tinyint(4) NOT NULL DEFAULT '0',
-  `it_type2` tinyint(4) NOT NULL DEFAULT '0',
-  `it_type3` tinyint(4) NOT NULL DEFAULT '0',
-  `it_type4` tinyint(4) NOT NULL DEFAULT '0',
-  `it_type5` tinyint(4) NOT NULL DEFAULT '0',
-  `it_basic` text NOT NULL,
-  `it_explan` mediumtext NOT NULL,
-  `it_explan2` mediumtext NOT NULL,
-  `it_mobile_explan` mediumtext NOT NULL,
-  `it_cust_price` int(11) NOT NULL DEFAULT '0',
-  `it_price` int(11) NOT NULL DEFAULT '0',
-  `it_point` int(11) NOT NULL DEFAULT '0',
-  `it_point_type` tinyint(4) NOT NULL DEFAULT '0',
-  `it_supply_point` int(11) NOT NULL DEFAULT '0',
-  `it_notax` tinyint(4) NOT NULL DEFAULT '0',
-  `it_sell_email` varchar(255) NOT NULL DEFAULT '',
-  `it_use` tinyint(4) NOT NULL DEFAULT '0',
-  `it_nocoupon` tinyint(4) NOT NULL DEFAULT '0',
-  `it_soldout` tinyint(4) NOT NULL DEFAULT '0',
-  `it_stock_qty` int(11) NOT NULL DEFAULT '0',
-  `it_stock_sms` tinyint(4) NOT NULL DEFAULT '0',
-  `it_noti_qty` int(11) NOT NULL DEFAULT '0',
   `it_sc_type` tinyint(4) NOT NULL DEFAULT '0',
   `it_sc_method` tinyint(4) NOT NULL DEFAULT '0',
   `it_sc_price` int(11) NOT NULL DEFAULT '0',
   `it_sc_minimum` int(11) NOT NULL DEFAULT '0',
   `it_sc_qty` int(11) NOT NULL DEFAULT '0',
-  `it_buy_min_qty` int(11) NOT NULL DEFAULT '0',
-  `it_buy_max_qty` int(11) NOT NULL DEFAULT '0',
-  `it_head_html` text NOT NULL,
-  `it_tail_html` text NOT NULL,
-  `it_mobile_head_html` text NOT NULL,
-  `it_mobile_tail_html` text NOT NULL,
-  `it_hit` int(11) NOT NULL DEFAULT '0',
-  `it_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `it_update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `it_ip` varchar(25) NOT NULL DEFAULT '',
-  `it_order` int(11) NOT NULL DEFAULT '0',
-  `it_info_gubun` varchar(50) NOT NULL DEFAULT '',
-  `it_info_value` text NOT NULL,
-  `it_sum_qty` int(11) NOT NULL DEFAULT '0',
-  `it_use_cnt` int(11) NOT NULL DEFAULT '0',
-  `it_use_avg` DECIMAL(2,1) NOT NULL,
-  `it_subscription_memo` text NOT NULL,
-  `it_subscription_date_format` char(4) NOT NULL DEFAULT '',
-  `it_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
-  `it_subscription_iteration` tinyint(4) NOT NULL DEFAULT '0',
-  `it_subscription_expiration_date` datetime NULL,
-  `it_check_firstshipment_day` tinyint(4) NOT NULL DEFAULT '0',
-  `it_expire_firstshipmen_day` tinyint(4) NOT NULL DEFAULT '0',
-  `it_img1` varchar(255) NOT NULL DEFAULT '',
-  `it_img2` varchar(255) NOT NULL DEFAULT '',
-  `it_img3` varchar(255) NOT NULL DEFAULT '',
-  `it_img4` varchar(255) NOT NULL DEFAULT '',
-  `it_img5` varchar(255) NOT NULL DEFAULT '',
-  `it_img6` varchar(255) NOT NULL DEFAULT '',
-  `it_img7` varchar(255) NOT NULL DEFAULT '',
-  `it_img8` varchar(255) NOT NULL DEFAULT '',
-  `it_img9` varchar(255) NOT NULL DEFAULT '',
-  `it_img10` varchar(255) NOT NULL DEFAULT '',
-  `it_1_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_2_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_3_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_4_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_5_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_6_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_7_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_8_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_9_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_10_subj` varchar(255) NOT NULL DEFAULT '',
-  `it_1` varchar(255) NOT NULL DEFAULT '',
-  `it_2` varchar(255) NOT NULL DEFAULT '',
-  `it_3` varchar(255) NOT NULL DEFAULT '',
-  `it_4` varchar(255) NOT NULL DEFAULT '',
-  `it_5` varchar(255) NOT NULL DEFAULT '',
-  `it_6` varchar(255) NOT NULL DEFAULT '',
-  `it_7` varchar(255) NOT NULL DEFAULT '',
-  `it_8` varchar(255) NOT NULL DEFAULT '',
-  `it_9` varchar(255) NOT NULL DEFAULT '',
-  `it_10` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`it_id`),
-  KEY `sc_id` (`sc_id`),
-  KEY `it_name` (`it_name`),
-  KEY `it_seo_title` (`it_seo_title`),
-  KEY `it_order` (`it_order`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `pb_status` varchar(255) NOT NULL DEFAULT '',
+  `pb_history` text NOT NULL,
+  `pb_price` int(11) NOT NULL DEFAULT '0',
+  `pb_point` int(11) NOT NULL DEFAULT '0',
+  `cp_price` int(11) NOT NULL DEFAULT '0',
+  `pb_point_use` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_stock_use` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_option` varchar(255) NOT NULL DEFAULT '',
+  `pb_qty` int(11) NOT NULL DEFAULT '0',
+  `pb_notax` tinyint(4) NOT NULL DEFAULT '0',
+  `io_id` varchar(255) NOT NULL DEFAULT '',
+  `io_type` tinyint(4) NOT NULL DEFAULT '0',
+  `io_price` int(11) NOT NULL DEFAULT '0',
+  `pb_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pb_ip` varchar(25) NOT NULL DEFAULT '',
+  `pb_send_cost` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_direct` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_select` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_select_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pb_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
+  `pb_firstshipment_date` DATETIME DEFAULT NULL,
+  `pb_date_format` CHAR(4) NOT NULL DEFAULT '',
+  PRIMARY KEY (`pb_id`),
+  KEY `od_id` (`od_id`),
+  KEY `it_id` (`it_id`),
+  KEY `pb_status` (`pb_status`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `g5_subscription_item_use`
 --
@@ -308,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_mod_history` text NOT NULL,
   `py_status` varchar(255) NOT NULL DEFAULT '',
   
+  `py_round_no` int(10) NOT NULL DEFAULT '1',
   `py_hope_date` date NOT NULL DEFAULT '0000-00-00',
   
   `py_settle_case` varchar(255) NOT NULL DEFAULT '',
@@ -340,37 +234,36 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_subscription_item_qa`
+-- Table structure for table `g5_shop_order`
 --
 
--- DROP TABLE IF EXISTS `g5_subscription_item_qa`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_item_qa` (
-  `iq_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_id` varchar(20) NOT NULL DEFAULT '',
+-- DROP TABLE IF EXISTS `g5_subscription_order`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
+  `hs_id` bigint(20) NOT NULL auto_increment,
+  `hs_parent` bigint(20) NOT NULL DEFAULT '0',
+  `hs_type` varchar(20) NOT NULL DEFAULT '',
+  `hs_category` varchar(100) NOT NULL DEFAULT '',
+  `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
-  `iq_secret` tinyint(4) NOT NULL DEFAULT '0',
-  `iq_name` varchar(255) NOT NULL DEFAULT '',
-  `iq_email` varchar(255) NOT NULL DEFAULT '',
-  `iq_hp` varchar(255) NOT NULL DEFAULT '',
-  `iq_password` varchar(255) NOT NULL DEFAULT '',
-  `iq_subject` varchar(255) NOT NULL DEFAULT '',
-  `iq_question` text NOT NULL,
-  `iq_answer` text NOT NULL,
-  `iq_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `iq_ip` varchar(25) NOT NULL DEFAULT '',
-  PRIMARY KEY (`iq_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  `hs_content` text NOT NULL,
+  `hs_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`hs_id`),
+  KEY `mb_id` (`mb_id`),
+  KEY `hs_type` (`hs_type`),
+  KEY `hs_category` (`hs_category`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_order`
+-- Table structure for table `g5_subscription_order`
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_id` bigint(20) unsigned NOT NULL,
-  `mb_id` varchar(255) NOT NULL DEFAULT '',  
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `ci_id` int(11) NOT NULL DEFAULT '0',
   `od_name` varchar(20) NOT NULL DEFAULT '',
   `od_email` varchar(100) NOT NULL DEFAULT '',
   `od_tel` varchar(20) NOT NULL DEFAULT '',
@@ -392,6 +285,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_b_addr3` varchar(255) NOT NULL DEFAULT '',
   `od_b_addr_jibeon` varchar(255) NOT NULL DEFAULT '',
   `od_memo` text NOT NULL,
+  `next_delivery_date` datetime DEFAULT NULL,
   `next_billing_date` datetime DEFAULT NULL,
   `od_enable_status` tinyint(3) NOT NULL DEFAULT '1',
   `last_billed_date` datetime DEFAULT NULL,
@@ -403,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_send_coupon` int(11) NOT NULL DEFAULT '0',  
   `od_receipt_price` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
-  `od_card_name` varchar(255) NOT NULL DEFAULT '',
+  `od_card_name` varchar(100) NOT NULL DEFAULT '',
   `od_receipt_time` datetime DEFAULT NULL,
   `od_coupon` int(11) NOT NULL DEFAULT '0',
   `od_subscription_memo` text NOT NULL,
@@ -420,14 +314,42 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',
   `od_free_mny` int(11) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
-  `card_number` varchar(50) NOT NULL DEFAULT '',
+  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
   `card_billkey` varchar(100) NOT NULL DEFAULT '',
+  `od_pays_total` int(10) NOT NULL DEFAULT '0',
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
+  `od_subscription_selected_data` text NOT NULL,
+  `od_subscription_selected_number` text NOT NULL,
   `od_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
   `od_firstshipment_date` datetime DEFAULT NULL,
   `od_time` datetime DEFAULT NULL,
+  `is_enable_user_input` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`od_id`),
   KEY `index2` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_mb_cardinfo`
+--
+
+-- DROP TABLE IF EXISTS `g5_subscription_mb_cardinfo`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
+  `ci_id` int(11) NOT NULL auto_increment,
+  `mb_id` varchar(100) NOT NULL DEFAULT '',  
+  `pg_service` varchar(20) NOT NULL DEFAULT '',
+  `pg_id` varchar(50) NOT NULL DEFAULT '',
+  `pg_apikey` varchar(150) NOT NULL DEFAULT '',
+  `first_ordernumber` varchar(20) NOT NULL DEFAULT '',
+  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
+  `card_billkey` varchar(100) NOT NULL DEFAULT '',
+  `od_card_name` varchar(100) NOT NULL DEFAULT '',
+  `od_id` bigint(20) unsigned NOT NULL,
+  `od_test` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ci_id`),
+  KEY `index2` (`mb_id`),
+  UNIQUE KEY `unique_pg_service_apikey_billkey` (`pg_service`, `pg_apikey`, `card_billkey`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -450,61 +372,6 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_data` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_subscription_event`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_event`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_event` (
-  `ev_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ev_skin` varchar(255) NOT NULL DEFAULT '',
-  `ev_mobile_skin` varchar(255) NOT NULL DEFAULT '',
-  `ev_img_width` int(11) NOT NULL DEFAULT '0',
-  `ev_img_height` int(11) NOT NULL DEFAULT '0',
-  `ev_list_mod` int(11) NOT NULL DEFAULT '0',
-  `ev_list_row` int(11) NOT NULL DEFAULT '0',
-  `ev_mobile_img_width` int(11) NOT NULL DEFAULT '0',
-  `ev_mobile_img_height` int(11) NOT NULL DEFAULT '0',
-  `ev_mobile_list_mod` int(11) NOT NULL DEFAULT '0',
-  `ev_mobile_list_row` int(11) NOT NULL DEFAULT '0',
-  `ev_subject` varchar(255) NOT NULL DEFAULT '',
-  `ev_subject_strong` tinyint(4) NOT NULL DEFAULT '0',
-  `ev_head_html` text NOT NULL,
-  `ev_tail_html` text NOT NULL,
-  `ev_use` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ev_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_subscription_event_item`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_event_item`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_event_item` (
-  `ev_id` int(11) NOT NULL DEFAULT '0',
-  `it_id` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`ev_id`,`it_id`),
-  KEY `it_id` (`it_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_subscription_item_relation`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_item_relation`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_item_relation` (
-  `it_id` varchar(20) NOT NULL DEFAULT '',
-  `it_id2` varchar(20) NOT NULL DEFAULT '',
-  `ir_no` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`it_id`,`it_id2`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `g5_unique`
 --
 
@@ -513,50 +380,6 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
   `uq_id` bigint(20) unsigned NOT NULL,
   `uq_ip` varchar(255) NOT NULL,
   PRIMARY KEY (`uq_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_subscription_item_use`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_item_use`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
-  `is_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_id` varchar(20) NOT NULL DEFAULT '0',
-  `mb_id` varchar(255) NOT NULL DEFAULT '',
-  `is_name` varchar(255) NOT NULL DEFAULT '',
-  `is_password` varchar(255) NOT NULL DEFAULT '',
-  `is_score` tinyint(4) NOT NULL DEFAULT '0',
-  `is_subject` varchar(255) NOT NULL DEFAULT '',
-  `is_content` text NOT NULL,
-  `is_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `is_ip` varchar(25) NOT NULL DEFAULT '',
-  `is_confirm` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`is_id`),
-  KEY `index1` (`it_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_shop_item_option`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_item_option`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_item_option` (
-  `io_no` INT(11) NOT NULL AUTO_INCREMENT,
-  `io_id` VARCHAR(255) NOT NULL DEFAULT '0',
-  `io_type` TINYINT(4) NOT NULL DEFAULT '0',                    
-  `it_id` VARCHAR(20) NOT NULL DEFAULT '',
-  `io_price` INT(11) NOT NULL DEFAULT '0',
-  `io_stock_qty` INT(11) NOT NULL DEFAULT '0',
-  `io_noti_qty` INT(11) NOT NULL DEFAULT '0',
-  `io_use` TINYINT(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`io_no`),
-  KEY `io_id` (`io_id`),
-  KEY `it_id` (`it_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

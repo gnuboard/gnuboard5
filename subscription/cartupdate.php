@@ -1,5 +1,4 @@
 <?php
-
 include_once './_common.php';
 
 // print_r2($_POST); exit;
@@ -42,7 +41,7 @@ if ($act == 'buy') {
     }
 
     // 선택필드 초기화
-    $sql = " update {$g5['g5_subscription_subscription_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
+    $sql = " update {$g5['g5_subscription_cart_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
     sql_query($sql);
 
     $fldcnt = count($post_it_ids);
@@ -237,7 +236,7 @@ if ($act == 'buy') {
 
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = [];
-        $sql = " select * from {$g5['g5_subscription_item_option_table']} where it_id = '$it_id' and io_use = 1 order by io_no asc ";
+        $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_use = 1 order by io_no asc ";
         $result = sql_query($sql);
         $lst_count = 0;
         for ($k = 0; $row = sql_fetch_array($result); ++$k) {
@@ -400,10 +399,23 @@ if ($act == 'buy') {
 
 // 바로 구매일 경우
 if ($sw_direct) {
+    
+    $tmps = array(
+        'delivery_cycle' => isset($_POST['delivery_cycle']) ? $_POST['delivery_cycle'] : '',
+        'usage_count' => isset($_POST['usage_count']) ? $_POST['usage_count'] : '',
+        'hope_delivery_date' => isset($_POST['hope_delivery_date']) ? $_POST['hope_delivery_date'] : ''
+    );
+    
+    $aparams = (!empty($tmps)) ? base64_encode(serialize($tmps)) : '';
+    
+    // $aparams2 = isValidBase64($aparams) ? unserialize(base64_decode($aparams)) : '';
+    
+    $add_params = $aparams ? '&aparams='.$aparams : '';
+        
     if ($is_member) {
-        goto_url(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct");
-    } else {
-        goto_url(G5_BBS_URL.'/login.php?url='.urlencode(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct"));
+        goto_url(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct".$add_params);
+    } else {     
+        goto_url(G5_BBS_URL.'/login.php?url='.urlencode(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct".$add_params));
     }
 } else {
     goto_url(G5_SUBSCRIPTION_URL.'/cart.php');

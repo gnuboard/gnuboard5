@@ -38,32 +38,24 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     
                     // $s_cart_id 로 현재 장바구니 자료 쿼리
                     $sql = " select a.ct_id,
-                        a.it_id,
-                        a.it_name,
-                        a.ct_price,
-                        a.ct_point,
-                        a.ct_qty,
-                        a.ct_status,
-                        a.ct_send_cost,
-                        a.it_sc_type,
-                        a.ct_subscription_number,
-                        a.ct_firstshipment_date,
-                        a.ct_date_format,
-                        b.sc_id,
-                        b.sc_id2,
-                        b.sc_id3,
-                        b.it_notax,
-                        b.it_subscription_date_format,
-                        b.it_subscription_expiration_date,
-                        b.it_subscription_number,
-                        b.it_subscription_iteration,
-                        b.it_check_firstshipment_day,
-                        b.it_expire_firstshipmen_day
-                   from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
-                  where a.od_id = '$s_cart_id'
-                    and a.ct_select = '1' ";
-                    $sql .= ' group by a.it_id ';
-                    $sql .= ' order by a.ct_id ';
+                                    a.it_id,
+                                    a.it_name,
+                                    a.ct_price,
+                                    a.ct_point,
+                                    a.ct_qty,
+                                    a.ct_status,
+                                    a.ct_send_cost,
+                                    a.it_sc_type,
+                                    b.ca_id,
+                                    b.ca_id2,
+                                    b.ca_id3,
+                                    b.it_notax
+                               from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+                              where a.od_id = '$s_cart_id'
+                                and a.ct_select = '1' ";
+                    $sql .= " group by a.it_id ";
+                    $sql .= " order by a.ct_id ";
+
                     $result = sql_query($sql);
 
                     $good_info = '';
@@ -254,25 +246,6 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <th scope="row"><label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label></th>
                                 <td><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
                             </tr>
-
-                            <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용
-                            ?>
-                                <tr>
-                                    <th scope="row"><label for="od_hope_date">희망배송일</label></th>
-                                    <td>
-                                        <!-- <select name="od_hope_date" id="od_hope_date">
-                                        <option value="">선택하십시오.</option>
-                                        <?php
-                                                for ($i = 0; $i < 7; ++$i) {
-                                                    $sdate = date('Y-m-d', time() + 86400 * (get_subs_option('de_hope_date_after') + $i));
-                                                    echo '<option value="' . $sdate . '">' . $sdate . ' (' . get_yoil($sdate) . ')</option>' . PHP_EOL;
-                                                }
-                                        ?>
-                                        </select> -->
-                                        <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
-                                    </td>
-                                </tr>
-                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -388,6 +361,133 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             </section>
             <!-- } 받으시는 분 입력 끝 -->
             <?php run_event('subscription_add_form_html'); ?>
+            
+            <?php
+            // 정기구독 설정 불러오기
+            // 배송주기
+            $subscription_info_inputs = get_subscription_info_inputs();
+            
+            // 이용횟수
+            $subscription_use_inputs = get_subscription_use_inputs();
+            ?>
+            <section id="sod_frm_subscription_input">
+                <h2>정기구독정보 입력</h2>
+
+                <div class="tbl_frm01 tbl_wrap">
+                    <table>
+                        <tbody>
+                        <?php if (get_subs_option('su_chk_user_delivery')) { ?>
+                            <tr>
+                                <th scope="row"><label for=""><?php echo subscription_item_delivery_title($it); ?></label></th>
+                                <td>
+                                <input id="od_subscription_select_data" name="od_subscription_select_data" type="number" inputmode="numeric" placeholder="숫자" max="365" maxlength="3" value="<?php echo get_subs_option('su_user_delivery_default_day'); ?>" class="frm_input">
+                                <span class="od_subscription_days">일</span>
+                                </td>
+                            </tr>
+                        <?php } else { ?>
+                            <tr>
+                                <th scope="row"><label for=""><?php echo subscription_item_delivery_title($it); ?></label></th>
+                                <td>
+                                <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
+                                    <div class="su-display-btns">
+                                    <?php 
+                                    foreach ($subscription_info_inputs as $key=>$opt) {
+                                        if (! $opt['opt_use']) {
+                                            continue;
+                                        }
+
+                                        $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+
+                                        if ($opt['opt_input'] || $opt['opt_date_format']) {
+                                            $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                                            $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                                        }
+                                        
+                                        $checked = (isset($aparams_array['delivery_cycle']) && $aparams_array['delivery_cycle'] === $key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']) ? 'checked' : '';
+                                    ?>
+                                        <input type="radio" id="od_subscription_select_data_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_data" <?php echo $checked; ?> value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>">
+                                        <label for="od_subscription_select_data_<?php echo $key; ?>" class="select-icon"><span><?php echo $opt_print; ?></span></label>
+                                    <?php } ?>
+                                    </div>
+                                <?php } else {  // 셀렉트박스 ?>
+                                    <select id="od_subscription_select_data" class="frm_input" name="od_subscription_select_data">
+                                        <option value="" selected="" disabled="">선택해주세요</option>
+                                    <?php
+                                    foreach ($subscription_info_inputs as $key=>$opt) {
+                                        if (! $opt['opt_use']) {
+                                            continue;
+                                        }
+
+                                        $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+
+                                        if ($opt['opt_input'] || $opt['opt_date_format']) {
+                                            $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                                            $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                                        }
+                                    ?>
+                                        <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
+                                    <?php } ?>
+                                    </select>
+                                <?php } ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                            <tr>
+                                <th scope="row"><label for="">이용횟수</label></th>
+                                <td>
+                                <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
+                                    <div class="su-display-btns">
+                                        <?php foreach ($subscription_use_inputs as $key=>$use) {
+                                        if (! $use['num_use']) {
+                                            continue;
+                                        }
+
+                                        $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+
+                                        if ($use['use_input']) {
+                                            $use_print = str_replace("{입력}", $use['use_input'], $use_print);
+                                        }
+                                        
+                                        $checked = (isset($aparams_array['usage_count']) && $aparams_array['usage_count'] === $key.'||'.$use['use_input']) ? 'checked' : '';
+                                        ?>
+                                        <input type="radio" id="od_subscription_select_number_<?php echo $key; ?>" class="sound_only" name="od_subscription_select_number" <?php echo $checked; ?> value="<?php echo get_text($key.'||'.$use['use_input']); ?>">
+                                        <label for="od_subscription_select_number_<?php echo $key; ?>" class="select-icon"><span><?php echo $use_print; ?></span></label>
+                                        <?php } ?>
+                                    </div>
+                                <?php } else {  // 셀렉트박스 ?>
+                                    <select id="od_subscription_select_number" class="frm_input" name="od_subscription_select_number">
+                                        <option value="" selected="" disabled="">선택해주세요</option>
+                                    <?php
+                                    foreach ($subscription_use_inputs as $key=>$use) {
+                                        if (! $use['num_use']) {
+                                            continue;
+                                        }
+
+                                        $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+
+                                        if ($use['use_input']) {
+                                            $use_print = str_replace("{입력}", $use['use_input'], $use_print);
+                                        }
+                                    ?>
+                                        <option value="<?php echo get_text($key.'||'.$use['use_input']); ?>"><?php echo $use_print; ?></option>
+                                    <?php } ?>
+                                    </select>
+                                <?php } ?>
+                                </td>
+                            </tr>
+                        <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용 ?>
+                            <tr>
+                                <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
+                                <td class="jquery-pg-datepicker">
+                                    <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">
+                                    <div id="od_hope_date_print" class="jquery-datepicker"></div>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <tbody>
+                    </table>
+                </div>
+            </section>
         </div>
 
         <div class="sod_right">
@@ -497,6 +597,19 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <th>추가배송비</th>
                                 <td><strong id="od_send_cost2">0</strong>원<br>(지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
                             </tr>
+                            <?php
+                            if (get_subs_option('su_hope_date_use') && get_subs_option('su_auto_payment_lead_days')) {
+                                
+                                // $str_date = strtotime('+'.$plus.' day', $timestamp);
+                            ?>
+                            <tr class="before_pay_date_tr">
+                                <td colspan="2" class="explain_before_pay_date">
+                                <span class="set_pay_date"></span> 1회차 결제
+                                등록된 수단으로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>영업일 전 자동결제 됩니다.
+                                </td>
+                            </tr>
+                            <?php } ?>
+                    
                         </tbody>
                     </table>
                 </div>
@@ -504,10 +617,39 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     <span>총 주문금액</span>
                     <strong class="print_price"><?php echo number_format($tot_price); ?></strong>원
                 </div>
+<?php
 
-                <div id="od_pay_sl">
+// $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test, od_time from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' and od_pg = '".get_subs_option('su_pg_service')."' GROUP BY od_card_name, card_mask_number ";
+
+// $result = sql_query($sql);
+
+$mcards = array();
+$result = sql_bind_select($g5['g5_subscription_mb_cardinfo_table'], 'ci_id, od_id, od_card_name, card_mask_number, od_test', array(
+'card_billkey' => array('!=' => ''),
+'mb_id' => $member['mb_id'],
+'pg_service' => get_subs_option('su_pg_service'),
+'pg_apikey' => get_subscription_pg_apikey()
+), array(
+'groupBy' => 'od_card_name, card_mask_number'
+));
+
+for ($i=0; $row = sql_fetch_array($result); $i++) {
+    $mcards[] = $row;
+}
+?>
+                <div id="od_pay_sl" class="is_subscription_pays">
+                    <ul>
+                        <?php
+                        foreach($mcards as $card) {
+                            $card_num_str = $card['card_mask_number'] ? ' ('.substr($card['card_mask_number'], 0, 4).')' : '';
+                        ?>
+                            <li>
+                                <?php echo $card['od_card_name'].$card_num_str; ?>
+                            </li>
+                        <?php } ?>
+                    </ul>
                     <div class="od_pay_buttons_el">
-                        <h3>결제수단</h3>
+                        <h3>결제수단 선택</h3>
                         <?php
                         $multi_settle = 0;
                         $checked = '';
@@ -516,18 +658,33 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
 
                         echo '<fieldset id="sod_frm_paysel">';
                         echo '<legend>결제방법 선택</legend>';
-
+                        
+                        /*
                         // 무통장입금 사용
                         if (get_subs_option('su_bank_use')) {
                             ++$multi_settle;
                             echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" ' . $checked . '> <label for="od_settle_bank" class="lb_icon bank_icon">무통장입금</label>' . PHP_EOL;
                             $checked = '';
                         }
-
+                        */
+                        
                         // 신용카드 사용
                         if (get_subs_option('su_card_use')) {
                             ++$multi_settle;
-                            echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" ' . $checked . '> <label for="od_settle_card" class="lb_icon card_icon">신용카드</label>' . PHP_EOL;
+                            
+                            if ($mcards) {
+                                
+                                echo '<input type="hidden" id="od_select_card_number" name="od_select_card_number" value="" >';
+                                
+                                $j = 0;
+                                
+                                foreach($mcards as $card) {
+                                    echo '<input type="radio" id="od_subscription_card_'.$j.'" class="od_subscription_
+                                    ids" name="od_settle_case" value="'.$card['ci_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
+                                    $j++;
+                                }
+                            }
+                            echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" ' . $checked . '> <label for="od_settle_card" class="lb_icon card_icon">새 신용카드 등록</label>' . PHP_EOL;
                             $checked = '';
                         }
 
@@ -542,20 +699,43 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     </div>
             </section>
             <!-- } 결제 정보 입력 끝 -->
-
+            
             <?php
             // 결제대행사별 코드 include (주문버튼)
             require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/orderform.3.php';
             ?>
+            
+            <div>
+                약관동의
+            </div>
         </div>
 
     </div>
 </form>
 <script>
+    var holidays = [
+        '2025-01-01', // 새해 첫날
+        '2025-01-28', // 설날 연휴 시작
+        '2025-01-29', // 설날
+        '2025-01-30', // 설날 연휴 끝
+        '2025-03-01', // 삼일절
+        '2025-03-03', // 삼일절 대체공휴일
+        '2025-05-05', // 어린이날 및 부처님오신날
+        '2025-05-06', // 부처님오신날 대체공휴일
+        '2025-06-06', // 현충일
+        '2025-08-15', // 광복절
+        '2025-10-03', // 개천절
+        '2025-10-05', // 추석 연휴 시작
+        '2025-10-06', // 추석
+        '2025-10-07', // 추석 연휴 끝
+        '2025-10-09', // 한글날
+        '2025-12-25'  // 성탄절
+    ];
+    
     var zipcode = "";
     var form_action_url = "<?php echo $order_action_url; ?>";
 
-    $(function() {
+    jQuery(function($) {
         var $cp_btn_el;
         var $cp_row_el;
 
@@ -630,6 +810,15 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             var url = this.href;
             window.open(url, "win_address", "left=100,top=100,width=800,height=600,scrollbars=1");
             return false;
+        });
+        
+        // 결제수단 선택 (기존의 카드를 선택시)
+        $(document).on("click", ".subscription_card", function() {
+            var od_id_number = $(this).prev("input[name='od_settle_case']").val();
+            
+            if (od_id_number) {
+                $("#od_select_card_number").val(od_id_number);
+            }
         });
     });
 
@@ -780,7 +969,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
         $("input[name=comm_vat_mny]").val(vat_mny);
         $("input[name=comm_free_mny]").val(comm_free_mny);
     }
-
+    
     function forderform_check(f) {
         // 재고체크
         var stock_msg = subscription_order_stock_check();
@@ -788,7 +977,17 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             alert(stock_msg);
             return false;
         }
-
+        
+        // alert($.datepicker.formatDate('dd MM, yy', $("#od_hope_date_print").datepicker( "getDate" )));
+        
+        // alert($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
+        
+        // return;
+        
+        if (! jQuery("#od_hope_date").val()) {
+            jQuery("#od_hope_date").val($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
+        }
+        
         errmsg = "";
         errfld = "";
         var deffld = "";
@@ -828,7 +1027,33 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             errfld.focus();
             return false;
         }
+        
+        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val() || jQuery("input[name='od_subscription_select_data']").val();
+        
+        <?php if (get_subs_option('su_chk_user_delivery')) {    // 배송주기를 사용자가 입력이 가능한경우 ?> 
 
+        if (!jQuery("#od_subscription_select_day").val()) {
+            //alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
+            //jQuery("#od_subscription_select_day").focus();
+        }
+        
+        <?php } ?>
+            
+        if (!od_subscription_select_val) {
+            alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
+            jQuery("#od_subscription_select_data").focus();
+            
+            return false;
+        }
+        
+        var od_subscription_select_number_val = jQuery("input[name='od_subscription_select_number']:selected").val() || jQuery("input[name='od_subscription_select_number']:checked").val() || jQuery("input[name='od_subscription_select_number']").val();
+        
+        if (!od_subscription_select_number_val) {
+            alert("이용횟수를 선택해주세요");
+            
+            return false;
+        }
+            
         var settle_case = document.getElementsByName("od_settle_case");
         var settle_check = false;
         var settle_method = "";
@@ -841,7 +1066,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             }
         }
         if (!settle_check) {
-            alert("결제방식을 선택하십시오.");
+            alert("결제수단을 선택하십시오.");
             return false;
         }
 
@@ -857,22 +1082,15 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
         var temp_point = 0;
 
         var tot_price = od_price + send_cost + send_cost2 - send_coupon - temp_point;
-
-        if (document.getElementById("od_settle_iche")) {
-            if (document.getElementById("od_settle_iche").checked) {
-                if (tot_price < 150) {
-                    alert("계좌이체는 150원 이상 결제가 가능합니다.");
-                    return false;
-                }
-            }
-        }
-
-        if (document.getElementById("od_settle_card")) {
-            if (document.getElementById("od_settle_card").checked) {
-                if (tot_price < 1000) {
-                    alert("신용카드는 1000원 이상 결제가 가능합니다.");
-                    return false;
-                }
+        
+        var is_subscription_card_checked = $(".od_subscription_ids").is(':checked');
+        
+        var is_settle_card = $("#od_settle_card").is(':checked') || is_subscription_card_checked;
+        
+        if (is_settle_card) {
+            if (tot_price < 1000) {
+                alert("신용카드는 1000원 이상 결제가 가능합니다.");
+                return false;
             }
         }
 
@@ -903,29 +1121,38 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         f.pay_method.value = "AUTH:CARD";
                         break;
                     default:
-                        f.pay_method.value = "무통장";
-                        break;
+                        f.pay_method.value = is_subscription_card_checked ? "exist_card" : "무통장";
                 }
             <?php } elseif (get_subs_option('su_pg_service') == 'inicis') { ?>
                 switch (settle_method) {
-                    case "무통장":
-                        f.gopaymethod.value = "무통장";
-                        break;
+
                     case "신용카드":
-                    default:
                         f.gopaymethod.value = "Card";
                         f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
                         break;
+                    default:
+                        f.gopaymethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
+                        f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
+
+                }
+            <?php } elseif (get_subs_option('su_pg_service') == 'tosspayments') { ?>
+                switch (settle_method) {
+
+                    case "신용카드":
+                        f.gopaymethod.value = "Card";
+                        break;
+                    default:
+                        f.gopaymethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
 
                 }
             <?php } elseif (get_subs_option('su_pg_service') == 'nicepay') { ?>
                 switch (settle_method) {
 
                     case "신용카드":
-                        //f.PayMethod.value = "CARD";
+                        f.PayMethod.value = "CARD";
                         break;
                     default:
-                        f.PayMethod.value = "무통장";
+                        f.PayMethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
                         break;
                 }
             <?php } ?>
@@ -959,13 +1186,26 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     f.submit();
                 }
             <?php } ?>
+            <?php if (get_subs_option('su_pg_service') == 'tosspayments') { ?>
+                
+                if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
+                    f.submit();
+                    return false;
+                }
+                
+                requestBillingAuth({
+                  customerEmail: f.od_name.value,
+                  customerName: f.od_email.value
+                });
+                
+            <?php } ?>
             <?php if (get_subs_option('su_pg_service') == 'inicis') { ?>
                 f.price.value = f.good_mny.value;
                 f.buyername.value = f.od_name.value;
                 f.buyeremail.value = f.od_email.value;
                 f.buyertel.value = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
 
-                if (f.gopaymethod.value == "무통장") {
+                if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
                     f.submit();
                     return false;
                 }
@@ -1030,8 +1270,81 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
         calculate_sendcost(String(f.od_b_zip.value));
     }
 
-    <?php if (get_subs_option('de_hope_date_use')) { ?>
-        $(function() {
+    function getBusinessDaysBefore(date, businessDays) {
+        // date: 기준 날짜 (Date 객체)
+        // businessDays: 몇 영업일 전으로 이동할 것인지
+        // holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+        while (businessDays > 0) {
+            date.setDate(date.getDate() - 1); // 하루 전으로 이동
+            const dayOfWeek = date.getDay(); // 요일 (0: 일요일, 6: 토요일)
+            
+            // 날짜 포맷 (YYYY-MM-DD)
+            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            
+            // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+            if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+                businessDays--;
+            }
+        }
+
+        return date;
+    }
+    
+    <?php if (get_subs_option('su_chk_user_delivery')) { ?>
+    jQuery(function($){
+        $("input#od_subscription_select_data").on('input', function() {
+            var $this = $(this),
+                $this_val = parseInt($this.val()),
+                this_length = $this.val().length,
+                ml = parseInt($this.attr("maxlength"));
+            
+            // 입력 값이 비어있거나 1보다 작은 값이면 1로 설정
+            if (isNaN($this_val) || $this_val < 1 || 365 < $this_val) {
+                $this_val = "<?php echo get_subs_option('su_user_delivery_default_day'); ?>";
+                $(this).val($this_val);
+            }
+            
+            calculate_next_delivery_date();
+        });
+    });
+    <?php } ?>
+    
+    <?php if (get_subs_option('su_hope_date_use')) { ?>
+        jQuery(function($) {
+        
+            var $od_hope_date_print = $("#od_hope_date_print");
+            $od_hope_date_print.datepicker({
+                dateFormat: "yy-mm-dd",
+                inline: true,
+                yearRange: "c-99:c+99",
+			    beforeShowDay: function(date){      // 토요일 일요일 제외
+                    const dayOfWeek = date.getDay(); // 0: 일요일, 6: 토요일
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+                    // 🔒 주말(토, 일) 또는 공휴일이면 비활성화 (false 반환)
+                    if (dayOfWeek === 0 || dayOfWeek === 6 || holidays.includes(formattedDate)) {
+                        return [false, 'ui-state-disabled', '공휴일 또는 주말입니다.'];
+                    }
+                    
+                    // 🔓 그 외의 날짜는 활성화
+                    return [true, '', ''];
+                },
+                onSelect: function(dateText, inst) {
+                    console.log(dateText, inst);
+                    change_hope_date_val();
+                    
+                    $("#od_hope_date").val(dateText);
+                    calculate_next_delivery_date();
+                },
+                minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
+                maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+            });
+            
+            <?php if ($aparams_array['hope_delivery_date']) { ?>
+                $od_hope_date_print.datepicker("setDate", "<?php echo $aparams_array['hope_delivery_date']; ?>");
+            <?php } ?>
+                
+            /*
             $("#od_hope_date").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -1041,6 +1354,102 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d;",
                 maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 6; ?>d;"
             });
+            */
+            
+            function change_hope_date_val() {
+                var before_pay_date = "<?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>";
+                
+                if (before_pay_date && parseInt(before_pay_date) > 0) {
+                    
+                    setTimeout(function(){
+                        var od_hope_date_print = $od_hope_date_print.datepicker("getDate");
+                        
+                        if (od_hope_date_print) {
+                            
+                            var resultDate = getBusinessDaysBefore(new Date(od_hope_date_print), parseInt(before_pay_date));
+                            
+                            // alert(resultDate);
+                            
+                            var daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+                            var year = resultDate.getFullYear();
+                            var month = resultDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
+                            var date = resultDate.getDate();
+                            var dayOfWeek = daysOfWeek[resultDate.getDay()]; // 요일 가져오기
+
+                            var formattedDate1 = `${month}월 ${date}일 (${dayOfWeek})`;
+                            var formattedDate2 = `${year}년 ${month}월 ${date}일 (${dayOfWeek})`;
+                            
+                            jQuery(".set_pay_date").text(formattedDate1);
+                            jQuery(".before_pay_date_tr").show();
+                        }
+                    }, 100);
+                }
+            }
+            
+            change_hope_date_val();
+            
         });
+        
     <?php } ?>
+    
+    function getNextBusinessDay(date) {
+        // date: 기준 날짜 (Date 객체)
+        // holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+
+        // 날짜 객체로 변환 (입력값 검사)
+        if (!(date instanceof Date)) {
+            date = new Date(date);
+        }
+
+        while (true) {
+            date.setDate(date.getDate() + 1); // 하루 앞으로 이동
+            const dayOfWeek = date.getDay(); // 요일 (0: 일요일, 6: 토요일)
+
+            // 날짜 포맷 (YYYY-MM-DD)
+            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+            // 주말(토, 일)이 아니고 공휴일이 아니면 다음 영업일로 간주
+            if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+                break;
+            }
+        }
+
+        return date;
+    }
+    
+    // 다음 예상 발송일 계산
+    function calculate_next_delivery_date() {
+        
+        if (!$("#od_hope_date").length) {   // 희망배송일이 없으면 리턴
+            return false;
+        }
+        
+        if (! jQuery("#od_hope_date").val()) {
+            jQuery("#od_hope_date").val($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
+        }
+        
+        var $od_subscription_select_data = jQuery("#od_subscription_select_data").val(),
+            $od_subscription_select_number = jQuery("#od_subscription_select_number").val(),
+            $od_hope_date_print = $("#od_hope_date").val();
+        
+        if ($od_subscription_select_number && $od_subscription_select_number < 2) {     // 이용횟수가 1회이면 리턴
+            return false;
+        }
+        
+        var $next_el = $('.jquery-pg-datepicker .next-delivery-date-el').length ? $(".jquery-pg-datepicker .next-delivery-date-el") : $('<div class="next-delivery-date-el"></div>').appendTo(".jquery-pg-datepicker");
+        
+        // 기준 날짜 계산
+        let baseDate = new Date($od_hope_date_print);
+        
+        
+        baseDate.setDate(baseDate.getDate() + parseInt($od_subscription_select_data)); // 몇일 이후 날짜 계산
+
+        const nextDeliveryDate = getNextBusinessDay(baseDate, holidays);
+        
+        // 결과 출력
+        console.log('기준 날짜:', baseDate.toISOString().slice(0, 10));
+        console.log('다음 배송일:', nextDeliveryDate.toISOString().slice(0, 10));
+
+        $next_el.html("다음 예상 배송일 : " + nextDeliveryDate.toISOString().slice(0, 10));
+    }
 </script>
