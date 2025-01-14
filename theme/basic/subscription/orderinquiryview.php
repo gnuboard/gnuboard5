@@ -331,6 +331,8 @@ if($od['od_pg'] == 'lg') {
     if ($use['use_input']) {
         $use_print = str_replace("{입력}", $use['use_input'], $use_print);
     }
+    
+    $cards = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('mb_id'=>$member['mb_id'], 'ci_id'=>$od['ci_id']));
 ?>
             <div class="tbl_head01 tbl_wrap">
                 <table>
@@ -338,7 +340,11 @@ if($od['od_pg'] == 'lg') {
                     <tr>
 	                    <th scope="row">결제카드</th>
 	                    <td>
-                            <?php echo $opt_print; ?>
+                            <?php if ($cards) { ?>
+                                <?php echo $cards['od_card_name']; ?> (<?php echo $cards['card_mask_number']; ?>)
+                            <?php } else { ?>
+                                카드정보가 지워졌거나 카드정보가 없습니다.
+                            <?php } ?>
                         </td>
                     </tr>
                     <tr>
