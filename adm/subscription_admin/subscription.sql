@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_id` int(11) NOT NULL auto_increment,
   `su_pg_service` varchar(80) NOT NULL DEFAULT '',
   `su_card_test` int(11) NOT NULL DEFAULT '0',
-  `su_kcp_mid` varchar(80) NOT NULL DEFAULT '',
+  `su_kcp_mid` varchar(30) NOT NULL DEFAULT '',
+  `su_kcp_site_key` varchar(60) NOT NULL DEFAULT '',
   `su_kcp_group_id` varchar(80) NOT NULL DEFAULT '',
   `su_kcp_cert_info` text NOT NULL,
   `su_inicis_mid` varchar(80) NOT NULL DEFAULT '',
@@ -31,6 +32,11 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_hope_date_after` int(10) NOT NULL DEFAULT '0',
   `su_output_display_type` tinyint(2) NOT NULL DEFAULT '0',
   `su_auto_payment_lead_days` tinyint(4) NOT NULL DEFAULT '0',
+  `su_chk_user_delivery` tinyint(2) NOT NULL DEFAULT '0',
+  `su_user_delivery_title` varchar(80) NOT NULL DEFAULT '',
+  `su_user_delivery_minimum` tinyint(4) NOT NULL DEFAULT '0',
+  `su_user_delivery_template` varchar(200) NOT NULL DEFAULT '',
+  `su_user_delivery_default_day` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -317,6 +323,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_subscription_number` tinyint(4) NOT NULL DEFAULT '0',
   `od_firstshipment_date` datetime DEFAULT NULL,
   `od_time` datetime DEFAULT NULL,
+  `is_enable_user_input` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`od_id`),
   KEY `index2` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -2,28 +2,63 @@
 include_once './_common.php';
 include_once G5_LIB_PATH.'/mailer.lib.php';
 
+//print_r2($_POST);
+//exit;
+
 $od_subscription_select_data = isset($_POST['od_subscription_select_data']) ? $_POST['od_subscription_select_data'] : '';
 $od_subscription_select_number = isset($_POST['od_subscription_select_number']) ? $_POST['od_subscription_select_number'] : '';
 $od_select_card_number = isset($_POST['od_select_card_number']) ? preg_replace('/[^a-z0-9_\-]/i', '', $_POST['od_select_card_number']) : '';
 $od_hope_date = isset($_POST['od_hope_date']) ? preg_replace('/[^0-9_\-]/i', '', $_POST['od_hope_date']) : '';
 
+$is_enable_user_input = 0;
+
 if (!$od_subscription_select_data) {
     alert('배송주기를 선택해 주세요.');
 }
 
-$arr_subs_data = explode('||', $od_subscription_select_data);
-
-$subscription_info_inputs = get_subscription_info_inputs();
-
-$key = $arr_subs_data[0];
-
-$subscription_selected_data = isset($subscription_info_inputs[$key]) ? $subscription_info_inputs[$key] : array();
-
-if (!($subscription_selected_data && $subscription_selected_data['opt_input'] == $arr_subs_data[1] && $subscription_selected_data['opt_date_format'] == $arr_subs_data[2])) {
-    echo "틀림";
-} else {
-    echo "맞음";
+if (!$od_subscription_select_number) {
+    alert('이용횟수를 선택해 주세요.');
 }
+
+// 사용자가 배송주기를 입력하는 단계일때는
+if ($od_subscription_select_data && get_subs_option('su_chk_user_delivery') && ctype_digit($od_subscription_select_data)) {
+    
+    $is_enable_user_input = 1;
+    
+    // $subscription_selected_data = '0||'.$od_subscription_select_data.'||day';
+    
+    $subscription_selected_data = array(
+        'opt_id' => 0,
+        'opt_input' => $od_subscription_select_data,
+        'opt_date_format' => 'day',
+        'opt_print' => '',
+        'opt_use' => 1
+    );
+    
+} else {
+    
+    $arr_subs_data = explode('||', $od_subscription_select_data);
+
+    $subscription_info_inputs = get_subscription_info_inputs();
+
+    $key = $arr_subs_data[0];
+
+    $subscription_selected_data = isset($subscription_info_inputs[$key]) ? $subscription_info_inputs[$key] : array();
+
+    if (!($subscription_selected_data && $subscription_selected_data['opt_input'] == $arr_subs_data[1] && $subscription_selected_data['opt_date_format'] == $arr_subs_data[2])) {
+        echo "틀림";
+    } else {
+        echo "맞음";
+    }
+}
+
+$arr_subs_number = explode('||', $od_subscription_select_number);
+
+$subscription_use_inputs = get_subscription_use_inputs();
+
+$key = $arr_subs_number[0];
+
+$subscription_selected_number = isset($subscription_use_inputs[$key]) ? $subscription_use_inputs[$key] : array();
 
 $card_ci_id = 0;
 
@@ -43,14 +78,6 @@ if ($od_select_card_number === $od_settle_case) {
     }
     
     $od_settle_case = '카드재사용';
-    
-    $arr_subs_number = explode('||', $od_subscription_select_number);
-    
-    $subscription_use_inputs = get_subscription_use_inputs();
-
-    $key = $arr_subs_number[0];
-
-    $subscription_selected_number = isset($subscription_use_inputs[$key]) ? $subscription_use_inputs[$key] : array();
     
     $card_ci_id = $od_select_card_number;
 }
@@ -251,7 +278,8 @@ if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
             break;
         case 'kcp':
         default:
-            include G5_SUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_req.php';
+            // include G5_SUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_req.php';
+            include G5_SUBSCRIPTION_PATH.'/kcp/pp_cli_hub.php';
             break;
     }
 
@@ -412,10 +440,8 @@ $inserts = array(
     'od_subscription_date_format' => $od_subscription_date_format,
     'od_subscription_selected_data' => base64_encode(serialize($subscription_selected_data)),
     'od_subscription_selected_number' => base64_encode(serialize($subscription_selected_number)),
+    'is_enable_user_input' => $is_enable_user_input
 );
-
-//echo var_export($inserts, true);
-//exit;
 
 $result = sql_bind_insert($g5['g5_subscription_order_table'], $inserts);
 

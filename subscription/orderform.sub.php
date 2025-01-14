@@ -376,8 +376,17 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 <div class="tbl_frm01 tbl_wrap">
                     <table>
                         <tbody>
+                        <?php if (get_subs_option('su_chk_user_delivery')) { ?>
                             <tr>
-                                <th scope="row"><label for="">배송주기</label></th>
+                                <th scope="row"><label for=""><?php echo subscription_item_delivery_title($it); ?></label></th>
+                                <td>
+                                <input id="od_subscription_select_data" name="od_subscription_select_data" type="number" inputmode="numeric" placeholder="숫자" max="365" maxlength="3" value="<?php echo get_subs_option('su_user_delivery_default_day'); ?>" class="frm_input">
+                                <span class="od_subscription_days">일</span>
+                                </td>
+                            </tr>
+                        <?php } else { ?>
+                            <tr>
+                                <th scope="row"><label for=""><?php echo subscription_item_delivery_title($it); ?></label></th>
                                 <td>
                                 <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
                                     <div class="su-display-btns">
@@ -422,11 +431,11 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <?php } ?>
                                 </td>
                             </tr>
+                        <?php } ?>
                             <tr>
                                 <th scope="row"><label for="">이용횟수</label></th>
                                 <td>
                                 <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
-                                    <input type="hidden" id="od_subscription_select_number" name="od_subscription_select_number">
                                     <div class="su-display-btns">
                                         <?php foreach ($subscription_use_inputs as $key=>$use) {
                                         if (! $use['num_use']) {
@@ -466,16 +475,15 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 <?php } ?>
                                 </td>
                             </tr>
-                            <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용
-                            ?>
-                                <tr>
-                                    <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
-                                    <td class="jquery-pg-datepicker">
-                                        <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">
-                                        <div id="od_hope_date_print" class="jquery-datepicker"></div>
-                                    </td>
-                                </tr>
-                            <?php } ?>
+                        <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용 ?>
+                            <tr>
+                                <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
+                                <td class="jquery-pg-datepicker">
+                                    <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">
+                                    <div id="od_hope_date_print" class="jquery-datepicker"></div>
+                                </td>
+                            </tr>
+                        <?php } ?>
                         <tbody>
                     </table>
                 </div>
@@ -706,16 +714,22 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
 </form>
 <script>
     var holidays = [
-        '2024-01-01', // 신정
-        '2024-02-09', '2024-02-10', '2024-02-11', '2024-02-12', // 설날 연휴
-        '2024-03-01', // 삼일절
-        '2024-05-05', '2024-05-06', // 어린이날 대체 공휴일
-        '2024-06-06', // 현충일
-        '2024-08-15', // 광복절
-        '2024-09-16', '2024-09-17', '2024-09-18', // 추석 연휴
-        '2024-10-03', // 개천절
-        '2024-10-09', // 한글날
-        '2024-12-25'  // 성탄절
+        '2025-01-01', // 새해 첫날
+        '2025-01-28', // 설날 연휴 시작
+        '2025-01-29', // 설날
+        '2025-01-30', // 설날 연휴 끝
+        '2025-03-01', // 삼일절
+        '2025-03-03', // 삼일절 대체공휴일
+        '2025-05-05', // 어린이날 및 부처님오신날
+        '2025-05-06', // 부처님오신날 대체공휴일
+        '2025-06-06', // 현충일
+        '2025-08-15', // 광복절
+        '2025-10-03', // 개천절
+        '2025-10-05', // 추석 연휴 시작
+        '2025-10-06', // 추석
+        '2025-10-07', // 추석 연휴 끝
+        '2025-10-09', // 한글날
+        '2025-12-25'  // 성탄절
     ];
     
     var zipcode = "";
@@ -955,7 +969,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         $("input[name=comm_vat_mny]").val(vat_mny);
         $("input[name=comm_free_mny]").val(comm_free_mny);
     }
-
+    
     function forderform_check(f) {
         // 재고체크
         var stock_msg = subscription_order_stock_check();
@@ -1014,11 +1028,28 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             return false;
         }
         
-        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val();
+        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val() || jQuery("input[name='od_subscription_select_data']").val();
         
+        <?php if (get_subs_option('su_chk_user_delivery')) {    // 배송주기를 사용자가 입력이 가능한경우 ?> 
+
+        if (!jQuery("#od_subscription_select_day").val()) {
+            //alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
+            //jQuery("#od_subscription_select_day").focus();
+        }
+        
+        <?php } ?>
+            
         if (!od_subscription_select_val) {
-            alert("배송주기를 선택해주세요");
+            alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
             jQuery("#od_subscription_select_data").focus();
+            
+            return false;
+        }
+        
+        var od_subscription_select_number_val = jQuery("input[name='od_subscription_select_number']:selected").val() || jQuery("input[name='od_subscription_select_number']:checked").val() || jQuery("input[name='od_subscription_select_number']").val();
+        
+        if (!od_subscription_select_number_val) {
+            alert("이용횟수를 선택해주세요");
             
             return false;
         }
@@ -1258,7 +1289,26 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
 
         return date;
     }
-
+    
+    <?php if (get_subs_option('su_chk_user_delivery')) { ?>
+    jQuery(function($){
+        $("input#od_subscription_select_data").on('input', function() {
+            var $this = $(this),
+                $this_val = parseInt($this.val()),
+                this_length = $this.val().length,
+                ml = parseInt($this.attr("maxlength"));
+            
+            // 입력 값이 비어있거나 1보다 작은 값이면 1로 설정
+            if (isNaN($this_val) || $this_val < 1 || 365 < $this_val) {
+                $this_val = "<?php echo get_subs_option('su_user_delivery_default_day'); ?>";
+                $(this).val($this_val);
+            }
+            
+            calculate_next_delivery_date();
+        });
+    });
+    <?php } ?>
+    
     <?php if (get_subs_option('su_hope_date_use')) { ?>
         jQuery(function($) {
         
@@ -1284,6 +1334,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                     change_hope_date_val();
                     
                     $("#od_hope_date").val(dateText);
+                    calculate_next_delivery_date();
                 },
                 minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
                 maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
@@ -1338,5 +1389,67 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             change_hope_date_val();
             
         });
+        
     <?php } ?>
+    
+    function getNextBusinessDay(date) {
+        // date: 기준 날짜 (Date 객체)
+        // holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+
+        // 날짜 객체로 변환 (입력값 검사)
+        if (!(date instanceof Date)) {
+            date = new Date(date);
+        }
+
+        while (true) {
+            date.setDate(date.getDate() + 1); // 하루 앞으로 이동
+            const dayOfWeek = date.getDay(); // 요일 (0: 일요일, 6: 토요일)
+
+            // 날짜 포맷 (YYYY-MM-DD)
+            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+            // 주말(토, 일)이 아니고 공휴일이 아니면 다음 영업일로 간주
+            if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+                break;
+            }
+        }
+
+        return date;
+    }
+    
+    // 다음 예상 발송일 계산
+    function calculate_next_delivery_date() {
+        
+        if (!$("#od_hope_date").length) {   // 희망배송일이 없으면 리턴
+            return false;
+        }
+        
+        if (! jQuery("#od_hope_date").val()) {
+            jQuery("#od_hope_date").val($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
+        }
+        
+        var $od_subscription_select_data = jQuery("#od_subscription_select_data").val(),
+            $od_subscription_select_number = jQuery("#od_subscription_select_number").val(),
+            $od_hope_date_print = $("#od_hope_date").val();
+        
+        if ($od_subscription_select_number && $od_subscription_select_number < 2) {     // 이용횟수가 1회이면 리턴
+            return false;
+        }
+        
+        var $next_el = $('.jquery-pg-datepicker .next-delivery-date-el').length ? $(".jquery-pg-datepicker .next-delivery-date-el") : $('<div class="next-delivery-date-el"></div>').appendTo(".jquery-pg-datepicker");
+        
+        // 기준 날짜 계산
+        let baseDate = new Date($od_hope_date_print);
+        
+        
+        baseDate.setDate(baseDate.getDate() + parseInt($od_subscription_select_data)); // 몇일 이후 날짜 계산
+
+        const nextDeliveryDate = getNextBusinessDay(baseDate, holidays);
+        
+        // 결과 출력
+        console.log('기준 날짜:', baseDate.toISOString().slice(0, 10));
+        console.log('다음 배송일:', nextDeliveryDate.toISOString().slice(0, 10));
+
+        $next_el.html("다음 예상 배송일 : " + nextDeliveryDate.toISOString().slice(0, 10));
+    }
 </script>

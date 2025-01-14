@@ -860,14 +860,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <h3>정기결제내역</h3>
     
     <?php
-    $sql = "select * from `{$g5['g5_subscription_pay_table']}` where od_id = '$od_id' order by id desc";
-    $pay_result = sql_query($sql);
-    
-    $pay_rows = array();
-    
-    for ($i = 0; $pays=sql_fetch_array($pay_result); ++$i) {
-        $pay_rows[] = $pays;
-    }
+    $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
     ?>
     <div class="tbl_frm01">
         <table>

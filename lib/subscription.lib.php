@@ -1076,7 +1076,7 @@ function getBusinessDaysBefore($date, $businessDays = 0, $holidays=array()) {
     }
 
 
-    return date('Y-m-d', $timestamp);
+    return date('Y-m-d', $timestamp).' 09:00:01';
 }
 
 function subscription_serial_encode($data, $od=null) {
@@ -1173,14 +1173,14 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
     
     // 희망배송일이 있으면
     if ($od_hope_date) {
-        $nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
+        //$nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
         
-        return $nextdate.' 09:00:01';
+        //return $nextdate.' 09:00:01';
     }
     
     $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
     $plus = abs($od_subscription_number);
-        
+    
     // 주어진 interval에 따라 날짜를 증가시킴
     switch ($interval) {
         case 'day':
@@ -1198,9 +1198,11 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
         default:
             throw new Exception("Unknown billing interval: $interval");
     }
-
+    
+    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp));
+    
     // 다음 청구일을 YYYY-MM-DD 형식으로 반환
-    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
+    // return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
     
 }
 
@@ -1280,6 +1282,62 @@ function expire_nicepay_billing($bid) {
 }
 
 function kcp_billing($od, $tmp_cart_id='') {
+    global $g5;
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+    
+    $site_cd            = get_subs_option('su_kcp_mid'); // 사이트 코드
+    // 인증서 정보(직렬화)
+    $kcp_cert_info      = get_subs_option('su_kcp_cert_info');
+    
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
+    
+    $cust_ip            = "";
+    $currency           = '410'; // 화폐 단위
+    $ordr_idxx          = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid(); // 주문번호 
+    $good_name          = $goodsname['full_name']; // 상품명
+    $buyr_name          = $od['od_name']; // 주문자명
+    $buyr_mail          = $od['od_email']; // 주문자 E-mail
+    $buyr_tel1          = $od['od_tel']; // 주문자 전화번호번호
+    $buyr_tel2          = $od['od_hp']; // 주문자 휴대폰번호
+
+    $bt_batch_key       = $od['card_billkey']; // 배치키 정보
+    $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
+
+    $posts = array(
+        'pay_method' => 'CARD',
+        'ordr_idxx' => $ordr_idxx,
+        'good_name' => $good_name,
+        'good_mny' => $od['od_receipt_price'],
+        'buyr_name' => $buyr_name,
+        'buyr_mail' => $buyr_mail,
+        'buyr_tel1' => $buyr_tel1,
+        'buyr_tel2' => $buyr_tel2,
+        'req_tx' => 'pay',  // req_tx : 요청종류 승인(pay)/취소,매입(mod) 요청시 사용
+        'currency' => $currency,
+        'mod_type' => '',   // 변경TYPE(승인취소시 필요)
+        'mod_desc' => '',   // 변경사유
+        'card_pay_method' => 'Batch',
+        'quotaopt' => "00",
+        'bt_group_id' => $bt_group_id,
+        'bt_batch_key' => $bt_batch_key,
+    );
+    
+    include_once(G5_SUBSCRIPTION_PATH.'/kcp/pay_pp_cli_hub.php');
+    
+    run_event('subscription_order_pg_pay', 'kcp', $results, $posts);
+    
+    if (isset($results['res_cd']) && $results['res_cd'] === '0000') {
+        return array('code'=>'success', 'message'=>$results['res_msg'], 'response'=>$results);
+    } else {
+        return array('code'=>'fail', 'message'=>$results['res_cd'].':'.$results['res_msg'], 'response'=>$results);
+    }
+    
+    return array();
+}
+
+function kcp_new_billing($od, $tmp_cart_id='') {
     global $g5;
     
     include(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
@@ -1364,7 +1422,7 @@ function kcp_billing($od, $tmp_cart_id='') {
     
     run_event('subscription_order_pg_pay', 'kcp', $res, $data);
     
-    if (isset($res['res_cd']) && $res['res_cd'] = '0000') {
+    if (isset($res['res_cd']) && $res['res_cd'] === '0000') {
         return array('code'=>'success', 'message'=>$res['res_msg'], 'response'=>$res);
     } else {
         return array('code'=>'fail', 'message'=>$res['res_cd'].':'.$res['res_msg'], 'response'=>$res);
@@ -1435,7 +1493,106 @@ function check_subscription_pay_method($od_settle_case) {
     
 }
 
+function nicepay_reqPost(Array $data, $url){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);					//connection timeout 15 
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));	//POST data
+	curl_setopt($ch, CURLOPT_POST, true);
+	$response = curl_exec($ch);
+	curl_close($ch);	 
+	return $response;
+}
+
 function nicepay_billing($od, $tmp_cart_id='') {
+    global $g5;
+    
+    include(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
+    
+    // https://developers.nicepay.co.kr/manual-card-billing.php#parameter-card-billing-response
+    // 빌링 결제(승인) API 요청 URL
+    $postURL = "https://webapi.nicepay.co.kr/webapi/billing/billing_approve.jsp";
+
+    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
+    $goodsname = get_subscription_goods($cart_id);
+    
+    /*
+    ****************************************************************************************
+    * (요청 값 정보)
+    * 아래 파라미터에 요청할 값을 알맞게 입력합니다. 
+    ****************************************************************************************
+    */
+    $bid 				= $od['card_billkey'];				// 빌키
+    $mid 				= get_subs_option('su_nicepay_mid');		// 가맹점 아이디
+    $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
+    $moid 				= $od['od_id'];				// 가맹점 주문번호
+    $amt 				= (int) $od['od_receipt_price'];				// 결제 금액
+    //$goodsName 			= $goodsname['full_name'];				// 상품명
+    
+    $goodsName 			= iconv("UTF-8", "EUC-KR", $goodsname['full_name']);				// 상품명
+    $cardInterest 		= '0';				// 무이자 여부, 가맹점 분담 무이자 할부 이벤트 사용 여부 (0: 미사용, 1: 사용(무이자))
+    $cardQuota 			= '00';				// 할부 개월 수, 할부개월 (00: 일시불, 02: 2개월, 03: 3개월, ...)
+    $buyerName 			= iconv("UTF-8", "EUC-KR", $od['od_name']);				// 구매자명
+    $buyerTel 			= $od['od_hp'];				// 구매자 전화번호
+    $buyerEmail 		= $od['od_email'];				// 구매자 이메일
+
+    /*
+    ****************************************************************************************
+    * (해쉬암호화 - 수정하지 마세요)
+    * SHA-256 해쉬암호화는 거래 위변조를 막기위한 방법입니다. 
+    ****************************************************************************************
+    */	
+    $ediDate = date("YmdHis", G5_SERVER_TIME);																					// API 요청 전문 생성일시
+    $merchantKey = get_subs_option('su_nicepay_key');	// 가맹점 키	
+    $signData = bin2hex(hash('sha256', $mid . $ediDate . $moid . $amt . $bid . $merchantKey, true));			// 위변조 데이터 검증 값 암호화
+
+    /*
+    ****************************************************************************************
+    * (API 요청부)
+    * 명세서를 참고하여 필요에 따라 파라미터와 값을 'key'=>'value' 형태로 추가해주세요
+    ****************************************************************************************
+    */
+    $data = Array(
+        'BID' => $bid,
+        'MID' => $mid,
+        'TID' => $tid,
+        'EdiDate' => $ediDate,
+        'Moid' => $moid,
+        'Amt' => $amt,
+        'GoodsName' => $goodsName,
+        'SignData' => $signData,
+        'CardInterest' => $cardInterest,
+        'CardQuota' => $cardQuota,
+        'CharSet' => 'utf-8'
+    );
+    
+    $response = nicepay_reqPost($data, $postURL); 				//API 호출, 결과 데이터가 $response 변수에 저장됩니다.
+
+    // $resp_utf = iconv("EUC-KR", "UTF-8", $response);
+    $resp_utf = $response; 
+    $nice_response = json_decode($resp_utf, true);
+    
+    // resultCode 가 3001이면 성공이고 그외이면 실패
+    if ($nice_response['ResultCode'] === '3001' && isset($nice_response['TID']) && $nice_response['TID']) {
+        $code = 'success';
+    } else {
+        $code = 'fail';
+        $message = $nice_response['ResultMsg'];
+    }
+    
+    if (function_exists('add_log')) {
+        add_log($nice_response, false, 'nice');
+    }
+    
+    run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $data);
+    
+    // $res 형식은 json
+    return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
+}
+
+function nicepay_new_billing($od, $tmp_cart_id='') {
     global $g5;
     
     include(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
@@ -1864,6 +2021,19 @@ function print_subscription_card_info($od) {
     }
     
     return $txt;
+}
+
+function subscription_item_delivery_title($it) {
+    $title = get_subs_option('su_user_delivery_title');
+    
+    return $title ? get_text($title) : '주기일입력';
+}
+
+function subscription_user_delivery_option($index) {
+    
+    $text = (int) get_subs_option('su_user_delivery_default_day') * (int) $index;
+    
+    return $index.'주기마다 ('.$text.'일마다)';
 }
 
 function isValidBase64($input) {

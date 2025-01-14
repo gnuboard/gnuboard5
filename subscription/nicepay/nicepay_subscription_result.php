@@ -65,7 +65,51 @@ $data = Array(
 );		
 
 $response = reqPost($data, $postURL); 				//API 호출, 결과 데이터가 $response 변수에 저장됩니다.
-jsonRespDump($response); 							//결과 데이터를 브라우저에 노출합니다.
+//jsonRespDump($response); 							//결과 데이터를 브라우저에 노출합니다.
+
+print_r( $response );
+
+$resp_utf = iconv("EUC-KR", "UTF-8", $response);
+
+$respArr = json_decode($resp_utf, true);
+
+// https://developers.nicepay.co.kr/manual-card-billing.php
+// 0000이 아니면 실패
+if ($respArr['ResultCode'] !== 'F100') {
+    alert($respArr['ResultMsg'], G5_SHOP_URL);
+}
+
+if (function_exists('add_log')) {
+    add_log($respArr);
+}
+
+$od_tno = $respArr['TID'];
+
+$card_mask_number = mask_card_number($cardNo);
+$card_billkey = $respArr['BID'];
+$tno = $respArr['TID'];
+$amount = $_POST['good_mny'] ? (int) $_POST['good_mny'] : 0;
+
+// 카드 코드
+$card_code = $respArr['CardCode'];
+// 카드이름
+$card_name = preg_replace('/\[(.*?)\]/', '$1', $respArr['CardName']);
+
+
+/*
+(
+    [ResultCode] => F100
+    [ResultMsg] => 빌키가 정상적으로 생성되었습니다.
+    [BID] => BIKYnictest*4m2501021117517***
+    [AuthDate] => 20250102
+    [CardCode] => 08
+    [CardName] => [롯데]
+    [TID] => nictest04m01162501021117517554
+    [CardCl] => 0
+    [AcquCardCode] => 08
+    [AcquCardName] => [롯데]
+)
+*/
 
 // 카드 정보를 암호화할 때 사용하는 AES 암호화 (opnessl) 함수입니다. 
 function aesEncryptSSL($data, $key){

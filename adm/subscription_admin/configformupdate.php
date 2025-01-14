@@ -35,6 +35,7 @@ $warning_msg = '';
 $check_sanitize_keys = array(
 'su_pg_service',                //결제대행사
 'su_kcp_mid',                   // KCP SITE CODE
+'su_kcp_site_key',              // NHN KCP SITE KEY
 'su_kcp_group_id',              // NHN KCP 그룹아이디
 'su_kcp_cert_info',             // NHN KCP 인증서 ( NHNKCP 상점 관리자 > 기술관리센터 > 인증센터 > KCP PG-API > 발급하기 경로에서 개인키 + 인증서 발급이 가능 )
 'su_inicis_mid',                //KG이니시스 상점아이디
@@ -52,6 +53,11 @@ $check_sanitize_keys = array(
 'su_hope_date_after',            // 희망배송일지정
 'su_output_display_type',       // 정기구독 입력 출력 형식
 'su_auto_payment_lead_days',    // 배송일 이전 자동결제 설정일
+'su_chk_user_delivery',         // 사용자가 배송주기의 입력 사용 가능한지 체크
+'su_user_delivery_title',       // 사용자가 배송주기의 입력 사용 가능시 타이틀 지정
+'su_user_delivery_minimum',
+'su_user_delivery_template',
+'su_user_delivery_default_day'
 );
 
 $inserts = array();
@@ -98,16 +104,21 @@ if (isset($exist['su_id']) && $exist['su_id']) {
     foreach($inserts as $key => $value) {
         $valueSets[] = $key . " = '" . $value . "'";
     }
-
-    $sql = "UPDATE `{$g5['g5_subscription_config_table']}` SET ".implode(', ',$valueSets);
+    
+    sql_bind_update(
+        $g5['g5_subscription_config_table'],
+        $inserts,
+        array('su_id'=>array('>=' => 0))
+    );
+    
+    //$sql = "UPDATE `{$g5['g5_subscription_config_table']}` SET ".implode(', ',$valueSets);
     
 } else {
     $columns = implode(', ', array_keys($inserts));
     $values = implode("', '", array_values($inserts));
     $sql = "INSERT INTO `{$g5['g5_subscription_config_table']}`($columns) VALUES ('$values')";
+    sql_query($sql);
 }
-
-sql_query($sql);
 
 run_event('subscription_admin_configformupdate');
 

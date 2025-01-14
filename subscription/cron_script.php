@@ -10,8 +10,21 @@ if (! $t) {
 $is_db_success = true;
 
 if ($is_db_success) {
+    
+    sql_bind_update($g5['g5_subscription_config_table'], array('su_cron_updatetime'=>G5_TIME_YMDHIS));
+    
+    /*
     $sql = "UPDATE `{$g5['g5_subscription_config_table']}` SET su_cron_updatetime = '".G5_TIME_YMDHIS."' ";
     sql_query($sql);
+    
+    sql_bind_update(
+        $g5['g5_subscription_order_table'],
+        array('next_billing_date'=>$nextBillingDate,
+        'last_billed_date'=>G5_TIME_YMDHIS,
+        'od_pays_total'=>1),
+        array('od_id'=>$od_id)
+    );
+    */
 }
 
 $tomorrow = date('Y-m-d', strtotime('+1 day', G5_SERVER_TIME));
@@ -32,30 +45,30 @@ $result_row = sql_bind_select_array(
 
 foreach($result_row as $od) {
     
-    $nextBillingDate = calculateNextBillingDate2($od);
+    $row = $od;
     
-    print_r($nextBillingDate);
-    
-    /*
     $pays = subscription_process_payment($od, $od['od_pg']);
     
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
-        $pay_round_no = (int) $row['od_pays_total'] + 1;
-        $insert_id = subscription_order_pay($row, $pays, $pay_round_no);
+        $pay_round_no = (int) $od['od_pays_total'] + 1;
+        $insert_id = subscription_order_pay($od, $pays, $pay_round_no);
         
         // 성공이면
         if ($insert_id) {
             
-            $nextBillingDate = calculateNextBillingDate($row);
+            $nextBillingDate = calculateNextBillingDate($od);
             
-            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '".$row['od_id']."'";
+            //$updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '".$od['od_id']."'";
             
-            sql_query($updateQuery);
+            //sql_query($updateQuery);
             
-            $od_name = $row['od_name'];
-            $od_email = $row['od_email'];
+            $result = sql_bind_update($g5['g5_subscription_order_table'], array('next_billing_date'=>$nextBillingDate, 'last_billed_date'=>G5_TIME_YMDHIS, 'od_pays_total'=>$pay_round_no), 
+                array('od_id'=>$od['od_id']));
+            
+            $od_name = $od['od_name'];
+            $od_email = $od['od_email'];
             
             include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
             include_once(G5_SUBSCRIPTION_PATH.'/cron_ordermail2.inc.php');
@@ -79,8 +92,7 @@ foreach($result_row as $od) {
         
         // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
     }
-    */
-    
+
 }
 
 exit;

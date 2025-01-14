@@ -99,14 +99,20 @@ class G5MySQLQuery
         }
         */
         foreach ($args as $value) {
+
             if (is_int($value)) {
                 $types .= "i";
             } elseif (is_float($value)) {
                 $types .= "d";
             } elseif (is_numeric($value) && ctype_digit($value)) {
                 // 숫자 문자열도 정수로 변환
-                $value = (int) $value;
-                $types .= "i";
+                $value = preg_replace('/[^0-9]/', '', $value);
+                
+                if (strlen($value) > 1 && preg_match('/^0.+/', $value)) {
+                    $types .= "s";
+                } else {
+                    $types .= "i";
+                }
             } elseif (is_numeric($value)) {
                 // 숫자 문자열이지만 정수가 아닌 경우, float로 변환
                 $value = (float) $value;
@@ -114,13 +120,15 @@ class G5MySQLQuery
             } else {
                 $types .= "s";
             }
+
+            //$types .= "s";
             $valueToBind[] = $value;
         }
         
         $this->boundValues = $valueToBind; // 바인딩된 값 저장
         
         $params = array_merge(array($this->preparedQuery, $types), $valueToBind);
-
+        
         if (!call_user_func_array('mysqli_stmt_bind_param', $this->refValues($params))) {
             $bindCount = count($args);
             throw new MySQLQueryFailToBindException("Failed to bind ({$bindCount}) values to the query");
@@ -245,11 +253,18 @@ class G5MySQLQuery
         $values = $this->boundValues;
 
         foreach ($values as $value) {
+            /*
             // 값이 문자열이면 작은따옴표로 감싸기
             if (is_string($value)) {
                 $value = "'" . addslashes($value) . "'";
             } elseif ($value === null) {
                 $value = "NULL";
+            }
+            */
+            if ($value === null) {
+                $value = "NULL";
+            } else {
+                $value = "'" . addslashes($value) . "'";
             }
             // ?를 바인딩된 값으로 하나씩 교체
             $query = preg_replace('/\?/', $value, $query, 1);
@@ -414,7 +429,7 @@ class G5MysqlCRUD
         */
         
         // 실행된 쿼리 디버깅
-        echo "실제 실행된 쿼리: " . $query->getQuery() . "\n";
+        // echo "실제 실행된 쿼리: " . $query->getQuery() . "\n";
         
         // $query->execute();
         
@@ -454,7 +469,7 @@ class G5MysqlCRUD
         call_user_func_array(array($queryObj, 'bind'), $valuesToBind);
         
         // 실행된 쿼리 디버깅
-        // echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
+        echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
         
         // $queryObj->execute();
         
@@ -532,11 +547,32 @@ function sql_bind_update($table, $updates, $conditions = array(), $link = null){
     
     $condition_array = array_keys($conditions);
     
+    /*
     $condition = array_map(function($item) {
         return "$item = ?";
     }, $condition_array);
+    */
     
-    $conditionValues = array_values($conditions);
+    // 조건에 연산자를 적용하기 위해 배열 구조 변경
+    $condition = array_map(function($item) use ($conditions) {
+        // 조건 값이 배열인지 확인 (예: ['>' => 100] 형식)
+        if (is_array($conditions[$item])) {
+            $operator = key($conditions[$item]); // 연산자 가져오기 (예: >, <, =, !=)
+            return "$item $operator ?";
+        } else {
+            return "$item = ?";
+        }
+    }, $condition_array);
+    
+    // $conditionValues = array_values($conditions);
+    
+    // 조건에 사용할 값만 추출 (연산자를 제외한 실제 값만 가져오기)
+    $conditionValues = array_map(function($value) {
+        if (is_array($value)) {
+            return current($value); // 연산자와 값 중 값만 추출
+        }
+        return $value;
+    }, array_values($conditions));
     
     return G5MysqlCRUD::update($table, $columns, $columnValues, $condition, $conditionValues, $link);
 

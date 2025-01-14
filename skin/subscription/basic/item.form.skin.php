@@ -371,14 +371,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 					<p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
 				<?php } ?>
 
-                <?php
-                // 정기구독 설정 불러오기
-                // 배송주기
-                $subscription_info_inputs = get_subscription_info_inputs();
-
-                // 이용횟수
-                $subscription_use_inputs = get_subscription_use_inputs();
-                ?>
+                <?php // 정기결제 모달 시작 ?>
                 <div id="ex1" class="modal">
                     <div>
                         <h2 class="subscription-title">
@@ -391,10 +384,36 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
                             <li>설명 설명 땡땡 가능합니다.</li>
                         </ul>
                     </div>
-                    <h3>
-                        <label for="">배송주기</label>
-                    </h3>
-                    <div>
+                    
+                    <?php if (get_subs_option('su_chk_user_delivery')) { ?>
+                        <div class="group_form_row">
+                            <div class="group_form_label"><?php echo subscription_item_delivery_title($it); ?></div>
+                            <div class="group_form_input">
+                                <input id="js-cycle" name="cycle" type="number" inputmode="numeric" placeholder="숫자" max="365" maxlength="3" value="" class="group_input">
+                                <div class="unit">일</div>
+                            </div>
+                        </div>
+                        <div class="group_form_row group_select">
+                            <div class="group_form_label">배송주기</div>
+                            <select id="js-multiple" name="multiple">
+                            <option selected="" disabled="">선택해주세요</option>
+                            <option value="1">1주기마다 (21일마다)</option>
+                            <option value="2">2주기마다 (42일마다)</option>
+                            <option value="3">3주기마다 (63일마다)</option>
+                            </select>
+                        </div>
+                    <?php } else {
+                        // 정기구독 설정 불러오기
+                        // 배송주기
+                        $subscription_info_inputs = get_subscription_info_inputs();
+
+                        // 이용횟수
+                        $subscription_use_inputs = get_subscription_use_inputs();
+                    ?>
+                        <h3>
+                            <label for="">배송주기</label>
+                        </h3>
+                        <div>
                         <?php if (get_subs_option('su_output_display_type')) {  // 버튼식 ?>
                             <div class="su-display-btns">
                             <?php 
@@ -475,6 +494,7 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
                             </select>
                         <?php } ?>
                       </div>
+                      <?php } ?>
                         <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용 ?>
                         <h3><label for="od_hope_date_print">희망배송일</label></h3>
                         <div class="jquery-datepicker">

@@ -336,6 +336,12 @@ if($od['od_pg'] == 'lg') {
                 <table>
 	                <tbody>
                     <tr>
+	                    <th scope="row">결제카드</th>
+	                    <td>
+                            <?php echo $opt_print; ?>
+                        </td>
+                    </tr>
+                    <tr>
 	                    <th scope="row">배송주기</th>
 	                    <td>
                             <?php echo $opt_print; ?>
@@ -371,6 +377,43 @@ if($od['od_pg'] == 'lg') {
                         </td>
                     </tr>
 	                </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <?php
+        
+        $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
+        
+        ?>
+        
+        <section id="sod_fin_dvr">
+            <h3>정기결제내역</h3>
+            
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                    <?php if ($pay_rows) { ?>
+                    <tr>
+                        <th>회차</th>
+                        <th>결제PG사</th>
+                        <th>결제된날짜</th>
+                        <th>결제금액</th>
+                        <th>보기</th>
+                    </tr>
+                    <?php foreach($pay_rows as $key=>$v) { ?>
+                    <tr>
+                        <td><?php echo $v['py_round_no']; ?></td>
+                        <td><?php echo $v['py_pg']; ?></td>
+                        <td><?php echo $v['py_receipt_time']; ?></td>
+                        <td></td>
+                        <td><a href="#" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
+                    </tr>
+                    <?php } // end for ?>
+                    <?php } else { ?>
+	                <tr>
+	                    <td class="empty_table">아직 정기결제내역이 없습니다.</td>
+	                </tr>
+                    <?php } ?>
                 </table>
             </div>
         </section>

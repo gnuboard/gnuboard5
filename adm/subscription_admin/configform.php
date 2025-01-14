@@ -42,6 +42,9 @@ $subscription_use_inputs = get_subscription_use_inputs();
 
 // print_r2($subscription_info_inputs);
 // exit;
+
+$cron_token = subscription_cron_token();
+
 $g5['title'] = '정기결제설정';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
@@ -62,8 +65,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tr>
             <th scope="row"><label>정기결제 CRON PATH</label></th>
             <td>
-                <p><?php echo G5_SUBSCRIPTION_URL.'/cron_script.php'; ?></p>
-                <p><?php echo G5_SUBSCRIPTION_PATH.'/cron_script.php?t='.subscription_cron_token(); ?></p>
+                <p><?php echo G5_SUBSCRIPTION_URL.'/cron_script.php?t='.$cron_token; ?></p>
+                <p><?php echo G5_SUBSCRIPTION_PATH.'/cron_script.php?t='.$cron_token; ?></p>
             </td>
         </tr>
         <tr>
@@ -72,7 +75,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <ul>
                 
                     <li>
-                    <a href="cron-job.org" target="_blank">cron-job.org</a> 과 같은 웹사이트에서 cron을 등록합니다.
+                    <a href="https://cron-job.org" target="_blank">cron-job.org</a> 과 같은 웹사이트에서 cron을 등록합니다.
                     </li>
                     <li>cron-job.org 사이트의 경우 로그인 후 CREATE CRONJOB 버튼을 눌러 URL 항목에<?php echo G5_SUBSCRIPTION_URL; ?>/cron_script.php 을 등록합니다.</li>
                     
@@ -101,19 +104,29 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <th scope="row">구독정보입력</th>
             <td>
                 <div>
-                출력형식 : 
-<select name="su_output_display_type">
-<?php echo option_selected(0, get_subs_option('su_output_display_type'), "셀렉트박스"); ?>
-<?php echo option_selected(1, get_subs_option('su_output_display_type'), "버튼식"); ?>
-</select>
-<br>
                 <input type="checkbox" name="" >다음 결제일 변경 수정가능
                 <br>
                 <input type="checkbox" name="" >다음 결제일 변경 가능일
                 <br>
                 <input type="checkbox" name="" >영업일에만 결제 사용 가능(체크시 토요일, 일요일 에는 결제를 하지 않습니다.);
                 <br>
+                <input type="checkbox" name="su_chk_user_delivery" id ="su_chk_user_delivery" value="1" <?php echo get_subs_option('su_chk_user_delivery') ? 'checked' : ''; ?>><label for="su_chk_user_delivery">체크시 아래 배송주기의 결제주기 입력이 비활성화되고 사용자가 직접 입력할수 있도록 합니다.(입력은 일(day)로 한정)</label>
+                <br>
+                <input type="number" name="su_user_delivery_default_day" value="<?php echo get_subs_option('su_user_delivery_default_day'); ?>">배송주기의 결제주기 입력의 기본값 예) 기본값은 1 일
+                <br>
+                <input type="text" name="su_user_delivery_title" value="<?php echo get_subs_option('su_user_delivery_title'); ?>">배송주기의 입력을 직접 사용자가 입력할수 경우 출력되는 타이틀 텍스트
+                <br>
+                <input type="number" name="su_user_delivery_minimum" value="<?php echo get_subs_option('su_user_delivery_minimum'); ?>">사용자 입력 최소일 제한
+                <br>
+                <input type="text" name="su_user_delivery_template" value="<?php echo get_subs_option('su_user_delivery_template'); ?>">사용자 주기 입력 템플릿 텍스트
                 </div>
+                
+                                출력형식 : 
+                <select name="su_output_display_type">
+                <?php echo option_selected(0, get_subs_option('su_output_display_type'), "셀렉트박스"); ?>
+                <?php echo option_selected(1, get_subs_option('su_output_display_type'), "버튼식"); ?>
+                </select>
+                <br>
 				<div>
 					<div class="local_desc01 local_desc">
 						<dl>
@@ -662,8 +675,16 @@ Array
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="su_kcp_site_key">NHN KCP SITE KEY</label></th>
+            <td>
+                <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
+                <input type="text" name="su_kcp_site_key" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_site_key')); ?>" id="su_kcp_site_key" class="frm_input" size="36" maxlength="25">
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
             <th scope="row"><label for="su_kcp_group_id">NHN KCP 그룹아이디</label></th>
             <td>
+                <?php echo help("KCP상점관리자 페이지 접속 -> 결제관리 -> 일반결제 -> 배치결제 -> 그룹관리를 통해 그룹아이디 생성 Ex) BA0011000348"); ?>
                 <input type="text" name="su_kcp_group_id" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_group_id')); ?>" id="su_kcp_group_id" class="frm_input" size="36" maxlength="25">
             </td>
         </tr>
@@ -821,4 +842,26 @@ jQuery(function($) {
 });
 </script>
 <?php
+
+// kcp의 경우 pp_cli 체크
+if(get_subs_option('su_pg_service') == 'kcp') {
+
+    $is_linux = true;
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+        $is_linux = false;
+
+    $exe = '/kcp/bin/';
+    if($is_linux) {
+        if(PHP_INT_MAX == 2147483647) // 32-bit
+            $exe .= 'pp_cli';
+        else
+            $exe .= 'pp_cli_x64';
+    } else {
+        $exe .= 'pp_cli_exe.exe';
+    }
+
+    echo module_exec_check(G5_SUBSCRIPTION_PATH.$exe, 'pp_cli');
+
+}
+    
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
