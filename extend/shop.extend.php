@@ -8,21 +8,24 @@ if (!defined('G5_USE_SHOP') || !G5_USE_SHOP) return;
 .'(배송업체명^택배조회URL^연락처)'
 */
 define('G5_DELIVERY_COMPANY',
-     '(경동택배^https://kdexp.com/basicNewDelivery.kd?barcode=^080-873-2178)'
+     '(경동택배^https://kdexp.com/service/delivery/etc/delivery.do?barcode=^1899-5368)'
     .'(대신택배^https://www.ds3211.co.kr/freight/internalFreightSearch.ht?billno=^043-222-4582)'
-    .'(동부택배^http://www.dongbups.com/delivery/delivery_search_view.jsp?item_no=^1588-8848)'
     .'(로젠택배^https://www.ilogen.com/m/personal/trace.pop/^1588-9988)'
     .'(우체국^https://m.epost.go.kr/postal/mobile/mobile.trace.RetrieveDomRigiTraceList.comm?ems_gubun=E&sid1=^1588-1300)'
-    .'(이노지스택배^http://www.innogis.co.kr/tracking_view.asp?invoice=^1566-4082)'
     .'(한진택배^https://www.hanjin.co.kr/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&schLang=KR&wblnumText2=^1588-0011)'
     .'(롯데택배^https://www.lotteglogis.com/open/tracking?invno=^1588-2121)'
-    .'(CJ대한통운^https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=^1588-1255)'
-    .'(CVSnet편의점택배^https://www.cvsnet.co.kr/invoice/tracking.do?invoice_no=^1577-1287)'
-    .'(KG옐로우캡택배^http://www.yellowcap.co.kr/custom/inquiry_result.asp?invoice_no=^1588-0123)'
-    .'(KGB택배^http://www.kgbls.co.kr/sub5/trace.asp?f_slipno=^1577-4577)'
-    .'(KG로지스^http://www.kglogis.co.kr/contents/waybill.jsp?item_no=^1588-8848)'
+    .'(CJ대한통운^https://trace.cjlogistics.com/next/tracking.html?wblNo=^1588-1255)'
+    .'(GS25편의점택배^https://www.cvsnet.co.kr/invoice/tracking.do?invoice_no=^1577-1287)'
+    .'(합동택배^https://hdexp.co.kr/deliverySearch2.hd?barcode=^1899-3392)'
+    .'(CU편의점택배^https://www.cupost.co.kr/postbox/delivery/localResult.cupost?invoice_no=^1577-1287)'
+    .'(천일택배^http://www.chunil.co.kr/HTrace/HTrace.jsp?transNo=^1877-6606)'
     .'(건영택배^https://www.kunyoung.com/goods/goods_01.php?mulno=^031-460-2700)'
-    .'(호남택배^http://www.honamlogis.co.kr/04estimate/songjang_list.php?c_search1=^031-376-6070)'
+    .'(우리택배^http://www.honamlogis.co.kr/04estimate/songjang_list.php?c_search1=^031-376-6070)'
+    .'(일양로지스^https://www.ilyanglogis.com/functionality/popup_result.asp?hawb_no=^1588-0002)'
+    .'(EMS^https://service.epost.go.kr/trace.RetrieveEmsRigiTraceList.comm?POST_CODE=^1588-1300)'
+    .'(DHL^https://www.dhl.com/kr-ko/home/tracking.html?tracking-id=^1588-1588-0001)'
+    .'(FedEx^https://www.fedex.com/fedextrack/?trknbr=^02-3496-7777)'
+    .'(UPS^https://www.fedex.com/fedextrack/?trknbr=^02-3496-7777)'
 );
 
 include_once(G5_LIB_PATH.'/shop.data.lib.php');
