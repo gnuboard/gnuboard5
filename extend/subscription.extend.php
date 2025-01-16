@@ -154,3 +154,7 @@ if(!defined('_THEME_PREVIEW_')) {
 include_once(G5_LIB_PATH.'/subscription.lib.php');
 include_once(G5_SUBSCRIPTION_PATH.'/subscription.hook.php');
 include_once(G5_SUBSCRIPTION_ADMIN_PATH.'/admin.subscription.hook.php');
+
+if (defined('IS_SUBSCRIPTION_EXPIRE_PAGE') && IS_SUBSCRIPTION_EXPIRE_PAGE) {
+    add_event('common_header', 'nocache_nostore_subscription_headers', 1, 0);
+}

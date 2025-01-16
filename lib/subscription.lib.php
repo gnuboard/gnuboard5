@@ -1173,9 +1173,9 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
     
     // 희망배송일이 있으면
     if ($od_hope_date) {
-        //$nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
+        $nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
         
-        //return $nextdate.' 09:00:01';
+        return $nextdate.' 09:00:01';
     }
     
     $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
@@ -1281,6 +1281,17 @@ function expire_nicepay_billing($bid) {
 	}
 }
 
+function nocache_nostore_subscription_headers() {
+    // 일부 브라우저 또는 앞으로 브라우저가 업데이트 된다면 아래의 방법이 안될수도 있습니다.
+    
+    if (headers_sent()) return;
+    
+    header_remove('Last-Modified');
+
+    header('Expires: Sat, 17 Jan 1999 01:00:00 GMT');
+    header('Cache-Control: no-transform, no-cache, no-store, must-revalidate');
+}
+
 function kcp_billing($od, $tmp_cart_id='') {
     global $g5;
     
@@ -1304,7 +1315,7 @@ function kcp_billing($od, $tmp_cart_id='') {
 
     $bt_batch_key       = $od['card_billkey']; // 배치키 정보
     $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
-
+    
     $posts = array(
         'pay_method' => 'CARD',
         'ordr_idxx' => $ordr_idxx,

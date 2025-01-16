@@ -1,4 +1,5 @@
 <?php
+define('IS_SUBSCRIPTION_EXPIRE_PAGE', 1);
 include_once('./_common.php');
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
@@ -14,6 +15,9 @@ $aparams_array = (isset($_REQUEST['aparams']) && isValidBase64($_REQUEST['aparam
 
 // Array ( [delivery_cycle] => 2||3||day [usage_count] => 0||4 [hope_delivery_date] => 0||4 )
 // print_r($aparams2);
+// exit;
+
+// print_r($aparams_array);
 // exit;
 
 // 모바일 주문인지

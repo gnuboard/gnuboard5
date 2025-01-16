@@ -548,7 +548,6 @@ if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_paymen
 }
 
 if ($is_first_pay) {
-
     $pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
 
     // 정기결제가 성공이면

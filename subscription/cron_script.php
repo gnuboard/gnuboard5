@@ -47,6 +47,20 @@ foreach($result_row as $od) {
     
     $row = $od;
     
+    $od_subscription_selected_number = subscription_serial_decode($od['od_subscription_selected_number']);
+    
+    // 이용횟수
+    $od_number_of_uses = isset($od_subscription_selected_number['use_input']) ? $od_subscription_selected_number['use_input'] : 0;
+    
+    // 만약에 해당 주문의 이용횟수가 있어서 이용횟수 기간이 지났다면
+    if ($od_number_of_uses && $od['od_pays_total'] <= $od_number_of_uses) {
+        
+        // 비활성화한다.
+        sql_bind_update($g5['g5_subscription_order_table'], array('od_enable_status'=>0), array('od_id'=>$od['od_id']));
+        
+        continue;
+    }
+    
     $pays = subscription_process_payment($od, $od['od_pg']);
     
     // 정기결제가 성공이면

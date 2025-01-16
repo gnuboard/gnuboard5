@@ -41,9 +41,10 @@ if ($act == 'buy') {
     }
 
     // 선택필드 초기화
-    $sql = " update {$g5['g5_subscription_cart_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
-    sql_query($sql);
-
+    //$sql = " update {$g5['g5_subscription_cart_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
+    //sql_query($sql);
+    sql_bind_update($g5['g5_subscription_cart_table'], array('ct_select' => 0), array('od_id' => '$tmp_cart_id'));
+    
     $fldcnt = count($post_it_ids);
     for ($i = 0; $i < $fldcnt; ++$i) {
         $ct_chk = isset($post_ct_chk[$i]) ? 1 : 0;

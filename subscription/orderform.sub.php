@@ -380,7 +380,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             <tr>
                                 <th scope="row"><label for=""><?php echo subscription_item_delivery_title($it); ?></label></th>
                                 <td>
-                                <input id="od_subscription_select_data" name="od_subscription_select_data" type="number" inputmode="numeric" placeholder="숫자" max="365" maxlength="3" value="<?php echo get_subs_option('su_user_delivery_default_day'); ?>" class="frm_input">
+                                <input id="od_subscription_select_data" name="od_subscription_select_data" type="number" inputmode="numeric" placeholder="숫자" max="365" maxlength="3" value="<?php echo (isset($aparams_array['delivery_cycle']) && $aparams_array['delivery_cycle']) ? (int) $aparams_array['delivery_cycle'] : get_subs_option('su_user_delivery_default_day'); ?>" class="frm_input">
                                 <span class="od_subscription_days">일</span>
                                 </td>
                             </tr>
