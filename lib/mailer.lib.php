@@ -52,9 +52,12 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
 
         $mail = run_replace('mail_options', $mail, $fname, $fmail, $to, $subject, $content, $type, $file, $cc, $bcc);
 
-        $mail_send_result = $mail->send();
-
+        if (!($mail_send_result = $mail->send())) {
+            throw new Exception($mail->ErrorInfo);
+        }
+        
     } catch (Exception $e) {
+        error_log("Mail sending error: " . $e->getMessage());
     }
 
     run_event('mail_send_result', $mail_send_result, $mail, $to, $cc, $bcc);
