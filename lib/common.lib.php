@@ -1398,15 +1398,14 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     static $cache = array();
 
     $name = get_text($name, 0, true);
-
-    if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
+    $namekey = ($mb_id && $name) ? $mb_id."\t".$name : '';
+    
+    // id는 유니크하지만 닉네임 또는 이름은 변경이 가능하다
+    // name의 경우 비회원은 게시판에 동일한 이름을 등록할수 있다.
+    if ($namekey && isset($cache['idname:' . $namekey]) && $cache['idname:' . $namekey]) {
+        return $cache['idname:' . $namekey];
+    } else if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
         return $cache['id:' . $mb_id];
-    } else if (
-        isset($name)
-        && isset($cache['name:' . $name])
-        && $cache['name:' . $name]
-    ) {
-        return $cache['name:' . $name];
     }
 
     $email = get_string_encrypt($email);
@@ -1520,11 +1519,11 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str .= $str2;
     $str .= '<noscript class="sv_nojs">' . $str2 . '</noscript>';
     $str .= "</span>";
-
-    if ($mb_id) {
+    
+    if ($namekey) {
+        $cache['idname:' . $namekey] = $str;
+    } else if ($mb_id && !$name) {
         $cache['id:' . $mb_id] = $str;
-    } else {
-        $cache['name:' . $name] = $str;
     }
 
     return $str;
