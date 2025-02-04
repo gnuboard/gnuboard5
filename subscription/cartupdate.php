@@ -66,7 +66,7 @@ if ($act == 'buy') {
             // 주문 상품의 재고체크
             // 동일 상품 옵션이 레코드에 있는 경우 재고를 제대로 체크하지 못하는 오류가 있음
             // $sql = " select ct_qty, it_name, ct_option, io_id, io_type from {$g5['g5_subscription_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ";
-
+            
             $sql = " select sum(ct_qty) as ct_qty, it_name, ct_option, io_id, io_type
                         from {$g5['g5_subscription_cart_table']}
                         where od_id = '$tmp_cart_id'
@@ -290,6 +290,8 @@ if ($act == 'buy') {
 
         // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
         if ($act == 'optionmod') {
+            
+            // 삭제되지 않고 업데이트 되면 좋을텐데... 이 부분은 나중에 수정
             sql_query(" delete from {$g5['g5_subscription_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ");
         }
 

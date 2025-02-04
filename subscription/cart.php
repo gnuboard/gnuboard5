@@ -10,14 +10,27 @@ $sw_direct = isset($_REQUEST['sw_direct']) ? (int) $_REQUEST['sw_direct'] : 0;
 set_subscription_cart_id($sw_direct);
 
 $s_cart_id = get_session('subs_cart_id');
-// 선택필드 초기화
-$sql = " update {$g5['g5_subscription_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
-sql_query($sql);
 
+// 선택필드 초기화
+sql_bind_update($g5['g5_subscription_cart_table'], array('ct_select' => 0), array('od_id'=>$s_cart_id));
+                
 $subscription_cart_action_url = G5_SUBSCRIPTION_URL.'/cartupdate.php';
 
 if (function_exists('before_check_cart_price')) {
     before_check_cart_price($s_cart_id, true, true, true);
+}
+
+// $s_cart_id 로 현재 장바구니 자료 쿼리
+$subscription_cart_datas = get_subscription_user_carts($s_cart_id);
+
+add_replace('shop_content_html_class', 'subscription_cart_content_attr', 10, 2);
+
+function subscription_cart_content_attr($content_class, $wrapper_class) {
+    
+    $content_class[] = 'use-susbscription-cart';
+    $content_class[] = 'is-susbscription-cart';
+        
+    return $content_class;
 }
 
 if (G5_IS_MOBILE) {
@@ -45,6 +58,11 @@ include_once './_head.php';
 <script src="<?php echo G5_JS_URL; ?>/shop.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL; ?>/shop.override.js?ver=<?php echo G5_JS_VER; ?>"></script>
 
+<ul class="cart-heading">
+    <li class="linked-title is-shop-cart-link"><a href="<?php echo G5_SHOP_URL.'/cart.php'; ?>">쇼핑몰</a> <span class="cart-number"><?php echo get_boxcart_datas_count(); ?></span></li>
+    <li class="linked-title is-subscription-cart-link active">정구구독 <span class="cart-number"><?php echo $subscription_cart_datas ? count($subscription_cart_datas) : ''; ?></span></li>
+</ul>
+
 <div id="sod_bsk" class="od_prd_list">
 
     <form name="frmcartlist" id="sod_bsk_list" class="2017_renewal_itemform" method="post" action="<?php echo $subscription_cart_action_url; ?>">
@@ -67,82 +85,64 @@ include_once './_head.php';
         <tbody>
         <?php
         $tot_point = 0;
-$tot_sell_price = 0;
-$send_cost = 0;
+        $tot_sell_price = 0;
+        $send_cost = 0;
 
-// $s_cart_id 로 현재 장바구니 자료 쿼리
-$sql = " select a.ct_id,
-                        a.it_id,
-                        a.it_name,
-                        a.ct_price,
-                        a.ct_point,
-                        a.ct_qty,
-                        a.ct_status,
-                        a.ct_send_cost,
-                        a.it_sc_type,
-                        b.ca_id,
-                        b.ca_id2,
-                        b.ca_id3
-                   from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-                  where a.od_id = '$s_cart_id' ";
-$sql .= ' group by a.it_id ';
-$sql .= ' order by a.ct_id ';
+        $it_send_cost = 0;
 
-$result = sql_query($sql);
+        $i = 0;
+        foreach($subscription_cart_datas as $row) {
+            // 합계금액 계산
+            $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                                    SUM(ct_point * ct_qty) as point,
+                                    SUM(ct_qty) as qty
+                                from {$g5['g5_subscription_cart_table']}
+                                where it_id = '{$row['it_id']}'
+                                  and od_id = '$s_cart_id' ";
+            $sum = sql_fetch($sql);
 
-$it_send_cost = 0;
+            if ($i == 0) { // 계속쇼핑
+                $continue_sc_id = $row['sc_id'];
+            }
 
-for ($i = 0; $row = sql_fetch_array($result); ++$i) {
-    // 합계금액 계산
-    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                            SUM(ct_point * ct_qty) as point,
-                            SUM(ct_qty) as qty
-                        from {$g5['g5_subscription_cart_table']}
-                        where it_id = '{$row['it_id']}'
-                          and od_id = '$s_cart_id' ";
-    $sum = sql_fetch($sql);
+            $a1 = '<a href="'.subscription_item_url($row['it_id']).'" class="prd_name"><b>';
+            $a2 = '</b></a>';
+            $image = get_subscription_it_image($row['it_id'], 80, 80);
 
-    if ($i == 0) { // 계속쇼핑
-        $continue_sc_id = $row['sc_id'];
-    }
+            $it_name = $a1.stripslashes($row['it_name']).$a2;
+            $it_options = subscription_print_item_options($row['it_id'], $s_cart_id);
+            
+            $mod_options = '';
+            if ($it_options) {
+                $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
+                $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
+            }
 
-    $a1 = '<a href="'.subscription_item_url($row['it_id']).'" class="prd_name"><b>';
-    $a2 = '</b></a>';
-    $image = get_subscription_it_image($row['it_id'], 80, 80);
+            // 배송비
+            switch ($row['ct_send_cost']) {
+                case 1:
+                    $ct_send_cost = '착불';
+                    break;
+                case 2:
+                    $ct_send_cost = '무료';
+                    break;
+                default:
+                    $ct_send_cost = '선불';
+                    break;
+            }
 
-    $it_name = $a1.stripslashes($row['it_name']).$a2;
-    $it_options = print_item_options($row['it_id'], $s_cart_id);
-    $mod_options = '';
-    if ($it_options) {
-        $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
-        $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
-    }
+            // 조건부무료
+            if ($row['it_sc_type'] == 2) {
+                $sendcost = get_subscription_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
 
-    // 배송비
-    switch ($row['ct_send_cost']) {
-        case 1:
-            $ct_send_cost = '착불';
-            break;
-        case 2:
-            $ct_send_cost = '무료';
-            break;
-        default:
-            $ct_send_cost = '선불';
-            break;
-    }
+                if ($sendcost == 0) {
+                    $ct_send_cost = '무료';
+                }
+            }
 
-    // 조건부무료
-    if ($row['it_sc_type'] == 2) {
-        $sendcost = get_subscription_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
-
-        if ($sendcost == 0) {
-            $ct_send_cost = '무료';
-        }
-    }
-
-    $point = $sum['point'];
-    $sell_price = $sum['price'];
-    ?>
+            $point = $sum['point'];
+            $sell_price = $sum['price'];
+            ?>
 
         <tr>
             <td class="td_chk chk_box">
@@ -167,16 +167,17 @@ for ($i = 0; $row = sql_fetch_array($result); ++$i) {
 
         <?php
         $tot_point += $point;
-    $tot_sell_price += $sell_price;
-} // for 끝
+        $tot_sell_price += $sell_price;
+        $i++;
+        } // for 끝
 
-if ($i == 0) {
-    echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
-} else {
-    // 배송비 계산
-    $send_cost = get_sendcost($s_cart_id, 0);
-}
-?>
+        if ($i == 0) {
+            echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+        } else {
+            // 배송비 계산
+            $send_cost = get_sendcost($s_cart_id, 0);
+        }
+        ?>
         </tbody>
         </table>
         <div class="btn_cart_del">

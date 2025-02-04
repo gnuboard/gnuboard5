@@ -85,6 +85,51 @@ function get_subscription_cart_count($cart_id)
     return $cnt;
 }
 
+function subscription_print_item_options($it_id, $cart_id)
+{
+    global $g5;
+    
+    $subscription_carts = sql_bind_select_array($g5['g5_subscription_cart_table'], 'ct_option, ct_qty, io_price', array('it_id'=>$it_id, 'od_id'=>$cart_id), array('orderBy'=>'io_type asc, ct_id', 'orderType' => 'asc'));
+    
+    $str = '';
+    $i = 0;
+    
+    foreach($subscription_carts as $row) {
+        if($i == 0)
+            $str .= '<ul>'.PHP_EOL;
+        $price_plus = '';
+        if($row['io_price'] >= 0)
+            $price_plus = '+';
+        $str .= '<li>'.get_text($row['ct_option']).' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
+        
+        $i++;
+    }
+    
+    if($i > 0)
+        $str .= '</ul>';
+    
+    /*
+    $sql = " select ct_option, ct_qty, io_price
+                from {$g5['g5_subscription_cart_table']} where it_id = '$it_id' and od_id = '$cart_id' order by io_type asc, ct_id asc ";
+    $result = sql_query($sql);
+
+    $str = '';
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        if($i == 0)
+            $str .= '<ul>'.PHP_EOL;
+        $price_plus = '';
+        if($row['io_price'] >= 0)
+            $price_plus = '+';
+        $str .= '<li>'.get_text($row['ct_option']).' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
+    }
+
+    if($i > 0)
+        $str .= '</ul>';
+    */
+    
+    return $str;
+}
+
 // 장바구니 금액 체크 $is_price_update 가 true 이면 장바구니 가격 업데이트한다. 
 function before_check_subscription_cart_price($s_cart_id, $is_ct_select_condition=false, $is_price_update=false, $is_item_cache=false){
     global $g5, $default, $config;
@@ -1079,6 +1124,49 @@ function getBusinessDaysBefore($date, $businessDays = 0, $holidays=array()) {
     return date('Y-m-d', $timestamp).' 09:00:01';
 }
 
+function getBusinessDaysNext($date, $businessDays = 0, $holidays = array()) {
+    // $date: 기준 날짜 (YYYY-MM-DD 형식의 문자열)
+    // $businessDays: 몇 영업일 후로 이동할 것인지
+    // $holidays: 공휴일 배열 (YYYY-MM-DD 형식의 문자열 배열)
+
+    // 기준 날짜를 타임스탬프로 변환
+    $timestamp = strtotime($date);
+
+    if ($businessDays) {
+        while ($businessDays > 0) {
+            // 하루 앞으로 이동
+            $timestamp = strtotime('+1 day', $timestamp);
+
+            // 요일 가져오기 (0: 일요일, 6: 토요일)
+            $dayOfWeek = date('w', $timestamp);
+
+            // 날짜 포맷 (YYYY-MM-DD)
+            $formattedDate = date('Y-m-d', $timestamp);
+
+            // 주말(토, 일)이 아니고 공휴일이 아니면 영업일로 간주
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+                $businessDays--;
+            }
+        }
+    } else {
+        // 영업일 검증 (0일일 때 배송일 확인)
+        while (true) {
+            $dayOfWeek = date('w', $timestamp);
+            $formattedDate = date('Y-m-d', $timestamp);
+
+            // 영업일이면 반환
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !($holidays && in_array($formattedDate, $holidays))) {
+                break;
+            }
+
+            // 주말 또는 공휴일이면 하루 앞으로 이동
+            $timestamp = strtotime('+1 day', $timestamp);
+        }
+    }
+
+    return date('Y-m-d', $timestamp) . ' 09:00:01';
+}
+
 function subscription_serial_encode($data, $od=null) {
     return base64_encode(serialize($data));
 }
@@ -1164,6 +1252,14 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
         $od_subscription_number = (int) $od_subscription_selected_data['opt_input'];
     }
     
+    echo $od_subscription_date_format;
+    
+    echo "<Br>";
+    
+    echo $od_subscription_number;
+    
+    echo "<Br>";
+    
     // 아래 구문은 틀렸다
     //if (isset($od_subscription_selected_number['use_input']) && $od_subscription_selected_number['use_input']) {
     //    $od_subscription_number = (int) $od_subscription_selected_number['use_input'];
@@ -1181,6 +1277,8 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
     $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
     $plus = abs($od_subscription_number);
     
+    $is_check_before = false;
+    
     // 주어진 interval에 따라 날짜를 증가시킴
     switch ($interval) {
         case 'day':
@@ -1191,19 +1289,38 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
             break;
         case 'month':
             $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            $is_check_before = true;
             break;
         case 'year':
             $timestamp = strtotime('+'.$plus.' year', $timestamp);
+            $is_check_before = true;
             break;
         default:
             throw new Exception("Unknown billing interval: $interval");
     }
     
-    return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp));
+    if ($is_check_before) {
+        
+        // 이전날로 구함
+        return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp));
+    }
+    
+    // 다음날로 구함
+    return getBusinessDaysnext(date('Y-m-d H:i:s', $timestamp));
     
     // 다음 청구일을 YYYY-MM-DD 형식으로 반환
     // return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);
     
+}
+
+//결제방식 이름을 체크하여 치환 대상인 문자열은 따로 리턴합니다.
+function get_subscription_pay_name_replace($payname, $od=array(), $is_client=0) {
+    
+    if ($payname === '카드재사용') {
+        return '신용카드';
+    }
+    
+    return $payname;
 }
 
 function calculateNextBillingDate($od, $od_hope_date=null){
@@ -1926,6 +2043,94 @@ function get_subscription_pg_apikey($pg_name=''){
     }
     
     return $str;
+}
+
+// 정기구독 장바구니 간소 데이터 가져오기
+function get_subscription_boxcart_datas($is_cache=false)
+{
+    global $g5, $is_member, $member;
+    
+    $sql  = " select * from {$g5['g5_subscription_cart_table']} ";
+    $sql .= " where od_id = '".$cart_id."' group by it_id ";
+    
+    if (!$is_member){
+        return array();
+    }
+
+    static $cache = array();
+
+    if ($is_cache && !empty($cache)) {
+        return $cache;
+    }
+    
+    // 정기구독은 회원만 결제가 가능하다.
+    $cart_id = get_session("subs_cart_id");
+    
+    if (!$cart_id) {
+        $wheres = array('mb_id' => $member['mb_id'], 'ct_status' => '쇼핑');
+    } else {
+        $wheres = array('od_id' => $cart_id, 'ct_status' => '쇼핑');
+    }
+    
+    $carts = sql_bind_select_array($g5['g5_subscription_cart_table'], '*', $wheres, array('groupBy'=> 'it_id'));
+    
+    /*
+    $sql  = " select * from {$g5['g5_subscription_cart_table']} ";
+    $sql .= " where od_id = '".$cart_id."' group by it_id ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $key = $row['it_id'];
+        $cache[$key] = $row;
+    }
+    */
+    
+    foreach($carts as $row) {
+        $key = $row['it_id'];
+        $cache[$key] = $row;
+    }
+    
+    return $cache;
+}
+
+//장바구니 간소 데이터 갯수 출력
+function get_subscription_boxcart_datas_count()
+{
+    $cart_datas = get_subscription_boxcart_datas(true);
+
+    return $cart_datas ? count($cart_datas) : 0;
+}
+
+function get_subscription_user_carts($s_cart_id) {
+    
+    global $g5, $member;
+    
+    static $cache = array();
+
+    $key = 'subs_'.$member['mb_id'].'_'.$s_cart_id;
+
+    if ($is_cache && isset($cache[$key])) {
+        return $cache[$key];
+    }
+    
+    $select_filed = 'a.ct_id,
+                    a.it_id,
+                    a.it_name,
+                    a.ct_price,
+                    a.ct_point,
+                    a.ct_qty,
+                    a.ct_status,
+                    a.ct_send_cost,
+                    a.it_sc_type,
+                    b.ca_id,
+                    b.ca_id2,
+                    b.ca_id3';
+                    
+    $cart_datas = sql_bind_select_array("{$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )", $select_filed, array('a.od_id' => $s_cart_id), array('groupBy' => 'a.it_id', 'orderBy' => 'a.ct_id'));
+    
+    $cache[$key] = $cart_datas;
+    
+    return $cart_datas;
 }
 
 function add_subscription_order_history($content, $arg=array()){

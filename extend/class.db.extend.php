@@ -98,31 +98,59 @@ class G5MySQLQuery
             $valueToBind[] = $value;
         }
         */
+        
         foreach ($args as $value) {
-
-            if (is_int($value)) {
-                $types .= "i";
-            } elseif (is_float($value)) {
-                $types .= "d";
-            } elseif (is_numeric($value) && ctype_digit($value)) {
-                // 숫자 문자열도 정수로 변환
-                $value = preg_replace('/[^0-9]/', '', $value);
-                
-                if (strlen($value) > 1 && preg_match('/^0.+/', $value)) {
-                    $types .= "s";
-                } else {
-                    $types .= "i";
+            
+            // select where in 의 경우 배열로 받는다.
+            if (is_array($value)) {
+                // 배열일 경우 (IN 조건 처리)
+                foreach ($value as $subValue) {
+                    if (is_int($subValue)) {
+                        $types .= "i";
+                    } elseif (is_float($subValue)) {
+                        $types .= "d";
+                    } elseif (is_numeric($subValue) && ctype_digit($subValue)) {
+                        $subValue = preg_replace('/[^0-9]/', '', $subValue);
+                        if (strlen($subValue) > 1 && preg_match('/^0.+/', $subValue)) {
+                            $types .= "s";
+                        } else {
+                            $types .= "i";
+                        }
+                    } elseif (is_numeric($subValue)) {
+                        $subValue = (float) $subValue;
+                        $types .= "d";
+                    } else {
+                        $types .= "s";
+                    }
+                    $valueToBind[] = $subValue; // 배열의 각 값을 추가
                 }
-            } elseif (is_numeric($value)) {
-                // 숫자 문자열이지만 정수가 아닌 경우, float로 변환
-                $value = (float) $value;
-                $types .= "d";
             } else {
-                $types .= "s";
+                
+                if (is_int($value)) {
+                    $types .= "i";
+                } elseif (is_float($value)) {
+                    $types .= "d";
+                } elseif (is_numeric($value) && ctype_digit($value)) {
+                    // 숫자 문자열도 정수로 변환
+                    $value = preg_replace('/[^0-9]/', '', $value);
+                    
+                    if (strlen($value) > 1 && preg_match('/^0.+/', $value)) {
+                        $types .= "s";
+                    } else {
+                        $types .= "i";
+                    }
+                } elseif (is_numeric($value)) {
+                    // 숫자 문자열이지만 정수가 아닌 경우, float로 변환
+                    $value = (float) $value;
+                    $types .= "d";
+                } else {
+                    $types .= "s";
+                }
+                
+                $valueToBind[] = $value;
+            
             }
-
-            //$types .= "s";
-            $valueToBind[] = $value;
+            
         }
         
         $this->boundValues = $valueToBind; // 바인딩된 값 저장
@@ -263,8 +291,15 @@ class G5MySQLQuery
             */
             if ($value === null) {
                 $value = "NULL";
-            } else {
+            } elseif (is_numeric($value)) {
+                if (ctype_digit($value) && strlen($value) > 1 && preg_match('/^0.+/', $value)) {
+                    $value = "'" . addslashes($value) . "'";
+                }
+            } elseif (is_string($value)) {
                 $value = "'" . addslashes($value) . "'";
+            } else { 
+                //if ((is_int($value) || is_float($value)) {
+                //}
             }
             // ?를 바인딩된 값으로 하나씩 교체
             $query = preg_replace('/\?/', $value, $query, 1);
@@ -314,9 +349,8 @@ class G5MysqlCRUD
         
         $limit = isset($readSettings['limit']) ? preg_replace('/[^0-9]/', '', $readSettings['limit']) : null;
         $offset = isset($readSettings['offset']) ? preg_replace('/[^0-9]/', '', $readSettings['offset']) : null;
-        $groupBy = isset($readSettings['groupBy']) ? preg_replace('/[^a-z0-9_ \,]/i', '', $readSettings['groupBy']) : null;
-        $orderBy = isset($readSettings['orderBy']) ? preg_replace('/[^a-z0-9_ \,]/i', '', $readSettings['orderBy']) : null;
-        
+        $groupBy = isset($readSettings['groupBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['groupBy']) : null;
+        $orderBy = isset($readSettings['orderBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['orderBy']) : null;
         $orderType = isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC";
 
         $query = "SELECT {$columnString} FROM {$table} ";
@@ -341,16 +375,26 @@ class G5MysqlCRUD
             $query .= "OFFSET ? ";
         }
         
+        // echo $query;
+        
+        // echo "<br>".$query;
+        
+        // print_r( $values );
+        
         $queryObj = new G5MySQLQuery($query, $link);
         
         $valueToBind = array_merge($values, ($limit ? array($limit) : array()), ($offset ? array($offset) : array()));
+        
+        //echo "<br>";
+        
+        // print_r($valueToBind);
         
         if (!empty($valueToBind)) {
             call_user_func_array(array($queryObj, 'bind'), $valueToBind);
         }
         
         // 실행된 쿼리 디버깅
-        echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
+        // echo "<br>실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
         
         // $result = $queryObj->execute();
         
@@ -379,7 +423,7 @@ class G5MysqlCRUD
      * 
      * @return void
      */
-    public static function insert($table, $columns, $values, $link = null)
+    public static function insert($table, $columns, $values, $updateColumns = array(), $link = null)
     {
         global $g5;
         
@@ -405,8 +449,22 @@ class G5MysqlCRUD
         $columnString = implode(",", $columns);
         $valueString = implode(",", $valuePlaceholders);
 
+        // ON DUPLICATE KEY UPDATE 부분 생성
+        $updatePlaceholder = array();
+        foreach ($updateColumns as $column => $value) {
+            if ($value instanceof RawSQL) {
+                // RawSQL 객체로 처리할 경우
+                $updatePlaceholder[] = "{$column} = {$value->getSQL()}";
+            } else {
+                $updatePlaceholder[] = "{$column} = ?";
+                $bindValues[] = $value;
+            }
+        }
+        
+        $updateString = !empty($updatePlaceholder) ? " ON DUPLICATE KEY UPDATE " . implode(", ", $updatePlaceholder) : "";
+    
         // SQL 쿼리 준비
-        $query = new G5MySQLQuery("INSERT INTO {$table} ({$columnString}) VALUES ({$valueString})");
+        $query = new G5MySQLQuery("INSERT INTO {$table} ({$columnString}) VALUES ({$valueString}){$updateString}");
         
         // 안전하게 일반 값만 바인딩
         if (!empty($bindValues)) {
@@ -429,7 +487,7 @@ class G5MysqlCRUD
         */
         
         // 실행된 쿼리 디버깅
-        // echo "실제 실행된 쿼리: " . $query->getQuery() . "\n";
+        echo "실제 실행된 쿼리: " . $query->getQuery() . "\n";
         
         // $query->execute();
         
@@ -469,7 +527,7 @@ class G5MysqlCRUD
         call_user_func_array(array($queryObj, 'bind'), $valuesToBind);
         
         // 실행된 쿼리 디버깅
-        echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
+        // echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
         
         // $queryObj->execute();
         
@@ -515,12 +573,12 @@ class G5MysqlCRUD
     }
 }
 
-function sql_bind_insert($table, $inserts, $link = null){
+function sql_bind_insert($table, $inserts, $updateColumns = array(), $link = null){
     
     $columns = array_keys($inserts);
     $values = array_values($inserts);
     
-    return G5MysqlCRUD::insert($table, $columns, $values, $link);
+    return G5MysqlCRUD::insert($table, $columns, $values, $updateColumns, $link);
     
     /*
     try {
@@ -607,7 +665,11 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
     $condition = array_map(function($item) use ($conditions) {
         // 조건 값이 배열인지 확인 (예: ['>' => 100] 형식)
         if (is_array($conditions[$item])) {
-            $operator = key($conditions[$item]); // 연산자 가져오기 (예: >, <, =, !=)
+            $operator = key($conditions[$item]); // 연산자 가져오기 (예: >, <, =, !=, LIKE, IN)
+            if (strtoupper($operator) === 'IN') {
+                $placeholders = implode(', ', array_fill(0, count($conditions[$item][$operator]), '?'));
+                return "$item $operator ($placeholders)";
+            }
             return "$item $operator ?";
         } else {
             return "$item = ?";
@@ -626,7 +688,7 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
     if (!is_array($columns)) {
         $columns = explode(',', $columns);
     }
-    
+
     // G5MysqlCRUD 클래스의 read 메서드 호출
     return G5MysqlCRUD::read($table, $columns, $condition, $values, $readSettings, $link, $is_fetch);
 }

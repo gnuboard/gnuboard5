@@ -259,7 +259,7 @@ jQuery(function ($){
             }
         ?>
         <!-- .shop-content 시작 { -->
-        <div class="<?php echo implode(' ', $content_class); ?>">
+        <div class="<?php echo implode(' ', run_replace('shop_content_html_class', $content_class, $wrapper_class)); ?>">
             <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g5['title'] ?></div><?php } ?>
             <!-- 글자크기 조정 display:none 되어 있음 시작 { -->
             <div id="text_size">

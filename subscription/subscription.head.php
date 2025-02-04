@@ -1,7 +1,9 @@
 <?php
-if (!defined('_GNUBOARD_')) {
-    exit;
-} // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+include_once(G5_SHOP_PATH.'/shop.head.php');
+
+return;
 
 $q = isset($_GET['q']) ? clean_xss_tags($_GET['q'], 1, 1) : '';
 

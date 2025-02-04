@@ -37,6 +37,27 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     $ct_date_format = '';           // 정기결제 관련
                     
                     // $s_cart_id 로 현재 장바구니 자료 쿼리
+                    $select_field = 'a.ct_id,
+                                    a.it_id,
+                                    a.it_name,
+                                    a.ct_price,
+                                    a.ct_point,
+                                    a.ct_qty,
+                                    a.ct_status,
+                                    a.ct_send_cost,
+                                    a.it_sc_type,
+                                    b.ca_id,
+                                    b.ca_id2,
+                                    b.ca_id3,
+                                    b.it_notax';
+                    
+                    $result = sql_bind_select("{$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )",
+                                $select_field,
+                                array('a.od_id' => $s_cart_id, 'a.ct_select' => 1),
+                                array('groupBy' => 'a.it_id', 'orderBy' => 'a.ct_id')
+                              );
+                    
+                    /*
                     $sql = " select a.ct_id,
                                     a.it_id,
                                     a.it_name,
@@ -57,7 +78,8 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     $sql .= " order by a.ct_id ";
 
                     $result = sql_query($sql);
-
+                    */
+                    
                     $good_info = '';
                     $it_send_cost = 0;
                     $it_cp_count = 0;
@@ -72,6 +94,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         $cp_button = '';
 
                         // 합계금액 계산
+                        /*
                         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                             SUM(ct_point * ct_qty) as point,
                             SUM(ct_qty) as qty
@@ -79,6 +102,10 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         where it_id = '{$row['it_id']}'
                           and od_id = '$s_cart_id' ";
                         $sum = sql_fetch($sql);
+                        */
+                        
+                        $select_field2 = 'SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price, SUM(ct_point * ct_qty) as point, SUM(ct_qty) as qty';
+                        $sum = sql_bind_select_fetch($g5['g5_subscription_cart_table'], $select_field2, array('it_id' => $row['it_id'], 'od_id' => $s_cart_id));
 
                         if (!$goods) {
                             // $goods = addslashes($row[it_name]);
@@ -91,7 +118,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         $image = get_it_image($row['it_id'], 80, 80);
 
                         $it_name = '<b>' . stripslashes($row['it_name']) . '</b>';
-                        $it_options = print_item_options($row['it_id'], $s_cart_id);
+                        $it_options = subscription_print_item_options($row['it_id'], $s_cart_id);
                         if ($it_options) {
                             $it_name .= '<div class="sod_opt">' . $it_options . '</div>';
                         }
@@ -161,16 +188,6 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         $send_cost = get_sendcost($s_cart_id);
                     }
                     ?>
-                    <tr>
-                        <td colspan="6">
-                            <ul>
-                                <li>배송 주기: <?php echo $ct_subscription_number; ?><?php echo $ct_date_format; ?> (구독단위 : <?php echo $ct_date_format; ?>)</li>
-                                <?php if (! is_null_date($ct_firstshipment_date)) { ?>
-                                <li>첫 발송일: <?php echo date('Y년 m월 d일', strtotime($ct_firstshipment_date)); ?>(<?php echo get_weekend_yoil($ct_firstshipment_date); ?>)</li>
-                                <?php } ?>
-                            </ul>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -270,11 +287,16 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>' . PHP_EOL;
 
                                 // 기본배송지
+                                /*
                                 $sql = " select *
                                 from {$g5['g5_shop_order_address_table']}
                                 where mb_id = '{$member['mb_id']}'
                                   and ad_default = '1' ";
                                 $row = sql_fetch($sql);
+                                */
+                                
+                                $row = sql_bind_select_fetch($g5['g5_shop_order_address_table'], '*', array('mb_id' => $member['mb_id'], 'ad_default' => 1));
+                                
                                 if (isset($row['ad_id']) && $row['ad_id']) {
                                     $val1 = $row['ad_name'] . $sep . $row['ad_tel'] . $sep . $row['ad_hp'] . $sep . $row['ad_zip1'] . $sep . $row['ad_zip2'] . $sep . $row['ad_addr1'] . $sep . $row['ad_addr2'] . $sep . $row['ad_addr3'] . $sep . $row['ad_jibeon'] . $sep . $row['ad_subject'];
                                     $addr_list .= '<input type="radio" name="ad_sel_addr" value="' . get_text($val1) . '" id="ad_sel_addr_def">' . PHP_EOL;
@@ -282,6 +304,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 }
 
                                 // 최근배송지
+                                /*
                                 $sql = " select *
                                 from {$g5['g5_shop_order_address_table']}
                                 where mb_id = '{$member['mb_id']}'
@@ -289,10 +312,19 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                 order by ad_id desc
                                 limit 1 ";
                                 $result = sql_query($sql);
-                                for ($i = 0; $row = sql_fetch_array($result); ++$i) {
+                                */
+                                
+                                $recent_deliverys = sql_bind_select_array($g5['g5_shop_order_address_table'], '*', array('mb_id' => $member['mb_id'], 'ad_default' => 0), array('orderBy' => 'ad_id', 'orderType' => 'desc', 'limit' => 1));
+                                
+                                $i = 0;
+                                foreach($recent_deliverys as $row) {
+                                    
+                                    if (empty($row)) continue;
+                                    
                                     $val1 = $row['ad_name'] . $sep . $row['ad_tel'] . $sep . $row['ad_hp'] . $sep . $row['ad_zip1'] . $sep . $row['ad_zip2'] . $sep . $row['ad_addr1'] . $sep . $row['ad_addr2'] . $sep . $row['ad_addr3'] . $sep . $row['ad_jibeon'] . $sep . $row['ad_subject'];
                                     $val2 = '<label for="ad_sel_addr_' . ($i + 1) . '">최근배송지(' . ($row['ad_subject'] ? get_text($row['ad_subject']) : get_text($row['ad_name'])) . ')</label>';
                                     $addr_list .= '<input type="radio" name="ad_sel_addr" value="' . get_text($val1) . '" id="ad_sel_addr_' . ($i + 1) . '"> ' . PHP_EOL . $val2 . PHP_EOL;
+                                    $i++;
                                 }
 
                                 $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">' . PHP_EOL;
@@ -534,9 +566,18 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                           and cp_start <= '" . G5_TIME_YMD . "'
                           and cp_end >= '" . G5_TIME_YMD . "'
                           and cp_minimum <= '$tot_sell_price' ";
-                $res = sql_query($sql);
-
-                for ($k = 0; $cp = sql_fetch_array($res); ++$k) {
+                          
+                $coupon_wheres = array(
+                    'mb_id' => array('IN' => array($member['mb_id'], '전체회원')),
+                    'cp_method' => '2',
+                    'cp_start' => array('<=' => G5_TIME_YMD),
+                    'cp_end' => array('>=' => G5_TIME_YMD),
+                    'cp_minimum' => array('<=' => $tot_sell_price)
+                    );
+                
+                $member_coupons = sql_bind_select_array($g5['g5_shop_coupon_table'], 'cp_id', $coupon_wheres);
+                
+                foreach($member_coupons as $cp) {
                     if (is_used_coupon($member['mb_id'], $cp['cp_id'])) {
                         continue;
                     }
@@ -555,7 +596,17 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                               and cp_minimum <= '$tot_sell_price' ";
                     $res = sql_query($sql);
 
-                    for ($k = 0; $cp = sql_fetch_array($res); ++$k) {
+					$coupon_wheres = array(
+						'mb_id' => array('IN' => array($member['mb_id'], '전체회원')),
+						'cp_method' => '3',
+						'cp_start' => array('<=' => G5_TIME_YMD),
+						'cp_end' => array('>=' => G5_TIME_YMD),
+						'cp_minimum' => array('<=' => $tot_sell_price)
+						);
+
+					$delivery_coupons = sql_bind_select_array($g5['g5_shop_coupon_table'], 'cp_id', $coupon_wheres);
+
+					foreach($delivery_coupons as $cp) {
                         if (is_used_coupon($member['mb_id'], $cp['cp_id'])) {
                             continue;
                         }
@@ -1428,7 +1479,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             jQuery("#od_hope_date").val($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
         }
         
-        var $od_subscription_select_data = jQuery("#od_subscription_select_data").val(),
+        var $od_subscription_select_data = jQuery("#od_subscription_select_data").val() || jQuery("input[name='od_subscription_select_data']").val(),
             $od_subscription_select_number = jQuery("#od_subscription_select_number").val(),
             $od_hope_date_print = $("#od_hope_date").val();
         
@@ -1441,7 +1492,9 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         // 기준 날짜 계산
         let baseDate = new Date($od_hope_date_print);
         
+        console.log( $od_subscription_select_data );
         
+        /*
         baseDate.setDate(baseDate.getDate() + parseInt($od_subscription_select_data)); // 몇일 이후 날짜 계산
 
         const nextDeliveryDate = getNextBusinessDay(baseDate, holidays);
@@ -1451,5 +1504,8 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         console.log('다음 배송일:', nextDeliveryDate.toISOString().slice(0, 10));
 
         $next_el.html("다음 예상 배송일 : " + nextDeliveryDate.toISOString().slice(0, 10));
+        
+        */
+        
     }
 </script>

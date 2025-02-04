@@ -1,5 +1,4 @@
 <?php
-
 include_once './_common.php';
 
 if (empty($_POST)) {
