@@ -7,6 +7,10 @@ if (! $t) {
     die('abc');
 }
 
+if ($_SERVER['REMOTE_ADDR'] !== '59.10.38.2') {
+    die('');
+}
+
 $is_db_success = true;
 
 if ($is_db_success) {
@@ -69,11 +73,13 @@ foreach($result_row as $od) {
     
     $pays = subscription_process_payment($od, $od['od_pg']);
     
+    print_r( $pays );
+    
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
         $pay_round_no = (int) $od['od_pays_total'] + 1;
-        $insert_id = subscription_order_pay($od, $pays, $pay_round_no);
+        $insert_id = subscription_order_pay($od, $pays['response'], $pay_round_no);
         
         // 성공이면
         if ($insert_id) {

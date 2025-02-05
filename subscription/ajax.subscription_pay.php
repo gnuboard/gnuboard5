@@ -7,6 +7,10 @@ if (!$pay_id) {
     die('');
 }
 
+if (!$is_member) {
+    die(json_encode(array('error' => 1, 'msg'=>'회원만 조회가 가능합니다.')));
+}
+
 $sql_wheres = array('id' => $pay_id);
 
 if ($is_member && !$is_admin) {
@@ -21,4 +25,16 @@ if (!(isset($pays['id']) && $pays['id'])) {
     
 }
 
+$pays['py_b_full_address'] = get_text(sprintf("(%s%s)", $pays['py_b_zip1'], $pays['py_b_zip2']).' '.print_address($pays['py_b_addr1'], $pays['py_b_addr2'], $pays['py_b_addr3'], $pays['py_b_addr_jibeon']));
+$pays['py_delivery_full_info'] = $pays['py_delivery_company'].' '.get_delivery_inquiry($pays['py_delivery_company'], $pays['py_invoice'], 'dvr_link');
+
+// 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
+$tot_price = $pays['py_cart_price'] + $pays['py_send_cost'] + $pays['py_send_cost2']
+                - $pays['py_cart_coupon'] - $pays['py_coupon'] - $pays['py_send_coupon']
+                - $pays['py_cancel_price'];
+
+$pays['py_tot_price'] = $tot_price;
+
+// 영수증
+$pays['py_receipt_url'] = '';
 die(json_encode($pays));

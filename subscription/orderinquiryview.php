@@ -40,7 +40,7 @@ if ($is_member && !$is_admin) {
 $od = sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', $sql_wheres);
 
 if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
-    alert("조회하실 주문서가 없습니다.", G5_SUBSCRIPTION__URL);
+    alert("조회하실 주문서가 없습니다.", G5_SUBSCRIPTION_URL);
 }
 
 // nicepay 로 주문하고 가상계좌인 경우

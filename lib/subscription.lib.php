@@ -940,10 +940,18 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     $paymethod = $pg_data['payMethod'];
     $od_receipt_price = $pg_data['amount'];
     $receipt_url = $pg_data['receiptUrl'];
-    $py_cardname = $pg_data['card']['cardName'];
-    $py_cardnumber = $pg_data['card']['cardNum'];
+    $py_cardname = isset($pg_data['card']['cardName']) ? $pg_data['card']['cardName'] : '';
+    $py_cardnumber = isset($pg_data['card']['cardNum']) ? $pg_data['card']['cardNum'] : '';
     $py_app_no = $pg_data['py_app_no'];
-        
+    
+    if (!$py_cardname) {
+        $py_cardname = $pg_data['cardname'];
+    }
+    
+    if (!$py_cardnumber) {
+        $py_cardnumber = $pg_data['cardnumber'];
+    }
+    
     // 나이스페이인 경우 메뉴얼 : https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
     // issuedCashReceipt 현금영수증 발급여부 true:발행 / false:미발행
     // useEscrow 에스크로 거래 여부 false:일반거래 / true:에스크로 거래
@@ -954,6 +962,9 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
         'od_id' => $od['od_id'],
         'mb_id' => $od['mb_id'],
         'subscription_id' => $subscription_id,
+        'py_name' => $od['od_name'],
+        'py_email' => $od['od_email'],
+        'py_hp' => $od['od_hp'],
         'py_b_name' => $od['od_b_name'],
         'py_b_hp' => $od['od_b_hp'],
         'py_b_zip1' => $od['od_b_zip1'],
@@ -973,11 +984,13 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
         'py_tno' => $pg_data['tid'],
         'py_time' => G5_TIME_YMDHIS,
         'py_app_no' => $py_app_no,
-        'py_round_no' => $pay_round_no
+        'py_round_no' => $pay_round_no,
+        'py_cart_count' => $od['od_cart_count'],
+        'py_cart_price' => $od['od_cart_price'],
         );
      
      
-     print_r2($inserts);
+    print_r2($inserts);
      
     $columns = implode(', ', array_keys($inserts));
     $values = implode("', '", array_values($inserts));
@@ -985,7 +998,7 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     // 주문서에 입력
     $sql = "INSERT INTO `{$g5['g5_subscription_pay_table']}`($columns) VALUES ('$values')";
     
-    echo $sql;
+    // echo $sql;
     
     sql_query($sql);
     
@@ -1316,6 +1329,7 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
 //결제방식 이름을 체크하여 치환 대상인 문자열은 따로 리턴합니다.
 function get_subscription_pay_name_replace($payname, $od=array(), $is_client=0) {
     
+    // 기존에 저장되어 있던 카드를 재사용한 경우
     if ($payname === '카드재사용') {
         return '신용카드';
     }
@@ -1457,6 +1471,16 @@ function kcp_billing($od, $tmp_cart_id='') {
     run_event('subscription_order_pg_pay', 'kcp', $results, $posts);
     
     if (isset($results['res_cd']) && $results['res_cd'] === '0000') {
+        
+        // 공통형식에 맞추어야 한다.
+        $results['orderId'] = $results['ordr_idxx'];
+        $results['payMethod'] = $results['pay_method'];
+        $results['amount'] = $results['good_mny'];
+        $results['receiptUrl'] = '';    // kcp 는 영수증 url 이 없다.
+        $results['cardname'] = $results['card_name'];
+        $results['cardnumber'] = mask_card_number($results['card_no']);   // kcp 는 정기결제시 결제카드 번호를 다 알려주지만, 여기서는 마스킹하여 저장한다.
+        $results['py_app_no'] = $results['app_no'];
+        
         return array('code'=>'success', 'message'=>$results['res_msg'], 'response'=>$results);
     } else {
         return array('code'=>'fail', 'message'=>$results['res_cd'].':'.$results['res_msg'], 'response'=>$results);
@@ -1551,6 +1575,16 @@ function kcp_new_billing($od, $tmp_cart_id='') {
     run_event('subscription_order_pg_pay', 'kcp', $res, $data);
     
     if (isset($res['res_cd']) && $res['res_cd'] === '0000') {
+        
+        // 공통형식에 맞추어야 한다.
+        $results['orderId'] = $results['ordr_idxx'];
+        $results['payMethod'] = $results['pay_method'];
+        $results['amount'] = $results['good_mny'];
+        $results['receiptUrl'] = '';    // kcp 는 영수증 url 이 없다.
+        $results['cardname'] = $results['card_name'];
+        $results['cardnumber'] = mask_card_number($results['card_no']);   // kcp 는 정기결제시 결제카드 번호를 다 알려주지만, 여기서는 마스킹하여 저장한다.
+        $results['py_app_no'] = $results['app_no'];
+        
         return array('code'=>'success', 'message'=>$res['res_msg'], 'response'=>$res);
     } else {
         return array('code'=>'fail', 'message'=>$res['res_cd'].':'.$res['res_msg'], 'response'=>$res);
@@ -1736,7 +1770,7 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
     $bid = $od['card_billkey'];
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
-    $nice_orderId = substr($od['od_id'].'_'.get_string_encrypt($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
+    $nice_orderId = substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
     $edi_date = date('c', G5_SERVER_TIME);
     $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
     $buyerName = $od['od_name'];
@@ -1837,7 +1871,7 @@ function tosspayments_billing($od, $tmp_cart_id='') {
     $data = array(
         'customerKey' => $billingKey,
         'amount' => $od['od_receipt_price'],
-        'orderId' => substr($od['od_id'].'_'.get_string_encrypt($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
+        'orderId' => substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
         'orderName' => $goodsname['full_name'],
         'customerEmail' => $od['od_email'],
         'customerName' => $od['od_name']

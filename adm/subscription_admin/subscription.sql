@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `subscription_id` char(50) NOT NULL DEFAULT '',
   `py_name` varchar(20) NOT NULL DEFAULT '',
   `py_email` varchar(100) NOT NULL DEFAULT '',
-
+  `py_hp` varchar(20) NOT NULL DEFAULT '',
   `py_b_name` varchar(20) NOT NULL DEFAULT '',
   `py_b_tel` varchar(20) NOT NULL DEFAULT '',
   `py_b_hp` varchar(20) NOT NULL DEFAULT '',

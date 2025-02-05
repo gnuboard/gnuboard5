@@ -388,8 +388,8 @@ include_once('./_head.php');
                         <td><?php echo $v['py_round_no']; ?></td>
                         <td><?php echo $v['py_pg']; ?></td>
                         <td><?php echo $v['py_receipt_time']; ?></td>
-                        <td></td>
-                        <td><a href="#ex_modal1" rel="modal:open" data-cid="<?php echo $v['py_round_no']; ?>" class="mng_mod btn btn_02">상세보기</a></td>
+                        <td><?php echo display_price($v['py_cart_price'] + $v['py_send_cost'] + $v['py_send_cost2']); ?></td>
+                        <td><a href="#ex_modal1" rel="modal:open" data-payid="<?php echo $v['id']; ?>" class="mng_mod btn btn_02">상세보기</a></td>
                     </tr>
                     <?php } // end for ?>
                     <?php } else { ?>
@@ -604,7 +604,7 @@ jQuery(function($) {
     $(document).on("click", ".mng_mod.btn", function(e) {
         e.preventDefault();
         
-        var pay_id = $(this).attr("data-cid"),
+        var pay_id = $(this).attr("data-payid"),
             oDate = new Date(),
             action_url = g5_url + "/subscription/ajax.subscription_pay.php",
             formData = "pay_id="+pay_id;
@@ -652,14 +652,54 @@ jQuery(function($) {
 
                     // JSON 데이터 순회하며 li 요소 생성 후 ul에 추가
                     $.each(data, function(key, value) {
-                        ulEl.append("<li><strong>" + key + ":</strong> " + value + "</li>");
+                        // ulEl.append("<li><strong>" + key + ":</strong> " + value + "</li>");
                     });
                     
+                    /*
                     var keys = {
                         "py_receipt_time": "결제시간",
                         "영수증출력": "",
                         "py_receipt_price": "결제금액",
                         };
+                    */
+                    
+                    var html = "";
+                    
+                    html = "<h3>주문하신 분</h3>";
+                    html += "<li><strong>이름 :</strong> " + data.py_name + "</li>";
+                    html += "<li><strong>핸드폰 :</strong> " + data.py_hp + "</li>";
+                    
+                    html += "<h3>받으시는 분</h3>";
+                    html += "<li><strong>이름 :</strong> " + data.py_b_name + "</li>";
+                    html += "<li><strong>전화번호 :</strong> " + data.py_b_tel + "</li>";
+                    html += "<li><strong>핸드폰 :</strong> " + data.py_b_hp + "</li>";
+                    html += "<li><strong>주소 :</strong> " + data.py_b_full_address + "</li>";
+                    
+                    html += "<h3>배송정보</h3>";
+                    if (data.py_invoice && data.py_delivery_company) {
+                        html += "<li><strong>배송회사 :</strong> " + data.py_delivery_full_info + "</li>";
+                        html += "<li><strong>운송장번호 :</strong> " + data.py_invoice + "</li>";
+                        html += "<li><strong>배송일시 :</strong> " + data.py_invoice_time + "</li>";
+                    } else {
+                        html += "<li class='is_not_delivery'>아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</li>";
+                    }
+
+                    html += "<li><strong>주문총액 :</strong> " + data.py_cart_price + "</li>";
+                    if (data.py_send_cost) {
+                        html += "<li><strong>배송비 :</strong> " + data.py_send_cost + "</li>";
+                    }
+                    html += "<li><strong>총계 :</strong> " + data.py_tot_price + "</li>";
+                    
+                    html += "<h3>결제정보</h3>";
+                    html += "<li><strong>주문번호 :</strong> " + data.subscription_id + "</li>";
+                    html += "<li><strong>주문일시 :</strong> " + data.py_time + "</li>";
+                    html += "<li><strong>결제방식 :</strong> " + data.py_settle_case + "</li>";
+                    html += "<li><strong>결제금액 :</strong> " + data.py_receipt_price + "</li>";
+                    html += "<li><strong>결제일시 :</strong> " + data.py_receipt_time + "</li>";
+                    html += "<li><strong>승인번호 :</strong> " + data.py_app_no + "</li>";
+                    html += "<li><strong>영수증 :</strong> " + data.py_receipt_url + "</li>";
+                    
+                    ulEl.append(html);
                     
                     // 기존 .content 내부에 추가
                     contentEl.html(ulEl);
