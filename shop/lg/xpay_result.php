@@ -81,7 +81,7 @@ if ($xpay->TX()) {
         $app_time        = $xpay->Response('LGD_PAYDATE',0);
         $bank_name = $bankname = $xpay->Response('LGD_FINANCENAME',0);
         $depositor       = $xpay->Response('LGD_PAYER',0);
-        $account         = $xpay->Response('LGD_FINANCENAME',0).' '.$xpay->Response('LGD_ACCOUNTNUM',0).' '.$xpay->Response('LGD_SAOWNER',0);
+        $account         = $xpay->Response('LGD_ACCOUNTNUM',0).' '.$xpay->Response('LGD_SAOWNER',0);
         $commid          = $xpay->Response('LGD_FINANCENAME',0);
         $mobile_no       = $xpay->Response('LGD_TELNO',0);
         $app_no = $od_app_no = $xpay->Response('LGD_FINANCEAUTHNUM',0);
