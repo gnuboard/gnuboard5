@@ -9,7 +9,7 @@ function subscription_add_mypage_sub() {
     if (!$is_member) {
         return '';
     }
-    
+    /*
     $limit = " limit 0, 5 ";
     
     $sql = " select *
@@ -18,7 +18,10 @@ function subscription_add_mypage_sub() {
               order by od_id desc
               $limit ";
     $result = sql_query($sql);
+    */
     
+    $result = sql_bind_select($g5['g5_subscription_order_table'], '*', array('mb_id'=>$member['mb_id']), array('orderBy'=>'od_id', 'orderType' => 'desc', 'limit' => 5, 'offset' => 0));
+
     $ods = array();
     
     for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -105,10 +108,13 @@ function subscription_add_mypage_sub() {
     }
 
     if ($i == 0)
-        echo '<tr><td colspan="7" class="empty_table">정기결제 내역이 없습니다.</td></tr>';
+        echo '<tr><td colspan="8" class="empty_table">정기결제 내역이 없습니다.</td></tr>';
     ?>
     </tbody>
     </table>
+</div>
+<div class="smb_my_more">
+    <a href="<?php echo G5_SUBSCRIPTION_URL; ?>/orderinquiry.php">더보기</a>
 </div>
 <!-- } 정기결제 내역 목록 끝 -->
 <?php
@@ -119,3 +125,5 @@ function subscription_add_mypage_sub() {
     }
     */
 }
+
+?>

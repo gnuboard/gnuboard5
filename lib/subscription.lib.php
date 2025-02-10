@@ -943,7 +943,7 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     $py_cardname = isset($pg_data['card']['cardName']) ? $pg_data['card']['cardName'] : '';
     $py_cardnumber = isset($pg_data['card']['cardNum']) ? $pg_data['card']['cardNum'] : '';
     $py_app_no = $pg_data['py_app_no'];
-    
+
     if (!$py_cardname) {
         $py_cardname = $pg_data['cardname'];
     }
@@ -1437,7 +1437,8 @@ function kcp_billing($od, $tmp_cart_id='') {
     
     $cust_ip            = "";
     $currency           = '410'; // 화폐 단위
-    $ordr_idxx          = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid(); // 주문번호 
+    // $ordr_idxx          = $od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(); // 주문번호 
+    $ordr_idxx          = generate_subscription_id($od['od_id']); // 주문번호 
     $good_name          = $goodsname['full_name']; // 상품명
     $buyr_name          = $od['od_name']; // 주문자명
     $buyr_mail          = $od['od_email']; // 주문자 E-mail
@@ -1480,6 +1481,7 @@ function kcp_billing($od, $tmp_cart_id='') {
         $results['cardname'] = $results['card_name'];
         $results['cardnumber'] = mask_card_number($results['card_no']);   // kcp 는 정기결제시 결제카드 번호를 다 알려주지만, 여기서는 마스킹하여 저장한다.
         $results['py_app_no'] = $results['app_no'];
+        $results['tid'] = $results['tno'];
         
         return array('code'=>'success', 'message'=>$results['res_msg'], 'response'=>$results);
     } else {
@@ -1503,7 +1505,8 @@ function kcp_new_billing($od, $tmp_cart_id='') {
     
     $cust_ip            = "";
     $currency           = '410'; // 화폐 단위
-    $ordr_idxx          = $od['od_id'].'_'.$od['mb_id'].'_'.uniqid(); // 주문번호 
+    // $ordr_idxx          = $od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(); // 주문번호 
+    $ordr_idxx          = generate_subscription_id($od['od_id']);
     $good_name          = $goodsname['full_name']; // 상품명
     $buyr_name          = $od['od_name']; // 주문자명
     $buyr_mail          = $od['od_email']; // 주문자 E-mail
@@ -1584,6 +1587,7 @@ function kcp_new_billing($od, $tmp_cart_id='') {
         $results['cardname'] = $results['card_name'];
         $results['cardnumber'] = mask_card_number($results['card_no']);   // kcp 는 정기결제시 결제카드 번호를 다 알려주지만, 여기서는 마스킹하여 저장한다.
         $results['py_app_no'] = $results['app_no'];
+        $results['tid'] = $results['tno'];
         
         return array('code'=>'success', 'message'=>$res['res_msg'], 'response'=>$res);
     } else {
@@ -1688,7 +1692,8 @@ function nicepay_billing($od, $tmp_cart_id='') {
     */
     $bid 				= $od['card_billkey'];				// 빌키
     $mid 				= get_subs_option('su_nicepay_mid');		// 가맹점 아이디
-    $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
+    // $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
+    $tid 				= substr(generate_subscription_id($od['od_tno']), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
     $moid 				= $od['od_id'];				// 가맹점 주문번호
     $amt 				= (int) $od['od_receipt_price'];				// 결제 금액
     //$goodsName 			= $goodsname['full_name'];				// 상품명
@@ -1770,7 +1775,8 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
     $bid = $od['card_billkey'];
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
-    $nice_orderId = substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
+    // $nice_orderId = substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
+    $nice_orderId = substr(generate_subscription_id($od['od_id']), 0, 64);  // 64길이
     $edi_date = date('c', G5_SERVER_TIME);
     $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
     $buyerName = $od['od_name'];
@@ -1871,7 +1877,8 @@ function tosspayments_billing($od, $tmp_cart_id='') {
     $data = array(
         'customerKey' => $billingKey,
         'amount' => $od['od_receipt_price'],
-        'orderId' => substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
+        // 'orderId' => substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
+        'orderId' => substr(generate_subscription_id($od['od_id']), 0, 64),  // 64길이
         'orderName' => $goodsname['full_name'],
         'customerEmail' => $od['od_email'],
         'customerName' => $od['od_name']
@@ -2039,6 +2046,19 @@ function mask_card_number($string) {
     
     // 문자열을 마스킹된 형태로 변환
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
+}
+
+function generate_subscription_id($oid='') {
+    global $g5, $is_member, $member;
+    
+    // 데이터베이스에서 가장 최근 주문 ID 가져오기
+    $stmt = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(id)');
+    
+    $lastId = $stmt['id'];
+    $lastId = $lastId ? $lastId + 1 : 1;
+    
+    $str = substr(hash('sha256', $lastId . $member['md_id'] . microtime()), 0, 12);
+    return $oid ? $oid.'_'.$str : $str;
 }
 
 function get_subscription_pg_id($pg_name=''){
@@ -2209,10 +2229,13 @@ function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
         );
     
     // 상품명만들기
-    
+    /*
     $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$pay_id' order by ct_id ";
         
     $result = sql_query($sql);
+    */
+    
+    $result = sql_bind_select("{$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b", "a.it_id, b.it_name", array('a.it_id' => 'b.it_id', 'a.od_id' => $pay_id), array('orderBy' => 'ct_id'));
     
     $tmp = array();
     

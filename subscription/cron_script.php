@@ -106,6 +106,16 @@ foreach($result_row as $od) {
                 add_log(array('error'=>'fail1'), false, '_subscription_fail_');
             }
             
+            $failure_reason = '(크론) 결제에 성공했으나, DB 쓰기에 실패했습니다.('.$pay_round_no.'회차) 코드 : '.$pays['code'].' 이유 : '.$pays['message'];
+            
+            add_subscription_order_history($failure_reason, array(
+                'hs_type' => 'subscription_pay',
+                'hs_category' => 'admin',
+                'od_id' => $od['od_id'],
+                'mb_id' => $od['mb_id'],
+                'hs_date' => G5_TIME_YMDHIS
+            ));
+            
             // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
         }
         
@@ -115,6 +125,16 @@ foreach($result_row as $od) {
         if (function_exists('add_log')) {
             add_log(array('error'=>'fail2'), false, '_subscription_fail_');
         }
+        
+        $failure_reason = '결제에 성공했으나, DB 쓰기에 실패했습니다.('.$pay_round_no.'회차) 코드 : '.$pays['code'].' 이유 : '.$pays['message'];
+        
+        add_subscription_order_history($failure_reason, array(
+            'hs_type' => 'subscription_pay',
+            'hs_category' => 'admin',
+            'od_id' => $od['od_id'],
+            'mb_id' => $od['mb_id'],
+            'hs_date' => G5_TIME_YMDHIS
+        ));
         
         // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
     }

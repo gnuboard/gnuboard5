@@ -1079,7 +1079,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             return false;
         }
         
-        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val() || jQuery("input[name='od_subscription_select_data']").val();
+        // var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val() || jQuery("input[name='od_subscription_select_data']").val();
         
         <?php if (get_subs_option('su_chk_user_delivery')) {    // 배송주기를 사용자가 입력이 가능한경우 ?> 
 
@@ -1088,8 +1088,16 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             //jQuery("#od_subscription_select_day").focus();
         }
         
+        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val() || jQuery("input[name='od_subscription_select_data']").val();
+        
+        <?php } else { ?>
+
+        var od_subscription_select_val = jQuery("#od_subscription_select_data :selected").val() || jQuery("input[name='od_subscription_select_data']:checked").val();
+        
         <?php } ?>
-            
+        
+        console.log("배송주기 : " + od_subscription_select_val );
+        
         if (!od_subscription_select_val) {
             alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
             jQuery("#od_subscription_select_data").focus();
@@ -1097,14 +1105,18 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             return false;
         }
         
-        var od_subscription_select_number_val = jQuery("input[name='od_subscription_select_number']:selected").val() || jQuery("input[name='od_subscription_select_number']:checked").val() || jQuery("input[name='od_subscription_select_number']").val();
+        //var od_subscription_select_number_val = jQuery("input[name='od_subscription_select_number']:selected").val() || jQuery("input[name='od_subscription_select_number']:checked").val() || jQuery("input[name='od_subscription_select_number']").val();
+        
+        var od_subscription_select_number_val = jQuery("input[name='od_subscription_select_number']:selected").val() || jQuery("input[name='od_subscription_select_number']:checked").val();
         
         if (!od_subscription_select_number_val) {
             alert("이용횟수를 선택해주세요");
             
             return false;
         }
-            
+        
+        console.log("이용횟수 : " + od_subscription_select_number_val );
+        
         var settle_case = document.getElementsByName("od_settle_case");
         var settle_check = false;
         var settle_method = "";
@@ -1271,7 +1283,8 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
 
             <?php } ?>
             <?php if (get_subs_option('su_pg_service') == 'nicepay') { ?>
-
+                
+                /*
                 console.log(f);
 
                 var cardNo = f.cardNo.value,
@@ -1299,7 +1312,9 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                 }
 
                 f.submit();
-
+                */
+                
+                nicepay_modal_open();
             <?php } ?>
         }
 
@@ -1358,6 +1373,14 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             calculate_next_delivery_date();
         });
     });
+    <?php } else { ?>
+        
+        $(document).on("click", "input[name='od_subscription_select_data']", function(e) {
+            
+            calculate_next_delivery_date();
+            
+        });
+        
     <?php } ?>
     
     <?php if (get_subs_option('su_hope_date_use')) { ?>
@@ -1479,7 +1502,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             jQuery("#od_hope_date").val($.datepicker.formatDate('yy-mm-dd', $("#od_hope_date_print").datepicker( "getDate" )));
         }
         
-        var $od_subscription_select_data = jQuery("#od_subscription_select_data").val() || jQuery("input[name='od_subscription_select_data']").val(),
+        var $od_subscription_select_data = jQuery("#od_subscription_select_data").val() || jQuery("input[name='od_subscription_select_data']:checked").val(),
             $od_subscription_select_number = jQuery("#od_subscription_select_number").val(),
             $od_hope_date_print = $("#od_hope_date").val();
         
@@ -1493,6 +1516,52 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         let baseDate = new Date($od_hope_date_print);
         
         console.log( $od_subscription_select_data );
+        
+        if ($od_subscription_select_data && $od_subscription_select_data.includes("||")) {
+            
+            let [no, plus, interval] = $od_subscription_select_data.split("||");
+            
+            interval = interval || "day";
+            plus = Math.abs(parseInt(plus, 10)) || 1;
+
+            let isCheckBefore = false;
+            
+            switch (interval) {
+                case "day":
+                    baseDate.setDate(baseDate.getDate() + plus);
+                    break;
+                case "week":
+                    baseDate.setDate(baseDate.getDate() + plus * 7);
+                    break;
+                case "month":
+                    baseDate.setMonth(baseDate.getMonth() + plus);
+                    isCheckBefore = true;
+                    break;
+                case "year":
+                    baseDate.setFullYear(baseDate.getFullYear() + plus);
+                    isCheckBefore = true;
+                    break;
+                default:
+                    throw new Error(`Unknown billing interval: ${interval}`);
+            }
+            
+            // let formattedDate = baseDate.toISOString().slice(0, 19).replace("T", " ");
+
+            // return isCheckBefore ? getBusinessDaysBefore(formattedDate) : getBusinessDaysNext(formattedDate);
+            
+            // const nextDeliveryDate = getNextBusinessDay(formattedDate, holidays);
+            
+        } else {
+            
+            baseDate.setDate(baseDate.getDate() + parseInt($od_subscription_select_data)); // 몇일 이후 날짜 계산
+            
+        }
+        
+        const nextDeliveryDate = getNextBusinessDay(baseDate, holidays);
+        
+        $next_el.html("다음 예상 배송일 : " + nextDeliveryDate.toISOString().slice(0, 10));
+            
+        // $next_el.html("다음 예상 배송일 : " + nextDeliveryDate.toISOString().slice(0, 10));
         
         /*
         baseDate.setDate(baseDate.getDate() + parseInt($od_subscription_select_data)); // 몇일 이후 날짜 계산

@@ -330,3 +330,48 @@ padding:0.1em 1em;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size
   border: 2px solid transparent;
 }
 */
+
+#nicepay_modal.modal{padding:0}
+#nicepay_modal.modal .modal-content{padding:1em 2em}
+#nicepay_modal h2 {
+margin: 0;
+padding: 10px;
+color: #fff;
+font-size: 14px;
+background: -moz-linear-gradient(top, #2e5764, #1e3d47);
+background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #1e3d47),color-stop(1, #2e5764));
+}
+
+#nicepay_modal .bottom-btns{
+margin: 0;
+padding: 10px;
+color: #fff;
+font-size: 14px;
+background: #f6f6f6;
+text-align:right;
+}
+
+.bottom-btns .modal-btn{display:inline-block;vertical-align: middle;background:#999;font-weight:bold;color:#fff;height:35px;line-height:35px;border:0;border-radius:5px;padding:0 50px}
+.bottom-btns .modal-btn.order-progress {background:#ff4081}
+.nicepay-form.flex ul{list-style:none}
+.nicepay-form.flex li{display:flex;flex:1;margin:1em 0}
+
+/* #nicepay_modal h2 {font-size:1.5em;margin-bottom:1em} */
+
+.nicepay-form li label {
+    display: flex;
+    flex: none;
+    width: 120px;
+	flex-direction: column;
+	/* align-items: center; */
+	justify-content: center;
+	font-weight:bold;
+}
+
+.nicepay-form li input{max-width:300px;width:90%}
+#nicepay_modal .description-top {border-top:1px solid #eceff4;padding:0.5em 0;margin:1em 0}
+.nicepay-form li .td{
+    display: flex;
+    flex: 1;
+    overflow: auto;
+}

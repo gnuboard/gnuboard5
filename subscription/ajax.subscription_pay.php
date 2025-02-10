@@ -36,5 +36,11 @@ $tot_price = $pays['py_cart_price'] + $pays['py_send_cost'] + $pays['py_send_cos
 $pays['py_tot_price'] = $tot_price;
 
 // 영수증
+
 $pays['py_receipt_url'] = '';
+
+if ($pays['py_pg'] == 'kcp') {
+    $pays['py_receipt_url'] = G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL.'card_bill&tno='.$pays['py_tno'].'&order_no='.$pays['subscription_id'].'&trade_mony='.(int) $pays['py_receipt_price'];
+}
+
 die(json_encode($pays));

@@ -155,6 +155,15 @@ include_once(G5_LIB_PATH.'/subscription.lib.php');
 include_once(G5_SUBSCRIPTION_PATH.'/subscription.hook.php');
 include_once(G5_SUBSCRIPTION_ADMIN_PATH.'/admin.subscription.hook.php');
 
+// KCP 매출전표 url 설정
+if (get_subs_option('su_card_test')) {
+    // 테스트
+    define('G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL', 'https://testadmin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=');
+} else {
+    // 실결제 https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=card_bill&tno=[NHN KCP거래번호]&order_no=[주문번호]&trade_mony=[거래금액]
+    define('G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL', 'https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=');
+}
+
 if (defined('IS_SUBSCRIPTION_EXPIRE_PAGE') && IS_SUBSCRIPTION_EXPIRE_PAGE) {
     add_event('common_header', 'nocache_nostore_subscription_headers', 1, 0);
 }

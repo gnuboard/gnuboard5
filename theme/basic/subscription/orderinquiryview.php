@@ -669,6 +669,10 @@ jQuery(function($) {
                     html += "<li><strong>이름 :</strong> " + data.py_name + "</li>";
                     html += "<li><strong>핸드폰 :</strong> " + data.py_hp + "</li>";
                     
+                    if (data.py_test) {
+                        html += "<li class='is_pay_test'><strong>이 결제는 테스트로 결제되었습니다.</strong></li>";
+                    }
+                    
                     html += "<h3>받으시는 분</h3>";
                     html += "<li><strong>이름 :</strong> " + data.py_b_name + "</li>";
                     html += "<li><strong>전화번호 :</strong> " + data.py_b_tel + "</li>";
@@ -693,11 +697,15 @@ jQuery(function($) {
                     html += "<h3>결제정보</h3>";
                     html += "<li><strong>주문번호 :</strong> " + data.subscription_id + "</li>";
                     html += "<li><strong>주문일시 :</strong> " + data.py_time + "</li>";
-                    html += "<li><strong>결제방식 :</strong> " + data.py_settle_case + "</li>";
+                    // html += "<li><strong>결제방식 :</strong> " + data.py_settle_case + "</li>";
+                    html += "<li><strong>결제카드 :</strong> " + data.py_settle_case + "</li>";
                     html += "<li><strong>결제금액 :</strong> " + data.py_receipt_price + "</li>";
                     html += "<li><strong>결제일시 :</strong> " + data.py_receipt_time + "</li>";
                     html += "<li><strong>승인번호 :</strong> " + data.py_app_no + "</li>";
-                    html += "<li><strong>영수증 :</strong> " + data.py_receipt_url + "</li>";
+                    
+                    if (data.py_receipt_url) {
+                        html += "<li><strong>영수증 :</strong> <a href='" + data.py_receipt_url + "' target='_blank' class='subscription-receipt-view'>영수증클릭</a></li>";
+                    }
                     
                     ulEl.append(html);
                     
@@ -721,6 +729,15 @@ jQuery(function($) {
         });
             
     });
+    
+    $(document).on("click", ".subscription-receipt-view", function(e){
+        e.preventDefault();
+        
+        var $href = $(this).attr("href");
+        
+        window.open($href, "winreceipt", "width=500,height=690,scrollbars=yes,resizable=yes");
+    });
+    
 });
 
 function fcancel_check(f)
@@ -735,7 +752,8 @@ function fcancel_check(f)
     }
 
     return true;
-}		
+}
+
 </script>
 
 <?php

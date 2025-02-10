@@ -47,6 +47,11 @@ $s_cart_id = $tmp_cart_id;
 
 $tot_price = 0;
 
+if (get_subs_option('su_pg_service') == 'nicepay') {
+    add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
+}
+
 $g5['title'] = '주문서 작성';
 
 if(G5_IS_MOBILE)

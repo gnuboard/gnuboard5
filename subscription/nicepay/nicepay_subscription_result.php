@@ -67,8 +67,6 @@ $data = Array(
 $response = reqPost($data, $postURL); 				//API 호출, 결과 데이터가 $response 변수에 저장됩니다.
 //jsonRespDump($response); 							//결과 데이터를 브라우저에 노출합니다.
 
-print_r( $response );
-
 $resp_utf = iconv("EUC-KR", "UTF-8", $response);
 
 $respArr = json_decode($resp_utf, true);
@@ -76,7 +74,7 @@ $respArr = json_decode($resp_utf, true);
 // https://developers.nicepay.co.kr/manual-card-billing.php
 // 0000이 아니면 실패
 if ($respArr['ResultCode'] !== 'F100') {
-    alert($respArr['ResultMsg'], G5_SHOP_URL);
+    alert($respArr['ResultMsg']);
 }
 
 if (function_exists('add_log')) {
@@ -228,12 +226,12 @@ try {
     // billing($bid); // 빌키 승인
     // expire($bid); // 빌키 삭제
 } catch (Exception $e) {
-    alert($e->getMessage(), G5_SHOP_URL);
+    alert($e->getMessage());
 }
 
 // 0000이 아니면 실패
 if ($resObject['resultCode'] !== '0000') {
-    alert($resObject['resultMsg'], G5_SHOP_URL);
+    alert($resObject['resultMsg']);
 }
 
 if (function_exists('add_log')) {

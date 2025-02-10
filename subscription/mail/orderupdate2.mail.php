@@ -1,4 +1,7 @@
-<?php //고객님께 ?>
+<?php
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+//고객님께
+?>
 <!doctype html>
 <html lang="ko">
 <head>

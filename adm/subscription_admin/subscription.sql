@@ -205,9 +205,10 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_hope_date` date NOT NULL DEFAULT '0000-00-00',
   
   `py_settle_case` varchar(255) NOT NULL DEFAULT '',
+  `py_card_name` varchar(100) NOT NULL DEFAULT '',
+  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
   `py_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `py_test` tinyint(4) NOT NULL DEFAULT '0',
-  `py_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `py_pg` varchar(255) NOT NULL DEFAULT '',
   `py_tno` varchar(255) NOT NULL DEFAULT '',
   `py_app_no` varchar(20) NOT NULL DEFAULT '',
