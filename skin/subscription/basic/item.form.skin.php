@@ -378,14 +378,12 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
                             정기구독 배송일 선택
                         </h2>
                     </div>
+                    <?php if (get_subs_option('su_subscription_content_first')) {   // 정기결제 폼 첫번째 안내문이 있다면 ?>
                     <div class="subscription-desc1">
-                        <ul>
-                            <li>구독 중 설명 설명 땡땡 가능합니다.</li>
-                            <li>설명 설명 땡땡 가능합니다.</li>
-                        </ul>
+                        <?php echo conv_content(get_subs_option('su_subscription_content_first'), 1); ?>
                     </div>
+                    <?php } ?>
                     
-
                     <?php
                         // 정기구독 설정 불러오기
                         // 배송주기
@@ -495,16 +493,13 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 
                         </div>
                         <?php } ?>
-                        <h3 class="underline">구매 전 확인해주세요</h3>
-                        <div class="subscription_desc2">
-                            <ul>
-                            <li>정기구독으로 설명 땡땡으로 설정됩니다.</li>
-                            <li>설명문2</li>
-                            <li>설명문3</li>
-                            <li>설명문4</li>
-                            <li>설명문5</li>
-                            </ul>
+                            
+                        <?php if (get_subs_option('su_subscription_content_end')) {   // 정기결제 폼 마지막 안내문이 있다면 ?>
+                        <div class="subscription-desc-end">
+                            <?php echo conv_content(get_subs_option('su_subscription_content_end'), 1); ?>
                         </div>
+                        <?php } ?>
+                            
                         <div class="form-box-btns">
                             <button type="submit" onclick="document.pressed=this.value;" value="정기구독신청" class="sit_btn_subscription sit_btn_buy">정기구독 신청하기</button>
                             <!-- <a href="#" class="sit_btn_subscription sit_btn_buy">정기구독 신청하기</a> -->
@@ -513,14 +508,14 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 
 				<div id="sit_ov_btn">
 					<?php if ($is_orderable) { ?>
-						<button type="submit" onclick="document.pressed=this.value;" value="정기구독카트" class="sit_btn_cart">정기구독카트</button>
-						<button type="submit" onclick="document.pressed=this.value;" value="정기구독구매" class="sit_btn_buy">정기구독구매</button>
+						<button type="submit" onclick="document.pressed=this.value;" value="구독장바구니" class="sit_btn_cart">구독장바구니</button>
+                        <?php if ($is_orderable) { ?>
+                        <a href="#ex1" rel="modal:open" class="sit-btn-subscription">정기구독</a>
+                        <?php } ?>
+						<!-- <button type="submit" onclick="document.pressed=this.value;" value="정기구독구매" class="sit_btn_buy">정기구독구매</button> -->
                         <!-- <button type="button" href="#ex1" rel="modal:open" onclick="document.pressed=this.value;" value="정기구독" class="sit_btn_buy">정기구독</button> -->
 					<?php } ?>
 					<a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" class="sit_btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span></a>
-                    <?php if ($is_orderable) { ?>
-                    <a href="#ex1" rel="modal:open" class="sit-btn-subscription">정기구독</a>
-                    <?php } ?>
 
 					<?php if (!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
 						<a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_alm">재입고알림</a>
@@ -701,13 +696,13 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
 		f.action = "<?php echo $action_url; ?>";
 		f.target = "";
         
-		if (document.pressed == "정기구독카트") {
+		if (document.pressed == "구독장바구니") {
 			f.sw_direct.value = 0;
 		} else { // 바로구매 또는 정기구독신청
 			f.sw_direct.value = 1;
 		}
 
-        if (document.pressed == "정기구독카트") {
+        if (document.pressed == "구독장바구니") {
         }
         
 		// 판매가격이 0 보다 작다면
@@ -1004,6 +999,10 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
         // 기준 날짜 계산
         let baseDate = new Date($od_hope_date_print);
         
+        if (typeof $od_subscription_select_data === 'undefined') {
+            return false;
+        }
+        
         console.log( $od_subscription_select_data );
         
         if ($od_subscription_select_data && $od_subscription_select_data.includes("||")) {
@@ -1047,6 +1046,8 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
         }
         
         const nextDeliveryDate = getNextBusinessDay(baseDate, holidays);
+        
+        console.log(nextDeliveryDate);
         
         $next_el.html("다음 예상 배송일 : " + nextDeliveryDate.toISOString().slice(0, 10));
             

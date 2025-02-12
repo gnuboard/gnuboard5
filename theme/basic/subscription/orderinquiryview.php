@@ -347,9 +347,11 @@ include_once('./_head.php');
 	                    <td><?php echo date('Y-m-d', strtotime($od['next_billing_date'])); ?></td>
                     </tr>
                     <tr>
-	                    <th scope="row">다음 결제가격</th>
+	                    <th scope="row">다음 결제가격<br>(예정)</th>
 	                    <td>
-                            <span class="help">결제가격은 변동될수 있습니다.</span>
+                            <?php echo number_format(subscription_order_pay_price($od_id)); ?>원
+                            <br>
+                            <span class="help">결제가격은 장바구니 상태에 따라 변동될수 있습니다.</span>
                         </td>
                     </tr>
                     <tr>

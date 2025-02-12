@@ -42,6 +42,7 @@ height: 50px;               /* 높이 지정 (주석 해제) */
     background-color: rgba(241, 244, 246, 0.7);
 }
 
+.modal .subscription-desc-end {margin-top:2em}
 .modal h3{font-size:1.2em;margin:0.5em 0}
 
 .modal .form-box-btns {margin-top:2em}

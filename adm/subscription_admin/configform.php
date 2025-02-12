@@ -651,6 +651,16 @@ Array
                 <input type="number" name="su_auto_payment_lead_days" value="<?php echo get_sanitize_input(get_subs_option('su_auto_payment_lead_days')); ?>" id="su_auto_payment_lead_days" class="frm_input" size="5"> 일
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row">정기결제 폼 첫번째 안내문</th>
+            <td><?php echo editor_html('su_subscription_content_first', get_text(html_purifier(get_subs_option('su_subscription_content_first')), 0)); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">정기결제 폼 마지막 안내문</th>
+            <td><?php echo editor_html('su_subscription_content_end', get_text(html_purifier(get_subs_option('su_subscription_content_end')), 0)); ?></td>
+        </tr>
+        
         <tr>
             <th scope="row"><label for="su_pg_service">결제대행사</label></th>
             <td>
@@ -798,6 +808,24 @@ Array
 </form>
 </div>
 <script>
+function fconfig_check(f) {
+    <?php echo get_editor_js('su_subscription_content_first'); ?>
+    <?php echo get_editor_js('su_subscription_content_end'); ?>
+        
+    var msg = "",
+        pg_msg = "";
+    
+    if( msg ){
+        if (confirm(msg)){
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+
 jQuery(function($) {
     
     $(document).on("click", ".de_pg_tab a", function(e){

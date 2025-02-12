@@ -18,6 +18,9 @@ define('G5_SUBSCRIPTION_ADMIN_DIR',        'subscription_admin');
 define('G5_SUBSCRIPTION_ADMIN_PATH',       G5_ADMIN_PATH.'/'.G5_SUBSCRIPTION_ADMIN_DIR);
 define('G5_SUBSCRIPTION_ADMIN_URL',        G5_ADMIN_URL.'/'.G5_SUBSCRIPTION_ADMIN_DIR);
 
+// NHN_KCP 정기결제 기본 pay_method 
+define('SUBSCRIPTION_DEFAULT_PAYMETHOD',        'CARD');
+
 // 정기결제 테이블명
 if (!isset($g5['subscription_prefix'])) {
     $g5['subscription_prefix']                = G5_TABLE_PREFIX.'subscription_';

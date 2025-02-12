@@ -41,6 +41,10 @@ $pays['py_receipt_url'] = '';
 
 if ($pays['py_pg'] == 'kcp') {
     $pays['py_receipt_url'] = G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL.'card_bill&tno='.$pays['py_tno'].'&order_no='.$pays['subscription_id'].'&trade_mony='.(int) $pays['py_receipt_price'];
+} else if ($pays['py_pg'] == 'nicepay') {
+    
+    // https://developers.nicepay.co.kr/receipt.php
+    $pays['py_receipt_url'] = 'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&TID='.$pays['py_tno'];
 }
 
 die(json_encode($pays));

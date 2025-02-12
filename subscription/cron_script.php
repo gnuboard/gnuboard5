@@ -75,6 +75,10 @@ foreach($result_row as $od) {
     
     print_r( $pays );
     
+    $od_name = $od['od_name'];
+    $od_email = $od['od_email'];
+    $od_id = $od['od_id'];
+    
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
@@ -92,9 +96,6 @@ foreach($result_row as $od) {
             
             $result = sql_bind_update($g5['g5_subscription_order_table'], array('next_billing_date'=>$nextBillingDate, 'last_billed_date'=>G5_TIME_YMDHIS, 'od_pays_total'=>$pay_round_no), 
                 array('od_id'=>$od['od_id']));
-            
-            $od_name = $od['od_name'];
-            $od_email = $od['od_email'];
             
             include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
             include_once(G5_SUBSCRIPTION_PATH.'/cron_ordermail2.inc.php');
@@ -116,6 +117,9 @@ foreach($result_row as $od) {
                 'hs_date' => G5_TIME_YMDHIS
             ));
             
+            include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
+            include_once(G5_SUBSCRIPTION_PATH.'/mail/fail_db.mail.php');
+            
             // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
         }
         
@@ -136,6 +140,9 @@ foreach($result_row as $od) {
             'hs_date' => G5_TIME_YMDHIS
         ));
         
+        include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
+        include_once(G5_SUBSCRIPTION_PATH.'/mail/fail_pay.mail.php');
+            
         // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
     }
 

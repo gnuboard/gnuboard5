@@ -85,7 +85,7 @@ function get_subscription_cart_count($cart_id)
     return $cnt;
 }
 
-function subscription_print_item_options($it_id, $cart_id)
+function subscription_print_item_options($it_id, $cart_id, $is_get=0)
 {
     global $g5;
     
@@ -94,38 +94,37 @@ function subscription_print_item_options($it_id, $cart_id)
     $str = '';
     $i = 0;
     
+    $datas =  array();
+    
     foreach($subscription_carts as $row) {
-        if($i == 0)
+        if($i == 0) {
             $str .= '<ul>'.PHP_EOL;
+        }
+        
         $price_plus = '';
-        if($row['io_price'] >= 0)
+        
+        if($row['io_price'] >= 0) {
             $price_plus = '+';
+        }
+        
+        $datas[] = array(
+            'ct_option' => $row['ct_option'],
+            'ct_qty' => $row['ct_qty'],
+            'price_plus' => $price_plus,
+            'io_price' => $row['io_price']
+            );
+        
         $str .= '<li>'.get_text($row['ct_option']).' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
         
         $i++;
     }
     
-    if($i > 0)
-        $str .= '</ul>';
-    
-    /*
-    $sql = " select ct_option, ct_qty, io_price
-                from {$g5['g5_subscription_cart_table']} where it_id = '$it_id' and od_id = '$cart_id' order by io_type asc, ct_id asc ";
-    $result = sql_query($sql);
-
-    $str = '';
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        if($i == 0)
-            $str .= '<ul>'.PHP_EOL;
-        $price_plus = '';
-        if($row['io_price'] >= 0)
-            $price_plus = '+';
-        $str .= '<li>'.get_text($row['ct_option']).' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
+    if ($is_get) {
+        return $datas;
     }
-
+    
     if($i > 0)
         $str .= '</ul>';
-    */
     
     return $str;
 }
@@ -134,39 +133,35 @@ function subscription_print_item_options($it_id, $cart_id)
 function before_check_subscription_cart_price($s_cart_id, $is_ct_select_condition=false, $is_price_update=false, $is_item_cache=false){
     global $g5, $default, $config;
 
-    if( !$s_cart_id ){
-        return;
+    if (!$s_cart_id) return;
+
+    $select_where_add = array('od_id' => $s_cart_id);
+    
+    if ($is_ct_select_condition) {
+        $select_where_add['ct_select'] = 0;
     }
 
-    $select_where_add = '';
-
-    if( $is_ct_select_condition ){
-        $select_where_add = " and ct_select = '0' ";
-    }
-
-    $sql = " select * from `{$g5['g5_subscription_cart_table']}` where od_id = '$s_cart_id' {$select_where_add} ";
-
-    $result = sql_query($sql);
+    $rows = sql_bind_select_array($g5['g5_subscription_cart_table'], '*', $select_where_add);
+    
     $check_need_update = false;
     
-    for ($i=0; $row=sql_fetch_array($result); $i++){
-        if( ! $row['it_id'] ) continue;
+    foreach($rows as $row) {
+        if (!$row['it_id']) continue;
 
         $it_id = $row['it_id'];
         $it = get_subscription_item($it_id, $is_item_cache);
         
         $update_querys = array();
 
-        if(!$it['it_id'])
-            continue;
+        if (!$it['it_id']) continue;
         
-        if( $it['it_price'] !== $row['ct_price'] ){
+        if ((int) $it['it_price'] !== (int) $row['ct_price']) {
             // 장바구니 테이블 상품 가격과 상품 테이블의 상품 가격이 다를경우
             $update_querys['ct_price'] = $it['it_price'];
         }
 
-        if( $row['io_id'] ){
-            $io_sql = " select * from {$g5['g5_subscription_item_option_table']} where it_id = '{$it['it_id']}' and io_id = '{$row['io_id']}' ";
+        if ($row['io_id']) {
+            $io_sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_id = '{$row['io_id']}' ";
             $io_infos = sql_fetch( $io_sql );
 
             if( $io_infos['io_type'] ){
@@ -180,7 +175,7 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
 
         // 포인트
         $compare_point = 0;
-        if($config['cf_use_point']) {
+        if ($config['cf_use_point']) {
 
             // DB 에 io_type 이 1이면 상품추가옵션이며, 0이면 상품선택옵션이다
             if($row['io_type'] == 0) {
@@ -193,12 +188,12 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
                 $compare_point = 0;
         }
         
-        if((int) $row['ct_point'] !== (int) $compare_point){
+        if ((int) $row['ct_point'] !== (int) $compare_point) {
             // 장바구니 테이블 적립 포인트와 상품 테이블의 적립 포인트가 다를경우
             $update_querys['ct_point'] = $compare_point;
         }
-
-        if( $update_querys ){
+        
+        if ($update_querys) {
             $check_need_update = true;
         }
 
@@ -207,22 +202,128 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
             $conditions = array();
 
             foreach ($update_querys as $column => $value) {
-                $conditions[] = "`{$column}` = '{$value}'";
+                $conditions[$column] = $value;
             }
 
-            if( $col_querys = implode(',', $conditions) ) {
+            if ($conditions) {
+                sql_bind_update($g5['g5_subscription_cart_table'], $conditions, array('it_id' => $it['it_id'], 'od_id' => $s_cart_id, 'ct_id' => $row['ct_id']));
+                /*
                 $sql_query = "update `{$g5['g5_subscription_cart_table']}` set {$col_querys} where it_id = '{$it['it_id']}' and od_id = '$s_cart_id' and ct_id =  '{$row['ct_id']}' ";
                 sql_query($sql_query, false);
+                */
             }
         }
     }
 
     // 장바구니에 담긴 금액과 실제 상품 금액에 차이가 있다면
-    if( $check_need_update ){
+    if ($check_need_update) {
+        echo "왜?";
+        exit;
         return false;
     }
 
     return true;
+}
+
+function subscription_order_pay_price($od_id) {
+    
+    $pay_infos = get_subscription_cart_price($od_id);
+    
+    $total_price = (int)$pay_infos['tot_sell_price'] + (int)$pay_infos['send_cost'];
+    
+    return $total_price;
+}
+
+function get_subscription_cart_price($s_cart_id, $is_pay=0) {
+    global $g5;
+    
+    // $s_cart_id 로 현재 장바구니 자료 쿼리
+    $select_field =
+    'a.ct_id,
+    a.it_id,
+    a.it_name,
+    a.ct_price,
+    a.ct_point,
+    a.ct_qty,
+    a.ct_status,
+    a.ct_send_cost,
+    a.it_sc_type,
+    b.ca_id,
+    b.ca_id2,
+    b.ca_id3,
+    b.it_notax';
+                                    
+    $rows = sql_bind_select_array("{$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )",
+        $select_field,
+        array('a.od_id' => $s_cart_id, 'a.ct_select' => 1),
+        array('groupBy' => 'a.it_id', 'orderBy' => 'a.ct_id')
+    );
+    
+    $goods = array();
+    $images = array();
+    $it_options = array();
+    
+    $tot_point = 0;
+    $tot_sell_price = 0;
+    
+    $good_info = '';
+    $it_send_cost = 0;
+    $it_cp_count = 0;
+
+    $comm_tax_mny = 0; // 과세금액
+    $comm_vat_mny = 0; // 부가세
+    $comm_free_mny = 0; // 면세금액
+    $tot_tax_mny = 0;
+    
+    foreach($rows as $row) {
+        $select_field2 = 'SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price, SUM(ct_point * ct_qty) as point, SUM(ct_qty) as qty';
+        $sum = sql_bind_select_fetch($g5['g5_subscription_cart_table'], $select_field2, array('it_id' => $row['it_id'], 'od_id' => $s_cart_id));
+        
+        $item_name = preg_replace("/\'|\"|\||\,|\&|\;/", '', $row['it_name']);
+        $image = get_it_image($row['it_id'], 80, 80);
+        
+        // if (!in_array($item_name, $goods)) {
+        //    $goods[] = $item_name;
+        // }
+        
+        $images[] = $image;
+        $goods[] = $item_name;
+        
+        $it_options[] = subscription_print_item_options($row['it_id'], $s_cart_id, 1);
+        
+        $point = $sum['point'];
+        $sell_price = $sum['price'];
+        
+        // 배송비
+        switch ($row['ct_send_cost']) {
+            case 1:
+                $ct_send_cost = '착불';
+                break;
+            case 2:
+                $ct_send_cost = '무료';
+                break;
+            default:
+                $ct_send_cost = '선불';
+                break;
+        }
+        
+        // 조건부무료
+        if ($row['it_sc_type'] == 2) {
+            $sendcost = get_subscription_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+
+            if ($sendcost == 0) {
+                $ct_send_cost = '무료';
+            }
+        }
+        
+        $tot_point += $point;
+        $tot_sell_price += $sell_price;
+    }
+    
+    // 배송비 계산
+    $send_cost = get_sendcost($s_cart_id);
+    
+    return array('goods'=>$goods, 'images' => $images, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
 }
 
 // 정기결제 상품의 재고 (창고재고수량 - 주문대기수량)
@@ -1449,7 +1550,7 @@ function kcp_billing($od, $tmp_cart_id='') {
     $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
     
     $posts = array(
-        'pay_method' => 'CARD',
+        'pay_method' => SUBSCRIPTION_DEFAULT_PAYMETHOD,
         'ordr_idxx' => $ordr_idxx,
         'good_name' => $good_name,
         'good_mny' => $od['od_receipt_price'],
@@ -1693,7 +1794,7 @@ function nicepay_billing($od, $tmp_cart_id='') {
     $bid 				= $od['card_billkey'];				// 빌키
     $mid 				= get_subs_option('su_nicepay_mid');		// 가맹점 아이디
     // $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
-    $tid 				= substr(generate_subscription_id($od['od_tno']), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
+    $tid 				= substr(generate_subscription_id(substr($od['od_tno'], 0, 17)), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
     $moid 				= $od['od_id'];				// 가맹점 주문번호
     $amt 				= (int) $od['od_receipt_price'];				// 결제 금액
     //$goodsName 			= $goodsname['full_name'];				// 상품명
@@ -1749,6 +1850,16 @@ function nicepay_billing($od, $tmp_cart_id='') {
         $message = $nice_response['ResultMsg'];
     }
     
+    // 공통형식에 맞추어야 한다.
+    $nice_response['orderId'] = $nice_response['Moid'];
+    $nice_response['payMethod'] = SUBSCRIPTION_DEFAULT_PAYMETHOD;
+    $nice_response['amount'] = (int) $nice_response['Amt'];
+    $nice_response['receiptUrl'] = '';    // kcp 는 영수증 url 이 없다.
+    $nice_response['cardname'] = $nice_response['CardName'];
+    $nice_response['cardnumber'] = mask_card_number($nice_response['CardNo']);   // 51881111****2222 이런 형식으로 카드, 여기서는 마스킹하여 저장한다.
+    $nice_response['py_app_no'] = $nice_response['AuthCode'];     // 승인번호
+    $nice_response['tid'] = $nice_response['TID'];
+        
     if (function_exists('add_log')) {
         add_log($nice_response, false, 'nice');
     }
@@ -1822,6 +1933,16 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
 	}
     
     $nice_response = json_decode($res, true);
+    
+    // 공통형식에 맞추어야 한다.
+    $nice_response['orderId'] = $nice_response['Moid'];
+    $nice_response['payMethod'] = SUBSCRIPTION_DEFAULT_PAYMETHOD;
+    $nice_response['amount'] = (int) $nice_response['Amt'];
+    $nice_response['receiptUrl'] = '';    // kcp 는 영수증 url 이 없다.
+    $nice_response['cardname'] = $nice_response['CardName'];
+    $nice_response['cardnumber'] = mask_card_number($nice_response['CardNo']);   // 51881111****2222 이런 형식으로 카드, 여기서는 마스킹하여 저장한다.
+    $nice_response['py_app_no'] = $nice_response['AuthCode'];     // 승인번호
+    $nice_response['tid'] = $nice_response['TID'];
     
     // resultCode 가 0000 and tid 가 없으면 결제실패이다
     if (!($nice_response['resultCode'] === '0000' && isset($nice_response['tid']) && $nice_response['tid'])) {
@@ -2037,6 +2158,11 @@ function mask_card_number($string) {
     // 문자열 길이 확인
     $length = strlen($string);
     
+    // 카드 길이가 16자리가 아닌경우 (나이스페이의 경우 결제실패시 **** 4자리를 리턴한다.)
+    if ($length !== 16) {
+        return $string;
+    }
+    
     // 시작과 끝에 남길 자리 수 설정
     $start = 6;
     $end = 1;
@@ -2235,7 +2361,7 @@ function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
     $result = sql_query($sql);
     */
     
-    $result = sql_bind_select("{$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b", "a.it_id, b.it_name", array('a.it_id' => 'b.it_id', 'a.od_id' => $pay_id), array('orderBy' => 'ct_id'));
+    $result = sql_bind_select("{$g5['g5_subscription_cart_table']} as a join {$g5['g5_shop_item_table']} as b ON a.it_id = b.it_id", "a.it_id, b.it_name", array('a.od_id' => $pay_id), array('orderBy' => 'ct_id'));
     
     $tmp = array();
     

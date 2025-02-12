@@ -2526,7 +2526,7 @@ function before_check_cart_price($s_cart_id, $is_ct_select_condition=false, $is_
         if(!$it['it_id'])
             continue;
         
-        if( $it['it_price'] !== $row['ct_price'] ){
+        if ((int) $it['it_price'] !== (int) $row['ct_price']) {
             // 장바구니 테이블 상품 가격과 상품 테이블의 상품 가격이 다를경우
             $update_querys['ct_price'] = $it['it_price'];
         }

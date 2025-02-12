@@ -1515,6 +1515,10 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         // 기준 날짜 계산
         let baseDate = new Date($od_hope_date_print);
         
+        if (typeof $od_subscription_select_data === 'undefined') {
+            return false;
+        }
+        
         console.log( $od_subscription_select_data );
         
         if ($od_subscription_select_data && $od_subscription_select_data.includes("||")) {

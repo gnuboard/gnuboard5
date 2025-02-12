@@ -39,8 +39,8 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row" style="<?php echo $th_st; ?>">실패이유 : <?php echo $failure_reason; ?></th>
-            <td style="<?php echo $td_st; ?>"></td>
+            <th scope="row" style="<?php echo $th_st; ?>">실패이유</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $failure_reason; ?></td>
         </tr>
         <?php for ($i=0; $i<count($list); $i++) { ?>
         <tr>
@@ -87,35 +87,6 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
             <th scope="row" style="<?php echo $th_st; ?>">포인트합계</th>
             <td style="<?php echo $td_st; ?>"><?php echo display_point($ttotal_point); ?></td>
         </tr>
-        </tbody>
-        </table>
-
-        <table style="<?php echo $cont_st; ?>">
-        <caption style="<?php echo $caption_st; ?>">결제정보</caption>
-        <colgroup>
-            <col style="width:130px">
-            <col>
-        </colgroup>
-        <tbody>
-        <?php if ($od_receipt_point > 0) { ?>
-        <tr>
-            <th scope="row" style="<?php echo $th_st; ?>">포인트 입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_point($od_receipt_point); ?></td>
-        </tr>
-        <?php } ?>
-
-        <?php if ($od_receipt_price > 0 && $od_settle_case == '신용카드') { ?>
-        <tr>
-            <th scope="row" style="<?php echo $th_st; ?>">신용카드 입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_price); ?></td>
-        </tr>
-        <?php } ?>
-
-        <?php if (!$od_receipt_point && !$od_receipt_price) { ?>
-        <tr>
-            <td colspan="2" style="<?php echo $empty_st; ?>">결제정보가 없습니다.</td>
-        </tr>
-        <?php } ?>
         </tbody>
         </table>
 
