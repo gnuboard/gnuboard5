@@ -161,13 +161,23 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
         }
 
         if ($row['io_id']) {
+            /*
             $io_sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_id = '{$row['io_id']}' ";
             $io_infos = sql_fetch( $io_sql );
-
+            */
+            
+            $io_infos = sql_bind_select_fetch($g5['g5_shop_item_option_table'], '*', array('it_id'=>$it['it_id'], 'io_id' => $row['io_id']));
+            
             if( $io_infos['io_type'] ){
                 $this_io_type = $io_infos['io_type'];
             }
-            if( $io_infos['io_id'] && $io_infos['io_price'] !== $row['io_price'] ){
+            
+            if( $io_infos['io_id'] && (int) $io_infos['io_price'] !== (int) $row['io_price'] ){
+                
+                echo "<br>".$io_sql;
+                print_r($row);
+                echo "<br>";
+                
                 // 장바구니 테이블 옵션 가격과 상품 옵션테이블의 옵션 가격이 다를경우
                 $update_querys['io_price'] = $io_infos['io_price'];
             }
@@ -176,7 +186,8 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
         // 포인트
         $compare_point = 0;
         if ($config['cf_use_point']) {
-
+            //print_r( $row );
+            
             // DB 에 io_type 이 1이면 상품추가옵션이며, 0이면 상품선택옵션이다
             if($row['io_type'] == 0) {
                 $compare_point = get_item_point($it, $row['io_id']);
@@ -189,6 +200,7 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
         }
         
         if ((int) $row['ct_point'] !== (int) $compare_point) {
+
             // 장바구니 테이블 적립 포인트와 상품 테이블의 적립 포인트가 다를경우
             $update_querys['ct_point'] = $compare_point;
         }
@@ -217,6 +229,7 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
 
     // 장바구니에 담긴 금액과 실제 상품 금액에 차이가 있다면
     if ($check_need_update) {
+        
         echo "왜?";
         exit;
         return false;
@@ -227,14 +240,14 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
 
 function subscription_order_pay_price($od_id) {
     
-    $pay_infos = get_subscription_cart_price($od_id);
+    $pay_infos = get_subscription_cart_data($od_id);
     
     $total_price = (int)$pay_infos['tot_sell_price'] + (int)$pay_infos['send_cost'];
     
     return $total_price;
 }
 
-function get_subscription_cart_price($s_cart_id, $is_pay=0) {
+function get_subscription_cart_data($s_cart_id, $is_pay=0) {
     global $g5;
     
     // $s_cart_id 로 현재 장바구니 자료 쿼리
@@ -323,12 +336,15 @@ function get_subscription_cart_price($s_cart_id, $is_pay=0) {
     // 배송비 계산
     $send_cost = get_sendcost($s_cart_id);
     
-    return array('goods'=>$goods, 'images' => $images, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
+    return array('goods'=>$goods, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
+    
+    // return array('goods'=>$goods, 'images' => $images, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
 }
 
 // 정기결제 상품의 재고 (창고재고수량 - 주문대기수량)
 function get_subscription_it_stock_qty($it_id)
 {
+    /*
     global $g5;
 
     $sql = " select it_stock_qty from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
@@ -348,6 +364,9 @@ function get_subscription_it_stock_qty($it_id)
     $daegi = (int)$row['sum_qty'];
 
     return $jaego - $daegi;
+    */
+    
+    return get_it_stock_qty($it_id);
 }
 
 // 배송비 구함
@@ -450,10 +469,11 @@ function get_subscription_item_sendcost($it_id, $price, $qty, $cart_id)
 // 정기결제 옵션의 재고 (창고재고수량 - 주문대기수량)
 function get_subscription_option_stock_qty($it_id, $io_id, $type)
 {
+    /*
     global $g5;
 
     $sql = " select io_stock_qty
-                from {$g5['g5_subscription_item_option_table']}
+                from {$g5['g5_shop_item_option_table']}
                 where it_id = '$it_id' and io_id = '$io_id' and io_type = '$type' and io_use = '1' ";
     $row = sql_fetch($sql);
     $jaego = (int)$row['io_stock_qty'];
@@ -470,6 +490,9 @@ function get_subscription_option_stock_qty($it_id, $io_id, $type)
     $daegi = (int)$row['sum_qty'];
 
     return $jaego - $daegi;
+    */
+    
+    return get_option_stock_qty($it_id, $io_id, $type);
 }
 
 // 정기결제 장바구니 상품삭제
@@ -1794,8 +1817,21 @@ function nicepay_billing($od, $tmp_cart_id='') {
     $bid 				= $od['card_billkey'];				// 빌키
     $mid 				= get_subs_option('su_nicepay_mid');		// 가맹점 아이디
     // $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
-    $tid 				= substr(generate_subscription_id(substr($od['od_tno'], 0, 17)), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
-    $moid 				= $od['od_id'];				// 가맹점 주문번호
+    // $tid 				= generate_subscription_id($od);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
+    // $od['od_tno'] 인 경우 subscription/orderform.php 에서 재등록카드를 사용할 경우 A212, [TID]잘못된 데이터 형식입니다. 오류가 일어난다.
+    
+    // 나이스페이 옛결제모듈의 경우 tid와 moid 는 카드등록을 한 tno와 od_id로 보내야 한다.
+    $before_nice_pay = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('ci_id'=>$od['ci_id'], 'mb_id'=>$od['mb_id'], 'pg_service' => $od['od_pg'], 'od_tno' => array('!=' => '')),
+        array('orderBy' => 'ci_id', 'limit' => 1, 'orderType' => 'desc'));
+    $tid = $before_nice_pay['od_tno'].'12';      // 일부러 실패하려고 한다면
+    
+    $tid = generate_subscription_id($before_nice_pay['od_tno']);
+    
+    // $tid = $before_nice_pay['od_tno'];
+    // 나이스페이 옛결제모듈의 경우 tid와 moid 는 카드등록을 한 tno와 od_id로 보내야 한다.
+    // $moid 				= $before_nice_pay['first_ordernumber'];				// 가맹점 주문번호
+    
+    $moid 				= generate_subscription_id($od['od_id']);				// 가맹점 주문번호
     $amt 				= (int) $od['od_receipt_price'];				// 결제 금액
     //$goodsName 			= $goodsname['full_name'];				// 상품명
     
@@ -1835,6 +1871,8 @@ function nicepay_billing($od, $tmp_cart_id='') {
         'CardQuota' => $cardQuota,
         'CharSet' => 'utf-8'
     );
+    
+    print_r( $data );
     
     $response = nicepay_reqPost($data, $postURL); 				//API 호출, 결과 데이터가 $response 변수에 저장됩니다.
 
@@ -1887,7 +1925,7 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
     // $nice_orderId = substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
-    $nice_orderId = substr(generate_subscription_id($od['od_id']), 0, 64);  // 64길이
+    $nice_orderId = generate_subscription_id($id, 64);  // 64길이 가능
     $edi_date = date('c', G5_SERVER_TIME);
     $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
     $buyerName = $od['od_name'];
@@ -1999,7 +2037,7 @@ function tosspayments_billing($od, $tmp_cart_id='') {
         'customerKey' => $billingKey,
         'amount' => $od['od_receipt_price'],
         // 'orderId' => substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
-        'orderId' => substr(generate_subscription_id($od['od_id']), 0, 64),  // 64길이
+        'orderId' => generate_subscription_id($od['od_id'], 64),  // 64길이 가능
         'orderName' => $goodsname['full_name'],
         'customerEmail' => $od['od_email'],
         'customerName' => $od['od_name']
@@ -2174,8 +2212,56 @@ function mask_card_number($string) {
     return substr($string, 0, $start) . str_repeat('*', $maskLength) . substr($string, -$end);
 }
 
-function generate_subscription_id($oid='') {
+function get_subscription_uniqid($is_pay=0, $uniqid_key='', $length=0) {
+    global $g5;
+
+    sql_query(" LOCK TABLE {$g5['g5_subscription_uniqid_table']} WRITE ");
+    $i = 0;
+    while (1) {
+        // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
+        
+        if ($is_pay) {
+            $key = $uniqid_key;
+            
+            if ($i > 0) {
+                $pad_str = str_pad((int)((float)microtime()*100), 2, "0", STR_PAD_LEFT);
+                $key = ($length && strlen($key) >= $length) ? substr($key, 0, -2).$pad_str : $key.$pad_str;
+            }
+        } else {
+            $key = date('YmdHis', time()) . str_pad((int)((float)microtime()*100), 2, "0", STR_PAD_LEFT);
+        }
+
+        // $result = sql_query(" insert into {$g5['g5_subscription_uniqid_table']} set suq_key = '$key', suq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
+        
+        $result = sql_bind_insert($g5['g5_subscription_uniqid_table'], array('suq_key' => $key, 'suq_ip' => $_SERVER['REMOTE_ADDR']));
+        
+        if ($result) break; // 쿼리가 정상이면 빠진다.
+
+        // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
+        usleep(10000); // 100분의 1초를 쉰다
+        $i++;
+    }
+    sql_query(" UNLOCK TABLES ");
+
+    return $key;
+}
+
+function generate_subscription_id($oid='', $length=30) {
     global $g5, $is_member, $member;
+    
+    /*
+    if (is_array($od)) {
+        $oid = isset($od['od_tno']) ? $od['od_tno'] : $od['od_id'];
+        
+        if ($od['od_pg'] === 'nicepay') {
+            $before_nice_pay = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('ci_id'=>$od['ci_id'], 'mb_id'=>$od['mb_id'], 'pg_service' => $od['od_pg']));
+            
+            $oid = $before_nice_pay['od_tno'];
+        }
+    } else {
+        $oid = $od;
+    }
+    */
     
     // 데이터베이스에서 가장 최근 주문 ID 가져오기
     $stmt = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(id)');
@@ -2184,7 +2270,14 @@ function generate_subscription_id($oid='') {
     $lastId = $lastId ? $lastId + 1 : 1;
     
     $str = substr(hash('sha256', $lastId . $member['md_id'] . microtime()), 0, 12);
-    return $oid ? $oid.'_'.$str : $str;
+    
+    if (strlen($oid) >= $length) {
+        $subscription_key = substr($oid, 0, -12).$str;
+    } else {
+        $subscription_key = $oid ? $oid.$str : $str;
+    }
+    
+    return get_subscription_uniqid(1, substr($subscription_key, 0, $length), $length);
 }
 
 function get_subscription_pg_id($pg_name=''){

@@ -310,8 +310,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
-  `od_pg` varchar(255) NOT NULL DEFAULT '',
-  `od_tno` varchar(255) NOT NULL DEFAULT '',
+  `od_pg` varchar(30) NOT NULL DEFAULT '',
+  `od_tno` varchar(150) NOT NULL DEFAULT '',
   `od_tax_flag` tinyint(4) NOT NULL DEFAULT '0',
   `od_tax_mny` int(11) NOT NULL DEFAULT '0',
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',
@@ -334,6 +334,21 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `g5_unique`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_uniqid`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
+  `suq_id` int(11) NOT NULL auto_increment,
+  `suq_key` char(64) NOT NULL DEFAULT '',
+  `suq_ip` varchar(100) NOT NULL,
+  PRIMARY KEY (`suq_id`),
+  UNIQUE KEY `unique_key` (`suq_key`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `g5_subscription_mb_cardinfo`
 --
 
@@ -348,6 +363,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
   `card_mask_number` varchar(50) NOT NULL DEFAULT '',
   `card_billkey` varchar(100) NOT NULL DEFAULT '',
   `od_card_name` varchar(100) NOT NULL DEFAULT '',
+  `od_tno` varchar(150) NOT NULL DEFAULT '',
   `od_id` bigint(20) unsigned NOT NULL,
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ci_id`),
@@ -372,17 +388,3 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_data` (
   KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_unique`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_uniqid`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
-  `uq_id` bigint(20) unsigned NOT NULL,
-  `uq_ip` varchar(255) NOT NULL,
-  PRIMARY KEY (`uq_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------

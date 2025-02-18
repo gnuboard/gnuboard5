@@ -71,7 +71,7 @@ if ($act == 'buy') {
                         from {$g5['g5_subscription_cart_table']}
                         where od_id = '$tmp_cart_id'
                           and it_id = '$it_id' GROUP BY od_id, it_id, it_name, ct_option, io_id, io_type ";
-
+            
             $result = sql_query($sql);
 
             for ($k = 0; $row = sql_fetch_array($result); ++$k) {
@@ -106,13 +106,18 @@ if ($act == 'buy') {
                     alert($item_option.' 의 재고수량이 부족합니다.\\n\\n현재 재고수량 : '.number_format($it_stock_qty - $sum_qty).' 개');
                 }
             }
-
+            
+            /*
             $sql = " update {$g5['g5_subscription_cart_table']}
                         set ct_select = '1',
                             ct_select_time = '".G5_TIME_YMDHIS."'
                         where od_id = '$tmp_cart_id'
                           and it_id = '$it_id' ";
+                          
             sql_query($sql);
+            */
+            
+            sql_bind_update($g5['g5_subscription_cart_table'], array('ct_select'=>1, 'ct_select_time'=>G5_TIME_YMDHIS), array('od_id'=>$tmp_cart_id, 'it_id'=>$it_id));
         }
     }
 
@@ -375,7 +380,18 @@ if ($act == 'buy') {
 
             // 포인트
             $point = 0;
+            
+            if($config['cf_use_point']) {
+                if($io_type == 0) {
+                    $point = get_item_point($it, $io_id);
+                } else {
+                    $point = $it['it_supply_point'];
+                }
 
+                if($point < 0)
+                    $point = 0;
+            }
+            
             $ct_send_cost = isset($_REQUEST['ct_send_cost']) ? (int) $_REQUEST['ct_send_cost'] : 0;
 
             // 배송비결제

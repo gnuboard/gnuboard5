@@ -229,7 +229,8 @@ height: 50px;               /* 높이 지정 (주석 해제) */
 }
 
 .su-display-btns label {display: inline-block;position:relative;border: 2px solid #ffffff;background-color: transparent;vertical-align: top;
-padding:0.1em 1em;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size:1em}
+padding:1em;line-height:auto;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size:1em}
+.su-display-btns label{line-height:20px}
 
 .su-display-btns label:after {
     position: absolute;
@@ -332,6 +333,47 @@ padding:0.1em 1em;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size
 }
 */
 
+.modal_contents .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+.modal_contents .product-item {
+            display: flex;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            align-items: center;
+            gap: 15px;
+        }
+.modal_contents .product-img img {
+            width: 55px;
+            height: 55px;
+            border-radius: 5px;
+        }
+.modal_contents .product-info {
+            flex-grow: 1;
+        }
+.modal_contents .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+.modal_contents .product-options {
+            font-size: 14px;
+            color: #666;
+        }
+.modal_contents .product-meta {
+            text-align: right;
+        }
+.modal_contents .product-meta div {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+		
 #nicepay_modal.modal{padding:0}
 #nicepay_modal.modal .modal-content{padding:1em 2em}
 #nicepay_modal h2 {
@@ -367,6 +409,78 @@ text-align:right;
 	/* align-items: center; */
 	justify-content: center;
 	font-weight:bold;
+}
+
+.user-subscription-inner ul {
+    list-style: none;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	list-style: none;
+}
+
+.user-subscription-inner h3 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.user-subscription-inner li {
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+	list-style: none;
+}
+
+.user-subscription-inner li:last-child {
+    border-bottom: none;
+}
+
+.user-subscription-inner span.th {
+    color: #444;
+    display: inline-block;
+	font-weight:bold;
+	width:90px;
+}
+
+.user-subscription-inner .is_pay_test {
+    color: red;
+    font-weight: bold;
+    text-align: left;
+    background: #ffecec;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.user-subscription-inner .is_not_delivery {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    background: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.user-subscription-inner a.subscription-receipt-view {
+    display: inline-block;
+    padding: 6px 10px;
+    margin-top: 5px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.user-subscription-inner a.subscription-receipt-view:hover {
+    background: #0056b3;
 }
 
 .nicepay-form li input{max-width:300px;width:90%}

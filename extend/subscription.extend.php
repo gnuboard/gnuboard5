@@ -44,6 +44,8 @@ $g5['g5_subscription_mb_cardinfo_table']   = $g5['subscription_prefix'] . 'mb_ca
 
 $g5['g5_subscription_order_history_table'] = $g5['subscription_prefix'] . 'order_history'; // 주문정보 히스토리 테이블
 
+$g5['g5_subscription_uniqid_table'] = $g5['subscription_prefix'] . 'uniqid'; // 정기구독 uniqid 테이블
+
 $subscriptions_default = array(
 'su_card_test' => 1,
 'su_inicis_mid' => '',

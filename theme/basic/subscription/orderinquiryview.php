@@ -650,7 +650,8 @@ jQuery(function($) {
                     var contentEl = $(".modal_contents");
 
                     // 새로운 ul 요소 생성
-                    var ulEl = $("<ul></ul>");
+                    var innerEl = $("<div class='user-subscription-pay'></div>"),
+                        ulEl = $("<ul class='user-subscription-inner'></ul>");
 
                     // JSON 데이터 순회하며 li 요소 생성 후 ul에 추가
                     $.each(data, function(key, value) {
@@ -665,54 +666,85 @@ jQuery(function($) {
                         };
                     */
                     
-                    var html = "";
+                    var html = "",
+                        cartHTML = "";
                     
-                    html = "<h3>주문하신 분</h3>";
-                    html += "<li><strong>이름 :</strong> " + data.py_name + "</li>";
-                    html += "<li><strong>핸드폰 :</strong> " + data.py_hp + "</li>";
+                    html += "<h3>주문하신 분</h3>";
+                    html += "<li><span class='th'>이름 :</span> " + data.py_name + "</li>";
+                    html += "<li><span class='th'>핸드폰 :</span> " + data.py_hp + "</li>";
                     
                     if (data.py_test) {
-                        html += "<li class='is_pay_test'><strong>이 결제는 테스트로 결제되었습니다.</strong></li>";
+                        html += "<li class='is_pay_test'>이 결제는 테스트로 결제되었습니다.</li>";
                     }
                     
                     html += "<h3>받으시는 분</h3>";
-                    html += "<li><strong>이름 :</strong> " + data.py_b_name + "</li>";
-                    html += "<li><strong>전화번호 :</strong> " + data.py_b_tel + "</li>";
-                    html += "<li><strong>핸드폰 :</strong> " + data.py_b_hp + "</li>";
-                    html += "<li><strong>주소 :</strong> " + data.py_b_full_address + "</li>";
+                    html += "<li><span class='th'>이름 :</span> " + data.py_b_name + "</li>";
+                    html += "<li><span class='th'>전화번호 :</span> " + data.py_b_tel + "</li>";
+                    html += "<li><span class='th'>핸드폰 :</span> " + data.py_b_hp + "</li>";
+                    html += "<li><span class='th'>주소 :</span> " + data.py_b_full_address + "</li>";
                     
                     html += "<h3>배송정보</h3>";
                     if (data.py_invoice && data.py_delivery_company) {
-                        html += "<li><strong>배송회사 :</strong> " + data.py_delivery_full_info + "</li>";
-                        html += "<li><strong>운송장번호 :</strong> " + data.py_invoice + "</li>";
-                        html += "<li><strong>배송일시 :</strong> " + data.py_invoice_time + "</li>";
+                        html += "<li><span class='th'>배송회사 :</span> " + data.py_delivery_full_info + "</li>";
+                        html += "<li><span class='th'>운송장번호 :</span> " + data.py_invoice + "</li>";
+                        html += "<li><span class='th'>배송일시 :</span> " + data.py_invoice_time + "</li>";
                     } else {
                         html += "<li class='is_not_delivery'>아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</li>";
                     }
 
-                    html += "<li><strong>주문총액 :</strong> " + data.py_cart_price + "</li>";
+                    html += "<li><span class='th'>주문총액 :</span> " + data.py_cart_price + "</li>";
                     if (data.py_send_cost) {
-                        html += "<li><strong>배송비 :</strong> " + data.py_send_cost + "</li>";
+                        html += "<li><span class='th'>배송비 :</span> " + data.py_send_cost + "</li>";
                     }
-                    html += "<li><strong>총계 :</strong> " + data.py_tot_price + "</li>";
+                    html += "<li><span class='th'>총계 :</span> " + data.py_tot_price + "</li>";
                     
                     html += "<h3>결제정보</h3>";
-                    html += "<li><strong>주문번호 :</strong> " + data.subscription_id + "</li>";
-                    html += "<li><strong>주문일시 :</strong> " + data.py_time + "</li>";
-                    // html += "<li><strong>결제방식 :</strong> " + data.py_settle_case + "</li>";
-                    html += "<li><strong>결제카드 :</strong> " + data.py_settle_case + "</li>";
-                    html += "<li><strong>결제금액 :</strong> " + data.py_receipt_price + "</li>";
-                    html += "<li><strong>결제일시 :</strong> " + data.py_receipt_time + "</li>";
-                    html += "<li><strong>승인번호 :</strong> " + data.py_app_no + "</li>";
+                    html += "<li><span class='th'>주문번호 :</span> " + data.subscription_id + "</li>";
+                    html += "<li><span class='th'>주문일시 :</span> " + data.py_time + "</li>";
+                    // html += "<li><span class='th'>결제방식 :</span> " + data.py_settle_case + "</li>";
+                    html += "<li><span class='th'>결제카드 :</span> " + data.py_settle_case + "</li>";
+                    html += "<li><span class='th'>결제금액 :</span> " + data.py_receipt_price + "</li>";
+                    html += "<li><span class='th'>결제일시 :</span> " + data.py_receipt_time + "</li>";
+                    html += "<li><span class='th'>승인번호 :</span> " + data.py_app_no + "</li>";
                     
                     if (data.py_receipt_url) {
-                        html += "<li><strong>영수증 :</strong> <a href='" + data.py_receipt_url + "' target='_blank' class='subscription-receipt-view'>영수증클릭</a></li>";
+                        html += "<li><span class='th'>영수증 :</span> <a href='" + data.py_receipt_url + "' target='_blank' class='subscription-receipt-view'>영수증클릭</a></li>";
                     }
                     
                     ulEl.append(html);
                     
+                    console.log(data.cart_infos);
+                    
+                    for (var i = 0; i < data.cart_infos.goods.length; i++) {
+                        
+                        var productName = data.cart_infos.goods[i];
+                        var productOption = data.cart_infos.it_options[i][0].ct_option;
+                        var productPrice = data.cart_infos.it_options[i][0].tot_sell_price;
+                        var pioPrice = data.cart_infos.it_options[i][0].io_price;
+                        
+                        cartHTML += `
+                            <div class="product-item">
+                                <div class="product-img"><img src="${g5_url}/shop/img/no_image.gif" alt="상품 이미지"></div>
+                                <div class="product-info">
+                                    <div class="product-name"><a href="#">${productName}</a></div>
+                                    <div class="product-options">${productOption}</div>
+                                </div>
+                                <div class="product-meta">
+                                    <div>가격: ${productPrice}원</div>
+                                </div>
+                            </div>
+                        `;
+                        
+                    }
+                    
+                    if (cartHTML) {
+                        innerEl.append('<div class="product-list">' + cartHTML + '</div>');
+                    }
+                    
+                    innerEl.append(ulEl);
+                    
                     // 기존 .content 내부에 추가
-                    contentEl.html(ulEl);
+                    contentEl.html(innerEl);
             
                 }
 

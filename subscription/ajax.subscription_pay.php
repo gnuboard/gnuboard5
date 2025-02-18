@@ -47,4 +47,7 @@ if ($pays['py_pg'] == 'kcp') {
     $pays['py_receipt_url'] = 'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&TID='.$pays['py_tno'];
 }
 
+// 결제 장바구니
+$pays['cart_infos'] = get_subscription_cart_data($pays['od_id']);
+
 die(json_encode($pays));

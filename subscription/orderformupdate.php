@@ -377,6 +377,7 @@ if (!(isset($exist_card['card_billkey']) && $exist_card['card_billkey'])) {
         'card_mask_number' => $card_mask_number,
         'card_billkey' => $card_billkey,
         'od_card_name' => $od_card_name,
+        'od_tno' => $od_tno,
         'od_test' => get_subs_option('su_card_test')
     );
     
@@ -563,7 +564,7 @@ if ($is_first_pay) {
             
         $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
         
-        $insert_id = subscription_order_pay($exists_order, $pays, $pay_round_no);
+        $insert_id = subscription_order_pay($exists_order, $pays['response'], $pay_round_no);
         
         // 성공이면
         if ($insert_id) {

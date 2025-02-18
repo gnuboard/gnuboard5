@@ -675,13 +675,14 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
 // $result = sql_query($sql);
 
 $mcards = array();
-$result = sql_bind_select($g5['g5_subscription_mb_cardinfo_table'], 'ci_id, od_id, od_card_name, card_mask_number, od_test', array(
+$result = sql_bind_select($g5['g5_subscription_mb_cardinfo_table'], 'ci_id, max(ci_id) as max_id, od_id, od_card_name, card_mask_number, od_test', array(
 'card_billkey' => array('!=' => ''),
 'mb_id' => $member['mb_id'],
 'pg_service' => get_subs_option('su_pg_service'),
 'pg_apikey' => get_subscription_pg_apikey()
 ), array(
-'groupBy' => 'od_card_name, card_mask_number'
+'groupBy' => 'od_card_name, card_mask_number',
+'orderBy' => 'max_id', 'limit' => 30, 'orderType' => 'desc'
 ));
 
 for ($i=0; $row = sql_fetch_array($result); $i++) {
@@ -731,7 +732,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                                 
                                 foreach($mcards as $card) {
                                     echo '<input type="radio" id="od_subscription_card_'.$j.'" class="od_subscription_
-                                    ids" name="od_settle_case" value="'.$card['ci_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
+                                    ids" name="od_settle_case" value="'.$card['max_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
                                     $j++;
                                 }
                             }
@@ -1314,6 +1315,19 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                 f.submit();
                 */
                 
+                /*
+                if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
+                    f.submit();
+                    return false;
+                }
+                */
+                
+                if (f.PayMethod.value == "무통장" || f.PayMethod.value == "exist_card") {
+                    f.submit();
+                    return false;
+                }
+                
+                // 새 신용카드 등록인 경우
                 nicepay_modal_open();
             <?php } ?>
         }
