@@ -293,7 +293,7 @@ function get_subscription_cart_data($s_cart_id, $is_pay=0) {
         $sum = sql_bind_select_fetch($g5['g5_subscription_cart_table'], $select_field2, array('it_id' => $row['it_id'], 'od_id' => $s_cart_id));
         
         $item_name = preg_replace("/\'|\"|\||\,|\&|\;/", '', $row['it_name']);
-        $image = get_it_image($row['it_id'], 80, 80);
+        $image = get_subscription_it_image($row['it_id'], 80, 80);
         
         // if (!in_array($item_name, $goods)) {
         //    $goods[] = $item_name;
@@ -849,8 +849,7 @@ function subscription_item_icon($it) {
 }
 
 // 상품 이미지를 얻는다
-function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img_alt='', $is_crop=false)
-{
+function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img_alt='', $is_crop=false, $is_array=0) {
     global $g5;
 
     if(!$it_id || !$width)
@@ -888,6 +887,8 @@ function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $im
        $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, $is_crop, 'center', false, $um_value='80/0.5/3');
     }
 
+    $file_url = '';
+    
     if($thumb) {
         $file_url = str_replace(G5_PATH, G5_URL, $filepath.'/'.$thumb);
         $img = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'" alt="'.$img_alt.'"';
@@ -897,15 +898,20 @@ function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $im
             $img .= ' height="'.$height.'"';
         $img .= ' alt="'.$img_alt.'"';
     }
-
+    
     if($img_id)
         $img .= ' id="'.$img_id.'"';
     $img .= '>';
 
     if($anchor)
         $img = $img = '<a href="'.subscription_item_url($it_id).'">'.$img.'</a>';
-
-    return run_replace('get_subscription_it_image_tag', $img, $thumb, $it_id, $width, $height, $anchor, $img_id, $img_alt, $is_crop);
+    
+    if ($is_array) {
+        return run_replace('get_subscription_it_image_tag_array', array('img'=> $img, 'file_url' => $file_url, 'width'=>$width, 'height'=>$height
+            ), $thumb, $it_id, $width, $height, $anchor, $img_id, $img_alt, $is_crop, $file_url);
+    }
+    
+    return run_replace('get_subscription_it_image_tag', $img, $thumb, $it_id, $width, $height, $anchor, $img_id, $img_alt, $is_crop, $file_url);
 }
 
 function get_subscription_navigation_data($is_cache, $sc_id, $sc_id2='', $sc_id3=''){

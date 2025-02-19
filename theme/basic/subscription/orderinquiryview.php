@@ -717,17 +717,40 @@ jQuery(function($) {
                     
                     for (var i = 0; i < data.cart_infos.goods.length; i++) {
                         
-                        var productName = data.cart_infos.goods[i];
+                        console.log( data.cart_infos.it_options );
+                        
+                        var productName = data.cart_infos.goods[i],
+                            productPrice = 0;
                         var productOption = data.cart_infos.it_options[i][0].ct_option;
-                        var productPrice = data.cart_infos.it_options[i][0].tot_sell_price;
+                        // var productPrice = data.cart_infos.it_options[i][0].tot_sell_price;
                         var pioPrice = data.cart_infos.it_options[i][0].io_price;
                         
+                        // let optionsHtml = data.cart_infos.it_options.map(opt => `<div>${opt.option} (수량: ${opt.qty}, 가격: ${opt.price}원${opt.point ? `, 포인트: ${opt.point}` : ''})</div>`).join('');
+                        
+                        var optionsHtml = '';
+                        
+                        data.cart_infos.it_options[i].forEach(function(opt) {
+                            var finalPrice;
+                            
+                            console.log( opt );
+                            
+                            if (opt.price_plus === "-") {
+                                finalPrice = parseInt(opt.ct_price) - parseInt(opt.io_price);
+                            } else {
+                                finalPrice = parseInt(opt.ct_price) + parseInt(opt.io_price);
+                            }
+                            
+                            productPrice += finalPrice;
+                            
+                            optionsHtml += '<div>' + opt.ct_option + ' (수량: ' + opt.ct_qty + ', 가격: ' + finalPrice + '원' + (opt.point ? ', 포인트: ' + opt.point : '') + ')</div>';
+                        });
+
                         cartHTML += `
                             <div class="product-item">
                                 <div class="product-img"><img src="${g5_url}/shop/img/no_image.gif" alt="상품 이미지"></div>
                                 <div class="product-info">
                                     <div class="product-name"><a href="#">${productName}</a></div>
-                                    <div class="product-options">${productOption}</div>
+                                    <div class="product-options">${optionsHtml}</div>
                                 </div>
                                 <div class="product-meta">
                                     <div>가격: ${productPrice}원</div>
