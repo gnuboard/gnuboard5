@@ -361,12 +361,6 @@
                     <Execution method="windowOpen" value="Embed" />
                 </Attribute>
             </Button>
-            <Button name="Map" tooltip="지도">
-                <Attribute class="cheditor-tb-bg" width="23" height="23">
-                    <Icon position="694" width="16" class="cheditor-tb-icon" />
-                    <Execution method="windowOpen" value="GoogleMap" />
-                </Attribute>
-            </Button>
         </Group>
         <Group name="PageBreak">
             <Button name="PageBreak" tooltip="인쇄 쪽 나눔">
