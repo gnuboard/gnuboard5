@@ -349,9 +349,19 @@ class G5MysqlCRUD
         
         $limit = isset($readSettings['limit']) ? preg_replace('/[^0-9]/', '', $readSettings['limit']) : null;
         $offset = isset($readSettings['offset']) ? preg_replace('/[^0-9]/', '', $readSettings['offset']) : null;
-        $groupBy = isset($readSettings['groupBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['groupBy']) : null;
-        $orderBy = isset($readSettings['orderBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['orderBy']) : null;
-        $orderType = isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC";
+        
+        $groupBy = isset($readSettings['groupBy']) ? $readSettings['groupBy'] : (isset($readSettings['groupby']) ? $readSettings['groupby'] : null);
+        $groupBy = preg_replace('/[^a-z0-9_ \,\.]/i', '', $groupBy);
+        
+        $orderBy = isset($readSettings['orderBy']) ? $readSettings['orderBy'] : (isset($readSettings['orderby']) ? $readSettings['orderby'] : null);
+        $orderBy = preg_replace('/[^a-z0-9_ \,\.]/i', '', $orderBy);
+        
+        $orderType = isset($readSettings['orderType']) ? $readSettings['orderType'] : (isset($readSettings['ordertype']) ? $readSettings['ordertype'] : "ASC");
+        $orderType = strtoupper($orderType);
+        
+        //$groupBy = isset($readSettings['groupBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['groupBy']) : null;
+        //$orderBy = isset($readSettings['orderBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['orderBy']) : null;
+        //$orderType = isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC";
 
         $query = "SELECT {$columnString} FROM {$table} ";
         

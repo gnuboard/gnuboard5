@@ -166,10 +166,10 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
 -- DROP TABLE IF EXISTS `g5_subscription_pay`;
 
 CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `pay_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
-  `subscription_id` char(50) NOT NULL DEFAULT '',
+  `subscription_pg_id` char(50) NOT NULL DEFAULT '',
   `py_name` varchar(20) NOT NULL DEFAULT '',
   `py_email` varchar(100) NOT NULL DEFAULT '',
   `py_hp` varchar(20) NOT NULL DEFAULT '',
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_cash_info` text NOT NULL,
   
   `py_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`pay_id`),
   KEY `index2` (`mb_id`),
   KEY `index3` (`subscription_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

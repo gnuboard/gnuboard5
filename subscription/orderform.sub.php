@@ -1399,9 +1399,12 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
     
     <?php if (get_subs_option('su_hope_date_use')) { ?>
         jQuery(function($) {
-        
+
+            var g5_yymmdd = "<?php echo G5_TIME_YMD; ?>";
+            
             var $od_hope_date_print = $("#od_hope_date_print");
             $od_hope_date_print.datepicker({
+                defaultDate: g5_yymmdd,
                 dateFormat: "yy-mm-dd",
                 inline: true,
                 yearRange: "c-99:c+99",
@@ -1424,8 +1427,10 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                     $("#od_hope_date").val(dateText);
                     calculate_next_delivery_date();
                 },
-                minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
-                maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+                //minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
+                //maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+                minDate: new Date("<?php echo getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after')); ?>"),
+                maxDate: new Date("<?php echo getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after') + 30); ?>")
             });
             
             <?php if ($aparams_array['hope_delivery_date']) { ?>

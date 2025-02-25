@@ -118,7 +118,7 @@ include_once('./_head.php');
 	            <?php } ?>
 	            <tr>
 	                <td headers="th_itopt" class="td_prd">
-	                	<div class="sod_img"><?php echo $image; ?></div>
+	                	<div class="sod_img"><a href="<?php echo subscription_item_url($row['it_id']); ?>"><?php echo $image; ?></a></div>
 	                	<div class="sod_name">
 		                	<a href="<?php echo subscription_item_url($row['it_id']); ?>"><?php echo $row['it_name']; ?></a><br>
 		                	<div class="sod_opt"><?php echo get_text($opt['ct_option']); ?></div>
@@ -368,7 +368,7 @@ include_once('./_head.php');
         
         <?php
         
-        $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
+        $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'pay_id', 'orderType'=>'DESC'));
         
         ?>
         
@@ -391,7 +391,7 @@ include_once('./_head.php');
                         <td><?php echo $v['py_pg']; ?></td>
                         <td><?php echo $v['py_receipt_time']; ?></td>
                         <td><?php echo display_price($v['py_cart_price'] + $v['py_send_cost'] + $v['py_send_cost2']); ?></td>
-                        <td><a href="#ex_modal1" rel="modal:open" data-payid="<?php echo $v['id']; ?>" class="mng_mod btn btn_02">상세보기</a></td>
+                        <td><a href="#ex_modal1" rel="modal:open" data-payid="<?php echo $v['pay_id']; ?>" class="mng_mod btn btn_02">상세보기</a></td>
                     </tr>
                     <?php } // end for ?>
                     <?php } else { ?>
@@ -720,7 +720,15 @@ jQuery(function($) {
                         console.log( data.cart_infos.it_options );
                         
                         var productName = data.cart_infos.goods[i],
-                            productPrice = 0;
+                            productPrice = 0,
+                            img = "";
+                        
+                        try {
+                            img = data.cart_infos.image_urls[i].img;
+                        } catch (error) {
+                            img = "";
+                        }
+                        
                         var productOption = data.cart_infos.it_options[i][0].ct_option;
                         // var productPrice = data.cart_infos.it_options[i][0].tot_sell_price;
                         var pioPrice = data.cart_infos.it_options[i][0].io_price;
@@ -730,24 +738,15 @@ jQuery(function($) {
                         var optionsHtml = '';
                         
                         data.cart_infos.it_options[i].forEach(function(opt) {
-                            var finalPrice;
                             
-                            console.log( opt );
+                            productPrice += opt.opt_price;
                             
-                            if (opt.price_plus === "-") {
-                                finalPrice = parseInt(opt.ct_price) - parseInt(opt.io_price);
-                            } else {
-                                finalPrice = parseInt(opt.ct_price) + parseInt(opt.io_price);
-                            }
-                            
-                            productPrice += finalPrice;
-                            
-                            optionsHtml += '<div>' + opt.ct_option + ' (수량: ' + opt.ct_qty + ', 가격: ' + finalPrice + '원' + (opt.point ? ', 포인트: ' + opt.point : '') + ')</div>';
+                            optionsHtml += '<div>' + opt.ct_option + ' (수량: ' + opt.ct_qty + ', 가격: ' + opt.opt_price + '원' + (opt.point ? ', 포인트: ' + opt.point : '') + ')</div>';
                         });
 
                         cartHTML += `
                             <div class="product-item">
-                                <div class="product-img"><img src="${g5_url}/shop/img/no_image.gif" alt="상품 이미지"></div>
+                                <div class="product-img">${img}</div>
                                 <div class="product-info">
                                     <div class="product-name"><a href="#">${productName}</a></div>
                                     <div class="product-options">${optionsHtml}</div>

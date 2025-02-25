@@ -75,8 +75,7 @@ function set_subscription_cart_id($direct)
 }
 
 // 정기결제 장바구니 건수 검사
-function get_subscription_cart_count($cart_id)
-{
+function get_subscription_cart_count($cart_id) {
     global $g5, $default;
 
     $sql = " select count(ct_id) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ";
@@ -85,11 +84,10 @@ function get_subscription_cart_count($cart_id)
     return $cnt;
 }
 
-function subscription_print_item_options($it_id, $cart_id, $is_get=0)
-{
+function subscription_print_item_options($it_id, $cart_id, $is_get=0) {
     global $g5;
     
-    $subscription_carts = sql_bind_select_array($g5['g5_subscription_cart_table'], 'ct_option, ct_qty, io_price', array('it_id'=>$it_id, 'od_id'=>$cart_id), array('orderBy'=>'io_type asc, ct_id', 'orderType' => 'asc'));
+    $subscription_carts = sql_bind_select_array($g5['g5_subscription_cart_table'], 'ct_price, ct_option, ct_qty, io_price, io_type', array('it_id'=>$it_id, 'od_id'=>$cart_id), array('orderBy'=>'io_type asc, ct_id', 'orderType' => 'asc'));
     
     $str = '';
     $i = 0;
@@ -111,7 +109,9 @@ function subscription_print_item_options($it_id, $cart_id, $is_get=0)
             'ct_option' => $row['ct_option'],
             'ct_qty' => $row['ct_qty'],
             'price_plus' => $price_plus,
-            'io_price' => $row['io_price']
+            'ct_price' => $row['ct_price'],
+            'io_price' => $row['io_price'],
+            'opt_price' => $row['io_type'] ? $row['io_price'] : (int) $row['ct_price'] + (int) $row['io_price']  // io_type 이 1이면 추가옵션이며, 0이면 선택옵션이다
             );
         
         $str .= '<li>'.get_text($row['ct_option']).' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
@@ -293,13 +293,14 @@ function get_subscription_cart_data($s_cart_id, $is_pay=0) {
         $sum = sql_bind_select_fetch($g5['g5_subscription_cart_table'], $select_field2, array('it_id' => $row['it_id'], 'od_id' => $s_cart_id));
         
         $item_name = preg_replace("/\'|\"|\||\,|\&|\;/", '', $row['it_name']);
-        $image = get_subscription_it_image($row['it_id'], 80, 80);
+        $image_url = get_subscription_it_image($row['it_id'], 80, 80, false, '', '', false, 1);
         
         // if (!in_array($item_name, $goods)) {
         //    $goods[] = $item_name;
         // }
         
-        $images[] = $image;
+        $image_urls[] = $image_url;
+        // $link_urls[] = // 상품 url
         $goods[] = $item_name;
         
         $it_options[] = subscription_print_item_options($row['it_id'], $s_cart_id, 1);
@@ -336,7 +337,9 @@ function get_subscription_cart_data($s_cart_id, $is_pay=0) {
     // 배송비 계산
     $send_cost = get_sendcost($s_cart_id);
     
-    return array('goods'=>$goods, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
+    return array('goods'=>$goods, 'image_urls'=>$image_urls, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
+    
+    // return array('goods'=>$goods, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
     
     // return array('goods'=>$goods, 'images' => $images, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
 }
@@ -1030,7 +1033,9 @@ function get_subscription_goods($cart_id) {
     global $g5;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
+    // $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
+    
+    $row = sql_bind_select_fetch("{$g5['g5_subscription_cart_table']} as a join {$g5['g5_shop_item_table']} as b ON a.it_id = b.it_id", "a.it_id, b.it_name", array('a.od_id' => $cart_id), array('orderBy' => 'ct_id', 'limit' => 1));
     
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
@@ -1039,7 +1044,10 @@ function get_subscription_goods($cart_id) {
     $goods['full_name'] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "",  $goods['full_name']);
 
     // 상품건수
-    $row = sql_fetch(" select count(*) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ");
+    // $row = sql_fetch(" select count(*) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ");
+    
+    $row = sql_bind_select_fetch($g5['g5_subscription_cart_table'], 'count(*) as cnt', array('od_id' => $cart_id));
+    
     $cnt = ($row['cnt']) ? (int) $row['cnt'] - 1 : 0;
     
     if ($cnt) {
@@ -1051,12 +1059,14 @@ function get_subscription_goods($cart_id) {
     return $goods;
 }
 
+/*
 function get_subscription_order_goods($od_id) {
     global $g5;
     
     $sql = " select * from {$g5['g5_subscription_cart_table']} where od_id = '$od_id'";
     $cart = sql_fetch($sql);
 }
+*/
 
 function subscription_order_pay($od, $pg_data, $pay_round_no) {
     global $g5;
@@ -1121,7 +1131,8 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
      
      
     print_r2($inserts);
-     
+    
+    /*
     $columns = implode(', ', array_keys($inserts));
     $values = implode("', '", array_values($inserts));
 
@@ -1131,13 +1142,18 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     // echo $sql;
     
     sql_query($sql);
+    */
+    
+    $result = sql_bind_insert($g5['g5_subscription_pay_table'], $inserts);
     
     $insert_id = sql_insert_id();
     
     if ($insert_id) {
         // 상품명만들기
-        $result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$od['od_id']."' order by ct_id asc ");
+        // $result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$od['od_id']."' order by ct_id asc ");
         
+        $result = sql_bind_select($g5['g5_subscription_cart_table'], '*', array('od_id' => $od['od_id']), array('orderBy' => 'ct_id', 'orderType' => 'asc'));
+            
         // 결제 될때 당시 결제된 장바구니 정보를 따로 저장한다. (pay_basket 테이블에)
         for ($i = 0; $row = sql_fetch_array($result); ++$i) {
             $inserts = array(
@@ -1175,6 +1191,7 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
                 'pb_date_format' => $row['ct_date_format']
                 );
             
+            /*
             $columns = implode(', ', array_keys($inserts));
             $values = implode("', '", array_values($inserts));
             
@@ -1184,6 +1201,10 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
             echo $sql;
             
             sql_query($sql, false);
+            */
+            
+            // 주문서에 입력
+            sql_bind_insert($g5['g5_subscription_pay_basket_table'], $inserts);
         }
     }
     
@@ -2425,6 +2446,7 @@ function add_subscription_order_history($content, $arg=array()){
         'hs_time' => G5_TIME_YMDHIS,
         );
     
+    /*
     // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php
     $columns = implode(', ', array_keys($inserts));
     $values = implode("', '", array_values($inserts));
@@ -2433,6 +2455,10 @@ function add_subscription_order_history($content, $arg=array()){
     $sql = "INSERT INTO `{$g5['g5_subscription_order_history_table']}`($columns) VALUES ('$values')";
     
     $result = sql_query($sql, false);
+    
+    */
+    
+    $result = sql_bind_insert($g5['g5_subscription_order_history_table'], $inserts);
     
     return sql_insert_id();
 }
@@ -2466,7 +2492,7 @@ function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
     
     for($i=0; $row=sql_fetch_array($result); $i++) {
         
-        $row['thumbnail'] = get_subscription_it_image($row['it_id'], 65, 65, true);
+        $row['thumbnail'] = get_subscription_it_image($row['it_id'], 65, 65, false);
         
         // 대표 상품명과 대표 썸네일을 지정한다.
         if ($i === 0) {

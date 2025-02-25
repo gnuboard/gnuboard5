@@ -829,9 +829,12 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
                 maxDate: getDateAfterDays(<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>)
             });
             */
-
+            
+            var g5_yymmdd = "<?php echo G5_TIME_YMD; ?>";
+            
             var $od_hope_date_print = $("#od_hope_date_print");
             $od_hope_date_print.datepicker({
+                defaultDate: g5_yymmdd,
                 dateFormat: "yy-mm-dd",
                 inline: true,
                 yearRange: "c-99:c+99",
@@ -854,8 +857,10 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/sty
                     $("#od_hope_date").val(dateText);
                     calculate_next_delivery_date();
                 },
-                minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
-                maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+                // minDate: "+<?php echo (int) get_subs_option('su_hope_date_after'); ?>d",
+                // maxDate: "+<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>d"
+                minDate: new Date("<?php echo getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after')); ?>"),
+                maxDate: new Date("<?php echo getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after') + 30); ?>")
             });
             
             function change_hope_date_val() {

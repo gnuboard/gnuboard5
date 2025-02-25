@@ -91,12 +91,14 @@ function subscription_add_mypage_sub() {
     <tr>
         <td>
             <div>
+                <a href="<?php echo $view_url; ?>">
                 <?php echo $row['goods']['thumb']; ?>
                 <br>
                 <?php echo $row['goods']['full_name']; ?>
+                </a>
             </div>
         </td>
-        <td><a href="<?php echo $view_url; ?>"><?php echo $row['od_id']; ?></td>
+        <td><a href="<?php echo $view_url; ?>"><?php echo $row['od_id']; ?></a></td>
         <td class="td_numbig"><?php echo substr($row['od_time'],2,9); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
         <td class="td_numbig text_right"><?php echo substr($row['next_billing_date'],2,9); ?> (<?php echo get_yoil($row['next_billing_date']); ?>)</td>
         <td class="td_numbig text_right"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>

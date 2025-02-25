@@ -11,7 +11,7 @@ if (!$is_member) {
     die(json_encode(array('error' => 1, 'msg'=>'회원만 조회가 가능합니다.')));
 }
 
-$sql_wheres = array('id' => $pay_id);
+$sql_wheres = array('pay_id' => $pay_id);
 
 if ($is_member && !$is_admin) {
     $sql_wheres['mb_id'] = $member['mb_id'];
@@ -19,7 +19,7 @@ if ($is_member && !$is_admin) {
 
 $pays = sql_bind_select_fetch($g5['g5_subscription_pay_table'], '*', $sql_wheres);
 
-if (!(isset($pays['id']) && $pays['id'])) {
+if (!(isset($pays['pay_id']) && $pays['pay_id'])) {
 
     die(json_encode(array('error' => 1, 'msg'=>'조회 권한이 없습니다.')));
     

@@ -113,7 +113,7 @@ if ($sel_field == '') {
     $sel_field = 'od_id';
 }
 if ($sort1 == '') {
-    $sort1 = 'id';
+    $sort1 = 'pay_id';
 }
 if ($sort2 == '') {
     $sort2 = 'desc';
