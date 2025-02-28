@@ -453,20 +453,20 @@ class G5MysqlCRUD
         global $g5;
         if ($link === null) $link = get_pdo_connection();
 
-        // 테이블 이름 검증 (간단한 정규식)
-        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
-            throw new Exception("Invalid table name: $table");
+        // 조인 포함 테이블 이름 검증
+        if (!self::validateTableString($table)) {
+            throw new Exception("Invalid table name or join syntax: $table");
         }
         
         // $columnString = empty($columns) ? "*" : implode(",", $columns);
         
-        // 컬럼 검증
+        // 컬럼 검증: 별칭 포함 허용 (예: a.ct_id)
         $columnString = empty($columns) ? "*" : implode(",", array_map(function($col) {
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+            if (!preg_match('/^[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?$/', $col) && $col !== '*') {
                 throw new Exception("Invalid column name: $col");
             }
             return $col;
-        }, (array)$columns));
+        }, (array)$columns)); // 괄호 하나만 닫음
         
         $conditionString = self::buildConditionString($condition);
 
@@ -536,18 +536,25 @@ class G5MysqlCRUD
         global $g5;
         if ($link === null) $link = get_pdo_connection();
 
-        // 테이블 이름 검증
-        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
-            throw new Exception("Invalid table name: $table");
+        // 조인 포함 테이블 이름 검증
+        if (!self::validateTableString($table)) {
+            throw new Exception("Invalid table name or join syntax: $table");
         }
         
-        // 컬럼 검증 (업데이트할 컬럼)
+        // 컬럼 검증 및 처리
         $validatedColumns = array_map(function($col) {
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
-                throw new Exception("Invalid column name: $col");
+            // 이미 "= ?"가 포함된 경우 처리
+            if (preg_match('/^([a-zA-Z0-9_]+)\s*=\s*\?$/', $col, $matches)) {
+                $colName = $matches[1];
+            } else {
+                $colName = $col;
             }
-            return "$col = ?";
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $colName)) {
+                throw new Exception("Invalid column name: $colName");
+            }
+            return "$colName = ?";
         }, (array)$columns);
+        
         $columnString = implode(",", $validatedColumns);
     
         $conditionString = self::buildConditionString($condition);
@@ -570,9 +577,9 @@ class G5MysqlCRUD
         global $g5;
         if ($connection === null) $connection = get_pdo_connection();
 
-        // 테이블 이름 검증
-        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
-            throw new Exception("Invalid table name: $table");
+        // 조인 포함 테이블 이름 검증
+        if (!self::validateTableString($table)) {
+            throw new Exception("Invalid table name or join syntax: $table");
         }
     
         $conditionString = self::buildConditionString($condition);
@@ -585,6 +592,13 @@ class G5MysqlCRUD
         return sql_query($queryObj);
     }
     
+    // 테이블 문자열 검증 메서드
+    private static function validateTableString($table)
+    {
+        // 단일 테이블 또는 기본 조인 구문 허용
+        $pattern = '/^[a-zA-Z0-9_]+(?: [a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?: [a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
+        return preg_match($pattern, $table) === 1;
+    }
     /*
     private static function buildConditionString($condition)
     {
@@ -603,6 +617,7 @@ class G5MysqlCRUD
         if ($condition) {
             foreach ($condition as $index => $cond) {
                 // 연산자와 컬럼 검증
+                /*
                 if (preg_match('/^([a-zA-Z0-9_]+)\s*([=><!]+|LIKE|IN)\s*\?$/i', $cond, $matches)) {
                     $column = $matches[1];
                     $operator = strtoupper($matches[2]);
@@ -611,6 +626,15 @@ class G5MysqlCRUD
                     }
                 } else {
                     throw new Exception("Invalid condition format: $cond");
+                }
+                */
+                if (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', self::$allowedOperators) . ')\s*\?$/i', $cond, $matches)) {
+                    throw new Exception("Invalid condition format: $cond");
+                }
+                $column = $matches[1];
+                $operator = strtoupper($matches[2]);
+                if (!in_array($operator, self::$allowedOperators)) {
+                    throw new Exception("Invalid operator: $operator");
                 }
                 $condition[$index] = "($cond)";
             }
@@ -623,10 +647,20 @@ class G5MysqlCRUD
     {
         $limit = isset($readSettings['limit']) ? preg_replace('/[^0-9]/', '', $readSettings['limit']) : null;
         $offset = isset($readSettings['offset']) ? preg_replace('/[^0-9]/', '', $readSettings['offset']) : null;
-        $groupBy = isset($readSettings['groupBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['groupBy']) : null;
-        $orderBy = isset($readSettings['orderBy']) ? preg_replace('/[^a-z0-9_ \,\.]/i', '', $readSettings['orderBy']) : null;
+        $groupBy = isset($readSettings['groupBy']) ? $readSettings['groupBy'] : null;
+        $orderBy = isset($readSettings['orderBy']) ? $readSettings['orderBy'] : null;
         $orderType = isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC";
 
+        if ($groupBy && !preg_match('/^[a-zA-Z0-9_,\.]+$/', $groupBy)) {
+            throw new Exception("Invalid GROUP BY: $groupBy");
+        }
+        if ($orderBy && !preg_match('/^[a-zA-Z0-9_, \.]+$/', $orderBy)) {
+            throw new Exception("Invalid ORDER BY: $orderBy");
+        }
+        if (!in_array($orderType, ['ASC', 'DESC'])) {
+            throw new Exception("Invalid order type: $orderType");
+        }
+        
         $query = "SELECT {$columnString} FROM {$table} ";
         if ($conditionString) $query .= "WHERE {$conditionString} ";
         if ($groupBy) $query .= "GROUP BY {$groupBy} ";
@@ -740,6 +774,23 @@ function sql_bind_condition_value($value)
         return current($value);
     }
     return $value;
+}
+
+function sql_bind_select_join($query, $values = array(), $link = null, $is_fetch = 0)
+{
+    if ($link === null) $link = get_pdo_connection();
+    $queryObj = new G5MySQLQuery($query, $link);
+    if (!empty($values)) {
+        call_user_func_array(array($queryObj, 'bind'), $values);
+    }
+    $result = sql_query($queryObj);
+    
+    if ($is_fetch === 1) {
+        return $queryObj->result_fetch($result);
+    } elseif ($is_fetch === 2) {
+        return $queryObj->result($result);
+    }
+    return $result;
 }
 
 /*
