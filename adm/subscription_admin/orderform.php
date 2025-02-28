@@ -860,7 +860,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <h3>정기결제내역</h3>
     
     <?php
-    $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
+    $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'pay_id', 'orderType'=>'DESC'));
     ?>
     <div class="tbl_frm01">
         <table>
@@ -877,7 +877,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <td><?php echo $v['py_pg']; ?></td>
                 <td><?php echo $v['py_receipt_time']; ?></td>
                 <td></td>
-                <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?id=<?php echo $v['id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
+                <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?pay_id=<?php echo $v['pay_id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
             </tr>
             <?php } ?>
         </table>

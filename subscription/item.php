@@ -59,7 +59,7 @@ if (!$saved) {
 
 // 조회수 증가
 if (get_cookie('ck_it_id') != $it_id) {
-    sql_query(" update {$g5['g5_subscription_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
+    sql_query(" update {$g5['g5_shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
     set_cookie("ck_it_id", $it_id, 3600); // 1시간동안 저장
 }
 
@@ -144,7 +144,7 @@ else
 
 
 // 이전 상품보기
-$sql = " select it_id, it_name from {$g5['g5_subscription_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
+$sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
 $row = sql_fetch($sql);
 if (isset($row['it_id']) && $row['it_id']) {
     $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
@@ -157,7 +157,7 @@ if (isset($row['it_id']) && $row['it_id']) {
 }
 
 // 다음 상품보기
-$sql = " select it_id, it_name from {$g5['g5_subscription_item_table']} where it_id < '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
+$sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id < '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
 $row = sql_fetch($sql);
 if (isset($row['it_id']) && $row['it_id']) {
     $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
@@ -173,12 +173,12 @@ if (isset($row['it_id']) && $row['it_id']) {
 $star_score = get_star_image($it['it_id']);
 
 // 관리자가 확인한 사용후기의 개수를 얻음
-$sql = " select count(*) as cnt from `{$g5['g5_subscription_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+$sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
 
 // 상품문의의 개수를 얻음
-$sql = " select count(*) as cnt from `{$g5['g5_subscription_item_qa_table']}` where it_id = '{$it_id}' ";
+$sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 

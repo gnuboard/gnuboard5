@@ -185,7 +185,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                         alert('장바구니가 비어 있습니다.', G5_SUBSCRIPTION_URL . '/cart.php');
                     } else {
                         // 배송비 계산
-                        $send_cost = get_sendcost($s_cart_id);
+                        $send_cost = get_subscription_sendcost($s_cart_id);
                     }
                     ?>
                 </tbody>

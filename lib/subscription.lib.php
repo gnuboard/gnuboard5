@@ -9,15 +9,15 @@ function get_dir_path($pathComponents, $is_end=0) {
     return implode($dir_separator, $filteredComponents) . ($is_end ? $dir_separator : '');
 }
 
-function subscription_category_url($sc_id, $add_param=''){
+function subscription_category_url($ca_id, $add_param=''){
     global $config;
 
     if( $config['cf_bbs_rewrite'] ){
-        // return get_pretty_url('shop', 'list-'.$sc_id, $add_param);
+        // return get_pretty_url('shop', 'list-'.$ca_id, $add_param);
     }
 	
 	$add_params = $add_param ? '&'.$add_param : '';
-    return G5_SUBSCRIPTION_URL.'/list.php?sc_id='.urlencode($sc_id).$add_params;
+    return G5_SUBSCRIPTION_URL.'/list.php?ca_id='.urlencode($ca_id).$add_params;
 }
 
 function subscription_item_url($it_id, $add_param=''){
@@ -80,6 +80,7 @@ function get_subscription_cart_count($cart_id) {
 
     $sql = " select count(ct_id) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ";
     $row = sql_fetch($sql);
+    
     $cnt = (int)$row['cnt'];
     return $cnt;
 }
@@ -242,6 +243,8 @@ function subscription_order_pay_price($od_id) {
     
     $pay_infos = get_subscription_cart_data($od_id);
     
+    print_r( $pay_infos );
+    
     $total_price = (int)$pay_infos['tot_sell_price'] + (int)$pay_infos['send_cost'];
     
     return $total_price;
@@ -335,7 +338,7 @@ function get_subscription_cart_data($s_cart_id, $is_pay=0) {
     }
     
     // 배송비 계산
-    $send_cost = get_sendcost($s_cart_id);
+    $send_cost = get_subscription_sendcost($s_cart_id);
     
     return array('goods'=>$goods, 'image_urls'=>$image_urls, 'it_options' => $it_options, 'tot_point' => $tot_point, 'tot_sell_price' => $tot_sell_price, 'send_cost' => $send_cost);
     
@@ -345,8 +348,7 @@ function get_subscription_cart_data($s_cart_id, $is_pay=0) {
 }
 
 // 정기결제 상품의 재고 (창고재고수량 - 주문대기수량)
-function get_subscription_it_stock_qty($it_id)
-{
+function get_subscription_it_stock_qty($it_id) {
     /*
     global $g5;
 
@@ -373,23 +375,27 @@ function get_subscription_it_stock_qty($it_id)
 }
 
 // 배송비 구함
-function get_subscription_sendcost($cart_id, $selected=1)
-{
+function get_subscription_sendcost($cart_id, $selected=1) {
     global $default, $g5;
 
     $send_cost = 0;
     $total_price = 0;
     $total_send_cost = 0;
     $diff = 0;
-
+    
+    /*
     $sql = " select distinct it_id
                 from {$g5['g5_subscription_cart_table']}
                 where od_id = '$cart_id'
                   and ct_send_cost = '0'
                   and ct_status IN ( '쇼핑', '주문', '입금', '준비', '배송', '완료' )
                   and ct_select = '$selected' ";
-
+                  
     $result = sql_query($sql);
+    */
+    
+    $result = sql_bind_select($g5['g5_subscription_cart_table'], 'distinct it_id', array('od_id' => $cart_id, 'ct_send_cost' => 0, 'ct_select' => $selected));
+    
     for($i=0; $sc=sql_fetch_array($result); $i++) {
         // 합계
         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
@@ -426,7 +432,7 @@ function get_subscription_sendcost($cart_id, $selected=1)
             }
         }
     }
-
+    
     return ($total_send_cost + $send_cost);
 }
 
@@ -550,12 +556,12 @@ function subscription_member_cert_check($id, $type){
     return $msg;
 }
 
-function get_subscription_category($sc_id) {
+function get_subscription_category($ca_id) {
     global $g5, $g5_object;
     
     $add_query = '';
     
-    $sql = " select * from {$g5['g5_shop_category_table']} where sc_id = '{$sc_id}' $add_query ";
+    $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '{$ca_id}' $add_query ";
     return sql_fetch($sql);
 }
 
@@ -840,7 +846,7 @@ function subscription_item_icon($it) {
                   and (
                         ( cp_method = '0' and cp_target = '{$it['it_id']}' )
                         OR
-                        ( cp_method = '1' and ( cp_target IN ( '{$it['sc_id']}', '{$it['sc_id2']}', '{$it['sc_id3']}' ) ) )
+                        ( cp_method = '1' and ( cp_target IN ( '{$it['ca_id']}', '{$it['ca_id2']}', '{$it['ca_id3']}' ) ) )
                       ) ";
     $row = sql_fetch($sql);
     if($row['cnt'])
@@ -917,22 +923,22 @@ function get_subscription_it_image($it_id, $width, $height=0, $anchor=false, $im
     return run_replace('get_subscription_it_image_tag', $img, $thumb, $it_id, $width, $height, $anchor, $img_id, $img_alt, $is_crop, $file_url);
 }
 
-function get_subscription_navigation_data($is_cache, $sc_id, $sc_id2='', $sc_id3=''){
+function get_subscription_navigation_data($is_cache, $ca_id, $ca_id2='', $ca_id3=''){
     
     $all_categories = get_subscription_category_array($is_cache);
 
     $datas = array();
     
-    if( strlen($sc_id) >= 2 && $all_categories ){
+    if( strlen($ca_id) >= 2 && $all_categories ){
         foreach((array) $all_categories as $category1 ){
             $datas[0][] = $category1['text'];
         }
     }
 
-    $select_sc_id = $sc_id2 ? $sc_id2 : $sc_id;
-    $item_categories2 = $select_sc_id ? get_subscription_category_by($is_cache, 'sc_id', $select_sc_id) : array();
+    $select_ca_id = $ca_id2 ? $ca_id2 : $ca_id;
+    $item_categories2 = $select_ca_id ? get_subscription_category_by($is_cache, 'ca_id', $select_ca_id) : array();
 
-    if( strlen($select_sc_id) >= 4 && $item_categories2 ){
+    if( strlen($select_ca_id) >= 4 && $item_categories2 ){
         foreach((array) $item_categories2 as $key=>$category2 ){
             if( $key === 'text' ) continue;
 
@@ -940,11 +946,11 @@ function get_subscription_navigation_data($is_cache, $sc_id, $sc_id2='', $sc_id3
         }
     }
 
-    $select_sc_id = $sc_id3 ? $sc_id3 : $sc_id;
-    $item_categories3 = $select_sc_id ? get_subscription_category_by($is_cache, 'sc_id', $select_sc_id) : array();
+    $select_ca_id = $ca_id3 ? $ca_id3 : $ca_id;
+    $item_categories3 = $select_ca_id ? get_subscription_category_by($is_cache, 'ca_id', $select_ca_id) : array();
 
-    if( strlen($select_sc_id) >= 6 && $item_categories3 && isset($item_categories3[substr($select_sc_id,0,4)]) ){
-        $sub_categories = $item_categories3[substr($select_sc_id,0,4)];
+    if( strlen($select_ca_id) >= 6 && $item_categories3 && isset($item_categories3[substr($select_ca_id,0,4)]) ){
+        $sub_categories = $item_categories3[substr($select_ca_id,0,4)];
 
         foreach((array) $sub_categories as $key=>$category3 ){
             if( $key === 'text' ) continue;
@@ -958,7 +964,7 @@ function get_subscription_navigation_data($is_cache, $sc_id, $sc_id2='', $sc_id3
 
 function get_subscription_category_by($is_cache, $case, $value){
     
-    if( $case === 'sc_id' ){
+    if( $case === 'ca_id' ){
         $categories = get_subscription_category_array($is_cache);
 
         $key = substr(preg_replace('/[^0-9a-z]/i', '', $value), 0, 2);
@@ -985,23 +991,23 @@ function get_subscription_category_array($is_cache=false){
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
 
-        $row['url'] = subscription_category_url($row['sc_id']);
-        $categories[$row['sc_id']]['text'] = $row;
+        $row['url'] = subscription_category_url($row['ca_id']);
+        $categories[$row['ca_id']]['text'] = $row;
         
-        if( $row['sc_id'] ){
-            $result2 = sql_query(get_subscription_category_sql($row['sc_id'], 4));
+        if( $row['ca_id'] ){
+            $result2 = sql_query(get_subscription_category_sql($row['ca_id'], 4));
 
             for($j=0; $row2=sql_fetch_array($result2); $j++) {
 
-                $row2['url'] = subscription_category_url($row2['sc_id']);
-                $categories[$row['sc_id']][$row2['sc_id']]['text'] = $row2;
+                $row2['url'] = subscription_category_url($row2['ca_id']);
+                $categories[$row['ca_id']][$row2['ca_id']]['text'] = $row2;
                 
-                if( $row2['sc_id'] ){
-                    $result3 = sql_query(get_subscription_category_sql($row2['sc_id'], 6));
+                if( $row2['ca_id'] ){
+                    $result3 = sql_query(get_subscription_category_sql($row2['ca_id'], 6));
                     for($k=0; $row3=sql_fetch_array($result3); $k++) {
 
-                        $row3['url'] = subscription_category_url($row3['sc_id']);
-                        $categories[$row['sc_id']][$row2['sc_id']][$row3['sc_id']]['text'] = $row3;
+                        $row3['url'] = subscription_category_url($row3['ca_id']);
+                        $categories[$row['ca_id']][$row2['ca_id']][$row3['ca_id']]['text'] = $row3;
                     }
                 }   //end if
             }   //end for
@@ -1011,14 +1017,14 @@ function get_subscription_category_array($is_cache=false){
     return $categories;
 }
 
-function get_subscription_category_sql($sc_id, $len){
+function get_subscription_category_sql($ca_id, $len){
     global $g5;
 
     $sql = " select * from {$g5['g5_shop_category_table']}
-                where sc_use = '1' ";
-    if($sc_id)
-        $sql .= " and sc_id like '$sc_id%' ";
-    $sql .= " and length(sc_id) = '$len' order by sc_order, sc_id ";
+                where ca_use = '1' ";
+    if($ca_id)
+        $sql .= " and ca_id like '$ca_id%' ";
+    $sql .= " and length(ca_id) = '$len' order by ca_order, ca_id ";
 
     return $sql;
 }
@@ -1076,7 +1082,7 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     
     $py_receipt_time = date('Y년m월d일', strtotime($pg_data['payDate'].$pg_data['payTime']));
     
-    $subscription_id = $pg_data['orderId'];
+    $subscription_pg_id = $pg_data['orderId'];
     $paymethod = $pg_data['payMethod'];
     $od_receipt_price = $pg_data['amount'];
     $receipt_url = $pg_data['receiptUrl'];
@@ -1101,7 +1107,7 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     $inserts = array(
         'od_id' => $od['od_id'],
         'mb_id' => $od['mb_id'],
-        'subscription_id' => $subscription_id,
+        'subscription_pg_id' => $subscription_pg_id,
         'py_name' => $od['od_name'],
         'py_email' => $od['od_email'],
         'py_hp' => $od['od_hp'],
@@ -2291,9 +2297,9 @@ function generate_subscription_id($oid='', $length=30) {
     */
     
     // 데이터베이스에서 가장 최근 주문 ID 가져오기
-    $stmt = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(id)');
+    $stmt = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(pay_id) as pay_id');
     
-    $lastId = $stmt['id'];
+    $lastId = $stmt['pay_id'];
     $lastId = $lastId ? $lastId + 1 : 1;
     
     $str = substr(hash('sha256', $lastId . $member['md_id'] . microtime()), 0, 12);
@@ -2545,6 +2551,271 @@ function print_subscription_card_info($od) {
     }
     
     return $txt;
+}
+
+function get_subscription_pays($pay_id, $od_id='') {
+    global $g5;
+    
+    $wheres = array('pay_id' => $pay_id);
+    
+    if ($od_id) {
+        $wheres['od_id'] = $od_id;
+    }
+    
+    $rows = sql_bind_select_fetch($g5['g5_subscription_pay_table'], '*', $wheres);
+    
+    return $rows;
+}
+
+// 주문의 금액, 배송비 과세금액 등의 정보를 가져옴
+function get_subscription_pay_info($pay_id, $od_id) {
+    global $g5;
+    
+    $pay = get_subscription_pays($pay_id, $od_id);
+        
+    if (!(isset($pay['pay_id']) && $pay['pay_id'])) {
+        return false;
+    }
+
+    $info = array();
+
+    // 장바구니 주문금액정보
+    /*
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                    SUM(cp_price) as coupon,
+                    SUM( IF( ct_notax = 0, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as tax_mny,
+                    SUM( IF( ct_notax = 1, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as free_mny
+                from {$g5['g5_shop_cart_table']}
+                where od_id = '$od_id'
+                  and ct_status IN ( '주문', '입금', '준비', '배송', '완료' ) ";
+    $sum = sql_fetch($sql);
+    */
+    
+    $select_field = "SUM(IF(io_type = 1, (io_price * pb_qty), ((pb_price + io_price) * pb_qty))) as price,
+                    SUM(cp_price) as coupon,
+                    SUM( IF( pb_notax = 0, ( IF(io_type = 1, (io_price * pb_qty), ( (pb_price + io_price) * pb_qty) ) - cp_price ), 0 ) ) as tax_mny,
+                    SUM( IF( pb_notax = 1, ( IF(io_type = 1, (io_price * pb_qty), ( (pb_price + io_price) * pb_qty) ) - cp_price ), 0 ) ) as free_mny";
+    
+    $wheres = array('pay_id' => $pay_id, 'od_id' => $od_id, 'pb_status' => array('IN' => array('주문', '입금', '준비', '배송', '완료')));
+    
+    $sum = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], $select_field, $wheres);
+    
+    $cart_price = $sum['price'];
+    $cart_coupon = $sum['coupon'];
+
+    // 배송비
+    $send_cost = get_subscription_pay_sendcost($pay_id, $od_id);
+
+    $od_coupon = $od_send_coupon = 0;
+    
+    /*
+    if($od['mb_id']) {
+        // 주문할인 쿠폰
+        $sql = " select a.cp_id, a.cp_type, a.cp_price, a.cp_trunc, a.cp_minimum, a.cp_maximum
+                    from {$g5['g5_shop_coupon_table']} a right join {$g5['g5_shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
+                    where b.od_id = '$od_id'
+                      and b.mb_id = '{$od['mb_id']}'
+                      and a.cp_method = '2' ";
+        $cp = sql_fetch($sql);
+
+        $tot_od_price = $cart_price - $cart_coupon;
+
+        if(isset($cp['cp_id']) && $cp['cp_id']) {
+            $dc = 0;
+
+            if($cp['cp_minimum'] <= $tot_od_price) {
+                if($cp['cp_type']) {
+                    $dc = floor(($tot_od_price * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                } else {
+                    $dc = $cp['cp_price'];
+                }
+
+                if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                    $dc = $cp['cp_maximum'];
+
+                if($tot_od_price < $dc)
+                    $dc = $tot_od_price;
+
+                $tot_od_price -= $dc;
+                $od_coupon = $dc;
+            }
+        }
+
+        // 배송쿠폰 할인
+        $sql = " select a.cp_id, a.cp_type, a.cp_price, a.cp_trunc, a.cp_minimum, a.cp_maximum
+                    from {$g5['g5_shop_coupon_table']} a right join {$g5['g5_shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
+                    where b.od_id = '$od_id'
+                      and b.mb_id = '{$od['mb_id']}'
+                      and a.cp_method = '3' ";
+        $cp = sql_fetch($sql);
+
+        if(isset($cp['cp_id']) && $cp['cp_id']) {
+            $dc = 0;
+            if($cp['cp_minimum'] <= $tot_od_price) {
+                if($cp['cp_type']) {
+                    $dc = floor(($send_cost * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                } else {
+                    $dc = $cp['cp_price'];
+                }
+
+                if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                    $dc = $cp['cp_maximum'];
+
+                if($dc > $send_cost)
+                    $dc = $send_cost;
+
+                $od_send_coupon = $dc;
+            }
+        }
+    }
+    */
+    
+    // 과세, 비과세 금액정보
+    $tax_mny = $sum['tax_mny'];
+    $free_mny = $sum['free_mny'];
+
+    if($od['od_tax_flag']) {
+        $tot_tax_mny = ( $tax_mny + $send_cost + $od['od_send_cost2'] )
+                       - ( $od_coupon + $od_send_coupon + $od['od_receipt_point'] );
+        if($tot_tax_mny < 0) {
+            $free_mny += $tot_tax_mny;
+            $tot_tax_mny = 0;
+        }
+    } else {
+        $tot_tax_mny = ( $tax_mny + $free_mny + $send_cost + $od['od_send_cost2'] )
+                       - ( $od_coupon + $od_send_coupon + $od['od_receipt_point'] );
+        $free_mny = 0;
+    }
+
+    $od_tax_mny = round($tot_tax_mny / 1.1);
+    $od_vat_mny = $tot_tax_mny - $od_tax_mny;
+    $od_free_mny = $free_mny;
+
+    // 장바구니 취소금액 정보
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price
+                from {$g5['g5_shop_cart_table']}
+                where od_id = '$od_id'
+                  and ct_status IN ( '취소', '반품', '품절' ) ";
+    $sum = sql_fetch($sql);
+    $cancel_price = $sum['price'];
+
+    // 미수금액
+    $od_misu = ( $cart_price + $send_cost + $od['od_send_cost2'] )
+               - ( $cart_coupon + $od_coupon + $od_send_coupon )
+               - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $od['od_refund_price'] );
+
+    // 장바구니상품금액
+    $od_cart_price = $cart_price + $cancel_price;
+
+    // 결과처리
+    $info['od_cart_price']      = $od_cart_price;
+    $info['od_send_cost']       = $send_cost;
+    $info['od_coupon']          = $od_coupon;
+    $info['od_send_coupon']     = $od_send_coupon;
+    $info['od_cart_coupon']     = $cart_coupon;
+    $info['od_tax_mny']         = $od_tax_mny;
+    $info['od_vat_mny']         = $od_vat_mny;
+    $info['od_free_mny']        = $od_free_mny;
+    $info['od_cancel_price']    = $cancel_price;
+    $info['od_misu']            = $od_misu;
+
+    return $info;
+}
+
+// 배송비 구함
+function get_subscription_pay_sendcost($pay_id, $cart_id, $selected=1) {
+    global $default, $g5;
+
+    $send_cost = 0;
+    $total_price = 0;
+    $total_send_cost = 0;
+    $diff = 0;
+    
+    $result = sql_bind_select($g5['g5_subscription_pay_basket_table'], 'distinct it_id', 
+        array('od_id' => $cart_id, 'pb_send_cost' => 0, 'pb_select' => $selected, 'pb_status' =>array('IN'=>array('쇼핑', '주문', '입금', '준비', '배송', '완료')))
+        );
+    
+    for($i=0; $sc=sql_fetch_array($result); $i++) {
+        // 합계
+        
+        $select_field = 'SUM(IF(io_type = 1, (io_price * pb_qty), ((pb_price + io_price) * pb_qty))) as price,
+                        SUM(pb_qty) as qty';
+                        
+        $sum = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], $select_field, 
+            array('it_id'=>$sc['it_id'], 'od_id'=>$cart_id, 'pb_select' => $selected, 'pb_status' =>array('IN'=>array('쇼핑', '주문', '입금', '준비', '배송', '완료')))
+            );
+
+        $send_cost = get_subscription_pay_item_sendcost($sc['it_id'], $sum['price'], $sum['qty'], $cart_id, $pay_id);
+
+        if($send_cost > 0)
+            $total_send_cost += $send_cost;
+
+        if($default['de_send_cost_case'] == '차등' && $send_cost == -1) {
+            $total_price += $sum['price'];
+            $diff++;
+        }
+    }
+
+    $send_cost = 0;
+    if($default['de_send_cost_case'] == '차등' && $total_price >= 0 && $diff > 0) {
+        // 금액별차등 : 여러단계의 배송비 적용 가능
+        $send_cost_limit = explode(";", $default['de_send_cost_limit']);
+        $send_cost_list  = explode(";", $default['de_send_cost_list']);
+        $send_cost = 0;
+        for ($k=0; $k<count($send_cost_limit); $k++) {
+            // 총판매금액이 배송비 상한가 보다 작다면
+            if ($total_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+                $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
+                break;
+            }
+        }
+    }
+
+    return ($total_send_cost + $send_cost);
+}
+
+// 상품별 배송비 (정기구독 결제)
+function get_subscription_pay_item_sendcost($it_id, $price, $qty, $cart_id, $pay_id) {
+    global $g5, $default;
+    /*
+    $sql = " select it_id, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty
+                from {$g5['g5_subscription_cart_table']}
+                where it_id = '$it_id'
+                  and od_id = '$cart_id'
+                order by ct_id
+                limit 1 ";
+    $ct = sql_fetch($sql);
+    */
+    
+    $select_field = 'it_id, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty';
+    
+    $pb = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], $select_field, array('it_id'=>$it_id, 'od_id'=>$cart_id, 'pay_id'=>$pay_id), array('orderBy'=>'ct_id', 'limit'=>1));
+    
+    if (!(isset($pb['it_id']) && $pb['it_id']))
+        return 0;
+
+    if($pb['it_sc_type'] > 1) {
+        if($pb['it_sc_type'] == 2) { // 조건부무료
+            if($price >= $pb['it_sc_minimum'])
+                $sendcost = 0;
+            else
+                $sendcost = $pb['it_sc_price'];
+        } else if($pb['it_sc_type'] == 3) { // 유료배송
+            $sendcost = $pb['it_sc_price'];
+        } else { // 수량별 부과
+            if(!$pb['it_sc_qty'])
+                $pb['it_sc_qty'] = 1;
+
+            $q = ceil((int)$qty / (int)$pb['it_sc_qty']);
+            $sendcost = (int)$pb['it_sc_price'] * $q;
+        }
+    } else if($pb['it_sc_type'] == 1) { // 무료배송
+        $sendcost = 0;
+    } else {
+        $sendcost = -1;
+    }
+
+    return $sendcost;
 }
 
 function subscription_item_delivery_title($it) {

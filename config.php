@@ -27,8 +27,8 @@ define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
 // 그누보드 디버그바 설정입니다, 실제 서버운영시 false 로 설정해 주세요.
-define('G5_DEBUG', false);
-define('G5_COLLECT_QUERY', false);
+define('G5_DEBUG', true);
+define('G5_COLLECT_QUERY', true);
 
 // Set Database table default engine is Database default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
 // DB에 테이블 생성 시 테이블의 기본 스토리지 엔진을 설정할 수 있습니다.
@@ -194,7 +194,8 @@ define('G5_MYSQL_PASSWORD_LENGTH', 41);         // mysql password length 41, old
 
 // SQL 에러를 표시할 것인지 지정
 // 에러를 표시하려면 true 로 변경
-define('G5_DISPLAY_SQL_ERROR', false);
+// 개발시에만 true, 실사용에는 false로 변경해야 합니다. 이것을 나중에 반드시 변경 수정 꼭꼭
+define('G5_DISPLAY_SQL_ERROR', true);
 
 // escape string 처리 함수 지정
 // addslashes 로 변경 가능
@@ -233,6 +234,9 @@ define('G5_VISIT_BROWSCAP_USE', false);
 다른 문자를 적어주시면 됩니다.
 */
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
+
+// PDO 여부
+define('G5_USE_DB_PDO', 1);
 
 // KAKAO 우편번호 서비스 CDN
 define('G5_POSTCODE_JS', '<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');

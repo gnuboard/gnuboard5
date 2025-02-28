@@ -1747,11 +1747,52 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
                 // error_log("Error Message: " . $e->getErrorMessage());
                 
                 if ($error) {
+                    /*
                     if ($is_admin === 'super') {
                         echo "Exception". $e ->getcode().": ".$e -> getMessage()."<br />".
                         " in ". $e->getFile()." on line ". $e -> getLine()."<br />";
                     }
                     die("쿼리 실행 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                    */
+                    
+                    // 슈퍼 관리자에게는 파일과 라인 정보 추가
+                    
+                    if ($is_admin === 'super') {
+                        
+                        /*
+                        // 에러 정보 설정
+                        $errorMessage = $e->getMessage();
+                        $errorCode = $e->getCode();
+                        $sqlState = 'N/A'; // G5MySQLQuery에서 SQLSTATE를 별도로 제공하지 않으면 기본값
+                        $queryString = method_exists($sql, 'getQuery') ? $sql->getQuery() : 'Unknown Query';
+
+                        // G5MySQLQuery에서 직접 에러 정보를 가져오기 위해 추가 확인
+                        if (property_exists($sql, 'errorMessage') && property_exists($sql, 'errorCode') && property_exists($sql, 'sqlState')) {
+                            $errorMessage = $sql->errorMessage ?: $errorMessage;
+                            $errorCode = $sql->errorCode ?: $errorCode;
+                            $sqlState = $sql->sqlState ?: $sqlState;
+                        }
+                        
+                        $errorOutput = "Query: " . $queryString . "\n" .
+                                        "SQLSTATE: " . $sqlState . "\n" .
+                                        "Error Code: " . $errorCode . "\n" .
+                                        "Error Message: " . $errorMessage . "\n" .
+                                        "File: " . $_SERVER['SCRIPT_NAME'] . "\n" .
+                                        "Executed Query: " . $queryString;
+
+                        $errorOutput .= "\nException in " . $e->getFile() . " on line " . $e->getLine();
+
+                        echo $errorOutput."\n<br>";
+                        */
+                        
+                        $sql->sql_error_print($e);
+                    }
+                    
+                    die("\n<br>쿼리 실행 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                    
+                } else {
+                    // 에러 표시가 꺼져 있으면 null 반환
+                    return null;
                 }
             }
         }
@@ -1795,9 +1836,16 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $source = array();
     if ($is_debug || G5_COLLECT_QUERY) {
         if (is_object($sql)) {
+            /*
             $error = array(
                 'error_code' => $e ->getcode(),
                 'error_message' => $e -> getMessage().' in '. $e->getFile().' on line '. $e -> getLine(),
+            );
+            */
+            
+            $error = array(
+                'error_code' => '',
+                'error_message' => '',
             );
             
             $query = $sql;
@@ -1879,7 +1927,7 @@ function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     return $row;
 }
 
-
+/*
 // 결과값에서 한행 연관배열(이름으로)로 얻는다.
 function sql_fetch_array($result)
 {
@@ -1896,7 +1944,34 @@ function sql_fetch_array($result)
 
     return $row;
 }
+*/
 
+// 결과값에서 한행 연관배열(이름으로)로 얻는다.
+function sql_fetch_array($result)
+{
+    if (!$result) return array();
+
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO && $result instanceof PDOStatement) {
+        // PDO 처리
+        try {
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            $row = null;
+        }
+    } elseif (function_exists('mysqli_fetch_assoc') && G5_MYSQLI_USE) {
+        // MySQLi 처리
+        try {
+            $row = @mysqli_fetch_assoc($result);
+        } catch (Exception $e) {
+            $row = null;
+        }
+    } else {
+        // MySQL 처리
+        $row = @mysql_fetch_assoc($result);
+    }
+
+    return $row ?: array(); // null이면 빈 배열 반환
+}
 
 // $result에 대한 메모리(memory)에 있는 내용을 모두 제거한다.
 // sql_free_result()는 결과로부터 얻은 질의 값이 커서 많은 메모리를 사용할 염려가 있을 때 사용된다.

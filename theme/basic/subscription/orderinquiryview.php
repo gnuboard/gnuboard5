@@ -699,7 +699,7 @@ jQuery(function($) {
                     html += "<li><span class='th'>총계 :</span> " + data.py_tot_price + "</li>";
                     
                     html += "<h3>결제정보</h3>";
-                    html += "<li><span class='th'>주문번호 :</span> " + data.subscription_id + "</li>";
+                    html += "<li><span class='th'>주문번호 :</span> " + data.subscription_pg_id + "</li>";
                     html += "<li><span class='th'>주문일시 :</span> " + data.py_time + "</li>";
                     // html += "<li><span class='th'>결제방식 :</span> " + data.py_settle_case + "</li>";
                     html += "<li><span class='th'>결제카드 :</span> " + data.py_settle_case + "</li>";

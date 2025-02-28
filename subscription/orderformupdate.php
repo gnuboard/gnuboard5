@@ -213,7 +213,7 @@ $tot_od_cp_price = 0;
 $tot_sc_cp_price = 0;
 
 // 배송비가 상이함
-$send_cost = get_sendcost($tmp_cart_id);
+$send_cost = get_subscription_sendcost($tmp_cart_id);
 
 $tot_sc_cp_price = 0;
 // 배송비 쿠폰 적용해야 해야함
@@ -549,8 +549,9 @@ if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_paymen
 }
 
 if ($is_first_pay) {
-    $pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
 
+    $pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
+    
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
         
@@ -904,6 +905,8 @@ if ($is_member) {
 
     sql_query($sql);
 }
+
+exit;
 
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>

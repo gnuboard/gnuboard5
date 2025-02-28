@@ -34,15 +34,11 @@ function subscription_pg_setting_check($is_print=false){
 	}
 }
 
-function is_cancel_subscription_pg_order($od){
+function is_cancel_subscription_pg_order($pay){
 
     $is_od_pg_cancel = false;
 
-    if (($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '간편결제' || $od['od_settle_case'] == 'KAKAOPAY') || ($od['od_pg'] == 'inicis' && is_inicis_order_pay($od['od_settle_case']))) {
-        $is_od_pg_cancel = true;
-    }
-
-    if ($od['od_pg'] === 'nicepay' && in_array($od['od_settle_case'], array('계좌이체', '휴대폰'))) {
+    if ($pay['py_settle_case'] == '신용카드' || strtoupper($pay['py_settle_case']) === 'CARD') {
         $is_od_pg_cancel = true;
     }
 

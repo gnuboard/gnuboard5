@@ -10,7 +10,7 @@ auth_check_menu($auth, $sub_menu, "w");
 $g5['title'] = "주문 내역 수정";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
-$id = isset($_REQUEST['id']) ? preg_replace('/[^a-z0-9_\-]/i', '', $_REQUEST['id']) : '';
+$pay_id = isset($_REQUEST['pay_id']) ? preg_replace('/[^a-z0-9_\-]/i', '', $_REQUEST['pay_id']) : '';
 $fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['fr_date']) : '';
 $to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['to_date']) : '';
 $pay_status = isset($_REQUEST['py_status']) ? clean_xss_tags($_REQUEST['py_status'], 1, 1) : '';
@@ -20,8 +20,10 @@ $pay_cancel_price = isset($_REQUEST['py_cancel_price']) ? clean_xss_tags($_REQUE
 $pay_refund_price = isset($_REQUEST['py_refund_price']) ? clean_xss_tags($_REQUEST['py_refund_price'], 1, 1) : '';
 $pay_receipt_point = isset($_REQUEST['py_receipt_point']) ? clean_xss_tags($_REQUEST['py_receipt_point'], 1, 1) : '';
 $pay_coupon = isset($_REQUEST['py_coupon']) ? clean_xss_tags($_REQUEST['py_coupon'], 1, 1) : '';
-$pay_id = isset($_REQUEST['py_id']) ? safe_replace_regex($_REQUEST['py_id'], 'py_id') : '';
 $pay_escrow = isset($_REQUEST['py_escrow']) ? clean_xss_tags($_REQUEST['py_escrow'], 1, 1) : ''; 
+
+// $pay_id = isset($_REQUEST['py_id']) ? safe_replace_regex($_REQUEST['py_id'], 'py_id') : '';
+
 
 $sort1 = isset($_REQUEST['sort1']) ? clean_xss_tags($_REQUEST['sort1'], 1, 1) : '';
 $sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : '';
@@ -31,8 +33,8 @@ $search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : 
 // 완료된 주문에 포인트를 적립한다.
 save_order_point("완료");
 
-if (! $id) {
-    alert("잘못된 요청입니다. id");
+if (! $pay_id) {
+    alert("잘못된 요청입니다. pay_id");
 }
 
 //------------------------------------------------------------------------------
@@ -43,10 +45,10 @@ $sql = " select * from {$g5['g5_subscription_pay_table']} where id = '$id' ";
 $pay = sql_fetch($sql);
 */
 
-$pay = sql_bind_select_fetch($g5['g5_subscription_pay_table'], '*', array('id'=>$id));
+$pay = sql_bind_select_fetch($g5['g5_subscription_pay_table'], '*', array('pay_id'=>$pay_id));
 
-if (!(isset($pay['id']) && $pay['id'])) {
-    alert("해당 주문번호로 주문서가 존재하지 않습니다.");
+if (!(isset($pay['pay_id']) && $pay['pay_id'])) {
+    alert("해당 정기결제 내역이 존재하지 않습니다.");
 }
 
 $pay['mb_id'] = $pay['mb_id'] ? $pay['mb_id'] : "비회원";
@@ -70,15 +72,9 @@ if($default['de_escrow_use'])
     $qstr1 .= "&amp;py_escrow=$pay_escrow";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
-/*
-$sql = "select * from {$g5['g5_subscription_pay_basket_table']} where pay_id = '{$pay['id']}' ";
-$pay_basket = sql_fetch($sql);
-*/
-
-$pay_basket = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], '*', array('pay_id'=>$pay['id']));
+$pay_basket = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], '*', array('pay_id'=>$pay['pay_id']));
 
 if (!(isset($pay_basket['pb_id']) && $pay_basket['pb_id'])) {
-    //$result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$pay['od_id']."' order by ct_id asc ");
     
     $result = sql_bind_select($g5['g5_subscription_cart_table'], '*', array('od_id'=>$pay['od_id']), array('orderBy'=>'ct_id', 'orderType'=>'asc'));
         
@@ -86,7 +82,7 @@ if (!(isset($pay_basket['pb_id']) && $pay_basket['pb_id'])) {
     for ($i = 0; $row = sql_fetch_array($result); ++$i) {
         $inserts = array(
             'od_id' => $row['od_id'],
-            'pay_id' => $pay['id'],
+            'pay_id' => $pay['pay_id'],
             'mb_id' => $row['mb_id'],
             'it_id' => $row['it_id'],
             'it_name' => $row['it_name'],
@@ -133,22 +129,8 @@ if (!(isset($pay_basket['pb_id']) && $pay_basket['pb_id'])) {
 }
 
 // 상품목록
-/*
-$sql = " select it_id,
-                it_name,
-                cp_price,
-                pb_notax,
-                pb_send_cost,
-                it_sc_type
-           from {$g5['g5_subscription_pay_basket_table']}
-          where pay_id = '{$pay['id']}'
-          group by it_id
-          order by pb_id ";
-$result = sql_query($sql);
-*/
-
 $select_field = 'it_id, it_name, cp_price, pb_notax, pb_send_cost, it_sc_type';
-$result = sql_bind_select($g5['g5_subscription_pay_basket_table'], $select_field, array('pay_id'=>$pay['id']), array('groupBy'=>'it_id', 'orderBy'=>'pb_id'));
+$result = sql_bind_select($g5['g5_subscription_pay_basket_table'], $select_field, array('pay_id'=>$pay['pay_id']), array('groupBy'=>'it_id', 'orderBy'=>'pb_id'));
 
 $print_py_deposit_name = $pay['py_deposit_name'];
 
@@ -174,8 +156,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <form name="frmorderform" method="post" action="./subscription_pay_cartupdate.php" onsubmit="return form_submit(this);">
+    <input type="hidden" name="pay_id" value="<?php echo get_text($pay['pay_id']); ?>">
     <input type="hidden" name="od_id" value="<?php echo get_text($pay['od_id']); ?>">
-    <input type="hidden" name="subscription_id" value="<?php echo get_text($pay['subscription_id']); ?>">
     <input type="hidden" name="mb_id" value="<?php echo get_text($pay['mb_id']); ?>">
     <input type="hidden" name="py_email" value="<?php echo get_text($pay['py_email']); ?>">
     <input type="hidden" name="sort1" value="<?php echo get_text($sort1); ?>">
@@ -215,32 +197,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             $image = get_it_image($row['it_id'], 50, 50);
 
             // 상품의 옵션정보
-            /*
-            $sql = " select pb_id, it_id, pb_price, pb_point, pb_qty, pb_option, pb_status, cp_price, pb_stock_use, pb_point_use, pb_send_cost, io_type, io_price
-                        from {$g5['g5_subscription_pay_basket_table']}
-                        where pay_id = '{$pay['id']}'
-                          and it_id = '{$row['it_id']}'
-                        order by io_type asc, pb_id asc ";
-            $res = sql_query($sql);
-            */
-            
             $select_field = 'pb_id, it_id, pb_price, pb_point, pb_qty, pb_option, pb_status, cp_price, pb_stock_use, pb_point_use, pb_send_cost, io_type, io_price';
-            $res = sql_bind_select($g5['g5_subscription_pay_basket_table'], $select_field, array('pay_id'=>$pay['id'], 'it_id'=>$row['it_id']), array('orderBy'=>'io_type asc, pb_id', 'orderType'=>'asc'));
+            $res = sql_bind_select($g5['g5_subscription_pay_basket_table'], $select_field, array('pay_id'=>$pay['pay_id'], 'it_id'=>$row['it_id']), array('orderBy'=>'io_type asc, pb_id', 'orderType'=>'asc'));
             
             $rowspan = sql_num_rows($res);
-
-            // 합계금액 계산
-            /*
-            $sql = " select SUM(IF(io_type = 1, (io_price * pb_qty), ((pb_price + io_price) * pb_qty))) as price,
-                            SUM(pb_qty) as qty
-                        from {$g5['g5_subscription_pay_basket_table']}
-                        where it_id = '{$row['it_id']}'
-                          and pay_id = '{$pay['id']}' ";
-            $sum = sql_fetch($sql);
-            */
             
             $select_field = 'SUM(IF(io_type = 1, (io_price * pb_qty), ((pb_price + io_price) * pb_qty))) as price, SUM(pb_qty) as qty';
-            $sum = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], $select_field, array('it_id'=>$row['it_id'], 'pay_id'=>$pay['id']));
+            $sum = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], $select_field, array('it_id'=>$row['it_id'], 'pay_id'=>$pay['pay_id']));
             
             // 배송비
             switch($row['pb_send_cost'])
@@ -386,7 +349,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <caption>주문결제 내역</caption>
         <thead>
         <tr>
-            <th scope="col">주문번호</th>
+            <th scope="col">결제PG번호</th>
             <th scope="col">결제방법</th>
             <th scope="col">주문총액</th>
             <th scope="col">배송비</th>
@@ -398,7 +361,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         </thead>
         <tbody>
         <tr>
-            <td><?php echo $pay['subscription_id']; ?></td>
+            <td><?php echo $pay['subscription_pg_id']; ?></td>
             <td class="td_paybybig"><?php echo $s_receipt_way; ?></td>
             <td class="td_numbig td_numsum"><?php echo display_price($amount['order']); ?></td>
             <td class="td_numbig"><?php echo display_price($pay['py_send_cost'] + $pay['py_send_cost2']); ?></td>
@@ -904,11 +867,8 @@ function form_submit(f)
         var $pb_chk = $("input[name^=pb_chk]");
         var chk_cnt = $pb_chk.length;
         var chked_cnt = $pb_chk.filter(":checked").length;
-        <?php if($pay['py_pg'] == 'KAKAOPAY') { ?>
-        var cancel_pg = "카카오페이";
-        <?php } else { ?>
+
         var cancel_pg = "PG사의 <?php echo $pay['py_settle_case']; ?>";
-        <?php } ?>
 
         if(chk_cnt == chked_cnt) {
             if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {

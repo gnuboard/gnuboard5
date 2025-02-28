@@ -3,11 +3,11 @@ $sub_menu = '600410';
 include_once('./_common.php');
 
 print_r2($_POST);
-exit;
+// exit;
 
 auth_check_menu($auth, $sub_menu, "w");
 
-check_admin_token();
+// check_admin_token();
 
 $pb_chk_count = isset($_POST['pb_chk']) ? count($_POST['pb_chk']) : 0;
 if(!$pb_chk_count)
@@ -49,7 +49,7 @@ for ($i=0; $i<$cnt; $i++)
     $pb = sql_fetch($sql);
     */
     
-    $pb = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], '*', array('od_id' => $od_id, 'pay_od' => $pay_id));
+    $pb = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], '*', array('od_id' => $od_id, 'pay_id' => $pay_id));
         
     if (!(isset($pb['pb_id']) && $pb['pb_id'])) {
         continue;
@@ -78,7 +78,7 @@ for ($i=0; $i<$cnt; $i++)
         }
 
         // 수량변경
-        $sql = " update {$g5['g5_shop_cart_table']}
+        $sql = " update {$g5['g5_subscription_pay_basket_table']}
                     set pb_qty = '$pb_qty'
                     where pb_id = '$pb_id'
                       and od_id = '$od_id' ";
@@ -154,7 +154,7 @@ for ($i=0; $i<$cnt; $i++)
     $now = G5_TIME_YMDHIS;
     $pb_history="\n$pb_status|{$member['mb_id']}|$now|$REMOTE_ADDR";
 
-    $sql = " update {$g5['g5_shop_cart_table']}
+    $sql = " update {$g5['g5_subscription_pay_basket_table']}
                 set pb_point_use  = '$point_use',
                     pb_stock_use  = '$stock_use',
                     pb_status     = '$pb_status',
@@ -173,7 +173,7 @@ if(is_array($arr_it_id) && !empty($arr_it_id)) {
     $unq_it_id = array_unique($arr_it_id);
 
     foreach($unq_it_id as $it_id) {
-        $sql2 = " select sum(pb_qty) as sum_qty from {$g5['g5_shop_cart_table']} where it_id = '$it_id' and pb_status = '완료' ";
+        $sql2 = " select sum(pb_qty) as sum_qty from {$g5['g5_subscription_pay_basket_table']} where it_id = '$it_id' and pb_status = '완료' ";
         $row2 = sql_fetch($sql2);
 
         $sql3 = " update {$g5['g5_shop_item_table']} set it_sum_qty = '{$row2['sum_qty']}' where it_id = '$it_id' ";
@@ -186,10 +186,13 @@ $cancel_change = false;
 if (in_array($_POST['pb_status'], $status_cancel)) {
     $sql = " select count(*) as od_count1,
                     SUM(IF(pb_status = '취소' OR pb_status = '반품' OR pb_status = '품절', 1, 0)) as od_count2
-                from {$g5['g5_shop_cart_table']}
-                where od_id = '$od_id' ";
+                from {$g5['g5_subscription_pay_basket_table']}
+                where od_id = '$od_id' and pay_id = '$pay_id'";
+                
     $row = sql_fetch($sql);
-
+    
+    print_r2( $row );
+    
     if($row['od_count1'] == $row['od_count2']) {
         $cancel_change = true;
 
@@ -199,15 +202,18 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
 
         // PG 신용카드 결제 취소일 때
         if($pg_cancel == 1) {
-            $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
-            $od = sql_fetch($sql);
-
-            if ($od['od_tno'] && is_cancel_shop_pg_order($od)) {
-                switch($od['od_pg']) {
-                    case 'lg':
-                        include_once(G5_SHOP_PATH.'/settle_lg.inc.php');
-
-                        $LGD_TID = $od['od_tno'];
+            
+            $pay = get_subscription_pays($pay_id, $od_id);
+            
+            print_r( $pay );
+            
+            if ($pay['py_tno'] && is_cancel_subscription_pg_order($pay)) {
+                switch($pay['py_pg']) {
+                    case 'tosspayments':
+                        include_once(G5_SUBSCRIPTION_PATH.'/settle_tosspayments.inc.php');
+                        
+                        /*
+                        $LGD_TID = $pay['py_tno'];
 
                         $xpay = new XPay($configPath, $CST_PLATFORM);
 
@@ -230,14 +236,16 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
                             $pg_res_cd = $xpay->Response_Code();
                             $pg_res_msg = $xpay->Response_Msg();
                         }
+                        */
+                        
                         break;
                     case 'inicis':
-                        include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+                        include_once(G5_SUBSCRIPTION_PATH.'/settle_inicis.inc.php');
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
                         
                         $args = array(
-                            'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
-                            'tid' => $od['od_tno'],
+                            'paymethod' => get_type_inicis_paymethod($pay['od_settle_case']),
+                            'tid' => $pay['od_tno'],
                             'msg' => $cancel_msg
                         );
 
@@ -256,19 +264,20 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
 
                         break;
                     case 'nicepay':
-                        include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
+                        include_once(G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php');
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
                         
-                        $tno = $od['od_tno'];
+                        $tno = $pay['py_tno'];
                         
-                        $cancelAmt = $od['od_receipt_price'];
+                        $cancelAmt = (int) $pay['py_receipt_price'];
 
                         // 0:전체 취소, 1:부분 취소(별도 계약 필요)
                         $partialCancelCode = 0;
 
-
-                        include G5_SHOP_PATH.'/nicepay/cancel_process.php';
-
+                        include G5_SUBSCRIPTION_PATH.'/nicepay/nicepay_cancel_process.php';
+                        
+                        print_r2( $result );
+                        
                         if (isset($result['ResultCode'])) {
                             // 실패했다면
                             if ($result['ResultCode'] !== '2001') {
@@ -281,17 +290,11 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
                         }
 
                         break;
-                    case 'KAKAOPAY':
-                        include_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
-                        $_REQUEST['TID']               = $od['od_tno'];
-                        $_REQUEST['Amt']               = $od['od_receipt_price'];
-                        $_REQUEST['CancelMsg']         = '쇼핑몰 운영자 승인 취소';
-                        $_REQUEST['PartialCancelCode'] = 0;
-                        include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
-                        break;
+                        
+                    case 'kcp':
                     default:
-                        include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
-                        require_once(G5_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
+                        include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+                        require_once(G5_SUBSCRIPTION_PATH.'/kcp/pp_ax_hub_lib.php');
 
                         // locale ko_KR.euc-kr 로 설정
                         setlocale(LC_CTYPE, 'ko_KR.euc-kr');
@@ -300,8 +303,8 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
 
                         $c_PayPlus->mf_clear();
                         
-                        $ordr_idxx = $od['od_id'];
-                        $tno = $od['od_tno'];
+                        $ordr_idxx = $pay['subscription_pg_id'];
+                        $tno = $pay['py_tno'];
                         $tran_cd = '00200000';
                         $cancel_msg = iconv_euckr('쇼핑몰 운영자 승인 취소');
                         $cust_ip = $_SERVER['REMOTE_ADDR'];
@@ -333,10 +336,10 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
 
                 // PG 취소요청 성공했으면
                 if($pg_res_cd == '') {
-                    $pg_cancel_log = ' PG '.$od['od_settle_case'].' 승인취소 처리';
-                    $sql = " update {$g5['g5_shop_order_table']}
-                                set od_refund_price = '{$od['od_receipt_price']}'
-                                where od_id = '$od_id' ";
+                    $pg_cancel_log = ' PG '.$pay['py_settle_case'].' 승인취소 처리';
+                    $sql = " update {$g5['g5_subscription_pay_table']}
+                                set od_refund_price = '{$pay['py_receipt_price']}'
+                                where pay_id = '$pay_id' ";
                     sql_query($sql);
                 }
             }
@@ -348,12 +351,12 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
 }
 
 // 미수금 등의 정보
-$info = get_order_info($od_id);
+$info = get_subscription_pay_info($pay_id, $od_id);
 
 if(!$info)
     alert('주문자료가 존재하지 않습니다.');
 
-$sql = " update {$g5['g5_shop_order_table']}
+$sql = " update {$g5['g5_subscription_pay_table']}
             set od_cart_price   = '{$info['od_cart_price']}',
                 od_cart_coupon  = '{$info['od_cart_coupon']}',
                 od_coupon       = '{$info['od_coupon']}',
@@ -383,12 +386,14 @@ $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$sear
 
 $url = "./orderform.php?od_id=$od_id&amp;$qstr";
 
+exit;
+
 // 신용카드 취소 때 오류가 있으면 알림
 if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
     alert('오류코드 : '.$pg_res_cd.' 오류내용 : '.$pg_res_msg, $url);
 } else {
     // 1.06.06
-    $od = sql_fetch(" select od_receipt_point from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
+    $od = sql_fetch(" select od_receipt_point from {$g5['g5_subscription_pay_table']} where pay_id = '$pay_id' and od_id = '$od_id' ");
     if ($od['od_receipt_point'])
         alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.", $url);
     else
