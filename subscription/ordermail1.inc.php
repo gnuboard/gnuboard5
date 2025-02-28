@@ -18,7 +18,7 @@ $sql = " select a.it_id,
                 a.ct_point,
                 b.it_sell_email,
                 b.it_origin
-           from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
+           from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
           where a.od_id = '$od_id'
             and a.ct_select = '1'
           group by a.it_id

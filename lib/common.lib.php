@@ -1735,7 +1735,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
     if(!$link)
         $link = $g5['connect_db'];
-    
+
     if (is_object($sql)) {
         
         if (method_exists($sql, 'execute')) {
@@ -2015,19 +2015,34 @@ function sql_insert_id($link=null)
     if(!$link)
         $link = $g5['connect_db'];
 
-    if(function_exists('mysqli_insert_id') && G5_MYSQLI_USE)
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO) {
+        // PDO: 마지막 삽입 ID 반환
+        return $link->lastInsertId();
+    } elseif (function_exists('mysqli_insert_id') && G5_MYSQLI_USE) {
+        // MySQLi
         return mysqli_insert_id($link);
-    else
+    } else {
+        // MySQL
         return mysql_insert_id($link);
+    }
 }
 
 
 function sql_num_rows($result)
 {
-    if(function_exists('mysqli_num_rows') && G5_MYSQLI_USE)
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO) {
+        if ($result instanceof PDOStatement) {
+            $rows = $result->fetchAll();
+            $count = count($rows);
+            $result->execute(); // 결과 포인터 재설정
+            return $count;
+        }
+        return 0;
+    } elseif (function_exists('mysqli_num_rows') && G5_MYSQLI_USE) {
         return mysqli_num_rows($result);
-    else
+    } else {
         return mysql_num_rows($result);
+    }
 }
 
 

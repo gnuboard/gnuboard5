@@ -245,6 +245,10 @@ class G5MySQLQuery
             }
 
             return $this->preparedQuery;
+            
+            // LOCK TABLES는 결과를 반환하지 않으므로 true 반환
+            // return true; // PDOStatement 대신 true로 통일
+        
         } else {
             // MySQLi 모드
             if ($this->preparedQuery === false || !($this->preparedQuery instanceof mysqli_stmt)) {
@@ -429,6 +433,9 @@ class G5MySQLQuery
 
 class G5MysqlCRUD
 {
+    
+    private static $allowedOperators = array('=', '>', '<', '>=', '<=', '!=', 'LIKE', 'IN');
+    
     /**
      * Read / Get a data from a table
      * 
@@ -446,8 +453,22 @@ class G5MysqlCRUD
         global $g5;
         if ($link === null) $link = get_pdo_connection();
 
+        // 테이블 이름 검증 (간단한 정규식)
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
+            throw new Exception("Invalid table name: $table");
+        }
+        
+        // $columnString = empty($columns) ? "*" : implode(",", $columns);
+        
+        // 컬럼 검증
+        $columnString = empty($columns) ? "*" : implode(",", array_map(function($col) {
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+                throw new Exception("Invalid column name: $col");
+            }
+            return $col;
+        }, (array)$columns));
+        
         $conditionString = self::buildConditionString($condition);
-        $columnString = empty($columns) ? "*" : implode(",", $columns);
 
         $query = self::buildSelectQuery($table, $columnString, $conditionString, $readSettings);
         $queryObj = new G5MySQLQuery($query, $link);
@@ -482,6 +503,17 @@ class G5MysqlCRUD
         global $g5;
         if ($link === null) $link = get_pdo_connection();
 
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
+            throw new Exception("Invalid table name: $table");
+        }
+        
+        $columns = array_map(function($col) {
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+                throw new Exception("Invalid column name: $col");
+            }
+            return $col;
+        }, (array)$columns);
+        
         list($valuePlaceholders, $bindValues) = self::prepareInsertValues($values);
         $columnString = implode(",", $columns);
         $valueString = implode(",", $valuePlaceholders);
@@ -504,8 +536,21 @@ class G5MysqlCRUD
         global $g5;
         if ($link === null) $link = get_pdo_connection();
 
+        // 테이블 이름 검증
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
+            throw new Exception("Invalid table name: $table");
+        }
+        
+        // 컬럼 검증 (업데이트할 컬럼)
+        $validatedColumns = array_map(function($col) {
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+                throw new Exception("Invalid column name: $col");
+            }
+            return "$col = ?";
+        }, (array)$columns);
+        $columnString = implode(",", $validatedColumns);
+    
         $conditionString = self::buildConditionString($condition);
-        $columnString = implode(",", $columns);
 
         $query = "UPDATE {$table} SET {$columnString} " . ($conditionString ? "WHERE {$conditionString}" : "");
         $queryObj = new G5MySQLQuery($query, $link);
@@ -525,6 +570,11 @@ class G5MysqlCRUD
         global $g5;
         if ($connection === null) $connection = get_pdo_connection();
 
+        // 테이블 이름 검증
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $table)) {
+            throw new Exception("Invalid table name: $table");
+        }
+    
         $conditionString = self::buildConditionString($condition);
         $query = "DELETE FROM {$table} " . ($conditionString ? "WHERE {$conditionString}" : "");
         $queryObj = new G5MySQLQuery($query, $connection);
@@ -535,11 +585,34 @@ class G5MysqlCRUD
         return sql_query($queryObj);
     }
     
+    /*
     private static function buildConditionString($condition)
     {
         if ($condition) {
             foreach ($condition as $index => $cond) {
                 $condition[$index] = "({$cond})";
+            }
+            return implode(" AND ", $condition);
+        }
+        return '';
+    }
+    */
+    
+    private static function buildConditionString($condition)
+    {
+        if ($condition) {
+            foreach ($condition as $index => $cond) {
+                // 연산자와 컬럼 검증
+                if (preg_match('/^([a-zA-Z0-9_]+)\s*([=><!]+|LIKE|IN)\s*\?$/i', $cond, $matches)) {
+                    $column = $matches[1];
+                    $operator = strtoupper($matches[2]);
+                    if (!in_array($operator, self::$allowedOperators)) {
+                        throw new Exception("Invalid column or operator in condition: $cond");
+                    }
+                } else {
+                    throw new Exception("Invalid condition format: $cond");
+                }
+                $condition[$index] = "($cond)";
             }
             return implode(" AND ", $condition);
         }
@@ -597,6 +670,17 @@ class G5MysqlCRUD
             }
         }
         return !empty($updatePlaceholder) ? " ON DUPLICATE KEY UPDATE " . implode(", ", $updatePlaceholder) : "";
+    }
+    
+    public static function updateWithTemplate($query, $values, $link = null)
+    {
+        if ($link === null) $link = get_pdo_connection();
+        
+        $queryObj = new G5MySQLQuery($query, $link);
+        if (!empty($values)) {
+            call_user_func_array(array($queryObj, 'bind'), $values);
+        }
+        return sql_query($queryObj);
     }
 }
 

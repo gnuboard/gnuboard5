@@ -906,8 +906,6 @@ if ($is_member) {
     sql_query($sql);
 }
 
-exit;
-
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>
 <html>

@@ -243,8 +243,6 @@ function subscription_order_pay_price($od_id) {
     
     $pay_infos = get_subscription_cart_data($od_id);
     
-    print_r( $pay_infos );
-    
     $total_price = (int)$pay_infos['tot_sell_price'] + (int)$pay_infos['send_cost'];
     
     return $total_price;
@@ -1856,7 +1854,8 @@ function nicepay_billing($od, $tmp_cart_id='') {
     // 나이스페이 옛결제모듈의 경우 tid와 moid 는 카드등록을 한 tno와 od_id로 보내야 한다.
     $before_nice_pay = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('ci_id'=>$od['ci_id'], 'mb_id'=>$od['mb_id'], 'pg_service' => $od['od_pg'], 'od_tno' => array('!=' => '')),
         array('orderBy' => 'ci_id', 'limit' => 1, 'orderType' => 'desc'));
-    $tid = $before_nice_pay['od_tno'].'12';      // 일부러 실패하려고 한다면
+    
+    // $tid = $before_nice_pay['od_tno'].'12';      // 일부러 실패하려고 한다면
     
     $tid = generate_subscription_id($before_nice_pay['od_tno']);
     
@@ -1904,8 +1903,6 @@ function nicepay_billing($od, $tmp_cart_id='') {
         'CardQuota' => $cardQuota,
         'CharSet' => 'utf-8'
     );
-    
-    print_r( $data );
     
     $response = nicepay_reqPost($data, $postURL); 				//API 호출, 결과 데이터가 $response 변수에 저장됩니다.
 
@@ -2248,7 +2245,10 @@ function mask_card_number($string) {
 function get_subscription_uniqid($is_pay=0, $uniqid_key='', $length=0) {
     global $g5;
 
-    sql_query(" LOCK TABLE {$g5['g5_subscription_uniqid_table']} WRITE ");
+    // sql_query(" LOCK TABLE {$g5['g5_subscription_uniqid_table']} WRITE ");
+    
+    sql_bind_lock($g5['g5_subscription_uniqid_table']);
+    
     $i = 0;
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
@@ -2274,7 +2274,10 @@ function get_subscription_uniqid($is_pay=0, $uniqid_key='', $length=0) {
         usleep(10000); // 100분의 1초를 쉰다
         $i++;
     }
-    sql_query(" UNLOCK TABLES ");
+    
+    sql_bind_unlock();
+    
+    // sql_query(" UNLOCK TABLES ");
 
     return $key;
 }
