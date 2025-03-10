@@ -1,0 +1,96 @@
+/* 전체 컨테이너 스타일 */
+.order-historys {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: block;
+}
+
+/* 개별 히스토리 아이템 (메모지 스타일) */
+.history-item {
+    background: #fff8e1; /* 연한 노란색 (포스트잇 느낌) */
+    border: 1px solid #ffe082;
+    border-radius: 5px;
+    min-height: 100px; /* 최소 높이 */
+    padding: 15px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1); /* 살짝 기울어진 그림자 */
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 0 auto 20px; /* 중앙 정렬 및 하단 여백 */
+}
+
+/* 호버 효과 */
+.history-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 히스토리 내용 */
+.history-content {
+    color: #4a4a4a; /* 짙은 회색 */
+    margin-bottom: 20px;
+}
+
+/* 링크 스타일 */
+.history-content a {
+    color: #d81b60; /* 포인트 컬러 (핑크) */
+    text-decoration: underline;
+}
+
+/* 버튼과 날짜 컨테이너 */
+.history-btns {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    font-size: 11px;
+    color: #666;
+}
+
+/* 날짜 스타일 */
+.history-date {
+    opacity: 0.8;
+}
+
+/* 삭제 버튼 스타일 */
+.order-historys .delete-history {
+	margin-left:2em;
+    background: #ef5350; /* 부드러운 빨간색 */
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 11px;
+    transition: background 0.2s;
+}
+
+.delete-history:hover {
+    background: #d32f2f; /* 더 진한 빨간색 */
+}
+
+.history-item.user {
+    background: #f1f8e9; /* 연한 초록 */
+    border-color: #dcedc8;
+}
+.history-item.admin {
+    background: #fff8e1; /* 연한 노랑 */
+    border-color: #ffe082;
+}
+.history-item.notice {
+    background: #fce4ec; /* 연한 핑크 */
+    border-color: #f8bbd0;
+}
+
+.history-item:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    background: #ef5350;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

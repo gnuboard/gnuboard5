@@ -557,10 +557,8 @@ if ($is_first_pay) {
         
         add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
             'hs_type' => 'subscription_order',
-            'hs_category' => 'admin',
             'od_id' => $od_id,
-            'mb_id' => $member['mb_id'],
-            'hs_date' => G5_TIME_YMDHIS
+            'mb_id' => $member['mb_id']
         ));
             
         $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
@@ -587,10 +585,8 @@ if ($is_first_pay) {
             
             add_subscription_order_history('정기구독 1회차 결제에 성공했으나, 데이터베이스 기록이 실패했습니다.', array(
                 'hs_type' => 'subscription_pay',
-                'hs_category' => 'admin',
                 'od_id' => $od_id,
-                'mb_id' => $member['mb_id'],
-                'hs_date' => G5_TIME_YMDHIS
+                'mb_id' => $member['mb_id']
             ));
             
         }
@@ -602,10 +598,8 @@ if ($is_first_pay) {
         
         add_subscription_order_history('정기구독 1회차 결제에 실패했습니다.', array(
                 'hs_type' => 'subscription_pay',
-                'hs_category' => 'admin',
                 'od_id' => $od_id,
-                'mb_id' => $member['mb_id'],
-                'hs_date' => G5_TIME_YMDHIS
+                'mb_id' => $member['mb_id']
             ));
         
         print_r($pays);
@@ -905,6 +899,8 @@ if ($is_member) {
 
     sql_query($sql);
 }
+
+exit;
 
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>

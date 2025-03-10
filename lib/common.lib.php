@@ -1865,9 +1865,18 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
         $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
         $found = false;
-
+        
+        $sql_bind_functions = array('sql_bind_select', 'sql_bind_select_fetch', 'sql_bind_select_join', 'sql_bind_select_array', 'sql_bind_insert', 'sql_bind_update', 'sql_bind_delete', 'sql_bind_lock', 'sql_bind_unlock');
+        
         foreach ($stack as $index => $trace) {
-            if ($trace['function'] === 'sql_query') {
+            
+            if (strpos($trace['file'], 'class.db.extend.php') !== false) {
+                continue;
+            }
+            
+            if (in_array($trace['function'], $sql_bind_functions)) {
+                $found = true;
+            } elseif ($trace['function'] === 'sql_query') {
                 $found = true;
             }
             if (isset($stack[$index + 1]) && $stack[$index + 1]['function'] === 'sql_fetch') {
@@ -2015,7 +2024,7 @@ function sql_insert_id($link=null)
     if(!$link)
         $link = $g5['connect_db'];
 
-    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO) {
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO && $link instanceof PDO) {
         // PDO: 마지막 삽입 ID 반환
         return $link->lastInsertId();
     } elseif (function_exists('mysqli_insert_id') && G5_MYSQLI_USE) {
@@ -2030,14 +2039,13 @@ function sql_insert_id($link=null)
 
 function sql_num_rows($result)
 {
-    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO) {
-        if ($result instanceof PDOStatement) {
-            $rows = $result->fetchAll();
-            $count = count($rows);
-            $result->execute(); // 결과 포인터 재설정
-            return $count;
-        }
-        return 0;
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO && $result instanceof PDOStatement) {
+
+        $rows = $result->fetchAll();
+        $count = count($rows);
+        $result->execute(); // 결과 포인터 재설정
+        return $count;
+
     } elseif (function_exists('mysqli_num_rows') && G5_MYSQLI_USE) {
         return mysqli_num_rows($result);
     } else {

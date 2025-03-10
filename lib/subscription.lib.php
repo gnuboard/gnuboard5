@@ -1228,6 +1228,12 @@ function get_next_delivery_date($od){
     return calculateNextDeliveryDate($od);
 }
 
+// 결제일을 구하는 함수
+function getNextPaymentDate($baseDate, $daysToSubtract = 0) {
+    $calculatedDate = strtotime("$baseDate -$daysToSubtract days");
+    return run_replace('getNextPaymentDate', date('Y-m-d', $calculatedDate).' 09:00:01', $calculatedDate, $baseDate, $daysToSubtract);
+}
+
 function getBusinessDaysBefore($date, $businessDays = 0, $holidays=array()) {
     // $date: 기준 날짜 (YYYY-MM-DD 형식의 문자열)
     // $businessDays: 몇 영업일 전으로 이동할 것인지
@@ -1437,9 +1443,11 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
     
     // 희망배송일이 있으면
     if ($od_hope_date) {
-        $nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
+        // $nextdate = getBusinessDaysBefore($od_hope_date, $config_before_pay_date);
         
-        return $nextdate.' 09:00:01';
+        $nextdate = getNextPaymentDate($od_hope_date, $config_before_pay_date);
+        
+        return $nextdate;
     }
     
     $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
@@ -2445,31 +2453,27 @@ function get_subscription_user_carts($s_cart_id) {
 function add_subscription_order_history($content, $arg=array()){
     global $g5;
     
+    // hs_category 카테고리의 경우 admin 은 관리자
+    
     $inserts = array(
         'hs_parent' => isset($arg['hs_parent']) ? (int) $arg['hs_parent'] : 0,
-        'hs_type' => isset($arg['type']) ? $arg['type'] : '',
-        'hs_category' => isset($arg['hs_category']) ? $arg['hs_category'] : '',
+        'hs_type' => isset($arg['type']) ? $arg['type'] : 'subscription_order',
+        'hs_category' => isset($arg['hs_category']) ? $arg['hs_category'] : 'admin',
         'od_id' => isset($arg['od_id']) ? $arg['od_id'] : '',
         'mb_id' => isset($arg['mb_id']) ? $arg['mb_id'] : '',
         'hs_content' => $content,
-        'hs_time' => G5_TIME_YMDHIS,
+        'hs_time' => (isset($arg['hs_time']) && strtotime($arg['hs_time']) !== false) ? $arg['hs_time'] : G5_TIME_YMDHIS,
         );
-    
-    /*
-    // https://stackoverflow.com/questions/10054633/insert-array-into-mysql-database-with-php
-    $columns = implode(', ', array_keys($inserts));
-    $values = implode("', '", array_values($inserts));
-
-    // 주문서에 입력
-    $sql = "INSERT INTO `{$g5['g5_subscription_order_history_table']}`($columns) VALUES ('$values')";
-    
-    $result = sql_query($sql, false);
-    
-    */
     
     $result = sql_bind_insert($g5['g5_subscription_order_history_table'], $inserts);
     
     return sql_insert_id();
+}
+
+function delete_subscription_order_history($hs_id) {
+    global $g5;
+    
+    sql_bind_delete($g5['g5_subscription_order_history_table'], array('hs_id'=>$hs_id));
 }
 
 function get_subscription_pay_full_goods($pay_id, $is_cache=false) {

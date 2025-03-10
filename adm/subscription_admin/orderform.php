@@ -50,6 +50,7 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 <li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
 <li><a href="#anc_sodr_memo">상점메모</a></li>
+<li><a href="#anc_sodr_history">정기구독 히스토리</a></li>
 <li><a href="#anc_sodr_orderer">주문하신 분</a></li>
 <li><a href="#anc_sodr_taker">받으시는 분</a></li>
 </ul>';
@@ -915,7 +916,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </form>
 </section>
 
-<section id="anc_sodr_memo" class="subscription_history">
+<section id="anc_sodr_history" class="subscription_history">
     <h2 class="h2_frm">정기구독 히스토리</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
@@ -924,41 +925,33 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         </p>
     </div>
     
+    <ul class="order-historys">
     <?php
-    $sql = "select * from `{$g5['g5_subscription_order_history_table']}` where hs_type = 'subscription_order' and od_id = '$od_id' order by hs_id desc ";
-    $result = sql_query($sql);
-    
-    $hs = array();
-    
-    for ($i=0; $row=sql_fetch_array($result); $i++){
-        $hs[] = $row;
-    }
-    ?>
-    
-    <?php if ($hs) { ?>
-        <ul class="order-historys">
-            <?php foreach($hs as $h) { ?>
-            <li rel="<?php echo $h['hs_id']; ?>" class="history">
-                <div class="history-content">
-                    <p><?php echo conv_content($h['hs_content'], 1); ?></p>
-                </div>
-            </li>
+    $hss = sql_bind_select_array($g5['g5_subscription_order_history_table'], '*', array('hs_type'=>'subscription_order', 'od_id'=>$od_id), array('orderby'=>'hs_id', 'ordertype'=>'desc'));
+
+    if ($hss) {
+        foreach($hss as $h) { ?>
+        <li rel="<?php echo $h['hs_id']; ?>" class="history-item <?php echo $h['hs_category']; ?>">
+            <div class="history-content">
+                <?php echo conv_content($h['hs_content'], 0); ?>
+            </div>
             <p class="history-btns">
                 <span class="history-date"><?php echo $h['hs_time']; ?></span>
-                <a href="#" class="delete-history" role="button">삭제하기</a>
+                <a href="#" class="delete-history" data-id="<?php echo $h['hs_id']; ?>" role="button">삭제하기</a>
             </p>
-            <?php } ?>
-        </ul>
-    <?php } ?>
-        
-    <form name="frmorderform2" action="./order_history_update.php" method="post">
+        </li>
+        <?php }
+    } ?>
+    </ul>
+    
+    <form name="frmorder_historyform" action="./order_history_update.php" method="post">
     <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
     <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
     <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
     <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="mod_type" value="memo">
+    <input type="hidden" name="mod_type" value="add">
 
     <div class="tbl_wrap">
         <label for="od_subscription_memo" class="sound_only">히스토리 추가하기</label>
@@ -970,6 +963,145 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     </form>
+    
+<script>
+// 공백을 유지하기 위해 이스케이프 함수
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/\n/g, "<br>"); // 줄바꿈을 <br>로 변환
+}
+
+jQuery(function(e){
+    $(document).on("click", ".delete-history", function(e) {
+        e.preventDefault();
+        
+        if (!confirm("정말 삭제하시겠습니까?")) {
+            return false;
+        }
+        
+        var $this = $(this);
+        var id = $this.data('id');
+        var token = get_ajax_token();
+
+        if(!token) {
+            alert("토큰 정보가 올바르지 않습니다.");
+            return false;
+        }
+        
+        $.ajax({
+            url: "./order_history_update.php",
+            type: "POST",
+            data: {
+                mod_type : 'del',
+                is_ajax: 1,
+                token: token,
+                hs_id: id
+            },
+            timeout: 10000, // 10초 타임아웃 설정 (필요에 따라 조정)
+            beforeSend: function() {
+                $this.prop('disabled', true); // 버튼 비활성화
+            },
+            success: function(response) {
+                // 서버에서 응답을 정상적으로 받은 경우
+                try {
+                    if (response.success) {
+                        $this.closest('.history-item').fadeOut(400, function() {
+                            $(this).remove(); // 애니메이션이 끝난 후 제거
+                        });
+                    } else {
+                        alert('삭제 실패: ' + (response.message || '알 수 없는 오류'));
+                    }
+                } catch (e) {
+                    alert('응답 처리 중 오류: ' + e.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('오류 발생: ' + error);
+            },
+            complete: function() {
+                $this.prop('disabled', false); // 버튼 활성화
+            }
+        });
+    });
+    
+    var $btn_submit = $('form[name="frmorder_historyform"]').find(".btn_submit"),
+        $btn_text = $btn_submit.val();
+            
+    // 폼 제출 이벤트 처리
+    $('form[name="frmorder_historyform"]').on('submit', function(e) {
+        e.preventDefault(); // 기본 폼 제출 방지
+
+        var historyText = $('#od_subscription_history').val().trim();
+        if (!historyText) {
+            alert('내용을 입력해주세요.');
+            return;
+        }
+        
+        // 폼 데이터 수집
+        var formData = $(this).serialize() + '&is_ajax=1'; // 모든 입력 필드 데이터를 직렬화
+        
+        // AJAX 요청
+        $.ajax({
+            url: $(this).attr('action'), // action 속성에서 URL 가져오기: ./order_history_update.php
+            type: 'POST',
+            data: formData, // 폼 데이터 전송
+            dataType: 'json', // 서버에서 JSON 응답을 기대
+            beforeSend: function() {
+                // 제출 버튼 비활성화 및 상태 표시
+                $btn_submit.prop('disabled', true).val('처리 중...');
+            },
+            success: function(response) {
+                // 응답 처리
+                if (response.success) {
+                    
+                    // 새 히스토리 항목 생성
+                    var newHistory = `
+                        <li rel="${response.hs_id}" class="history-item">
+                            <div class="history-content">
+                                ${escapeHtml(historyText)}
+                            </div>
+                            <p class="history-btns">
+                                <span class="history-date">${response.hs_date}</span>
+                                <a href="#" class="delete-history" data-id="${response.hs_id}" role="button">삭제하기</a>
+                            </p>
+                        </li>
+                    `;
+
+                    // 목록에 추가 (맨 위에 추가)
+                    var $newItem = $(newHistory).hide();
+                    $('.order-historys').prepend($newItem);
+                    $newItem.fadeIn(400, function() { // 페이드인 후 스크롤
+                        $('html, body').animate({
+                            scrollTop: $newItem.offset().top - 150
+                        }, 300);
+                    });
+                    
+                    $('#od_subscription_history').val('');
+                } else {
+                    alert(response.message || '히스토리 추가에 실패했습니다.');
+                }
+            },
+            error: function(xhr, status, error) {
+                // 에러 처리
+                let errorMessage = status === 'timeout' ? '서버 응답 시간이 초과되었습니다.' :
+                                 status === 'parsererror' ? '서버 응답 형식이 잘못되었습니다.' :
+                                 '오류 발생: ' + (error || '알 수 없는 오류');
+                alert(errorMessage);
+            },
+            complete: function() {
+                // 요청 완료 후 버튼 복구
+                $btn_submit.prop('disabled', false).val($btn_text);
+            },
+            timeout: 10000 // 10초 타임아웃
+        });
+    });
+});
+</script>
 </section>
 
 <section>

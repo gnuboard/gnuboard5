@@ -739,11 +739,13 @@ jQuery(function($) {
                         
                         data.cart_infos.it_options[i].forEach(function(opt) {
                             
-                            productPrice += opt.opt_price;
+                            productPrice += parseInt(opt.opt_price);
                             
                             optionsHtml += '<div>' + opt.ct_option + ' (수량: ' + opt.ct_qty + ', 가격: ' + opt.opt_price + '원' + (opt.point ? ', 포인트: ' + opt.point : '') + ')</div>';
                         });
-
+                        
+                        productPrice = productPrice ? number_format(productPrice) : 0;
+                        
                         cartHTML += `
                             <div class="product-item">
                                 <div class="product-img">${img}</div>

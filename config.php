@@ -236,7 +236,7 @@ define('G5_VISIT_BROWSCAP_USE', false);
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
 // PDO 여부
-define('G5_USE_DB_PDO', 1);
+define('G5_USE_DB_PDO', 0);
 
 // KAKAO 우편번호 서비스 CDN
 define('G5_POSTCODE_JS', '<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');

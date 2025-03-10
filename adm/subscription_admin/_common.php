@@ -25,3 +25,5 @@ if (isset($token)) {
 
 include_once(G5_ADMIN_PATH.'/admin.lib.php');
 include_once('admin.subscription.lib.php');
+
+add_stylesheet('<link rel="stylesheet" href="' . G5_ADMIN_URL . '/css/subscription.css">', 10);

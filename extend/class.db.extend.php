@@ -37,6 +37,7 @@ function get_pdo_connection() {
         $g5['connect_pdo_db'] = new PDO($dsn, G5_MYSQL_USER, G5_MYSQL_PASSWORD);
         $g5['connect_pdo_db']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $g5['connect_pdo_db']->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $g5['connect_pdo_db']->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); // 이스케이프 방지
         
         // echo "Database connection established successfully.";
         
@@ -44,6 +45,13 @@ function get_pdo_connection() {
         // 연결 실패 시 에러 처리
         die("PDO Connection failed: " . $e->getMessage());
     }
+}
+
+function get_pdo_insert_id($link=null) {
+    
+    if ($link === null) $link = get_pdo_connection();
+    return sql_insert_id($link);
+    
 }
 
 class MySQLQueryFailToExecuteException extends Exception
@@ -78,6 +86,8 @@ class G5MySQLQuery
     private $errorCode = '';
     private $sqlState = '';
     
+    private $isPostPage = 0;
+    
     /**
      * Construct a new query
      * 
@@ -87,7 +97,7 @@ class G5MySQLQuery
      * 
      * @throws MySQLNoConnectionException If no connection is supplied
      */
-    public function __construct($query, $connection = null)
+    public function __construct($query, $connection = null, $not_prepared = null)
     {
         global $g5;
         
@@ -103,7 +113,13 @@ class G5MySQLQuery
             throw new MySQLNoConnectionException("Error: no MySQL connection is supplied");
         }
         
+        $this->isPostPage = ($_SERVER['REQUEST_METHOD'] === 'POST') ? 1 : 0;
+            
         $this->queryString = $query; // 쿼리문 저장
+        
+        if ($not_prepared) {
+            return;
+        }
         
         if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO) {
             // PDO 모드
@@ -113,11 +129,18 @@ class G5MySQLQuery
                 $this->errorMessage = $errorInfo[2];
                 $this->errorCode = $errorInfo[1];
                 $this->sqlState = $errorInfo[0];
-                throw new Exception($this->errorMessage);
+                throw new Exception("PDO prepare failed: " . $this->errorMessage . " - Query: $query");
             }
         } else {
             // MySQLi 모드
+            // $this->preparedQuery = mysqli_prepare($this->connection, $query);
+            if (!($this->connection instanceof mysqli)) {
+                throw new Exception("Invalid MySQLi connection: " . var_export($this->connection, true));
+            }
             $this->preparedQuery = mysqli_prepare($this->connection, $query);
+            if ($this->preparedQuery === false) {
+                throw new Exception("MySQLi prepare failed: " . mysqli_error($this->connection) . " - Query: $query");
+            }
         }
     }
 
@@ -132,6 +155,10 @@ class G5MySQLQuery
      */
     public function bind()
     {
+        // LOCK TABLES는 바인딩 불필요
+        if ($this->preparedQuery === null) {
+            return; // 특수 쿼리는 바인딩 생략
+        }
         $args = func_get_args();
         $types = '';
         $valueToBind = array();
@@ -178,6 +205,11 @@ class G5MySQLQuery
             $types .= "d";
         } else {
             $types .= "s";
+            // 백슬래시가 포함된 경우에만 제거
+            if ($this->isPostPage && strpos($value, '\\') !== false) {
+                // stripslashes 하는 이유는 common.php 에서 sql_escape_string 적용 때문에 하는것이다.(비효율적, 어쩔수가 없다;;)
+                $value = stripslashes($value);
+            }
         }
         $valueToBind[] = $value;
     }
@@ -228,6 +260,12 @@ class G5MySQLQuery
     {
         if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO) {
             // PDO 모드
+            
+            if ($this->preparedQuery === null) {
+                // 특수 쿼리는 exec 사용
+                return $this->connection->exec($this->queryString) !== false;
+            }
+            
             if ($this->preparedQuery === false) {
                 $errorInfo = $this->connection->errorInfo();
                 $this->errorMessage = $errorInfo[2] ?: "Failed to prepare the statement";
@@ -250,6 +288,12 @@ class G5MySQLQuery
             // return true; // PDOStatement 대신 true로 통일
         
         } else {
+            
+            if ($this->preparedQuery === null) {
+                // 특수 쿼리는 mysqli_query 사용
+                return mysqli_query($this->connection, $this->queryString) !== false;
+            }
+            
             // MySQLi 모드
             if ($this->preparedQuery === false || !($this->preparedQuery instanceof mysqli_stmt)) {
                 $this->errorMessage = mysqli_error($this->connection) ?: "Failed to prepare the statement";
@@ -458,15 +502,7 @@ class G5MysqlCRUD
             throw new Exception("Invalid table name or join syntax: $table");
         }
         
-        // $columnString = empty($columns) ? "*" : implode(",", $columns);
-        
-        // 컬럼 검증: 별칭 포함 허용 (예: a.ct_id)
-        $columnString = empty($columns) ? "*" : implode(",", array_map(function($col) {
-            if (!preg_match('/^[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?$/', $col) && $col !== '*') {
-                throw new Exception("Invalid column name: $col");
-            }
-            return $col;
-        }, (array)$columns)); // 괄호 하나만 닫음
+        $columnString = empty($columns) ? "*" : implode(",", $columns);
         
         $conditionString = self::buildConditionString($condition);
 
@@ -583,7 +619,7 @@ class G5MysqlCRUD
         }
     
         $conditionString = self::buildConditionString($condition);
-        $query = "DELETE FROM {$table} " . ($conditionString ? "WHERE {$conditionString}" : "");
+        $query = "DELETE FROM {$table} WHERE {$conditionString}";
         $queryObj = new G5MySQLQuery($query, $connection);
 
         if (!empty($values)) {
@@ -596,7 +632,18 @@ class G5MysqlCRUD
     private static function validateTableString($table)
     {
         // 단일 테이블 또는 기본 조인 구문 허용
+        /*
         $pattern = '/^[a-zA-Z0-9_]+(?: [a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?: [a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
+        return preg_match($pattern, $table) === 1;
+        */
+        
+        // 조인 구문 허용: AS와 기본 JOIN 포함
+        /*
+        $pattern = '/^[a-zA-Z0-9_]+(?:\s+AS\s+[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+AS\s+[a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
+        $pattern = '/^[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
+        */
+        $pattern = '/^[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?\s*ON\s*(?:\()?\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*(?:\))?)*$/i';
+
         return preg_match($pattern, $table) === 1;
     }
     /*
@@ -616,25 +663,23 @@ class G5MysqlCRUD
     {
         if ($condition) {
             foreach ($condition as $index => $cond) {
-                // 연산자와 컬럼 검증
-                /*
-                if (preg_match('/^([a-zA-Z0-9_]+)\s*([=><!]+|LIKE|IN)\s*\?$/i', $cond, $matches)) {
+                // IN 연산자 체크
+                if (preg_match('/^([a-zA-Z0-9_\.]+)\s*IN\s*\(\s*\?\s*(?:,\s*\?)*\s*\)$/i', $cond, $matches)) {
+                    $column = $matches[1];
+                    if (!in_array('IN', self::$allowedOperators)) {
+                        throw new Exception("Invalid operator: IN");
+                    }
+                }
+                // 기타 연산자 체크
+                elseif (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', array_diff(self::$allowedOperators, ['IN'])) . ')\s*\?$/i', $cond, $matches)) {
+                    throw new Exception("Invalid condition format: $cond");
+                }
+                else {
                     $column = $matches[1];
                     $operator = strtoupper($matches[2]);
                     if (!in_array($operator, self::$allowedOperators)) {
-                        throw new Exception("Invalid column or operator in condition: $cond");
+                        throw new Exception("Invalid operator: $operator");
                     }
-                } else {
-                    throw new Exception("Invalid condition format: $cond");
-                }
-                */
-                if (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', self::$allowedOperators) . ')\s*\?$/i', $cond, $matches)) {
-                    throw new Exception("Invalid condition format: $cond");
-                }
-                $column = $matches[1];
-                $operator = strtoupper($matches[2]);
-                if (!in_array($operator, self::$allowedOperators)) {
-                    throw new Exception("Invalid operator: $operator");
                 }
                 $condition[$index] = "($cond)";
             }
@@ -647,14 +692,20 @@ class G5MysqlCRUD
     {
         $limit = isset($readSettings['limit']) ? preg_replace('/[^0-9]/', '', $readSettings['limit']) : null;
         $offset = isset($readSettings['offset']) ? preg_replace('/[^0-9]/', '', $readSettings['offset']) : null;
-        $groupBy = isset($readSettings['groupBy']) ? $readSettings['groupBy'] : null;
-        $orderBy = isset($readSettings['orderBy']) ? $readSettings['orderBy'] : null;
-        $orderType = isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC";
+        
+        $groupBy = isset($readSettings['groupby']) ? trim($readSettings['groupby']) : 
+                   (isset($readSettings['groupBy']) ? trim($readSettings['groupBy']) : null);
 
-        if ($groupBy && !preg_match('/^[a-zA-Z0-9_,\.]+$/', $groupBy)) {
+        $orderBy = isset($readSettings['orderby']) ? trim($readSettings['orderby']) : 
+                   (isset($readSettings['orderBy']) ? trim($readSettings['orderBy']) : null);
+
+        $orderType = isset($readSettings['ordertype']) ? strtoupper($readSettings['ordertype']) : 
+                     (isset($readSettings['orderType']) ? strtoupper($readSettings['orderType']) : "ASC");
+
+        if ($groupBy && !preg_match('/^[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?(?:\s+(ASC|DESC))?(?:\s*,\s*[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?(?:\s+(ASC|DESC))?)*$/i', $groupBy)) {
             throw new Exception("Invalid GROUP BY: $groupBy");
         }
-        if ($orderBy && !preg_match('/^[a-zA-Z0-9_, \.]+$/', $orderBy)) {
+        if ($orderBy && !preg_match('/^[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?(?:\s+(ASC|DESC))?(?:\s*,\s*[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?(?:\s+(ASC|DESC))?)*$/i', $orderBy)) {
             throw new Exception("Invalid ORDER BY: $orderBy");
         }
         if (!in_array($orderType, ['ASC', 'DESC'])) {
@@ -724,18 +775,6 @@ function sql_bind_insert($table, $inserts, $updateColumns = array(), $link = nul
     $values = array_values($inserts);
     
     return G5MysqlCRUD::insert($table, $columns, $values, $updateColumns, $link);
-    
-    /*
-    try {
-        $result = G5MysqlCRUD::insert($table, $columns, $values, $link);
-    } catch (MySQLQueryFailToExecuteException $e) {
-        // 에러 정보 출력
-        // error_log("SQLSTATE: " . $e->getSQLState());
-        // error_log("Error Code: " . $e->getErrorCode());
-        // error_log("Error Message: " . $e->getErrorMessage());
-        // echo "쿼리 실행 중 오류가 발생했습니다. 관리자에게 문의하세요.";
-    }
-    */
 }
 
 function sql_bind_update($table, $updates, $conditions = array(), $link = null) {
@@ -793,51 +832,6 @@ function sql_bind_select_join($query, $values = array(), $link = null, $is_fetch
     return $result;
 }
 
-/*
-// 조건 문자열 생성 함수 (PHP 5.2 호환)
-function build_condition_string($item, $conditions)
-{
-    if (is_array($conditions[$item])) {
-        $operator = key($conditions[$item]);
-        if (strtoupper($operator) === 'IN') {
-            $placeholders = implode(', ', array_fill(0, count($conditions[$item][$operator]), '?'));
-            return "$item $operator ($placeholders)";
-        }
-        return "$item $operator ?";
-    }
-    return "$item = ?";
-}
-
-function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0) {
-    
-    // 조건의 키 배열 가져오기
-    $condition_array = array_keys($conditions);
-
-    // 조건에 연산자를 적용하기 위해 배열 구조 변경 (PHP 5.2용 일반 함수)
-    $condition = array_map('build_condition_string', $condition_array, array_fill(0, count($condition_array), $conditions));
-
-    // 조건에 사용할 값만 추출 (IN 연산자 처리 포함)
-    $values = array();
-    foreach ($conditions as $key => $value) {
-        if (is_array($value) && strtoupper(key($value)) === 'IN') {
-            // IN 연산자의 경우 배열 값을 펼침
-            $values = array_merge($values, $value['IN']);
-        } else {
-            // 기타 연산자는 단일 값 추가
-            $values[] = is_array($value) ? current($value) : $value;
-        }
-    }
-
-    // 컬럼이 문자열로 전달되었을 경우 배열로 변환
-    if (!is_array($columns)) {
-        $columns = explode(',', $columns);
-    }
-
-    // G5MysqlCRUD 클래스의 read 메서드 호출
-    return G5MysqlCRUD::read($table, $columns, $condition, $values, $readSettings, $link, $is_fetch);
-}
-*/
-
 function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0) {
     $condition = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
     $values = array();
@@ -883,7 +877,8 @@ function sql_bind_lock($tables, $lock_type = 'WRITE', $link = null) {
     }
 
     $query = "LOCK TABLES " . implode(", ", $tableClauses);
-    $queryObj = new G5MySQLQuery($query, $link);
+    
+    $queryObj = new G5MySQLQuery($query, $link, 1);
     return sql_query($queryObj);
 }
 
@@ -891,7 +886,7 @@ function sql_bind_unlock($link = null) {
     global $g5;
     if (!$link) $link = get_pdo_connection();
     
-    $queryObj = new G5MySQLQuery("UNLOCK TABLES", $link);
+    $queryObj = new G5MySQLQuery("UNLOCK TABLES", $link, 1);
     return sql_query($queryObj);
 }
 
@@ -899,6 +894,13 @@ function sql_bind_delete($table, $conditions = array(), $link = null){
     
     $condition = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
     $values = array_map('sql_bind_condition_value', array_values($conditions));
+    
+    /*
+    echo "Query: DELETE FROM $table WHERE " . implode(" AND ", $condition) . "\n";
+    echo "Values: " . print_r($values, true) . "\n";
+    exit;
+    */
+    
     return G5MysqlCRUD::delete($table, $condition, $values, $link);
     
 }
