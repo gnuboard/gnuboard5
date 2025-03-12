@@ -429,7 +429,33 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                                         }
 
                                         $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
-
+                                        
+                                        if (!$opt['opt_print']) {
+                                            
+                                            if ($opt['opt_date_format'] === 'week') {
+                                                $opt_print = '1주에 한 번';
+                                                if ($opt['opt_input']) {
+                                                    $cg_yoil = get_subscriptionDayOfWeek(G5_TIME_YMD, $opt['opt_input']);
+                                                    $opt_print = '1주에 '.$cg_yoil.'마다';
+                                                }
+                                            } else if($opt['opt_date_format'] === 'month') {
+                                                $opt_print = '1달에 한 번';
+                                                if ($opt['opt_input']) {
+                                                    $cg_yoil = get_subscriptionMonthDay(G5_TIME_YMD, (int) $opt['opt_input']);
+                                                    $opt_print = '1달에 '.$cg_yoil.'마다';
+                                                }
+                                            } else if($opt['opt_date_format'] === 'year') {
+                                                $opt_print = '1년에 한 번';
+                                                /*
+                                                if ($opt['opt_input']) {
+                                                    $cg_yoil = get_subscriptionMonthDay(G5_TIME_YMD, 0, 1);
+                                                    $opt_print = '1년에 '.$cg_yoil.'일';
+                                                }
+                                                */
+                                                
+                                            }
+                                        }
+                                        
                                         if ($opt['opt_input'] || $opt['opt_date_format']) {
                                             $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
                                             $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
@@ -509,7 +535,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             </tr>
                         <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용 ?>
                             <tr>
-                                <th scope="row"><label for="od_hope_date_print">희망배송일</label></th>
+                                <th scope="row"><label for="od_hope_date_print">첫 희망배송일</label></th>
                                 <td class="jquery-pg-datepicker">
                                     <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">
                                     <div id="od_hope_date_print" class="jquery-datepicker"></div>

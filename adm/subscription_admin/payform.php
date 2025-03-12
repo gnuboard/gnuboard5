@@ -124,7 +124,7 @@ if (!(isset($pay_basket['pb_id']) && $pay_basket['pb_id'])) {
         
         echo $sql;
         
-        sql_query($sql, false);
+        // sql_query($sql, false);
     }
 }
 
@@ -300,11 +300,11 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
     </form>
 
-    <?php if ($pay['py_mpy_history']) { ?>
+    <?php if ($pay['py_mod_history']) { ?>
     <section id="sodr_qty_log">
         <h3>주문 수량변경 및 주문 전체취소 처리 내역</h3>
         <div>
-            <?php echo conv_content($pay['py_mpy_history'], 0); ?>
+            <?php echo conv_content($pay['py_mod_history'], 0); ?>
         </div>
     </section>
     <?php } ?>
@@ -312,7 +312,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 </section>
 
 <?php if($pay['py_test']) { ?>
-<div class="py_test_caution">주의) 이 주문은 테스트용으로 실제 결제가 이루어지지 않았으므로 절대 배송하시면 안됩니다.</div>
+<div class="py_test_caution od_test_caution">주의) 이 주문은 테스트용으로 실제 결제가 이루어지지 않았으므로 절대 배송하시면 안됩니다.</div>
 <?php } ?>
 
 <section id="anc_sodr_pay">

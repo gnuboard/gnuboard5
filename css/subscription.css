@@ -490,3 +490,5 @@ text-align:right;
     flex: 1;
     overflow: auto;
 }
+
+#sod_frm #sod_frm_subscription_input .tbl_frm01 th{width:104px}

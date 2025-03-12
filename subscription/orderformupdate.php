@@ -526,6 +526,71 @@ if (!$result) {
 
 $exists_order = sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', array('od_id'=>$od_id));
 
+// 장바구니 상태변경
+// 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
+$cart_status = $od_status;
+$sql_card_point = '';
+if ($od_receipt_price > 0 && !$default['de_card_point']) {
+    $sql_card_point = " , ct_point = '0' ";
+}
+
+// 회원 아이디 값 변경
+$sql_mb_id = '';
+if ($is_member) {
+    $sql_mb_id = " , mb_id = '{$member['mb_id']}' ";
+}
+
+$sql = "update {$g5['g5_subscription_cart_table']}
+           set od_id = '$od_id',
+               ct_status = '$cart_status'
+               $sql_card_point
+               $sql_mb_id
+         where od_id = '$tmp_cart_id'
+           and ct_select = '1' ";
+$result = sql_query($sql, false);
+
+// 주문정보 입력 오류시 결제 취소
+// if (!$result) {
+//     if ($tno) {
+//         $cancel_msg = '주문상태 변경 오류';
+//         switch ($od_pg) {
+//             case 'lg':
+//                 include G5_SUBSCRIPTION_PATH.'/lg/xpay_cancel.php';
+//                 break;
+//             case 'inicis':
+//                 include G5_SUBSCRIPTION_PATH.'/inicis/inipay_cancel.php';
+//                 break;
+//             case 'KAKAOPAY':
+//                 $_REQUEST['TID'] = $tno;
+//                 $_REQUEST['Amt'] = $amount;
+//                 $_REQUEST['CancelMsg'] = $cancel_msg;
+//                 $_REQUEST['PartialCancelCode'] = 0;
+//                 include G5_SUBSCRIPTION_PATH.'/kakaopay/kakaopay_cancel.php';
+//                 break;
+//             default:
+//                 include G5_SUBSCRIPTION_PATH.'/kcp/pp_ax_hub_cancel.php';
+//                 break;
+//         }
+//     }
+
+//     // 관리자에게 오류 알림 메일발송
+//     $error = 'status';
+//     include G5_SUBSCRIPTION_PATH.'/ordererrormail.php';
+
+//     if (function_exists('add_order_post_log')) {
+//         add_order_post_log($cancel_msg);
+//     }
+//     // 주문삭제
+//     sql_query(" delete from {$g5['g5_SUBSCRIPTION_order_table']} where od_id = '$od_id' ");
+
+//     exit('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+// }
+
+// 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
+// if ($is_member && $od_receipt_point) {
+//     insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
+// }
+
 // 희망배송일과 배송일 이전 자동결제 설정일이 있으면 다음회차에 결제를 하고, 그렇지 않으면 1회차 결제를 한다.
 $is_first_pay = true;
 
@@ -550,16 +615,10 @@ if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_paymen
 
 if ($is_first_pay) {
 
-    $pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
+    $pays = subscription_process_payment($exists_order, $od_pg);
     
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
-        
-        add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
-            'hs_type' => 'subscription_order',
-            'od_id' => $od_id,
-            'mb_id' => $member['mb_id']
-        ));
             
         $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
         
@@ -572,9 +631,29 @@ if ($is_first_pay) {
             
             $nextBillingDate = calculateNextBillingDate($exists_order);
             
+            /*
             $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '$od_id'";
             
             sql_query($updateQuery);
+            */
+            
+            sql_bind_update(
+                $g5['g5_subscription_order_table'],
+                array(
+                    'next_billing_date' => $nextBillingDate,
+                    'last_billed_date' => G5_TIME_YMDHIS,
+                    'od_pays_total' => $pay_round_no
+                ),
+                array(
+                    'od_id' => $od_id
+                )
+            );
+            
+            add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
+                'hs_type' => 'subscription_order',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id']
+            ));
             
         } else {
             // 실패시 처리
@@ -658,71 +737,6 @@ if ($is_first_pay) {
 //         add_order_post_log($cancel_msg);
 //     }
 //     exit('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
-// }
-
-// 장바구니 상태변경
-// 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
-$cart_status = $od_status;
-$sql_card_point = '';
-if ($od_receipt_price > 0 && !$default['de_card_point']) {
-    $sql_card_point = " , ct_point = '0' ";
-}
-
-// 회원 아이디 값 변경
-$sql_mb_id = '';
-if ($is_member) {
-    $sql_mb_id = " , mb_id = '{$member['mb_id']}' ";
-}
-
-$sql = "update {$g5['g5_subscription_cart_table']}
-           set od_id = '$od_id',
-               ct_status = '$cart_status'
-               $sql_card_point
-               $sql_mb_id
-         where od_id = '$tmp_cart_id'
-           and ct_select = '1' ";
-$result = sql_query($sql, false);
-
-// 주문정보 입력 오류시 결제 취소
-// if (!$result) {
-//     if ($tno) {
-//         $cancel_msg = '주문상태 변경 오류';
-//         switch ($od_pg) {
-//             case 'lg':
-//                 include G5_SUBSCRIPTION_PATH.'/lg/xpay_cancel.php';
-//                 break;
-//             case 'inicis':
-//                 include G5_SUBSCRIPTION_PATH.'/inicis/inipay_cancel.php';
-//                 break;
-//             case 'KAKAOPAY':
-//                 $_REQUEST['TID'] = $tno;
-//                 $_REQUEST['Amt'] = $amount;
-//                 $_REQUEST['CancelMsg'] = $cancel_msg;
-//                 $_REQUEST['PartialCancelCode'] = 0;
-//                 include G5_SUBSCRIPTION_PATH.'/kakaopay/kakaopay_cancel.php';
-//                 break;
-//             default:
-//                 include G5_SUBSCRIPTION_PATH.'/kcp/pp_ax_hub_cancel.php';
-//                 break;
-//         }
-//     }
-
-//     // 관리자에게 오류 알림 메일발송
-//     $error = 'status';
-//     include G5_SUBSCRIPTION_PATH.'/ordererrormail.php';
-
-//     if (function_exists('add_order_post_log')) {
-//         add_order_post_log($cancel_msg);
-//     }
-//     // 주문삭제
-//     sql_query(" delete from {$g5['g5_SUBSCRIPTION_order_table']} where od_id = '$od_id' ");
-
-//     exit('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
-// }
-
-// 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
-// if ($is_member && $od_receipt_point) {
-//     insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
 // }
 
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))).'&nbsp;';
@@ -899,8 +913,6 @@ if ($is_member) {
 
     sql_query($sql);
 }
-
-exit;
 
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>

@@ -3,7 +3,6 @@ $sub_menu = '600100';
 include_once('./_common.php');
 
 /*
-
 print_r($_POST);
 
 exit;

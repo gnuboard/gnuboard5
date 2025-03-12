@@ -74,15 +74,58 @@ function set_subscription_cart_id($direct)
     }
 }
 
+function get_subscriptionDayOfWeek($date, $opt_input = '') {
+    $days = array(
+        'sun' => '일요일', 'mon' => '월요일', 'tue' => '화요일', 'wed' => '수요일', 
+        'thu' => '목요일', 'fri' => '금요일', 'sat' => '토요일', 
+        0 => '일요일', 1 => '월요일', 2 => '화요일',
+        3 => '수요일', 4 => '목요일', 5 => '금요일', 
+        6 => '토요일'
+    );
+    
+    // $opt_input이 제공되고 유효한 키일 경우
+    if (!empty($opt_input) && array_key_exists(strtolower($opt_input), $days)) {
+        return $days[strtolower($opt_input)];
+    }
+    
+    // 유효한 날짜인지 확인
+    $timestamp = strtotime($date);
+    if ($timestamp === false) {
+        return false; // 또는 적절한 에러 메시지 반환
+    }
+    
+    $dayIndex = date('w', $timestamp);
+    return $days[$dayIndex];
+}
+
+function get_subscriptionMonthDay($date, $int_day=0, $is_month=0) {
+    
+    $timestamp = strtotime($date);
+    
+    if ($int_day > 0) {
+        // 다음 달의 $int_day일로 이동
+        $timestamp = strtotime("+$int_day days", strtotime("first day of next month", $timestamp));
+    }
+    
+    if ($is_month) {
+        return date('m월 d일', $timestamp);
+    }
+    
+    return date('d일', $timestamp);
+}
+
 // 정기결제 장바구니 건수 검사
 function get_subscription_cart_count($cart_id) {
     global $g5, $default;
-
+    
+    $row = sql_bind_select_fetch($g5['g5_subscription_cart_table'], 'count(ct_id) as cnt', array('od_id' => $cart_id));
+    
+    /*
     $sql = " select count(ct_id) as cnt from {$g5['g5_subscription_cart_table']} where od_id = '$cart_id' ";
     $row = sql_fetch($sql);
+    */
     
-    $cnt = (int)$row['cnt'];
-    return $cnt;
+    return isset($row['cnt']) ? (int) $row['cnt'] : 0;
 }
 
 function subscription_print_item_options($it_id, $cart_id, $is_get=0) {
@@ -1150,14 +1193,16 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     
     $result = sql_bind_insert($g5['g5_subscription_pay_table'], $inserts);
     
-    $insert_id = sql_insert_id();
+    $insert_id = get_pdo_insert_id();
+    
+    echo $insert_id;
     
     if ($insert_id) {
         // 상품명만들기
         // $result = sql_query(" select * from {$g5['g5_subscription_cart_table']} where od_id = '".$od['od_id']."' order by ct_id asc ");
         
         $result = sql_bind_select($g5['g5_subscription_cart_table'], '*', array('od_id' => $od['od_id']), array('orderBy' => 'ct_id', 'orderType' => 'asc'));
-            
+        
         // 결제 될때 당시 결제된 장바구니 정보를 따로 저장한다. (pay_basket 테이블에)
         for ($i = 0; $row = sql_fetch_array($result); ++$i) {
             $inserts = array(
@@ -1206,6 +1251,8 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
             
             sql_query($sql, false);
             */
+            
+            // echo var_export($inserts, true);
             
             // 주문서에 입력
             sql_bind_insert($g5['g5_subscription_pay_basket_table'], $inserts);
@@ -2681,50 +2728,58 @@ function get_subscription_pay_info($pay_id, $od_id) {
     $tax_mny = $sum['tax_mny'];
     $free_mny = $sum['free_mny'];
 
-    if($od['od_tax_flag']) {
-        $tot_tax_mny = ( $tax_mny + $send_cost + $od['od_send_cost2'] )
-                       - ( $od_coupon + $od_send_coupon + $od['od_receipt_point'] );
+    if($pay['py_tax_flag']) {
+        $tot_tax_mny = ( $tax_mny + $send_cost + $pay['py_send_cost2'] )
+                       - ( $pay_coupon + $pay_send_coupon + $pay['py_receipt_point'] );
         if($tot_tax_mny < 0) {
             $free_mny += $tot_tax_mny;
             $tot_tax_mny = 0;
         }
     } else {
-        $tot_tax_mny = ( $tax_mny + $free_mny + $send_cost + $od['od_send_cost2'] )
-                       - ( $od_coupon + $od_send_coupon + $od['od_receipt_point'] );
+        $tot_tax_mny = ( $tax_mny + $free_mny + $send_cost + $pay['py_send_cost2'] )
+                       - ( $pay_coupon + $pay_send_coupon + $pay['py_receipt_point'] );
         $free_mny = 0;
     }
 
-    $od_tax_mny = round($tot_tax_mny / 1.1);
-    $od_vat_mny = $tot_tax_mny - $od_tax_mny;
-    $od_free_mny = $free_mny;
-
+    $pay_tax_mny = round($tot_tax_mny / 1.1);
+    $pay_vat_mny = $tot_tax_mny - $pay_tax_mny;
+    $pay_free_mny = $free_mny;
+    
+    /*
     // 장바구니 취소금액 정보
     $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price
-                from {$g5['g5_shop_cart_table']}
-                where od_id = '$od_id'
+                from {$g5['g5_subscription_pay_basket_table']}
+                where py_id = '$pay_id'
                   and ct_status IN ( '취소', '반품', '품절' ) ";
     $sum = sql_fetch($sql);
+    */
+    
+    $sum = sql_bind_select_fetch($g5['g5_subscription_pay_basket_table'], 
+        'SUM(IF(io_type = 1, (io_price * pb_qty), ((pb_price + io_price) * pb_qty))) as price', 
+        array('pay_id' => $pay_id, 'pb_status' => array('IN' => array('취소', '반품', '품절')))
+        );
+    
     $cancel_price = $sum['price'];
 
     // 미수금액
-    $od_misu = ( $cart_price + $send_cost + $od['od_send_cost2'] )
-               - ( $cart_coupon + $od_coupon + $od_send_coupon )
-               - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $od['od_refund_price'] );
+    $pay_misu = ( $cart_price + $send_cost + $pay['py_send_cost2'] )
+               - ( $cart_coupon + $pay_coupon + $pay_send_coupon )
+               - ( $pay['py_receipt_price'] + $pay['py_receipt_point'] - $pay['py_refund_price'] );
 
     // 장바구니상품금액
-    $od_cart_price = $cart_price + $cancel_price;
+    $pay_cart_price = $cart_price + $cancel_price;
 
     // 결과처리
-    $info['od_cart_price']      = $od_cart_price;
-    $info['od_send_cost']       = $send_cost;
-    $info['od_coupon']          = $od_coupon;
-    $info['od_send_coupon']     = $od_send_coupon;
-    $info['od_cart_coupon']     = $cart_coupon;
-    $info['od_tax_mny']         = $od_tax_mny;
-    $info['od_vat_mny']         = $od_vat_mny;
-    $info['od_free_mny']        = $od_free_mny;
-    $info['od_cancel_price']    = $cancel_price;
-    $info['od_misu']            = $od_misu;
+    $info['py_cart_price']      = $pay_cart_price;
+    $info['py_send_cost']       = $send_cost;
+    $info['py_coupon']          = $pay_coupon;
+    $info['py_send_coupon']     = $pay_send_coupon;
+    $info['py_cart_coupon']     = $cart_coupon;
+    $info['py_tax_mny']         = $pay_tax_mny;
+    $info['py_vat_mny']         = $pay_vat_mny;
+    $info['py_free_mny']        = $pay_free_mny;
+    $info['py_cancel_price']    = $cancel_price;
+    $info['py_misu']            = $pay_misu;
 
     return $info;
 }

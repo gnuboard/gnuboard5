@@ -7,10 +7,6 @@ if (! $t) {
     die('abc');
 }
 
-if ($_SERVER['REMOTE_ADDR'] !== '59.10.38.2') {
-    die('');
-}
-
 $is_db_success = true;
 
 if ($is_db_success) {
@@ -31,7 +27,11 @@ if ($is_db_success) {
     */
 }
 
-$tomorrow = date('Y-m-d', strtotime('+1 day', G5_SERVER_TIME));
+if ($_SERVER['REMOTE_ADDR'] !== '59.10.38.2') {
+    die('');
+}
+
+// $tomorrow = date('Y-m-d', strtotime('+1 day', G5_SERVER_TIME));
 
 /*
 $sql = "select * from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and od_enable_status = 1 and next_billing_date <= '".G5_TIME_YMDHIS."' limit 1000";
@@ -40,12 +40,20 @@ echo $sql;
 exit;
 */
 
+$subscription_wheres = array('card_billkey' => array('!=' => ''), 'od_enable_status' => 1, 'next_billing_date' => array('<=' => G5_TIME_YMDHIS));
+
+// 현재 설정중인 PG만 결제하려면
+$subscription_wheres['od_pg'] = get_subs_option('su_pg_service');
+
 $result_row = sql_bind_select_array(
     $g5['g5_subscription_order_table'],
     '*',
-    array('card_billkey' => array('!=' => ''), 'od_enable_status' => 1, 'next_billing_date' => array('<=' => G5_TIME_YMDHIS)),
-    array('limit'=> 1000)
+    $subscription_wheres,
+    array('limit'=> 500)
 );
+
+echo count($result_row);
+echo "<br>";
 
 foreach($result_row as $od) {
     
@@ -73,11 +81,12 @@ foreach($result_row as $od) {
     
     $pays = subscription_process_payment($od, $od['od_pg']);
     
-    print_r( $pays );
+    print_r2( $pays );
     
     $od_name = $od['od_name'];
     $od_email = $od['od_email'];
     $od_id = $od['od_id'];
+    $is_pay_fail = 0;
     
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
@@ -94,8 +103,22 @@ foreach($result_row as $od) {
             
             //sql_query($updateQuery);
             
-            $result = sql_bind_update($g5['g5_subscription_order_table'], array('next_billing_date'=>$nextBillingDate, 'last_billed_date'=>G5_TIME_YMDHIS, 'od_pays_total'=>$pay_round_no), 
-                array('od_id'=>$od['od_id']));
+            $result = sql_bind_update(
+                $g5['g5_subscription_order_table'],
+                array(
+                    'next_billing_date'=>$nextBillingDate,
+                    'last_billed_date'=>G5_TIME_YMDHIS,
+                    'od_pays_total'=>$pay_round_no,
+                    'od_fail_count' => 0
+                ), 
+                array('od_id'=>$od['od_id'])
+            );
+            
+            add_subscription_order_history('정기구독 '.$pay_round_no.'회차 결제에 성공했습니다.', array(
+                'hs_type' => 'subscription_order',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id']
+            ));
             
             include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
             include_once(G5_SUBSCRIPTION_PATH.'/cron_ordermail2.inc.php');
@@ -111,16 +134,15 @@ foreach($result_row as $od) {
             
             add_subscription_order_history($failure_reason, array(
                 'hs_type' => 'subscription_pay',
-                'hs_category' => 'admin',
                 'od_id' => $od['od_id'],
-                'mb_id' => $od['mb_id'],
-                'hs_date' => G5_TIME_YMDHIS
+                'mb_id' => $od['mb_id']
             ));
             
             include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
             include_once(G5_SUBSCRIPTION_PATH.'/mail/fail_db.mail.php');
             
-            // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
+            // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다.
+            $is_pay_fail = 1;
         }
         
     } else {
@@ -134,18 +156,38 @@ foreach($result_row as $od) {
         
         add_subscription_order_history($failure_reason, array(
             'hs_type' => 'subscription_pay',
-            'hs_category' => 'admin',
             'od_id' => $od['od_id'],
-            'mb_id' => $od['mb_id'],
-            'hs_date' => G5_TIME_YMDHIS
+            'mb_id' => $od['mb_id']
         ));
         
         include_once(G5_SUBSCRIPTION_PATH.'/ordermail1.inc.php');
         include_once(G5_SUBSCRIPTION_PATH.'/mail/fail_pay.mail.php');
             
-        // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다. 
+        // 연속으로 몇번 이상 실패시 해당 구독을 비활성화 해야 한다.
+        $is_pay_fail = 1;
     }
-
+    
+    // 정기결제가 실패 되었다면, 3회 이상 실패시 
+    if ($is_pay_fail && ($od['od_fail_count'] + 1) >= 3) {
+        
+        // 비활성화한다.
+        sql_bind_update(
+            $g5['g5_subscription_order_table'],
+            array(
+                'od_fail_count' => array('expression' => 'od_fail_count + 1'),
+                'od_enable_status'=>0
+            ),
+            array('od_id'=>$od['od_id'])
+        );
+        
+        $failure_reason = "3회 이상 정기결제가 실패되어서, 정기구독이 비활성화 되었습니다.";
+        
+        add_subscription_order_history($failure_reason, array(
+            'hs_type' => 'subscription_pay',
+            'od_id' => $od['od_id'],
+            'mb_id' => $od['mb_id']
+        ));
+    }
 }
 
 exit;

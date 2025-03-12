@@ -33,7 +33,7 @@ function get_pdo_connection() {
     
     // PDO 연결 생성
     try {
-        $dsn = "mysql:host=".G5_MYSQL_HOST.";dbname=".G5_MYSQL_DB.";charset=utf8";
+        $dsn = "mysql:host=".G5_MYSQL_HOST.";dbname=".G5_MYSQL_DB.";charset=".G5_DB_CHARSET;
         $g5['connect_pdo_db'] = new PDO($dsn, G5_MYSQL_USER, G5_MYSQL_PASSWORD);
         $g5['connect_pdo_db']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $g5['connect_pdo_db']->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -53,6 +53,8 @@ function get_pdo_insert_id($link=null) {
     return sql_insert_id($link);
     
 }
+
+define('G5_IS_BIND_DEBUG', 0);
 
 class MySQLQueryFailToExecuteException extends Exception
 {}
@@ -513,7 +515,12 @@ class G5MysqlCRUD
         if (!empty($valueToBind)) {
             call_user_func_array(array($queryObj, 'bind'), $valueToBind);
         }
-
+        
+        if (G5_IS_BIND_DEBUG) {
+            // 실행된 쿼리 디버깅
+            echo "<br>실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
+        }
+        
         $result = sql_query($queryObj);
 
         if ($is_fetches === 1) {
@@ -561,6 +568,14 @@ class G5MysqlCRUD
         if (!empty($bindValues)) {
             call_user_func_array(array($queryObj, 'bind'), $bindValues);
         }
+        
+        if (G5_IS_BIND_DEBUG) {
+            // 실행된 쿼리 디버깅
+            echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
+        }
+        
+        // $query->execute();
+        
         return sql_query($queryObj);
     }
     
@@ -578,19 +593,41 @@ class G5MysqlCRUD
         }
         
         // 컬럼 검증 및 처리
+        /*
         $validatedColumns = array_map(function($col) {
-            // 이미 "= ?"가 포함된 경우 처리
-            if (preg_match('/^([a-zA-Z0-9_]+)\s*=\s*\?$/', $col, $matches)) {
-                $colName = $matches[1];
-            } else {
-                $colName = $col;
+            // 이미 완성된 SET 절 문자열인지 확인 (예: "column = CONCAT(...)"
+            if (preg_match('/^[a-zA-Z0-9_]+\s*=\s*.+$/', $col)) {
+                // 컬럼명 검증
+                $colParts = explode('=', $col, 2);
+                $colName = trim($colParts[0]);
+                if (!preg_match('/^[a-zA-Z0-9_]+$/', $colName)) {
+                    throw new Exception("Invalid column name in SET clause: $colName");
+                }
+                return $col; // 그대로 사용
             }
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $colName)) {
-                throw new Exception("Invalid column name: $colName");
+            // 단순 컬럼명만 온 경우
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+                throw new Exception("Invalid column name: $col");
             }
-            return "$colName = ?";
+            return "$col = ?";
         }, (array)$columns);
+        */
         
+        $validatedColumns = array_map(function($col) {
+            if (preg_match('/^[a-zA-Z0-9_]+\s*=\s*.+$/', $col)) {
+                $colParts = explode('=', $col, 2);
+                $colName = trim($colParts[0]);
+                if (!preg_match('/^[a-zA-Z0-9_]+$/', $colName)) {
+                    throw new Exception("Invalid column name in SET clause: $colName"); // $colName만 출력
+                }
+                return $col; // 그대로 사용
+            }
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+                throw new Exception("Invalid column name: $col");
+            }
+            return "$col = ?";
+        }, (array)$columns);
+    
         $columnString = implode(",", $validatedColumns);
     
         $conditionString = self::buildConditionString($condition);
@@ -598,7 +635,10 @@ class G5MysqlCRUD
         $query = "UPDATE {$table} SET {$columnString} " . ($conditionString ? "WHERE {$conditionString}" : "");
         $queryObj = new G5MySQLQuery($query, $link);
 
-        $valuesToBind = array_merge($columnValues, $conditionValues);
+        // $valuesToBind = array_merge($columnValues, $conditionValues);
+        
+        $valuesToBind = $columnValues; // $conditionValues는 이미 $columnValues에 포함됨
+        
         if (!empty($valuesToBind)) {
             call_user_func_array(array($queryObj, 'bind'), $valuesToBind);
         }
@@ -659,33 +699,52 @@ class G5MysqlCRUD
     }
     */
     
-    private static function buildConditionString($condition)
+    public static function buildConditionString($condition, $defaultLogic = 'AND')
     {
-        if ($condition) {
-            foreach ($condition as $index => $cond) {
-                // IN 연산자 체크
+        if (empty($condition)) {
+            return '';
+        }
+        
+        $conditions = array();
+        foreach ($condition as $cond) {
+            // 기존 형식: 문자열 조건
+            if (is_string($cond)) {
                 if (preg_match('/^([a-zA-Z0-9_\.]+)\s*IN\s*\(\s*\?\s*(?:,\s*\?)*\s*\)$/i', $cond, $matches)) {
                     $column = $matches[1];
                     if (!in_array('IN', self::$allowedOperators)) {
                         throw new Exception("Invalid operator: IN");
                     }
-                }
-                // 기타 연산자 체크
-                elseif (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', array_diff(self::$allowedOperators, ['IN'])) . ')\s*\?$/i', $cond, $matches)) {
+                } elseif (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', array_diff(self::$allowedOperators, ['IN'])) . ')\s*\?$/i', $cond, $matches)) {
                     throw new Exception("Invalid condition format: $cond");
-                }
-                else {
+                } else {
                     $column = $matches[1];
                     $operator = strtoupper($matches[2]);
                     if (!in_array($operator, self::$allowedOperators)) {
                         throw new Exception("Invalid operator: $operator");
                     }
                 }
-                $condition[$index] = "($cond)";
+                $conditions[] = "($cond)";
+            } 
+            // 새 형식: 배열 조건
+            elseif (is_array($cond) && isset($cond['condition'])) {
+                $conditions[] = '(' . $cond['condition'] . ')';
+            } else {
+                throw new Exception("Invalid condition format: " . print_r($cond, true));
             }
-            return implode(" AND ", $condition);
         }
-        return '';
+        
+        // 조건 결합
+        $result = $conditions[0];
+        for ($i = 1; $i < count($conditions); $i++) {
+            // 배열 조건일 경우 logic 사용, 문자열 조건은 기본 AND
+            $logic = (is_array($condition[$i]) && isset($condition[$i]['logic'])) ? strtoupper($condition[$i]['logic']) : $defaultLogic;
+            if (!in_array($logic, ['AND', 'OR'])) {
+                throw new Exception("Invalid logic operator: $logic");
+            }
+            $result .= " $logic " . $conditions[$i];
+        }
+        
+        return $result;
     }
     
     private static function buildSelectQuery($table, $columnString, $conditionString, $readSettings)
@@ -778,39 +837,158 @@ function sql_bind_insert($table, $inserts, $updateColumns = array(), $link = nul
 }
 
 function sql_bind_update($table, $updates, $conditions = array(), $link = null) {
+    $setClauses = array();
+    $updateValues = array();
     
-    $columns = array_map('sql_bind_update_map', array_keys($updates));
-    $columnValues = array_values($updates);
-    $condition = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
-    $conditionValues = array_map('sql_bind_condition_value', array_values($conditions));
-    return G5MysqlCRUD::update($table, $columns, $columnValues, $condition, $conditionValues, $link);
-
-}
-
-function sql_bind_update_map($item) {
-    return "$item = ?";
-}
-
-function sql_bind_condition_map($item, $value)
-{
-    if (is_array($value)) {
-        $operator = key($value);
-        if (strtoupper($operator) === 'IN') {
-            $placeholders = implode(', ', array_fill(0, count($value[$operator]), '?'));
-            return "$item $operator ($placeholders)";
+    // $updates 처리
+    foreach ($updates as $key => $value) {
+        $setClause = sql_bind_update_map($key, $value);
+        $setClauses[] = $setClause;
+        
+        if (is_array($value) && isset($value['function'])) {
+            foreach ($value['args'] as $arg) {
+                if (is_string($arg) && (strpos($arg, '$') === 0 || !preg_match('/^[a-zA-Z0-9_]+$/', $arg))) {
+                    $updateValues[] = (strpos($arg, '$') === 0) ? substr($arg, 1) : $arg;
+                }
+            }
+        } elseif (is_array($value) && isset($value['expression'])) {
+            // expression은 바인딩 값 필요 없음
+        } else {
+            $updateValues[] = $value;
         }
-        return "$item $operator ?";
     }
-    return "$item = ?";
+    
+    $conditionArray = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
+    $conditionValues = array();
+    foreach ($conditions as $k => $cond) {
+        $value = sql_bind_condition_value($k, $cond); // $k와 $cond를 모두 전달
+        if (is_array($value)) {
+            $conditionValues = array_merge($conditionValues, $value);
+        } else {
+            $conditionValues[] = $value;
+        }
+    }
+    
+    //$allValues = array_merge($updateValues, $conditionValues);
+    //return G5MysqlCRUD::update($table, $setClauses, $allValues, $conditionArray, $conditionValues, $link);
+    
+    $allValues = array_merge($updateValues, $conditionValues);
+    // 디버깅용 출력 추가
+    $conditionString = G5MysqlCRUD::buildConditionString($conditionArray);
+    
+    if (G5_IS_BIND_DEBUG) {
+        $debugQuery = "UPDATE $table SET " . implode(", ", $setClauses) . ($conditionString ? " WHERE $conditionString" : "");
+        echo "Debug Query: $debugQuery\n";
+        echo "Debug Values: " . print_r($allValues, true) . "\n";
+    }
+    
+    return G5MysqlCRUD::update($table, $setClauses, $allValues, $conditionArray, [], $link); // $conditionValues 중복 제거
+    
+    // return G5MysqlCRUD::update($table, $setClauses, $allValues, $conditionArray, $conditionValues, $link);
 }
 
-function sql_bind_condition_value($value)
+function sql_bind_update_map($key, $value = null)
 {
-    if (is_array($value)) {
-        if (strtoupper(key($value)) === 'IN') {
-            return $value['IN']; // 배열 반환
+    if (is_array($value) && isset($value['function'])) {
+        $function = strtoupper($value['function']);
+        $args = $value['args'];
+        $argPlaceholders = array();
+        foreach ($args as $arg) {
+            if (!is_scalar($arg)) {
+                throw new Exception("Invalid argument type in function args: " . print_r($arg, true));
+            }
+            if (is_string($arg) && strpos($arg, '$') === 0) {
+                $argPlaceholders[] = '?';
+            } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', $arg)) {
+                $argPlaceholders[] = '?';
+            } else {
+                $argPlaceholders[] = $arg;
+            }
         }
-        return current($value);
+        return "$key = $function(" . implode(', ', $argPlaceholders) . ")";
+    } elseif (is_array($value) && isset($value['expression'])) {
+        $expression = $value['expression'];
+        if (!preg_match('/^[a-zA-Z0-9_]+\s*[+\-*\/]\s*[0-9]+$/', $expression)) {
+            throw new Exception("Invalid expression format: $expression");
+        }
+        return "$key = $expression";
+    }
+    return "$key = ?";
+}
+
+function sql_bind_condition_map($key, $value = null)
+{
+    // 기존 키-값 쌍 형식 처리
+    if (!is_array($key)) {
+        if (is_array($value) && !empty($value)) {
+            $operator = key($value);
+            if (strtoupper($operator) === 'IN') {
+                $placeholders = implode(', ', array_fill(0, count($value[$operator]), '?'));
+                return array('condition' => "$key $operator ($placeholders)", 'logic' => 'AND');
+            }
+            return array('condition' => "$key $operator ?", 'logic' => 'AND');
+        }
+        return array('condition' => "$key = ?", 'logic' => 'AND');
+    }
+    
+    // 새 형식 (연관 배열) 처리
+    $cond = $key; // $key가 실제 조건 배열
+    if (isset($cond['group'])) {
+        $groupConditions = array_map('sql_bind_condition_map', array_keys($cond['group']), array_values($cond['group']));
+        $groupLogic = isset($cond['groupLogic']) ? strtoupper($cond['groupLogic']) : 'AND';
+        if (!in_array($groupLogic, ['AND', 'OR'])) {
+            throw new Exception("Invalid group logic operator: $groupLogic");
+        }
+        return array(
+            'condition' => G5MysqlCRUD::buildConditionString($groupConditions, $groupLogic),
+            'logic' => isset($cond['logic']) ? strtoupper($cond['logic']) : 'AND'
+        );
+    }
+    
+    $column = $cond['column'];
+    $value = $cond['value'];
+    $operator = isset($cond['operator']) ? strtoupper($cond['operator']) : '=';
+    $logic = isset($cond['logic']) ? strtoupper($cond['logic']) : 'AND';
+
+    if (is_array($value) && $operator === 'IN') {
+        $placeholders = implode(', ', array_fill(0, count($value), '?'));
+        return array('condition' => "$column $operator ($placeholders)", 'logic' => $logic);
+    }
+    return array('condition' => "$column $operator ?", 'logic' => $logic);
+}
+
+function sql_bind_condition_value($key, $value = null)
+{
+    // 기존 키-값 쌍 형식 처리
+    if (!is_array($key)) {
+        if (is_array($value) && !empty($value)) {
+            $operator = key($value);
+            if (strtoupper($operator) === 'IN') {
+                return $value[$operator];
+            }
+            return $value[$operator];
+        }
+        return $value;
+    }
+    
+    // 새 형식 처리
+    $cond = $key;
+    if (isset($cond['group'])) {
+        $values = array();
+        foreach ($cond['group'] as $k => $subCond) {
+            $subValue = sql_bind_condition_value($k, $subCond);
+            if (is_array($subValue)) {
+                $values = array_merge($values, $subValue);
+            } else {
+                $values[] = $subValue;
+            }
+        }
+        return $values;
+    }
+    
+    $value = $cond['value'];
+    if (is_array($value) && strtoupper(key($value)) === 'IN') {
+        return $value['IN'];
     }
     return $value;
 }
@@ -833,17 +1011,21 @@ function sql_bind_select_join($query, $values = array(), $link = null, $is_fetch
 }
 
 function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0) {
-    $condition = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
+    // 조건을 키-값 쌍으로 전달받으므로 array_map에 key와 value를 함께 사용
+    $conditionArray = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
     $values = array();
-    foreach ($conditions as $key => $value) {
-        if (is_array($value) && strtoupper(key($value)) === 'IN') {
-            $values = array_merge($values, $value['IN']);
+    foreach ($conditions as $k => $cond) {
+        $value = sql_bind_condition_value($k, $cond);
+        if (is_array($value)) {
+            $values = array_merge($values, $value);
         } else {
-            $values[] = sql_bind_condition_value($value);
+            $values[] = $value;
         }
     }
     if (!is_array($columns)) $columns = explode(',', $columns);
-    return G5MysqlCRUD::read($table, $columns, $condition, $values, $readSettings, $link, $is_fetch);
+    
+    $conditionString = G5MysqlCRUD::buildConditionString($conditionArray);
+    return G5MysqlCRUD::read($table, $columns, $conditionArray, $values, $readSettings, $link, $is_fetch);
 }
 
 // 한 행만 리턴 (sql_fetch 와 같은 역할)

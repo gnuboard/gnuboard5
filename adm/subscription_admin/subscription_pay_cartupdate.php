@@ -338,7 +338,7 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
                 if($pg_res_cd == '') {
                     $pg_cancel_log = ' PG '.$pay['py_settle_case'].' 승인취소 처리';
                     $sql = " update {$g5['g5_subscription_pay_table']}
-                                set od_refund_price = '{$pay['py_receipt_price']}'
+                                set py_refund_price = '{$pay['py_receipt_price']}'
                                 where pay_id = '$pay_id' ";
                     sql_query($sql);
                 }
@@ -353,9 +353,38 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
 // 미수금 등의 정보
 $info = get_subscription_pay_info($pay_id, $od_id);
 
-if(!$info)
+if (!(isset($info['py_cart_price']) && $info)) {
     alert('주문자료가 존재하지 않습니다.');
+}
 
+$updates = array(
+'py_cart_price' => $info['py_cart_price'],
+'py_cart_coupon'  => $info['py_cart_coupon'],
+'py_coupon'       => $info['py_coupon'],
+'py_send_coupon'  => $info['py_send_coupon'],
+'py_cancel_price' => $info['py_cancel_price'],
+'py_send_cost'    => $info['py_send_cost'],
+'py_misu'        => $info['py_misu'],
+'py_tax_mny'      => $info['py_tax_mny'],
+'py_vat_mny'      => $info['py_vat_mny'],
+'py_free_mny'     => $info['py_free_mny']
+);
+
+if ($mod_history) { // 주문변경 히스토리 기록
+    $updates['py_mod_history'] = array('function' => 'CONCAT', 'args' => array('py_mod_history', $mod_history));
+}
+
+if($cancel_change) {
+    $updates['py_status'] = '취소'; // 주문상품 모두 취소, 반품, 품절이면 주문 취소
+} else {
+    if (isset($_POST['pb_status']) && in_array($_POST['pb_status'], $status_normal)) { // 정상인 주문상태만 기록
+        $updates['py_status'] = $_POST['pb_status'];
+    }
+}
+
+$result = sql_bind_update($g5['g5_subscription_pay_table'], $updates, array('od_id' => $od_id, 'pay_id' => $pay_id));
+
+/*
 $sql = " update {$g5['g5_subscription_pay_table']}
             set od_cart_price   = '{$info['od_cart_price']}',
                 od_cart_coupon  = '{$info['od_cart_coupon']}',
@@ -381,20 +410,22 @@ if($cancel_change) {
 
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
+*/
 
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 $url = "./orderform.php?od_id=$od_id&amp;$qstr";
-
-exit;
 
 // 신용카드 취소 때 오류가 있으면 알림
 if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
     alert('오류코드 : '.$pg_res_cd.' 오류내용 : '.$pg_res_msg, $url);
 } else {
     // 1.06.06
-    $od = sql_fetch(" select od_receipt_point from {$g5['g5_subscription_pay_table']} where pay_id = '$pay_id' and od_id = '$od_id' ");
-    if ($od['od_receipt_point'])
+    // $od = sql_fetch(" select py_receipt_point from {$g5['g5_subscription_pay_table']} where pay_id = '$pay_id' and od_id = '$od_id' ");
+    
+    $pay = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'py_receipt_point', array('od_id' => $od_id, 'pay_id' => $pay_id));
+    
+    if ($pay['py_receipt_point'])
         alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.", $url);
     else
         goto_url($url);

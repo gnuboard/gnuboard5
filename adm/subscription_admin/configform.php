@@ -9,8 +9,19 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
+/*
 $sql = " select * from `{$g5['g5_subscription_config_table']}` limit 1";
 $g5_subscriptions_options = $config['g5_subscriptions_options'] = sql_fetch($sql);
+*/
+
+$config['g5_subscriptions_options'] = sql_bind_select_fetch(
+    $g5['g5_subscription_config_table'],
+    '*',
+    array(),
+    array('limit' => 1)
+);
+
+$g5_subscriptions_options = $config['g5_subscriptions_options'];
 
 /*
 if (! isset($g5_subscriptions_options['su_cron_execute_hour']) ) {
@@ -134,6 +145,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 							<dd>{입력} {결제주기}</dd>
 						</dl>
 					   <p><span class="frm_info">이것은 헬프문입니다.</span></p>
+                       <p>일 선택시 기본값은 매일 정기결제합니다.</p>
+                       <p>주 선택시 기본값은 매주 결제한 요일에 정기결제합니다.</p>
+                       <p>월 선택시 기본값은 매월 결제한 일에 정기결제합니다.</p>
+                       <p>년 선택시 기본값은 매년 결제한 일에 정기결제합니다.</p>
 					</div>
 				</div>
                 <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
@@ -209,6 +224,9 @@ Array
                         <?php
                         foreach ($subscription_info_inputs as $opt) {
                             $disabled_attr = ($i === 0) ? 'disabled' : '';
+                            
+                            print_r2($opt);
+                            
                         ?>
                         <tr class="trtr" data-jbox-content="">
                             <td>
@@ -217,7 +235,24 @@ Array
                             </td>
                             <td>
                                 <span class="default_format">
-                                    <input type="number" name="opt_input[]" class="frm_input" value="<?php echo $opt['opt_input']; ?>">
+                                    <?php if ($opt['opt_date_format'] === 'week') { ?>
+                                    <select name="opt_input[<?php echo $i; ?>]">
+                                        <option value="">선택안함</option>
+                                        <?php echo option_selected("mon", $opt['opt_input'], "월요일"); ?>
+                                        <?php echo option_selected("tue", $opt['opt_input'], "화요일"); ?>
+                                        <?php echo option_selected("wed", $opt['opt_input'], "수요일"); ?>
+                                        <?php echo option_selected("thu", $opt['opt_input'], "목요일"); ?>
+                                        <?php echo option_selected("fri", $opt['opt_input'], "금요일"); ?>
+                                        <?php echo option_selected("sat", $opt['opt_input'], "토요일"); ?>
+                                        <?php echo option_selected("sun", $opt['opt_input'], "일요일"); ?>
+                                    </select>
+                                    <?php } else if ($opt['opt_date_format'] === 'month') { ?>
+                                        <input type="number" name="opt_input[<?php echo $i; ?>]" class="frm_input month_input" min="0" max="31" value="<?php echo $opt['opt_input']; ?>">
+                                    <?php } else if ($opt['opt_date_format'] === 'year') { ?>
+                                        <input type="number" name="opt_input[<?php echo $i; ?>]" class="frm_input" value="1" disabled="">
+                                    <?php } else { ?>
+                                        <input type="number" name="opt_input[<?php echo $i; ?>]" class="frm_input" value="<?php echo $opt['opt_input']; ?>">
+                                    <?php } ?>
                                 </span>
                             </td>
                             <td>
@@ -388,6 +423,15 @@ Array
                         
                     }
                     
+                    $(document).on("input", ".month_input", function (e) {
+                        var value = parseInt($(this).val(), 10);
+                        if (value > 31) {
+                            $(this).val(31);
+                        } else if (value < 1) {
+                            $(this).val(1); // 최소값도 1로 설정
+                        }
+                    });
+                    
                     $("#sit_supply_frm .trtr").each(function(index, item){
                         var $this = $(this);
                         
@@ -499,7 +543,7 @@ Array
                                 content: week_content + add_content
                             },
                             month: {
-                                input: '<input type="number" name="opt_input[]" class="frm_input" min="0" max="31" value="0">',
+                                input: '<input type="number" name="opt_input[]" class="frm_input month_input" min="0" max="31" value="0">',
                                 content: month_content + add_content
                             },
                             year: {
