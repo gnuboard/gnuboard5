@@ -24,6 +24,9 @@
             var width = $this.width();
 
             $img.each(function() {
+				
+				if ($(this).attr("loading") === "lazy") return; // loading="lazy" 속성이 있는 경우 건너뜀
+				
                 if($(this).data("width") == undefined)
                     $(this).data("width", $(this).width());
 
@@ -73,6 +76,9 @@
             var width = $this.width();
 
             $img.each(function() {
+				
+				if ($(this).attr("loading") === "lazy") return; // loading="lazy" 속성이 있는 경우 건너뜀
+				
                 $(this).removeAttr("width")
                        .removeAttr("height")
                        .css("width","")
