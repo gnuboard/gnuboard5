@@ -1,5 +1,5 @@
 <?php
-define('IS_SUBSCRIPTION_EXPIRE_PAGE', 1);
+define('IS_SUBSCRIPTION_ORDER_FORM', 1);
 include_once('./_common.php');
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
@@ -10,6 +10,22 @@ add_javascript('<script src="'.G5_JS_URL.'/subscription.order.js"></script>', 0)
 
 $sw_direct = isset($_REQUEST['sw_direct']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['sw_direct']) : '';
 $aparams_array = (isset($_REQUEST['aparams']) && isValidBase64($_REQUEST['aparams'])) ? unserialize(base64_decode($_REQUEST['aparams'])) : array('hope_delivery_date'=>'');
+
+// if (isset($aparams_array['hope_delivery_date']) && $aparams_array['hope_delivery_date']) {
+    
+    $business_next_day = getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after'));
+    
+    if ($aparams_array['hope_delivery_date'] && isValidDate($aparams_array['hope_delivery_date'])) {
+        
+        if (strtotime($aparams_array['hope_delivery_date']) < strtotime($business_next_day)) {
+            $aparams_array['hope_delivery_date'] = $business_next_day;
+        }
+        
+    } else {
+        $aparams_array['hope_delivery_date'] = $business_next_day;
+    }
+
+// }
 
 // $aparams2 = base64_decode($_REQUEST['aparams']);
 

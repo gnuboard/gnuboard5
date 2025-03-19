@@ -3,11 +3,11 @@ $sub_menu = '600100';
 include_once('./_common.php');
 
 /*
-print_r($_POST);
+print_r2($_POST);
 
-exit;
+
 $opts = array();
-$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
+$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_etc', 'opt_print', 'opt_use');
 $opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
 
 if ($opt_ids) {
@@ -18,7 +18,7 @@ if ($opt_ids) {
     }
 }
 
-print_r($opts);
+print_r2($opts);
 
 exit;
 */
@@ -82,7 +82,7 @@ if (isset($_POST['su_subscription_content_end'])) {
 $exist = sql_bind_select_fetch($g5['g5_subscription_config_table'], '*', array(), array('limit'=>1));
 
 $opts = array();
-$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
+$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_etc', 'opt_print', 'opt_use');
 $opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
 
 if ($opt_ids) {

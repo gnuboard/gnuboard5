@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+define('G5_IS_SUBSCRIPTION_ITEM', 1);
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSUBSCRIPTION_PATH.'/item.php');
     return;

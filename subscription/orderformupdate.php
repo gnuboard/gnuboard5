@@ -31,6 +31,7 @@ if ($od_subscription_select_data && get_subs_option('su_chk_user_delivery') && c
         'opt_id' => 0,
         'opt_input' => $od_subscription_select_data,
         'opt_date_format' => 'day',
+        'opt_etc' => '',
         'opt_print' => '',
         'opt_use' => 1
     );

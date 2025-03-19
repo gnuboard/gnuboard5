@@ -492,3 +492,42 @@ text-align:right;
 }
 
 #sod_frm #sod_frm_subscription_input .tbl_frm01 th{width:104px}
+
+.today-highlight span.ui-state-default {
+    position: relative;
+    font-weight: bold;
+    color: red !important; /* 오늘 날짜 강조 */
+}
+
+.today-highlight span.ui-state-default::after {
+    content: "오늘";
+    display: block;
+    font-size: 10px;
+    color: blue;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 25px; /* 날짜 아래로 이동 */
+}
+
+.subscription-form {padding:0px 10px}
+.order-table {
+	display: table;
+	width: 100%;
+}
+.order-table .row {
+	display: table-row;
+}
+.order-table .cell {
+	display: table-cell;
+	padding: 10px;
+	text-align: left;
+}
+.order-table .header {
+	width:94px;
+}
+
+.order-table .header label{display:inline-block;font-weight:normal;margin-right:1em}
+.order-table .full-width {
+	width: 100%;
+}

@@ -4,6 +4,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
 
+$result_row = sql_bind_select_array($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
+    array('od_id'=>$od_id),
+    array('groupBy'=>'it_id', 'orderBy'=>'ct_id')
+);
+        
+$subscription_pays = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'pay_id', 'orderType'=>'DESC'));
+
 $g5['title'] = '주문상세내역';
 include_once('./_head.php');
 ?>
@@ -17,19 +24,6 @@ include_once('./_head.php');
         <?php
         $st_count1 = $st_count2 = 0;
         $custom_cancel = false;
-        
-        /*
-        $sql = " select it_id, it_name, ct_send_cost, it_sc_type
-                    from {$g5['g5_shop_cart_table']}
-                    where od_id = '$od_id'
-                    group by it_id
-                    order by ct_id ";
-        $result = sql_query($sql);
-        */
-        $result_row = sql_bind_select_array($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
-        array('od_id'=>$od_id),
-        array('groupBy'=>'it_id', 'orderBy'=>'ct_id')
-        );
         ?>
         
         <div class="tbl_head03 tbl_wrap">
@@ -47,39 +41,19 @@ include_once('./_head.php');
 	            </thead>
 	            <tbody>
 	            <?php
-	            //for($i=0; $row=sql_fetch_array($result); $i++) {
                 $i = 0;
                 foreach($result_row as $row) {
 	                $image = get_it_image($row['it_id'], 55, 55);
-	                
-                    /*
-	                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-	                            from {$g5['g5_shop_cart_table']}
-	                            where od_id = '$od_id'
-	                              and it_id = '{$row['it_id']}'
-	                            order by io_type asc, ct_id asc ";
-	                $res = sql_query($sql);
-	                $rowspan = sql_num_rows($res) + 1;
-                    */
                     
                     $res = sql_bind_select($g5['g5_subscription_cart_table'], 'ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price',
-                    array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
-                    array('orderBy'=>'io_type, ct_id')
+                        array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
+                        array('orderBy'=>'io_type, ct_id')
                     );
                     $rowspan = sql_num_rows($res) + 1;
 	
-	                // 합계금액 계산
-                    /*
-	                $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-	                                SUM(ct_qty) as qty
-	                            from {$g5['g5_subscription_cart_table']}
-	                            where it_id = '{$row['it_id']}'
-	                              and od_id = '$od_id' ";
-	                $sum = sql_fetch($sql);
-                    */
                     
                     $sum = sql_bind_select_fetch($g5['g5_subscription_cart_table'], 'SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price, SUM(ct_qty) as qty',
-                    array('od_id'=>$od_id, 'it_id'=>$row['it_id'])
+                        array('od_id'=>$od_id, 'it_id'=>$row['it_id'])
                     );
 	
 	                // 배송비
@@ -266,19 +240,7 @@ include_once('./_head.php');
                     <th scope="row">주 소</th>
                     <td><?php echo get_text(sprintf("(%s%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2'], $od['od_b_addr3'], $od['od_b_addr_jibeon'])); ?></td>
                 </tr>
-                <?php
-                // 희망배송일을 사용한다면
-                if ($default['de_hope_date_use'])
-                {
-                ?>
-                <tr>
-                    <th scope="row">희망배송일</th>
-                    <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
-                </tr>
-                <?php }
-                if ($od['od_memo'])
-                {
-                ?>
+                <?php if ($od['od_memo']) { ?>
                 <tr>
                     <th scope="row">전하실 말씀</th>
                     <td><?php echo conv_content($od['od_memo'], 0); ?></td>
@@ -297,7 +259,36 @@ include_once('./_head.php');
     $use = subscription_serial_decode($od['od_subscription_selected_number']);
     
     $opt_print = (isset($opt['opt_print']) && $opt['opt_print']) ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+    
+    if (!$opt['opt_print']) {
+        
+        if (!$opt['opt_input']) $opt['opt_input'] = 1;
+        
+        if ($opt['opt_date_format'] === 'week') {
+            
+            $opt_print = (int) $opt['opt_input'].'주에 ';
 
+            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                $opt_print .= get_subscriptionDayOfWeek($opt['opt_etc']);
+            } else {
+                $opt_print .= '한 번';
+            }
+        } else if($opt['opt_date_format'] === 'month') {
+                            
+            $opt_print = (int) $opt['opt_input'].'달에 ';
+
+            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                $opt_print .= (int) $opt['opt_etc'].'일';
+            } else {
+                $opt_print .= '한 번';
+            }
+
+            } else if($opt['opt_date_format'] === 'year') {
+            $opt_print = '1년에 한 번';
+
+        }
+    }
+    
     if ($opt['opt_input'] || $opt['opt_date_format']) {
         $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
         $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
@@ -310,6 +301,20 @@ include_once('./_head.php');
     }
     
     $cards = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('mb_id'=>$member['mb_id'], 'ci_id'=>$od['ci_id']));
+    
+    $payment_date_title = (!empty($subscription_pays)) ? '다음 결제일' : '첫 결제일';
+    $upcoming_payment_title = '다음 결제가격';
+    $next_delivery_title = '다음 배송일';
+
+    if (empty($subscription_pays)) {
+        $payment_date_title = '첫 결제일';
+        $upcoming_payment_title = '첫 결제가격';
+        $next_delivery_title = '첫 배송일';
+        $e_number = '1';
+    } else {
+        $subscription_pay_max = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(py_round_no) as max_no', array('od_id'=>$od_id));
+        $e_number = isset($subscription_pay_max['max_no']) ? (int) $subscription_pay_max['max_no'] : '1';
+    }
 ?>
             <div class="tbl_head01 tbl_wrap">
                 <table>
@@ -343,11 +348,11 @@ include_once('./_head.php');
 	                </tr>
                     <?php } ?>
                     <tr>
-	                    <th scope="row">다음 결제일</th>
+	                    <th scope="row"><?php echo $payment_date_title; ?></th>
 	                    <td><?php echo date('Y-m-d', strtotime($od['next_billing_date'])); ?></td>
                     </tr>
                     <tr>
-	                    <th scope="row">다음 결제가격<br>(예정)</th>
+	                    <th scope="row"><?php echo $upcoming_payment_title; ?><br>(예정)</th>
 	                    <td>
                             <?php echo number_format(subscription_order_pay_price($od_id)); ?>원
                             <br>
@@ -355,10 +360,10 @@ include_once('./_head.php');
                         </td>
                     </tr>
                     <tr>
-	                    <th scope="row">다음 배송일</th>
+	                    <th scope="row"><?php echo $next_delivery_title; ?></th>
 	                    <td>
-                            몇 회차<span class="set_pay_date"><?php echo get_next_delivery_date($od); ?></span>
-                            등록된 수단으로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>영업일 전 자동결제 됩니다.
+                            <?php echo $e_number; ?> 회차 <span class="set_pay_date"><?php echo get_next_delivery_date($od, 'y-m-d'); ?></span>
+                            등록된 결제카드로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>영업일 전 자동결제 됩니다.
                         </td>
                     </tr>
 	                </tbody>
@@ -366,18 +371,12 @@ include_once('./_head.php');
             </div>
         </section>
         
-        <?php
-        
-        $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'pay_id', 'orderType'=>'DESC'));
-        
-        ?>
-        
         <section id="sod_fin_dvr">
             <h3>정기결제내역</h3>
             
             <div class="tbl_head01 tbl_wrap">
                 <table>
-                    <?php if ($pay_rows) { ?>
+                    <?php if ($subscription_pays) { ?>
                     <tr>
                         <th>회차</th>
                         <th>결제PG사</th>
@@ -385,7 +384,7 @@ include_once('./_head.php');
                         <th>결제금액</th>
                         <th>보기</th>
                     </tr>
-                    <?php foreach($pay_rows as $key=>$v) { ?>
+                    <?php foreach($subscription_pays as $key=>$v) { ?>
                     <tr>
                         <td><?php echo $v['py_round_no']; ?></td>
                         <td><?php echo $v['py_pg']; ?></td>

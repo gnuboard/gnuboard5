@@ -169,6 +169,16 @@ if (get_subs_option('su_card_test')) {
     define('G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL', 'https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=');
 }
 
-if (defined('IS_SUBSCRIPTION_EXPIRE_PAGE') && IS_SUBSCRIPTION_EXPIRE_PAGE) {
+if (defined('IS_SUBSCRIPTION_ORDER_FORM') && IS_SUBSCRIPTION_ORDER_FORM) {
     add_event('common_header', 'nocache_nostore_subscription_headers', 1, 0);
+}
+
+// 결제일을 구하는 함수
+function getNextPaymentDate($baseDate, $daysToSubtract = 0, $od=array()) {
+    $calculatedDate = strtotime("$baseDate -$daysToSubtract days");
+    
+    
+    return run_replace('getNextPaymentDate', date('Y-m-d', $calculatedDate).' 09:00:01', $calculatedDate, $baseDate, $daysToSubtract, $od);
+    
+    
 }
