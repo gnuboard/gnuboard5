@@ -1,0 +1,77 @@
+<?php
+if (!defined('_GNUBOARD_')) exit;
+
+function getWeeklyDeliveryDate($startDate, $weekInterval, $targetDayOfWeek, $holidays = array()) {
+    // $startDate: 최초 배송 시작일 (YYYY-MM-DD)
+    // $weekInterval: 몇 주 후인지 (0: 이번 주, 1: 다음 주 등)
+    // $targetDayOfWeek: 목표 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+    // $holidays: 공휴일 배열
+    
+    // 기준 날짜의 타임스탬프
+    $startTimestamp = strtotime($startDate);
+    
+    // 시작 날짜의 요일
+    $startDayOfWeek = date('w', $startTimestamp);
+    
+    // 목표 요일까지의 날짜 차이 계산
+    $daysToAdd = ($targetDayOfWeek - $startDayOfWeek + 7) % 7;
+    if ($weekInterval > 0) {
+        $daysToAdd += $weekInterval * 7; // 주 단위로 추가
+    }
+    
+    // 목표 날짜 계산
+    $scheduledDate = date('Y-m-d', strtotime("+$daysToAdd days", $startTimestamp));
+    
+    // getBusinessDaysBefore를 사용해 연휴 전 영업일로 조정
+    $adjustedDate = getBusinessDaysBefore($scheduledDate, 0, $holidays);
+    
+    return $adjustedDate;
+}
+
+function getMonthlyDeliveryDate($startDate, $monthInterval, $targetDay, $holidays = array()) {
+    // $startDate: 최초 배송 시작일 (YYYY-MM-DD)
+    // $monthInterval: 몇 달 후인지 (0: 이번 달, 1: 다음 달 등)
+    // $targetDay: 목표 날짜 (1~31)
+    // $holidays: 공휴일 배열
+    
+    // 입력 검증: $targetDay는 1~31 사이어야 함
+    if ($targetDay < 1 || $targetDay > 31) {
+        throw new Exception("Target day must be between 1 and 31");
+    }
+    
+    // 기준 날짜에서 월 간격 적용
+    $baseDate = date('Y-m-01', strtotime("+$monthInterval months", strtotime($startDate)));
+    
+    // 목표 날짜 설정 (해당 달의 $targetDay)
+    $scheduledDate = $baseDate;
+    $month = date('m', strtotime($baseDate));
+    $year = date('Y', strtotime($baseDate));
+    
+    // 해당 달의 마지막 날 확인
+    $lastDayOfMonth = date('t', strtotime($baseDate));
+    $adjustedTargetDay = min($targetDay, $lastDayOfMonth); // 31일이 없는 달 조정
+    
+    $scheduledDate = sprintf('%d-%02d-%02d', $year, $month, $adjustedTargetDay);
+    
+    // getBusinessDaysBefore를 사용해 연휴 전 영업일로 조정
+    $adjustedDate = getBusinessDaysBefore($scheduledDate, 0, $holidays);
+    
+    // 조정된 날짜가 해당 달을 벗어나면 해당 달의 마지막 영업일로 고정
+    $monthStart = date('Y-m-01', strtotime($baseDate));
+    if (strtotime($adjustedDate) < strtotime($monthStart)) {
+        $timestamp = strtotime(date('Y-m-t', strtotime($baseDate)));
+        $maxIterations = 10;
+        $iteration = 0;
+        while ($iteration++ < $maxIterations) {
+            $dayOfWeek = date('w', $timestamp);
+            $formattedDate = date('Y-m-d', $timestamp);
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !isset(array_flip($holidays)[$formattedDate])) {
+                break;
+            }
+            $timestamp = strtotime('-1 day', $timestamp);
+        }
+        $adjustedDate = date('Y-m-d', $timestamp) . ' 09:00:01';
+    }
+    
+    return $adjustedDate;
+}
