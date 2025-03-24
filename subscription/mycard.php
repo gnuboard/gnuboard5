@@ -117,7 +117,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             <form name="fwishlist" method="post" action="./manage_card_update.php">
             <input type="hidden" name="act" value="multi">
             <input type="hidden" name="sw_direct" value="">
-            <input type="hidden" name="prog" value="wish">
+            <input type="hidden" name="prog" value="subscription_card">
                 <ul>
                 <?php
                 $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test, od_time from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";

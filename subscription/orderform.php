@@ -76,7 +76,7 @@ else
     include_once(G5_SUBSCRIPTION_PATH.'/_head.php');
 
 // 희망배송일 지정
-if ($default['de_hope_date_use']) {
+if (get_subs_option('su_hope_date_use')) {
     include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 }
 

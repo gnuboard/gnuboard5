@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
-function getWeeklyDeliveryDate($startDate, $weekInterval, $targetDayOfWeek, $holidays = array()) {
+function getWeeklyDeliveryDate($startDate, $weekInterval, $targetDayOfWeek = 0, $holidays = array()) {
     // $startDate: 최초 배송 시작일 (YYYY-MM-DD)
     // $weekInterval: 몇 주 후인지 (0: 이번 주, 1: 다음 주 등)
     // $targetDayOfWeek: 목표 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
@@ -10,17 +10,22 @@ function getWeeklyDeliveryDate($startDate, $weekInterval, $targetDayOfWeek, $hol
     // 기준 날짜의 타임스탬프
     $startTimestamp = strtotime($startDate);
     
-    // 시작 날짜의 요일
-    $startDayOfWeek = date('w', $startTimestamp);
-    
-    // 목표 요일까지의 날짜 차이 계산
-    $daysToAdd = ($targetDayOfWeek - $startDayOfWeek + 7) % 7;
-    if ($weekInterval > 0) {
-        $daysToAdd += $weekInterval * 7; // 주 단위로 추가
+    if ($targetDayOfWeek) {
+        // 시작 날짜의 요일
+        $startDayOfWeek = date('w', $startTimestamp);
+        
+        // 목표 요일까지의 날짜 차이 계산
+        $daysToAdd = ($targetDayOfWeek - $startDayOfWeek + 7) % 7;
+        if ($weekInterval > 0) {
+            $daysToAdd += $weekInterval * 7; // 주 단위로 추가
+        }
+        
+        // 목표 날짜 계산
+        $scheduledDate = date('Y-m-d', strtotime("+$daysToAdd days", $startTimestamp));
+    } else {
+        // 기준 날짜 계산 (startDate에서 weekInterval만큼 후)
+        $scheduledDate = date('Y-m-d', strtotime("+$weekInterval weeks", $startTimestamp));
     }
-    
-    // 목표 날짜 계산
-    $scheduledDate = date('Y-m-d', strtotime("+$daysToAdd days", $startTimestamp));
     
     // getBusinessDaysBefore를 사용해 연휴 전 영업일로 조정
     $adjustedDate = getBusinessDaysBefore($scheduledDate, 0, $holidays);

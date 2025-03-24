@@ -168,7 +168,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
     <div class="row">
         <?php if (get_subs_option('su_hope_date_use')) { // 배송희망일 사용 ?>
         <div class="cell header">
-            <label for="od_hope_date_print">희망배송일</label>
+            <label for="od_hope_date_print">첫 희망배송일</label>
         </div>
         <div class="cell jquery-pg-datepicker">
             <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">

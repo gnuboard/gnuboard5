@@ -309,7 +309,7 @@ include_once('./_head.php');
     if (empty($subscription_pays)) {
         $payment_date_title = '첫 결제일';
         $upcoming_payment_title = '첫 결제가격';
-        $next_delivery_title = '첫 배송일';
+        $next_delivery_title = '첫 배송일(예정)';
         $e_number = '1';
     } else {
         $subscription_pay_max = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(py_round_no) as max_no', array('od_id'=>$od_id));
@@ -363,7 +363,7 @@ include_once('./_head.php');
 	                    <th scope="row"><?php echo $next_delivery_title; ?></th>
 	                    <td>
                             <?php echo $e_number; ?> 회차 <span class="set_pay_date"><?php echo get_next_delivery_date($od, 'y-m-d'); ?></span>
-                            등록된 결제카드로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>영업일 전 자동결제 됩니다.
+                            등록된 결제카드로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>일 전 자동결제 됩니다.
                         </td>
                     </tr>
 	                </tbody>

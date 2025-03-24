@@ -1470,6 +1470,11 @@ function calculateNextDeliveryDate($od, $date_format=''){
     
     $timestamp = !is_null_date($od['od_hope_date']) ? strtotime($od['od_hope_date']) : strtotime($od['od_time']);
     
+    // 아직 첫회차 결제전이면
+    if (!$od['od_pays_total'] && $od['od_hope_date']) {
+        return date('Y-m-d', $timestamp);
+    }
+    
     if (isset($od['next_delivery_date']) && $od['next_delivery_date']) {
         $timestamp = strtotime($od['next_delivery_date']);
     }
@@ -1491,6 +1496,9 @@ function calculateNextDeliveryDate($od, $date_format=''){
     $interval = $od_subscription_date_format ? $od_subscription_date_format : 'day';
     $plus = abs($od_subscription_number);
     
+    $startDate = date('Y-m-d', $timestamp); // 기준 날짜
+    
+    /*
     // 주어진 interval에 따라 날짜를 증가시킴
     switch ($interval) {
         case 'day':
@@ -1515,6 +1523,61 @@ function calculateNextDeliveryDate($od, $date_format=''){
     
     // 다음 청구일을 YYYY-MM-DD 형식으로 반환
     return getBusinessDaysBefore(date($date_format, $timestamp), $config_before_pay_date);
+    */
+    
+    // 주어진 interval에 따라 날짜를 증가시킴
+    switch ($interval) {
+        case 'day':
+            $timestamp = strtotime('+'.$plus.' day', $timestamp);
+            // 일의 경우 무조건 영업일 다음날로 지정
+            $nextdate = getBusinessDaysnext(date('Y-m-d H:i:s', $timestamp));
+            break;
+        case 'week':
+            // $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            // 특정 요일 설정 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+            
+            $otp_etc = isset($od_subscription_selected_data['opt_etc']) ? $od_subscription_selected_data['opt_etc'] : '';
+            
+            // 요일 매핑
+            $dayMap = array(
+                'sun' => 0,
+                'mon' => 1,
+                'tue' => 2,
+                'wed' => 3,
+                'thu' => 4,
+                'fri' => 5,
+                'sat' => 6
+            );
+
+            // etc_data에서 목표 요일 가져오기 (없으면 기본값으로 월요일(1) 사용)
+            $targetDayOfWeek = ($otp_etc && isset($dayMap[$otp_etc])) ? $dayMap[$otp_etc] : 0;
+            
+            /*
+            $targetDayOfWeek = isset($od_subscription_selected_data['target_day_of_week']) 
+                ? (int) $od_subscription_selected_data['target_day_of_week'] 
+                : 0; // 기본값: 월요일
+            */
+            
+            $nextdate = getWeeklyDeliveryDate($startDate, $plus, $targetDayOfWeek);
+            break;
+        case 'month':
+            // $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            // 특정 날짜 설정 (1~31)
+            $targetDay = isset($od_subscription_selected_data['target_day']) 
+                ? (int) $od_subscription_selected_data['target_day'] 
+                : 15; // 기본값: 15일
+            $nextdate = getMonthlyDeliveryDate($startDate, $plus, $targetDay);
+            $is_check_before = true;
+            break;
+        case 'year':
+            $timestamp = strtotime("+$plus year", $timestamp);
+            $nextdate = getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), 0);
+            break;
+        default:
+            throw new Exception("Unknown billing interval: $interval");
+    }
+    
+    return $nextdate;
 }
 
 function calculateNextBillingDate2($od, $od_hope_date=null){
@@ -1581,20 +1644,33 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
             $nextdate = getBusinessDaysnext(date('Y-m-d H:i:s', $timestamp));
             break;
         case 'week':
-            $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            // $timestamp = strtotime('+'.$plus.' week', $timestamp);
+            // 특정 요일 설정 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+            $targetDayOfWeek = isset($od_subscription_selected_data['target_day_of_week']) 
+                ? (int) $od_subscription_selected_data['target_day_of_week'] 
+                : 1; // 기본값: 월요일
+            $nextdate = getWeeklyDeliveryDate($startDate, $plus, $targetDayOfWeek);
             break;
         case 'month':
-            $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            // $timestamp = strtotime('+'.$plus.' month', $timestamp);
+            // 특정 날짜 설정 (1~31)
+            $targetDay = isset($od_subscription_selected_data['target_day']) 
+                ? (int) $od_subscription_selected_data['target_day'] 
+                : 15; // 기본값: 15일
+            $nextdate = getMonthlyDeliveryDate($startDate, $plus, $targetDay);
             $is_check_before = true;
             break;
         case 'year':
-            $timestamp = strtotime('+'.$plus.' year', $timestamp);
-            $is_check_before = true;
+            $timestamp = strtotime("+$plus year", $timestamp);
+            $nextdate = getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), 0);
             break;
         default:
             throw new Exception("Unknown billing interval: $interval");
     }
     
+    return $nextdate;
+    
+    /*
     if ($is_check_before) {
         
         // 이전날로 구함
@@ -1603,6 +1679,7 @@ function calculateNextBillingDate2($od, $od_hope_date=null){
     
     // 다음날로 구함
     return getBusinessDaysnext(date('Y-m-d H:i:s', $timestamp));
+    */
     
     // 다음 청구일을 YYYY-MM-DD 형식으로 반환
     // return getBusinessDaysBefore(date('Y-m-d H:i:s', $timestamp), $config_before_pay_date);

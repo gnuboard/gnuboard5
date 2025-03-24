@@ -697,7 +697,7 @@ if ($is_first_pay) {
         $g5['g5_subscription_order_table'],
         array('next_billing_date'=>$nextBillingDate,
         'last_billed_date'=>G5_TIME_YMDHIS,
-        'od_pays_total'=>1),
+        'od_pays_total'=>0),
         array('od_id'=>$od_id)
     );
     
