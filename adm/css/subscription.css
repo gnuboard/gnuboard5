@@ -104,3 +104,27 @@ select.subscription_date_format{min-width:80px}
     cursor: not-allowed;  /* 마우스 포인터 변경 */
     pointer-events: none;  /* 클릭/입력 방지 */
 }
+.calendar-wrap {
+	display: flex;
+	height: 100vh;
+}
+.calendar-main {
+	flex: 8;
+	width:100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.calendar-side {
+	flex: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.fullcalendar{width:100%}
+
+.fc-popover.fc-more-popover {
+    max-height: 380px; /* 원하는 최대 높이 지정 */
+    overflow-y: auto; /* 내부 스크롤 추가 */
+}

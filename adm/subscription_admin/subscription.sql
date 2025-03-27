@@ -208,7 +208,6 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   
   `py_settle_case` varchar(255) NOT NULL DEFAULT '',
   `py_card_name` varchar(100) NOT NULL DEFAULT '',
-  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
   `py_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `py_test` tinyint(4) NOT NULL DEFAULT '0',
   `py_pg` varchar(255) NOT NULL DEFAULT '',
@@ -318,8 +317,6 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_free_mny` int(11) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
   `od_fail_count` tinyint(4) NOT NULL DEFAULT '0',
-  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
-  `card_billkey` varchar(100) NOT NULL DEFAULT '',
   `od_pays_total` int(10) NOT NULL DEFAULT '0',
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
   `od_subscription_selected_data` text NOT NULL,
@@ -330,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `is_enable_user_input` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`od_id`),
   KEY `index2` (`mb_id`),
-  KEY `idx_billing` (od_enable_status, next_billing_date, card_billkey)
+  KEY `idx_billing` (od_enable_status, next_billing_date)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -368,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
   `od_tno` varchar(150) NOT NULL DEFAULT '',
   `od_id` bigint(20) unsigned NOT NULL,
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
+  `ci_time` datetime DEFAULT NULL,
   PRIMARY KEY (`ci_id`),
   KEY `index2` (`mb_id`),
   UNIQUE KEY `unique_pg_service_apikey_billkey` (`pg_service`, `pg_apikey`, `card_billkey`)

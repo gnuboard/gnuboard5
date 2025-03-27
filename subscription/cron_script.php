@@ -28,7 +28,7 @@ if ($is_db_success) {
 }
 
 if ($_SERVER['REMOTE_ADDR'] !== '59.10.38.2') {
-    die('');
+    // die('');
 }
 
 // $tomorrow = date('Y-m-d', strtotime('+1 day', G5_SERVER_TIME));
@@ -40,7 +40,9 @@ echo $sql;
 exit;
 */
 
-$subscription_wheres = array('card_billkey' => array('!=' => ''), 'od_enable_status' => 1, 'next_billing_date' => array('<=' => G5_TIME_YMDHIS));
+// $subscription_wheres = array('card_billkey' => array('!=' => ''), 'od_enable_status' => 1, 'next_billing_date' => array('<=' => G5_TIME_YMDHIS));
+
+$subscription_wheres = array('od_enable_status' => 1, 'next_billing_date' => array('<=' => G5_TIME_YMDHIS));
 
 // 현재 설정중인 PG만 결제하려면
 $subscription_wheres['od_pg'] = get_subs_option('su_pg_service');
@@ -124,7 +126,7 @@ foreach($result_row as $od) {
             include_once(G5_SUBSCRIPTION_PATH.'/cron_ordermail2.inc.php');
             
         } else {
-            // 실패시 처리
+            // DB 실패시 처리
             
             if (function_exists('add_log')) {
                 add_log(array('error'=>'fail1'), false, '_subscription_fail_');
@@ -146,13 +148,13 @@ foreach($result_row as $od) {
         }
         
     } else {
-        // 실패시 처리
+        // 결제 실패시 처리
         
         if (function_exists('add_log')) {
             add_log(array('error'=>'fail2'), false, '_subscription_fail_');
         }
         
-        $failure_reason = '결제에 성공했으나, DB 쓰기에 실패했습니다.('.$pay_round_no.'회차) 코드 : '.$pays['code'].' 이유 : '.$pays['message'];
+        $failure_reason = '결제가 실패 되었습니다.('.$pay_round_no.'회차) 코드 : '.$pays['code'].' 이유 : '.$pays['message'];
         
         add_subscription_order_history($failure_reason, array(
             'hs_type' => 'subscription_pay',
@@ -168,25 +170,29 @@ foreach($result_row as $od) {
     }
     
     // 정기결제가 실패 되었다면, 3회 이상 실패시 
-    if ($is_pay_fail && ($od['od_fail_count'] + 1) >= 3) {
+    if ($is_pay_fail) {
         
-        // 비활성화한다.
+        $update_sets = array('od_fail_count' => array('expression' => 'od_fail_count + 1'));
+        
+        // 3회 이상 실패시 해당 구독주문을 비활성화 한다.
+        if (($od['od_fail_count'] + 1) >= 3) {
+            $update_sets['od_enable_status'] = 0;
+            
+            $failure_reason = "3회 이상 정기결제가 실패되어서, 정기구독이 비활성화 되었습니다.";
+            
+            add_subscription_order_history($failure_reason, array(
+                'hs_type' => 'subscription_pay',
+                'od_id' => $od['od_id'],
+                'mb_id' => $od['mb_id']
+            ));
+        }
+            
         sql_bind_update(
             $g5['g5_subscription_order_table'],
-            array(
-                'od_fail_count' => array('expression' => 'od_fail_count + 1'),
-                'od_enable_status'=>0
-            ),
+            $update_sets,
             array('od_id'=>$od['od_id'])
         );
         
-        $failure_reason = "3회 이상 정기결제가 실패되어서, 정기구독이 비활성화 되었습니다.";
-        
-        add_subscription_order_history($failure_reason, array(
-            'hs_type' => 'subscription_pay',
-            'od_id' => $od['od_id'],
-            'mb_id' => $od['mb_id']
-        ));
     }
 }
 

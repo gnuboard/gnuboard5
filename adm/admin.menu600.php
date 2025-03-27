@@ -10,4 +10,5 @@ $menu['menu600'] = array(
     ['600300', '상품관리', G5_ADMIN_URL.'/subscription_admin/itemlist.php', 'subs_item'],
     ['600400', '구독내역', G5_ADMIN_URL.'/subscription_admin/orderlist.php', 'subs_orderlist'],
     ['600410', '정기결제내역', G5_ADMIN_URL.'/subscription_admin/paylist.php', 'subs_paylist'],
+    ['600500', '정기결제일정', G5_ADMIN_URL.'/subscription_admin/subscription_calendar.php', 'subs_subscription_calendar'],
 );

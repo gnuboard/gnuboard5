@@ -606,10 +606,21 @@ function get_subscription_category($ca_id) {
     return sql_fetch($sql);
 }
 
-function get_subscription_order($od_id) {
-    global $g5;
+function get_subscription_order($od_id, $is_select_memeber=0) {
+    global $g5, $is_member, $member;
     
-    return sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', array('od_id'=>$od_id));
+    $wheres = array('od_id'=>$od_id);
+    
+    if ($is_select_memeber) {
+        
+        if (!$is_member) {
+            return null;
+        }
+        
+        $wheres['mb_id'] = $member['mb_id'];
+    }
+    
+    return sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', $wheres);
     
     $sql = " select * from {$g5['g5_subscription_order_table']} where od_id = '{$od_id}' ";
     return sql_fetch($sql);
@@ -1805,7 +1816,7 @@ function kcp_billing($od, $tmp_cart_id='') {
     $buyr_tel1          = $od['od_tel']; // 주문자 전화번호번호
     $buyr_tel2          = $od['od_hp']; // 주문자 휴대폰번호
 
-    $bt_batch_key       = $od['card_billkey']; // 배치키 정보
+    $bt_batch_key       = get_card_billkey($od); // 배치키 정보
     $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
     
     $posts = array(
@@ -1872,7 +1883,7 @@ function kcp_new_billing($od, $tmp_cart_id='') {
     $buyr_mail          = $od['od_email']; // 주문자 E-mail
     $buyr_tel2          = $od['od_hp']; // 주문자 휴대폰번호
 
-    $bt_batch_key       = $od['card_billkey']; // 배치키 정보
+    $bt_batch_key       = get_card_billkey($od); // 배치키 정보
     $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
     
     $data = array(
@@ -2050,7 +2061,7 @@ function nicepay_billing($od, $tmp_cart_id='') {
     * 아래 파라미터에 요청할 값을 알맞게 입력합니다. 
     ****************************************************************************************
     */
-    $bid 				= $od['card_billkey'];				// 빌키
+    $bid 				= get_card_billkey($od);				// 빌키
     $mid 				= get_subs_option('su_nicepay_mid');		// 가맹점 아이디
     // $tid 				= substr(substr($od['od_tno'], 0, 20).substr(preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS), 2), 0, 30);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
     // $tid 				= generate_subscription_id($od);				// 거래 ID, 30글자 제한있음, 30글자 채워야함
@@ -2156,7 +2167,7 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
     
     $res = null;
     
-    $bid = $od['card_billkey'];
+    $bid = get_card_billkey($od);
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
     // $nice_orderId = substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
@@ -2233,11 +2244,6 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
     return array('code'=>$code, 'message'=>$message, 'response'=>$nice_response);
 }
 
-function get_subscription_billing_key($od) {
-    
-    return $od['card_billkey'];
-}
-
 function subscription_sendRequest($url, $authKey, $postData) {
     $ch = curl_init($url);
 
@@ -2264,7 +2270,7 @@ function tosspayments_billing($od, $tmp_cart_id='') {
     
     $encryptedApiSecretKey = "Basic " . base64_encode($apiSecretKey . ":");
 
-    $billingKey = get_subscription_billing_key($od);
+    $billingKey = get_card_billkey($od);
     $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
     $goodsname = get_subscription_goods($cart_id);
     
@@ -2341,7 +2347,7 @@ function inicis_billing($od, $tmp_cart_id='') {
     // 장바구니 금액이 변경될수 있으니, $od['od_receipt_price'] 가 아니라 장바구니 금액을 체크해서 가져와야 한다.
 	$detail["price"] = $od['od_receipt_price'];
     
-	$detail["billKey"] = $od['card_billkey'];
+	$detail["billKey"] = get_card_billkey($od);
 	$detail["authentification"] = "00";
 	$detail["cardQuota"] = "00";
 	$detail["quotaInterest"] = "0";

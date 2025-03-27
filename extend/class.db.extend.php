@@ -642,6 +642,12 @@ class G5MysqlCRUD
         if (!empty($valuesToBind)) {
             call_user_func_array(array($queryObj, 'bind'), $valuesToBind);
         }
+        
+        if (G5_IS_BIND_DEBUG) {
+            // 실행된 쿼리 디버깅
+            echo "실제 실행된 쿼리: " . $queryObj->getQuery() . "\n";
+        }
+        
         return sql_query($queryObj);
     }
     
@@ -668,6 +674,7 @@ class G5MysqlCRUD
         return sql_query($queryObj);
     }
     
+    
     // 테이블 문자열 검증 메서드
     private static function validateTableString($table)
     {
@@ -682,8 +689,9 @@ class G5MysqlCRUD
         $pattern = '/^[a-zA-Z0-9_]+(?:\s+AS\s+[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+AS\s+[a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
         $pattern = '/^[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
         */
+        
+        // 기존 테이블 및 조인 패턴
         $pattern = '/^[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?\s*ON\s*(?:\()?\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*(?:\))?)*$/i';
-
         return preg_match($pattern, $table) === 1;
     }
     /*
@@ -851,6 +859,8 @@ function sql_bind_update($table, $updates, $conditions = array(), $link = null) 
                     $updateValues[] = (strpos($arg, '$') === 0) ? substr($arg, 1) : $arg;
                 }
             }
+        } elseif (is_array($value) && isset($value['expression']) && is_array($value['expression'])) {
+            $updateValues[] = $value['expression']['value']; // 바인딩 값 추가
         } elseif (is_array($value) && isset($value['expression'])) {
             // expression은 바인딩 값 필요 없음
         } else {
@@ -908,6 +918,9 @@ function sql_bind_update_map($key, $value = null)
         return "$key = $function(" . implode(', ', $argPlaceholders) . ")";
     } elseif (is_array($value) && isset($value['expression'])) {
         $expression = $value['expression'];
+        if (is_array($expression) && isset($expression['column']) && isset($expression['operator']) && isset($expression['value'])) {
+            return "$key = {$expression['column']} {$expression['operator']} ?"; // 바인딩 지원
+        }
         if (!preg_match('/^[a-zA-Z0-9_]+\s*[+\-*\/]\s*[0-9]+$/', $expression)) {
             throw new Exception("Invalid expression format: $expression");
         }
@@ -925,6 +938,8 @@ function sql_bind_condition_map($key, $value = null)
             if (strtoupper($operator) === 'IN') {
                 $placeholders = implode(', ', array_fill(0, count($value[$operator]), '?'));
                 return array('condition' => "$key $operator ($placeholders)", 'logic' => 'AND');
+            } elseif (strtoupper($operator) === 'BETWEEN' && is_array($value[$operator]) && count($value[$operator]) === 2) {
+                return array('condition' => "$key BETWEEN ? AND ?", 'logic' => 'AND');
             }
             return array('condition' => "$key $operator ?", 'logic' => 'AND');
         }
@@ -953,6 +968,8 @@ function sql_bind_condition_map($key, $value = null)
     if (is_array($value) && $operator === 'IN') {
         $placeholders = implode(', ', array_fill(0, count($value), '?'));
         return array('condition' => "$column $operator ($placeholders)", 'logic' => $logic);
+    } elseif ($operator === 'BETWEEN' && is_array($value) && count($value) === 2) {
+        return array('condition' => "$column BETWEEN ? AND ?", 'logic' => $logic);
     }
     return array('condition' => "$column $operator ?", 'logic' => $logic);
 }
@@ -1010,6 +1027,7 @@ function sql_bind_select_join($query, $values = array(), $link = null, $is_fetch
     return $result;
 }
 
+/*
 function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0) {
     // 조건을 키-값 쌍으로 전달받으므로 array_map에 key와 value를 함께 사용
     $conditionArray = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
@@ -1026,6 +1044,49 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
     
     $conditionString = G5MysqlCRUD::buildConditionString($conditionArray);
     return G5MysqlCRUD::read($table, $columns, $conditionArray, $values, $readSettings, $link, $is_fetch);
+}
+*/
+
+function sql_bind_select($table, $columns, $conditions = array(), $readSettings = array(), $link = null, $is_fetch = 0) {
+    if (is_array($table) && isset($table['subquery'])) {
+        $subTable = $table['subquery']['table'];
+        $subColumns = $table['subquery']['columns'];
+        $subConditions = $table['subquery']['conditions'];
+        $subSettings = $table['subquery']['settings'] ?? [];
+        
+        $subConditionArray = array_map('sql_bind_condition_map', array_keys($subConditions), array_values($subConditions));
+        $subValues = array();
+        foreach ($subConditions as $k => $cond) {
+            $value = sql_bind_condition_value($k, $cond);
+            if (is_array($value)) {
+                $subValues = array_merge($subValues, $value);
+            } else {
+                $subValues[] = $value;
+            }
+        }
+        $subQuery = "SELECT " . implode(',', $subColumns) . " FROM $subTable";
+        $subConditionString = G5MysqlCRUD::buildConditionString($subConditionArray);
+        if ($subConditionString) $subQuery .= " WHERE $subConditionString";
+        if (isset($subSettings['groupBy'])) $subQuery .= " GROUP BY " . $subSettings['groupBy'];
+        
+        $table = "($subQuery) AS subquery";
+        $values = $subValues;
+    } else {
+        $conditionArray = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
+        $values = array();
+        foreach ($conditions as $k => $cond) {
+            $value = sql_bind_condition_value($k, $cond);
+            if (is_array($value)) {
+                $values = array_merge($values, $value);
+            } else {
+                $values[] = $value;
+            }
+        }
+    }
+    
+    if (!is_array($columns)) $columns = explode(',', $columns);
+    $conditionString = G5MysqlCRUD::buildConditionString($conditionArray ?? []);
+    return G5MysqlCRUD::read($table, $columns, $conditionArray ?? [], $values, $readSettings, $link, $is_fetch);
 }
 
 // 한 행만 리턴 (sql_fetch 와 같은 역할)

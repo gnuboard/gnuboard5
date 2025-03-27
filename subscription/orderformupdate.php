@@ -384,7 +384,7 @@ if (!(isset($exist_card['card_billkey']) && $exist_card['card_billkey'])) {
     
     sql_bind_insert($g5['g5_subscription_mb_cardinfo_table'], $card_inserts);
     
-    $card_ci_id = sql_insert_id();
+    $card_ci_id = get_pdo_insert_id();
 }
 
 $inserts = array(
@@ -435,8 +435,6 @@ $inserts = array(
     'od_settle_case' => $od_settle_case,
     'od_other_pay_type' => $od_other_pay_type,
     'od_test' => get_subs_option('su_card_test'),
-    'card_mask_number' => $card_mask_number,
-    'card_billkey' => $card_billkey,
     'od_subscription_number' => $od_subscription_number,
     'od_firstshipment_date' => $od_firstshipment_date,
     'od_subscription_date_format' => $od_subscription_date_format,

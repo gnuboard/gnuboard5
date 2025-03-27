@@ -80,3 +80,11 @@ function getMonthlyDeliveryDate($startDate, $monthInterval, $targetDay, $holiday
     
     return $adjustedDate;
 }
+
+function get_card_billkey($od) {
+    global $g5;
+    
+    $result = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('ci_id'=>$od['ci_id'], 'mb_id'=>$od['mb_id'], 'pg_service' => $od['od_pg']));
+    
+    return isset($result['card_billkey']) ? $result['card_billkey'] : '';
+}
