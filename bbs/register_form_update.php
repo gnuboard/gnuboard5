@@ -338,7 +338,7 @@ if ($w == '') {
         $sql_nick_date =  " , mb_nick_date = '".G5_TIME_YMD."' ";
 
     $sql_open_date = "";
-    if ($mb_open_default != $mb_open)
+    if (isset($mb_open_default) && $mb_open_default != $mb_open)
         $sql_open_date =  " , mb_open_date = '".G5_TIME_YMD."' ";
 
     // 이전 메일주소와 수정한 메일주소가 틀리다면 인증을 다시 해야하므로 값을 삭제
@@ -531,7 +531,7 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
 
 
 // 신규회원 쿠폰발생
-if($w == '' && $default['de_member_reg_coupon_use'] && $default['de_member_reg_coupon_term'] > 0 && $default['de_member_reg_coupon_price'] > 0) {
+if($w == '' && isset($default['de_member_reg_coupon_use']) && $default['de_member_reg_coupon_use'] && $default['de_member_reg_coupon_term'] > 0 && $default['de_member_reg_coupon_price'] > 0) {
     $j = 0;
     $create_coupon = false;
 
