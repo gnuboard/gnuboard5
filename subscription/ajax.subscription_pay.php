@@ -50,4 +50,9 @@ if ($pays['py_pg'] == 'kcp') {
 // 결제 장바구니
 $pays['cart_infos'] = get_subscription_cart_data($pays['od_id']);
 
-die(json_encode($pays));
+header('Content-Type: application/json');
+echo json_encode($pays, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+die('');
+
+// die(json_encode($pays));

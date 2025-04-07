@@ -26,7 +26,7 @@ $result = null;
 
 if ($mod_type === 'add') {
     $result = add_subscription_order_history($od_subscription_history, array(
-        'hs_type' => 'subscription_order',
+        'hs_type' => 'subscription_add_admin',
         'od_id' => $od_id,
         'pay_id' => $pay_id,
         'mb_id' => $member['mb_id'],

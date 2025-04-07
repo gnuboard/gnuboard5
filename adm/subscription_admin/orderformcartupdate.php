@@ -148,7 +148,7 @@ sql_bind_update(
 $message = ($ct_status === '비활성화') ? '구독주문이 비활성화 되었습니다.' : '구독주문이 활성화 되었습니다.';
 
 add_subscription_order_history($message, array(
-    'hs_type' => 'subscription_order',
+    'hs_type' => ($ct_status === '비활성화') ? 'subscription_disable_order' : 'subscription_enable_order',
     'od_id' => $od_id,
     'mb_id' => $member['mb_id']
 ));

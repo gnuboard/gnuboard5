@@ -37,7 +37,7 @@ $updates['od_subscription_memo'] = array('function' => 'CONCAT', 'args' => array
 $result = sql_bind_update($g5['g5_subscription_order_table'], $updates, array('od_id'=>$od['od_id'], 'mb_id'=>$member['mb_id']));
 
 add_subscription_order_history('주문자 본인이 직접 구독을 취소했습니다.', array(
-    'hs_type' => 'subscription_order',
+    'hs_type' => 'subscription_member_cancel_order',
     'hs_category' => 'user',
     'od_id' => $od['od_id'],
     'mb_id' => $od['mb_id']

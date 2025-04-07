@@ -117,7 +117,7 @@ foreach($result_row as $od) {
             );
             
             add_subscription_order_history('정기구독 '.$pay_round_no.'회차 결제에 성공했습니다.', array(
-                'hs_type' => 'subscription_order',
+                'hs_type' => 'subscription_order_success',
                 'od_id' => $od_id,
                 'mb_id' => $member['mb_id']
             ));
@@ -132,10 +132,10 @@ foreach($result_row as $od) {
                 add_log(array('error'=>'fail1'), false, '_subscription_fail_');
             }
             
-            $failure_reason = '(크론) 결제에 성공했으나, DB 쓰기에 실패했습니다.('.$pay_round_no.'회차) 코드 : '.$pays['code'].' 이유 : '.$pays['message'];
+            $failure_reason = '(크론) 결제에 성공했으나, DB 쓰기에 실패했습니다.('.$pay_round_no.'회차) ';
             
             add_subscription_order_history($failure_reason, array(
-                'hs_type' => 'subscription_pay',
+                'hs_type' => 'subscription_pay_db_fail',
                 'od_id' => $od['od_id'],
                 'mb_id' => $od['mb_id']
             ));
@@ -157,7 +157,7 @@ foreach($result_row as $od) {
         $failure_reason = '결제가 실패 되었습니다.('.$pay_round_no.'회차) 코드 : '.$pays['code'].' 이유 : '.$pays['message'];
         
         add_subscription_order_history($failure_reason, array(
-            'hs_type' => 'subscription_pay',
+            'hs_type' => 'subscription_pay_pg_fail',
             'od_id' => $od['od_id'],
             'mb_id' => $od['mb_id']
         ));
@@ -181,7 +181,7 @@ foreach($result_row as $od) {
             $failure_reason = "3회 이상 정기결제가 실패되어서, 정기구독이 비활성화 되었습니다.";
             
             add_subscription_order_history($failure_reason, array(
-                'hs_type' => 'subscription_pay',
+                'hs_type' => 'subscription_disable_order',
                 'od_id' => $od['od_id'],
                 'mb_id' => $od['mb_id']
             ));

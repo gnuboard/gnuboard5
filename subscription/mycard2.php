@@ -68,18 +68,20 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 	        </li>
             
             <?php
-            $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
-            
-            // $sql = "select count(*) as total from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
-            
-            $sql = " SELECT COUNT(DISTINCT CONCAT(od_card_name, card_mask_number)) AS num
-                    FROM `{$g5['g5_subscription_order_table']}`
-                    WHERE card_billkey != '' 
-                      AND mb_id = 'admin' 
-                      AND od_settle_case = '신용카드' 
-                      AND od_card_name != '' ";
-            
-            $total = sql_fetch($sql);
+            $total = sql_bind_select_fetch(
+                array(
+                    'subquery' => array(
+                        'table' => $g5['g5_subscription_mb_cardinfo_table'],
+                        'columns' => ['COUNT(*) AS cnt'],
+                        'conditions' => array(
+                            'card_billkey' => array('!=' => ''),
+                            'mb_id' => 'admin'
+                        ),
+                        'settings' => array('groupBy' => 'od_card_name, card_mask_number')
+                    )
+                ),
+                'COUNT(cnt) AS num'
+            );
             
 
             $total_card_num = isset($total['num']) ? (int) $total['num'] : 0;

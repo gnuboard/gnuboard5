@@ -649,7 +649,7 @@ if ($is_first_pay) {
             );
             
             add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
-                'hs_type' => 'subscription_order',
+                'hs_type' => 'subscription_order_success',
                 'od_id' => $od_id,
                 'mb_id' => $member['mb_id']
             ));
@@ -662,7 +662,7 @@ if ($is_first_pay) {
             //exit;
             
             add_subscription_order_history('정기구독 1회차 결제에 성공했으나, 데이터베이스 기록이 실패했습니다.', array(
-                'hs_type' => 'subscription_pay',
+                'hs_type' => 'subscription_pay_db_fail',
                 'od_id' => $od_id,
                 'mb_id' => $member['mb_id']
             ));
@@ -674,8 +674,8 @@ if ($is_first_pay) {
         
         //alert('fail2');
         
-        add_subscription_order_history('정기구독 1회차 결제에 실패했습니다.', array(
-                'hs_type' => 'subscription_pay',
+        add_subscription_order_history('정기구독 1회차 결제에 실패했습니다. 코드 : '.$pays['code'].' 이유 : '.$pays['message'], array(
+                'hs_type' => 'subscription_pay_pg_fail',
                 'od_id' => $od_id,
                 'mb_id' => $member['mb_id']
             ));

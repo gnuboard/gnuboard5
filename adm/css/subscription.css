@@ -128,3 +128,140 @@ select.subscription_date_format{min-width:80px}
     max-height: 380px; /* 원하는 최대 높이 지정 */
     overflow-y: auto; /* 내부 스크롤 추가 */
 }
+
+.fullcalendar .fc-event-time {
+    display: none !important;
+}
+
+.jquery-modal.blocker {z-index:9999;}
+.jquery-modal .modal{max-width:600px;padding:1em 2em;z-index:10001}
+
+.modal_contents {
+max-height:500px;
+overflow-y: auto; /* 세로 스크롤바 추가 */
+overflow-x: hidden; /* 가로 스크롤 방지 (필요하면) */
+}
+
+.modal_contents .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+.modal_contents .product-item {
+            display: flex;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            align-items: center;
+            gap: 15px;
+        }
+.modal_contents .product-img img {
+            width: 55px;
+            height: 55px;
+            border-radius: 5px;
+        }
+.modal_contents .product-info {
+            flex-grow: 1;
+        }
+.modal_contents .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+.modal_contents .product-options {
+            font-size: 14px;
+            color: #666;
+        }
+.modal_contents .product-meta {
+            text-align: right;
+        }
+.modal_contents .product-meta div {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+		
+.user-subscription-inner ul {
+    list-style: none;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	list-style: none;
+}
+
+.user-subscription-inner h3 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.user-subscription-inner li {
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+	list-style: none;
+}
+
+.user-subscription-inner li:last-child {
+    border-bottom: none;
+}
+
+.user-subscription-inner span.th {
+    color: #444;
+    display: inline-block;
+	font-weight:bold;
+	width:90px;
+}
+
+.user-subscription-inner .is_pay_test {
+    color: red;
+    font-weight: bold;
+    text-align: left;
+    background: #ffecec;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.user-subscription-inner .is_not_delivery {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    background: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.user-subscription-inner a.subscription-receipt-view {
+    display: inline-block;
+    padding: 6px 10px;
+    margin-top: 5px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.user-subscription-inner a.subscription-receipt-view:hover {
+    background: #0056b3;
+}
+
+/*
+.fc-daygrid-day-events {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.fc .fc-daygrid-day-frame {
+  height: auto !important;
+}
+*/

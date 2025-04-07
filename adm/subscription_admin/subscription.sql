@@ -230,7 +230,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
   PRIMARY KEY (`pay_id`),
   KEY `index2` (`mb_id`),
-  KEY `index3` (`subscription_id`)
+  KEY `index3` (`subscription_id`),
+  KEY `py_time` (`py_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -243,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
 CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
   `hs_id` bigint(20) NOT NULL auto_increment,
   `hs_parent` bigint(20) NOT NULL DEFAULT '0',
-  `hs_type` varchar(20) NOT NULL DEFAULT '',
+  `hs_type` varchar(30) NOT NULL DEFAULT '',
   `hs_category` varchar(100) NOT NULL DEFAULT '',
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -252,7 +253,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
   PRIMARY KEY (`hs_id`),
   KEY `mb_id` (`mb_id`),
   KEY `hs_type` (`hs_type`),
-  KEY `hs_category` (`hs_category`)
+  KEY `hs_category` (`hs_category`),
+  KEY `hs_time` (`hs_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

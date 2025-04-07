@@ -622,8 +622,11 @@ function get_subscription_order($od_id, $is_select_memeber=0) {
     
     return sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', $wheres);
     
+    /*
     $sql = " select * from {$g5['g5_subscription_order_table']} where od_id = '{$od_id}' ";
     return sql_fetch($sql);
+    */
+    
 }
 
 function get_subscription_item($it_id, $is_cache=false, $add_query='') {
@@ -2660,7 +2663,7 @@ function add_subscription_order_history($content, $arg=array()){
     
     $inserts = array(
         'hs_parent' => isset($arg['hs_parent']) ? (int) $arg['hs_parent'] : 0,
-        'hs_type' => isset($arg['type']) ? $arg['type'] : 'subscription_order',
+        'hs_type' => isset($arg['type']) ? $arg['type'] : 'subscription_history',
         'hs_category' => isset($arg['hs_category']) ? $arg['hs_category'] : 'admin',
         'od_id' => isset($arg['od_id']) ? $arg['od_id'] : '',
         'mb_id' => isset($arg['mb_id']) ? $arg['mb_id'] : '',

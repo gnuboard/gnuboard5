@@ -690,6 +690,11 @@ class G5MysqlCRUD
         $pattern = '/^[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?\s*ON\s*\(\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*\))*$/i';
         */
         
+        // 서브쿼리 패턴: (쿼리) AS 별칭
+        if (preg_match('/^\s*\(.+\)\s+AS\s+[a-zA-Z0-9_]+$/i', trim($table))) {
+            return true;
+        }
+        
         // 기존 테이블 및 조인 패턴
         $pattern = '/^[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?(?:\s*(?:LEFT|RIGHT|INNER)?\s*JOIN\s*[a-zA-Z0-9_]+(?:\s+(?:AS\s+)?[a-zA-Z0-9_]+)?\s*ON\s*(?:\()?\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*=\s*[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+\s*(?:\))?)*$/i';
         return preg_match($pattern, $table) === 1;
@@ -1051,7 +1056,7 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
     if (is_array($table) && isset($table['subquery'])) {
         $subTable = $table['subquery']['table'];
         $subColumns = $table['subquery']['columns'];
-        $subConditions = $table['subquery']['conditions'];
+        $subConditions = $table['subquery']['conditions'] ?? [];
         $subSettings = $table['subquery']['settings'] ?? [];
         
         $subConditionArray = array_map('sql_bind_condition_map', array_keys($subConditions), array_values($subConditions));
@@ -1071,6 +1076,7 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
         
         $table = "($subQuery) AS subquery";
         $values = $subValues;
+        $conditionArray = [];
     } else {
         $conditionArray = array_map('sql_bind_condition_map', array_keys($conditions), array_values($conditions));
         $values = array();
@@ -1085,8 +1091,7 @@ function sql_bind_select($table, $columns, $conditions = array(), $readSettings 
     }
     
     if (!is_array($columns)) $columns = explode(',', $columns);
-    $conditionString = G5MysqlCRUD::buildConditionString($conditionArray ?? []);
-    return G5MysqlCRUD::read($table, $columns, $conditionArray ?? [], $values, $readSettings, $link, $is_fetch);
+    return G5MysqlCRUD::read($table, $columns, $conditionArray, $values, $readSettings, $link, $is_fetch);
 }
 
 // 한 행만 리턴 (sql_fetch 와 같은 역할)
