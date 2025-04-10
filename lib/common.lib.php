@@ -1979,7 +1979,7 @@ function sql_fetch_array($result)
         $row = @mysql_fetch_assoc($result);
     }
 
-    return $row ?: array(); // null이면 빈 배열 반환
+    return $row ? $row : array(); // null이면 빈 배열 반환
 }
 
 // $result에 대한 메모리(memory)에 있는 내용을 모두 제거한다.
