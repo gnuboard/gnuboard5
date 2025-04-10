@@ -10,6 +10,11 @@ include_once G5_ADMIN_PATH.'/admin.head.php';
 add_javascript('<script src="'.G5_JS_URL.'/fullcalendar/index.global.js"></script>', 2);
 // add_stylesheet('<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.3.2/dist/jBox.all.min.css">', 2);
 
+add_javascript('<script src="'.G5_JS_URL.'/fullcalendar/popper.min.js"></script>', 3);
+add_javascript('<script src="'.G5_JS_URL.'/fullcalendar/tooltip.min.js"></script>', 3);
+// add_stylesheet('<link rel="stylesheet" href="//unpkg.com/popper.js/dist/umd/popper.min.js">', 3);
+// add_stylesheet('<link rel="stylesheet" href="//unpkg.com/popper.js/dist/umd/tooltip.min.js">', 3);
+
 add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
 
@@ -17,16 +22,31 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.mo
 <div class="calendar-wrap">
     <div class="calendar-main">
         <div id="calendar" class="fullcalendar"></div>
+        <!-- 로딩 오버레이와 스피너 -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="loading-text">로딩 중...</div>
+        </div>
     </div>
     <div class="calendar-side">
-        
+        <ul class="calendar-description">
+            <li class="fc-daygrid-dot-event">
+                <div class="fc-daygrid-event-dot" style="border-color: rgb(55, 136, 216);"></div> 앞으로 결제예정인 구독내역입니다.
+            </li>
+            <li class="fc-daygrid-dot-event">
+                <div class="fc-daygrid-event-dot" style="border-color: rgb(237, 7, 7);"></div> 결제된 정기결제내역입니다.
+            </li>
+            <li class="fc-daygrid-dot-event">
+                <div class="fc-daygrid-event-dot" style="border-color: rgb(195, 212, 212);"></div> 실패된 정기결제내역입니다.
+            </li>
+        </ul>
     </div>
     
 </div>
 
 <!-- <a href="#subscription_modal1" rel="modal:open" data-oid="" data-pid="" id="subscription-modal1-btn" class="mng_mod btn btn_02">상세보기</a> -->
 
-<a href="#subscription_modal1" data-oid="" data-pid="" id="subscription-modal1-btn" data-modal class="mng_mod btn btn_02">상세보기</a>
+<a href="#subscription_modal1" data-oid="" data-pid="" id="subscription-modal1-btn" data-modal class="sound_only">상세보기</a>
 <div id="subscription_modal1" class="modal">
     <div class="modal_contents">
     </div>
@@ -109,7 +129,7 @@ jQuery(function($){
                         cartHTML = "";
                     
                     if (pay_id && data.pay_id) {
-                        html += '<div><a href="' + g5_admin_url + '/subscription_admin/payform.php?pay_id=' + data.pay_id +' ">정기결제내역 확인하기</a></div>';
+                        html += '<div><a href="' + g5_admin_url + '/subscription_admin/payform.php?pay_id=' + data.pay_id +' " class="btn btn_02">정기결제내역 바로가기</a></div>';
                         
                         var od_name = data.py_name,
                             od_hp = data.py_hp,
@@ -127,7 +147,7 @@ jQuery(function($){
                             od_test = data.py_test;
                             
                     } else if (od_id && data.od_id) {
-                        html += '<div><a href="' + g5_admin_url + '/subscription_admin/orderform.php?od_id=' + data.od_id +' ">구독내역 확인하기</a></div>';
+                        html += '<div><a href="' + g5_admin_url + '/subscription_admin/orderform.php?od_id=' + data.od_id +' " class="btn btn_02">구독내역 바로가기</a></div>';
                         
                         var od_name = data.od_name,
                             od_hp = data.od_hp,
@@ -284,6 +304,7 @@ jQuery(function($){
             
         // var calendarEl = document.getElementById('calendar');
         var calendarEl = $('#calendar')[0]; // jQuery 객체에서 DOM 요소로 변환
+        var $loadingOverlay = $('#loadingOverlay'); // 로딩 오버레이 jQuery 객체
         
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
@@ -343,11 +364,25 @@ jQuery(function($){
             if (isLoading) {
               console.log('로딩 중...');
               // 로딩 스피너 표시 가능
+              $loadingOverlay.fadeIn(200); // 부드럽게 표시
             } else {
               console.log('로딩 완료');
               // 로딩 스피너 숨김
+              $loadingOverlay.fadeOut(200); // 부드럽게 숨김
             }
           },
+            eventOrder: function(a, b) {
+            const colorPriority = {
+              '#ed0707': 1,
+              '#c3d4d4': 2,
+              '#3788d8': 3
+            };
+
+            const priorityA = colorPriority[a.backgroundColor] || 99;
+            const priorityB = colorPriority[b.backgroundColor] || 99;
+
+            return priorityA - priorityB;
+            },
           events: function(fetchInfo, successCallback, failureCallback) {
               
               console.log(fetchInfo.startStr.split("T")[0]);
@@ -369,6 +404,7 @@ jQuery(function($){
                       
                     return {
                       title: item.title,
+                      description: item.title,
                       start: item.start,
                       end: item.end || null, // end가 없는 경우 null 처리
                       extendedProps : {
@@ -378,6 +414,12 @@ jQuery(function($){
                       backgroundColor: item.color || '#3788d8' // 기본 색상 지정
                     };
                   });
+                  
+                    // color 기준으로 정렬
+                    //events.sort(function(a, b) {
+                    //    return a.backgroundColor.localeCompare(b.backgroundColor);
+                    //});
+                
                   successCallback(events); // 캘린더에 이벤트 전달
                 },
                 error: function(xhr, status, error) {
@@ -397,6 +439,13 @@ jQuery(function($){
                 // a 태그에 data-id 추가
                 info.el.setAttribute('data-oid', info.event.extendedProps.oid);
               
+                var tooltip = new Tooltip(info.el, {
+                  title: info.event.extendedProps.description,
+                  placement: 'top',
+                  trigger: 'hover',
+                  container: 'body'
+                });
+                
               /*
               const popoverEl = document.querySelector('.fc-popover');
               
@@ -415,7 +464,7 @@ jQuery(function($){
                   
                   // alert("cccc");
                 });
-            },
+            }
           /*
           events: [
             {
