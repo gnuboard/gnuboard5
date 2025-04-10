@@ -230,14 +230,14 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
   PRIMARY KEY (`pay_id`),
   KEY `index2` (`mb_id`),
-  KEY `index3` (`subscription_id`),
+  KEY `index3` (`subscription_pg_id`),
   KEY `py_time` (`py_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_order`
+-- Table structure for table `g5_subscription_order_history`
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order`;
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_unique`
+-- Table structure for table `g5_subscription_uniqid`
 --
 
 DROP TABLE IF EXISTS `g5_subscription_uniqid`;
@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_order_data`
+-- Table structure for table `g5_subscription_order_data`
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order_data`;

@@ -6,7 +6,7 @@ $skin = isset($_REQUEST['skin']) ? safe_replace_regex($_REQUEST['skin'], 'skin')
 $ev_id = isset($_REQUEST['ev_id']) ? safe_replace_regex($_REQUEST['ev_id'], 'ev_id') : '';
 
 // 상품 리스트에서 다른 필드로 정렬을 하려면 아래의 배열 코드에서 해당 필드를 추가하세요.
-if (isset($sort) && !in_array($sort, ['it_name', 'it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time'])) {
+if (isset($sort) && !in_array($sort, array('it_name', 'it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time'))) {
     $sort = '';
 }
 
@@ -64,9 +64,9 @@ $skin_dir = G5_SUBSCRIPTION_SKIN_PATH;
 
 if ($ca['ca_skin_dir']) {
     if (preg_match('#^theme/(.+)$#', $ca['ca_skin_dir'], $match)) {
-        $skin_dir = get_dir_path([G5_THEME_PATH, G5_SKIN_DIR, G5_SUBSCRIPTION_DIR, $match[1]]);
+        $skin_dir = get_dir_path(array(G5_THEME_PATH, G5_SKIN_DIR, G5_SUBSCRIPTION_DIR, $match[1]));
     } else {
-        $skin_dir = get_dir_path([G5_PATH, G5_SKIN_DIR, G5_SUBSCRIPTION_DIR, $ca['ca_skin_dir']]);
+        $skin_dir = get_dir_path(array(G5_PATH, G5_SKIN_DIR, G5_SUBSCRIPTION_DIR, $ca['ca_skin_dir']));
     }
 
     if (is_dir($skin_dir)) {

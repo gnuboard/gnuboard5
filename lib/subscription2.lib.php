@@ -41,7 +41,9 @@ function getMonthlyDeliveryDate($startDate, $monthInterval, $targetDay, $holiday
     
     // 입력 검증: $targetDay는 1~31 사이어야 함
     if ($targetDay < 1 || $targetDay > 31) {
-        throw new Exception("Target day must be between 1 and 31");
+        // throw new Exception("Target day must be between 1 and 31");
+        trigger_error("Target day must be between 1 and 31", E_USER_ERROR);
+        return false;
     }
     
     // 기준 날짜에서 월 간격 적용
@@ -62,6 +64,7 @@ function getMonthlyDeliveryDate($startDate, $monthInterval, $targetDay, $holiday
     $adjustedDate = getBusinessDaysBefore($scheduledDate, 0, $holidays);
     
     // 조정된 날짜가 해당 달을 벗어나면 해당 달의 마지막 영업일로 고정
+    /*
     $monthStart = date('Y-m-01', strtotime($baseDate));
     if (strtotime($adjustedDate) < strtotime($monthStart)) {
         $timestamp = strtotime(date('Y-m-t', strtotime($baseDate)));
@@ -77,7 +80,29 @@ function getMonthlyDeliveryDate($startDate, $monthInterval, $targetDay, $holiday
         }
         $adjustedDate = date('Y-m-d', $timestamp) . ' 09:00:01';
     }
+    */
     
+    if (strtotime($adjustedDate) < strtotime($monthStart)) {
+        $timestamp = strtotime(date('Y-m-t', strtotime($baseDate)));
+        $maxIterations = 10;
+        $iteration = 0;
+        
+        while ($iteration++ < $maxIterations) {
+            $dayOfWeek = date('w', $timestamp);
+            $formattedDate = date('Y-m-d', $timestamp);
+            
+            // PHP 5.2.17 호환성을 위해 array_flip 후 isset 대신 in_array 사용
+            $holidaysFlipped = array_flip($holidays);
+            $isHoliday = in_array($formattedDate, array_keys($holidaysFlipped));
+            
+            if ($dayOfWeek != 0 && $dayOfWeek != 6 && !$isHoliday) {
+                break;
+            }
+            $timestamp = strtotime('-1 day', $timestamp);
+        }
+        $adjustedDate = date('Y-m-d', $timestamp) . ' 09:00:01';
+    }
+
     return $adjustedDate;
 }
 

@@ -1400,7 +1400,7 @@ function getBusinessDaysNext($date, $businessDays = 0, $holidays = array()) {
 }
 */
 
-function getBusinessDaysBefore($date, $businessDays = 0, $holidays = []) {
+function getBusinessDaysBefore($date, $businessDays = 0, $holidays = array()) {
     // 기준 날짜를 타임스탬프로 변환
     $timestamp = strtotime($date);
     // 공휴일 배열을 연관 배열로 변환 (효율성 개선)
@@ -1436,7 +1436,7 @@ function getBusinessDaysBefore($date, $businessDays = 0, $holidays = []) {
     return date('Y-m-d', $timestamp) . ' 09:00:01';
 }
 
-function getBusinessDaysNext($date, $businessDays = 0, $holidays = []) {
+function getBusinessDaysNext($date, $businessDays = 0, $holidays = array()) {
     // 기준 날짜를 타임스탬프로 변환
     $timestamp = strtotime($date);
     // 공휴일 배열을 연관 배열로 변환 (효율성 개선)
@@ -2250,10 +2250,10 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
 function subscription_sendRequest($url, $authKey, $postData) {
     $ch = curl_init($url);
 
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "Authorization: $authKey",
         "Content-Type: application/json"
-    ]);
+    ));
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

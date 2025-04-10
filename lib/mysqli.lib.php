@@ -12,6 +12,46 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
  * 
  */
 
+// php 5.2 버전에서는 mysqli_stmt_get_result 함수가 없음
+if (!function_exists('mysqli_stmt_get_result')) {
+    function mysqli_stmt_get_result($stmt) {
+        // 결과 메타데이터 가져오기
+        $meta = mysqli_stmt_result_metadata($stmt);
+        if (!$meta) {
+            return false; // 결과가 없거나 오류 발생 시
+        }
+
+        // 필드 정보 가져오기
+        $fields = mysqli_fetch_fields($meta);
+        $field_count = mysqli_num_fields($meta);
+        $result = array();
+
+        // 바인딩할 변수 배열 준비
+        $bind_vars = array();
+        $row = array();
+        for ($i = 0; $i < $field_count; $i++) {
+            $bind_vars[$i] = &$row[$fields[$i]->name]; // 참조로 바인딩
+        }
+
+        // 결과 바인딩
+        call_user_func_array(array($stmt, 'bind_result'), $bind_vars);
+
+        // 결과 가져오기
+        while (mysqli_stmt_fetch($stmt)) {
+            $row_copy = array();
+            foreach ($row as $key => $value) {
+                $row_copy[$key] = $value; // 값 복사 (참조 방지)
+            }
+            $result[] = $row_copy;
+        }
+
+        // 메타데이터 해제
+        mysqli_free_result($meta);
+
+        return $result;
+    }
+}
+
 function get_pdo_connection() {
     global $g5;
     
@@ -72,23 +112,23 @@ class G5MySQLQuery
      * 
      * @var mysqli
      */
-    var $connection = null;
+    private $connection = null;
 
     /**
      * Store the prepared query
      * 
      * @var mysqli_stmt
      */
-    var $preparedQuery = null;
+    private $preparedQuery = null;
     
-    var $boundValues = array(); // 바인딩된 값 저장
+    private $boundValues = array(); // 바인딩된 값 저장
     
-    var $queryString = ''; // 원본 쿼리문 저장
-    var $errorMessage = '';
-    var $errorCode = '';
-    var $sqlState = '';
+    private $queryString = ''; // 원본 쿼리문 저장
+    private $errorMessage = '';
+    private $errorCode = '';
+    private $sqlState = '';
     
-    var $isPostPage = 0;
+    private $isPostPage = 0;
     
     /**
      * Construct a new query
@@ -99,7 +139,7 @@ class G5MySQLQuery
      * 
      * @throws MySQLNoConnectionException If no connection is supplied
      */
-    function __construct($query, $connection = null, $not_prepared = null)
+    public function __construct($query, $connection = null, $not_prepared = null)
     {
         global $g5;
         
@@ -155,7 +195,7 @@ class G5MySQLQuery
      * 
      * @throws MySQLQueryFailToBindException if failed to bind the values
      */
-    function bind()
+    public function bind()
     {
         // LOCK TABLES는 바인딩 불필요
         if ($this->preparedQuery === null) {
@@ -193,7 +233,7 @@ class G5MySQLQuery
         
     }
 
-    function addBindTypeAndValue($value, &$types, &$valueToBind)
+    private function addBindTypeAndValue($value, &$types, &$valueToBind)
     {
         if (is_int($value)) {
             $types .= "i";
@@ -216,7 +256,7 @@ class G5MySQLQuery
         $valueToBind[] = $value;
     }
     /*
-    function getPDOParamType($value)
+    private function getPDOParamType($value)
     {
         if (is_int($value)) {
             return PDO::PARAM_INT;
@@ -230,7 +270,7 @@ class G5MySQLQuery
     }
     */
     
-    function getPDOParamType($value)
+    private function getPDOParamType($value)
     {
         if (is_int($value)) {
             return PDO::PARAM_INT;
@@ -553,15 +593,16 @@ class G5MysqlCRUD
             throw new Exception("Invalid table name: $table");
         }
         
-        $columns = array_map(function($col) {
+        $validatedColumns = array();
+        foreach ((array)$columns as $col) {
             if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
                 throw new Exception("Invalid column name: $col");
             }
-            return $col;
-        }, (array)$columns);
+            $validatedColumns[] = $col;
+        }
         
         list($valuePlaceholders, $bindValues) = self::prepareInsertValues($values);
-        $columnString = implode(",", $columns);
+        $columnString = implode(",", $validatedColumns);
         $valueString = implode(",", $valuePlaceholders);
 
         $updateString = self::buildUpdateString($updateColumns, $bindValues);
@@ -614,7 +655,6 @@ class G5MysqlCRUD
             }
             return "$col = ?";
         }, (array)$columns);
-        */
         
         $validatedColumns = array_map(function($col) {
             if (preg_match('/^[a-zA-Z0-9_]+\s*=\s*.+$/', $col)) {
@@ -630,7 +670,24 @@ class G5MysqlCRUD
             }
             return "$col = ?";
         }, (array)$columns);
-    
+        */
+
+        $validatedColumns = array();
+        foreach ((array)$columns as $col) {
+            if (preg_match('/^[a-zA-Z0-9_]+\s*=\s*.+$/', $col)) {
+                $colParts = explode('=', $col, 2);
+                $colName = trim($colParts[0]);
+                if (!preg_match('/^[a-zA-Z0-9_]+$/', $colName)) {
+                    throw new Exception("Invalid column name in SET clause: $colName");
+                }
+                $validatedColumns[] = $col;
+            } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) {
+                throw new Exception("Invalid column name: $col");
+            } else {
+                $validatedColumns[] = "$col = ?";
+            }
+        }
+        
         $columnString = implode(",", $validatedColumns);
     
         $conditionString = self::buildConditionString($condition);
@@ -730,7 +787,7 @@ class G5MysqlCRUD
                     if (!in_array('IN', self::$allowedOperators)) {
                         throw new Exception("Invalid operator: IN");
                     }
-                } elseif (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', array_diff(self::$allowedOperators, ['IN'])) . ')\s*\?$/i', $cond, $matches)) {
+                } elseif (!preg_match('/^([a-zA-Z0-9_\.]+)\s*(' . implode('|', array_diff(self::$allowedOperators, array('IN'))) . ')\s*\?$/i', $cond, $matches)) {
                     throw new Exception("Invalid condition format: $cond");
                 } else {
                     $column = $matches[1];
@@ -754,7 +811,7 @@ class G5MysqlCRUD
         for ($i = 1; $i < count($conditions); $i++) {
             // 배열 조건일 경우 logic 사용, 문자열 조건은 기본 AND
             $logic = (is_array($condition[$i]) && isset($condition[$i]['logic'])) ? strtoupper($condition[$i]['logic']) : $defaultLogic;
-            if (!in_array($logic, ['AND', 'OR'])) {
+            if (!in_array($logic, array('AND', 'OR'))) {
                 throw new Exception("Invalid logic operator: $logic");
             }
             $result .= " $logic " . $conditions[$i];
@@ -783,7 +840,7 @@ class G5MysqlCRUD
         if ($orderBy && !preg_match('/^[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?(?:\s+(ASC|DESC))?(?:\s*,\s*[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)?(?:\s+(ASC|DESC))?)*$/i', $orderBy)) {
             throw new Exception("Invalid ORDER BY: $orderBy");
         }
-        if (!in_array($orderType, ['ASC', 'DESC'])) {
+        if (!in_array($orderType, array('ASC', 'DESC'))) {
             throw new Exception("Invalid order type: $orderType");
         }
         
