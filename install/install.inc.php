@@ -4,12 +4,12 @@ $data_path = '../'.G5_DATA_DIR;
 
 if (! (isset($title) && $title)) $title = G5_VERSION." 설치";
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <title><?php echo $title; ?></title>
-<link rel="stylesheet" href="install.css">
+<link rel="stylesheet" href="/css/install/install.css">
 </head>
 <body>
 

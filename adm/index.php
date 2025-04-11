@@ -1,6 +1,6 @@
 <?php
 $sub_menu = '100000';
-require_once './_common.php';
+require_once $GLOBALS['baseDir'] . '/g5/adm/_common.php';
 
 @require_once './safe_check.php';
 
