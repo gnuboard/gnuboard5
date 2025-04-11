@@ -7,7 +7,7 @@
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
 
-include_once($GLOBALS['baseDir'] . '/g5/version.php');   // 설정 파일
+include_once($g5_path['path'].'/version.php');   // 설정 파일
 
 // 기본 시간대 설정
 date_default_timezone_set("Asia/Seoul");

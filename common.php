@@ -173,7 +173,7 @@ if (file_exists($dbconfig_file)) {
 <head>
 <meta charset="utf-8">
 <title>오류! <?php echo G5_VERSION ?> 설치하기</title>
-<link rel="stylesheet" href="/css/install/install.css">
+<link rel="stylesheet" href="install/install.css">
 </head>
 <body>
 
@@ -189,7 +189,7 @@ if (file_exists($dbconfig_file)) {
     </ul>
     <p>그누보드 설치 후 다시 실행하시기 바랍니다.</p>
     <div class="inner_btn">
-        <a href="/install/"><?php echo G5_VERSION ?> 설치하기</a>
+        <a href="<?php echo G5_URL; ?>/install/"><?php echo G5_VERSION ?> 설치하기</a>
     </div>
 </div>
 <div id="ins_ft">

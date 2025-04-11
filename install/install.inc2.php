@@ -5,6 +5,3 @@
 
 </body>
 </html>
-<?php
-exit;
-?>
