@@ -1557,7 +1557,17 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </table>
         </div>
     </section>
-
+    
+    <div id="config_captcha_wrap" style="display:none">
+        <h2>캡챠입력</h2>
+        <?php
+        require_once G5_CAPTCHA_PATH . '/captcha.lib.php';
+        $captcha_html = captcha_html();
+        $captcha_js   = chk_captcha_js();
+        echo $captcha_html;
+        ?>
+    </div>
+    
     <div class="btn_fixed_top btn_confirm">
         <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
     </div>
@@ -1629,10 +1639,61 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         });
     });
 
+    // 각 요소의 초기값 저장
+    var initialValues = {
+        cf_admin: $('#cf_admin').val(),
+        cf_analytics: $('#cf_analytics').val(),
+        cf_add_meta: $('#cf_add_meta').val(),
+        cf_add_script: $('#cf_add_script').val()
+    };
+
+    function check_config_captcha_open() {
+        var isChanged = false;
+
+        // 현재 값이 있는 경우에만 변경 여부 체크
+        if ($('#cf_admin').val()) {
+            isChanged = isChanged || $('#cf_admin').val() !== initialValues.cf_admin;
+        }
+        if ($('#cf_analytics').val()) {
+            isChanged = isChanged || $('#cf_analytics').val() !== initialValues.cf_analytics;
+        }
+        if ($('#cf_add_meta').val()) {
+            isChanged = isChanged || $('#cf_add_meta').val() !== initialValues.cf_add_meta;
+        }
+        if ($('#cf_add_script').val()) {
+            isChanged = isChanged || $('#cf_add_script').val() !== initialValues.cf_add_script;
+        }
+        
+        var $wrap = $("#config_captcha_wrap"),
+            tooptipid = "mp_captcha_tooltip",
+            $p_text = $("<p>", {id:tooptipid, style:"font-size:0.95em;letter-spacing:-0.1em"}).html("중요정보를 수정할 경우 캡챠를 입력해야 합니다."),
+            $children = $wrap.children(':first'),
+            is_invisible_recaptcha = $("#captcha").hasClass("invisible_recaptcha");
+
+        if(isChanged){
+            $wrap.show();
+            if(! is_invisible_recaptcha) {
+                $wrap.css("margin-top","1em");
+                if(! $("#"+tooptipid).length){ $children.after($p_text) }
+            }
+        } else {
+            $wrap.hide();
+            if($("#"+tooptipid).length && ! is_invisible_recaptcha){ $children.next("#"+tooptipid).remove(); }
+        }
+        
+        return isChanged;
+    }
+        
     function fconfigform_submit(f) {
         var current_user_ip = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
         var cf_intercept_ip_val = f.cf_intercept_ip.value;
-
+        
+        if (check_config_captcha_open()){
+            jQuery("html, body").scrollTop(jQuery("#config_captcha_wrap").offset().top);
+            
+            <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
+        }
+        
         if (cf_intercept_ip_val && current_user_ip) {
             var cf_intercept_ips = cf_intercept_ip_val.split("\n");
 
@@ -1653,6 +1714,22 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         f.action = "./config_form_update.php";
         return true;
     }
+    
+    jQuery(function($){
+        $("#captcha_key").prop('required', false).removeAttr("required").removeClass("required");
+        
+        // 최고관리자 변경시
+        $(document).on('change', '#cf_admin', check_config_captcha_open);
+
+        // 방문자분석 스크립트 변경시
+        $(document).on('input', '#cf_analytics', check_config_captcha_open);
+        
+        // 추가 메타태그 변경시
+        $(document).on('input', '#cf_add_meta', check_config_captcha_open);
+        
+        // 추가 script, css 변경시
+        $(document).on('input', '#cf_add_script', check_config_captcha_open);
+    });
 </script>
 
 <?php

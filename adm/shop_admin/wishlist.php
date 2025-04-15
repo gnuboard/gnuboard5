@@ -58,8 +58,8 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
-<input type="hidden" name="doc" value="<?php echo $doc; ?>">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="doc" value="<?php echo get_sanitize_input($doc); ?>">
+<input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
 
 <label for="sel_ca_id" class="sound_only">검색대상</label>
 <select name="sel_ca_id" id="sel_ca_id">
