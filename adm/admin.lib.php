@@ -554,9 +554,18 @@ function admin_check_xss_params($params)
 
         if (is_array($value)) {
             admin_check_xss_params($value);
-        } else if ((preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && (preg_match('/script.*?\/script/ius', $value) || preg_match('/(onload|onerror)=.*/ius', $value))) || preg_match('/^(?=.*token\()(?=.*xmlhttprequest\()(?=.*send\().*$/im', $value) || (preg_match('/(onload|onerror|focus)=.*/ius', $value) && preg_match('/(eval|expression|exec|prompt)(\s*)\((.*)\)/ius', $value))) {
+        } else if (
+            (preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && (preg_match('/script.*?\/script/ius', $value) || preg_match('/on[a-z]+=*/ius', $value))) || preg_match('/^(?=.*token\()(?=.*xmlhttprequest\()(?=.*send\().*$/im', $value) || 
+            (preg_match('/(on[a-z]+|focus)=.*/ius', $value) && preg_match('/(eval|atob|fetch|expression|exec|prompt)(\s*)\((.*)\)/ius', $value))) {
             alert('요청 쿼리에 잘못된 스크립트문장이 있습니다.\\nXSS 공격일수도 있습니다.', G5_URL);
             die();
+        } else if (preg_match('/atob\s*\(\s*[\'"]?([a-zA-Z0-9+\/=]+)[\'"]?\s*\)/ius', $value, $matches)) {
+            $decoded = base64_decode($matches[1], true);
+            if ($decoded && preg_match('/(eval|fetch|script|alert|settimeout|setinterval)/ius', $decoded)) {
+                // error_log("Base64 XSS 시도 감지: key=$key, decoded=$decoded, IP=" . $_SERVER['REMOTE_ADDR']);
+                alert('Base64로 인코딩된 위험한 스크립트가 발견되었습니다.', G5_URL);
+                die();
+            }
         }
     }
 
