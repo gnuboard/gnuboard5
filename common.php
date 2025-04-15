@@ -358,6 +358,45 @@ if(XenoPostToForm::check()) {
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
 $config = get_config(true);
 
+if ($is_admin != 'super') {
+    // 접근가능 IP
+    $cf_possible_ip = trim($config['cf_possible_ip']);
+    if ($cf_possible_ip) {
+        $is_possible_ip = false;
+        $pattern = explode("\n", $cf_possible_ip);
+        for ($i=0; $i<count($pattern); $i++) {
+            $pattern[$i] = trim($pattern[$i]);
+            if (empty($pattern[$i]))
+                continue;
+
+            $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
+            $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
+            $pat = "/^{$pattern[$i]}$/";
+            $is_possible_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
+            if ($is_possible_ip)
+                break;
+        }
+        if (!$is_possible_ip)
+            die ("<meta charset=utf-8>접근이 가능하지 않습니다.");
+    }
+
+    // 접근차단 IP
+    $is_intercept_ip = false;
+    $pattern = explode("\n", trim($config['cf_intercept_ip']));
+    for ($i=0; $i<count($pattern); $i++) {
+        $pattern[$i] = trim($pattern[$i]);
+        if (empty($pattern[$i]))
+            continue;
+
+        $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
+        $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
+        $pat = "/^{$pattern[$i]}$/";
+        $is_intercept_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
+        if ($is_intercept_ip)
+            die ("<meta charset=utf-8>접근 불가합니다.");
+    }
+}
+
 // 본인인증 또는 쇼핑몰 사용시에만 secure; SameSite=None 로 설정합니다.
 if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) ) {
     // Chrome 80 버전부터 아래 이슈 대응
@@ -636,47 +675,6 @@ if (isset($member['mb_id']) && $member['mb_id']) {
     $member['mb_id'] = '';
     $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
 }
-
-
-if ($is_admin != 'super') {
-    // 접근가능 IP
-    $cf_possible_ip = trim($config['cf_possible_ip']);
-    if ($cf_possible_ip) {
-        $is_possible_ip = false;
-        $pattern = explode("\n", $cf_possible_ip);
-        for ($i=0; $i<count($pattern); $i++) {
-            $pattern[$i] = trim($pattern[$i]);
-            if (empty($pattern[$i]))
-                continue;
-
-            $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
-            $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
-            $pat = "/^{$pattern[$i]}$/";
-            $is_possible_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
-            if ($is_possible_ip)
-                break;
-        }
-        if (!$is_possible_ip)
-            die ("<meta charset=utf-8>접근이 가능하지 않습니다.");
-    }
-
-    // 접근차단 IP
-    $is_intercept_ip = false;
-    $pattern = explode("\n", trim($config['cf_intercept_ip']));
-    for ($i=0; $i<count($pattern); $i++) {
-        $pattern[$i] = trim($pattern[$i]);
-        if (empty($pattern[$i]))
-            continue;
-
-        $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
-        $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
-        $pat = "/^{$pattern[$i]}$/";
-        $is_intercept_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
-        if ($is_intercept_ip)
-            die ("<meta charset=utf-8>접근 불가합니다.");
-    }
-}
-
 
 // 테마경로
 if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true)
