@@ -205,7 +205,7 @@ if (isset($mb_id) && $mb_id) {
 if ($mb['mb_intercept_date']) {
     $g5['title'] = "차단된 ";
 } else {
-    $g5['title'] .= "";
+    $g5['title'] = "";
 }
 $g5['title'] .= '회원 ' . $html_title;
 require_once './admin.head.php';
@@ -455,7 +455,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <?php if ($config['cf_use_recommend']) { // 추천인 사용 ?>
                     <tr>
                         <th scope="row">추천인</th>
-                        <td colspan="3"><?php echo ($mb['mb_recommend'] ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?></td>
+                        <td colspan="3"><?php echo ((isset($mb['mb_recommend']) && $mb['mb_recommend']) ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?></td>
                     </tr>
                 <?php } ?>
 

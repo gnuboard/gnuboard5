@@ -14,24 +14,28 @@ $str_nick_list = '';
 $msg = '';
 $error_list  = array();
 $member_list = array('id'=>array(), 'nick'=>array());
+$me_memo = isset($_POST['me_memo']) ? preg_replace("#[\\\]+$#", "", substr(trim($_POST['me_memo']),0,65536)) : '';
 
 run_event('memo_form_update_before', $recv_list);
 
 for ($i=0; $i<count($recv_list); $i++) {
-    $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
+
+    $recv_list_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $recv_list[$i]), 0, 20);
+
+    $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list_id}' ");
     if ($row) {
         if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] && !$row['mb_intercept_date']))) {
             $member_list['id'][]   = $row['mb_id'];
             $member_list['nick'][] = $row['mb_nick'];
         } else {
-            $error_list[]   = $recv_list[$i];
+            $error_list[]   = $recv_list_id;
         }
     }
     /*
     // 관리자가 아니면서
     // 가입된 회원이 아니거나 정보공개를 하지 않았거나 탈퇴한 회원이거나 차단된 회원에게 쪽지를 보내는것은 에러
     if ((!$row['mb_id'] || !$row['mb_open'] || $row['mb_leave_date'] || $row['mb_intercept_date']) && !$is_admin) {
-        $error_list[]   = $recv_list[$i];
+        $error_list[]   = $recv_list_id;
     } else {
         $member_list['id'][]   = $row['mb_id'];
         $member_list['nick'][] = $row['mb_nick'];
@@ -67,14 +71,14 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     $recv_mb_nick = get_text($member_list['nick'][$i]);
 
     // 받는 회원 쪽지 INSERT
-    $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_type, me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00' , 'recv', '{$_SERVER['REMOTE_ADDR']}' ) ";
+    $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_type, me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$me_memo}', '0000-00-00 00:00:00' , 'recv', '{$_SERVER['REMOTE_ADDR']}' ) ";
 
     sql_query($sql);
 
     if( $me_id = sql_insert_id() ){
 
         // 보내는 회원 쪽지 INSERT
-        $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_send_id, me_type , me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00', '$me_id', 'send', '{$_SERVER['REMOTE_ADDR']}' ) ";
+        $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_send_id, me_type , me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$me_memo}', '0000-00-00 00:00:00', '$me_id', 'send', '{$_SERVER['REMOTE_ADDR']}' ) ";
         sql_query($sql);
 		
 		$member_list['me_id'][$i] = $me_id;

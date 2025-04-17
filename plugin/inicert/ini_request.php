@@ -9,13 +9,14 @@ if(empty($max_cr_id)) $max_cr_id = 0;
 if($config['cf_cert_use'] == 2) { // 실서비스 일때
     $mid = 'SRA'.$config['cf_cert_kg_mid']; // 부여받은 MID(상점ID) 입력(영업담당자 문의)
     $apiKey = $config['cf_cert_kg_cd'];   // 부여받은 MID 에 대한 apiKey
-    $mTxId ='SIR_'.$max_cr_id;
+    $mTxId ='SIR_'.substr($max_cr_id.'_'.round(microtime(true) * 1000), 0, 16);
     certify_count_check($member['mb_id'], 'simple'); // 금일 인증시도 횟수 체크
 } else { // 테스트 일때
     $mid = "SRAiasTest";
     $apiKey = "43700dfd4c795fe9550853aef3b6aaf1";
-    $mTxId ='SIR_'.$max_cr_id;
+    $mTxId ='SIR_'.substr($max_cr_id.'_'.round(microtime(true) * 1000), 0, 16);
 }
+
 $reqSvcCd ='01';    // 요청구분코드 ["01":간편인증, "02":전자서명]
 $reservedMsg = (defined('KGINICIS_USE_CERT_SEED') && KGINICIS_USE_CERT_SEED) ? 'isUseToken=Y' : '';   // 결과조회 응답시 개인정보SEED 암호화 처리 요청
 

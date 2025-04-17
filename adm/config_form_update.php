@@ -10,9 +10,11 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
+$sql = " select * from {$g5['config_table']} limit 1";
+$ori_config = sql_fetch($sql);
+
 $cf_title = isset($_POST['cf_title']) ? strip_tags(clean_xss_attributes($_POST['cf_title'])) : '';
 $cf_admin = isset($_POST['cf_admin']) ? clean_xss_tags($_POST['cf_admin'], 1, 1) : '';
-$posts = array();
 
 $mb = get_member($cf_admin);
 
@@ -24,15 +26,15 @@ check_admin_token();
 
 $cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
 
-$check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret', 'cf_cert_kg_cd', 'cf_cert_kg_mid');
+$check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_cert_kcp_enckey', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret', 'cf_cert_kg_cd', 'cf_cert_kg_mid');
 
 foreach ($check_keys as $key) {
     if (isset($_POST[$key]) && $_POST[$key]) {
-        $posts[$key] = $_POST[$key] = preg_replace('/[^a-z0-9_\-\.]/i', '', $_POST[$key]);
+        $_POST[$key] = preg_replace('/[^a-z0-9_\-\.]/i', '', $_POST[$key]);
     }
 }
 
-$posts['cf_icode_server_port'] = $_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
+$_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
 
 if (isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']) {
     $pattern = explode("\n", trim($_POST['cf_intercept_ip']));
@@ -165,12 +167,12 @@ for ($i = 1; $i <= 10; $i++) {
 
 foreach ($check_keys as $k => $v) {
     if ($v === 'int') {
-        $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? (int) $_POST[$k] : 0;
+        $_POST[$k] = isset($_POST[$k]) ? (int) $_POST[$k] : 0;
     } else {
         if (in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy'))) {
-            $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
+            $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
         } else {
-            $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? strip_tags(clean_xss_attributes($_POST[$k])) : '';
+            $_POST[$k] = isset($_POST[$k]) ? strip_tags(clean_xss_attributes($_POST[$k])) : '';
         }
     }
 }
@@ -181,9 +183,36 @@ if ($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] &&
 }
 
 if (!$_POST['cf_cert_use']) {
-    $posts[$key] = $_POST['cf_cert_ipin'] = '';
-    $posts[$key] = $_POST['cf_cert_hp'] = '';
-    $posts[$key] = $_POST['cf_cert_simple'] = '';
+    $_POST['cf_cert_ipin'] = '';
+    $_POST['cf_cert_hp'] = '';
+   $_POST['cf_cert_simple'] = '';
+}
+
+// 관리자가 자동등록방지를 사용해야 할 경우 ( 기본환경설정에서 최고관리자, 방문자분석 스크립트, 추가 메타태그, 추가 script, css 변경시 )
+$check_captcha = 0;
+
+if ($cf_admin && $ori_config['cf_admin'] !== $cf_admin) {
+    $check_captcha = 1;
+}
+
+if ($_POST['cf_analytics'] && $ori_config['cf_analytics'] !== stripslashes($_POST['cf_analytics'])) {
+    $check_captcha = 1;
+}
+
+if ($_POST['cf_add_meta'] && $ori_config['cf_add_meta'] !== stripslashes($_POST['cf_add_meta'])) {
+    $check_captcha = 1;
+}
+
+if ($_POST['cf_add_script'] && $ori_config['cf_add_script'] !== stripslashes($_POST['cf_add_script'])) {
+    $check_captcha = 1;
+}
+
+if ($check_captcha) {
+    include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
+
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
+    }
 }
 
 $sql = " update {$g5['config_table']}
@@ -290,6 +319,7 @@ $sql = " update {$g5['config_table']}
                 cf_cert_kg_mid = '" . trim($_POST['cf_cert_kg_mid']) . "',
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
                 cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
+                cf_cert_kcp_enckey = '{$_POST['cf_cert_kcp_enckey']}',
                 cf_cert_limit = '{$_POST['cf_cert_limit']}',
                 cf_cert_req = '{$_POST['cf_cert_req']}',
                 cf_sms_use = '{$_POST['cf_sms_use']}',
@@ -344,6 +374,10 @@ sql_query($sql);
 
 if (isset($_POST['cf_bbs_rewrite'])) {
     g5_delete_all_cache();
+}
+
+if (function_exists('get_admin_captcha_by')) {
+    get_admin_captcha_by('remove');
 }
 
 run_event('admin_config_form_update');

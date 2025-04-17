@@ -160,11 +160,11 @@ if( function_exists('pg_setting_check') ){
 </div>
 
 <form name="frmorderlist" class="local_sch01 local_sch">
-<input type="hidden" name="doc" value="<?php echo $doc; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="save_search" value="<?php echo $search; ?>">
+<input type="hidden" name="doc" value="<?php echo get_sanitize_input($doc); ?>">
+<input type="hidden" name="sort1" value="<?php echo get_sanitize_input($sort1); ?>">
+<input type="hidden" name="sort2" value="<?php echo get_sanitize_input($sort2); ?>">
+<input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
+<input type="hidden" name="save_search" value="<?php echo get_sanitize_input($search); ?>">
 
 <label for="sel_field" class="sound_only">검색대상</label>
 <select name="sel_field" id="sel_field">

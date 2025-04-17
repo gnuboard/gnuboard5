@@ -102,6 +102,10 @@ function goto_url($url)
 {
     run_event('goto_url', $url);
 
+    if (function_exists('safe_filter_url_host')) {
+        $url = safe_filter_url_host($url);
+    }
+
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
 
@@ -182,6 +186,10 @@ function alert($msg='', $url='', $error=true, $post=false)
 
     run_event('alert', $msg, $url, $error, $post);
 
+    if (function_exists('safe_filter_url_host')) {
+        $url = safe_filter_url_host($url);
+    }
+
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
 
     $header = '';
@@ -218,6 +226,12 @@ function confirm($msg, $url1='', $url2='', $url3='')
     if (!$msg) {
         $msg = '올바른 방법으로 이용해 주십시오.';
         alert($msg);
+    }
+
+    if (function_exists('safe_filter_url_host')) {
+        $url1 = safe_filter_url_host($url1);
+        $url2 = safe_filter_url_host($url2);
+        $url3 = safe_filter_url_host($url3);
     }
 
     if(!trim($url1) || !trim($url2)) {
@@ -712,7 +726,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     $tmp = explode(",", trim($search_field));
     $field = explode("||", $tmp[0]);
     $not_comment = "";
-    if (!empty($tmp[1]))
+    if (isset($tmp[1]))
         $not_comment = $tmp[1];
 
     $str .= "(";
@@ -768,8 +782,11 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         $op1 = " $search_operator ";
     }
     $str .= " ) ";
-    if ($not_comment)
+    if ($not_comment === '1') {
         $str .= " and wr_is_comment = '0' ";
+    } else if ($not_comment === '0') {
+        $str .= " and wr_is_comment = '1' ";
+    }
 
     return $str;
 }
@@ -832,23 +849,33 @@ function get_group($gr_id, $is_cache=false)
 }
 
 
-// 회원 정보를 얻는다.
-function get_member($mb_id, $fields='*', $is_cache=false)
+/**
+ * 회원 정보를 얻는다
+ * 
+ * @param string $mb_id
+ * @param string $fields
+ * @param bool $is_cache
+ * 
+ * @return array
+ */
+function get_member($mb_id, $fields = '*', $is_cache = false)
 {
     global $g5;
-    
-    if (preg_match("/[^0-9a-z_]+/i", $mb_id))
+
+    $mb_id = trim($mb_id);
+    if (preg_match("/[^0-9a-z_]+/i", $mb_id)) {
         return array();
+    }
 
     static $cache = array();
 
     $key = md5($fields);
 
-    if( $is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key]) ){
+    if ($is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key])) {
         return $cache[$mb_id][$key];
     }
 
-    $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
+    $sql = " SELECT {$fields} from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 
     $cache[$mb_id][$key] = run_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
 
@@ -1320,6 +1347,10 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
                       and po_rel_action = '$rel_action' ";
         $row = sql_fetch($sql);
 
+        if (! (isset($row['po_id']) && $row['po_id'])) {
+            return true;
+        }
+
         if(isset($row['po_point']) && $row['po_point'] < 0) {
             $mb_id = $row['mb_id'];
             $po_point = abs($row['po_point']);
@@ -1367,15 +1398,14 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     static $cache = array();
 
     $name = get_text($name, 0, true);
-
-    if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
+    $namekey = ($mb_id && $name) ? $mb_id."\t".$name : '';
+    
+    // id는 유니크하지만 닉네임 또는 이름은 변경이 가능하다
+    // name의 경우 비회원은 게시판에 동일한 이름을 등록할수 있다.
+    if ($namekey && isset($cache['idname:' . $namekey]) && $cache['idname:' . $namekey]) {
+        return $cache['idname:' . $namekey];
+    } else if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
         return $cache['id:' . $mb_id];
-    } else if (
-        isset($name)
-        && isset($cache['name:' . $name])
-        && $cache['name:' . $name]
-    ) {
-        return $cache['name:' . $name];
     }
 
     $email = get_string_encrypt($email);
@@ -1489,11 +1519,11 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str .= $str2;
     $str .= '<noscript class="sv_nojs">' . $str2 . '</noscript>';
     $str .= "</span>";
-
-    if ($mb_id) {
+    
+    if ($namekey) {
+        $cache['idname:' . $namekey] = $str;
+    } else if ($mb_id && !$name) {
         $cache['id:' . $mb_id] = $str;
-    } else {
-        $cache['name:' . $name] = $str;
     }
 
     return $str;
@@ -1652,7 +1682,10 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
             die('Connect Error: '.mysqli_connect_error());
         }
     } else {
-        $link = mysql_connect($host, $user, $pass);
+        if (!function_exists('mysql_connect')) {
+            die('MySQL이 설치되지 않아 mysql_connect 함수를 사용할 수 없습니다.');
+        }
+        $link = mysql_connect($host, $user, $pass) or die('MySQL Host, User, Password 정보에 오류가 있습니다.');
     }
 
     return $link;
@@ -2098,7 +2131,7 @@ function time_select($time, $name="")
     preg_match("/([0-9]{2}):([0-9]{2}):([0-9]{2})/", $time, $m);
 
     // 시
-    $s .= "<select name='{$name}_h'>";
+    $s = "<select name='{$name}_h'>";
     for ($i=0; $i<=23; $i++) {
         $s .= "<option value='$i'";
         if ($i == $m['0']) {
@@ -2244,6 +2277,24 @@ function bad_tag_convert($code)
 
 function _callback_bad_tag_convert($matches){
     return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 없는 다른 아이디로 접속하세요.</div>";
+}
+
+function normalize_utf8_string($string) {
+    // utf8mb4 환경과 mb_ord 함수가 지원되지 않는 환경에서는 제외한다.
+    if (G5_DB_CHARSET === 'utf8mb4' || !function_exists('mb_ord')) {
+        return $string;
+    }
+    
+    // Unicode 특수 문자를 일반 문자로 변환
+    $normalized = preg_replace_callback('/[\x{1D400}-\x{1D7FF}]/u', '_callback_normalizeString', $string);
+
+    return $normalized;
+}
+
+function _callback_normalizeString($matches){
+    $charCode = mb_ord($matches[0], 'UTF-8');
+    // 변환 테이블에서 일반 문자로 매핑
+    return chr(($charCode - 0x1D400) % 26 + ord('A'));
 }
 
 // 토큰 생성
@@ -3592,6 +3643,13 @@ function login_password_check($mb, $pass, $hash)
     }
 
     return check_password($pass, $hash);
+}
+
+function safe_filter_url_host($url) {
+
+    $regex = run_replace('safe_filter_url_regex', '\\', $url);
+
+    return $regex ? preg_replace('#'. preg_quote($regex, '#') .'#iu', '', $url) : '';
 }
 
 // 동일한 host url 인지

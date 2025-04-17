@@ -3,6 +3,7 @@
 include_once('./_common.php');
 
 $comment_id = isset($_REQUEST['comment_id']) ? (int) $_REQUEST['comment_id'] : 0;
+$token = isset($_REQUEST['token']) ? clean_xss_tags($_REQUEST['token']) : 0;
 
 $delete_comment_token = get_session('ss_delete_comment_'.$comment_id.'_token');
 set_session('ss_delete_comment_'.$comment_id.'_token', '');

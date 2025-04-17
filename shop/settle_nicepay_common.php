@@ -1,8 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (function_exists('add_log')) add_log($_POST, false, 'vv');
-
 $NICEPAY_log_path = G5_DATA_PATH.'/log'; // 나이스페이 가상계좌 로그저장 경로
 $NICEPAY_payLog  = false;                  // 로그를 기록하려면 true 로 수정
 

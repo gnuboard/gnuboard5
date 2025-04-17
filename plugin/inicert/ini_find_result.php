@@ -1,8 +1,12 @@
 <?php
 include_once('./_common.php');
+require_once (dirname(__FILE__) .'/libs/KISA_SEED_CBC.php');
+require_once (dirname(__FILE__) .'/libs/INILib.php');
 
 $txId = isset($_POST['txId']) ? clean_xss_tags($_POST['txId'], 1, 1) : '';
 $mid  = substr($txId, 6, 10);
+$SEEDKEY = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
+$SEEDIV = 'SASHOSTSIRIAS000';
 
 if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
@@ -41,6 +45,14 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
         $birth_day      = $res_data['userBirthday'];            // 생년월일
         $ci             = $res_data['userCi'];                  // CI           
 
+        if (defined('KGINICIS_USE_CERT_SEED') && KGINICIS_USE_CERT_SEED) {
+            // 개인정보SEED 암호화 된것을 복호화 합니다.
+            $user_name = decrypt_SEED($user_name, $SEEDKEY, $SEEDIV);
+            $phone_no = decrypt_SEED($phone_no, $SEEDKEY, $SEEDIV);
+            $birth_day = decrypt_SEED($birth_day, $SEEDKEY, $SEEDIV);
+            $ci = decrypt_SEED($ci, $SEEDKEY, $SEEDIV);
+        }
+        
         @insert_cert_history($member['mb_id'], 'inicis', $cert_type); // 인증성공 시 내역 기록
 
         if(!$phone_no)

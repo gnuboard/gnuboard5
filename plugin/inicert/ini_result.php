@@ -6,7 +6,7 @@ require_once (dirname(__FILE__) .'/libs/INILib.php');
 $txId = isset($_POST['txId']) ? clean_xss_tags($_POST['txId'], 1, 1) : '';
 $mid  = substr($txId, 6, 10);
 $SEEDKEY = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
-$SEEDIV  = "SASKGINICIS00000";
+$SEEDIV = 'SASHOSTSIRIAS000';
 
 if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 

@@ -292,9 +292,10 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_simple` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kg_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kg_mid` varchar(255) NOT NULL DEFAULT '',
-  `cf_cert_use_seed` tinyint(4) NOT NULL DEFAULT '0',
+  `cf_cert_use_seed` tinyint(4) NOT NULL DEFAULT '1',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
+  `cf_cert_kcp_enckey` varchar(100) NOT NULL DEFAULT '',
   `cf_lg_mid` varchar(100) NOT NULL DEFAULT '',
   `cf_lg_mert_key` varchar(100) NOT NULL DEFAULT '',
   `cf_cert_limit` int(11) NOT NULL DEFAULT '0',
@@ -909,7 +910,7 @@ CREATE TABLE IF NOT EXISTS `g5_member_social_profiles` (
   `description` varchar(255) NOT NULL DEFAULT '',
   `mp_register_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `mp_latest_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  UNIQUE KEY `mp_no` (`mp_no`),
+  PRIMARY KEY (`mp_no`),
   KEY `mb_id` (`mb_id`),
   KEY `provider` (`provider`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

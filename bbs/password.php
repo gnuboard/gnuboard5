@@ -23,7 +23,7 @@ switch ($w) {
         break;
     case 's' :
         // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
-        if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
+        if ($is_admin || (isset($write['mb_id']) && $write['mb_id'] && $member['mb_id'] == $write['mb_id']))
             goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
         else {
             $action = https_url(G5_BBS_DIR).'/password_check.php';
@@ -32,7 +32,7 @@ switch ($w) {
         break;
     case 'sc' :
         // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
-        if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
+        if ($is_admin || (isset($write['mb_id']) && $write['mb_id'] && $member['mb_id'] == $write['mb_id']))
             goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
         else {
             $action = https_url(G5_BBS_DIR).'/password_check.php';

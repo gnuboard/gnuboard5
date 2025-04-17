@@ -35,7 +35,7 @@ $sql_common .= $sql_search;
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = isset($row['cnt']) ? $row['cnt'] : 0;
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
@@ -67,10 +67,10 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
-<input type="hidden" name="doc" value="<?php echo $doc; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="doc" value="<?php echo get_sanitize_input($doc); ?>">
+<input type="hidden" name="sort1" value="<?php echo get_sanitize_input($sort1); ?>">
+<input type="hidden" name="sort2" value="<?php echo get_sanitize_input($sort2); ?>">
+<input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
 
 <label for="sel_ca_id" class="sound_only">분류선택</label>
 <select name="sel_ca_id" id="sel_ca_id">
@@ -159,7 +159,6 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         $it_stock_qty_st = ''; // 스타일 정의
         if($row['it_stock_qty'] <= $row['it_noti_qty']) {
             $it_stock_qty_st = ' sit_stock_qty_alert';
-            $it_stock_qty = ''.$it_stock_qty.' !<span class="sound_only"> 재고부족 </span>';
         }
 
         $bg = 'bg'.($i%2);
@@ -171,7 +170,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <?php echo $row['it_id']; ?>
         </td>
         <td class="td_left"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo (int)$it_stock_qty; ?></td>
+        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo $it_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format((float)$wait_qty); ?></td>
         <td class="td_num"><?php echo number_format((float)$temporary_qty); ?></td>
         <td class="td_num">

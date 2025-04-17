@@ -145,6 +145,8 @@ function get_content_by_field($write_table, $type='bbs', $where_field='', $where
 {
     global $g5, $g5_object;
 
+    static $cache = array();
+
     $order_key = 'wr_id';
 
     if( $type === 'content' ){

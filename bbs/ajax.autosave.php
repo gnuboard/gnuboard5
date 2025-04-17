@@ -4,8 +4,8 @@ include_once('./_common.php');
 if (!$is_member) die('0');
 
 $uid     = isset($_REQUEST['uid']) ? preg_replace('/[^0-9]/', '', $_REQUEST['uid']) : 0;
-$subject = isset($_REQUEST['subject']) ? trim($_REQUEST['subject']) : '';
-$content = isset($_REQUEST['content']) ? trim($_REQUEST['content']) : '';
+$subject = isset($_REQUEST['subject']) ? preg_replace("#[\\\]+$#", "", substr(trim($_POST['subject']),0,255)) : '';
+$content = isset($_REQUEST['content']) ? preg_replace("#[\\\]+$#", "", substr(trim($_POST['content']),0,65536)) : '';
 
 if ($subject && $content) {
     $sql = " select count(*) as cnt from {$g5['autosave_table']} where mb_id = '{$member['mb_id']}' and as_subject = '$subject' and as_content = '$content' ";

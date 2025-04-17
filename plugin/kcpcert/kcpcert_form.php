@@ -27,6 +27,8 @@ if(!$ordr_idxx)
 $ct_cert = new C_CT_CLI;
 $ct_cert->mf_clear();
 
+$sbParam = '';
+
 $year          = "00";
 $month         = "00";
 $day           = "00";
@@ -47,7 +49,7 @@ $hash_data = $site_cd   .
              $sex_code  .
              $local_code;
 
-$up_hash = $ct_cert->make_hash_data( $home_dir, $hash_data );
+$up_hash = $ct_cert->make_hash_data( $home_dir, $kcp_enc_key, $hash_data );
 
 $ct_cert->mf_clear();
 ?>
@@ -101,10 +103,19 @@ $ct_cert->mf_clear();
 <!-- up_hash 검증 을 위한 필드 -->
 <input type="hidden" name="veri_up_hash" value=""/>
 
+<!-- web_siteid 을 위한 필드 -->
+<input type="hidden" name="web_siteid_hashYN" value=""/>
+
 <!-- 가맹점 사용 필드 (인증완료시 리턴)-->
 <input type="hidden" name="param_opt_1"  value="opt1"/>
 <input type="hidden" name="param_opt_2"  value="opt2"/>
 <input type="hidden" name="param_opt_3"  value="opt3"/>
+
+<?php if ($config['cf_cert_kcp_enckey']) { ?>
+<!-- 리턴 암호화 고도화 -->
+<input type="hidden" name="cert_enc_use_ext" value="Y"/>
+<input type='hidden' name='kcp_cert_lib_ver' value="<?php echo $ct_cert->get_kcp_lib_ver( $home_dir ); ?>"/>
+<?php } ?>
 </form>
 
 <script>

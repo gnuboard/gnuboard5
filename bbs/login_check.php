@@ -147,8 +147,16 @@ if(function_exists('set_cart_id')){
     cart_item_clean();
     set_cart_id('');
     $s_cart_id = get_session('ss_cart_id');
+
+    $add_cart_where = '';
+
+    // 장바구니에서 주문하기를 하는 경우
+    if (strpos($link, 'orderform.php') !== false) {
+        $add_cart_where = " and ct_select_time < '".date('Y-m-d H:i:s', strtotime('-1 hour', G5_SERVER_TIME))."' ";
+    }
+
     // 선택필드 초기화
-    $sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
+    $sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' $add_cart_where ";
     sql_query($sql);
 }
 

@@ -151,7 +151,7 @@ function social_before_join_check($url=''){
     return false;
 }
 
-function social_get_data($by='provider', $provider, $user_profile){
+function social_get_data($by, $provider, $user_profile){
     global $g5;
 
     // 소셜 가입이 되어 있는지 체크

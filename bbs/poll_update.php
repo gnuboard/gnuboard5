@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $po_id = isset($_POST['po_id']) ? preg_replace('/[^0-9]/', '', $_POST['po_id']) : 0;
 
-$po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$_POST['po_id']}' ");
+$po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '$po_id' ");
 if (! (isset($po['po_id']) && $po['po_id']))
     alert('po_id 값이 제대로 넘어오지 않았습니다.');
 

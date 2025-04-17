@@ -4,8 +4,6 @@ include_once('./_common.php');
 if ($is_guest)
     alert('로그인 한 회원만 접근하실 수 있습니다.', G5_BBS_URL.'/login.php');
 
-$url = isset($_GET['url']) ? clean_xss_tags($_GET['url']) : '';
-
 while (1) {
     $tmp = preg_replace('/&#[^;]+;/', '', $url);
     if ($tmp == $url) break;
@@ -30,6 +28,10 @@ if($url){
 
     if( preg_match('#^/{3,}#', $url) ){
         $url = preg_replace('#^/{3,}#', '/', $url);
+    }
+
+    if (function_exists('safe_filter_url_host')) {
+        $url = safe_filter_url_host($url);
     }
 }
 

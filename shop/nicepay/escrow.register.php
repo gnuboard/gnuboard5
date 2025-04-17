@@ -5,6 +5,11 @@ if($od['od_pg'] != 'nicepay') return;
 
 include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
 
+if (!$escrow_numb) {
+    // 송장번호가 없으면 등록이 안된다.
+    return;
+}
+
 $mid = $default['de_nicepay_mid'];
 $tid = $escrow_tno;                             // 거래 번호
 $reqType = '03';					                // 요청타입 (배송등록 03)
@@ -45,8 +50,6 @@ $response = nicepay_reqPost($data, $escrowRequestURL);
 
 $nice_result = json_decode($response, true);
 
-if (function_exists('add_log')) add_log($nice_result, true, 'es');
-
 // 성공이면
 if (isset($nice_result['ResultCode']) && $nice_result['ResultCode'] === 'C000') {
 
@@ -72,6 +75,3 @@ $resultCode = $nice_result['ResultCode'];        // 결과코드 ("00"이면 지
 $resultMsg  = $nice_result['ResultMsg'];          // 결과내용 (지불결과에 대한 설명)
 $dlv_date   = $nice_result['ProcessDate'];
 $dlv_time   = $nice_result['ProcessTime'];
-
-echo "에스크로배송";
-exit;
