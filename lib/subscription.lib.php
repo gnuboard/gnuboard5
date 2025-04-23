@@ -1812,7 +1812,7 @@ function kcp_billing($od, $tmp_cart_id='') {
     $cust_ip            = "";
     $currency           = '410'; // 화폐 단위
     // $ordr_idxx          = $od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(); // 주문번호 
-    $ordr_idxx          = generate_subscription_id($od['od_id']); // 주문번호 
+    $ordr_idxx          = generate_subscription_id($od['od_id'], $od['mb_id']); // 주문번호 
     $good_name          = $goodsname['full_name']; // 상품명
     $buyr_name          = $od['od_name']; // 주문자명
     $buyr_mail          = $od['od_email']; // 주문자 E-mail
@@ -1880,7 +1880,7 @@ function kcp_new_billing($od, $tmp_cart_id='') {
     $cust_ip            = "";
     $currency           = '410'; // 화폐 단위
     // $ordr_idxx          = $od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(); // 주문번호 
-    $ordr_idxx          = generate_subscription_id($od['od_id']);
+    $ordr_idxx          = generate_subscription_id($od['od_id'], $od['mb_id']);
     $good_name          = $goodsname['full_name']; // 상품명
     $buyr_name          = $od['od_name']; // 주문자명
     $buyr_mail          = $od['od_email']; // 주문자 E-mail
@@ -2076,13 +2076,13 @@ function nicepay_billing($od, $tmp_cart_id='') {
     
     // $tid = $before_nice_pay['od_tno'].'12';      // 일부러 실패하려고 한다면
     
-    $tid = generate_subscription_id($before_nice_pay['od_tno']);
+    $tid = generate_subscription_id($before_nice_pay['od_tno'], $before_nice_pay['mb_id']);
     
     // $tid = $before_nice_pay['od_tno'];
     // 나이스페이 옛결제모듈의 경우 tid와 moid 는 카드등록을 한 tno와 od_id로 보내야 한다.
     // $moid 				= $before_nice_pay['first_ordernumber'];				// 가맹점 주문번호
     
-    $moid 				= generate_subscription_id($od['od_id']);				// 가맹점 주문번호
+    $moid 				= generate_subscription_id($od['od_id'], $od['mb_id']);				// 가맹점 주문번호
     $amt 				= (int) $od['od_receipt_price'];				// 결제 금액
     //$goodsName 			= $goodsname['full_name'];				// 상품명
     
@@ -2174,7 +2174,7 @@ function nicepay_new_billing($od, $tmp_cart_id='') {
     
     // https://github.com/nicepayments/nicepay-manual/blob/main/api/payment-subscribe.md#%EB%B9%8C%ED%82%A4%EC%8A%B9%EC%9D%B8
     // $nice_orderId = substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64);  // 64길이
-    $nice_orderId = generate_subscription_id($id, 64);  // 64길이 가능
+    $nice_orderId = generate_subscription_id($id, $od['mb_id'], 64);  // 64길이 가능
     $edi_date = date('c', G5_SERVER_TIME);
     $sign_data = bin2hex(hash('sha256', $nice_orderId.$bid.$edi_date.$secretKey, true));
     $buyerName = $od['od_name'];
@@ -2281,7 +2281,7 @@ function tosspayments_billing($od, $tmp_cart_id='') {
         'customerKey' => $billingKey,
         'amount' => $od['od_receipt_price'],
         // 'orderId' => substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
-        'orderId' => generate_subscription_id($od['od_id'], 64),  // 64길이 가능
+        'orderId' => generate_subscription_id($od['od_id'], $od['mb_id'], 64),  // 64길이 가능
         'orderName' => $goodsname['full_name'],
         'customerEmail' => $od['od_email'],
         'customerName' => $od['od_name']
@@ -2342,7 +2342,7 @@ function inicis_billing($od, $tmp_cart_id='') {
 	// $detail["url"] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['REQUEST_URI'];
     $detail["url"] = G5_SUBSCRIPTION_URL;
 	// $detail["moid"] = $od['od_id'];
-    $detail["moid"] = generate_subscription_id($od['od_id']);
+    $detail["moid"] = generate_subscription_id($od['od_id'], $od['mb_id']);
 	$detail["goodName"] = $goodsname['full_name'];
 	$detail["buyerName"] = $od['od_name'];
 	$detail["buyerEmail"] = $od['od_email'];
@@ -2506,7 +2506,7 @@ function get_subscription_uniqid($is_pay=0, $uniqid_key='', $length=0) {
     return $key;
 }
 
-function generate_subscription_id($oid='', $length=30) {
+function generate_subscription_id($oid='', $mb_id='', $length=30) {
     global $g5, $is_member, $member;
     
     /*
@@ -2523,13 +2523,17 @@ function generate_subscription_id($oid='', $length=30) {
     }
     */
     
+    if (!$mb_id && $is_member) {
+        $mb_id = $member['mb_id'];
+    }
+    
     // 데이터베이스에서 가장 최근 주문 ID 가져오기
     $stmt = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(pay_id) as pay_id');
     
     $lastId = $stmt['pay_id'];
     $lastId = $lastId ? $lastId + 1 : 1;
     
-    $str = substr(hash('sha256', $lastId . $member['mb_id'] . microtime()), 0, 12);
+    $str = substr(hash('sha256', $lastId . $mb_id . microtime()), 0, 12);
     
     if (strlen($oid) >= $length) {
         $subscription_key = substr($oid, 0, -12).$str;
