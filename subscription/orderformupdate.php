@@ -256,8 +256,8 @@ if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
     if ($od_settle_case == '카드재사용') {
         $card_mask_number = $select_before_od['card_mask_number'];
         $card_billkey = $select_before_od['card_billkey'];
-        $od_subscription_date_format = $select_before_od['od_subscription_date_format'];
-        $od_subscription_selected_data = $select_before_od['od_subscription_selected_data'];
+        $od_subscription_date_format = isset($select_before_od['od_subscription_date_format']) ? $select_before_od['od_subscription_date_format'] : '';
+        $od_subscription_selected_data = isset($select_before_od['od_subscription_selected_data']) ? $select_before_od['od_subscription_selected_data'] : '';
         $od_card_name = $select_before_od['od_card_name'];
         
         // 구독 등록될 가격
@@ -598,6 +598,8 @@ if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_paymen
     
     $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
     
+    print_r( $nextBillingDate );
+    
     // 결제일이 오늘이거나 이전일이면 바로 1회차 결제한다.
     
     $current_time = strtotime(G5_TIME_YMDHIS);
@@ -615,6 +617,8 @@ if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_paymen
 if ($is_first_pay) {
 
     $pays = subscription_process_payment($exists_order, $od_pg);
+    
+    print_r( $pays );
     
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
@@ -912,6 +916,8 @@ if ($is_member) {
 
     sql_query($sql);
 }
+
+exit;
 
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>

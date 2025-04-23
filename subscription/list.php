@@ -22,6 +22,12 @@ $ca = array(
 'ca_img_width' => $default['de_listtype_img_width'],
 'ca_img_height' => $default['de_listtype_img_height'],
 'ca_skin' => 'list.10.skin.php',
+'ca_name' => '',
+'ca_include_head' => '',
+'ca_skin_dir' => '',
+'ca_head_html' => '',
+'ca_tail_html' => '',
+'ca_include_tail' => '' 
 );
 
 if ($ca_id) {

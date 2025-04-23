@@ -1735,7 +1735,10 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
     if(!$link)
         $link = $g5['connect_db'];
-
+    
+    $is_debug = false;
+    $start_time = 0;
+    
     if (is_object($sql)) {
         
         if (method_exists($sql, 'execute')) {

@@ -1,16 +1,19 @@
 .order-common-section{margin:0 0 30px;border:1px solid #e3e5e8;background:#fff}
 section.order-common-section h2 {border-bottom:1px solid #e2e4e7;font-size:1.167em;padding:20px}
 
+.cell.jquery-pg-datepicker{text-align:center;margin:0 auto}
+.cell.header label{margin:1em 0 0.5em;font-size:1.2em;font-weight:bold;display:block}
+
 #od_pay_sl.is_subscription_pays .lb_icon{float:none;width:100%}
 #od_pay_sl .lb_icon.subscription_card {padding-top:1.1em}
 
-#od_hope_date_print .ui-datepicker {width:95%;max-width:500px;padding:1em 0}
+#od_hope_date_print .ui-datepicker {width:100%;max-width:560px;text-align:left;padding:1em 0}
 
 #sod_frm_subscription_input {margin:0 0 30px;border:1px solid #e3e5e8;background:#fff}
 
 .jquery-modal.blocker{z-index:120}
 
-.jquery-modal .modal{max-width:600px;padding:1em 2em}
+.jquery-modal .modal{max-width:560px;padding:1em 2em}
 .sit-btn-subscription {
 width: 186px;
 float: left;
@@ -229,8 +232,8 @@ height: 50px;               /* 높이 지정 (주석 해제) */
 }
 
 .su-display-btns label {display: inline-block;position:relative;border: 2px solid #ffffff;background-color: transparent;vertical-align: top;
-padding:1em;line-height:auto;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size:1em}
-.su-display-btns label{line-height:20px}
+padding:0.6em 1em;line-height:auto;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size:1em}
+.su-display-btns label{line-height:20px;width:100px}
 
 .su-display-btns label:after {
     position: absolute;

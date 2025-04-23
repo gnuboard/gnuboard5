@@ -72,6 +72,12 @@ foreach($result_row as $od) {
         // 비활성화한다.
         sql_bind_update($g5['g5_subscription_order_table'], array('od_enable_status'=>0), array('od_id'=>$od['od_id']));
         
+        add_subscription_order_history($od_number_of_uses . ' 회가 지나서 비활성화 되었습니다', array(
+            'hs_type' => 'subscription_disable_order',
+            'od_id' => $od['od_id'],
+            'mb_id' => $od['mb_id']
+        ));
+        
         continue;
     }
     

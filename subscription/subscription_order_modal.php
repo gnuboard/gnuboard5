@@ -24,7 +24,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
         <?php } ?>
         
         <div class="cell header">
-            <label for=""><?php echo subscription_item_delivery_title($it); ?></label>
+            <label for=""><?php echo subscription_item_delivery_title(); ?></label>
         </div>
         <div class="cell">
         <?php if (get_subs_option('su_chk_user_delivery')) { ?>
@@ -171,7 +171,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
             <label for="od_hope_date_print">첫 희망배송일</label>
         </div>
         <div class="cell jquery-pg-datepicker">
-            <input type="hidden" name="od_hope_date" value="<?php echo $aparams_array['hope_delivery_date']; ?>" id="od_hope_date" class="frm_input" maxlength="10">
+            <input type="hidden" name="od_hope_date" value="<?php echo isset($aparams_array['hope_delivery_date']) ? get_text($aparams_array['hope_delivery_date']) : ''; ?>" id="od_hope_date" class="frm_input" maxlength="10">
             <div id="od_hope_date_print" class="jquery-datepicker"></div>
         </div>
         <?php } ?>

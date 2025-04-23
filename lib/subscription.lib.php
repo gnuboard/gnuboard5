@@ -2341,7 +2341,8 @@ function inicis_billing($od, $tmp_cart_id='') {
     $detail = array();
 	// $detail["url"] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['REQUEST_URI'];
     $detail["url"] = G5_SUBSCRIPTION_URL;
-	$detail["moid"] = $od['od_id'];
+	// $detail["moid"] = $od['od_id'];
+    $detail["moid"] = generate_subscription_id($od['od_id']);
 	$detail["goodName"] = $goodsname['full_name'];
 	$detail["buyerName"] = $od['od_name'];
 	$detail["buyerEmail"] = $od['od_email'];
@@ -2405,6 +2406,15 @@ function inicis_billing($od, $tmp_cart_id='') {
     // 성공이면 pay 테이블에 insert 한다. $response 형식은 json
     
     $inicis_res = json_decode($response, true);
+    
+    // 영카트5 정기결제 공통규격에 맞게 수정
+    $inicis_res['orderId'] = $detail["moid"];
+    $inicis_res['payMethod'] = 'CARD';
+    $inicis_res['amount'] = $inicis_res['price'];
+    $inicis_res['receiptUrl'] = '';    // 이니시스 는 영수증 url 이 없다.
+    $inicis_res['cardname'] = isset($CARD_CODE[$inicis_res['cardCode']]) ? $CARD_CODE[$inicis_res['cardCode']] : $inicis_res['cardCode'];
+    $inicis_res['cardnumber'] = $inicis_res['cardNumber'];   // 카드 마스킹번호
+    $inicis_res['py_app_no'] = $inicis_res['payAuthCode'];     // 승인번호
     
     run_event('subscription_order_pg_pay', 'inicis', $inicis_res, $postdata);
     
@@ -2519,7 +2529,7 @@ function generate_subscription_id($oid='', $length=30) {
     $lastId = $stmt['pay_id'];
     $lastId = $lastId ? $lastId + 1 : 1;
     
-    $str = substr(hash('sha256', $lastId . $member['md_id'] . microtime()), 0, 12);
+    $str = substr(hash('sha256', $lastId . $member['mb_id'] . microtime()), 0, 12);
     
     if (strlen($oid) >= $length) {
         $subscription_key = substr($oid, 0, -12).$str;
@@ -2624,7 +2634,7 @@ function get_subscription_boxcart_datas_count()
     return $cart_datas ? count($cart_datas) : 0;
 }
 
-function get_subscription_user_carts($s_cart_id) {
+function get_subscription_user_carts($s_cart_id, $is_cache=false) {
     
     global $g5, $member;
     
@@ -2682,12 +2692,13 @@ function delete_subscription_order_history($hs_id) {
     sql_bind_delete($g5['g5_subscription_order_history_table'], array('hs_id'=>$hs_id));
 }
 
-function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
+function get_subscription_pay_full_goods($id, $is_pay=0, $is_cache=false) {
     global $g5;
     
     static $cache = array();
-
-    $key = md5($pay_id);
+    
+    // $is_pay 가 0이면 구독내역이고 1이면 정기결제내역
+    $key = md5($id.'||'.$is_pay);
 
     if( $is_cache && isset($cache[$key]) ){
         return $cache[$key];
@@ -2700,12 +2711,16 @@ function get_subscription_pay_full_goods($pay_id, $is_cache=false) {
     
     // 상품명만들기
     /*
-    $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$pay_id' order by ct_id ";
+    $sql = " select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$id' order by ct_id ";
         
     $result = sql_query($sql);
     */
     
-    $result = sql_bind_select("{$g5['g5_subscription_cart_table']} as a join {$g5['g5_shop_item_table']} as b ON a.it_id = b.it_id", "a.it_id, b.it_name", array('a.od_id' => $pay_id), array('orderBy' => 'ct_id'));
+    if ($is_pay) {
+        $result = sql_bind_select("{$g5['g5_subscription_pay_basket_table']} as a join {$g5['g5_shop_item_table']} as b ON a.it_id = b.it_id", "a.it_id, b.it_name", array('a.pay_id' => $id), array('orderBy' => 'pay_id'));
+    } else {
+        $result = sql_bind_select("{$g5['g5_subscription_cart_table']} as a join {$g5['g5_shop_item_table']} as b ON a.it_id = b.it_id", "a.it_id, b.it_name", array('a.od_id' => $id), array('orderBy' => 'ct_id'));
+    }
     
     $tmp = array();
     
@@ -3039,7 +3054,7 @@ function get_subscription_pay_item_sendcost($it_id, $price, $qty, $cart_id, $pay
     return $sendcost;
 }
 
-function subscription_item_delivery_title($it) {
+function subscription_item_delivery_title() {
     $title = get_subs_option('su_user_delivery_title');
     
     return $title ? get_text($title) : '주기일입력';

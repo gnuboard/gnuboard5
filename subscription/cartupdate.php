@@ -198,7 +198,7 @@ if ($act == 'buy') {
         
         $ct_subscription_number = $it_subscription_number;
         $ct_firstshipment_date = $it_firstshipment_date;
-        $ct_date_format = $it['it_subscription_date_format'];
+        $ct_date_format = isset($it['it_subscription_date_format']) ? $it['it_subscription_date_format'] : '';
         
         // 바로구매에 있던 장바구니 자료를 지운다.
         if ($i == 0 && $sw_direct) {
@@ -430,7 +430,7 @@ if ($sw_direct) {
     // $aparams2 = isValidBase64($aparams) ? unserialize(base64_decode($aparams)) : '';
     
     $add_params = $aparams ? '&aparams='.$aparams : '';
-        
+    
     if ($is_member) {
         goto_url(G5_SUBSCRIPTION_URL."/orderform.php?sw_direct=$sw_direct".$add_params);
     } else {     

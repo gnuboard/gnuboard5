@@ -132,8 +132,6 @@ if (!(isset($pay_basket['pb_id']) && $pay_basket['pb_id'])) {
 $select_field = 'it_id, it_name, cp_price, pb_notax, pb_send_cost, it_sc_type';
 $result = sql_bind_select($g5['g5_subscription_pay_basket_table'], $select_field, array('pay_id'=>$pay['pay_id']), array('groupBy'=>'it_id', 'orderBy'=>'pb_id'));
 
-$print_py_deposit_name = $pay['py_deposit_name'];
-
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 ?>
@@ -150,9 +148,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             주문총액 <strong><?php echo number_format($pay['py_cart_price'] + $pay['py_send_cost'] + $pay['py_send_cost2']); ?></strong>원
         </p>
         <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $pay['py_hope_date']; ?> (<?php echo get_yoil($pay['py_hope_date']); ?>) 입니다.</p><?php } ?>
-        <?php if($pay['py_mobile']) { ?>
-        <p>모바일 쇼핑몰의 주문입니다.</p>
-        <?php } ?>
     </div>
 
     <form name="frmorderform" method="post" action="./subscription_pay_cartupdate.php" onsubmit="return form_submit(this);">
@@ -572,13 +567,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row"><label for="py_refund_price">배송주기</label></th>
                     <td>
-                        <?php echo $pay['py_subscription_number']; ?> <?php echo $pay['py_subscription_date_format']; ?>
+                        
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="py_refund_price">첫 발송일</label></th>
                     <td>
-                        <?php echo date('Y년 m월 d일', strtotime($pay['py_firstshipment_date'])); ?> (<?php echo get_weekend_yoil($pay['py_firstshipment_date']); ?>)
+                        
                     </td>
                 </tr>
                 <tr>
@@ -701,11 +696,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><input type="text" name="py_name" value="<?php echo get_text($pay['py_name']); ?>" id="py_name" required class="frm_input required"></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="py_tel"><span class="sound_only">주문하신 분 </span>전화번호</label></th>
-                    <td><input type="text" name="py_tel" value="<?php echo get_text($pay['py_tel']); ?>" id="py_tel" required class="frm_input required"></td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="py_hp"><span class="sound_only">주문하신 분 </span>핸드폰</label></th>
+                    <th scope="row"><label for="py_hp"><span class="sound_only">주문하신 분 </span>연락처</label></th>
                     <td><input type="text" name="py_hp" value="<?php echo get_text($pay['py_hp']); ?>" id="py_hp" class="frm_input"></td>
                 </tr>
                 <tr>

@@ -123,9 +123,9 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             $it_name .= '<div class="sod_opt">' . $it_options . '</div>';
                         }
 
-                        $ct_subscription_number = $row['ct_subscription_number'];   // 정기결제 관련
-                        $ct_firstshipment_date = $row['ct_firstshipment_date'];    // 정기결제 관련
-                        $ct_date_format = $row['ct_date_format'];           // 정기결제 관련
+                        $ct_subscription_number = isset($row['ct_subscription_number']) ? $row['ct_subscription_number'] : 0;   // 정기결제 관련
+                        $ct_firstshipment_date = isset($row['ct_firstshipment_date']) ? $row['ct_firstshipment_date'] : 0;    // 정기결제 관련
+                        $ct_date_format = isset($row['ct_date_format']) ? $row['ct_date_format'] : 0;           // 정기결제 관련
                     
                         $point = $sum['point'];
                         $sell_price = $sum['price'];
@@ -966,7 +966,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         <?php if (get_subs_option('su_chk_user_delivery')) {    // 배송주기를 사용자가 입력이 가능한경우 ?> 
 
         if (!jQuery("#od_subscription_select_day").val()) {
-            //alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
+            //alert("<?php echo subscription_item_delivery_title(); ?>를 선택해주세요");
             //jQuery("#od_subscription_select_day").focus();
         }
         
@@ -981,7 +981,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         console.log("배송주기 : " + od_subscription_select_val );
         
         if (!od_subscription_select_val) {
-            alert("<?php echo subscription_item_delivery_title($it); ?>를 선택해주세요");
+            alert("<?php echo subscription_item_delivery_title(); ?>를 선택해주세요");
             jQuery("#od_subscription_select_data").focus();
             
             return false;

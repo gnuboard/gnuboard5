@@ -45,7 +45,7 @@ if ($pay_id) {
     $pays['py_receipt_url'] = '';
 
     if ($pays['py_pg'] == 'kcp') {
-        $pays['py_receipt_url'] = G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL.'card_bill&tno='.$pays['py_tno'].'&order_no='.$pays['subscription_id'].'&trade_mony='.(int) $pays['py_receipt_price'];
+        $pays['py_receipt_url'] = G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL.'card_bill&tno='.$pays['py_tno'].'&order_no='.$pays['subscription_pg_id'].'&trade_mony='.(int) $pays['py_receipt_price'];
     } else if ($pays['py_pg'] == 'nicepay') {
         
         // https://developers.nicepay.co.kr/receipt.php
@@ -72,12 +72,11 @@ if ($pay_id) {
     }
     
     $od['od_b_full_address'] = get_text(sprintf("(%s%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2'], $od['od_b_addr3'], $od['od_b_addr_jibeon']));
-    $od['od_delivery_full_info'] = $od['od_delivery_company'].' '.get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link');
+    // $od['od_delivery_full_info'] = $od['od_delivery_company'].' '.get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link');
 
     // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
     $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']
-                    - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon']
-                    - $od['od_cancel_price'];
+                    - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'];
 
     $od['od_tot_price'] = $tot_price;
     

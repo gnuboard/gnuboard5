@@ -149,17 +149,16 @@ include_once('./_head.php');
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
         $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']
-                        - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon']
-                        - $od['od_cancel_price'];
+                        - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'];
 
         $receipt_price  = $od['od_receipt_price']
                         + $od['od_receipt_point'];
-        $cancel_price   = $od['od_cancel_price'];
+        $cancel_price   = 0;
 
         $misu = true;
         $misu_price = $tot_price - $receipt_price;
 
-        if ($misu_price == 0 && ($od['od_cart_price'] > $od['od_cancel_price'])) {
+        if ($misu_price == 0 && ($od['od_cart_price'] > 0)) {
             $wanbul = " (완불)";
             $misu = false; // 미수금 없음
         }
@@ -402,34 +401,6 @@ include_once('./_head.php');
             </div>
         </section>
         
-        <section id="sod_fin_dvr">
-            <h3>배송정보</h3>
-
-            <div class="tbl_head01 tbl_wrap">
-                <table>
-	                <tbody>
-	                <?php if ($od['od_invoice'] && $od['od_delivery_company']) { ?>
-	                <tr>
-	                    <th scope="row">배송회사</th>
-	                    <td><?php echo $od['od_delivery_company']; ?> <?php echo get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link'); ?></td>
-	                </tr>
-	                <tr>
-	                    <th scope="row">운송장번호</th>
-	                    <td><?php echo $od['od_invoice']; ?></td>
-	                </tr>
-	                <tr>
-	                    <th scope="row">배송일시</th>
-	                    <td><?php echo $od['od_invoice_time']; ?></td>
-	                </tr>
-	                <?php } else { ?>
-	                <tr>
-	                    <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
-	                </tr>
-	                <?php } ?>
-	                </tbody>
-                </table>
-            </div>
-        </section>
     </div>
 
     <div class="sod_right">
@@ -466,12 +437,6 @@ include_once('./_head.php');
             <li class="sod_bsk_dvr">
                 <span>추가배송비</span>
                 <strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong>
-            </li>
-            <?php } ?>
-            <?php if ($od['od_cancel_price'] > 0) { ?>
-            <li class="sod_bsk_dvr">
-                <span>취소금액</span>
-                <strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong> 
             </li>
             <?php } ?>
             <li class="sod_bsk_cnt">
