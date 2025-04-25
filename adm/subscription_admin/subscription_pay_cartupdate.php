@@ -41,7 +41,7 @@ for ($i=0; $i<$cnt; $i++)
 
     $pb_id = isset($_POST['pb_id'][$k]) ? (int) $_POST['pb_id'][$k] : 0;
 
-    if(!$pb_id)
+    if (!$pb_id)
         continue;
     
     /*
@@ -244,21 +244,20 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
                         
                         $args = array(
-                            'paymethod' => get_type_inicis_paymethod($pay['od_settle_case']),
-                            'tid' => $pay['od_tno'],
+                            'tid' => $pay['py_tno'],
                             'msg' => $cancel_msg
                         );
 
-                        $response = inicis_tid_cancel($args);
+                        $response = subscription_inicis_tid_cancel($args);
                         $result = json_decode($response, true);
 
                         if (isset($result['resultCode'])) {
-                            if ($result['resultCode'] != '00') {
+                            if ((string) $result['resultCode'] !== '00') {
                                 $pg_res_cd = $result['resultCode'];
                                 $pg_res_msg = $result['resultMsg'];
                             }
                         } else {
-                            $pg_res_cd = '';
+                            $pg_res_cd = 'noresponse';
                             $pg_res_msg = 'curl 로 데이터를 받지 못했습니다.';
                         }
 
@@ -285,7 +284,7 @@ if (in_array($_POST['pb_status'], $status_cancel)) {
                                 $pg_res_msg = $result['ResultMsg'];
                             }
                         } else {
-                            $pg_res_cd = '';
+                            $pg_res_cd = 'noresponse';
                             $pg_res_msg = 'curl 로 데이터를 받지 못하거나 통신에 실패했습니다.';
                         }
 
@@ -412,9 +411,9 @@ $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
 */
 
-$qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
+$qstr = "od_id=$od_id&amp;sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
-$url = "./orderform.php?od_id=$od_id&amp;$qstr";
+$url = "./payform.php?pay_id=$pay_id&amp;$qstr";
 
 // 신용카드 취소 때 오류가 있으면 알림
 if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {

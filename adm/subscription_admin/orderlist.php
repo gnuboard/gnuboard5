@@ -27,7 +27,7 @@ $od_coupon = isset($_GET['od_coupon']) ? preg_replace('/[^0-9a-z]/i', '', $_GET[
 $od_settle_case = isset($_GET['od_settle_case']) ? clean_xss_tags($_GET['od_settle_case'], 1, 1) : '';
 $od_escrow = isset($_GET['od_escrow']) ? clean_xss_tags($_GET['od_escrow'], 1, 1) : '';
 
-$od_enable_status = isset($_GET['od_enable_status']) ? preg_replace('/^[0-9]/', '', $_GET['od_enable_status']) : '';
+$od_enable_status = (isset($_GET['od_enable_status']) && $_GET['od_enable_status']) ? (string) preg_replace('/^[0-9a-z]/', '', $_GET['od_enable_status']) : 'all';
 
 $tot_itemcount = $tot_orderprice = $tot_receiptprice = $tot_ordercancel = $tot_misu = $tot_couponprice = 0;
 $sql_search = '';
@@ -190,9 +190,9 @@ subscription_pg_setting_check(true);
     <strong>주문상태</strong>
     <input type="radio" name="od_enable_status" value="all" id="od_enable_status_all"    <?php echo get_checked($od_enable_status, 'all'); ?>>
     <label for="od_enable_status_all">전체</label>
-    <input type="radio" name="od_enable_status" value="1" id="od_enable_status_enable" <?php echo get_checked($od_enable_status, 1); ?>>
+    <input type="radio" name="od_enable_status" value="1" id="od_enable_status_enable" <?php echo get_checked($od_enable_status, '1'); ?>>
     <label for="od_enable_status_odr">활성화</label>
-    <input type="radio" name="od_enable_status" value="0" id="od_enable_status_disable" <?php echo get_checked($od_enable_status, 0); ?>>
+    <input type="radio" name="od_enable_status" value="0" id="od_enable_status_disable" <?php echo get_checked($od_enable_status, '0'); ?>>
     <label for="od_enable_status_income">비활성화</label>
 </div>
 

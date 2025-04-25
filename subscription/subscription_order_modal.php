@@ -245,6 +245,47 @@ $subscription_use_inputs = get_subscription_use_inputs();
     <?php } ?>
     
     <?php if (get_subs_option('su_hope_date_use')) { ?>
+        
+        function getDateAfterDays(days) {
+          const today = new Date(); // 오늘 날짜를 가져옵니다.
+          today.setDate(today.getDate() + days); // 현재 날짜에 days(3일)를 더합니다.
+
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+          const day = String(today.getDate()).padStart(2, '0'); // 일도 2자리로 포맷팅
+
+          return `${year}-${month}-${day}`; // YYYY-MM-DD 형식으로 반환
+        }
+        
+        var holidays = [
+            '2024-01-01', // 신정
+            '2024-02-09', '2024-02-10', '2024-02-11', '2024-02-12', // 설날 연휴
+            '2024-03-01', // 삼일절
+            '2024-05-05', '2024-05-06', // 어린이날 대체 공휴일
+            '2024-06-06', // 현충일
+            '2024-08-15', // 광복절
+            '2024-09-16', '2024-09-17', '2024-09-18', // 추석 연휴
+            '2024-10-03', // 개천절
+            '2024-10-09', // 한글날
+            '2024-12-25',  // 성탄절
+            '2025-01-01', // 새해 첫날
+            '2025-01-28', // 설날 연휴 시작
+            '2025-01-29', // 설날
+            '2025-01-30', // 설날 연휴 끝
+            '2025-03-01', // 삼일절
+            '2025-03-03', // 삼일절 대체공휴일
+            '2025-05-05', // 어린이날 및 부처님오신날
+            '2025-05-06', // 부처님오신날 대체공휴일
+            '2025-06-06', // 현충일
+            '2025-08-15', // 광복절
+            '2025-10-03', // 개천절
+            '2025-10-05', // 추석 연휴 시작
+            '2025-10-06', // 추석
+            '2025-10-07', // 추석 연휴 끝
+            '2025-10-09', // 한글날
+            '2025-12-25'  // 성탄절
+        ];
+        
         jQuery(function($) {
 
             var g5_yymmdd = "<?php echo G5_TIME_YMD; ?>";
@@ -288,7 +329,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
                 maxDate: new Date("<?php echo getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after') + 30); ?>")
             });
             
-            <?php if ($aparams_array['hope_delivery_date']) { ?>
+            <?php if (isset($aparams_array['hope_delivery_date']) && $aparams_array['hope_delivery_date']) { ?>
                 $od_hope_date_print.datepicker("setDate", "<?php echo $aparams_array['hope_delivery_date']; ?>");
             <?php } ?>
                 
@@ -336,6 +377,45 @@ $subscription_use_inputs = get_subscription_use_inputs();
             
             change_hope_date_val();
             
+            /*
+            $('#od_hope_date_print').pignoseCalendar({
+                lang: 'ko',
+                disabledWeekdays: [0, 6], // SUN (0), SAT (6)
+                disabledDates: holidays,
+                minDate: getDateAfterDays(<?php echo (int) get_subs_option('su_hope_date_after'); ?>),
+                maxDate: getDateAfterDays(<?php echo (int) get_subs_option('su_hope_date_after') + 30; ?>)
+            });
+            */
+            
+            $(document).on("click", ".sit_btn_subscription", function(e){
+                e.preventDefault();
+                
+                // 1. 입력값 가져오기
+                const deliveryCycle = $("#od_subscription_select_data").val() || $("input[name='od_subscription_select_data']:checked").val();
+                const usageCount = $("#od_subscription_select_number").val()  || $("input[name='od_subscription_select_number']:checked").val();
+                const hopeDeliveryDate = $("#od_hope_date").val();
+                
+                // 2. 유효성 검사 (선택 사항)
+                if (!deliveryCycle) {
+                    alert("배송주기를 선택해주세요.");
+                    return;
+                }
+                if (!usageCount) {
+                    alert("이용횟수를 선택해주세요.");
+                    return;
+                }
+                if (!hopeDeliveryDate) {
+                    alert("희망배송일을 입력해주세요.");
+                    return;
+                }
+                
+                // 3. 숨겨진 폼에 값 할당
+                document.getElementById("hidden_delivery_cycle").value = deliveryCycle;
+                document.getElementById("hidden_usage_count").value = usageCount;
+                document.getElementById("hidden_hope_delivery_date").value = hopeDeliveryDate;
+                
+                $("form[name='fitem']").submit();
+            });
         });
         
     <?php } ?>
@@ -664,4 +744,25 @@ $subscription_use_inputs = get_subscription_use_inputs();
     
     calculate_next_delivery_date();
     
+    $("form[name='fitem']").on("form:valid", function() {
+        
+        if (document.pressed === "구독장바구니" || document.pressed === "정기구독신청" || document.pressed === "정기구독") {
+            
+            // form의 action을 구독 전용 URL로 변경
+            this.action = "<?php echo G5_SUBSCRIPTION_URL; ?>/cartupdate.php";
+            
+            $("input[name='is_subscription']").val('1');
+            
+            if (document.pressed === "구독장바구니") {
+                this.sw_direct.value = 0;
+            } else if (document.pressed === "정기구독신청" || document.pressed === "정기구독") {
+                this.sw_direct.value = 1;
+            }
+            
+        } else {
+            $("input[name='is_subscription']").val('');
+        }
+        
+    });
+
 </script>

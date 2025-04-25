@@ -2587,10 +2587,8 @@ function get_subscription_boxcart_datas($is_cache=false)
 {
     global $g5, $is_member, $member;
     
-    $sql  = " select * from {$g5['g5_subscription_cart_table']} ";
-    $sql .= " where od_id = '".$cart_id."' group by it_id ";
-    
-    if (!$is_member){
+    // 회원이 아니면
+    if (!$is_member) {
         return array();
     }
 
@@ -2810,7 +2808,10 @@ function get_subscription_pay_info($pay_id, $od_id) {
     }
 
     $info = array();
-
+    
+    $pay_coupon = 0;
+    $pay_send_coupon = 0;
+        
     // 장바구니 주문금액정보
     /*
     $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,

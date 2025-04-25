@@ -17,8 +17,10 @@ $order_info = array();
 $od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
 
 // 테이블의 전체 레코드수만 얻음
+/*
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
+*/
 
 $row = sql_bind_select_fetch($g5['g5_subscription_order_table'], 'count(*) as cnt', array('mb_id' => $member['mb_id']));
 $cnt = $total_count = $row['cnt'];

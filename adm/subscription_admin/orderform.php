@@ -12,11 +12,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 $fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['fr_date']) : '';
 $to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['to_date']) : '';
-$od_status = isset($_REQUEST['od_status']) ? clean_xss_tags($_REQUEST['od_status'], 1, 1) : '';
+$od_enable_status = isset($_REQUEST['od_enable_status']) ? clean_xss_tags($_REQUEST['od_enable_status'], 1, 1) : '';
 $od_settle_case = isset($_REQUEST['od_settle_case']) ? clean_xss_tags($_REQUEST['od_settle_case'], 1, 1) : '';
 $od_misu = isset($_REQUEST['od_misu']) ? clean_xss_tags($_REQUEST['od_misu'], 1, 1) : '';
-$od_cancel_price = isset($_REQUEST['od_cancel_price']) ? clean_xss_tags($_REQUEST['od_cancel_price'], 1, 1) : '';
-$od_refund_price = isset($_REQUEST['od_refund_price']) ? clean_xss_tags($_REQUEST['od_refund_price'], 1, 1) : '';
 $od_receipt_point = isset($_REQUEST['od_receipt_point']) ? clean_xss_tags($_REQUEST['od_receipt_point'], 1, 1) : '';
 $od_coupon = isset($_REQUEST['od_coupon']) ? clean_xss_tags($_REQUEST['od_coupon'], 1, 1) : '';
 $od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
@@ -55,10 +53,10 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_taker">받으시는 분</a></li>
 </ul>';
 
-$html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="'.$od['od_misu'].'" onclick="chk_receipt_price()">
+$html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="" onclick="chk_receipt_price()">
 <label for="od_receipt_chk">결제금액 입력</label><br>';
 
-$qstr1 = "od_status=".urlencode($od_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
+$qstr1 = "od_enable_status=".urlencode($od_enable_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 if($default['de_escrow_use'])
     $qstr1 .= "&amp;od_escrow=$od_escrow";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
@@ -87,7 +85,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
         <p>
-            현재 구독상태 <strong><?php echo $od['od_status'] ?></strong>
+            현재 구독상태 <strong><?php echo $od['od_enable_status'] ?></strong>
             |
             주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
             |
@@ -100,14 +98,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <form name="frmorderform" method="post" action="./orderformcartupdate.php" onsubmit="return form_submit(this);">
-    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
-    <input type="hidden" name="mb_id" value="<?php echo $od['mb_id']; ?>">
-    <input type="hidden" name="od_email" value="<?php echo $od['od_email']; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-    <input type="hidden" name="search" value="<?php echo $search; ?>">
-    <input type="hidden" name="page" value="<?php echo $page;?>">
+    <input type="hidden" name="od_id" value="<?php echo get_sanitize_input($od_id); ?>">
+    <input type="hidden" name="mb_id" value="<?php echo get_sanitize_input($od['mb_id']); ?>">
+    <input type="hidden" name="od_email" value="<?php echo get_sanitize_input($od['od_email']); ?>">
+    <input type="hidden" name="sort1" value="<?php echo get_sanitize_input($sort1); ?>">
+    <input type="hidden" name="sort2" value="<?php echo get_sanitize_input($sort2); ?>">
+    <input type="hidden" name="sel_field" value="<?php echo get_sanitize_input($sel_field); ?>">
+    <input type="hidden" name="search" value="<?php echo get_sanitize_input($search); ?>">
+    <input type="hidden" name="page" value="<?php echo get_sanitize_input($page);?>">
     <input type="hidden" name="pg_cancel" value="0">
 
     <div class="tbl_head01 tbl_wrap">
@@ -259,16 +257,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <?php if($od['od_test']) { ?>
 <div class="od_test_caution">주의) 이 주문은 테스트용으로 실제 결제가 이루어지지 않았으므로 절대 배송하시면 안됩니다.</div>
 <?php } ?>
-<?php if($od['od_pg'] === 'inicis' && !$od['od_test']) {
-    $sql = "select P_TID from {$g5['g5_subscription_inicis_log_table']} where oid = '$od_id' and P_STATUS = 'cancel' ";
-    $tmp_row = sql_fetch($sql);
-    if(isset($tmp_row['P_TID']) && $tmp_row['P_TID']){
-?>
-<div class="od_test_caution">주의) 이 주문은 결제취소된 내역이 있습니다. 이니시스 관리자 상점에서 반드시 재확인을 해 주세요.</div>
-<?php 
-    }   //end if
-}   //end if
-?>
 
 <section id="anc_sodr_pay">
     <h2 class="h2_frm">주문결제 내역</h2>
@@ -285,7 +273,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     $amount['coupon'] = $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'];
 
     // 취소금액
-    $amount['cancel'] = $od['od_cancel_price'];
+    // $amount['cancel'] = $od['od_cancel_price'];
 
     // 미수금 = 주문금액 - 취소금액 - 입금금액 - 쿠폰금액
     //$amount['미수'] = $amount['order'] - $amount['receipt'] - $amount['coupon'];
@@ -298,7 +286,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     ?>
 
     <div class="tbl_head01 tbl_wrap">
-        <strong class="sodr_nonpay">미수금 <?php echo display_price($od['od_misu']); ?></strong>
 
         <table>
         <caption>주문결제 내역</caption>
@@ -323,7 +310,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <td class="td_numbig"><?php echo display_point($od['od_receipt_point']); ?></td>
             <td class="td_numbig td_numincome"><?php echo number_format($amount['receipt']); ?>원</td>
             <td class="td_numbig td_numcoupon"><?php echo display_price($amount['coupon']); ?></td>
-            <td class="td_numbig td_numcancel"><?php echo number_format($amount['cancel']); ?>원</td>
+            <td class="td_numbig td_numcancel">취소금액?</td>
         </tr>
         </tbody>
         </table>
@@ -335,17 +322,16 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php echo $pg_anchor; ?>
 
     <form name="frmorderreceiptform" action="./orderformreceiptupdate.php" method="post" autocomplete="off">
-    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-    <input type="hidden" name="search" value="<?php echo $search; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="od_name" value="<?php echo $od['od_name']; ?>">
-    <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
-    <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
-    <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
-    <input type="hidden" name="od_pg" value="<?php echo $od['od_pg']; ?>">
+    <input type="hidden" name="od_id" value="<?php echo get_sanitize_input($od_id); ?>">
+    <input type="hidden" name="sort1" value="<?php echo get_sanitize_input($sort1); ?>">
+    <input type="hidden" name="sort2" value="<?php echo get_sanitize_input($sort2); ?>">
+    <input type="hidden" name="sel_field" value="<?php echo get_sanitize_input($sel_field); ?>">
+    <input type="hidden" name="search" value="<?php echo get_sanitize_input($search); ?>">
+    <input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
+    <input type="hidden" name="od_name" value="<?php echo get_sanitize_input($od['od_name']); ?>">
+    <input type="hidden" name="od_hp" value="<?php echo get_sanitize_input($od['od_hp']); ?>">
+    <input type="hidden" name="od_tno" value="<?php echo get_sanitize_input($od['od_tno']); ?>">
+    <input type="hidden" name="od_pg" value="<?php echo get_sanitize_input($od['od_pg']); ?>">
 
     <div class="compare_wrap">
 
@@ -531,24 +517,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><?php echo display_point($od['od_receipt_point']); ?></td>
                 </tr>
                 <tr>
-                    <th scope="row">결제취소/환불액</th>
-                    <td><?php echo display_price($od['od_refund_price']); ?></td>
-                </tr>
-                <?php if ($od['od_invoice']) { ?>
-                <tr>
-                    <th scope="row">배송회사</th>
-                    <td><?php echo $od['od_delivery_company']; ?> <?php echo get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link'); ?></td>
-                </tr>
-                <tr>
-                    <th scope="row">운송장번호</th>
-                    <td><?php echo $od['od_invoice']; ?></td>
-                </tr>
-                <tr>
-                    <th scope="row">배송일시</th>
-                    <td><?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
                     <th scope="row"><label for="od_send_cost">배송비</label></th>
                     <td>
                         <input type="text" name="od_send_cost" value="<?php echo $od['od_send_cost']; ?>" id="od_send_cost" class="frm_input" size="10"> 원
@@ -584,60 +552,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php echo $od['next_billing_date']; ?> (<?php echo get_Ko_DayOfWeek($od['next_billing_date']); ?>)
                     </td>
                 </tr>
-                <?php
-                if ($od['od_misu'] == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
-                ?>
-                <tr>
-                    <th scope="row">현금영수증</th>
-                    <td>
-                    <?php
-                    if ($od['od_cash']) {
-                        if($od['od_pg'] == 'lg') {
-                            require G5_SHOP_PATH.'/settle_lg.inc.php';
-
-                            switch($od['od_settle_case']) {
-                                case '계좌이체':
-                                    $trade_type = 'BANK';
-                                    break;
-                                case '가상계좌':
-                                    $trade_type = 'CAS';
-                                    break;
-                                default:
-                                    $trade_type = 'CR';
-                                    break;
-                            }
-                            $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
-                        } else if($od['od_pg'] == 'inicis') {
-                            $cash = unserialize($od['od_cash_info']);
-                            $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
-                        } else if($od['od_pg'] == 'nicepay') {
-                            
-                            $od_tid = $od['od_tno'];
-                            $cash_type = 0;
-
-                            if (! $od_tid) {
-                                $cash = unserialize($od['od_cash_info']);
-                                $od_tid = isset($cash['TID']) ? $cash['TID'] : '';
-                                $cash_type = $od_tid ? 1 : 0;
-                            }
-
-                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type='.$cash_type.'&TID='.$od_tid.'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-                        } else {
-                            require G5_SHOP_PATH.'/settle_kcp.inc.php';
-
-                            $cash = unserialize($od['od_cash_info']);
-                            $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
-                        }
-                    ?>
-                        <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>">현금영수증 확인</a>
-                    <?php } else { ?>
-                        <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
-                    <?php } ?>
-                    </td>
-                </tr>
-                <?php
-                }
-                ?>
                 </tbody>
                 </table>
             </div>
@@ -782,48 +696,15 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><input type="text" name="od_receipt_point" value="<?php echo $od['od_receipt_point']; ?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_refund_price">결제취소/환불 금액</label></th>
-                    <td>
-                        <input type="text" name="od_refund_price" value="<?php echo $od['od_refund_price']; ?>" id="od_refund_price" class="frm_input" size="10"> 원
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_refund_price">배송주기</label></th>
+                    <th scope="row"><label for="od_subscription_number">배송주기</label></th>
                     <td>
                         <?php echo $od['od_subscription_number']; ?> <?php echo $od['od_subscription_date_format']; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_refund_price">첫 발송일</label></th>
+                    <th scope="row"><label for="od_firstshipment_date">첫 발송일</label></th>
                     <td>
                         <?php echo date('Y년 m월 d일', strtotime($od['od_firstshipment_date'])); ?> (<?php echo get_weekend_yoil($od['od_firstshipment_date']); ?>)
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_invoice">운송장번호</label></th>
-                    <td>
-                        <?php if ($config['cf_sms_use'] && $default['de_sms_use5']) { ?>
-                        <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
-                        <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
-                        <br>
-                        <?php } ?>
-                        <input type="text" name="od_invoice" value="<?php echo $od['od_invoice']; ?>" id="od_invoice" class="frm_input">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_delivery_company">배송회사</label></th>
-                    <td>
-                        <input type="checkbox" id="od_delivery_chk" value="<?php echo $default['de_delivery_company']; ?>" onclick="chk_delivery_company()">
-                        <label for="od_delivery_chk">기본 배송회사로 설정</label><br>
-                        <input type="text" name="od_delivery_company" id="od_delivery_company" value="<?php echo $od['od_delivery_company']; ?>" class="frm_input">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_invoice_time">배송일시</label></th>
-                    <td>
-                        <input type="checkbox" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="chk_invoice_time()">
-                        <label for="od_invoice_chk">현재 시간으로 설정</label><br>
-                        <input type="text" name="od_invoice_time" id="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" class="frm_input" maxlength="19">
                     </td>
                 </tr>
 
@@ -846,12 +727,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit btn">
-        <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
-        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add" class="btn btn_02">개인결제추가</a>
-        <?php } ?>
-        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY')) { ?>
-        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo $od['od_settle_case']; ?> 부분취소</a>
-        <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
     </div>
     </form>
@@ -1293,29 +1168,6 @@ function form_submit(f)
     }
 
     var msg = "";
-
-    <?php if (is_cancel_subscription_pg_order($od)) { ?>
-    if(status == "취소" || status == "반품" || status == "품절") {
-        var $ct_chk = $("input[name^=ct_chk]");
-        var chk_cnt = $ct_chk.length;
-        var chked_cnt = $ct_chk.filter(":checked").length;
-        <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
-        var cancel_pg = "카카오페이";
-        <?php } else { ?>
-        var cancel_pg = "PG사의 <?php echo $od['od_settle_case']; ?>";
-        <?php } ?>
-
-        if(chk_cnt == chked_cnt) {
-            if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
-                f.pg_cancel.value = 1;
-                msg = cancel_pg+" 결제 취소와 함께 ";
-            } else {
-                f.pg_cancel.value = 0;
-                msg = "";
-            }
-        }
-    }
-    <?php } ?>
 
     if (confirm(msg+"\'" + status + "\' 상태를 선택하셨습니다.\n\n선택하신대로 처리하시겠습니까?")) {
         return true;

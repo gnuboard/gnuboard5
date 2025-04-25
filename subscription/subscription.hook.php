@@ -29,10 +29,8 @@ function subscription_add_mypage_sub() {
         $ods[] = $row;
     }
 ?>
-<!-- 정기결제 내역 목록 시작 { -->
-<?php if (!$limit) { ?>총 <?php echo $cnt; ?> 건<?php } ?>
     
-<h2>구독내역</h2>
+<h2>최근 구독내역</h2>
 <div class="tbl_head03 tbl_wrap">
     <table>
     <thead>
@@ -51,7 +49,8 @@ function subscription_add_mypage_sub() {
     <?php
     foreach($ods as $row) {
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
-
+        
+        /*
         switch($row['od_status']) {
             case '주문':
                 $od_status = '<span class="status_01">입금확인중</span>';
@@ -72,6 +71,7 @@ function subscription_add_mypage_sub() {
                 $od_status = '<span class="status_06">주문취소</span>';
                 break;
         }
+        */
         
         $view_url = G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uid='.$uid;
     ?>
@@ -103,7 +103,7 @@ function subscription_add_mypage_sub() {
         <td class="td_numbig text_right"><?php echo substr($row['next_billing_date'],2,9); ?> (<?php echo get_yoil($row['next_billing_date']); ?>)</td>
         <td class="td_numbig text_right"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td class="td_numbig text_right"><?php echo subscription_pg_cardname($row['od_card_name']); ?></td>
-        <td class="td_numbig text_right"><?php echo $od_status; ?></td>
+        <td class="td_numbig text_right">활성화여부</td>
         <td><a href="<?php echo $view_url; ?>">보기</a></td>
     </tr>
     <?php

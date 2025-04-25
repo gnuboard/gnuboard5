@@ -113,3 +113,15 @@ function get_card_billkey($od) {
     
     return isset($result['card_billkey']) ? $result['card_billkey'] : '';
 }
+
+function is_use_subscription_item($it) {
+    
+    // defined('G5_USE_SUBSCRIPTION') && function_exists('get_subs_option') && get_subs_option('su_hope_date_use')
+    // if (defined('G5_USE_SUBSCRIPTION') && function_exists('get_subs_option') && get_subs_option('su_hope_date_use') && isset($it['it_class_num']) && $it['it_class_num']) {
+    // 정기결제를 사용하는 상품이면
+    if (defined('G5_USE_SUBSCRIPTION') && get_subs_option('su_hope_date_use') && isset($it['it_class_num']) && $it['it_class_num']) {
+        return true;
+    }
+    
+    return 0;
+}

@@ -15,7 +15,7 @@ if(defined('G5_THEME_SUBSCRIPTION_PATH')) {
 ?>
 
 <!-- 주문 내역 목록 시작 { -->
-<?php if (!$limit) { ?>총 <?php echo $cnt; ?> 건<?php } ?>
+<?php if (! $sql_limit) { ?>총 <?php echo $cnt; ?> 건<?php } ?>
 
 <div class="tbl_head03 tbl_wrap">
     <table>
@@ -46,7 +46,8 @@ if(defined('G5_THEME_SUBSCRIPTION_PATH')) {
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
-
+        
+        /*
         switch($row['od_status']) {
             case '주문':
                 $od_status = '<span class="status_01">입금확인중</span>';
@@ -67,6 +68,7 @@ if(defined('G5_THEME_SUBSCRIPTION_PATH')) {
                 $od_status = '<span class="status_06">주문취소</span>';
                 break;
         }
+        */
     ?>
 
     <tr>
@@ -77,8 +79,8 @@ if(defined('G5_THEME_SUBSCRIPTION_PATH')) {
         <td class="td_numbig"><?php echo $row['od_cart_count']; ?></td>
         <td class="td_numbig text_right"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td class="td_numbig text_right"><?php echo display_price($row['od_receipt_price']); ?></td>
-        <td class="td_numbig text_right"><?php echo display_price($row['od_misu']); ?></td>
-        <td><?php echo $od_status; ?></td>
+        <td class="td_numbig text_right">미수금여부</td>
+        <td>비활성여부</td>
     </tr>
 
     <?php

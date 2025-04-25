@@ -2803,7 +2803,7 @@ function check_payment_method($od_settle_case) {
     }
 }
 
-function get_shop_user_carts($s_cart_id) {
+function get_shop_user_carts($s_cart_id, $is_cache=0) {
     
     global $g5, $member;
     

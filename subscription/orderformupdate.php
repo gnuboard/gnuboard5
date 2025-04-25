@@ -618,8 +618,6 @@ if ($is_first_pay) {
 
     $pays = subscription_process_payment($exists_order, $od_pg);
     
-    print_r( $pays );
-    
     // 정기결제가 성공이면
     if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
             
@@ -916,8 +914,6 @@ if ($is_member) {
 
     sql_query($sql);
 }
-
-exit;
 
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>
