@@ -685,6 +685,10 @@ function html_purifier($html)
     )
     );
 
+    // 커스텀 URI 필터 등록
+    $def = $config->getDefinition('URI', true); // URI 정의 가져오기
+    $def->addFilter(new HTMLPurifierContinueParamFilter(), $config); // 커스텀 필터 추가
+
     $purifier = new HTMLPurifier($config);
 
     return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
