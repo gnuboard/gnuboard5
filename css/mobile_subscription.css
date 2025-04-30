@@ -1,0 +1,8 @@
+
+.jquery-modal.blocker{z-index:1000}
+.clearfix::after {content: "";display: block;clear: both}
+
+.subscription-btns {margin-top:1em}
+
+.subscription_btn_cart {float:left;width:39%;margin-right:1%;line-height:50px;border:1px solid #98a3b3;color:#000;background:#fff;font-weight:bold;border-radius:3px}
+a.sit-btn-subscription {float:left;width:39%;margin-right:1%;line-height:50px;font-weight:bold;color:#fff;font-size:1em}

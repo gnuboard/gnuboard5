@@ -64,6 +64,9 @@
 				   + "&escw_used=" + form.escw_used.value
 				   + "&good_name=" + form.good_name.value
 				   + "&Ret_URL=" + form.Ret_URL.value;
+		
+		console.log( url + params );
+		
 		sendRequest( url + params );
 	}
 

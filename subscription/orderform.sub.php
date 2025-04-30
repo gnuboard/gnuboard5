@@ -1,7 +1,9 @@
 <?php
-if (!defined('_GNUBOARD_')) {
-    exit;
-} // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+if (!get_subs_option('su_pg_service')) {
+    alert('결제PG사 미설정', G5_URL);
+}
 
 require_once G5_SUBSCRIPTION_PATH . '/settle_' . get_subs_option('su_pg_service') . '.inc.php';
 
@@ -158,9 +160,9 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                             <td class="td_prd">
                                 <div class="sod_img"><?php echo $image; ?></div>
                                 <div class="sod_name">
-                                    <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
+                                    <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo get_text($row['it_id']); ?>">
                                     <input type="hidden" name="it_name[<?php echo $i; ?>]" value="<?php echo get_text($row['it_name']); ?>">
-                                    <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
+                                    <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo get_text($sell_price); ?>">
                                     <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
                                     <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
                                     <?php echo $it_name; ?>
@@ -198,14 +200,14 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
         <!-- } 주문상품 확인 끝 -->
 
         <div class="sod_left">
-            <input type="hidden" name="od_price" value="<?php echo $tot_sell_price; ?>">
-            <input type="hidden" name="org_od_price" value="<?php echo $tot_sell_price; ?>">
-            <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
+            <input type="hidden" name="od_price" value="<?php echo get_text($tot_sell_price); ?>">
+            <input type="hidden" name="org_od_price" value="<?php echo get_text($tot_sell_price); ?>">
+            <input type="hidden" name="od_send_cost" value="<?php echo get_text($send_cost); ?>">
             <input type="hidden" name="od_send_cost2" value="0">
             <input type="hidden" name="item_coupon" value="0">
             <input type="hidden" name="od_coupon" value="0">
             <input type="hidden" name="od_send_coupon" value="0">
-            <input type="hidden" name="od_goods_name" value="<?php echo $goods; ?>">
+            <input type="hidden" name="od_goods_name" value="<?php echo get_text($goods); ?>">
 
             <?php
             // 결제대행사별 코드 include (결제대행사 정보 필드)
@@ -612,8 +614,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
                                 $j = 0;
                                 
                                 foreach($mcards as $card) {
-                                    echo '<input type="radio" id="od_subscription_card_'.$j.'" class="od_subscription_
-                                    ids" name="od_settle_case" value="'.$card['max_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
+                                    echo '<input type="radio" id="od_subscription_card_'.$j.'" class="od_subscription_ids" name="od_settle_case" value="'.$card['max_id'].'"> <label for="od_subscription_card_'.$j.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).'<br>'.$card['card_mask_number'].'</span></label>' . PHP_EOL;
                                     $j++;
                                 }
                             }
@@ -1020,15 +1021,6 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
             }
         }
 
-        if (document.getElementById("od_settle_hp")) {
-            if (document.getElementById("od_settle_hp").checked) {
-                if (tot_price < 350) {
-                    alert("휴대폰은 350원 이상 결제가 가능합니다.");
-                    return false;
-                }
-            }
-        }
-
         <?php if (get_subs_option('su_pg_service') == 'inicis') { ?>
             if (f.action != form_action_url) {
                 f.action = form_action_url;
@@ -1039,7 +1031,7 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
 
         var form_order_method = '';
 
-        if (jQuery(f).triggerHandler("form_sumbit_order_" + form_order_method) !== false) {
+        if (jQuery(f).triggerHandler("subscriptionform_sumbit_" + form_order_method) !== false) {
 
             <?php if (get_subs_option('su_pg_service') == 'kcp') { ?>
                 switch (settle_method) {

@@ -102,7 +102,7 @@ include_once './_head.php';
             $sum = sql_fetch($sql);
 
             if ($i == 0) { // 계속쇼핑
-                $continue_sc_id = $row['sc_id'];
+                $continue_sc_id = $row['ca_id'];
             }
 
             $a1 = '<a href="'.subscription_item_url($row['it_id']).'" class="prd_name"><b>';

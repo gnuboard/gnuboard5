@@ -13,8 +13,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/pg-calendar/css/pigno
 add_stylesheet('<link rel="stylesheet" href="' . G5_SUBSCRIPTION_CSS_URL . '/style.css">', 0);
 ?>
 <div id="sit_ov_from">
-	<form name="fitem" method="post" action="<?php echo $action_url; ?>" onsubmit="return fitem_submit(this);">
-		<input type="hidden" name="it_id[]" value="<?php echo $it_id; ?>">
+	<form name="fitem" method="post" action="<?php echo get_text($action_url); ?>" onsubmit="return fitem_submit(this);">
+		<input type="hidden" name="it_id[]" value="<?php echo get_text($it_id); ?>">
 		<input type="hidden" name="sw_direct">
 		<input type="hidden" name="url">
 

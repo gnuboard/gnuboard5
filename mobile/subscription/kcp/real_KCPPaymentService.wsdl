@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:ax21="http://payment.domain.webpay.service.kcp.kr/xsd" xmlns:ns="http://webservice.act.webpay.service.kcp.kr" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ax22="http://domain.webpay.service.kcp.kr/xsd" targetNamespace="http://webservice.act.webpay.service.kcp.kr">
+    <wsdl:documentation>
+		KCP Payment Service
+	</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:ax23="http://domain.webpay.service.kcp.kr/xsd" targetNamespace="http://payment.domain.webpay.service.kcp.kr/xsd" attributeFormDefault="qualified" elementFormDefault="qualified">
+            <xs:import namespace="http://domain.webpay.service.kcp.kr/xsd"/>
+            <xs:complexType name="ApproveReq">
+                <xs:sequence>
+                    <xs:element name="accessCredentialType" minOccurs="0" type="ax22:AccessCredentialType" nillable="true"/>
+                    <xs:element name="baseRequestType" minOccurs="0" type="ax22:BaseRequestType" nillable="true"/>
+                    <xs:element name="escrow" minOccurs="0" type="xs:boolean"/>
+                    <xs:element name="orderID" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="paymentAmount" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="paymentMethod" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="productName" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="returnUrl" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="siteCode" minOccurs="0" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ApproveRes">
+                <xs:sequence>
+                    <xs:element name="approvalKey" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="baseResponseType" minOccurs="0" type="ax22:BaseResponseType" nillable="true"/>
+                    <xs:element name="payUrl" minOccurs="0" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax24="http://payment.domain.webpay.service.kcp.kr/xsd" targetNamespace="http://webservice.act.webpay.service.kcp.kr" attributeFormDefault="qualified" elementFormDefault="qualified">
+            <xs:import namespace="http://payment.domain.webpay.service.kcp.kr/xsd"/>
+            <xs:element name="approve">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="req" minOccurs="0" type="ax24:ApproveReq" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="approveResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" minOccurs="0" type="ax24:ApproveRes" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema targetNamespace="http://domain.webpay.service.kcp.kr/xsd" attributeFormDefault="qualified" elementFormDefault="qualified">
+            <xs:complexType name="AccessCredentialType">
+                <xs:sequence>
+                    <xs:element name="accessLicense" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="signature" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="timestamp" minOccurs="0" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BaseRequestType">
+                <xs:sequence>
+                    <xs:element name="detailLevel" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="requestApp" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="requestID" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="userAgent" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="version" minOccurs="0" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BaseResponseType">
+                <xs:sequence>
+                    <xs:element name="detailLevel" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="error" minOccurs="0" type="ax22:ErrorType" nillable="true"/>
+                    <xs:element name="messageID" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="release" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="requestID" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="responseType" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="timestamp" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="version" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="warningList" maxOccurs="unbounded" minOccurs="0" type="ax22:ErrorType" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ErrorType">
+                <xs:sequence>
+                    <xs:element name="code" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="detail" minOccurs="0" type="xs:string" nillable="true"/>
+                    <xs:element name="message" minOccurs="0" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="approveRequest">
+        <wsdl:part name="parameters" element="ns:approve"/>
+    </wsdl:message>
+    <wsdl:message name="approveResponse">
+        <wsdl:part name="parameters" element="ns:approveResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="KCPPaymentServicePortType">
+        <wsdl:operation name="approve">
+            <wsdl:input message="ns:approveRequest" wsaw:Action="urn:approve"/>
+            <wsdl:output message="ns:approveResponse" wsaw:Action="urn:approveResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="KCPPaymentServiceSoap11Binding" type="ns:KCPPaymentServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="approve">
+            <soap:operation soapAction="urn:approve" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="KCPPaymentServiceSoap12Binding" type="ns:KCPPaymentServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="approve">
+            <soap12:operation soapAction="urn:approve" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="KCPPaymentServiceHttpBinding" type="ns:KCPPaymentServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="approve">
+            <http:operation location="KCPPaymentService/approve"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="approve"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="approve"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="KCPPaymentService">
+        <wsdl:port name="KCPPaymentServiceHttpSoap11Endpoint" binding="ns:KCPPaymentServiceSoap11Binding">
+            <soap:address location="https://smpay.kcp.co.kr/services/KCPPaymentService.KCPPaymentServiceHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="KCPPaymentServiceHttpSoap12Endpoint" binding="ns:KCPPaymentServiceSoap12Binding">
+            <soap12:address location="https://smpay.kcp.co.kr/services/KCPPaymentService.KCPPaymentServiceHttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="KCPPaymentServiceHttpEndpoint" binding="ns:KCPPaymentServiceHttpBinding">
+            <http:address location="https://smpay.kcp.co.kr/services/KCPPaymentService.KCPPaymentServiceHttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
