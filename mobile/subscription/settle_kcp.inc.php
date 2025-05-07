@@ -37,8 +37,8 @@ if (get_subs_option('su_card_test')) {
     
     
     // 모바일 테스트
-    // $g_wsdl = "KCPPaymentService.wsdl";
-    $g_wsdl = "real_KCPPaymentService.wsdl";
+    $g_wsdl = "KCPPaymentService.wsdl";
+    // $g_wsdl = "real_KCPPaymentService.wsdl";
     $g_conf_gw_url = "testpaygw.kcp.co.kr";
     
 } else {

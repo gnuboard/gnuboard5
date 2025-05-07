@@ -245,7 +245,8 @@ $pg_receipt_infos = array(
 'od_cash_info'=>''
 );
 
-if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
+// if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
+if ($od_settle_case == '카드재사용') {
     $od_receipt_point = $i_temp_point;
     $od_receipt_price = 0;
     $od_misu = $i_price - $od_receipt_price;
@@ -253,18 +254,16 @@ if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
         $od_status = '입금';
     }
     
-    if ($od_settle_case == '카드재사용') {
-        $card_mask_number = $select_before_od['card_mask_number'];
-        $card_billkey = $select_before_od['card_billkey'];
-        $od_subscription_date_format = isset($select_before_od['od_subscription_date_format']) ? $select_before_od['od_subscription_date_format'] : '';
-        $od_subscription_selected_data = isset($select_before_od['od_subscription_selected_data']) ? $select_before_od['od_subscription_selected_data'] : '';
-        $od_card_name = $select_before_od['od_card_name'];
-        
-        // 구독 등록될 가격
-        $od_receipt_price = $order_price;
-        $od_subscription_date_format = '';
-        $od_firstshipment_date = '';
-    }
+    $card_mask_number = $select_before_od['card_mask_number'];
+    $card_billkey = $select_before_od['card_billkey'];
+    $od_subscription_date_format = isset($select_before_od['od_subscription_date_format']) ? $select_before_od['od_subscription_date_format'] : '';
+    $od_subscription_selected_data = isset($select_before_od['od_subscription_selected_data']) ? $select_before_od['od_subscription_selected_data'] : '';
+    $od_card_name = $select_before_od['od_card_name'];
+    
+    // 구독 등록될 가격
+    $od_receipt_price = $order_price;
+    $od_subscription_date_format = '';
+    $od_firstshipment_date = '';
     
 } elseif ($od_settle_case == '신용카드') {
     switch ($od_pg) {
@@ -849,7 +848,7 @@ set_session('subs_orderview_uid', $uid);
 
 // // 주문 정보 임시 데이터 삭제
 // if ($od_pg == 'inicis') {
-//     $sql = " delete from {$g5['g5_SUBSCRIPTION_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
+//     $sql = " delete from {$g5['g5_subscription_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
 //     sql_query($sql);
 // }
 

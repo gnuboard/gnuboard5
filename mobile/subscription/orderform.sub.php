@@ -1073,6 +1073,7 @@ function pay_approval()
         if(typeof f.pay_method !== "undefined") f.pay_method.value = "";
 
         <?php } else if(get_subs_option('su_pg_service') == 'inicis') { ?>
+        /*
         var paymethod = "";
         var width = 330;
         var height = 480;
@@ -1123,12 +1124,17 @@ function pay_approval()
         f.P_UNAME.value = pf.od_name.value;
         f.P_MOBILE.value = pf.od_hp.value;
         f.P_EMAIL.value = pf.od_email.value;
-        <?php if($default['de_tax_flag_use']) { ?>
+        */
+        
+        <?php if(get_subs_option('su_tax_flag_use')) { ?>
         f.P_TAX.value = pf.comm_vat_mny.value;
         f.P_TAXFREE = pf.comm_free_mny.value;
         <?php } ?>
-        f.P_RETURN_URL.value = "<?php echo $return_url.$od_id; ?>";
-        f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
+
+        f.action = "https://inilite.inicis.com/inibill/inibill_card.jsp";
+        f.target = "_self";
+        f.submit(); 
+             
         <?php } else if(get_subs_option('su_pg_service') == 'nicepay') { ?>
 
         f.Amt.value       = f.good_mny.value;

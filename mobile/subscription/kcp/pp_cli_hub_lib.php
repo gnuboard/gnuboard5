@@ -192,7 +192,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                                     "cust_ip="   . $cust_ip           . "," .
 									"log_path="  . $g_conf_log_path   . ","	.
                                     "log_level=" . $log_level         . "," .
-                                    "opt="       . $opt               . "" );
+		                          	"mode="		 . $mode              . "" 
+			                        		  );
         if ( $res_data == "" )
         {
            $res_data = "res_cd=9502" . chr( 31 ) . "res_msg=연동 모듈 호출 오류";

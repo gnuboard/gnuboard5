@@ -92,23 +92,6 @@ print_r2($_REQUEST);
             $pay_method = 'CARD';
             $ActionResult = 'card';
             break;
-        case '계좌이체':
-            $pay_method = 'BANK';
-            $ActionResult = 'acnt';
-            break;
-        case '휴대폰':
-            $pay_method = 'MOBX';
-            $ActionResult = 'mobx';
-            break;
-        case '가상계좌':
-            $pay_method = 'VCNT';
-            $ActionResult = 'vcnt';
-            break;
-        case '간편결제':
-            $pay_method = 'CARD';
-            $ActionResult = 'card';
-            $escw_used = 'N';
-            break;
         default:
             $pay_method = '';
             $ActionResult = '';
@@ -116,7 +99,7 @@ print_r2($_REQUEST);
     }
 
 $js_return_url = G5_SUBSCRIPTION_URL.'/orderform.php';
-if (get_session('ss_direct')) {
+if (get_session('subs_direct')) {
     $js_return_url .= '?sw_direct=1';
 }
 
@@ -214,8 +197,6 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
     
     $row = sql_bind_select_fetch($g5['g5_subscription_order_data_table'], '*', array('od_id'=>$ordr_idxx));
     
-    print_r($row);
-    exit;
     $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
     
     $order_action_url = G5_HTTPS_MSUBSCRIPTION_URL.'/orderformupdate.php';
