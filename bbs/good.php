@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$good = isset($_REQUEST['good']) ? preg_replace('/[^a-z0-9]/i', '', $_REQUEST['good']) : '';
+
 run_event('bbs_good_before', $bo_table, $wr_id, $good);
 
 @include_once($board_skin_path.'/good.head.skin.php');
