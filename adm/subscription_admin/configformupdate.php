@@ -3,12 +3,11 @@ $sub_menu = '600100';
 include_once('./_common.php');
 
 /*
+print_r2($_POST);
 
-print_r($_POST);
 
-exit;
 $opts = array();
-$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
+$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_etc', 'opt_print', 'opt_use');
 $opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
 
 if ($opt_ids) {
@@ -19,7 +18,7 @@ if ($opt_ids) {
     }
 }
 
-print_r($opts);
+print_r2($opts);
 
 exit;
 */
@@ -57,7 +56,7 @@ $check_sanitize_keys = array(
 'su_user_delivery_title',       // 사용자가 배송주기의 입력 사용 가능시 타이틀 지정
 'su_user_delivery_minimum',
 'su_user_delivery_template',
-'su_user_delivery_default_day'
+'su_user_delivery_default_day',
 );
 
 $inserts = array();
@@ -66,13 +65,24 @@ foreach( $check_sanitize_keys as $key ){
     $inserts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
 }
 
-// 주문서에 입력
+// 정기결제 폼 첫번째 안내문
+if (isset($_POST['su_subscription_content_first'])) {
+    $inserts['su_subscription_content_first'] = $_POST['su_subscription_content_first'];
+}
 
-$sql = "select * from `{$g5['g5_subscription_config_table']}` limit 1";
-$exist = sql_fetch($sql);
+// 정기결제 폼 마지막 안내문
+if (isset($_POST['su_subscription_content_end'])) {
+    $inserts['su_subscription_content_end'] = $_POST['su_subscription_content_end'];
+}
+
+// 주문서에 입력
+// $sql = "select * from `{$g5['g5_subscription_config_table']}` limit 1";
+// $exist = sql_fetch($sql);
+
+$exist = sql_bind_select_fetch($g5['g5_subscription_config_table'], '*', array(), array('limit'=>1));
 
 $opts = array();
-$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_print', 'opt_use');
+$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_etc', 'opt_print', 'opt_use');
 $opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
 
 if ($opt_ids) {
@@ -114,10 +124,14 @@ if (isset($exist['su_id']) && $exist['su_id']) {
     //$sql = "UPDATE `{$g5['g5_subscription_config_table']}` SET ".implode(', ',$valueSets);
     
 } else {
+    /*
     $columns = implode(', ', array_keys($inserts));
     $values = implode("', '", array_values($inserts));
     $sql = "INSERT INTO `{$g5['g5_subscription_config_table']}`($columns) VALUES ('$values')";
     sql_query($sql);
+    */
+    
+    sql_bind_insert($g5['g5_subscription_config_table'], $inserts);
 }
 
 run_event('subscription_admin_configformupdate');

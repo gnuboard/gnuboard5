@@ -12,11 +12,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 $fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['fr_date']) : '';
 $to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['to_date']) : '';
-$od_status = isset($_REQUEST['od_status']) ? clean_xss_tags($_REQUEST['od_status'], 1, 1) : '';
+$od_enable_status = isset($_REQUEST['od_enable_status']) ? clean_xss_tags($_REQUEST['od_enable_status'], 1, 1) : '';
 $od_settle_case = isset($_REQUEST['od_settle_case']) ? clean_xss_tags($_REQUEST['od_settle_case'], 1, 1) : '';
 $od_misu = isset($_REQUEST['od_misu']) ? clean_xss_tags($_REQUEST['od_misu'], 1, 1) : '';
-$od_cancel_price = isset($_REQUEST['od_cancel_price']) ? clean_xss_tags($_REQUEST['od_cancel_price'], 1, 1) : '';
-$od_refund_price = isset($_REQUEST['od_refund_price']) ? clean_xss_tags($_REQUEST['od_refund_price'], 1, 1) : '';
 $od_receipt_point = isset($_REQUEST['od_receipt_point']) ? clean_xss_tags($_REQUEST['od_receipt_point'], 1, 1) : '';
 $od_coupon = isset($_REQUEST['od_coupon']) ? clean_xss_tags($_REQUEST['od_coupon'], 1, 1) : '';
 $od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
@@ -50,14 +48,15 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 <li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
 <li><a href="#anc_sodr_memo">상점메모</a></li>
+<li><a href="#anc_sodr_history">정기구독 히스토리</a></li>
 <li><a href="#anc_sodr_orderer">주문하신 분</a></li>
 <li><a href="#anc_sodr_taker">받으시는 분</a></li>
 </ul>';
 
-$html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="'.$od['od_misu'].'" onclick="chk_receipt_price()">
+$html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="" onclick="chk_receipt_price()">
 <label for="od_receipt_chk">결제금액 입력</label><br>';
 
-$qstr1 = "od_status=".urlencode($od_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
+$qstr1 = "od_enable_status=".urlencode($od_enable_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 if($default['de_escrow_use'])
     $qstr1 .= "&amp;od_escrow=$od_escrow";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
@@ -86,7 +85,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
         <p>
-            현재 구독상태 <strong><?php echo $od['od_status'] ?></strong>
+            현재 구독상태 <strong><?php echo $od['od_enable_status'] ?></strong>
             |
             주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
             |
@@ -99,14 +98,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <form name="frmorderform" method="post" action="./orderformcartupdate.php" onsubmit="return form_submit(this);">
-    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
-    <input type="hidden" name="mb_id" value="<?php echo $od['mb_id']; ?>">
-    <input type="hidden" name="od_email" value="<?php echo $od['od_email']; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-    <input type="hidden" name="search" value="<?php echo $search; ?>">
-    <input type="hidden" name="page" value="<?php echo $page;?>">
+    <input type="hidden" name="od_id" value="<?php echo get_sanitize_input($od_id); ?>">
+    <input type="hidden" name="mb_id" value="<?php echo get_sanitize_input($od['mb_id']); ?>">
+    <input type="hidden" name="od_email" value="<?php echo get_sanitize_input($od['od_email']); ?>">
+    <input type="hidden" name="sort1" value="<?php echo get_sanitize_input($sort1); ?>">
+    <input type="hidden" name="sort2" value="<?php echo get_sanitize_input($sort2); ?>">
+    <input type="hidden" name="sel_field" value="<?php echo get_sanitize_input($sel_field); ?>">
+    <input type="hidden" name="search" value="<?php echo get_sanitize_input($search); ?>">
+    <input type="hidden" name="page" value="<?php echo get_sanitize_input($page);?>">
     <input type="hidden" name="pg_cancel" value="0">
 
     <div class="tbl_head01 tbl_wrap">
@@ -258,16 +257,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <?php if($od['od_test']) { ?>
 <div class="od_test_caution">주의) 이 주문은 테스트용으로 실제 결제가 이루어지지 않았으므로 절대 배송하시면 안됩니다.</div>
 <?php } ?>
-<?php if($od['od_pg'] === 'inicis' && !$od['od_test']) {
-    $sql = "select P_TID from {$g5['g5_subscription_inicis_log_table']} where oid = '$od_id' and P_STATUS = 'cancel' ";
-    $tmp_row = sql_fetch($sql);
-    if(isset($tmp_row['P_TID']) && $tmp_row['P_TID']){
-?>
-<div class="od_test_caution">주의) 이 주문은 결제취소된 내역이 있습니다. 이니시스 관리자 상점에서 반드시 재확인을 해 주세요.</div>
-<?php 
-    }   //end if
-}   //end if
-?>
 
 <section id="anc_sodr_pay">
     <h2 class="h2_frm">주문결제 내역</h2>
@@ -284,7 +273,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     $amount['coupon'] = $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'];
 
     // 취소금액
-    $amount['cancel'] = $od['od_cancel_price'];
+    // $amount['cancel'] = $od['od_cancel_price'];
 
     // 미수금 = 주문금액 - 취소금액 - 입금금액 - 쿠폰금액
     //$amount['미수'] = $amount['order'] - $amount['receipt'] - $amount['coupon'];
@@ -297,7 +286,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     ?>
 
     <div class="tbl_head01 tbl_wrap">
-        <strong class="sodr_nonpay">미수금 <?php echo display_price($od['od_misu']); ?></strong>
 
         <table>
         <caption>주문결제 내역</caption>
@@ -322,7 +310,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <td class="td_numbig"><?php echo display_point($od['od_receipt_point']); ?></td>
             <td class="td_numbig td_numincome"><?php echo number_format($amount['receipt']); ?>원</td>
             <td class="td_numbig td_numcoupon"><?php echo display_price($amount['coupon']); ?></td>
-            <td class="td_numbig td_numcancel"><?php echo number_format($amount['cancel']); ?>원</td>
+            <td class="td_numbig td_numcancel">취소금액?</td>
         </tr>
         </tbody>
         </table>
@@ -334,17 +322,16 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php echo $pg_anchor; ?>
 
     <form name="frmorderreceiptform" action="./orderformreceiptupdate.php" method="post" autocomplete="off">
-    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-    <input type="hidden" name="search" value="<?php echo $search; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="od_name" value="<?php echo $od['od_name']; ?>">
-    <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
-    <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
-    <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
-    <input type="hidden" name="od_pg" value="<?php echo $od['od_pg']; ?>">
+    <input type="hidden" name="od_id" value="<?php echo get_sanitize_input($od_id); ?>">
+    <input type="hidden" name="sort1" value="<?php echo get_sanitize_input($sort1); ?>">
+    <input type="hidden" name="sort2" value="<?php echo get_sanitize_input($sort2); ?>">
+    <input type="hidden" name="sel_field" value="<?php echo get_sanitize_input($sel_field); ?>">
+    <input type="hidden" name="search" value="<?php echo get_sanitize_input($search); ?>">
+    <input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
+    <input type="hidden" name="od_name" value="<?php echo get_sanitize_input($od['od_name']); ?>">
+    <input type="hidden" name="od_hp" value="<?php echo get_sanitize_input($od['od_hp']); ?>">
+    <input type="hidden" name="od_tno" value="<?php echo get_sanitize_input($od['od_tno']); ?>">
+    <input type="hidden" name="od_pg" value="<?php echo get_sanitize_input($od['od_pg']); ?>">
 
     <div class="compare_wrap">
 
@@ -530,24 +517,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><?php echo display_point($od['od_receipt_point']); ?></td>
                 </tr>
                 <tr>
-                    <th scope="row">결제취소/환불액</th>
-                    <td><?php echo display_price($od['od_refund_price']); ?></td>
-                </tr>
-                <?php if ($od['od_invoice']) { ?>
-                <tr>
-                    <th scope="row">배송회사</th>
-                    <td><?php echo $od['od_delivery_company']; ?> <?php echo get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link'); ?></td>
-                </tr>
-                <tr>
-                    <th scope="row">운송장번호</th>
-                    <td><?php echo $od['od_invoice']; ?></td>
-                </tr>
-                <tr>
-                    <th scope="row">배송일시</th>
-                    <td><?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
                     <th scope="row"><label for="od_send_cost">배송비</label></th>
                     <td>
                         <input type="text" name="od_send_cost" value="<?php echo $od['od_send_cost']; ?>" id="od_send_cost" class="frm_input" size="10"> 원
@@ -583,60 +552,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php echo $od['next_billing_date']; ?> (<?php echo get_Ko_DayOfWeek($od['next_billing_date']); ?>)
                     </td>
                 </tr>
-                <?php
-                if ($od['od_misu'] == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
-                ?>
-                <tr>
-                    <th scope="row">현금영수증</th>
-                    <td>
-                    <?php
-                    if ($od['od_cash']) {
-                        if($od['od_pg'] == 'lg') {
-                            require G5_SHOP_PATH.'/settle_lg.inc.php';
-
-                            switch($od['od_settle_case']) {
-                                case '계좌이체':
-                                    $trade_type = 'BANK';
-                                    break;
-                                case '가상계좌':
-                                    $trade_type = 'CAS';
-                                    break;
-                                default:
-                                    $trade_type = 'CR';
-                                    break;
-                            }
-                            $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
-                        } else if($od['od_pg'] == 'inicis') {
-                            $cash = unserialize($od['od_cash_info']);
-                            $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
-                        } else if($od['od_pg'] == 'nicepay') {
-                            
-                            $od_tid = $od['od_tno'];
-                            $cash_type = 0;
-
-                            if (! $od_tid) {
-                                $cash = unserialize($od['od_cash_info']);
-                                $od_tid = isset($cash['TID']) ? $cash['TID'] : '';
-                                $cash_type = $od_tid ? 1 : 0;
-                            }
-
-                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type='.$cash_type.'&TID='.$od_tid.'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-                        } else {
-                            require G5_SHOP_PATH.'/settle_kcp.inc.php';
-
-                            $cash = unserialize($od['od_cash_info']);
-                            $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
-                        }
-                    ?>
-                        <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>">현금영수증 확인</a>
-                    <?php } else { ?>
-                        <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
-                    <?php } ?>
-                    </td>
-                </tr>
-                <?php
-                }
-                ?>
                 </tbody>
                 </table>
             </div>
@@ -781,48 +696,15 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><input type="text" name="od_receipt_point" value="<?php echo $od['od_receipt_point']; ?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_refund_price">결제취소/환불 금액</label></th>
-                    <td>
-                        <input type="text" name="od_refund_price" value="<?php echo $od['od_refund_price']; ?>" id="od_refund_price" class="frm_input" size="10"> 원
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_refund_price">배송주기</label></th>
+                    <th scope="row"><label for="od_subscription_number">배송주기</label></th>
                     <td>
                         <?php echo $od['od_subscription_number']; ?> <?php echo $od['od_subscription_date_format']; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_refund_price">첫 발송일</label></th>
+                    <th scope="row"><label for="od_firstshipment_date">첫 발송일</label></th>
                     <td>
                         <?php echo date('Y년 m월 d일', strtotime($od['od_firstshipment_date'])); ?> (<?php echo get_weekend_yoil($od['od_firstshipment_date']); ?>)
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_invoice">운송장번호</label></th>
-                    <td>
-                        <?php if ($config['cf_sms_use'] && $default['de_sms_use5']) { ?>
-                        <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
-                        <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
-                        <br>
-                        <?php } ?>
-                        <input type="text" name="od_invoice" value="<?php echo $od['od_invoice']; ?>" id="od_invoice" class="frm_input">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_delivery_company">배송회사</label></th>
-                    <td>
-                        <input type="checkbox" id="od_delivery_chk" value="<?php echo $default['de_delivery_company']; ?>" onclick="chk_delivery_company()">
-                        <label for="od_delivery_chk">기본 배송회사로 설정</label><br>
-                        <input type="text" name="od_delivery_company" id="od_delivery_company" value="<?php echo $od['od_delivery_company']; ?>" class="frm_input">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_invoice_time">배송일시</label></th>
-                    <td>
-                        <input type="checkbox" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="chk_invoice_time()">
-                        <label for="od_invoice_chk">현재 시간으로 설정</label><br>
-                        <input type="text" name="od_invoice_time" id="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" class="frm_input" maxlength="19">
                     </td>
                 </tr>
 
@@ -845,12 +727,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit btn">
-        <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
-        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add" class="btn btn_02">개인결제추가</a>
-        <?php } ?>
-        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY')) { ?>
-        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo $od['od_settle_case']; ?> 부분취소</a>
-        <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
     </div>
     </form>
@@ -860,7 +736,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <h3>정기결제내역</h3>
     
     <?php
-    $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
+    $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'pay_id', 'orderType'=>'DESC'));
     ?>
     <div class="tbl_frm01">
         <table>
@@ -877,7 +753,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <td><?php echo $v['py_pg']; ?></td>
                 <td><?php echo $v['py_receipt_time']; ?></td>
                 <td></td>
-                <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?id=<?php echo $v['id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
+                <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?pay_id=<?php echo $v['pay_id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
             </tr>
             <?php } ?>
         </table>
@@ -915,7 +791,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </form>
 </section>
 
-<section id="anc_sodr_memo" class="subscription_history">
+<section id="anc_sodr_history" class="subscription_history">
     <h2 class="h2_frm">정기구독 히스토리</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
@@ -924,41 +800,33 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         </p>
     </div>
     
+    <ul class="order-historys">
     <?php
-    $sql = "select * from `{$g5['g5_subscription_order_history_table']}` where hs_type = 'subscription_order' and od_id = '$od_id' order by hs_id desc ";
-    $result = sql_query($sql);
-    
-    $hs = array();
-    
-    for ($i=0; $row=sql_fetch_array($result); $i++){
-        $hs[] = $row;
-    }
-    ?>
-    
-    <?php if ($hs) { ?>
-        <ul class="order-historys">
-            <?php foreach($hs as $h) { ?>
-            <li rel="<?php echo $h['hs_id']; ?>" class="history">
-                <div class="history-content">
-                    <p><?php echo conv_content($h['hs_content'], 1); ?></p>
-                </div>
-            </li>
+    $hss = sql_bind_select_array($g5['g5_subscription_order_history_table'], '*', array('hs_type'=>'subscription_order', 'od_id'=>$od_id), array('orderby'=>'hs_id', 'ordertype'=>'desc'));
+
+    if ($hss) {
+        foreach($hss as $h) { ?>
+        <li rel="<?php echo $h['hs_id']; ?>" class="history-item <?php echo $h['hs_category']; ?>">
+            <div class="history-content">
+                <?php echo conv_content($h['hs_content'], 0); ?>
+            </div>
             <p class="history-btns">
                 <span class="history-date"><?php echo $h['hs_time']; ?></span>
-                <a href="#" class="delete-history" role="button">삭제하기</a>
+                <a href="#" class="delete-history" data-id="<?php echo $h['hs_id']; ?>" role="button">삭제하기</a>
             </p>
-            <?php } ?>
-        </ul>
-    <?php } ?>
-        
-    <form name="frmorderform2" action="./order_history_update.php" method="post">
+        </li>
+        <?php }
+    } ?>
+    </ul>
+    
+    <form name="frmorder_historyform" action="./order_history_update.php" method="post">
     <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
     <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
     <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
     <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="mod_type" value="memo">
+    <input type="hidden" name="mod_type" value="add">
 
     <div class="tbl_wrap">
         <label for="od_subscription_memo" class="sound_only">히스토리 추가하기</label>
@@ -970,6 +838,145 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     </form>
+    
+<script>
+// 공백을 유지하기 위해 이스케이프 함수
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/\n/g, "<br>"); // 줄바꿈을 <br>로 변환
+}
+
+jQuery(function(e){
+    $(document).on("click", ".delete-history", function(e) {
+        e.preventDefault();
+        
+        if (!confirm("정말 삭제하시겠습니까?")) {
+            return false;
+        }
+        
+        var $this = $(this);
+        var id = $this.data('id');
+        var token = get_ajax_token();
+
+        if(!token) {
+            alert("토큰 정보가 올바르지 않습니다.");
+            return false;
+        }
+        
+        $.ajax({
+            url: "./order_history_update.php",
+            type: "POST",
+            data: {
+                mod_type : 'del',
+                is_ajax: 1,
+                token: token,
+                hs_id: id
+            },
+            timeout: 10000, // 10초 타임아웃 설정 (필요에 따라 조정)
+            beforeSend: function() {
+                $this.prop('disabled', true); // 버튼 비활성화
+            },
+            success: function(response) {
+                // 서버에서 응답을 정상적으로 받은 경우
+                try {
+                    if (response.success) {
+                        $this.closest('.history-item').fadeOut(400, function() {
+                            $(this).remove(); // 애니메이션이 끝난 후 제거
+                        });
+                    } else {
+                        alert('삭제 실패: ' + (response.message || '알 수 없는 오류'));
+                    }
+                } catch (e) {
+                    alert('응답 처리 중 오류: ' + e.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('오류 발생: ' + error);
+            },
+            complete: function() {
+                $this.prop('disabled', false); // 버튼 활성화
+            }
+        });
+    });
+    
+    var $btn_submit = $('form[name="frmorder_historyform"]').find(".btn_submit"),
+        $btn_text = $btn_submit.val();
+            
+    // 폼 제출 이벤트 처리
+    $('form[name="frmorder_historyform"]').on('submit', function(e) {
+        e.preventDefault(); // 기본 폼 제출 방지
+
+        var historyText = $('#od_subscription_history').val().trim();
+        if (!historyText) {
+            alert('내용을 입력해주세요.');
+            return;
+        }
+        
+        // 폼 데이터 수집
+        var formData = $(this).serialize() + '&is_ajax=1'; // 모든 입력 필드 데이터를 직렬화
+        
+        // AJAX 요청
+        $.ajax({
+            url: $(this).attr('action'), // action 속성에서 URL 가져오기: ./order_history_update.php
+            type: 'POST',
+            data: formData, // 폼 데이터 전송
+            dataType: 'json', // 서버에서 JSON 응답을 기대
+            beforeSend: function() {
+                // 제출 버튼 비활성화 및 상태 표시
+                $btn_submit.prop('disabled', true).val('처리 중...');
+            },
+            success: function(response) {
+                // 응답 처리
+                if (response.success) {
+                    
+                    // 새 히스토리 항목 생성
+                    var newHistory = `
+                        <li rel="${response.hs_id}" class="history-item">
+                            <div class="history-content">
+                                ${escapeHtml(historyText)}
+                            </div>
+                            <p class="history-btns">
+                                <span class="history-date">${response.hs_date}</span>
+                                <a href="#" class="delete-history" data-id="${response.hs_id}" role="button">삭제하기</a>
+                            </p>
+                        </li>
+                    `;
+
+                    // 목록에 추가 (맨 위에 추가)
+                    var $newItem = $(newHistory).hide();
+                    $('.order-historys').prepend($newItem);
+                    $newItem.fadeIn(400, function() { // 페이드인 후 스크롤
+                        $('html, body').animate({
+                            scrollTop: $newItem.offset().top - 150
+                        }, 300);
+                    });
+                    
+                    $('#od_subscription_history').val('');
+                } else {
+                    alert(response.message || '히스토리 추가에 실패했습니다.');
+                }
+            },
+            error: function(xhr, status, error) {
+                // 에러 처리
+                let errorMessage = status === 'timeout' ? '서버 응답 시간이 초과되었습니다.' :
+                                 status === 'parsererror' ? '서버 응답 형식이 잘못되었습니다.' :
+                                 '오류 발생: ' + (error || '알 수 없는 오류');
+                alert(errorMessage);
+            },
+            complete: function() {
+                // 요청 완료 후 버튼 복구
+                $btn_submit.prop('disabled', false).val($btn_text);
+            },
+            timeout: 10000 // 10초 타임아웃
+        });
+    });
+});
+</script>
 </section>
 
 <section>
@@ -1161,29 +1168,6 @@ function form_submit(f)
     }
 
     var msg = "";
-
-    <?php if (is_cancel_subscription_pg_order($od)) { ?>
-    if(status == "취소" || status == "반품" || status == "품절") {
-        var $ct_chk = $("input[name^=ct_chk]");
-        var chk_cnt = $ct_chk.length;
-        var chked_cnt = $ct_chk.filter(":checked").length;
-        <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
-        var cancel_pg = "카카오페이";
-        <?php } else { ?>
-        var cancel_pg = "PG사의 <?php echo $od['od_settle_case']; ?>";
-        <?php } ?>
-
-        if(chk_cnt == chked_cnt) {
-            if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
-                f.pg_cancel.value = 1;
-                msg = cancel_pg+" 결제 취소와 함께 ";
-            } else {
-                f.pg_cancel.value = 0;
-                msg = "";
-            }
-        }
-    }
-    <?php } ?>
 
     if (confirm(msg+"\'" + status + "\' 상태를 선택하셨습니다.\n\n선택하신대로 처리하시겠습니까?")) {
         return true;

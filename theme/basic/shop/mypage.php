@@ -64,6 +64,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
                 
                 // $sql = "select count(*) as total from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
                 
+                /*
                 $sql = " SELECT COUNT(DISTINCT CONCAT(od_card_name, card_mask_number)) AS num
                         FROM `{$g5['g5_subscription_order_table']}`
                         WHERE card_billkey != '' 
@@ -72,6 +73,49 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
                           AND od_card_name != '' ";
                 
                 $total = sql_fetch($sql);
+                */
+                
+                /*
+                $total = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], 'count(*) as total', array(
+                    'card_billkey' => array('!=' => ''),
+                    'mb_id' => $member['mb_id']
+                ), array(
+                    'groupBy' => 'od_card_name, card_mask_number'
+                ));
+                */
+                
+                /*
+                $total = sql_bind_select_fetch(
+                    array(
+                        'subquery' => array(
+                            'table' => $g5['g5_subscription_mb_cardinfo_table'],
+                            'columns' => ['COUNT(*) AS cnt'],
+                            'conditions' => array(
+                                'card_billkey' => array('!=' => ''),
+                                'mb_id' => $member['mb_id']
+                            ),
+                            'settings' => array('groupBy' => 'od_card_name, card_mask_number')
+                        )
+                    ),
+                    ['SUM(cnt) AS total'],
+                    array()
+                );
+                */
+                
+                $total = sql_bind_select_fetch(
+                    array(
+                        'subquery' => array(
+                            'table' => $g5['g5_subscription_mb_cardinfo_table'],
+                            'columns' => ['COUNT(*) AS cnt'],
+                            'conditions' => array(
+                                'card_billkey' => array('!=' => ''),
+                                'mb_id' => 'admin'
+                            ),
+                            'settings' => array('groupBy' => 'od_card_name, card_mask_number')
+                        )
+                    ),
+                    'COUNT(cnt) AS num'
+                );
                 
                 $total_card_num = isset($total['num']) ? (int) $total['num'] : 0;
             ?>

@@ -1,41 +1,29 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
+
+$result_row = sql_bind_select_array($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
+    array('od_id'=>$od_id),
+    array('groupBy'=>'it_id', 'orderBy'=>'ct_id')
+);
+        
+$subscription_pays = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'pay_id', 'orderType'=>'DESC'));
+
 $g5['title'] = '주문상세내역';
 include_once('./_head.php');
-
-// LG 현금영수증 JS
-if($od['od_pg'] == 'lg') {
-    if($default['de_card_test']) {
-    echo '<script language="JavaScript" src="'.SHOP_TOSSPAYMENTS_CASHRECEIPT_TEST_JS.'"></script>'.PHP_EOL;
-    } else {
-        echo '<script language="JavaScript" src="'.SHOP_TOSSPAYMENTS_CASHRECEIPT_REAL_JS.'"></script>'.PHP_EOL;
-    }
-}
 ?>
 
 <!-- 주문상세내역 시작 { -->
 <div id="sod_fin">
-    <div id="sod_fin_no">주문번호 <strong><?php echo $od_id; ?></strong></div>
+    <div id="sod_fin_no">구독번호 <strong><?php echo $od_id; ?></strong></div>
     <section id="sod_fin_list">
-        <h2>주문하신 상품</h2>
+        <h2>구독하신 상품</h2>
 
         <?php
         $st_count1 = $st_count2 = 0;
         $custom_cancel = false;
-        
-        /*
-        $sql = " select it_id, it_name, ct_send_cost, it_sc_type
-                    from {$g5['g5_shop_cart_table']}
-                    where od_id = '$od_id'
-                    group by it_id
-                    order by ct_id ";
-        $result = sql_query($sql);
-        */
-        $result_row = sql_bind_select_array($g5['g5_subscription_cart_table'], 'it_id, it_name, ct_send_cost, it_sc_type',
-        array('od_id'=>$od_id),
-        array('groupBy'=>'it_id', 'orderBy'=>'ct_id')
-        );
         ?>
         
         <div class="tbl_head03 tbl_wrap">
@@ -53,39 +41,19 @@ if($od['od_pg'] == 'lg') {
 	            </thead>
 	            <tbody>
 	            <?php
-	            //for($i=0; $row=sql_fetch_array($result); $i++) {
                 $i = 0;
                 foreach($result_row as $row) {
 	                $image = get_it_image($row['it_id'], 55, 55);
-	                
-                    /*
-	                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-	                            from {$g5['g5_shop_cart_table']}
-	                            where od_id = '$od_id'
-	                              and it_id = '{$row['it_id']}'
-	                            order by io_type asc, ct_id asc ";
-	                $res = sql_query($sql);
-	                $rowspan = sql_num_rows($res) + 1;
-                    */
                     
                     $res = sql_bind_select($g5['g5_subscription_cart_table'], 'ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price',
-                    array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
-                    array('orderBy'=>'io_type, ct_id')
+                        array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
+                        array('orderBy'=>'io_type, ct_id')
                     );
                     $rowspan = sql_num_rows($res) + 1;
 	
-	                // 합계금액 계산
-                    /*
-	                $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-	                                SUM(ct_qty) as qty
-	                            from {$g5['g5_subscription_cart_table']}
-	                            where it_id = '{$row['it_id']}'
-	                              and od_id = '$od_id' ";
-	                $sum = sql_fetch($sql);
-                    */
                     
                     $sum = sql_bind_select_fetch($g5['g5_subscription_cart_table'], 'SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price, SUM(ct_qty) as qty',
-                    array('od_id'=>$od_id, 'it_id'=>$row['it_id'])
+                        array('od_id'=>$od_id, 'it_id'=>$row['it_id'])
                     );
 	
 	                // 배송비
@@ -124,7 +92,7 @@ if($od['od_pg'] == 'lg') {
 	            <?php } ?>
 	            <tr>
 	                <td headers="th_itopt" class="td_prd">
-	                	<div class="sod_img"><?php echo $image; ?></div>
+	                	<div class="sod_img"><a href="<?php echo subscription_item_url($row['it_id']); ?>"><?php echo $image; ?></a></div>
 	                	<div class="sod_name">
 		                	<a href="<?php echo subscription_item_url($row['it_id']); ?>"><?php echo $row['it_name']; ?></a><br>
 		                	<div class="sod_opt"><?php echo get_text($opt['ct_option']); ?></div>
@@ -181,17 +149,16 @@ if($od['od_pg'] == 'lg') {
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
         $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']
-                        - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon']
-                        - $od['od_cancel_price'];
+                        - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'];
 
         $receipt_price  = $od['od_receipt_price']
                         + $od['od_receipt_point'];
-        $cancel_price   = $od['od_cancel_price'];
+        $cancel_price   = 0;
 
         $misu = true;
         $misu_price = $tot_price - $receipt_price;
 
-        if ($misu_price == 0 && ($od['od_cart_price'] > $od['od_cancel_price'])) {
+        if ($misu_price == 0 && ($od['od_cart_price'] > 0)) {
             $wanbul = " (완불)";
             $misu = false; // 미수금 없음
         }
@@ -214,23 +181,6 @@ if($od['od_pg'] == 'lg') {
             $app_no = $od['od_app_no'];
             $disp_bank = false;
             $disp_receipt = true;
-        } else if($od['od_settle_case'] == '간편결제') {
-            $app_no_subj = '승인번호';
-            $app_no = $od['od_app_no'];
-            $disp_bank = false;
-            $disp_receipt = true;
-        } else if($od['od_settle_case'] == '휴대폰') {
-            $app_no_subj = '휴대폰번호';
-            $app_no = $od['od_bank_account'];
-            $disp_bank = false;
-            $disp_receipt = true;
-        } else if($od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') {
-            $app_no_subj = '거래번호';
-            $app_no = $od['od_tno'];
-
-			if( function_exists('shop_is_taxsave') && $misu_price == 0 && shop_is_taxsave($od, true) === 2 ){
-				$disp_receipt = true;
-			}
         }
         ?>
 
@@ -289,19 +239,7 @@ if($od['od_pg'] == 'lg') {
                     <th scope="row">주 소</th>
                     <td><?php echo get_text(sprintf("(%s%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2'], $od['od_b_addr3'], $od['od_b_addr_jibeon'])); ?></td>
                 </tr>
-                <?php
-                // 희망배송일을 사용한다면
-                if ($default['de_hope_date_use'])
-                {
-                ?>
-                <tr>
-                    <th scope="row">희망배송일</th>
-                    <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
-                </tr>
-                <?php }
-                if ($od['od_memo'])
-                {
-                ?>
+                <?php if ($od['od_memo']) { ?>
                 <tr>
                     <th scope="row">전하실 말씀</th>
                     <td><?php echo conv_content($od['od_memo'], 0); ?></td>
@@ -320,7 +258,36 @@ if($od['od_pg'] == 'lg') {
     $use = subscription_serial_decode($od['od_subscription_selected_number']);
     
     $opt_print = (isset($opt['opt_print']) && $opt['opt_print']) ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
+    
+    if (!$opt['opt_print']) {
+        
+        if (!$opt['opt_input']) $opt['opt_input'] = 1;
+        
+        if ($opt['opt_date_format'] === 'week') {
+            
+            $opt_print = (int) $opt['opt_input'].'주에 ';
 
+            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                $opt_print .= get_subscriptionDayOfWeek($opt['opt_etc']);
+            } else {
+                $opt_print .= '한 번';
+            }
+        } else if($opt['opt_date_format'] === 'month') {
+                            
+            $opt_print = (int) $opt['opt_input'].'달에 ';
+
+            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                $opt_print .= (int) $opt['opt_etc'].'일';
+            } else {
+                $opt_print .= '한 번';
+            }
+
+            } else if($opt['opt_date_format'] === 'year') {
+            $opt_print = '1년에 한 번';
+
+        }
+    }
+    
     if ($opt['opt_input'] || $opt['opt_date_format']) {
         $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
         $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
@@ -333,6 +300,20 @@ if($od['od_pg'] == 'lg') {
     }
     
     $cards = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], '*', array('mb_id'=>$member['mb_id'], 'ci_id'=>$od['ci_id']));
+    
+    $payment_date_title = (!empty($subscription_pays)) ? '다음 결제일' : '첫 결제일';
+    $upcoming_payment_title = '다음 결제가격';
+    $next_delivery_title = '다음 배송일';
+
+    if (empty($subscription_pays)) {
+        $payment_date_title = '첫 결제일';
+        $upcoming_payment_title = '첫 결제가격';
+        $next_delivery_title = '첫 배송일(예정)';
+        $e_number = '1';
+    } else {
+        $subscription_pay_max = sql_bind_select_fetch($g5['g5_subscription_pay_table'], 'MAX(py_round_no) as max_no', array('od_id'=>$od_id));
+        $e_number = isset($subscription_pay_max['max_no']) ? (int) $subscription_pay_max['max_no'] : '1';
+    }
 ?>
             <div class="tbl_head01 tbl_wrap">
                 <table>
@@ -366,20 +347,22 @@ if($od['od_pg'] == 'lg') {
 	                </tr>
                     <?php } ?>
                     <tr>
-	                    <th scope="row">다음 결제일</th>
+	                    <th scope="row"><?php echo $payment_date_title; ?></th>
 	                    <td><?php echo date('Y-m-d', strtotime($od['next_billing_date'])); ?></td>
                     </tr>
                     <tr>
-	                    <th scope="row">다음 결제가격</th>
+	                    <th scope="row"><?php echo $upcoming_payment_title; ?><br>(예정)</th>
 	                    <td>
-                            <span class="help">결제가격은 변동될수 있습니다.</span>
+                            <?php echo number_format(subscription_order_pay_price($od_id)); ?>원
+                            <br>
+                            <span class="help">결제가격은 장바구니 상태에 따라 변동될수 있습니다.</span>
                         </td>
                     </tr>
                     <tr>
-	                    <th scope="row">다음 배송일</th>
+	                    <th scope="row"><?php echo $next_delivery_title; ?></th>
 	                    <td>
-                            몇 회차<span class="set_pay_date"><?php echo get_next_delivery_date($od); ?></span>
-                            등록된 수단으로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>영업일 전 자동결제 됩니다.
+                            <?php echo $e_number; ?> 회차 <span class="set_pay_date"><?php echo get_next_delivery_date($od, 'y-m-d'); ?></span>
+                            등록된 결제카드로 도착 <?php echo (int) get_subs_option('su_auto_payment_lead_days'); ?>일 전 자동결제 됩니다.
                         </td>
                     </tr>
 	                </tbody>
@@ -387,18 +370,12 @@ if($od['od_pg'] == 'lg') {
             </div>
         </section>
         
-        <?php
-        
-        $pay_rows = sql_bind_select_array($g5['g5_subscription_pay_table'], '*', array('od_id'=>$od_id), array('orderBy'=>'id', 'orderType'=>'DESC'));
-        
-        ?>
-        
         <section id="sod_fin_dvr">
             <h3>정기결제내역</h3>
             
             <div class="tbl_head01 tbl_wrap">
                 <table>
-                    <?php if ($pay_rows) { ?>
+                    <?php if ($subscription_pays) { ?>
                     <tr>
                         <th>회차</th>
                         <th>결제PG사</th>
@@ -406,13 +383,13 @@ if($od['od_pg'] == 'lg') {
                         <th>결제금액</th>
                         <th>보기</th>
                     </tr>
-                    <?php foreach($pay_rows as $key=>$v) { ?>
+                    <?php foreach($subscription_pays as $key=>$v) { ?>
                     <tr>
                         <td><?php echo $v['py_round_no']; ?></td>
                         <td><?php echo $v['py_pg']; ?></td>
                         <td><?php echo $v['py_receipt_time']; ?></td>
-                        <td></td>
-                        <td><a href="#" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
+                        <td><?php echo display_price($v['py_cart_price'] + $v['py_send_cost'] + $v['py_send_cost2']); ?></td>
+                        <td><a href="#ex_modal1" rel="modal:open" data-payid="<?php echo $v['pay_id']; ?>" class="mng_mod btn btn_02">상세보기</a></td>
                     </tr>
                     <?php } // end for ?>
                     <?php } else { ?>
@@ -424,34 +401,6 @@ if($od['od_pg'] == 'lg') {
             </div>
         </section>
         
-        <section id="sod_fin_dvr">
-            <h3>배송정보</h3>
-
-            <div class="tbl_head01 tbl_wrap">
-                <table>
-	                <tbody>
-	                <?php if ($od['od_invoice'] && $od['od_delivery_company']) { ?>
-	                <tr>
-	                    <th scope="row">배송회사</th>
-	                    <td><?php echo $od['od_delivery_company']; ?> <?php echo get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link'); ?></td>
-	                </tr>
-	                <tr>
-	                    <th scope="row">운송장번호</th>
-	                    <td><?php echo $od['od_invoice']; ?></td>
-	                </tr>
-	                <tr>
-	                    <th scope="row">배송일시</th>
-	                    <td><?php echo $od['od_invoice_time']; ?></td>
-	                </tr>
-	                <?php } else { ?>
-	                <tr>
-	                    <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
-	                </tr>
-	                <?php } ?>
-	                </tbody>
-                </table>
-            </div>
-        </section>
     </div>
 
     <div class="sod_right">
@@ -490,12 +439,6 @@ if($od['od_pg'] == 'lg') {
                 <strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong>
             </li>
             <?php } ?>
-            <?php if ($od['od_cancel_price'] > 0) { ?>
-            <li class="sod_bsk_dvr">
-                <span>취소금액</span>
-                <strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong> 
-            </li>
-            <?php } ?>
             <li class="sod_bsk_cnt">
                 <span>총계</span>
                 <strong><?php echo number_format($tot_price); ?> 원</strong>
@@ -530,193 +473,21 @@ if($od['od_pg'] == 'lg') {
             <h3>결제정보</h3>
             <ul>
 	            <li>
-	                <strong>주문번호</strong>
+	                <strong>구독번호</strong>
 	                <span><?php echo $od_id; ?></span>
 	            </li>
 	            <li>
-	                <strong>주문일시</strong>
+	                <strong>구독일시</strong>
 	                <span><?php echo $od['od_time']; ?></span>
 	            </li>
 	            <li>
 	                <strong>결제방식</strong>
-	                <span><?php echo check_pay_name_replace($od['od_settle_case'], $od, 1); ?></span>
+	                <span><?php echo get_subscription_pay_name_replace($od['od_settle_case'], $od, 1); ?></span>
 	            </li>
 	            <li>
-	                <strong>결제금액</strong>
+	                <strong>구독금액</strong>
 	                <span><?php echo $od_receipt_price; ?></span>
 	            </li>
-	            <?php
-	            if($od['od_receipt_price'] > 0)
-	            {
-	            ?>
-	            <li>
-	                <strong>결제일시</strong>
-	                <span><?php echo $od['od_receipt_time']; ?></span>
-	            </li>
-	            <?php
-	            }
-	
-	            // 승인번호, 휴대폰번호, 거래번호
-	            if($app_no_subj && $app_no)
-	            {
-	            ?>
-	            <li>
-	                <strong><?php echo $app_no_subj; ?></strong>
-	                <span><?php echo $app_no; ?></span>
-	            </li>
-	            <?php
-	            }
-	
-	            // 계좌정보
-	            if($disp_bank)
-	            {
-	            ?>
-	            <li>
-	                <strong>입금자명</strong>
-	                <span><?php echo get_text($od['od_deposit_name']); ?></span>
-	            </li>
-	            <li>
-	                <strong>입금계좌</strong>
-	                <span><?php echo get_text($od['od_bank_account']); ?></span>
-	            </li>
-	            <?php
-	            }
-	
-	            if($disp_receipt) {
-	            ?>
-	            <li>
-	                <strong>영수증</strong>
-	                <span>
-	                    <?php
-	                    if($od['od_settle_case'] == '휴대폰')
-	                    {
-	                        if($od['od_pg'] == 'lg') {
-	                            require_once G5_SHOP_PATH.'/settle_lg.inc.php';
-	                            $LGD_TID      = $od['od_tno'];
-	                            $LGD_MERTKEY  = $config['cf_lg_mert_key'];
-	                            $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
-	
-	                            $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
-	                        } else if($od['od_pg'] == 'inicis') {
-	                            $hp_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-	                        } else if($od['od_pg'] == 'nicepay') {
-                                $hp_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&TID='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-                            } else {
-	                            $hp_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=500,height=690,scrollbars=yes,resizable=yes\');';
-	                        }
-	                    ?>
-	                    <a href="javascript:;" onclick="<?php echo $hp_receipt_script; ?>">영수증 출력</a>
-	                    <?php
-	                    }
-	
-	                    if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '간편결제' || is_inicis_order_pay($od['od_settle_case']) || (shop_is_taxsave($od, true) && $misu_price == 0) )
-	                    {
-	                        if($od['od_pg'] == 'lg') {
-	                            require_once G5_SHOP_PATH.'/settle_lg.inc.php';
-	                            $LGD_TID      = $od['od_tno'];
-	                            $LGD_MERTKEY  = $config['cf_lg_mert_key'];
-	                            $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
-	
-	                            $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
-	                        } else if($od['od_pg'] == 'inicis') {
-	                            $card_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-	                        } else if($od['od_pg'] == 'nicepay') {
-                                $card_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&TID='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-                            } else {
-	                            $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
-	                        }
-	                    ?>
-	                    <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
-	                    <?php
-	                    }
-	
-	                    if($od['od_settle_case'] == 'KAKAOPAY')
-	                    {
-	                        //$card_receipt_script = 'window.open(\'https://mms.cnspay.co.kr/trans/retrieveIssueLoader.do?TID='.$od['od_tno'].'&type=0\', \'popupIssue\', \'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=420,height=540\');';
-                            $card_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-	                    ?>
-	                    <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
-	                    <?php
-	                    }
-	                    ?>
-	                </span>
-	            </li>
-	            <?php
-	            }
-	
-	            if ($od['od_receipt_point'] > 0)
-	            {
-	            ?>
-	            <li>
-	                <strong>포인트사용</strong>
-	                <span><?php echo display_point($od['od_receipt_point']); ?></span>
-	            </li>
-	
-	            <?php
-	            }
-	
-	            if ($od['od_refund_price'] > 0)
-	            {
-	            ?>
-	            <li>
-	                <strong>환불 금액</strong>
-	                <span><?php echo display_price($od['od_refund_price']); ?></span>
-	            </li>
-	            <?php
-	            }
-	
-                // 현금영수증 발급을 사용하는 경우 또는 현금영수증 발급을 한 주문건이면
-	            if ((function_exists('shop_is_taxsave') && shop_is_taxsave($od)) || (function_exists('is_order_cashreceipt') && is_order_cashreceipt($od))) {
-	                // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-	                if ($misu_price == 0 && is_order_cashreceipt($od)) {
-	            ?>
-	            <li>
-	                <strong class="letter-2px">현금영수증</strong>
-	                <span>
-	                <?php
-	                if ($od['od_cash'])
-	                {
-	                    if($od['od_pg'] == 'lg') {
-	                        require_once G5_SHOP_PATH.'/settle_lg.inc.php';
-	
-	                        switch($od['od_settle_case']) {
-	                            case '계좌이체':
-	                                $trade_type = 'BANK';
-	                                break;
-	                            case '가상계좌':
-	                                $trade_type = 'CAS';
-	                                break;
-	                            default:
-	                                $trade_type = 'CR';
-	                                break;
-	                        }
-	                        $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
-	                    } else if($od['od_pg'] == 'inicis') {
-	                        $cash = unserialize($od['od_cash_info']);
-	                        $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
-	                    } else if($od['od_pg'] == 'nicepay') {
-                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&TID='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
-                        } else {
-	                        require_once G5_SHOP_PATH.'/settle_kcp.inc.php';
-	
-	                        $cash = unserialize($od['od_cash_info']);
-	                        $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
-	                    }
-	                ?>
-	                    <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>" class="btn_frmline">현금영수증 확인하기</a>
-	                <?php
-	                }
-	                else if (shop_is_taxsave($od))
-	                {
-	                ?>
-	                    <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline is-long-text">현금영수증을 발급하시려면 클릭하십시오.</a>
-	                <?php } ?>
-	                </span>
-	            </li>
-            <?php
-                }
-            }
-            ?>
             </ul>
         </section>
 
@@ -726,10 +497,10 @@ if($od['od_pg'] == 'lg') {
             if ($cancel_price == 0) {
                 if ($custom_cancel) {
             ?>
-            <button type="button" class="sod_fin_c_btn">주문 취소하기</button>
+            <button type="button" class="sod_fin_c_btn">구독 취소하기</button>
 			<div id="sod_cancel_pop">	
 	            <div id="sod_fin_cancelfrm">
-	            	<h2>주문취소</h2>
+	            	<h2>구독취소</h2>
 	                <form method="post" action="./orderinquirycancel.php" onsubmit="return fcancel_check(this);">
 	                <input type="hidden" name="od_id" value="<?php echo $od['od_id']; ?>">
 	                <input type="hidden" name="token" value="<?php echo $token; ?>">
@@ -757,56 +528,23 @@ if($od['od_pg'] == 'lg') {
                 }
             } else {
             ?>
-            <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
+            <p>구독 취소 내역이 있습니다.</p>
             <?php } ?>
         </section>
     </div>
 
-    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin && $od['od_pg'] == 'kcp') {
-    preg_match("/\s{1}([^\s]+)\s?/", $od['od_bank_account'], $matchs);
-    $deposit_no = trim($matchs[1]);
-    ?>
-    <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
-    <div class="tbl_frm01 tbl_wrap">
-        <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-        <table>
-        <caption>모의입금처리</caption>
-        <colgroup>
-            <col class="grid_3">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="col"><label for="e_trade_no">KCP 거래번호</label></th>
-            <td><input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>"></td>
-        </tr>
-        <tr>
-            <th scope="col"><label for="deposit_no">입금계좌</label></th>
-            <td><input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"></td>
-        </tr>
-        <tr>
-            <th scope="col"><label for="req_name">입금자명</label></th>
-            <td><input type="text" name="req_name" value="<?php echo $od['od_deposit_name']; ?>"></td>
-        </tr>
-        <tr>
-            <th scope="col"><label for="noti_url">입금통보 URL</label></th>
-            <td><input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"></td>
-        </tr>
-        </tbody>
-        </table>
-        <div id="sod_fin_test" class="btn_confirm">
-            <input type="submit" value="입금통보 테스트" class="btn_submit">
-        </div>
-        </form>
-    </div>
-    <?php } ?>
-
 </div>
 <!-- } 주문상세내역 끝 -->
 
+<?php // 정기결제 상세보기 모달 시작 ?>
+<div id="ex_modal1" class="modal">
+    <div class="modal_contents">
+    </div>
+</div>
+
 <script>
-$(function() {
-    $("#sod_sts_explan_open").on("click", function() {
+jQuery(function($) {
+    $("#sod_sts_explan_open").on("click", function(e) {
         var $explan = $("#sod_sts_explan");
         if($explan.is(":animated"))
             return false;
@@ -820,7 +558,7 @@ $(function() {
         }
     });
 
-    $("#sod_sts_explan_close").on("click", function() {
+    $("#sod_sts_explan_close").on("click", function(e) {
         var $explan = $("#sod_sts_explan");
         if($explan.is(":animated"))
             return false;
@@ -828,11 +566,205 @@ $(function() {
         $explan.slideUp(200);
         $("#sod_sts_explan_open").text("상태설명보기");
     });
+    
+    $(document).on("click", ".mng_mod.btn", function(e) {
+        e.preventDefault();
+        
+        var pay_id = $(this).attr("data-payid"),
+            oDate = new Date(),
+            action_url = g5_url + "/subscription/ajax.subscription_pay.php",
+            formData = "pay_id="+pay_id;
+        
+        var ajax_var = $.ajax({
+            type:"POST",
+            url: action_url + "?t="+ oDate.getTime(),
+            data:formData,
+            dataType   : 'json', // xml, html, script, json
+            cache: false,
+            success:function(data, status, xhr){
+                if (data.error){ //실패
+                    /*
+                    var error_msg = data.msg;
+                        error_msg = error_msg.replace(/\\n/g, "\n")
+                                  .replace(/\\r/g, "\r");
+
+                    alert( error_msg );
+                    sir_cm.fn_hide_loading();
+                    sir_cm.waiting = false;
+                    */
+                    
+                } else {    //성공
+                    
+                    console.log(data);
+                    /*
+                    var obj = {
+                        msg : sir_cm.cm_success_msg,
+                        type : "success"
+                    }
+                    sir_cm.fn_load_comment( data.url, obj );
+
+                    if( $(".client-info button[id^='request']").length ){
+                        $(".client-info button[id^='request']").attr("data-view", "1");
+                    }
+
+                    $("#fcomment").trigger("request_reset", 'write');
+                    */
+                    
+                    // .content 요소 선택
+                    var contentEl = $(".modal_contents");
+
+                    // 새로운 ul 요소 생성
+                    var innerEl = $("<div class='user-subscription-pay'></div>"),
+                        ulEl = $("<ul class='user-subscription-inner'></ul>");
+
+                    // JSON 데이터 순회하며 li 요소 생성 후 ul에 추가
+                    $.each(data, function(key, value) {
+                        // ulEl.append("<li><strong>" + key + ":</strong> " + value + "</li>");
+                    });
+                    
+                    /*
+                    var keys = {
+                        "py_receipt_time": "결제시간",
+                        "영수증출력": "",
+                        "py_receipt_price": "결제금액",
+                        };
+                    */
+                    
+                    var html = "",
+                        cartHTML = "";
+                    
+                    html += "<h3>주문하신 분</h3>";
+                    html += "<li><span class='th'>이름 :</span> " + data.py_name + "</li>";
+                    html += "<li><span class='th'>핸드폰 :</span> " + data.py_hp + "</li>";
+                    
+                    if (data.py_test) {
+                        html += "<li class='is_pay_test'>이 결제는 테스트로 결제되었습니다.</li>";
+                    }
+                    
+                    html += "<h3>받으시는 분</h3>";
+                    html += "<li><span class='th'>이름 :</span> " + data.py_b_name + "</li>";
+                    html += "<li><span class='th'>전화번호 :</span> " + data.py_b_tel + "</li>";
+                    html += "<li><span class='th'>핸드폰 :</span> " + data.py_b_hp + "</li>";
+                    html += "<li><span class='th'>주소 :</span> " + data.py_b_full_address + "</li>";
+                    
+                    html += "<h3>배송정보</h3>";
+                    if (data.py_invoice && data.py_delivery_company) {
+                        html += "<li><span class='th'>배송회사 :</span> " + data.py_delivery_full_info + "</li>";
+                        html += "<li><span class='th'>운송장번호 :</span> " + data.py_invoice + "</li>";
+                        html += "<li><span class='th'>배송일시 :</span> " + data.py_invoice_time + "</li>";
+                    } else {
+                        html += "<li class='is_not_delivery'>아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</li>";
+                    }
+
+                    html += "<li><span class='th'>주문총액 :</span> " + data.py_cart_price + "</li>";
+                    if (data.py_send_cost) {
+                        html += "<li><span class='th'>배송비 :</span> " + data.py_send_cost + "</li>";
+                    }
+                    html += "<li><span class='th'>총계 :</span> " + data.py_tot_price + "</li>";
+                    
+                    html += "<h3>결제정보</h3>";
+                    html += "<li><span class='th'>주문번호 :</span> " + data.subscription_pg_id + "</li>";
+                    html += "<li><span class='th'>주문일시 :</span> " + data.py_time + "</li>";
+                    // html += "<li><span class='th'>결제방식 :</span> " + data.py_settle_case + "</li>";
+                    html += "<li><span class='th'>결제카드 :</span> " + data.py_settle_case + "</li>";
+                    html += "<li><span class='th'>결제금액 :</span> " + data.py_receipt_price + "</li>";
+                    html += "<li><span class='th'>결제일시 :</span> " + data.py_receipt_time + "</li>";
+                    html += "<li><span class='th'>승인번호 :</span> " + data.py_app_no + "</li>";
+                    
+                    if (data.py_receipt_url) {
+                        html += "<li><span class='th'>영수증 :</span> <a href='" + data.py_receipt_url + "' target='_blank' class='subscription-receipt-view'>영수증클릭</a></li>";
+                    }
+                    
+                    ulEl.append(html);
+                    
+                    console.log(data.cart_infos);
+                    
+                    for (var i = 0; i < data.cart_infos.goods.length; i++) {
+                        
+                        console.log( data.cart_infos.it_options );
+                        
+                        var productName = data.cart_infos.goods[i],
+                            productPrice = 0,
+                            img = "";
+                        
+                        try {
+                            img = data.cart_infos.image_urls[i].img;
+                        } catch (error) {
+                            img = "";
+                        }
+                        
+                        var productOption = data.cart_infos.it_options[i][0].ct_option;
+                        // var productPrice = data.cart_infos.it_options[i][0].tot_sell_price;
+                        var pioPrice = data.cart_infos.it_options[i][0].io_price;
+                        
+                        // let optionsHtml = data.cart_infos.it_options.map(opt => `<div>${opt.option} (수량: ${opt.qty}, 가격: ${opt.price}원${opt.point ? `, 포인트: ${opt.point}` : ''})</div>`).join('');
+                        
+                        var optionsHtml = '';
+                        
+                        data.cart_infos.it_options[i].forEach(function(opt) {
+                            
+                            productPrice += parseInt(opt.opt_price);
+                            
+                            optionsHtml += '<div>' + opt.ct_option + ' (수량: ' + opt.ct_qty + ', 가격: ' + opt.opt_price + '원' + (opt.point ? ', 포인트: ' + opt.point : '') + ')</div>';
+                        });
+                        
+                        productPrice = productPrice ? number_format(productPrice) : 0;
+                        
+                        cartHTML += `
+                            <div class="product-item">
+                                <div class="product-img">${img}</div>
+                                <div class="product-info">
+                                    <div class="product-name"><a href="#">${productName}</a></div>
+                                    <div class="product-options">${optionsHtml}</div>
+                                </div>
+                                <div class="product-meta">
+                                    <div>가격: ${productPrice}원</div>
+                                </div>
+                            </div>
+                        `;
+                        
+                    }
+                    
+                    if (cartHTML) {
+                        innerEl.append('<div class="product-list">' + cartHTML + '</div>');
+                    }
+                    
+                    innerEl.append(ulEl);
+                    
+                    // 기존 .content 내부에 추가
+                    contentEl.html(innerEl);
+            
+                }
+
+            },
+            error : function(request, status, error){
+                //alert(sir_cm.cm_false_msg+request.responseText);
+                //sir_cm.waiting = false;
+            }
+        })
+        .always(function() {
+            /*
+            if(typeof(a[0].captcha_key) != 'undefined'){
+                $(a[0]).find("#captcha_reload").trigger("click");
+            }
+            */
+        });
+            
+    });
+    
+    $(document).on("click", ".subscription-receipt-view", function(e){
+        e.preventDefault();
+        
+        var $href = $(this).attr("href");
+        
+        window.open($href, "winreceipt", "width=500,height=690,scrollbars=yes,resizable=yes");
+    });
+    
 });
 
 function fcancel_check(f)
 {
-    if(!confirm("주문을 정말 취소하시겠습니까?"))
+    if(!confirm("구독을 정말 취소하시겠습니까?"))
         return false;
 
     var memo = f.cancel_memo.value;
@@ -842,7 +774,8 @@ function fcancel_check(f)
     }
 
     return true;
-}		
+}
+
 </script>
 
 <?php

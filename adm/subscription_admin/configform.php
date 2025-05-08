@@ -9,8 +9,19 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
+/*
 $sql = " select * from `{$g5['g5_subscription_config_table']}` limit 1";
 $g5_subscriptions_options = $config['g5_subscriptions_options'] = sql_fetch($sql);
+*/
+
+$config['g5_subscriptions_options'] = sql_bind_select_fetch(
+    $g5['g5_subscription_config_table'],
+    '*',
+    array(),
+    array('limit' => 1)
+);
+
+$g5_subscriptions_options = $config['g5_subscriptions_options'];
 
 /*
 if (! isset($g5_subscriptions_options['su_cron_execute_hour']) ) {
@@ -131,9 +142,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 					<div class="local_desc01 local_desc">
 						<dl>
 							<dt>정기결제 주문폼</dt>
-							<dd>{입력} {결제주기}</dd>
+							<dd>{입력} {결제주기} {기타}</dd>
 						</dl>
 					   <p><span class="frm_info">이것은 헬프문입니다.</span></p>
+                       <p>일 선택시 기본값은 매일 정기결제합니다.</p>
+                       <p>주 선택시 기본값은 매주 결제한 요일에 정기결제합니다.</p>
+                       <p>월 선택시 기본값은 매월 결제한 일에 정기결제합니다.</p>
+                       <p>년 선택시 기본값은 매년 결제한 일에 정기결제합니다.</p>
 					</div>
 				</div>
                 <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
@@ -142,7 +157,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                         <tr class="not-remove">
                             <th>삭제체크</th>
                             <th>입력</th>
-                            <th>결제주기 선택</th>
+                            <th>결제주기</th>
+                            <th>기타</th>
                             <th>출력텍스트</th>
                             <th>사용여부</th>
                         </tr>
@@ -209,15 +225,22 @@ Array
                         <?php
                         foreach ($subscription_info_inputs as $opt) {
                             $disabled_attr = ($i === 0) ? 'disabled' : '';
+                            
+                            // print_r2($opt);
+                            
                         ?>
-                        <tr class="trtr" data-jbox-content="">
+                        <tr class="trtr" data-jbox-content="" data-index="<?php echo $i; ?>">
                             <td>
                                 <input type="hidden" name="opt_id[]" value="<?php echo $opt['opt_id']; ?>" >
                                 <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" <?php echo $disabled_attr; ?>>
                             </td>
                             <td>
                                 <span class="default_format">
-                                    <input type="number" name="opt_input[]" class="frm_input" value="<?php echo $opt['opt_input']; ?>">
+                                    <?php if ($opt['opt_date_format'] === 'year') { ?>
+                                        <input type="number" name="opt_input[]" class="frm_input input-disabled" value="1" readonly>
+                                    <?php } else { ?>
+                                        <input type="number" name="opt_input[]" class="frm_input" value="<?php echo $opt['opt_input']; ?>">
+                                    <?php } ?>
                                 </span>
                             </td>
                             <td>
@@ -227,6 +250,24 @@ Array
                                 <?php echo option_selected("month", $opt['opt_date_format'], "월"); ?>
                                 <?php echo option_selected("year", $opt['opt_date_format'], "년"); ?>
                             </select>
+                            </td>
+                            <td>
+                                <span class="default_etc_format">
+                                    <?php if ($opt['opt_date_format'] === 'week') { ?>
+                                    <select name="opt_etc[]">
+                                        <option value="">선택안함</option>
+                                        <?php echo option_selected("mon", $opt['opt_etc'], "월"); ?>
+                                        <?php echo option_selected("tue", $opt['opt_etc'], "화"); ?>
+                                        <?php echo option_selected("wed", $opt['opt_etc'], "수"); ?>
+                                        <?php echo option_selected("thu", $opt['opt_etc'], "목"); ?>
+                                        <?php echo option_selected("fri", $opt['opt_etc'], "금"); ?>
+                                    </select>요일
+                                    <?php } else if ($opt['opt_date_format'] === 'month') { ?>
+                                        <input type="number" name="opt_etc[]" class="frm_input month_input" min="0" max="31" value="<?php echo $opt['opt_etc']; ?>">일
+                                    <?php } else { ?>
+                                        <input type="hidden" name="opt_etc[]" class="frm_input" value="">
+                                    <?php } ?>
+                                </span>
                             </td>
                             <td>
                                 <input type="text" class="frm_input subscription_print_format" name="opt_print[]" title="" value="<?php echo $opt['opt_print']; ?>" size="40">
@@ -388,13 +429,22 @@ Array
                         
                     }
                     
+                    $(document).on("input", ".month_input", function (e) {
+                        var value = parseInt($(this).val(), 10);
+                        if (value > 31) {
+                            $(this).val(31);
+                        } else if (value < 0) {
+                            $(this).val(0); // 최소값은 0으로 설정
+                        }
+                    });
+                    
                     $("#sit_supply_frm .trtr").each(function(index, item){
                         var $this = $(this);
                         
                         jBox_tooltip_attach($this);
                     });
   
-                    $("#add_supply_row").click(function() {
+                    $(document).on("click", "#add_supply_row", function(e) {
                         var $el = $("#sit_supply_frm tr:last"),
                             newRow = $el.clone();
                         
@@ -403,6 +453,7 @@ Array
                         }).get(); // jQuery 객체를 일반 배열로 변환
 
                         var maxValue = Math.max.apply(null, values);
+                        var newIndex = parseInt($el.attr("data-index")) + 1;
                         
                         // 복사된 tr 내부의 값 초기화
                         newRow.removeClass("not-remove");
@@ -410,7 +461,22 @@ Array
                         newRow.find('input[type="checkbox"]').prop('checked', false).removeAttr("disabled"); // 체크박스 해제
                         newRow.find('input[type="text"]').val(''); // 텍스트 초기화
                         // newRow.find('select[name="opt_date_format[]"]').val('day'); // 기본 선택값 설정 (필요 시 변경 가능)
-
+                        // 기존 인덱스를 찾아 새로운 인덱스로 업데이트
+                        newRow.attr("data-index", newIndex);
+                        
+                        /*
+                        // opt_input 및 opt_etc name 속성 업데이트
+                        newRow.find('input[name^="opt_input["]').each(function() {
+                            var newName = "opt_input[" + newIndex + "]";
+                            $(this).attr("name", newName);
+                        });
+                        
+                        newRow.find('input[name^="opt_etc["]').each(function() {
+                            var newName = "opt_etc[" + newIndex + "]";
+                            $(this).attr("name", newName);
+                        });
+                        */
+                        
                         $el.after(newRow);
                         jBox_tooltip_attach(newRow);
                         
@@ -451,8 +517,10 @@ Array
                     function subcription_opt_change_event($selector, is_change_format=0) {
                         const $row = $selector.closest("tr");
                         const $defaultFormatInput = $row.find(".default_format");
+                        const $defaultEtcFormat = $row.find(".default_etc_format");
                         const $opt_print = $row.find('[name="opt_print[]"]');
                         const $opt_input = $row.find('[name="opt_input[]"]');
+                        const $opt_etc = $row.find('[name="opt_etc[]"]');
                         const $selectTag = $row.find('[name="opt_date_format[]"]');
                         const selectedValue = $selectTag.val();
                         
@@ -482,28 +550,30 @@ Array
                         const templates = {
                             day: {
                                 input: '<input type="number" name="opt_input[]" class="frm_input" value="1">',
+                                etc_input: '<input type="hidden" name="opt_etc[]" class="frm_input" value="">',
                                 content: day_content + add_content
                             },
                             week: {
-                                input: `
-                                    <select name="opt_input[]">
+                                input: '<input type="number" name="opt_input[]" class="frm_input" value="1">',
+                                etc_input: `
+                                    <select name="opt_etc[]">
                                         <option value="">선택안함</option>
                                         <option value="mon">월요일</option>
                                         <option value="tue">화요일</option>
                                         <option value="wed">수요일</option>
                                         <option value="thu">목요일</option>
                                         <option value="fri">금요일</option>
-                                        <option value="sat">토요일</option>
-                                        <option value="sun">일요일</option>
                                     </select>`,
                                 content: week_content + add_content
                             },
                             month: {
-                                input: '<input type="number" name="opt_input[]" class="frm_input" min="0" max="31" value="0">',
+                                input: '<input type="number" name="opt_input[]" class="frm_input" value="1">',
+                                etc_input: '<input type="number" name="opt_etc[]" class="frm_input month_input" min="0" max="31" value="0">',
                                 content: month_content + add_content
                             },
                             year: {
-                                input: '<input type="number" name="opt_input[]" class="frm_input" value="1" disabled>',
+                                input: '<input type="number" name="opt_input[]" class="frm_input input-disabled" value="1" readonly>',
+                                etc_input: '<input type="hidden" name="opt_etc[]" class="frm_input" value="">',
                                 content: year_content + add_content
                             }
                         };
@@ -514,7 +584,9 @@ Array
                         if (template) {
                             if (is_change_format !== 2) {
                                 $defaultFormatInput.html(template.input);
+                                $defaultEtcFormat.html(template.etc_input);
                             }
+                            // $defaultEtcFormat.html(template.etc_input);
                             $row.attr("data-jbox-content", template.content);
                             $row.trigger("changeinput");
                         }
@@ -651,6 +723,16 @@ Array
                 <input type="number" name="su_auto_payment_lead_days" value="<?php echo get_sanitize_input(get_subs_option('su_auto_payment_lead_days')); ?>" id="su_auto_payment_lead_days" class="frm_input" size="5"> 일
             </td>
         </tr>
+        
+        <tr>
+            <th scope="row">정기결제 폼 첫번째 안내문</th>
+            <td><?php echo editor_html('su_subscription_content_first', get_text(html_purifier(get_subs_option('su_subscription_content_first')), 0)); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">정기결제 폼 마지막 안내문</th>
+            <td><?php echo editor_html('su_subscription_content_end', get_text(html_purifier(get_subs_option('su_subscription_content_end')), 0)); ?></td>
+        </tr>
+        
         <tr>
             <th scope="row"><label for="su_pg_service">결제대행사</label></th>
             <td>
@@ -798,6 +880,24 @@ Array
 </form>
 </div>
 <script>
+function fconfig_check(f) {
+    <?php echo get_editor_js('su_subscription_content_first'); ?>
+    <?php echo get_editor_js('su_subscription_content_end'); ?>
+        
+    var msg = "",
+        pg_msg = "";
+    
+    if( msg ){
+        if (confirm(msg)){
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+
 jQuery(function($) {
     
     $(document).on("click", ".de_pg_tab a", function(e){

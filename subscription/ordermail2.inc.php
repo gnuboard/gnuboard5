@@ -36,7 +36,7 @@ unset($list);
 $sql = " select b.it_sell_email,
                 a.it_id,
                 a.it_name
-           from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_subscription_item_table']} b on ( a.it_id = b.it_id )
+           from {$g5['g5_subscription_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
           where a.od_id = '$od_id'
             and a.ct_select = '1'
             and b.it_sell_email <> ''

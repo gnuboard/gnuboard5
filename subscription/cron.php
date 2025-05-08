@@ -7,7 +7,7 @@ function get_subscription_goods($cart_id)
     global $g5;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_subscription_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from {$g5['g5_subscription_cart_table']} a, {$g5['g5_shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
     $goods['full_name'] = $goods['name'] = addslashes($row['it_name']);

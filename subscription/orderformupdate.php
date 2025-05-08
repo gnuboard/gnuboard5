@@ -31,6 +31,7 @@ if ($od_subscription_select_data && get_subs_option('su_chk_user_delivery') && c
         'opt_id' => 0,
         'opt_input' => $od_subscription_select_data,
         'opt_date_format' => 'day',
+        'opt_etc' => '',
         'opt_print' => '',
         'opt_use' => 1
     );
@@ -213,7 +214,7 @@ $tot_od_cp_price = 0;
 $tot_sc_cp_price = 0;
 
 // 배송비가 상이함
-$send_cost = get_sendcost($tmp_cart_id);
+$send_cost = get_subscription_sendcost($tmp_cart_id);
 
 $tot_sc_cp_price = 0;
 // 배송비 쿠폰 적용해야 해야함
@@ -255,8 +256,8 @@ if ($od_settle_case == '무통장' || $od_settle_case == '카드재사용') {
     if ($od_settle_case == '카드재사용') {
         $card_mask_number = $select_before_od['card_mask_number'];
         $card_billkey = $select_before_od['card_billkey'];
-        $od_subscription_date_format = $select_before_od['od_subscription_date_format'];
-        $od_subscription_selected_data = $select_before_od['od_subscription_selected_data'];
+        $od_subscription_date_format = isset($select_before_od['od_subscription_date_format']) ? $select_before_od['od_subscription_date_format'] : '';
+        $od_subscription_selected_data = isset($select_before_od['od_subscription_selected_data']) ? $select_before_od['od_subscription_selected_data'] : '';
         $od_card_name = $select_before_od['od_card_name'];
         
         // 구독 등록될 가격
@@ -377,12 +378,13 @@ if (!(isset($exist_card['card_billkey']) && $exist_card['card_billkey'])) {
         'card_mask_number' => $card_mask_number,
         'card_billkey' => $card_billkey,
         'od_card_name' => $od_card_name,
+        'od_tno' => $od_tno,
         'od_test' => get_subs_option('su_card_test')
     );
     
     sql_bind_insert($g5['g5_subscription_mb_cardinfo_table'], $card_inserts);
     
-    $card_ci_id = sql_insert_id();
+    $card_ci_id = get_pdo_insert_id();
 }
 
 $inserts = array(
@@ -433,8 +435,6 @@ $inserts = array(
     'od_settle_case' => $od_settle_case,
     'od_other_pay_type' => $od_other_pay_type,
     'od_test' => get_subs_option('su_card_test'),
-    'card_mask_number' => $card_mask_number,
-    'card_billkey' => $card_billkey,
     'od_subscription_number' => $od_subscription_number,
     'od_firstshipment_date' => $od_firstshipment_date,
     'od_subscription_date_format' => $od_subscription_date_format,
@@ -525,146 +525,6 @@ if (!$result) {
 
 $exists_order = sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', array('od_id'=>$od_id));
 
-// 희망배송일과 배송일 이전 자동결제 설정일이 있으면 다음회차에 결제를 하고, 그렇지 않으면 1회차 결제를 한다.
-$is_first_pay = true;
-
-if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_payment_lead_days') > 0) {
-    $is_first_pay = false;
-    
-    $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
-    
-    // 결제일이 오늘이거나 이전일이면 바로 1회차 결제한다.
-    
-    $current_time = strtotime(G5_TIME_YMDHIS);
-    $compare_time = strtotime($nextBillingDate);
-
-    if (date('Y-m-d', $current_time) === date('Y-m-d', $compare_time)) {
-        $is_first_pay = true;
-    }
-    
-    if ($compare_time <= $current_time) {
-        $is_first_pay = true;
-    }
-}
-
-if ($is_first_pay) {
-
-    $pays = subscription_process_payment($exists_order, $od_pg, $tmp_cart_id);
-
-    // 정기결제가 성공이면
-    if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
-        
-        add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
-            'hs_type' => 'subscription_order',
-            'hs_category' => 'admin',
-            'od_id' => $od_id,
-            'mb_id' => $member['mb_id'],
-            'hs_date' => G5_TIME_YMDHIS
-        ));
-            
-        $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
-        
-        $insert_id = subscription_order_pay($exists_order, $pays, $pay_round_no);
-        
-        // 성공이면
-        if ($insert_id) {
-            
-            // $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
-            
-            $nextBillingDate = calculateNextBillingDate($exists_order);
-            
-            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '$od_id'";
-            
-            sql_query($updateQuery);
-            
-        } else {
-            // 실패시 처리
-            //alert('fail1');
-            
-            // echo 'fail1';
-            //exit;
-            
-            add_subscription_order_history('정기구독 1회차 결제에 성공했으나, 데이터베이스 기록이 실패했습니다.', array(
-                'hs_type' => 'subscription_order',
-                'hs_category' => 'admin',
-                'od_id' => $od_id,
-                'mb_id' => $member['mb_id'],
-                'hs_date' => G5_TIME_YMDHIS
-            ));
-            
-        }
-        
-    } else {
-        // 실패시 처리
-        
-        //alert('fail2');
-        
-        add_subscription_order_history('정기구독 1회차 결제에 실패했습니다.', array(
-                'hs_type' => 'subscription_order',
-                'hs_category' => 'admin',
-                'od_id' => $od_id,
-                'mb_id' => $member['mb_id'],
-                'hs_date' => G5_TIME_YMDHIS
-            ));
-        
-        print_r($pays);
-        
-        echo 'fail2';
-        exit;
-    }
-
-} else {
-    
-    // 결제하지 않고 정기구독 1회차에 결제일자를 결정한다.
-    // $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
-    
-    sql_bind_update(
-        $g5['g5_subscription_order_table'],
-        array('next_billing_date'=>$nextBillingDate,
-        'last_billed_date'=>G5_TIME_YMDHIS,
-        'od_pays_total'=>1),
-        array('od_id'=>$od_id)
-    );
-    
-    //$updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '1' WHERE od_id = '$od_id'";
-    
-    //sql_query($updateQuery);
-    
-}
-// 주문정보 입력 오류시 결제 취소
-// if (!$result || !(isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
-//     if ($tno) {
-//         $cancel_msg = '주문정보 입력 오류 : '.$sql;
-//         switch ($od_pg) {
-//             case 'lg':
-//                 include G5_SUBSCRIPTION_PATH.'/lg/xpay_cancel.php';
-//                 break;
-//             case 'inicis':
-//                 include G5_SUBSCRIPTION_PATH.'/inicis/inipay_cancel.php';
-//                 break;
-//             case 'KAKAOPAY':
-//                 $_REQUEST['TID'] = $tno;
-//                 $_REQUEST['Amt'] = $amount;
-//                 $_REQUEST['CancelMsg'] = $cancel_msg;
-//                 $_REQUEST['PartialCancelCode'] = 0;
-//                 include G5_SUBSCRIPTION_PATH.'/kakaopay/kakaopay_cancel.php';
-//                 break;
-//             default:
-//                 include G5_SUBSCRIPTION_PATH.'/kcp/pp_ax_hub_cancel.php';
-//                 break;
-//         }
-//     }
-
-//     // 관리자에게 오류 알림 메일발송
-//     $error = 'order';
-//     include G5_SUBSCRIPTION_PATH.'/ordererrormail.php';
-
-//     if (function_exists('add_order_post_log')) {
-//         add_order_post_log($cancel_msg);
-//     }
-//     exit('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
-// }
-
 // 장바구니 상태변경
 // 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
 $cart_status = $od_status;
@@ -728,6 +588,156 @@ $result = sql_query($sql, false);
 // 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
 // if ($is_member && $od_receipt_point) {
 //     insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
+// }
+
+// 희망배송일과 배송일 이전 자동결제 설정일이 있으면 다음회차에 결제를 하고, 그렇지 않으면 1회차 결제를 한다.
+$is_first_pay = true;
+
+if (get_subs_option('su_hope_date_use') && (int) get_subs_option('su_auto_payment_lead_days') > 0) {
+    $is_first_pay = false;
+    
+    $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
+    
+    print_r( $nextBillingDate );
+    
+    // 결제일이 오늘이거나 이전일이면 바로 1회차 결제한다.
+    
+    $current_time = strtotime(G5_TIME_YMDHIS);
+    $compare_time = strtotime($nextBillingDate);
+
+    if (date('Y-m-d', $current_time) === date('Y-m-d', $compare_time)) {
+        $is_first_pay = true;
+    }
+    
+    if ($compare_time <= $current_time) {
+        $is_first_pay = true;
+    }
+}
+
+if ($is_first_pay) {
+
+    $pays = subscription_process_payment($exists_order, $od_pg);
+    
+    // 정기결제가 성공이면
+    if ($pays && (isset($pays['code']) && $pays['code'] === 'success')) {
+            
+        $pay_round_no = (int) $exists_order['od_pays_total'] + 1;
+        
+        $insert_id = subscription_order_pay($exists_order, $pays['response'], $pay_round_no);
+        
+        // 성공이면
+        if ($insert_id) {
+            
+            // $nextBillingDate = calculateNextBillingDate($subscription['next_billing_date'], $subscription['billing_interval']);
+            
+            $nextBillingDate = calculateNextBillingDate($exists_order);
+            
+            /*
+            $updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '".$pay_round_no."' WHERE od_id = '$od_id'";
+            
+            sql_query($updateQuery);
+            */
+            
+            sql_bind_update(
+                $g5['g5_subscription_order_table'],
+                array(
+                    'next_billing_date' => $nextBillingDate,
+                    'last_billed_date' => G5_TIME_YMDHIS,
+                    'od_pays_total' => $pay_round_no
+                ),
+                array(
+                    'od_id' => $od_id
+                )
+            );
+            
+            add_subscription_order_history('정기구독 1회차 결제에 성공했습니다.', array(
+                'hs_type' => 'subscription_order_success',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id']
+            ));
+            
+        } else {
+            // 실패시 처리
+            //alert('fail1');
+            
+            // echo 'fail1';
+            //exit;
+            
+            add_subscription_order_history('정기구독 1회차 결제에 성공했으나, 데이터베이스 기록이 실패했습니다.', array(
+                'hs_type' => 'subscription_pay_db_fail',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id']
+            ));
+            
+        }
+        
+    } else {
+        // 실패시 처리
+        
+        //alert('fail2');
+        
+        add_subscription_order_history('정기구독 1회차 결제에 실패했습니다. 코드 : '.$pays['code'].' 이유 : '.$pays['message'], array(
+                'hs_type' => 'subscription_pay_pg_fail',
+                'od_id' => $od_id,
+                'mb_id' => $member['mb_id']
+            ));
+        
+        print_r($pays);
+        
+        echo 'fail2';
+        exit;
+    }
+
+} else {
+    
+    // 결제하지 않고 정기구독 1회차에 결제일자를 결정한다.
+    // $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
+    
+    sql_bind_update(
+        $g5['g5_subscription_order_table'],
+        array('next_billing_date'=>$nextBillingDate,
+        'last_billed_date'=>G5_TIME_YMDHIS,
+        'od_pays_total'=>0),
+        array('od_id'=>$od_id)
+    );
+    
+    //$updateQuery = "UPDATE {$g5['g5_subscription_order_table']} SET next_billing_date = '".$nextBillingDate."', last_billed_date = '".G5_TIME_YMDHIS."', od_pays_total = '1' WHERE od_id = '$od_id'";
+    
+    //sql_query($updateQuery);
+    
+}
+// 주문정보 입력 오류시 결제 취소
+// if (!$result || !(isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
+//     if ($tno) {
+//         $cancel_msg = '주문정보 입력 오류 : '.$sql;
+//         switch ($od_pg) {
+//             case 'lg':
+//                 include G5_SUBSCRIPTION_PATH.'/lg/xpay_cancel.php';
+//                 break;
+//             case 'inicis':
+//                 include G5_SUBSCRIPTION_PATH.'/inicis/inipay_cancel.php';
+//                 break;
+//             case 'KAKAOPAY':
+//                 $_REQUEST['TID'] = $tno;
+//                 $_REQUEST['Amt'] = $amount;
+//                 $_REQUEST['CancelMsg'] = $cancel_msg;
+//                 $_REQUEST['PartialCancelCode'] = 0;
+//                 include G5_SUBSCRIPTION_PATH.'/kakaopay/kakaopay_cancel.php';
+//                 break;
+//             default:
+//                 include G5_SUBSCRIPTION_PATH.'/kcp/pp_ax_hub_cancel.php';
+//                 break;
+//         }
+//     }
+
+//     // 관리자에게 오류 알림 메일발송
+//     $error = 'order';
+//     include G5_SUBSCRIPTION_PATH.'/ordererrormail.php';
+
+//     if (function_exists('add_order_post_log')) {
+//         add_order_post_log($cancel_msg);
+//     }
+//     exit('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 // }
 
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))).'&nbsp;';

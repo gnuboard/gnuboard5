@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+define('G5_IS_SUBSCRIPTION_ITEM', 1);
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSUBSCRIPTION_PATH.'/item.php');
     return;
@@ -20,7 +22,7 @@ if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
     subscription_seo_title_update($row['it_id']);
 }
 
-if (!($it['sc_use'] && $it['it_use'])) {
+if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
         alert('현재 판매가능한 상품이 아닙니다.');
 }
@@ -28,7 +30,7 @@ if (!($it['sc_use'] && $it['it_use'])) {
 include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$ca = get_subscription_category($it['sc_id']);
+$ca = get_subscription_category($it['ca_id']);
 
 // 본인인증, 성인인증체크
 if(!$is_admin) {
@@ -59,13 +61,13 @@ if (!$saved) {
 
 // 조회수 증가
 if (get_cookie('ck_it_id') != $it_id) {
-    sql_query(" update {$g5['g5_subscription_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
+    sql_query(" update {$g5['g5_shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
     set_cookie("ck_it_id", $it_id, 3600); // 1시간동안 저장
 }
 
 // 스킨경로
 $skin_dir = G5_SUBSCRIPTION_SKIN_PATH;
-$sc_dir_check = true;
+$ca_dir_check = true;
 
 if($it['it_skin']) {
     if(preg_match('#^theme/(.+)$#', $it['it_skin'], $match))
@@ -77,16 +79,16 @@ if($it['it_skin']) {
         $form_skin_file = $skin_dir.'/item.form.skin.php';
         
         if(is_file($form_skin_file))
-            $sc_dir_check = false;
+            $ca_dir_check = false;
     }
 }
 
-if($sc_dir_check) {
-    if($ca['sc_skin_dir']) {
-        if(preg_match('#^theme/(.+)$#', $ca['sc_skin_dir'], $match))
+if($ca_dir_check) {
+    if($ca['ca_skin_dir']) {
+        if(preg_match('#^theme/(.+)$#', $ca['ca_skin_dir'], $match))
             $skin_dir = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$match[1];
         else
-            $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$ca['sc_skin_dir'];
+            $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$ca['ca_skin_dir'];
 
         if(is_dir($skin_dir)) {
             $form_skin_file = $skin_dir.'/item.form.skin.php';
@@ -101,18 +103,18 @@ if($sc_dir_check) {
 
 define('G5_SUBSCRIPTION_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 
-$g5['title'] = $it['it_name'].' &gt; '.$it['sc_name'];
+$g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 // 분류 상단 코드가 있으면 출력하고 없으면 기본 상단 코드 출력
-if ($ca['sc_include_head'] && is_include_path_check($ca['sc_include_head'])) {
-    @include_once($ca['sc_include_head']);
+if ($ca['ca_include_head'] && is_include_path_check($ca['ca_include_head'])) {
+    @include_once($ca['ca_include_head']);
 } else {
     include_once(G5_SUBSCRIPTION_PATH.'/_head.php');
 }
 
 // 분류 위치
 // HOME > 1단계 > 2단계 ... > 6단계 분류
-$sc_id = $it['sc_id'];
+$ca_id = $it['ca_id'];
 $nav_skin = $skin_dir.'/navigation.skin.php';
 if(!is_file($nav_skin))
     $nav_skin = G5_SUBSCRIPTION_SKIN_PATH.'/navigation.skin.php';
@@ -144,7 +146,7 @@ else
 
 
 // 이전 상품보기
-$sql = " select it_id, it_name from {$g5['g5_subscription_item_table']} where it_id > '$it_id' and SUBSTRING(sc_id,1,4) = '".substr($it['sc_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
+$sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
 $row = sql_fetch($sql);
 if (isset($row['it_id']) && $row['it_id']) {
     $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
@@ -157,7 +159,7 @@ if (isset($row['it_id']) && $row['it_id']) {
 }
 
 // 다음 상품보기
-$sql = " select it_id, it_name from {$g5['g5_subscription_item_table']} where it_id < '$it_id' and SUBSTRING(sc_id,1,4) = '".substr($it['sc_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
+$sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id < '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
 $row = sql_fetch($sql);
 if (isset($row['it_id']) && $row['it_id']) {
     $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
@@ -173,12 +175,12 @@ if (isset($row['it_id']) && $row['it_id']) {
 $star_score = get_star_image($it['it_id']);
 
 // 관리자가 확인한 사용후기의 개수를 얻음
-$sql = " select count(*) as cnt from `{$g5['g5_subscription_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+$sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
 
 // 상품문의의 개수를 얻음
-$sql = " select count(*) as cnt from `{$g5['g5_subscription_item_qa_table']}` where it_id = '{$it_id}' ";
+$sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
@@ -268,7 +270,7 @@ echo run_replace('subscription_it_tail_html', conv_content($it['it_tail_html'], 
 ?>
 
 <?php
-if ($ca['sc_include_tail'] && is_include_path_check($ca['sc_include_tail']))
-    @include_once($ca['sc_include_tail']);
+if ($ca['ca_include_tail'] && is_include_path_check($ca['ca_include_tail']))
+    @include_once($ca['ca_include_tail']);
 else
     include_once(G5_SUBSCRIPTION_PATH.'/_tail.php');

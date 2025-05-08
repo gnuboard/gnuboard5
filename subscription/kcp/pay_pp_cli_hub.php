@@ -11,6 +11,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* = 라이브러리 및 사이트 정보 include                                          = */
     /* = -------------------------------------------------------------------------- = */
 
+// locale ko_KR.euc-kr 로 설정
+setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+
 include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
 require_once(G5_SUBSCRIPTION_PATH.'/kcp/pay_pp_cli_hub_lib.php');
     /* ============================================================================== */
@@ -20,9 +23,9 @@ require_once(G5_SUBSCRIPTION_PATH.'/kcp/pay_pp_cli_hub_lib.php');
     /* = -------------------------------------------------------------------------- = */
     $pay_method = isset($posts['pay_method']) ? clean_xss_tags($posts['pay_method']) : '';  // 결제 방법
     $ordr_idxx  = isset($posts["ordr_idxx"]) ? preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $posts["ordr_idxx"]) : '';  // 주문 번호
-    $good_name  = isset($posts["good_name"]) ? clean_xss_tags($posts["good_name"]) : '';  // 상품 정보
+    $good_name  = isset($posts["good_name"]) ? iconv("utf-8", "cp949", clean_xss_tags($posts["good_name"])) : '';  // 상품 정보
     $good_mny   = isset($posts['good_mny']) ? (int) $posts['good_mny'] : 0;  // 결제 금액
-    $buyr_name  = isset($posts['buyr_name']) ? clean_xss_tags($posts['buyr_name']) : '';  // 주문자 이름
+    $buyr_name  = isset($posts['buyr_name']) ? iconv("utf-8", "cp949", clean_xss_tags($posts['buyr_name'])) : '';  // 주문자 이름
     $buyr_mail  = isset($posts['buyr_mail']) ? clean_xss_tags($posts['buyr_mail']) : '';  // 주문자 E-Mail
     $buyr_tel1  = isset($posts['buyr_tel1']) ? clean_xss_tags($posts['buyr_tel1']) : '';  // 주문자 전화번호
     $buyr_tel2  = isset($posts['buyr_tel2']) ? clean_xss_tags($posts['buyr_tel2']) : '';  // 주문자 휴대폰번호
@@ -240,7 +243,7 @@ require_once(G5_SUBSCRIPTION_PATH.'/kcp/pay_pp_cli_hub_lib.php');
     /* ============================================================================== */
     /* =   06. 폼 구성 및 결과페이지 호출                                           = */
     /* ============================================================================== */
-
+    
 $results = array(
     'req_tx' => $req_tx,           // 요청 구분
     'pay_method' => $pay_method,   // 사용한 결제 수단
@@ -268,4 +271,5 @@ $results = array(
     'noinf' => $noinf,             // 무이자여부
 );
 
-print_r2($results);
+// locale 설정 초기화
+setlocale(LC_CTYPE, '');

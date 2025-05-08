@@ -18,6 +18,9 @@ define('G5_SUBSCRIPTION_ADMIN_DIR',        'subscription_admin');
 define('G5_SUBSCRIPTION_ADMIN_PATH',       G5_ADMIN_PATH.'/'.G5_SUBSCRIPTION_ADMIN_DIR);
 define('G5_SUBSCRIPTION_ADMIN_URL',        G5_ADMIN_URL.'/'.G5_SUBSCRIPTION_ADMIN_DIR);
 
+// NHN_KCP 정기결제 기본 pay_method 
+define('SUBSCRIPTION_DEFAULT_PAYMETHOD',        'CARD');
+
 // 정기결제 테이블명
 if (!isset($g5['subscription_prefix'])) {
     $g5['subscription_prefix']                = G5_TABLE_PREFIX.'subscription_';
@@ -40,6 +43,8 @@ $g5['g5_subscription_order_data_table']   = $g5['subscription_prefix'] . 'order_
 $g5['g5_subscription_mb_cardinfo_table']   = $g5['subscription_prefix'] . 'mb_cardinfo'; // 사용자 카드번호 키 저장테이블
 
 $g5['g5_subscription_order_history_table'] = $g5['subscription_prefix'] . 'order_history'; // 주문정보 히스토리 테이블
+
+$g5['g5_subscription_uniqid_table'] = $g5['subscription_prefix'] . 'uniqid'; // 정기구독 uniqid 테이블
 
 $subscriptions_default = array(
 'su_card_test' => 1,
@@ -152,5 +157,29 @@ if(!defined('_THEME_PREVIEW_')) {
 }
 
 include_once(G5_LIB_PATH.'/subscription.lib.php');
+include_once(G5_LIB_PATH.'/subscription2.lib.php');
 include_once(G5_SUBSCRIPTION_PATH.'/subscription.hook.php');
 include_once(G5_SUBSCRIPTION_ADMIN_PATH.'/admin.subscription.hook.php');
+
+// KCP 매출전표 url 설정
+if (get_subs_option('su_card_test')) {
+    // 테스트
+    define('G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL', 'https://testadmin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=');
+} else {
+    // 실결제 https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=card_bill&tno=[NHN KCP거래번호]&order_no=[주문번호]&trade_mony=[거래금액]
+    define('G5_SUBSCRIPTION_KCP_BILL_RECEIPT_URL', 'https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=');
+}
+
+if (defined('IS_SUBSCRIPTION_ORDER_FORM') && IS_SUBSCRIPTION_ORDER_FORM) {
+    add_event('common_header', 'nocache_nostore_subscription_headers', 1, 0);
+}
+
+// 결제일을 구하는 함수
+function getNextPaymentDate($baseDate, $daysToSubtract = 0, $od=array()) {
+    $calculatedDate = strtotime("$baseDate -$daysToSubtract days");
+    
+    
+    return run_replace('getNextPaymentDate', date('Y-m-d', $calculatedDate).' 09:00:01', $calculatedDate, $baseDate, $daysToSubtract, $od);
+    
+    
+}

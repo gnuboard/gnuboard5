@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_user_delivery_minimum` tinyint(4) NOT NULL DEFAULT '0',
   `su_user_delivery_template` varchar(200) NOT NULL DEFAULT '',
   `su_user_delivery_default_day` tinyint(4) NOT NULL DEFAULT '0',
+  `su_subscription_content_first` text NOT NULL,
+  `su_subscription_content_end` text NOT NULL,
   PRIMARY KEY  (`su_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -164,13 +166,13 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_item_use` (
 -- DROP TABLE IF EXISTS `g5_subscription_pay`;
 
 CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `pay_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
-  `subscription_id` char(50) NOT NULL DEFAULT '',
+  `subscription_pg_id` char(50) NOT NULL DEFAULT '',
   `py_name` varchar(20) NOT NULL DEFAULT '',
   `py_email` varchar(100) NOT NULL DEFAULT '',
-
+  `py_hp` varchar(20) NOT NULL DEFAULT '',
   `py_b_name` varchar(20) NOT NULL DEFAULT '',
   `py_b_tel` varchar(20) NOT NULL DEFAULT '',
   `py_b_hp` varchar(20) NOT NULL DEFAULT '',
@@ -205,9 +207,9 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_hope_date` date NOT NULL DEFAULT '0000-00-00',
   
   `py_settle_case` varchar(255) NOT NULL DEFAULT '',
+  `py_card_name` varchar(100) NOT NULL DEFAULT '',
   `py_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `py_test` tinyint(4) NOT NULL DEFAULT '0',
-  `py_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `py_pg` varchar(255) NOT NULL DEFAULT '',
   `py_tno` varchar(255) NOT NULL DEFAULT '',
   `py_app_no` varchar(20) NOT NULL DEFAULT '',
@@ -226,22 +228,23 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_pay` (
   `py_cash_info` text NOT NULL,
   
   `py_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`pay_id`),
   KEY `index2` (`mb_id`),
-  KEY `index3` (`subscription_id`)
+  KEY `index3` (`subscription_pg_id`),
+  KEY `py_time` (`py_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_order`
+-- Table structure for table `g5_subscription_order_history`
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order`;
 CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
   `hs_id` bigint(20) NOT NULL auto_increment,
   `hs_parent` bigint(20) NOT NULL DEFAULT '0',
-  `hs_type` varchar(20) NOT NULL DEFAULT '',
+  `hs_type` varchar(30) NOT NULL DEFAULT '',
   `hs_category` varchar(100) NOT NULL DEFAULT '',
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -250,7 +253,8 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_history` (
   PRIMARY KEY (`hs_id`),
   KEY `mb_id` (`mb_id`),
   KEY `hs_type` (`hs_type`),
-  KEY `hs_category` (`hs_category`)
+  KEY `hs_category` (`hs_category`),
+  KEY `hs_time` (`hs_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -307,15 +311,14 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
-  `od_pg` varchar(255) NOT NULL DEFAULT '',
-  `od_tno` varchar(255) NOT NULL DEFAULT '',
+  `od_pg` varchar(30) NOT NULL DEFAULT '',
+  `od_tno` varchar(150) NOT NULL DEFAULT '',
   `od_tax_flag` tinyint(4) NOT NULL DEFAULT '0',
   `od_tax_mny` int(11) NOT NULL DEFAULT '0',
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',
   `od_free_mny` int(11) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
-  `card_mask_number` varchar(50) NOT NULL DEFAULT '',
-  `card_billkey` varchar(100) NOT NULL DEFAULT '',
+  `od_fail_count` tinyint(4) NOT NULL DEFAULT '0',
   `od_pays_total` int(10) NOT NULL DEFAULT '0',
   `od_subscription_date_format` CHAR(4) NOT NULL DEFAULT '',
   `od_subscription_selected_data` text NOT NULL,
@@ -325,7 +328,23 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order` (
   `od_time` datetime DEFAULT NULL,
   `is_enable_user_input` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`od_id`),
-  KEY `index2` (`mb_id`)
+  KEY `index2` (`mb_id`),
+  KEY `idx_billing` (od_enable_status, next_billing_date)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_uniqid`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_uniqid`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
+  `suq_id` int(11) NOT NULL auto_increment,
+  `suq_key` char(64) NOT NULL DEFAULT '',
+  `suq_ip` varchar(100) NOT NULL,
+  PRIMARY KEY (`suq_id`),
+  UNIQUE KEY `unique_key` (`suq_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -345,8 +364,10 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
   `card_mask_number` varchar(50) NOT NULL DEFAULT '',
   `card_billkey` varchar(100) NOT NULL DEFAULT '',
   `od_card_name` varchar(100) NOT NULL DEFAULT '',
+  `od_tno` varchar(150) NOT NULL DEFAULT '',
   `od_id` bigint(20) unsigned NOT NULL,
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
+  `ci_time` datetime DEFAULT NULL,
   PRIMARY KEY (`ci_id`),
   KEY `index2` (`mb_id`),
   UNIQUE KEY `unique_pg_service_apikey_billkey` (`pg_service`, `pg_apikey`, `card_billkey`)
@@ -355,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_mb_cardinfo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_order_data`
+-- Table structure for table `g5_subscription_order_data`
 --
 
 -- DROP TABLE IF EXISTS `g5_subscription_order_data`;
@@ -369,17 +390,3 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_order_data` (
   KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_unique`
---
-
--- DROP TABLE IF EXISTS `g5_subscription_uniqid`;
-CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
-  `uq_id` bigint(20) unsigned NOT NULL,
-  `uq_ip` varchar(255) NOT NULL,
-  PRIMARY KEY (`uq_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------

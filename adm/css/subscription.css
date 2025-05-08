@@ -1,0 +1,423 @@
+/* 전체 컨테이너 스타일 */
+.order-historys {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: block;
+}
+
+/* 개별 히스토리 아이템 (메모지 스타일) */
+.history-item {
+    background: #fff8e1; /* 연한 노란색 (포스트잇 느낌) */
+    border: 1px solid #ffe082;
+    border-radius: 5px;
+    min-height: 100px; /* 최소 높이 */
+    padding: 15px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1); /* 살짝 기울어진 그림자 */
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 0 auto 20px; /* 중앙 정렬 및 하단 여백 */
+}
+
+/* 호버 효과 */
+.history-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 히스토리 내용 */
+.history-content {
+    color: #4a4a4a; /* 짙은 회색 */
+    margin-bottom: 20px;
+}
+
+/* 링크 스타일 */
+.history-content a {
+    color: #d81b60; /* 포인트 컬러 (핑크) */
+    text-decoration: underline;
+}
+
+/* 버튼과 날짜 컨테이너 */
+.history-btns {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    font-size: 11px;
+    color: #666;
+}
+
+/* 날짜 스타일 */
+.history-date {
+    opacity: 0.8;
+}
+
+/* 삭제 버튼 스타일 */
+.order-historys .delete-history {
+	margin-left:2em;
+    background: #ef5350; /* 부드러운 빨간색 */
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 11px;
+    transition: background 0.2s;
+}
+
+.delete-history:hover {
+    background: #d32f2f; /* 더 진한 빨간색 */
+}
+
+.history-item.user {
+    background: #f1f8e9; /* 연한 초록 */
+    border-color: #dcedc8;
+}
+.history-item.admin {
+    background: #fff8e1; /* 연한 노랑 */
+    border-color: #ffe082;
+}
+.history-item.notice {
+    background: #fce4ec; /* 연한 핑크 */
+    border-color: #f8bbd0;
+}
+
+.history-item:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    background: #ef5350;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+select.subscription_date_format{min-width:80px}
+
+.input-disabled {
+    background-color: #e9ecef;  /* 회색 배경 */
+    color: #6c757d;  /* 흐린 글자색 */
+    border: 1px solid #ced4da;  /* 기본 테두리 유지 */
+    cursor: not-allowed;  /* 마우스 포인터 변경 */
+    pointer-events: none;  /* 클릭/입력 방지 */
+}
+.calendar-wrap {
+	display: flex;
+	height: 100vh;
+}
+.calendar-main {
+	flex: 8;
+	width:100%;
+	display: flex;
+	position:relative;
+	/*
+	align-items: center;
+	justify-content: center;
+	*/
+}
+.calendar-side {
+	flex: 2;
+	display: flex;
+	/*
+	align-items: center;
+	justify-content: center;
+	*/
+}
+
+.fullcalendar{width:100%}
+
+.fc-popover.fc-more-popover {
+    max-height: 380px; /* 원하는 최대 높이 지정 */
+    overflow-y: auto; /* 내부 스크롤 추가 */
+}
+
+.fullcalendar .fc-event-time {
+    display: none !important;
+}
+
+.jquery-modal.blocker {z-index:9999;}
+.jquery-modal .modal{max-width:600px;padding:1em 2em;z-index:10001}
+
+.modal_contents {
+max-height:500px;
+overflow-y: auto; /* 세로 스크롤바 추가 */
+overflow-x: hidden; /* 가로 스크롤 방지 (필요하면) */
+}
+
+.modal_contents .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+.modal_contents .product-item {
+            display: flex;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            align-items: center;
+            gap: 15px;
+        }
+.modal_contents .product-img img {
+            width: 55px;
+            height: 55px;
+            border-radius: 5px;
+        }
+.modal_contents .product-info {
+            flex-grow: 1;
+        }
+.modal_contents .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+.modal_contents .product-options {
+            font-size: 14px;
+            color: #666;
+        }
+.modal_contents .product-meta {
+            text-align: right;
+        }
+.modal_contents .product-meta div {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+		
+.user-subscription-inner ul {
+    list-style: none;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	list-style: none;
+}
+
+.user-subscription-inner h3 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.user-subscription-inner li {
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+	list-style: none;
+}
+
+.user-subscription-inner li:last-child {
+    border-bottom: none;
+}
+
+.user-subscription-inner span.th {
+    color: #444;
+    display: inline-block;
+	font-weight:bold;
+	width:90px;
+}
+
+.user-subscription-inner .is_pay_test {
+    color: red;
+    font-weight: bold;
+    text-align: left;
+    background: #ffecec;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.user-subscription-inner .is_not_delivery {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    background: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.user-subscription-inner a.subscription-receipt-view {
+    display: inline-block;
+    padding: 6px 10px;
+    margin-top: 5px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.user-subscription-inner a.subscription-receipt-view:hover {
+    background: #0056b3;
+}
+
+/*
+.fc-daygrid-day-events {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.fc .fc-daygrid-day-frame {
+  height: auto !important;
+}
+*/
+
+/* 로딩 오버레이 스타일 */
+
+.loading-overlay {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column; /* 세로로 쌓이도록 설정 */
+  justify-content: center; /* 수직 중앙 정렬 */
+  align-items: center; /* 수평 중앙 정렬 */
+}
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3788d8;
+    border-right: 6px solid #28a745;
+    border-bottom: 6px solid #ff9f89;
+    border-radius: 50%;
+    animation: spin 1.2s ease-in-out infinite;
+  }
+
+  .loading-text {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 15px;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+
+  .loading-text::after {
+    content: '';
+    animation: dots 1.5s steps(3, end) infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes dots {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+  }
+
+  .popper,
+  .tooltip {
+    position: absolute;
+    z-index: 9999;
+    background: #FFC107;
+    color: black;
+    width: 150px;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    padding: 10px;
+    text-align: center;
+  }
+  .style5 .tooltip {
+    background: #1E252B;
+    color: #FFFFFF;
+    max-width: 200px;
+    width: auto;
+    font-size: .8rem;
+    padding: .5em 1em;
+  }
+  .popper .popper__arrow,
+  .tooltip .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+  }
+
+  .tooltip .tooltip-arrow,
+  .popper .popper__arrow {
+    border-color: #FFC107;
+  }
+  .style5 .tooltip .tooltip-arrow {
+    border-color: #1E252B;
+  }
+  .popper[x-placement^="top"],
+  .tooltip[x-placement^="top"] {
+    margin-bottom: 5px;
+  }
+  .popper[x-placement^="top"] .popper__arrow,
+  .tooltip[x-placement^="top"] .tooltip-arrow {
+    border-width: 5px 5px 0 5px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    bottom: -5px;
+    left: calc(50% - 5px);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .popper[x-placement^="bottom"],
+  .tooltip[x-placement^="bottom"] {
+    margin-top: 5px;
+  }
+  .tooltip[x-placement^="bottom"] .tooltip-arrow,
+  .popper[x-placement^="bottom"] .popper__arrow {
+    border-width: 0 5px 5px 5px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    top: -5px;
+    left: calc(50% - 5px);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .tooltip[x-placement^="right"],
+  .popper[x-placement^="right"] {
+    margin-left: 5px;
+  }
+  .popper[x-placement^="right"] .popper__arrow,
+  .tooltip[x-placement^="right"] .tooltip-arrow {
+    border-width: 5px 5px 5px 0;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    left: -5px;
+    top: calc(50% - 5px);
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .popper[x-placement^="left"],
+  .tooltip[x-placement^="left"] {
+    margin-right: 5px;
+  }
+  .popper[x-placement^="left"] .popper__arrow,
+  .tooltip[x-placement^="left"] .tooltip-arrow {
+    border-width: 5px 0 5px 5px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    right: -5px;
+    top: calc(50% - 5px);
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+.calendar-description {margin:50px 0 0 20px}

@@ -1,4 +1,5 @@
 <?php
+define('SUBSCRIPTION_INSTALL_PAGE', 1);
 $sub_menu = "600000";
 include_once("./_common.php");
 

@@ -18,9 +18,23 @@ sql_query($sql);
 
 $cart_action_url = G5_SHOP_URL.'/cartupdate.php';
 
+if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) {
+    add_replace('shop_content_html_class', 'subscription_cart_use_attr', 10, 2);
+
+    function subscription_cart_use_attr($content_class, $wrapper_class) {
+
+        $content_class[] = 'use-susbscription-cart';
+            
+        return $content_class;
+    }
+}
+
 if(function_exists('before_check_cart_price')) {
     before_check_cart_price($s_cart_id, true, true, true);
 }
+
+// $s_cart_id 로 현재 장바구니 자료 쿼리
+$cart_datas = get_shop_user_carts($s_cart_id);
 
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/cart.php');
@@ -45,6 +59,10 @@ include_once('./_head.php');
 <script src="<?php echo G5_JS_URL; ?>/shop.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL; ?>/shop.override.js?ver=<?php echo G5_JS_VER; ?>"></script>
 
+<ul class="cart-heading">
+    <li class="linked-title is-shop-cart-link active">쇼핑몰 <span class=""><?php echo $cart_datas ? count($cart_datas) : ''; ?></span></li>
+    <li class="linked-title is-subscription-cart-link"><a href="<?php echo G5_SUBSCRIPTION_URL.'/cart.php'; ?>">정구구독</a> <span class=""><?php echo get_subscription_boxcart_datas_count(); ?></span></li>
+</ul>
 <div id="sod_bsk" class="od_prd_list">
 
     <form name="frmcartlist" id="sod_bsk_list" class="2017_renewal_itemform" method="post" action="<?php echo $cart_action_url; ?>">
@@ -70,29 +88,11 @@ include_once('./_head.php');
         $tot_sell_price = 0;
         $send_cost = 0;
 
-        // $s_cart_id 로 현재 장바구니 자료 쿼리
-        $sql = " select a.ct_id,
-                        a.it_id,
-                        a.it_name,
-                        a.ct_price,
-                        a.ct_point,
-                        a.ct_qty,
-                        a.ct_status,
-                        a.ct_send_cost,
-                        a.it_sc_type,
-                        b.ca_id,
-                        b.ca_id2,
-                        b.ca_id3
-                   from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-                  where a.od_id = '$s_cart_id' ";
-        $sql .= " group by a.it_id ";
-        $sql .= " order by a.ct_id ";
-        $result = sql_query($sql);
-
         $it_send_cost = 0;
-
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
+        
+        $i = 0;
+        foreach($cart_datas as $row) {
+            
             // 합계금액 계산
             $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                             SUM(ct_point * ct_qty) as point,
@@ -167,6 +167,7 @@ include_once('./_head.php');
         <?php
             $tot_point      += $point;
             $tot_sell_price += $sell_price;
+            $i++;
         } // for 끝
 
         if ($i == 0) {

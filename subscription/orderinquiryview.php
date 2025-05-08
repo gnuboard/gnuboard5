@@ -18,6 +18,9 @@ if (!$is_member) {
     }
 }
 
+add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
+
 $tot_point = 0;
 
 /*
@@ -37,7 +40,7 @@ if ($is_member && !$is_admin) {
 $od = sql_bind_select_fetch($g5['g5_subscription_order_table'], '*', $sql_wheres);
 
 if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
-    alert("조회하실 주문서가 없습니다.", G5_SUBSCRIPTION__URL);
+    alert("조회하실 주문서가 없습니다.", G5_SUBSCRIPTION_URL);
 }
 
 // nicepay 로 주문하고 가상계좌인 경우
@@ -135,8 +138,8 @@ if($od['od_pg'] == 'lg') {
                 */
                 
                 $result_row = sql_bind_select($g5['g5_subscription_cart_table'], 'ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price',
-                array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
-                array('orderBy'=>'io_type, ct_id')
+					array('od_id'=>$od_id, 'it_id'=>$row['it_id']),
+					array('orderBy'=>'io_type, ct_id')
                 );
         
                 // 합계금액 계산
@@ -724,50 +727,12 @@ if($od['od_pg'] == 'lg') {
         </section>
     </div>
 
-
-   
-
-    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin && $od['od_pg'] == 'kcp') {
-    preg_match("/\s{1}([^\s]+)\s?/", $od['od_bank_account'], $matchs);
-    $deposit_no = trim($matchs[1]);
-    ?>
-    <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
-    <div class="tbl_frm01 tbl_wrap">
-        <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-        <table>
-        <caption>모의입금처리</caption>
-        <colgroup>
-            <col class="grid_3">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="col"><label for="e_trade_no">KCP 거래번호</label></th>
-            <td><input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>"></td>
-        </tr>
-        <tr>
-            <th scope="col"><label for="deposit_no">입금계좌</label></th>
-            <td><input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"></td>
-        </tr>
-        <tr>
-            <th scope="col"><label for="req_name">입금자명</label></th>
-            <td><input type="text" name="req_name" value="<?php echo $od['od_deposit_name']; ?>"></td>
-        </tr>
-        <tr>
-            <th scope="col"><label for="noti_url">입금통보 URL</label></th>
-            <td><input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"></td>
-        </tr>
-        </tbody>
-        </table>
-        <div id="sod_fin_test" class="btn_confirm">
-            <input type="submit" value="입금통보 테스트" class="btn_submit">
-        </div>
-        </form>
-    </div>
-    <?php } ?>
-
 </div>
 <!-- } 주문상세내역 끝 -->
+
+<?php // 정기결제 상세보기 모달 시작 ?>
+<div id="ex_modal1" class="modal">
+</div>
 
 <script>
 $(function() {
