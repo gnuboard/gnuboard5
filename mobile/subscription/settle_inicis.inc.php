@@ -31,7 +31,9 @@ if (get_subs_option('su_card_test')) {
 /**************************
  * 1. 라이브러리 인클루드 *
  **************************/
-require_once(G5_MSUBSCRIPTION_PATH.'/inicis/libs/INIStdPayUtil.php');
+ 
+// INIStdPayUtil.php파일은 PC와 mobile 과 코드가 같음
+require_once(G5_SUBSCRIPTION_PATH.'/inicis/libs/INIStdPayUtil.php');
 
 $mid = get_subs_option('su_inicis_mid');
 $signKey = get_subs_option('su_inicis_sign_key');

@@ -1,19 +1,9 @@
 <?php
 include_once('../../common.php');
 
-if (isset($_REQUEST['sort']))  {
-    $sort = trim($_REQUEST['sort']);
-    $sort = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sort);
-} else {
-    $sort = '';
-}
+// 쇼핑몰 설정을 그대로 따른다.
+include_once G5_SHOP_PATH.'/_common.php';
 
-if (isset($_REQUEST['sortodr']))  {
-    $sortodr = preg_match("/^(asc|desc)$/i", $sortodr) ? $sortodr : '';
-} else {
-    $sortodr = '';
+if (!(defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION)) {
+    exit('<p>정기결제 프로그램을 설치 후 이용해 주십시오.</p>');
 }
-
-if (!defined('G5_USE_SHOP') || !G5_USE_SHOP)
-    die('<p>쇼핑몰 설치 후 이용해 주십시오.</p>');
-define('_SHOP_', true);
