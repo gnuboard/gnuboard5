@@ -685,7 +685,7 @@ sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 
 // 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 비밀번호를 묻지 않기 위함
 if ($secret) {
-    if (! $wr_num) {
+    if (!(isset($wr_num) && $wr_num)) {
         $write = get_write($write_table, $wr_id, true);
         $wr_num = $write['wr_num'];
     }

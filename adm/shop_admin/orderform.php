@@ -510,10 +510,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         if ($od['od_settle_case'] != '무통장') {
                             switch($od['od_pg']) {
                                 case 'lg':
-                                    $pg_url  = 'http://pgweb.tosspayments.com';
+                                    $pg_url  = 'https://app.tosspayments.com';
                                     $pg_test = '토스페이먼츠';
                                     if ($default['de_card_test']) {
-                                        $pg_url = 'http://pgweb.tosspayments.com/tmert';
+                                        $pg_url = 'https://pgweb.tosspayments.com/tmert';
                                         $pg_test .= ' 테스트 ';
                                     }
                                     break;

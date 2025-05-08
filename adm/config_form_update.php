@@ -10,6 +10,9 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
+$sql = " select * from {$g5['config_table']} limit 1";
+$ori_config = sql_fetch($sql);
+
 $cf_title = isset($_POST['cf_title']) ? strip_tags(clean_xss_attributes($_POST['cf_title'])) : '';
 $cf_admin = isset($_POST['cf_admin']) ? clean_xss_tags($_POST['cf_admin'], 1, 1) : '';
 
@@ -185,6 +188,33 @@ if (!$_POST['cf_cert_use']) {
    $_POST['cf_cert_simple'] = '';
 }
 
+// 관리자가 자동등록방지를 사용해야 할 경우 ( 기본환경설정에서 최고관리자, 방문자분석 스크립트, 추가 메타태그, 추가 script, css 변경시 )
+$check_captcha = 0;
+
+if ($cf_admin && $ori_config['cf_admin'] !== $cf_admin) {
+    $check_captcha = 1;
+}
+
+if ($_POST['cf_analytics'] && $ori_config['cf_analytics'] !== stripslashes($_POST['cf_analytics'])) {
+    $check_captcha = 1;
+}
+
+if ($_POST['cf_add_meta'] && $ori_config['cf_add_meta'] !== stripslashes($_POST['cf_add_meta'])) {
+    $check_captcha = 1;
+}
+
+if ($_POST['cf_add_script'] && $ori_config['cf_add_script'] !== stripslashes($_POST['cf_add_script'])) {
+    $check_captcha = 1;
+}
+
+if ($check_captcha) {
+    include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
+
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
+    }
+}
+
 $sql = " update {$g5['config_table']}
             set cf_title = '{$cf_title}',
                 cf_admin = '{$cf_admin}',
@@ -344,6 +374,10 @@ sql_query($sql);
 
 if (isset($_POST['cf_bbs_rewrite'])) {
     g5_delete_all_cache();
+}
+
+if (function_exists('get_admin_captcha_by')) {
+    get_admin_captcha_by('remove');
 }
 
 run_event('admin_config_form_update');

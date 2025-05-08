@@ -585,45 +585,6 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
     // 자동로그인 end ---------------------------------------
 }
 
-
-/** @var array $write 글 데이터 */
-$write = array();
-/** @var string $write_table 게시판 테이블 전체이름 */
-$write_table = '';
-if ($bo_table) {
-    $board = get_board_db($bo_table, true);
-    if (isset($board['bo_table']) && $board['bo_table']) {
-        set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
-        $gr_id = $board['gr_id'];
-        // 게시판 테이블 전체이름
-        $write_table = $g5['write_prefix'] . $bo_table; 
-
-        if (isset($wr_id) && $wr_id) {
-            $write = get_write($write_table, $wr_id);
-        } else if (isset($wr_seo_title) && $wr_seo_title) {
-            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', generate_seo_title($wr_seo_title));
-            if (isset($write['wr_id'])) {
-                $wr_id = (int) $write['wr_id'];
-            }
-        }
-    }
-
-    // 게시판에서 사용하는 에디터를 설정
-    if (isset($board['bo_select_editor']) && $board['bo_select_editor']) {
-        $config['cf_editor'] = $board['bo_select_editor'];
-    }
-}
-
-if ($gr_id && !is_array($gr_id)) {
-    $group = get_group($gr_id, true);
-}
-
-if ($config['cf_editor']) {
-    define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
-} else {
-    define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
-}
-
 // 회원, 비회원 구분
 $is_member = $is_guest = false;
 $is_admin = '';
@@ -636,7 +597,6 @@ if (isset($member['mb_id']) && $member['mb_id']) {
     $member['mb_id'] = '';
     $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
 }
-
 
 if ($is_admin != 'super') {
     // 접근가능 IP
@@ -677,6 +637,43 @@ if ($is_admin != 'super') {
     }
 }
 
+/** @var array $write 글 데이터 */
+$write = array();
+/** @var string $write_table 게시판 테이블 전체이름 */
+$write_table = '';
+if ($bo_table) {
+    $board = get_board_db($bo_table, true);
+    if (isset($board['bo_table']) && $board['bo_table']) {
+        set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
+        $gr_id = $board['gr_id'];
+        // 게시판 테이블 전체이름
+        $write_table = $g5['write_prefix'] . $bo_table; 
+
+        if (isset($wr_id) && $wr_id) {
+            $write = get_write($write_table, $wr_id);
+        } else if (isset($wr_seo_title) && $wr_seo_title) {
+            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', generate_seo_title($wr_seo_title));
+            if (isset($write['wr_id'])) {
+                $wr_id = (int) $write['wr_id'];
+            }
+        }
+    }
+
+    // 게시판에서 사용하는 에디터를 설정
+    if (isset($board['bo_select_editor']) && $board['bo_select_editor']) {
+        $config['cf_editor'] = $board['bo_select_editor'];
+    }
+}
+
+if ($gr_id && !is_array($gr_id)) {
+    $group = get_group($gr_id, true);
+}
+
+if ($config['cf_editor']) {
+    define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
+} else {
+    define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
+}
 
 // 테마경로
 if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true)
