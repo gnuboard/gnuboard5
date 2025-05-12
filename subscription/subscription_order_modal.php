@@ -106,6 +106,48 @@ $subscription_use_inputs = get_subscription_use_inputs();
 
                     $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
 
+                    if (!$opt['opt_print']) {
+                        
+                        if (!$opt['opt_input']) $opt['opt_input'] = 1;
+                        
+                        if ($opt['opt_date_format'] === 'week') {
+                            
+                            $opt_print = (int) $opt['opt_input'].'주에 ';
+                            
+                            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                                $opt_print .= get_subscriptionDayOfWeek($opt['opt_etc']);
+                            } else {
+                                $opt_print .= '한 번';
+                            }
+                            /*
+                            $opt_print = '1주에 한 번';
+                            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                                $cg_yoil = get_subscriptionDayOfWeek($opt['opt_etc']);
+                                $opt_print = '1주에 '.$cg_yoil;
+                            }
+                            */
+                        } else if($opt['opt_date_format'] === 'month') {
+                            
+                            $opt_print = (int) $opt['opt_input'].'달에 ';
+                            
+                            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                                $opt_print .= (int) $opt['opt_etc'].'일';
+                            } else {
+                                $opt_print .= '한 번';
+                            }
+                            /*
+                            $opt_print = '1달에 한 번';
+                            if (isset($opt['opt_etc']) && $opt['opt_etc']) {
+                                $cg_yoil = get_subscriptionMonthDay((int) $opt['opt_etc']);
+                                $opt_print = '1달에 '.$cg_yoil;
+                            }
+                            */
+                        } else if($opt['opt_date_format'] === 'year') {
+                            $opt_print = '1년에 한 번';
+                            
+                        }
+                    }
+                    
                     if ($opt['opt_input'] || $opt['opt_date_format']) {
                         $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
                         $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);

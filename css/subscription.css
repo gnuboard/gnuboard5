@@ -14,6 +14,8 @@ section.order-common-section h2 {border-bottom:1px solid #e2e4e7;font-size:1.167
 .jquery-modal.blocker{z-index:120}
 
 .jquery-modal .modal{max-width:560px;padding:1em 2em}
+.jquery-modal .modal select.frm_input{min-width:300px}
+
 .sit-btn-subscription {
 width: 186px;
 float: left;
