@@ -42,7 +42,7 @@ if( isset($g5['subscription_cart_table']) && sql_query(" DESCRIBE {$g5['subscrip
         <li id="subscription_job_03"></li>
     </ol>
 
-    <p><button type="button" id="subscription_btn_next" disabled class="btn_frmline" onclick="location.href='config.php';">정기결제 기본설정</button></p>
+    <p><button type="button" id="subscription_btn_next" disabled class="btn_frmline" onclick="location.href='configform.php';">정기결제 기본설정</button></p>
 
 </div>
 <?php

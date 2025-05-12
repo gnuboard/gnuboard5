@@ -131,7 +131,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
                     continue;
                 }
 
-                $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+                $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 회';
 
                 if ($use['use_input']) {
                     $use_print = str_replace("{입력}", $use['use_input'], $use_print);
@@ -152,7 +152,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
                     continue;
                 }
 
-                $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 일마다';
+                $use_print = $use['use_print'] ? $use['use_print'] : $use['use_input'].' 회';
 
                 if ($use['use_input']) {
                     $use_print = str_replace("{입력}", $use['use_input'], $use_print);
