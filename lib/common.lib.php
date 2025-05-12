@@ -685,6 +685,10 @@ function html_purifier($html)
     )
     );
 
+    // 커스텀 URI 필터 등록
+    $def = $config->getDefinition('URI', true); // URI 정의 가져오기
+    $def->addFilter(new HTMLPurifierContinueParamFilter(), $config); // 커스텀 필터 추가
+
     $purifier = new HTMLPurifier($config);
 
     return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
@@ -1731,47 +1735,130 @@ function sql_data_seek($result, $offset=0)
 // mysql connect resource 지정 - 명랑폐인님 제안
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 {
-    global $g5, $g5_debug;
+    global $g5, $g5_debug, $is_admin;
 
     if(!$link)
         $link = $g5['connect_db'];
-
-    // Blind SQL Injection 취약점 해결
-    $sql = trim($sql);
-    // union의 사용을 허락하지 않습니다.
-    //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
-    $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
-    // `information_schema` DB로의 접근을 허락하지 않습니다.
-    $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
-
-    $is_debug = get_permission_debug_show();
     
-    $start_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
-
-    if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
-        if ($error) {
-            $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
-        } else {
+    $is_debug = false;
+    $start_time = 0;
+    
+    if (is_object($sql)) {
+        
+        if (method_exists($sql, 'execute')) {
             try {
-                $result = @mysqli_query($link, $sql);
+                $result = $sql->execute();
             } catch (Exception $e) {
-                $result = null;
+                // error_log("SQLSTATE: " . $e->getSQLState());
+                // error_log("Error Code: " . $e->getErrorCode());
+                // error_log("Error Message: " . $e->getErrorMessage());
+                
+                if ($error) {
+                    /*
+                    if ($is_admin === 'super') {
+                        echo "Exception". $e ->getcode().": ".$e -> getMessage()."<br />".
+                        " in ". $e->getFile()." on line ". $e -> getLine()."<br />";
+                    }
+                    die("쿼리 실행 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                    */
+                    
+                    // 슈퍼 관리자에게는 파일과 라인 정보 추가
+                    
+                    if ($is_admin === 'super') {
+                        
+                        /*
+                        // 에러 정보 설정
+                        $errorMessage = $e->getMessage();
+                        $errorCode = $e->getCode();
+                        $sqlState = 'N/A'; // G5MySQLQuery에서 SQLSTATE를 별도로 제공하지 않으면 기본값
+                        $queryString = method_exists($sql, 'getQuery') ? $sql->getQuery() : 'Unknown Query';
+
+                        // G5MySQLQuery에서 직접 에러 정보를 가져오기 위해 추가 확인
+                        if (property_exists($sql, 'errorMessage') && property_exists($sql, 'errorCode') && property_exists($sql, 'sqlState')) {
+                            $errorMessage = $sql->errorMessage ?: $errorMessage;
+                            $errorCode = $sql->errorCode ?: $errorCode;
+                            $sqlState = $sql->sqlState ?: $sqlState;
+                        }
+                        
+                        $errorOutput = "Query: " . $queryString . "\n" .
+                                        "SQLSTATE: " . $sqlState . "\n" .
+                                        "Error Code: " . $errorCode . "\n" .
+                                        "Error Message: " . $errorMessage . "\n" .
+                                        "File: " . $_SERVER['SCRIPT_NAME'] . "\n" .
+                                        "Executed Query: " . $queryString;
+
+                        $errorOutput .= "\nException in " . $e->getFile() . " on line " . $e->getLine();
+
+                        echo $errorOutput."\n<br>";
+                        */
+                        
+                        $sql->sql_error_print($e);
+                    }
+                    
+                    die("\n<br>쿼리 실행 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                    
+                } else {
+                    // 에러 표시가 꺼져 있으면 null 반환
+                    return null;
+                }
             }
         }
+        
     } else {
-        if ($error) {
-            $result = @mysql_query($sql, $link) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+
+        // Blind SQL Injection 취약점 해결
+        $sql = trim($sql);
+        // union의 사용을 허락하지 않습니다.
+        //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+        $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
+        // `information_schema` DB로의 접근을 허락하지 않습니다.
+        $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
+
+        $is_debug = get_permission_debug_show();
+        
+        $start_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
+
+        if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
+            if ($error) {
+                $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            } else {
+                try {
+                    $result = @mysqli_query($link, $sql);
+                } catch (Exception $e) {
+                    $result = null;
+                }
+            }
         } else {
-            $result = @mysql_query($sql, $link);
+            if ($error) {
+                $result = @mysql_query($sql, $link) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            } else {
+                $result = @mysql_query($sql, $link);
+            }
         }
     }
-
+    
     $end_time = ($is_debug || G5_COLLECT_QUERY) ? get_microtime() : 0;
 
     $error = null;
     $source = array();
     if ($is_debug || G5_COLLECT_QUERY) {
-        if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
+        if (is_object($sql)) {
+            /*
+            $error = array(
+                'error_code' => $e ->getcode(),
+                'error_message' => $e -> getMessage().' in '. $e->getFile().' on line '. $e -> getLine(),
+            );
+            */
+            
+            $error = array(
+                'error_code' => '',
+                'error_message' => '',
+            );
+            
+            $query = $sql;
+            $sql = $query->getQuery();
+            
+        } else if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
             $error = array(
                 'error_code' => mysqli_errno($link),
                 'error_message' => mysqli_error($link),
@@ -1785,9 +1872,18 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
         $stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
         $found = false;
-
+        
+        $sql_bind_functions = array('sql_bind_select', 'sql_bind_select_fetch', 'sql_bind_select_join', 'sql_bind_select_array', 'sql_bind_insert', 'sql_bind_update', 'sql_bind_delete', 'sql_bind_lock', 'sql_bind_unlock');
+        
         foreach ($stack as $index => $trace) {
-            if ($trace['function'] === 'sql_query') {
+            
+            if (strpos($trace['file'], 'class.db.extend.php') !== false) {
+                continue;
+            }
+            
+            if (in_array($trace['function'], $sql_bind_functions)) {
+                $found = true;
+            } elseif ($trace['function'] === 'sql_query') {
                 $found = true;
             }
             if (isset($stack[$index + 1]) && $stack[$index + 1]['function'] === 'sql_fetch') {
@@ -1847,7 +1943,7 @@ function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     return $row;
 }
 
-
+/*
 // 결과값에서 한행 연관배열(이름으로)로 얻는다.
 function sql_fetch_array($result)
 {
@@ -1864,7 +1960,34 @@ function sql_fetch_array($result)
 
     return $row;
 }
+*/
 
+// 결과값에서 한행 연관배열(이름으로)로 얻는다.
+function sql_fetch_array($result)
+{
+    if (!$result) return array();
+
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO && $result instanceof PDOStatement) {
+        // PDO 처리
+        try {
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            $row = null;
+        }
+    } elseif (function_exists('mysqli_fetch_assoc') && G5_MYSQLI_USE) {
+        // MySQLi 처리
+        try {
+            $row = @mysqli_fetch_assoc($result);
+        } catch (Exception $e) {
+            $row = null;
+        }
+    } else {
+        // MySQL 처리
+        $row = @mysql_fetch_assoc($result);
+    }
+
+    return $row ? $row : array(); // null이면 빈 배열 반환
+}
 
 // $result에 대한 메모리(memory)에 있는 내용을 모두 제거한다.
 // sql_free_result()는 결과로부터 얻은 질의 값이 커서 많은 메모리를 사용할 염려가 있을 때 사용된다.
@@ -1908,19 +2031,33 @@ function sql_insert_id($link=null)
     if(!$link)
         $link = $g5['connect_db'];
 
-    if(function_exists('mysqli_insert_id') && G5_MYSQLI_USE)
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO && $link instanceof PDO) {
+        // PDO: 마지막 삽입 ID 반환
+        return $link->lastInsertId();
+    } elseif (function_exists('mysqli_insert_id') && G5_MYSQLI_USE) {
+        // MySQLi
         return mysqli_insert_id($link);
-    else
+    } else {
+        // MySQL
         return mysql_insert_id($link);
+    }
 }
 
 
 function sql_num_rows($result)
 {
-    if(function_exists('mysqli_num_rows') && G5_MYSQLI_USE)
+    if (defined('G5_USE_DB_PDO') && G5_USE_DB_PDO && $result instanceof PDOStatement) {
+
+        $rows = $result->fetchAll();
+        $count = count($rows);
+        $result->execute(); // 결과 포인터 재설정
+        return $count;
+
+    } elseif (function_exists('mysqli_num_rows') && G5_MYSQLI_USE) {
         return mysqli_num_rows($result);
-    else
+    } else {
         return mysql_num_rows($result);
+    }
 }
 
 
@@ -4286,6 +4423,16 @@ function get_random_token_string($length=6)
     $output = substr(str_shuffle($characters), 0, $length);
 
     return bin2hex($output);
+}
+
+function sanitize_input($s, $is_html=0) {
+
+    if (!$is_html) {
+        $s = strip_tags($s);
+    }
+    $s = htmlspecialchars($s, ENT_QUOTES, 'utf-8');
+
+    return $s;
 }
 
 function filter_input_include_path($path){

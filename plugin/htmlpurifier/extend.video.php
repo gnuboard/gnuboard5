@@ -78,3 +78,29 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		}
 	}
 }
+
+if( !class_exists('HTMLPurifierContinueParamFilter') ){
+	class HTMLPurifierContinueParamFilter extends HTMLPurifier_URIFilter
+	{
+		public $name = 'ContinueParamFilter';
+        
+        public function filter(&$uri, $config, $context)
+        {
+            // 쿼리 파라미터 검사
+            $query = $uri->query;
+            $path = $uri->path;
+            
+            if ($path && preg_match('#[\\\\/]logout#i', $path)) {
+                return false;
+            }
+            
+            if ($query) {
+                if (isset($query_params['continue'])) {
+                    return false;
+                }
+            }
+
+            return true; // 조건 통과 시 허용
+        }
+	}
+}

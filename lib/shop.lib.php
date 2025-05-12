@@ -2526,7 +2526,7 @@ function before_check_cart_price($s_cart_id, $is_ct_select_condition=false, $is_
         if(!$it['it_id'])
             continue;
         
-        if( $it['it_price'] !== $row['ct_price'] ){
+        if ((int) $it['it_price'] !== (int) $row['ct_price']) {
             // 장바구니 테이블 상품 가격과 상품 테이블의 상품 가격이 다를경우
             $update_querys['ct_price'] = $it['it_price'];
         }
@@ -2801,6 +2801,48 @@ function check_payment_method($od_settle_case) {
         alert($od_settle_case.' 은 결제수단에서 사용이 금지되어 있습니다.', G5_SHOP_URL);
         die('');
     }
+}
+
+function get_shop_user_carts($s_cart_id, $is_cache=0) {
+    
+    global $g5, $member;
+    
+    static $cache = array();
+
+    $key = $member['mb_id'].'_'.$s_cart_id;
+
+    if ($is_cache && isset($cache[$key])) {
+        return $cache[$key];
+    }
+    
+    $sql = " select a.ct_id,
+                    a.it_id,
+                    a.it_name,
+                    a.ct_price,
+                    a.ct_point,
+                    a.ct_qty,
+                    a.ct_status,
+                    a.ct_send_cost,
+                    a.it_sc_type,
+                    b.ca_id,
+                    b.ca_id2,
+                    b.ca_id3
+               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+              where a.od_id = '$s_cart_id' ";
+    $sql .= " group by a.it_id ";
+    $sql .= " order by a.ct_id ";
+    
+    $result = sql_query($sql);
+
+    $cart_datas = array();
+
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $cart_datas[] = $row;
+    }
+    
+    $cache[$key] = $cart_datas;
+    
+    return $cart_datas;
 }
 
 //결제방식 이름을 체크하여 치환 대상인 문자열은 따로 리턴합니다.

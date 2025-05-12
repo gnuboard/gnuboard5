@@ -1,5 +1,7 @@
 <?php
-$sub_menu = '400200';
+if (!(defined('G5_IS_SUBSCRIPTION_ADMIN_PAGE') && $sub_menu)) {
+    $sub_menu = '400200';
+}
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
@@ -152,6 +154,27 @@ else {
     else
         $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_mobile_skin_dir'];
 }
+
+if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) {
+    // 정기결제 스킨 Path
+    if(!$ca['ca_skin_dir'])
+        $g5_subscription_skin_path = G5_SUBSCRIPTION_SKIN_PATH;
+    else {
+        if(preg_match('#^theme/(.+)$#', $ca['ca_skin_dir'], $match))
+            $g5_subscription_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$match[1];
+        else
+            $g5_subscription_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$ca['ca_skin_dir'];
+    }
+
+    if(!$ca['ca_mobile_skin_dir'])
+        $g5_msubscription_skin_path = G5_MSUBSCRIPTION_SKIN_PATH;
+    else {
+        if(preg_match('#^theme/(.+)$#', $ca['ca_mobile_skin_dir'], $match))
+            $g5_msubscription_skin_path = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$match[1];
+        else
+            $g5_msubscription_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.G5_SUBSCRIPTION_DIR.'/'.$ca['ca_mobile_skin_dir'];
+    }
+}
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -243,13 +266,75 @@ else {
                 <label for="ca_adult_use_no">사용안함</label>
             </td>
         </tr>
+        <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+        <tr>
+            <th scope="row"><label for="ca_id">정기결제 스킨사용</label></th>
+            <td>
+                <?php echo help('쇼핑몰스킨은 shop 폴더이며, 정기결제스킨은 subscription 폴더를 사용합니다.'); ?>
+                
+                <input type="radio" name="ca_class_num" value="0" id="ca_class_num0" <?php if(!(isset($ca['ca_class_num']) && $ca['ca_class_num'])) echo 'checked="checked"'; ?>>
+                <label for="ca_class_num0">쇼핑몰스킨 사용</label>
+                <input type="radio" name="ca_class_num" value="1" id="ca_class_num1" <?php if((isset($ca['ca_class_num']) && $ca['ca_class_num'])) echo 'checked="checked"'; ?>>
+                <label for="ca_class_num1">정기결제스킨 사용</label>
+            </td>
+        </tr>
+        <script>
+            jQuery(function($){
+                // 스킨 표시/숨김 처리 함수
+                function toggleSkin() {
+                    if ($("input[name='ca_class_num']:checked").val() === "1") {
+                        $(".use-subscription-skin").show();
+                        $(".use-shop-skin").hide();
+                    } else {
+                        $(".use-subscription-skin").hide();
+                        $(".use-shop-skin").show();
+                    }
+                }
+
+                // 초기 상태 설정
+                toggleSkin();
+
+                // 라디오 버튼 클릭 시 상태 갱신
+                $("input[name='ca_class_num']").click(toggleSkin);
+            });
+        </script>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="ca_skin">출력스킨</label></th>
             <td>
-                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_shop_skin_path).'/list.*.skin.php 입니다.'); ?>
-                <select id="ca_skin" name="ca_skin" required class="required">
-                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $ca['ca_skin']); ?>
-                </select>
+                <div class="use-shop-skin">
+                    <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_shop_skin_path).'/list.*.skin.php 입니다.'); ?>
+                    <select id="ca_skin" name="ca_skin" required class="required">
+                        <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $ca['ca_skin']); ?>
+                    </select>
+                </div>
+                <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+                <div class="use-subscription-skin">
+                    <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_subscription_skin_path).'/list.*.skin.php 입니다.'); ?>
+                    <select id="subscription_ca_skin" name="ca_skin" required class="required">
+                        <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_subscription_skin_path, $ca['ca_skin']); ?>
+                    </select>
+                </div>
+                <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
+            <td>
+                <div class="use-shop-skin">
+                    <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_mshop_skin_path).'/list.*.skin.php 입니다.'); ?>
+                    <select id="ca_mobile_skin" name="ca_mobile_skin" required class="required">
+                        <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $ca['ca_mobile_skin']); ?>
+                    </select>
+                </div>
+                <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+                <div class="use-subscription-skin">
+                    <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_msubscription_skin_path).'/list.*.skin.php 입니다.'); ?>
+                    <select id="ca_mobile_skin" name="ca_mobile_skin" required class="required">
+                        <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_msubscription_skin_path, $ca['ca_mobile_skin']); ?>
+                    </select>
+                </div>
+                <?php } ?>
             </td>
         </tr>
         <tr>
@@ -278,15 +363,6 @@ else {
             <td>
                 <?php echo help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에서 표시하는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다."); ?>
                 <input type="text" name="ca_list_row" value='<?php echo $ca['ca_list_row']; ?>' id="ca_list_row" required class="required frm_input" size="3"> 줄
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
-            <td>
-                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_mshop_skin_path).'/list.*.skin.php 입니다.'); ?>
-                <select id="ca_mobile_skin" name="ca_mobile_skin" required class="required">
-                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $ca['ca_mobile_skin']); ?>
-                </select>
             </td>
         </tr>
         <tr>

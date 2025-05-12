@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 /* 초기화 */
-html {overflow-y:scroll}
-body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif}
+html {}
+body {overflow-y:scroll;margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic', dotum, sans-serif}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -183,6 +183,12 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #container .shop-content {position:relative;padding:1px 0}
 #container .is_index {margin-left:285px}
 .shop-content #bo_v{margin-top:20px}
+#container .use-susbscription-cart #wrapper_title{position:absolute;text-align:right;top:3px;right:1em;font-size:1.6em}
+#container .use-susbscription-cart .cart-heading{position:relative;padding:23px 0;font-size:0;white-space:nowrap;color:#919191}
+#container .use-susbscription-cart .cart-heading a{color:#919191}
+.cart-heading .linked-title{display:inline-block;position:relative;padding:0 15px;min-height:25px;min-width:50px;font-size:19px}
+.cart-heading .active, .cart-heading .active a{font-weight:bold;color:#000}
+.cart-heading .is-shop-cart-link:after {position:absolute;top:0;right:0;width:1px;height:100%;max-height:40px;background-color:#d1d4d7;content:""}
 
 #idx_hit {overflow:hidden}
 #idx_hit:after {display:block;visibility:hidden;clear:both;content:""}

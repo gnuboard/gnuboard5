@@ -57,6 +57,75 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 	            	<strong class="scrap"><?php echo number_format($member['mb_scrap_cnt']); ?></strong>
 	            </a>
 	        </li>
+            
+            <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) {
+                
+                $sql = "select od_id, od_card_name, card_mask_number, od_pg, od_test from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
+                
+                // $sql = "select count(*) as total from `{$g5['g5_subscription_order_table']}` where card_billkey != '' and mb_id = '{$member['mb_id']}' and od_settle_case = '신용카드' and od_card_name != '' GROUP BY od_card_name, card_mask_number ";
+                
+                /*
+                $sql = " SELECT COUNT(DISTINCT CONCAT(od_card_name, card_mask_number)) AS num
+                        FROM `{$g5['g5_subscription_order_table']}`
+                        WHERE card_billkey != '' 
+                          AND mb_id = 'admin' 
+                          AND od_settle_case = '신용카드' 
+                          AND od_card_name != '' ";
+                
+                $total = sql_fetch($sql);
+                */
+                
+                /*
+                $total = sql_bind_select_fetch($g5['g5_subscription_mb_cardinfo_table'], 'count(*) as total', array(
+                    'card_billkey' => array('!=' => ''),
+                    'mb_id' => $member['mb_id']
+                ), array(
+                    'groupBy' => 'od_card_name, card_mask_number'
+                ));
+                */
+                
+                /*
+                $total = sql_bind_select_fetch(
+                    array(
+                        'subquery' => array(
+                            'table' => $g5['g5_subscription_mb_cardinfo_table'],
+                            'columns' => ['COUNT(*) AS cnt'],
+                            'conditions' => array(
+                                'card_billkey' => array('!=' => ''),
+                                'mb_id' => $member['mb_id']
+                            ),
+                            'settings' => array('groupBy' => 'od_card_name, card_mask_number')
+                        )
+                    ),
+                    ['SUM(cnt) AS total'],
+                    array()
+                );
+                */
+                
+                $total = sql_bind_select_fetch(
+                    array(
+                        'subquery' => array(
+                            'table' => $g5['g5_subscription_mb_cardinfo_table'],
+                            'columns' => ['COUNT(*) AS cnt'],
+                            'conditions' => array(
+                                'card_billkey' => array('!=' => ''),
+                                'mb_id' => 'admin'
+                            ),
+                            'settings' => array('groupBy' => 'od_card_name, card_mask_number')
+                        )
+                    ),
+                    'COUNT(cnt) AS num'
+                );
+                
+                $total_card_num = isset($total['num']) ? (int) $total['num'] : 0;
+            ?>
+	        <li>
+	            <a href="<?php echo G5_SUBSCRIPTION_URL ?>/mycard.php" class="subscription-card-manage">
+	            	<i class="fa fa-thumb-tack" aria-hidden="true"></i>정기구독 카드 관리
+	            	<strong class="card-manage"><?php echo number_format($total_card_num); ?></strong>
+	            </a>
+	        </li>
+            <?php } ?>
 	    </ul>
 	    
         <h3>내정보</h3>
@@ -78,6 +147,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <!-- } 회원정보 개요 끝 -->
 
 	<div id="smb_my_list">
+    
+        <?php run_event('g5_shop_mypage_sub_top'); ?>
+        
 	    <!-- 최근 주문내역 시작 { -->
 	    <section id="smb_my_od">
 	        <h2>주문내역조회</h2>
@@ -94,7 +166,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 	        </div>
 	    </section>
 	    <!-- } 최근 주문내역 끝 -->
-	
+	    
+        <?php run_event('g5_shop_mypage_sub_middle'); ?>
+        
 	    <!-- 최근 위시리스트 시작 { -->
 	    <section id="smb_my_wish">
 	        <h2>최근 위시리스트</h2>
@@ -162,6 +236,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             </form>
 	    </section>
 	    <!-- } 최근 위시리스트 끝 -->
+        
+        <?php run_event('g5_shop_mypage_sub_bottom'); ?>
+        
 	</div>
 </div>
 
