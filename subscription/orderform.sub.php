@@ -200,9 +200,9 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
         <!-- } 주문상품 확인 끝 -->
 
         <div class="sod_left">
-            <input type="hidden" name="od_price" value="<?php echo get_text($tot_sell_price); ?>">
-            <input type="hidden" name="org_od_price" value="<?php echo get_text($tot_sell_price); ?>">
-            <input type="hidden" name="od_send_cost" value="<?php echo get_text($send_cost); ?>">
+            <input type="hidden" name="od_price" value="<?php echo (int) $tot_sell_price; ?>">
+            <input type="hidden" name="org_od_price" value="<?php echo (int) $tot_sell_price; ?>">
+            <input type="hidden" name="od_send_cost" value="<?php echo (int) $send_cost; ?>">
             <input type="hidden" name="od_send_cost2" value="0">
             <input type="hidden" name="item_coupon" value="0">
             <input type="hidden" name="od_coupon" value="0">
@@ -800,6 +800,9 @@ for ($i=0; $row = sql_fetch_array($result); $i++) {
         var send_cost = parseInt($("input[name=od_send_cost]").val());
         var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
         var send_coupon = parseInt($("input[name=od_send_coupon]").val());
+        
+        console.log( sell_price, send_cost, send_cost2, send_coupon );
+            
         var tot_price = sell_price + send_cost + send_cost2 - send_coupon;
 
         $("input[name=good_mny]").val(tot_price);

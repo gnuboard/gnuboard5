@@ -428,6 +428,8 @@ $pg_receipt_infos = array(
 'od_cash_info'=>''
 );
 
+$tno = '';
+
 if ($od_settle_case == "카드재사용") {
     $od_receipt_point = $i_temp_point;
     $od_receipt_price = 0;
@@ -493,7 +495,7 @@ if ($tno) {
                 break;
             case 'nicepay':
                 $cancelAmt = (int)$pg_price;
-                include G5_SUBSCRIPTION_PATH.'/nicepay/cancel_process.php';
+                // include G5_SUBSCRIPTION_PATH.'/nicepay/cancel_process.php';
                 break;
             default:
                 include G5_SUBSCRIPTION_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -1102,5 +1104,9 @@ if($is_member) {
 
     sql_query($sql);
 }
+
+//echo G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid;
+
+//exit;
 
 goto_url(G5_SUBSCRIPTION_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);

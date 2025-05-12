@@ -1,15 +1,14 @@
 <?php
-    include_once('./_common.php');
-    
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    header("Cache-Control: no-store");
-    header("Pragma: no-cache");
-    
-    include_once(G5_MSUBSCRIPTION_PATH.'/settle_kcp.inc.php');
-    require_once(G5_MSUBSCRIPTION_PATH.'/kcp/KCPComLibrary.php');              // library [수정불가]
+include_once('./_common.php');
 
-?>
-<?php
+@header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+@header("Cache-Control: no-store");
+@header("Pragma: no-cache");
+
+// library [수정불가]
+include_once(G5_MSUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+require_once(G5_MSUBSCRIPTION_PATH.'/kcp/KCPComLibrary.php');
+
     // 쇼핑몰 페이지에 맞는 문자셋을 지정해 주세요.
     $charSetType      = 'utf-8';             // UTF-8인 경우 "utf-8"로 설정
 

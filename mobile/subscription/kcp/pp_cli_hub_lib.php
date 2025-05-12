@@ -216,6 +216,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     function  mf_get_payx_data()
     {
+      $my_data = '';
+      
       if ( $this->m_payx_common != "" || $this->m_payx_card != "" )
       {
         $my_data  = "payx_data=";

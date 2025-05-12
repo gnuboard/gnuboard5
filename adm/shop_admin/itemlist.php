@@ -2,6 +2,7 @@
 if (!(defined('G5_IS_SUBSCRIPTION_ADMIN_PAGE') && $sub_menu)) {
     $sub_menu = '400300';
 }
+
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
@@ -11,6 +12,11 @@ if (isset($sfl) && $sfl && !in_array($sfl, array('it_name','it_id','it_maker','i
 }
 
 $g5['title'] = '상품관리';
+
+if (defined('IS_ADM_SUBSCRIPTION_ITEM_LIST') && IS_ADM_SUBSCRIPTION_ITEM_LIST) {
+    $g5['title'] = '정기구독 상품관리';
+}
+
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 // 분류
@@ -53,6 +59,11 @@ $sql_common = " from {$g5['g5_shop_item_table']} a ,
 if ($is_admin != 'super')
     $sql_common .= " and b.ca_mb_id = '{$member['mb_id']}'";
 $sql_common .= ") ";
+
+if (defined('IS_ADM_SUBSCRIPTION_ITEM_LIST') && IS_ADM_SUBSCRIPTION_ITEM_LIST) {
+    $sql_common .= " and a.it_class_num IN (1, 2) ";
+}
+
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음

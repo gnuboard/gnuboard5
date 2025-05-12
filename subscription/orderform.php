@@ -68,7 +68,7 @@ if (get_subs_option('su_pg_service') == 'nicepay') {
     add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
 }
 
-$g5['title'] = '주문서 작성';
+$g5['title'] = '정기구독 주문서 작성';
 
 if(G5_IS_MOBILE)
     include_once(G5_MSUBSCRIPTION_PATH.'/_head.php');

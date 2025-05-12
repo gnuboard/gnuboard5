@@ -2641,8 +2641,6 @@ function get_checked($field, $value)
 
 function is_mobile()
 {
-    return 1;
-    
     if (isset($_SERVER['HTTP_USER_AGENT']))
         return  preg_match('/'.G5_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT']);
     else

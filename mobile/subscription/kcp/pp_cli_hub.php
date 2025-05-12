@@ -13,8 +13,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 /* ============================================================================== */
 /* = 라이브러리 및 사이트 정보 include                                          = */
 /* = -------------------------------------------------------------------------- = */
-include_once(G5_SUBSCRIPTION_PATH.'/settle_kcp.inc.php');
-require_once(G5_SUBSCRIPTION_PATH.'/kcp/pp_cli_hub_lib.php');
+include_once(G5_MSUBSCRIPTION_PATH.'/settle_kcp.inc.php');
+require_once(G5_MSUBSCRIPTION_PATH.'/kcp/pp_cli_hub_lib.php');
 
     /* ============================================================================== */
     /* =   02. 인증 요청 정보 설정                                                  = */
@@ -105,6 +105,13 @@ if ($res_cd != '0000')
         $card_name = $c_PayPlus->mf_get_res_data( "card_name" );       // 카드명
         $batch_key = $c_PayPlus->mf_get_res_data( "batch_key" );
         
+        echo $card_cd;
+        echo "<br>";
+        echo $card_name;
+        echo "<br>";
+        echo $batch_key;
+        echo "<br>";
+        
         // 승인결과
         // 일반 폼에서 batch_cardno_return_yn 를 Y, L 값을 주는것에 따라 다름
         $card_mask_number = isset($_POST['card_mask_no']) ? clean_xss_tags($_POST['card_mask_no']) : '';
@@ -115,7 +122,8 @@ if ($res_cd != '0000')
         // NHN_KCP는 batch키를 발급받는 것에 tno값을 보내지 않는다.
         $tno = '';
         $amount = $_POST['od_price'] ? (int) $_POST['od_price'] : 0;
-
+        $app_no = '';
+        $app_time = '';
     }
     /* ============================================================================== */
 

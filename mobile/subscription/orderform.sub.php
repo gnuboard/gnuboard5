@@ -409,7 +409,9 @@ require_once(G5_MSUBSCRIPTION_PATH.'/'.get_subs_option('su_pg_service').'/orderf
             </ul>
         </div>
     </section>
-
+    
+    <?php run_event('subscription_add_form_html'); ?>
+    
     <section id="sod_frm_subscription_input" class="subscription_mobile">
         <h2>정기구독정보 입력</h2>
         
@@ -521,12 +523,20 @@ require_once(G5_MSUBSCRIPTION_PATH.'/'.get_subs_option('su_pg_service').'/orderf
             ));
 
             for ($i=0; $row = sql_fetch_array($result); $i++) {
-                //$mcards[] = $row;
-                $card = $row;
-                echo '<li>';
+                $mcards[] = $row;
+            }
+            
+            if ($mcards) {
                 echo '<input type="hidden" id="od_select_card_number" name="od_select_card_number" value="" >';
-                echo '<input type="radio" id="od_subscription_card_'.$i.'" class="od_subscription_ids" name="od_settle_case" value="'.$card['max_id'].'"> <label for="od_subscription_card_'.$i.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).' '.$card['card_mask_number'].'</span></label>';
-                echo '</li>'. PHP_EOL;
+                
+                $j = 0;
+                
+                foreach($mcards as $card) {
+                    echo '<li>';
+                    echo '<input type="radio" id="od_subscription_card_'.$i.'" class="od_subscription_ids" name="od_settle_case" value="'.$card['max_id'].'"> <label for="od_subscription_card_'.$i.'" class="lb_icon card_icon subscription_card"><span>'.subscription_pg_cardname($card['od_card_name']).' '.$card['card_mask_number'].'</span></label>';
+                    echo '</li>'. PHP_EOL;
+                    $j++;
+                }
             }
 
             ?>
@@ -854,6 +864,15 @@ jQuery(function($) {
         window.open(url, "win_address", "left=100,top=100,width=650,height=500,scrollbars=1");
         return false;
     });
+    
+    // 결제수단 선택 (기존의 카드를 선택시)
+    $(document).on("click", ".subscription_card", function() {
+        var od_id_number = $(this).prev("input[name='od_settle_case']").val();
+        
+        if (od_id_number) {
+            $("#od_select_card_number").val(od_id_number);
+        }
+    });
 });
 
 function coupon_cancel($el)
@@ -1071,7 +1090,17 @@ function pay_approval()
 
         if(typeof f.ActionResult !== "undefined") f.ActionResult.value = "";
         if(typeof f.pay_method !== "undefined") f.pay_method.value = "";
+        
+        <?php } else if(get_subs_option('su_pg_service') == 'inicis') { ?>
+        switch (settle_method) {
 
+            case "신용카드":
+                f.gopaymethod.value = "Card";
+                break;
+            default:
+                f.gopaymethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
+
+        }
         <?php } else if(get_subs_option('su_pg_service') == 'inicis') { ?>
         /*
         var paymethod = "";
@@ -1136,81 +1165,15 @@ function pay_approval()
         f.submit(); 
              
         <?php } else if(get_subs_option('su_pg_service') == 'nicepay') { ?>
+        switch (settle_method) {
 
-        f.Amt.value       = f.good_mny.value;
-        f.BuyerName.value   = pf.od_name.value;
-        f.BuyerEmail.value  = pf.od_email.value;
-        f.BuyerTel.value    = pf.od_hp.value ? pf.od_hp.value : pf.od_tel.value;
-
-        f.DirectShowOpt.value = "";     // 간편결제 요청 값 초기화
-        f.DirectEasyPay.value = "";     // 간편결제 요청 값 초기화
-        f.NicepayReserved.value = "";   // 간편결제 요청 값 초기화
-        f.EasyPayMethod.value = "";   // 간편결제 요청 값 초기화
-
-
-        switch(settle_method) {
-            case "계좌이체":
-                paymethod = "BANK";
-                break;
-            case "가상계좌":
-                paymethod = "VBANK";
-                break;
-            case "휴대폰":
-                paymethod = "CELLPHONE";
-                break;
             case "신용카드":
-                paymethod = "CARD";
-                break;
-            case "간편결제":
-                paymethod = "CARD";
-                f.DirectShowOpt.value = "CARD";
-                f.TransType.value = "0";    // 간편결제의 경우 에스크로를 사용할수 없다.
-
-                var nicepay_easy_pay = jQuery("input[name='od_settle_case']:checked" ).attr("data-pay");
-
-                if(nicepay_easy_pay === "nice_naverpay"){
-                    if(typeof f.DirectEasyPay !== "undefined") f.DirectEasyPay.value = "E020";
-                    
-                    <?php 
-                        // * 카드 선택 시 전액 카드로 결제, 포인트 선택 시 전액 포인트로 결제.
-                        // (카드와 포인트를 같이 사용하는 복합결제 형태의 결제는 불가함.)
-                        // - 카드: EasyPayMethod=”E020=CARD”, 포인트: EasyPayMethod=”E020=POINT”
-                    ?>
-                    
-                    if(typeof f.EasyPayMethod !== "undefined") f.EasyPayMethod.value = "E020=CARD";
-
-                } else if(nicepay_easy_pay === "nice_kakaopay"){
-                    if(typeof f.NicepayReserved !== "undefined") f.NicepayReserved.value = "DirectKakao=Y";
-                } else if(nicepay_easy_pay === "nice_samsungpay"){
-                    if(typeof f.DirectEasyPay !== "undefined") f.DirectEasyPay.value = "E021";
-                } else if(nicepay_easy_pay === "nice_applepay"){
-                    if(typeof f.DirectEasyPay !== "undefined") f.DirectEasyPay.value = "E022";
-                } else if(nicepay_easy_pay === "nice_paycopay"){
-                    if(typeof f.NicepayReserved !== "undefined") f.NicepayReserved.value = "DirectPayco=Y";
-                } else if(nicepay_easy_pay === "nice_skpay"){
-                    if(typeof f.NicepayReserved !== "undefined") f.NicepayReserved.value = "DirectPay11=Y";
-                } else if(nicepay_easy_pay === "nice_ssgpay"){
-                    if(typeof f.DirectEasyPay !== "undefined") f.DirectEasyPay.value = "E007";
-                } else if(nicepay_easy_pay === "nice_lpay"){
-                    if(typeof f.DirectEasyPay !== "undefined") f.DirectEasyPay.value = "E018";
-                }
-
+                f.PayMethod.value = "CARD";
                 break;
             default:
-                paymethod = "무통장";
+                f.PayMethod.value = is_subscription_card_checked ? "exist_card" : "무통장";
                 break;
-        }
-        
-        f.PayMethod.value = paymethod;
-
-        <?php if($default['de_tax_flag_use']) { ?>
-        f.SupplyAmt.value = pf.comm_tax_mny.value;
-        f.GoodsVat.value = pf.comm_vat_mny.value;
-        f.TaxFreeAmt.value = pf.comm_free_mny.value;
-        <?php } ?>
-
-        if (! nicepay_create_signdata(f)) {
-            return false;
+                
         }
         <?php } ?>
 
@@ -1233,12 +1196,34 @@ function pay_approval()
             return false;
         }
 
+        <?php if (get_subs_option('su_pg_service') == 'tosspayments') { ?>
+            
+            if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
+                pf.submit();
+                return false;
+            }
+            
+            requestBillingAuth({
+              customerEmail: pf.od_name.value,
+              customerName: pf.od_email.value
+            });
+            
+            return false;
+            
+        <?php } ?>
+                
         <?php if (get_subs_option('su_pg_service') == 'nicepay') { ?>
-        nicepayStart(f);
-        return false;
+            if (f.PayMethod.value == "무통장" || f.PayMethod.value == "exist_card") {
+                pf.submit();
+                return false;
+            }
+            
+            // 새 신용카드 등록인 경우
+            nicepay_modal_open();
+            return false;
         <?php } ?>
 
-        f.submit();
+        pf.submit();
     }
 
     return false;
@@ -1683,8 +1668,6 @@ function payment_check(f)
     }
 
     var tot_price = od_price + send_cost + send_cost2 - send_coupon - temp_point;
-    
-    alert( tot_price );
     
     console.log( tot_price );
     
