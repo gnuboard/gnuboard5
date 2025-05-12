@@ -2,8 +2,20 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_SUBSCRIPTION_CSS_URL.'/style.css">', 0);
 add_javascript('<script src="'.G5_JS_URL.'/jquery.bxslider.js"></script>', 10);
+
+include_once(G5_PLUGIN_PATH . '/jquery-ui/datepicker.php');
+
+add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
+
+add_javascript('<script src="'.G5_JS_URL.'/pg-calendar/js/pignose.calendar.full.min.js"></script>', 11);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/pg-calendar/css/pignose.calendar.min.css">', 11);
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/subscription.css">', 11);
+add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/mobile_subscription.css">', 11);
 ?>
 
 <?php if($config['cf_kakao_js_apikey']) { ?>
@@ -14,11 +26,15 @@ var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
 <script src="<?php echo G5_JS_URL; ?>/kakaolink.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 
-<form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
-<input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
+<form name="fitem" action="<?php echo get_text($action_url); ?>" method="post" onsubmit="return fitem_submit(this);">
+<input type="hidden" name="it_id[]" value="<?php echo get_text($it['it_id']); ?>">
 <input type="hidden" name="sw_direct">
 <input type="hidden" name="url">
 
+<input type="hidden" name="delivery_cycle" id="hidden_delivery_cycle">
+<input type="hidden" name="usage_count" id="hidden_usage_count">
+<input type="hidden" name="hope_delivery_date" id="hidden_hope_delivery_date">
+        
 <div id="sit_ov_wrap">
     <?php
     // 이미지(중) 썸네일
@@ -285,11 +301,11 @@ var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
                 <li class="sit_opt_list">
                     <input type="hidden" name="io_type[<?php echo $it_id; ?>][]" value="0">
                     <input type="hidden" name="io_id[<?php echo $it_id; ?>][]" value="">
-                    <input type="hidden" name="io_value[<?php echo $it_id; ?>][]" value="<?php echo $it['it_name']; ?>">
+                    <input type="hidden" name="io_value[<?php echo $it_id; ?>][]" value="<?php echo get_text($it['it_name']); ?>">
                     <input type="hidden" class="io_price" value="0">
-                    <input type="hidden" class="io_stock" value="<?php echo $it['it_stock_qty']; ?>">
+                    <input type="hidden" class="io_stock" value="<?php echo get_text($it['it_stock_qty']); ?>">
                     <div class="opt_name">
-                        <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
+                        <span class="sit_opt_subj"><?php echo get_text($it['it_name']); ?></span>
                     </div>
                     <div class="opt_count">
                         <label for="ct_qty_<?php echo $i; ?>" class="sound_only">수량</label>
@@ -314,18 +330,25 @@ var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
         <?php if($is_soldout) { ?>
         <p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
         <?php } ?>
+            
+        <?php // 정기결제 모달 시작 ?>
+        <div id="subscription-modal-form" class="subscription modal">
+            <?php // 정기결제 공통폼 불러오기
+                include_once(G5_SUBSCRIPTION_PATH.'/subscription_order_modal.php');
+            ?>
+        </div>
+                
         <div id="sit_ov_btn">
-            <?php if ($is_orderable) { ?>
-            <input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart">
-            <input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy" class="btn_submit">
-            <?php } ?>
-            <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
-            <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_phone">재입고알림</a>
-            <?php } ?>
-            <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish"><span class="sound_only">위시리스트</span><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-            <?php if ($naverpay_button_js) { ?>
-            <div class="naverpay-item"><?php echo $naverpay_request_js.$naverpay_button_js; ?></div>
-            <?php } ?>
+            <div class="clearfix subscription-btns">
+                <?php if ($is_orderable) { ?>
+                <button type="submit" onclick="document.pressed=this.value;" value="구독장바구니" class="sit_btn_cart subscription_btn_cart">구독장바구니</button>
+                <a href="#subscription-modal-form" rel="modal:open" class="sit-btn-subscription">정기구독</a>
+                <?php } ?>
+                <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
+                <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_phone">재입고알림</a>
+                <?php } ?>
+                <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish"><span class="sound_only">위시리스트</span><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+            </div>
         </div>
     </div>
     <button type="button" class="btn_close"><span class="sound_only">닫기</span><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
@@ -468,13 +491,14 @@ $(function (){
 <?php } ?>
 
 <script>
-$(window).bind("pageshow", function(event) {
-    if (event.originalEvent.persisted) {
-        document.location.reload();
-    }
-});
-
-$(function(){
+jQuery(function($){
+    
+    $(window).bind("pageshow", function(event) {
+        if (event.originalEvent.persisted) {
+            document.location.reload();
+        }
+    });
+    
     //이미지
     $('#slide-counter').prepend('<strong class="slide-index current-index"></strong> / ');
      

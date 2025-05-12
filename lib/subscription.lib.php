@@ -1135,7 +1135,7 @@ function subscription_order_pay($od, $pg_data, $pay_round_no) {
     // $od['py_receipt_price'] ?
     // inicis : $pg_data['price']
     
-    $py_receipt_time = date('Y년m월d일', strtotime($pg_data['payDate'].$pg_data['payTime']));
+    // $py_receipt_time = date('Y년m월d일', strtotime($pg_data['payDate'].$pg_data['payTime']));
     
     $subscription_pg_id = $pg_data['orderId'];
     $paymethod = $pg_data['payMethod'];
@@ -2128,6 +2128,8 @@ function nicepay_billing($od, $tmp_cart_id='') {
     // $resp_utf = iconv("EUC-KR", "UTF-8", $response);
     $resp_utf = $response; 
     $nice_response = json_decode($resp_utf, true);
+    
+    $message = '';
     
     // resultCode 가 3001이면 성공이고 그외이면 실패
     if ($nice_response['ResultCode'] === '3001' && isset($nice_response['TID']) && $nice_response['TID']) {

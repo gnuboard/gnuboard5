@@ -337,11 +337,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 	            <button type="submit" onclick="document.pressed=this.value;" value="바로구매" class="sit_btn_buy">바로구매</button>
 	            <?php } ?>
                 
-                <?php if (function_exists('is_use_subscription_item') && is_use_subscription_item($it)) { ?>
-						<button type="submit" onclick="document.pressed=this.value;" value="구독장바구니" class="sit_btn_cart">구독장바구니</button>
-                        <?php if ($is_orderable) { ?>
-                        <a href="#subscription-modal-form" rel="modal:open" class="sit-btn-subscription">정기구독</a>
-                        <?php } ?>
+                <?php if (function_exists('is_use_subscription_item') && is_use_subscription_item($it) && $is_orderable) { ?>
+                    <button type="submit" onclick="document.pressed=this.value;" value="구독장바구니" class="sit_btn_cart">구독장바구니</button>
+                    <a href="#subscription-modal-form" rel="modal:open" class="sit-btn-subscription">정기구독</a>
                 <?php } ?>
                     
 	            <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" class="sit_btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span></a>

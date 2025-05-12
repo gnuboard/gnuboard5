@@ -4425,6 +4425,16 @@ function get_random_token_string($length=6)
     return bin2hex($output);
 }
 
+function sanitize_input($s, $is_html=0) {
+
+    if (!$is_html) {
+        $s = strip_tags($s);
+    }
+    $s = htmlspecialchars($s, ENT_QUOTES, 'utf-8');
+
+    return $s;
+}
+
 function filter_input_include_path($path){
     return str_replace('//', '/', strip_tags($path));
 }

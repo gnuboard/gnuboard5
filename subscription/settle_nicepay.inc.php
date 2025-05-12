@@ -1,8 +1,5 @@
 <?php
-
-if (!defined('_GNUBOARD_')) {
-    exit;
-} // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // curl 체크
 if (!function_exists('curl_init')) {

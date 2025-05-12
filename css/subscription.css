@@ -232,8 +232,8 @@ height: 50px;               /* 높이 지정 (주석 해제) */
 }
 
 .su-display-btns label {display: inline-block;position:relative;border: 2px solid #ffffff;background-color: transparent;vertical-align: top;
-padding:0.6em 1em;line-height:auto;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size:1em}
-.su-display-btns label{line-height:20px;width:100px}
+padding:0.6em 1em;margin-right:5px;margin-bottom:10px;font-weight:bold;font-size:1em}
+.su-display-btns label{line-height:20px;min-width:110px}
 
 .su-display-btns label:after {
     position: absolute;
@@ -248,6 +248,8 @@ padding:0.6em 1em;line-height:auto;margin-right:5px;margin-bottom:10px;font-weig
 .su-display-btns {position:relative}
 .su-display-btns input[type="radio"]{position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;text-indent:-999px;left: 0;z-index:-1}
 .su-display-btns input[type="radio"]:checked+.select-icon {border:1px solid #ff006c;color:#3a8afd;z-index:3}
+
+.next-delivery-date-el{text-align:left;margin-top:1em}
 
 /*
 .ui-datepicker-header {

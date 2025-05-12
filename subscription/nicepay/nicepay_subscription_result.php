@@ -86,14 +86,19 @@ $od_tno = $respArr['TID'];
 $card_mask_number = mask_card_number($cardNo);
 $card_billkey = $respArr['BID'];
 $tno = $respArr['TID'];
-$amount = $_POST['good_mny'] ? (int) $_POST['good_mny'] : 0;
+$amount = isset($_POST['good_mny']) ? (int) $_POST['good_mny'] : 0;
+
+if (!$amount && isset($_POST['od_price'])) {
+    $amount = (int) $_POST['od_price'];
+}
 
 // 카드 코드
 $card_code = $respArr['CardCode'];
 // 카드이름
 $card_name = preg_replace('/\[(.*?)\]/', '$1', $respArr['CardName']);
 
-
+$app_no = '';
+$app_time = '';
 /*
 (
     [ResultCode] => F100

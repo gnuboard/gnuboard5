@@ -3,11 +3,6 @@ include_once('./_common.php');
 
 define('G5_IS_SUBSCRIPTION_ITEM', 1);
 
-if (G5_IS_MOBILE) {
-    include_once(G5_MSUBSCRIPTION_PATH.'/item.php');
-    return;
-}
-
 $it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
 $it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
@@ -63,6 +58,11 @@ if (!$saved) {
 if (get_cookie('ck_it_id') != $it_id) {
     sql_query(" update {$g5['g5_shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
     set_cookie("ck_it_id", $it_id, 3600); // 1시간동안 저장
+}
+
+if (G5_IS_MOBILE) {
+    include_once(G5_MSUBSCRIPTION_PATH.'/item.php');
+    return;
 }
 
 // 스킨경로

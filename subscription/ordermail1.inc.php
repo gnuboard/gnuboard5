@@ -101,8 +101,8 @@ array('it_id' => $row['it_id'], 'od_id' => $od_id, 'ct_select' => 1), array('ord
 
 // 배송비가 있다면 총계에 더한다
 if ($od_send_cost)
-    $ttotal_price += $od_send_cost;
+    $ttotal_price += (int) $od_send_cost;
 
 // 추가배송비가 있다면 총계에 더한다
 if ($od_send_cost2)
-    $ttotal_price += $od_send_cost2;
+    $ttotal_price += (int) $od_send_cost2;

@@ -89,7 +89,7 @@ if ($ca['ca_skin_dir']) {
 define('G5_SUBSCRIPTION_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 
 if ($is_admin) {
-    echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/subscription_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin btn"><span class="sound_only">분류 관리</span><i class="fa fa-cog fa-spin fa-fw"></i></a></div>';
+    echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/subscription_admin/itemlist.php" class="btn_admin btn"><span class="sound_only">분류 관리</span><i class="fa fa-cog fa-spin fa-fw"></i></a></div>';
 }
 ?>
 
