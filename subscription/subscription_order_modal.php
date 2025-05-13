@@ -41,7 +41,7 @@ $subscription_use_inputs = get_subscription_use_inputs();
                     }
                     
                     $opt_print = $opt['opt_print'] ? $opt['opt_print'] : $opt['opt_input'].' 일마다';
-                    
+                     
                     if (!$opt['opt_print']) {
                         
                         if (!$opt['opt_input']) $opt['opt_input'] = 1;
@@ -85,8 +85,21 @@ $subscription_use_inputs = get_subscription_use_inputs();
                     }
                     
                     if ($opt['opt_input'] || $opt['opt_date_format']) {
-                        $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
+                        $opt_print = str_replace("{입력}", (int) $opt['opt_input'], $opt_print);
                         $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                        
+                        $opt_etc_str = '';
+                        
+                        if ($opt['opt_etc']) {
+                            
+                            if ($opt['opt_date_format'] === 'week') {
+                                $opt_etc_str = get_subscriptionDayOfWeek($opt['opt_etc']);
+                            } else if ($opt['opt_date_format'] === 'month') {
+                                $opt_etc_str = (int) $opt['opt_etc'].'일';
+                            }
+                        }
+                        
+                        $opt_print = str_replace("{기타}", $opt_etc_str, $opt_print);
                     }
                     
                     $checked = (isset($aparams_array['delivery_cycle']) && $aparams_array['delivery_cycle'] === $key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format'].'||'.$opt['opt_etc']) ? 'checked' : '';
@@ -151,6 +164,17 @@ $subscription_use_inputs = get_subscription_use_inputs();
                     if ($opt['opt_input'] || $opt['opt_date_format']) {
                         $opt_print = str_replace("{입력}", $opt['opt_input'], $opt_print);
                         $opt_print = str_replace("{결제주기}", get_hangul_date_format($opt['opt_date_format']), $opt_print);
+                        
+                        if ($opt['opt_etc']) {
+                            
+                            if ($opt['opt_date_format'] === 'week') {
+                                $opt_etc_str = get_subscriptionDayOfWeek($opt['opt_etc']);
+                            } else if ($opt['opt_date_format'] === 'month') {
+                                $opt_etc_str = (int) $opt['opt_etc'].'일';
+                            }
+                        }
+                        
+                        $opt_print = str_replace("{기타}", $opt_etc_str, $opt_print);
                     }
                 ?>
                     <option value="<?php echo get_text($key.'||'.$opt['opt_input'].'||'.$opt['opt_date_format']); ?>"><?php echo $opt_print; ?></option>
