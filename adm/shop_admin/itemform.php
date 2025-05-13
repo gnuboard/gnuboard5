@@ -92,6 +92,10 @@ if ($w == "")
     //$it[it_origin] = stripslashes($_COOKIE[ck_origin]);
     $it['it_maker']  = stripslashes(get_cookie("ck_maker"));
     $it['it_origin'] = stripslashes(get_cookie("ck_origin"));
+    
+    if (defined('IS_ADM_SUBSCRIPTION_ITEM') && IS_ADM_SUBSCRIPTION_ITEM) {
+        $it['it_class_num'] = 1;
+    }
 }
 else if ($w == "u")
 {

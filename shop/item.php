@@ -16,8 +16,12 @@ if (! (isset($it['it_id']) && $it['it_id']))
 
 $it_id = $_REQUEST['it_id'] = $it['it_id'];
 
-if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
-    shop_seo_title_update($row['it_id']);
+if (isset($it['it_seo_title']) && !$it['it_seo_title']){
+    shop_seo_title_update($it['it_id']);
+}
+
+if (isset($it['it_class_num']) && (int) $it['it_class_num'] === 1) {
+    goto_url(G5_SUBSCRIPTION_URL.'/item.php?'.$_SERVER['QUERY_STRING']);
 }
 
 if (function_exists('check_case_exist_title')) check_case_exist_title($it, G5_SHOP_DIR, true);

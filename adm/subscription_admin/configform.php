@@ -295,13 +295,24 @@ Array
                             <td>
                             <select class="subscription_date_format" name="opt_date_format[]">
                                 <option value="day">일</option>
-                                <option value="week">주</option>
+                                <option value="week" selected>주</option>
                                 <option value="month">월</option>
                                 <option value="year">년</option>
                             </select>
                             </td>
                             <td>
-                                <input type="text" class="frm_input subscription_print_format" name="opt_print[]" title="">
+                                <span class="default_etc_format">
+                                    <select name="opt_etc[]">
+                                        <option value="">선택안함</option>
+                                        <option value="mon">월요일</option>
+                                        <option value="tue">화요일</option>
+                                        <option value="wed">수요일</option>
+                                        <option value="thu">목요일</option>
+                                        <option value="fri">금요일</option>
+                                    </select></span>
+                            </td>
+                            <td>
+                                <input type="text" class="frm_input subscription_print_format" name="opt_print[]" title="" value="" size="40">
                             </td>
                             <td>
                                 <select name="opt_use[]" id="spl_use_<?php echo $i; ?>">
