@@ -58,22 +58,22 @@ $g5['title'] = 'KG이니시스 간편인증';
 include_once(G5_PATH.'/head.sub.php'); 	
 ?>
     <form name="saForm">
-        <input type="hidden" name="mid" value="<?php echo $mid ?>"> <!-- 필수 값 -->
-        <input type="hidden" name="reqSvcCd" value="<?php echo $reqSvcCd ?>"> <!-- 필수 값 -->
-        <input type="hidden" name="mTxId" value="<?php echo $mTxId ?>"> <!-- 필수 값 -->
+        <input type="hidden" name="mid" value="<?php echo get_text($mid); ?>"> <!-- 필수 값 -->
+        <input type="hidden" name="reqSvcCd" value="<?php echo get_text($reqSvcCd); ?>"> <!-- 필수 값 -->
+        <input type="hidden" name="mTxId" value="<?php echo get_text($mTxId); ?>"> <!-- 필수 값 -->
 
-        <input type="hidden" name="authHash" value="<?php echo $authHash ?>"> <!-- 필수 값 -->
-        <input type="hidden" name="flgFixedUser" value="<?php echo $flgFixedUser ?>"> <!-- 필수 값 Y/N 특정사용자 인증 요청 여부 -->
-        <input type="hidden" name="userName" value="<?php echo $userName ?>">
-        <input type="hidden" name="userPhone" value="<?php echo $userPhone ?>">
-        <input type="hidden" name="userBirth" value="<?php echo $userBirth ?>">
-        <input type="hidden" name="userHash" value="<?php echo $userHash ?>">
-        <input type="hidden" name="reservedMsg" value="<?php echo $reservedMsg; ?>">
-        <input type="hidden" name="mbId" value="<?php echo $member['mb_id']; ?>">
-        <input type="hidden" name="directAgency" value="<?php echo isset($_GET['directAgency']) ? clean_xss_tags($_GET['directAgency'], 1, 1) : ''; ?>">
+        <input type="hidden" name="authHash" value="<?php echo get_text($authHash); ?>"> <!-- 필수 값 -->
+        <input type="hidden" name="flgFixedUser" value="<?php echo get_text($flgFixedUser); ?>"> <!-- 필수 값 Y/N 특정사용자 인증 요청 여부 -->
+        <input type="hidden" name="userName" value="<?php echo get_text($userName); ?>">
+        <input type="hidden" name="userPhone" value="<?php echo get_text($userPhone); ?>">
+        <input type="hidden" name="userBirth" value="<?php echo get_text($userBirth); ?>">
+        <input type="hidden" name="userHash" value="<?php echo get_text($userHash); ?>">
+        <input type="hidden" name="reservedMsg" value="<?php echo get_text($reservedMsg); ?>">
+        <input type="hidden" name="mbId" value="<?php echo get_text($member['mb_id']); ?>">
+        <input type="hidden" name="directAgency" value="<?php echo isset($_GET['directAgency']) ? get_text(clean_xss_tags($_GET['directAgency'], 1, 1)) : ''; ?>">
 
-        <input type="hidden" name="successUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->
-        <input type="hidden" name="failUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->
+        <input type="hidden" name="successUrl" value="<?php echo get_text($resultUrl); ?>"> <!-- 필수 값 -->
+        <input type="hidden" name="failUrl" value="<?php echo get_text($resultUrl); ?>"> <!-- 필수 값 -->
         <!-- successUrl / failUrl 은 분리 하여 이용가능!-->
     </form> 
     <script>
