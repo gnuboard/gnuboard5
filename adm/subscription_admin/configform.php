@@ -345,6 +345,11 @@ Array
                             if ($subscription_use_inputs) { ?>
                             <?php
                             foreach ($subscription_use_inputs as $use) {
+                                
+                                if (!(isset($use['use_input']) && $use['use_input'])) {
+                                    continue;
+                                }
+                                
                                 $disabled_attr = ($i === 0) ? 'disabled' : '';
                             ?>
                             <tr class="trtr" data-jbox-content="">
@@ -354,7 +359,7 @@ Array
                                 </td>
                                 <td>
                                     <span class="default_format">
-                                        <input type="number" name="use_input[]" class="frm_input" value="<?php echo $use['use_input']; ?>">
+                                        <input type="number" name="use_input[]" class="frm_input" required min="1" value="<?php echo get_text($use['use_input']); ?>">
                                     </span>
                                 </td>
                                 <td>
@@ -377,7 +382,7 @@ Array
                                 </td>
                                 <td>
                                     <span class="default_format">
-                                        <input type="number" name="use_input[]" class="frm_input" value="1">
+                                        <input type="number" name="use_input[]" class="frm_input" value="1" required min="1">
                                     </span>
                                 </td>
                                 <td>
@@ -511,7 +516,7 @@ Array
                     function get_yoil(str) {
                         var arr_yoil = {"mon": "월요일", "tue": "화요일", "wed": "수요일", "thu": "목요일", "fri": "금요일", "sat": "토요일", "sun": "일요일"};
 
-                        return arr_yoil[str];
+                        return arr_yoil[str] || '';
                     }
                     
                     function getHangulDateFormat(str) {
@@ -543,17 +548,28 @@ Array
                             year_content = "매년 결제한 일에 정기결제합니다.";
                         
                         var $opt_input_val = $opt_input.val(),
-                            $opt_print_val = $opt_print.val();
+                            $opt_print_val = $opt_print.val(),
+                            $opt_etc_val = $opt_etc.val();
+                        
+                        console.log($opt_input_val, $opt_print_val, $opt_etc_val, selectedValue, getHangulDateFormat(selectedValue));
                         
                         if ($opt_input_val && is_change_format === 2) {
                             day_content = "매 "+ $opt_input_val +"일 마다 정기결제합니다.";
-                            week_content = "매주 "+ get_yoil($opt_input_val) +" 마다 정기결제합니다.";
-                            month_content = "매월 "+ $opt_input_val +"일에 정기결제합니다.";
+                            week_content = "매 " + $opt_input_val  +"주마다 "+ get_yoil($opt_etc_val) +" 마다 정기결제합니다.";
+                            month_content = "매 "+ $opt_input_val +"월마다 " + $opt_etc_val + "일에 정기결제합니다.";
                         }
                         
                         $opt_print_val = $opt_print_val.replace("{입력}", $opt_input_val);
                         $opt_print_val = $opt_print_val.replace("{결제주기}", getHangulDateFormat(selectedValue));
-
+                        
+                        if (selectedValue === 'week') {
+                            $opt_print_val = $opt_print_val.replace("{기타}", get_yoil($opt_etc_val));
+                        } else if (selectedValue === 'month') {
+                            $opt_print_val = $opt_print_val.replace("{기타}", $opt_etc_val + "일");
+                        } else {
+                            $opt_print_val = $opt_print_val.replace("{기타}", "");
+                        }
+                        
                         var add_content = "<br>"+$opt_print_val;
                         
                         
@@ -574,12 +590,12 @@ Array
                                         <option value="wed">수요일</option>
                                         <option value="thu">목요일</option>
                                         <option value="fri">금요일</option>
-                                    </select>`,
+                                    </select>요일`,
                                 content: week_content + add_content
                             },
                             month: {
                                 input: '<input type="number" name="opt_input[]" class="frm_input" value="1">',
-                                etc_input: '<input type="number" name="opt_etc[]" class="frm_input month_input" min="0" max="31" value="0">',
+                                etc_input: '<input type="number" name="opt_etc[]" class="frm_input month_input" min="0" max="31" value="0">일',
                                 content: month_content + add_content
                             },
                             year: {
@@ -610,7 +626,7 @@ Array
                         
                     });
                     
-                    $(document).on("change input", 'input[name="opt_print[]"]', function (e) {
+                    $(document).on("change input focus", 'input[name="opt_print[]"]', function (e) {
                         var $this = $(this);
                         
                         console.log('is_print', $(this).val());
