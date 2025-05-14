@@ -130,13 +130,13 @@
     </wsdl:binding>
     <wsdl:service name="PayService">
         <wsdl:port name="PayServiceHttpSoap11Endpoint" binding="ns:PayServiceSoap11Binding">
-            <soap:address location="https://devpggw.kcp.co.kr:8100/services/KCPPaymentService"/>
+            <soap:address location="https://testsmpay.kcp.co.kr/services/KCPPaymentService"/>
         </wsdl:port>
         <wsdl:port name="PayServiceHttpSoap12Endpoint" binding="ns:PayServiceSoap12Binding">
-            <soap12:address location="https://devpggw.kcp.co.kr:8100/services/KCPPaymentService"/>
+            <soap12:address location="https://testsmpay.kcp.co.kr/services/KCPPaymentService"/>
         </wsdl:port>
         <wsdl:port name="PayServiceHttpEndpoint" binding="ns:PayServiceHttpBinding">
-            <http:address location="https://devpggw.kcp.co.kr:8100/services/KCPPaymentService"/>
+            <http:address location="https://testsmpay.kcp.co.kr/services/KCPPaymentService"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
