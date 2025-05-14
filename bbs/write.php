@@ -20,7 +20,7 @@ if (!($w == '' || $w == 'u' || $w == 'r')) {
 }
 
 if ($w == 'u' || $w == 'r') {
-    if ($write['wr_id']) {
+    if (isset($write['wr_id']) && $write['wr_id']) {
         // 가변 변수로 $wr_1 .. $wr_10 까지 만든다.
         for ($i=1; $i<=10; $i++) {
             $vvar = "wr_".$i;
