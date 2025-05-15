@@ -525,7 +525,6 @@ if (isset($_REQUEST['gr_id'])) {
 }
 //===================================
 
-
 // 자동로그인 부분에서 첫로그인에 포인트 부여하던것을 로그인중일때로 변경하면서 코드도 대폭 수정하였습니다.
 if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
@@ -585,20 +584,8 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
     // 자동로그인 end ---------------------------------------
 }
 
-// 회원, 비회원 구분
-$is_member = $is_guest = false;
-$is_admin = '';
-if (isset($member['mb_id']) && $member['mb_id']) {
-    $is_member = true;
-    $is_admin = is_admin($member['mb_id']);
-    $member['mb_dir'] = substr($member['mb_id'],0,2);
-} else {
-    $is_guest = true;
-    $member['mb_id'] = '';
-    $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
-}
-
-if ($is_admin != 'super') {
+// 최고관리자가 아니면 IP를 체크한다.
+if (!(isset($member['mb_id']) && $config['cf_admin'] === $member['mb_id'])) {
     // 접근가능 IP
     $cf_possible_ip = trim($config['cf_possible_ip']);
     if ($cf_possible_ip) {
@@ -673,6 +660,19 @@ if ($config['cf_editor']) {
     define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
 } else {
     define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
+}
+
+// 회원, 비회원 구분
+$is_member = $is_guest = false;
+$is_admin = '';
+if (isset($member['mb_id']) && $member['mb_id']) {
+    $is_member = true;
+    $is_admin = is_admin($member['mb_id']);
+    $member['mb_dir'] = substr($member['mb_id'],0,2);
+} else {
+    $is_guest = true;
+    $member['mb_id'] = '';
+    $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
 }
 
 // 테마경로
