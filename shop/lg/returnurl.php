@@ -46,7 +46,7 @@ $payReqMap = $_SESSION['PAYREQ_MAP'];//결제 요청시, Session에 저장했던
 <form method="post" name="LGD_RETURNINFO" id="LGD_RETURNINFO">
 <?php
 	  foreach ($payReqMap as $key => $value) {
-      echo "<input type='hidden' name='$key' id='$key' value='$value'>";
+      echo "<input type='hidden' name='".get_text($key)."' id='".get_text($key)."' value='".get_text($value)."'>";
     }
 ?>
 </form>

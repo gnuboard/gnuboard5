@@ -59,7 +59,7 @@ $payReqMap = $_SESSION['lgd_certify'];//결제 요청시, Session에 저장했�
 	  foreach ($payReqMap as $key => $value) {
         $key = htmlspecialchars(strip_tags($key));
         $value = htmlspecialchars(strip_tags($value));
-      echo "<input type='hidden' name='$key' id='$key' value='$value'>";
+      echo "<input type='hidden' name='".get_text($key)."' id='".get_text($key)."' value='".get_text($value)."'>";
     }
 ?>
 </form>

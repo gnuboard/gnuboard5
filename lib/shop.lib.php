@@ -2641,10 +2641,10 @@ function make_order_field($data, $exclude)
 
         if(is_array($value)) {
             foreach($value as $k=>$v) {
-                $field .= '<input type="hidden" name="'.$key.'['.$k.']" value="'.get_text($v).'">'.PHP_EOL;
+                $field .= '<input type="hidden" name="'.get_text($key.'['.$k.']').'" value="'.get_text($v).'">'.PHP_EOL;
             }
         } else {
-            $field .= '<input type="hidden" name="'.$key.'" value="'.get_text($value).'">'.PHP_EOL;
+            $field .= '<input type="hidden" name="'.get_text($key).'" value="'.get_text($value).'">'.PHP_EOL;
         }
     }
 
