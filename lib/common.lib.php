@@ -4186,7 +4186,14 @@ function is_include_path_check($path='', $is_input='')
             if ( $peer_count && $peer_count > $slash_count ){
                 return false;
             }
-
+            
+            $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(__DIR__)));
+            
+            // 웹서버 폴더만 허용
+            if ($dirname_doc_root && file_exists($path) && strpos(realpath($path), realpath($dirname_doc_root)) !== 0) {
+                return false;
+            }
+            
             try {
                 // whether $path is unix or not
                 $unipath = strlen($path)==0 || substr($path, 0, 1) != '/';
@@ -4222,8 +4229,8 @@ function is_include_path_check($path='', $is_input='')
                 //echo 'Caught exception: ',  $e->getMessage(), "\n";
                 return false;
             }
-
-            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
+            
+            if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pear(cmd)?\.php/i', $replace_path)){
                 return false;
             }
             if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) || (preg_match('/search\.skin\.php/i', $replace_path) ) ){
