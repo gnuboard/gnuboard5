@@ -64,15 +64,15 @@ $mb_8           = isset($_POST['mb_8'])             ? trim($_POST['mb_8'])      
 $mb_9           = isset($_POST['mb_9'])             ? trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])          : "";
 
-$mb_name        = clean_xss_tags($mb_name);
+$mb_name        = clean_xss_tags($mb_name, 1, 1);
 $mb_email       = get_email_address($mb_email);
-$mb_homepage    = clean_xss_tags($mb_homepage);
-$mb_tel         = clean_xss_tags($mb_tel);
+$mb_homepage    = clean_xss_tags($mb_homepage, 1, 1);
+$mb_tel         = clean_xss_tags($mb_tel, 1, 1);
 $mb_zip1        = preg_replace('/[^0-9]/', '', $mb_zip1);
 $mb_zip2        = preg_replace('/[^0-9]/', '', $mb_zip2);
-$mb_addr1       = clean_xss_tags($mb_addr1);
-$mb_addr2       = clean_xss_tags($mb_addr2);
-$mb_addr3       = clean_xss_tags($mb_addr3);
+$mb_addr1       = clean_xss_tags($mb_addr1, 1, 1);
+$mb_addr2       = clean_xss_tags($mb_addr2, 1, 1);
+$mb_addr3       = clean_xss_tags($mb_addr3, 1, 1);
 $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
 
 run_event('register_form_update_before', $mb_id, $w);
