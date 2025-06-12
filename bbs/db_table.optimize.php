@@ -29,7 +29,11 @@ if($config['cf_popular_del'] > 0) {
 if($config['cf_new_del'] > 0) {
     $sql = " delete from {$g5['board_new_table']} where (TO_DAYS('".G5_TIME_YMDHIS."') - TO_DAYS(bn_datetime)) > '{$config['cf_new_del']}' ";
     sql_query($sql);
-    sql_query(" OPTIMIZE TABLE `{$g5['board_new_table']}` ");
+    
+    // 데이터가 많으면 처리시간 때문에 브라우저 응답이 늦을수 있음
+    if (defined('G5_USE_OPTIMIZE_DBTABLE') && G5_USE_OPTIMIZE_DBTABLE) {
+        sql_query(" OPTIMIZE TABLE `{$g5['board_new_table']}` ");
+    }
 }
 
 // 설정일이 지난 쪽지 삭제
