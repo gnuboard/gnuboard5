@@ -1,20 +1,65 @@
+# Git 저장소 설정 파일을 무시하지 않도록 설정
 !.gitignore
+
+# Apache 서버 설정 파일을 무시
 /.htaccess
+
+# 데이터 디렉토리 무시
 data/
+
+# 테스트 디렉토리 무시
 test/
+
+# sirgle 디렉토리 무시
 sirgle/
+
+# 특정 파일 무시
 test.php
+
+# 확장자가 .key인 파일 무시
 *.key
+
+# 확장자가 .sh인 파일 무시
 *.sh
-log
-g5_tree
-cheditor5.*/
-!ckeditor*/
+
+# 로그 디렉토리 무시
 log/
+
+# g5_tree 파일 무시
+g5_tree
+
+# cheditor5으로 시작하는 파일 및 디렉토리 무시
+cheditor5.*/
+
+# ckeditor로 시작하는 파일 및 디렉토리 무시하지 않음
+!ckeditor*/
+
+# 로그 디렉토리 무시
+log/
+
+# g5_tree 디렉토리 무시
 g5_tree/
+
+# Visual Studio Code 설정 디렉토리 무시
 .vscode/
+
+# naver로 시작하고 .html로 끝나는 파일 무시
 naver*.html
+
+# initests01 디렉토리 무시
 initests01/
+
+# SIRsoft000 디렉토리 무시
 SIRsoft000/
+
+# config.php 파일 무시
 config.php
+
+# pma 디렉토리 무시
 pma/
+
+# start.sh 파일은 무시하지 않음
+!start.sh
+
+# .env 파일 무시
+.env
