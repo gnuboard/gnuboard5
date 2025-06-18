@@ -2535,6 +2535,10 @@ function get_uniqid()
 {
     global $g5;
 
+    if ($get_uniqid_key = run_replace('get_uniqid_key', '')) {
+        return $get_uniqid_key;
+    }
+    
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
