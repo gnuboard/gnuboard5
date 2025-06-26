@@ -14,6 +14,16 @@ if (G5_IS_MOBILE) {
     return;
 }
 
+// 테마에 list.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_list_file = G5_THEME_SHOP_PATH.'/list.php';
+    if(is_file($theme_list_file)) {
+        include_once($theme_list_file);
+        return;
+    }
+    unset($theme_list_file);
+}
+
 $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' and ca_use = '1'  ";
 $ca = sql_fetch($sql);
 if (! (isset($ca['ca_id']) && $ca['ca_id']))
