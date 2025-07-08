@@ -1141,7 +1141,11 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 function insert_use_point($mb_id, $point, $po_id='')
 {
     global $g5, $config;
-
+    
+    if ($replace_insert = run_replace('insert_use_point_before', '', $mb_id, $point, $po_id)) {
+        return $replace_insert;
+    }
+    
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date asc, po_id asc ";
     else
