@@ -257,7 +257,13 @@ function url_auto_link($str)
 {
     global $g5;
     global $config;
-
+    
+    if ($replace_str = run_replace('url_auto_link_before', '', $str)) {
+        return $replace_str;
+    }
+    
+    $ori_str = $str;
+    
     // 140326 유창화님 제안코드로 수정
     // http://sir.kr/pg_lecture/461
     // http://sir.kr/pg_lecture/463
@@ -290,7 +296,7 @@ function url_auto_link($str)
     $str = preg_replace("/\t_gt_\t/", "&gt;", $str);
     */
 
-    return run_replace('url_auto_link', $str);
+    return run_replace('url_auto_link', $str, $ori_str);
 }
 
 
