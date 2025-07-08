@@ -835,7 +835,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row"><label for="cf_lg_mert_key">토스페이먼츠 MERT KEY</label></th>
             <td>
-                <?php echo help("토스페이먼츠 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 토스페이먼츠 MERT KEY와 동일합니다."); ?>
+                <?php echo help("토스페이먼츠 상점MertKey는 상점관리자 -> 개발자센터 -> API키 -> 머트 키에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
                 <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
             </td>
         </tr>
