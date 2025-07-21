@@ -86,6 +86,7 @@ $qa_related = 0;
 $qa_email_recv = (isset($_POST['qa_email_recv']) && $_POST['qa_email_recv']) ? 1 : 0;
 $qa_sms_recv = (isset($_POST['qa_sms_recv']) && $_POST['qa_sms_recv']) ? 1 : 0;
 $qa_status = 0;
+$qa_html = (isset($_POST['qa_html']) && $_POST['qa_html']) ? (int) $_POST['qa_html'] : 0;
 $answer_id = null;
 
 for ($i=1; $i<=5; $i++) {
