@@ -260,8 +260,8 @@ class item_list
         if ($this->query) {
 
             $sql = $this->query;
-            $result = sql_query($sql);
-            $this->total_count = @sql_num_rows($result);
+            $result = sql_query($sql, false);
+            $this->total_count = $result ? @sql_num_rows($result) : 0;
 
         } else {
 

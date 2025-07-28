@@ -291,6 +291,9 @@ function pg_anchor($anc_id)
     </ul>
 <?php
 }
+
+$naverpay_button_js = '';
+include_once(G5_SHOP_PATH . '/settle_naverpay.inc.php');
 ?>
 
 <?php if ($is_orderable) { ?>

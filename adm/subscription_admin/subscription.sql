@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_chk_user_delivery` tinyint(1) NOT NULL DEFAULT '0',
   `su_user_delivery_title` varchar(80) NOT NULL DEFAULT '',
   `su_user_delivery_minimum` tinyint(4) NOT NULL DEFAULT '0',
-  `su_user_delivery_template` varchar(200) NOT NULL DEFAULT '',
+  `su_user_select_title` varchar(80) NOT NULL DEFAULT '',
   `su_user_delivery_default_day` tinyint(4) NOT NULL DEFAULT '0',
   `su_subscription_content_first` text NOT NULL,
   `su_subscription_content_end` text NOT NULL,
