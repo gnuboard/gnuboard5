@@ -1,0 +1,343 @@
+@charset "utf-8";
+
+.rel { position: relative; } 
+.hide { display: none; } 
+.show-block { display: block; } 
+.show-inline { display: inline; } 
+.show-inline-block { display: inline-block; } 
+.warning { line-height: 1.7em; padding: 5px; background: #f7ecea; border: 1px solid #ffb6c1; color: #ff0000; font-weight: bold; margin-bottom: 1em; } 
+
+.rel .sod_option_btn { position: absolute; right: 0; bottom: 5px; } 
+.sod_option_btn .mod_options { margin: 5px 0 0; padding: 5px; border: 1px solid #d4d6db; color: #606060; background: #fff; border-radius: 3px; } 
+
+/* 전체 컨테이너 스타일 */
+.order-historys { list-style: none; padding: 0; margin: 20px 0; display: block; } 
+
+/* 개별 히스토리 아이템 (메모지 스타일) */
+.history-item { background: #fff8e1; /* 연한 노란색 (포스트잇 느낌) */
+ border: 1px solid #ffe082; border-radius: 5px; min-height: 100px; /* 최소 높이 */
+ padding: 15px; box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1); /* 살짝 기울어진 그림자 */
+ position: relative; transition: transform 0.2s, box-shadow 0.2s; margin: 0 auto 20px; /* 중앙 정렬 및 하단 여백 */}
+
+/* 호버 효과 */
+.history-item:hover { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); } 
+
+/* 히스토리 내용 */
+.history-content { color: #4a4a4a; /* 짙은 회색 */
+ margin-bottom: 20px; } 
+
+/* 링크 스타일 */
+.history-content a { color: #d81b60; /* 포인트 컬러 (핑크) */
+ text-decoration: underline; } 
+
+/* 버튼과 날짜 컨테이너 */
+.history-btns { position: absolute; bottom: 10px; left: 15px; right: 15px; display: flex; /* justify-content: space-between; */
+ align-items: center; font-size: 11px; color: #666; } 
+
+/* 날짜 스타일 */
+.history-date { opacity: 0.8; } 
+
+/* 삭제 버튼 스타일 */
+.order-historys .delete-history { margin-left: 2em; background: #ef5350; /* 부드러운 빨간색 */
+ color: #fff; padding: 4px 8px; border-radius: 3px; text-decoration: none; font-size: 11px; transition: background 0.2s; } 
+
+.delete-history:hover { background: #d32f2f; /* 더 진한 빨간색 */}
+
+.history-item.user { background: #f1f8e9; /* 연한 초록 */
+ border-color: #dcedc8; } 
+.history-item.admin { background: #fff8e1; /* 연한 노랑 */
+ border-color: #ffe082; } 
+.history-item.notice { background: #fce4ec; /* 연한 핑크 */
+ border-color: #f8bbd0; } 
+
+.history-item:before { content: ""; position: absolute; top: -5px; left: 10px; width: 10px; height: 10px; background: #ef5350; border-radius: 50%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); } 
+
+select.subscription_date_format { min-width: 80px; } 
+
+.input-disabled { background-color: #e9ecef; /* 회색 배경 */
+ color: #6c757d; /* 흐린 글자색 */
+ border: 1px solid #ced4da; /* 기본 테두리 유지 */
+ cursor: not-allowed; /* 마우스 포인터 변경 */
+ pointer-events: none; /* 클릭/입력 방지 */}
+.calendar-wrap { display: flex; height: 100vh; } 
+.calendar-main { flex: 8; width: 100%; display: flex; position: relative; /*
+align-items: center;justify-content: center;*/}
+.calendar-side { flex: 2; display: flex; /*
+align-items: center;justify-content: center;*/}
+
+.fullcalendar { width: 100%; } 
+
+.fc-popover.fc-more-popover { max-height: 380px; /* 원하는 최대 높이 지정 */
+ overflow-y: auto; /* 내부 스크롤 추가 */}
+
+.fullcalendar .fc-event-time { display: none !important; } 
+
+.jquery-modal.blocker { z-index: 9999; } 
+.jquery-modal .modal { max-width: 600px; padding: 1em 2em; z-index: 10001; } 
+
+.modal_contents { max-height: 500px; overflow-y: auto; /* 세로 스크롤바 추가 */
+ overflow-x: hidden; /* 가로 스크롤 방지 (필요하면) */}
+
+.modal_contents .product-list { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 20px auto; } 
+.modal_contents .product-item { display: flex; border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #f9f9f9; align-items: center; gap: 15px; } 
+.modal_contents .product-img img { width: 55px; height: 55px; border-radius: 5px; } 
+.modal_contents .product-info { flex-grow: 1; } 
+.modal_contents .product-name { font-size: 16px; font-weight: bold; margin-bottom: 5px; } 
+.modal_contents .product-options { font-size: 14px; color: #666; } 
+.modal_contents .product-meta { text-align: right; } 
+.modal_contents .product-meta div { font-size: 14px; margin-bottom: 5px; } 
+
+.user-subscription-inner ul { list-style: none; padding: 20px; max-width: 600px; margin: auto; background: #f9f9f9; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); list-style: none; } 
+
+.user-subscription-inner h3 { font-size: 18px; color: #333; margin-top: 20px; border-bottom: 2px solid #ddd; padding-bottom: 5px; } 
+
+.user-subscription-inner li { font-size: 16px; padding: 8px 0; border-bottom: 1px solid #eee; list-style: none; } 
+
+.user-subscription-inner li:last-child { border-bottom: none; } 
+
+.user-subscription-inner span.th { color: #444; display: inline-block; font-weight: bold; width: 90px; } 
+
+.user-subscription-inner .is_pay_test { color: red; font-weight: bold; text-align: left; background: #ffecec; padding: 10px; border-radius: 5px; margin-top: 10px; } 
+
+.user-subscription-inner .is_not_delivery { color: #777; font-style: italic; text-align: center; background: #f2f2f2; padding: 10px; border-radius: 5px; margin-top: 10px; } 
+
+.user-subscription-inner a.subscription-receipt-view { display: inline-block; padding: 6px 10px; margin-top: 5px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; transition: 0.3s; } 
+
+.user-subscription-inner a.subscription-receipt-view:hover { background: #0056b3; } 
+
+/*
+.fc-daygrid-day-events { max-height: none !important; overflow: visible !important; } 
+
+.fc .fc-daygrid-day-frame { height: auto !important; } 
+*/
+
+/* 로딩 오버레이 스타일 */
+
+.loading-overlay { display: none; /* 기본적으로 숨김 */
+ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3); z-index: 1000; display: flex; flex-direction: column; /* 세로로 쌓이도록 설정 */
+ justify-content: center; /* 수직 중앙 정렬 */
+ align-items: center; /* 수평 중앙 정렬 */}
+
+.spinner { width: 60px; height: 60px; border: 6px solid #f3f3f3; border-top: 6px solid #3788d8; border-right: 6px solid #28a745; border-bottom: 6px solid #ff9f89; border-radius: 50%; animation: spin 1.2s ease-in-out infinite; } 
+
+.loading-text { color: #fff; font-size: 18px; margin-top: 15px; font-family: "Arial", sans-serif; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); } 
+
+.loading-text::after { content: ""; animation: dots 1.5s steps(3, end) infinite; } 
+
+@keyframes spin { 
+ 0% { transform: rotate(0deg); } 
+ 100% { transform: rotate(360deg); } 
+ }
+
+@keyframes dots { 
+ 0% { content: "."; } 
+ 33% { content: ".."; } 
+ 66% { content: "..."; } 
+ }
+
+.popper,
+.tooltip { position: absolute; z-index: 9999; background: #ffc107; color: black; width: 150px; border-radius: 3px; box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); padding: 10px; text-align: center; } 
+.style5 .tooltip { background: #1e252b; color: #ffffff; max-width: 200px; width: auto; font-size: 0.8rem; padding: 0.5em 1em; } 
+.popper .popper__arrow,
+.tooltip .tooltip-arrow { width: 0; height: 0; border-style: solid; position: absolute; margin: 5px; } 
+
+.tooltip .tooltip-arrow,
+.popper .popper__arrow { border-color: #ffc107; } 
+.style5 .tooltip .tooltip-arrow { border-color: #1e252b; } 
+.popper[x-placement^="top"],
+.tooltip[x-placement^="top"] { margin-bottom: 5px; } 
+.popper[x-placement^="top"] .popper__arrow,
+.tooltip[x-placement^="top"] .tooltip-arrow { border-width: 5px 5px 0 5px; border-left-color: transparent; border-right-color: transparent; border-bottom-color: transparent; bottom: -5px; left: calc(50% - 5px); margin-top: 0; margin-bottom: 0; } 
+.popper[x-placement^="bottom"],
+.tooltip[x-placement^="bottom"] { margin-top: 5px; } 
+.tooltip[x-placement^="bottom"] .tooltip-arrow,
+.popper[x-placement^="bottom"] .popper__arrow { border-width: 0 5px 5px 5px; border-left-color: transparent; border-right-color: transparent; border-top-color: transparent; top: -5px; left: calc(50% - 5px); margin-top: 0; margin-bottom: 0; } 
+.tooltip[x-placement^="right"],
+.popper[x-placement^="right"] { margin-left: 5px; } 
+.popper[x-placement^="right"] .popper__arrow,
+.tooltip[x-placement^="right"] .tooltip-arrow { border-width: 5px 5px 5px 0; border-left-color: transparent; border-top-color: transparent; border-bottom-color: transparent; left: -5px; top: calc(50% - 5px); margin-left: 0; margin-right: 0; } 
+.popper[x-placement^="left"],
+.tooltip[x-placement^="left"] { margin-right: 5px; } 
+.popper[x-placement^="left"] .popper__arrow,
+.tooltip[x-placement^="left"] .tooltip-arrow { border-width: 5px 0 5px 5px; border-top-color: transparent; border-right-color: transparent; border-bottom-color: transparent; right: -5px; top: calc(50% - 5px); margin-left: 0; margin-right: 0; } 
+
+.calendar-description { margin: 50px 0 0 20px; } 
+
+.subscription-admin-warning { background-color: #ff4d4d; color: white; padding: 16px; text-align: left; font-weight: bold; font-size: 16px; border-bottom: 2px solid #cc0000; position: relative; } 
+
+.subscription-admin-warning .close-btn { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 20px; cursor: pointer; } 
+
+.subscription-admin-warning .close-btn:hover { color: #333; } 
+
+.adm_mod_option_frm h2 { border-bottom: 1px solid #e8e8e8; padding: 0px; line-height: 50px; font-size: 1.25em; margin: 0; } 
+.adm_mod_option_frm #sit_sel_option { margin: 0.5em; } 
+.adm_mod_option_frm #sit_tot_price { float: left; display: inline-block; margin: 0 20px 20px; } 
+.adm_mod_option_frm #sit_opt_added { } 
+.adm_mod_option_frm .btn_confirm { float: right; display: inline-block; margin: 0 20px 20px; background: yellow; } 
+.adm_mod_option_frm .btn_confirm .btn_submit { width: 100px; height: 40px; font-size: 1.167em; font-weight: bold; cursor: pointer; } 
+.adm_mod_option_frm .btn_confirm .btn_close { display: none; } 
+/*#mod_option_frm .btn_confirm .btn_close:hover { background:#f3f3f3 } */
+
+#sit_opt_added { margin: 0; padding: 0; border-bottom: 0; list-style: none; } 
+#sit_opt_added li { padding: 10px 15px; background: #f9f9f9; border: 1px solid #e6e9ed; margin: 10px 0; position: relative; } 
+#sit_opt_added li:after { display: block; visibility: hidden; clear: both; content: ""; } 
+#sit_opt_added li .opt_name { line-height: 28px; font-weight: bold; } 
+#sit_opt_added li .opt_count { } 
+#sit_opt_added button { float: left; width: 30px; height: 30px; border: 1px solid #bdc9dc; border-radius: 0; background: #fff; color: #666 !important; font-size: 0.92em; } 
+#sit_opt_added button:hover { color: #000; } 
+#sit_opt_added .num_input { float: left; border: 0; height: 30px; border-top: 1px solid #e4e4e4; border-bottom: 1px solid #e4e4e4; text-align: center; } 
+#sit_opt_added .sit_opt_del { position: absolute; right: 0; top: 0; font-size: 15px; border: 0; border-left: 1px solid #e6e9ed; border-bottom: 1px solid #e6e9ed; } 
+#sit_opt_added .sit_opt_del:hover { color: #be334a; } 
+#sit_opt_added .sit_opt_prc { display: block; float: right; width: 100px; padding: 0 3px; text-align: right; line-height: 30px; font-size: 1.183em; font-weight: bold; } 
+
+.option_wr { padding: 0.5em; } 
+.option_wr h3 { font-size: 1.167em; margin-bottom: 10px; } 
+.option_wr .get_item_options,
+.option_wr .get_item_supply { margin-bottom: 10px; } 
+.option_wr label { display: block; margin: 10px 0 5px; } 
+.option_wr select { width: 100%; border: 1px solid #d4d4d4; height: 48px; } 
+#sit_sel_option h3 { position: absolute; font-size: 0; line-height: 0; overflow: hidden; } 
+
+/* 일요일 날짜: 빨간색 */
+.fc-day-sun a.fc-daygrid-day-number { color: red; } 
+
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a.fc-daygrid-day-number { color: blue; } 
+
+.holiday-settings .fc-daygrid-day-number.holiday { color: red; } 
+.holiday-settings .fc-daygrid-day-number .ellipsis { padding-right: 6px; text-align: right; } 
+
+.description-holidays { margin: 30px 0 0 5%; } 
+.description-holidays h3 { margin-top: 20px; margin-bottom: 10px; color: #333; border-bottom: 2px solid #ddd; padding-bottom: 5px; font-size: 18px; } 
+
+.description-holidays .api-holidays,
+.description-holidays .admin-set-holidays { min-height: 100px; } 
+
+.description-holidays .api-holidays ul,
+.description-holidays .admin-set-holidays ul { list-style: none; padding-left: 0; } 
+
+.description-holidays .api-holidays li,
+.description-holidays .admin-set-holidays li { background-color: #fff; border: 1px solid #ddd; border-left: 4px solid #dc3545; margin-bottom: 4px; padding: 5px; border-radius: 6px; font-size: 14px; color: #444; } 
+
+.description-holidays .admin-set-holidays li { border-left-color: #28a745; /* green by default */}
+
+.description-holidays .admin-set-holidays li.h { border-left-color: #ff6f00; /* red for 휴무일 */}
+
+.description-holidays .admin-set-holidays li.w { border-left-color: #3788d8; /* green for 영업일 */}
+
+.modal-content h3 { margin-bottom: 20px; font-size: 20px; font-weight: 600; color: #333; text-align: center; } 
+
+.modal-content label { display: block; font-size: 14px; color: #444; margin-bottom: 5px; } 
+
+.modal-content input[type="date"],
+.modal-content input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; margin-top: 4px; box-sizing: border-box; } 
+
+.modal-content input[type="radio"] { margin-right: 6px; } 
+
+.modal-content div { margin-bottom: 15px; } 
+
+.modal-content button { padding: 10px 16px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; margin-right: 8px; transition: background-color 0.2s; } 
+
+#holiday-add-btn { background-color: #4caf50; color: white; } 
+
+#holiday-add-btn:hover { background-color: #45a049; } 
+
+.modal-content button:last-child { background-color: #ccc; color: #333; } 
+
+.modal-content button:last-child:hover { background-color: #bbb; } 
+
+.subscription-list { list-style: none; padding: 0; margin: 0 auto; border: 1px solid #e3e5e8; border-top: 0 none; margin-bottom: 2em; } 
+
+.subscription-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-top: 1px solid #e3e5e8; /* border-radius: 10px; */
+ background-color: #fff; /*
+margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); transition: background 0.3s;*/}
+
+.subscription-item.is-current { background-color: #e8f6ff; } 
+
+.count-area { display: flex; align-items: center; gap: 8px; } 
+
+.count { font-weight: 600; font-size: 16px; } 
+
+.badge { background: #3fa7ff; color: white; padding: 2px 8px; font-size: 12px; border-radius: 12px; } 
+
+.status-area { display: flex; flex-direction: column; gap: 6px; } 
+
+.status { display: flex; align-items: center; gap: 6px; font-size: 14px; } 
+
+.icon-status svg { display: inline-block; vertical-align: middle; } 
+
+.date { font-weight: 500; } 
+
+.text { color: #888; } 
+
+.subscription_config .copy-box {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9f9f9;
+}
+.subscription_config .copy-text {
+      padding: 5px;
+      word-break: break-all;
+}
+.subscription_config .copy-btn {
+      padding: 5px 10px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+}
+.subscription_config .copy-btn:active {
+background-color: #45a049;
+}
+
+.subscription_config .section {
+      background: #fff;
+      padding: 20px 25px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+.subscription_config .section.mb30 {margin-bottom: 30px;}
+.subscription_config .cron-line {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+.subscription_config .cron-input {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f4f4f4;
+    }
+.subscription_config .copy-btn {
+      padding: 8px 12px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+.subscription_config .copy-btn:hover {
+      background: #43a047;
+    }
+.subscription_config .instructions {
+      font-size: 14px;
+      color: #444;
+    }
+.subscription_config code {
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+	
+.subscription_config pre {overflow-x: visible;}

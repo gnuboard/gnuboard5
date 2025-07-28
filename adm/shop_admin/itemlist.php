@@ -1,5 +1,8 @@
 <?php
-$sub_menu = '400300';
+if (!(defined('G5_IS_SUBSCRIPTION_ADMIN_PAGE') && $sub_menu)) {
+    $sub_menu = '400300';
+}
+
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
@@ -9,6 +12,11 @@ if (isset($sfl) && $sfl && !in_array($sfl, array('it_name','it_id','it_maker','i
 }
 
 $g5['title'] = '상품관리';
+
+if (defined('IS_ADM_SUBSCRIPTION_ITEM_LIST') && IS_ADM_SUBSCRIPTION_ITEM_LIST) {
+    $g5['title'] = '정기구독 상품관리';
+}
+
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 // 분류
@@ -51,6 +59,11 @@ $sql_common = " from {$g5['g5_shop_item_table']} a ,
 if ($is_admin != 'super')
     $sql_common .= " and b.ca_mb_id = '{$member['mb_id']}'";
 $sql_common .= ") ";
+
+if (defined('IS_ADM_SUBSCRIPTION_ITEM_LIST') && IS_ADM_SUBSCRIPTION_ITEM_LIST) {
+    $sql_common .= " and a.it_class_num IN (1, 2) ";
+}
+
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -82,6 +95,12 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 ?>
 
+<?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+<div class="admin_pg_notice od_test_caution">
+    정기결제가 활성화 된 경우 분류에서 쇼핑몰과 정기결제를 선택해서 사용할수 있습니다.
+</div>
+<?php } ?>
+    
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     <span class="btn_ov01"><span class="ov_txt">등록된 상품</span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
@@ -253,7 +272,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 <div class="btn_fixed_top">
 
     <a href="./itemform.php" class="btn btn_01">상품등록</a>
-    <a href="./itemexcel.php" onclick="return excelform(this.href);" target="_blank" class="btn btn_02">상품일괄등록</a>
+    <a href="<?php echo G5_ADMIN_URL.'/shop_admin'; ?>/itemexcel.php" onclick="return excelform(this.href);" target="_blank" class="btn btn_02">상품일괄등록</a>
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
     <?php if ($is_admin == 'super') { ?>
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">

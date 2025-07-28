@@ -76,6 +76,9 @@ $cp_count = get_shop_member_coupon_count($member['mb_id'], true);
     </script>
 
     <section id="smb_my_od">
+        
+        <?php run_event('g5_shop_mypage_sub_top'); ?>
+        
         <h2><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php">최근 주문내역</a></h2>
         <?php
         // 최근 주문내역

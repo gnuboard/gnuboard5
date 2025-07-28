@@ -1,6 +1,19 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+// 정기결제를 사용한다면
+if (function_exists('is_use_subscription_item') && is_use_subscription_item($it)) {
+    
+    if (!defined('G5_IS_SUBSCRIPTION_ITEM')) define('G5_IS_SUBSCRIPTION_ITEM', 1);
+    
+    include_once(G5_PLUGIN_PATH . '/jquery-ui/datepicker.php');
+
+    add_javascript('<script src="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.js"></script>', 10);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/jquerymodal/jquery.modal.min.css">', 10);
+    
+    add_stylesheet('<link rel="stylesheet" href="'.G5_CSS_URL.'/subscription.css">', 11);
+}
+
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
 ?>
@@ -10,6 +23,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 	<input type="hidden" name="sw_direct">
 	<input type="hidden" name="url">
 	
+    <?php if (function_exists('is_use_subscription_item') && is_use_subscription_item($it)) { ?>
+        <input type="hidden" name="is_subscription" value="0">
+        <input type="hidden" name="delivery_cycle" id="hidden_delivery_cycle">
+        <input type="hidden" name="usage_count" id="hidden_usage_count">
+        <input type="hidden" name="hope_delivery_date" id="hidden_hope_delivery_date">
+    <?php } ?>
+        
 	<div id="sit_ov_wrap">
 	    <!-- 상품이미지 미리보기 시작 { -->
 	    <div id="sit_pvi">
@@ -300,11 +320,25 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 	        <p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
 	        <?php } ?>
 	
+            <?php if (function_exists('is_use_subscription_item') && is_use_subscription_item($it)) { ?>
+            <div id="subscription-modal-form" class="subscription modal">
+                <?php // 정기결제 공통폼 불러오기
+                    include_once(G5_SUBSCRIPTION_PATH.'/subscription_order_modal.php');
+                ?>
+            </div>
+            <?php } ?>
+                    
 	        <div id="sit_ov_btn">
 	            <?php if ($is_orderable) { ?>
 	            <button type="submit" onclick="document.pressed=this.value;" value="장바구니" class="sit_btn_cart">장바구니</button>
 	            <button type="submit" onclick="document.pressed=this.value;" value="바로구매" class="sit_btn_buy">바로구매</button>
 	            <?php } ?>
+                
+                <?php if (function_exists('is_use_subscription_item') && is_use_subscription_item($it) && $is_orderable) { ?>
+                    <button type="submit" onclick="document.pressed=this.value;" value="구독장바구니" class="sit_btn_cart">구독장바구니</button>
+                    <a href="#subscription-modal-form" rel="modal:open" class="sit-btn-subscription">정기구독</a>
+                <?php } ?>
+                    
 	            <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" class="sit_btn_wish"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시리스트</span></a>
 	            	
 	            <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
@@ -520,7 +554,12 @@ function fitem_submit(f)
         alert("선택옵션 개수 총합 "+number_format(String(max_qty))+"개 이하로 주문해 주십시오.");
         return false;
     }
-
+    
+    // 유효성 통과 후 커스텀 이벤트 실행
+    if (jQuery(f).triggerHandler("form:valid") === false) {
+        return false;
+    }
+    
     return true;
 }
 </script>

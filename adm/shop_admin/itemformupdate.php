@@ -35,6 +35,16 @@ if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
     }
 }
 
+$old_item = sql_fetch(" select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ");
+
+$old_item_options = array();
+
+$old_opt_result = sql_query(" select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' ");
+
+while ($row = sql_fetch_array($old_opt_result)) {
+    $old_item_options[trim($row['io_id'])] = $row;
+}
+
 $it_img1 = $it_img2 = $it_img3 = $it_img4 = $it_img5 = $it_img6 = $it_img7 = $it_img8 = $it_img9 = $it_img10 = '';
 // 파일정보
 if($w == "u") {
@@ -634,7 +644,7 @@ if($all_fields) {
 $is_seo_title_edit = $w ? true : false;
 if( function_exists('shop_seo_title_update') ) shop_seo_title_update($it_id, $is_seo_title_edit);
 
-run_event('shop_admin_itemformupdate', $it_id, $w);
+run_event('shop_admin_itemformupdate', $it_id, $w, $old_item, $old_item_options);
 
 $qstr = "$qstr&amp;sca=$sca&amp;page=$page";
 

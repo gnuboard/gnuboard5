@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 /* 초기화 */
-html {overflow-y:scroll}
-body {margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif}
+html {}
+body {overflow-y:scroll;margin:0;padding:0;font-size:0.75em;font-family:'Malgun Gothic', dotum, sans-serif}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:'Malgun Gothic', dotum, sans-serif}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}

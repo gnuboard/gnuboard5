@@ -191,6 +191,12 @@ box-shadow:0 0 5px #eee}
 #mod_option_frm .btn_confirm .btn_submit{height:40px;font-size:1.167em;font-weight:bold;width:100%;}
 #mod_option_frm .btn_confirm .btn_close{position: absolute; top: 0; right: 0;width: 50px;height: 50px;border: 0;background: none;font-size: 1.25em;border-radius: 0;}
 
+.container-title-wrap {position:relative}
+.container-title-wrap .cart-heading {position:absolute;top:1.2em;right:0}
+.cart-heading .linked-title{display:inline-block;position:relative;padding:0 15px;min-height:20px;min-width:50px}
+.cart-heading .active, .cart-heading .active a{font-weight:bold;color:#000}
+.cart-heading .is-shop-cart-link:after {position:absolute;top:0;right:0;width:1px;height:100%;max-height:40px;background-color:#d1d4d7;content:""}
+
 #sod_bsk .btn_del_wr{margin:10px }
 #sod_bsk .go_shopping{margin: 10px}
 #sod_bsk .go_shopping .btn01{height:45px;line-height:43px;font-size:1.167em;font-weight:bold;width:100%;text-align:center}

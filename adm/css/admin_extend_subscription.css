@@ -1,0 +1,4 @@
+@charset "utf-8";
+
+#gnb .gnb_li .btn_op.menu-600{background:url(../img/credit-card.svg) 50% 50% no-repeat #ebebeb;background-size: 17px 13px}
+#gnb .on .btn_op.menu-600{background:url(../img/credit-card.svg) 50% 50% no-repeat #fff;background-size: 17px 13px}

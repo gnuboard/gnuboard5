@@ -1861,6 +1861,17 @@ function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     return $row;
 }
 
+function sql_result_array($result) {
+    $rows = array();
+    
+    if ($result) {
+        while ($row = sql_fetch_array($result)) {
+            $rows[] = $row;
+        }
+    }
+    
+    return $rows;
+}
 
 // 결과값에서 한행 연관배열(이름으로)로 얻는다.
 function sql_fetch_array($result)
@@ -1878,7 +1889,6 @@ function sql_fetch_array($result)
 
     return $row;
 }
-
 
 // $result에 대한 메모리(memory)에 있는 내용을 모두 제거한다.
 // sql_free_result()는 결과로부터 얻은 질의 값이 커서 많은 메모리를 사용할 염려가 있을 때 사용된다.
@@ -4305,6 +4315,16 @@ function get_random_token_string($length=6)
     $output = substr(str_shuffle($characters), 0, $length);
 
     return bin2hex($output);
+}
+
+function sanitize_input($s, $is_html=0) {
+
+    if (!$is_html) {
+        $s = strip_tags($s);
+    }
+    $s = htmlspecialchars($s, ENT_QUOTES, 'utf-8');
+
+    return $s;
 }
 
 function filter_input_include_path($path){
