@@ -16,30 +16,19 @@ add_javascript('<script src="'.G5_JS_URL.'/subscription.order.js"></script>', 0)
 $sw_direct = isset($_REQUEST['sw_direct']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['sw_direct']) : '';
 $aparams_array = (isset($_REQUEST['aparams']) && isValidBase64($_REQUEST['aparams'])) ? unserialize(base64_decode($_REQUEST['aparams'])) : array('hope_delivery_date'=>'', 'delivery_cycle'=>'');
 
-// if (isset($aparams_array['hope_delivery_date']) && $aparams_array['hope_delivery_date']) {
+run_event('check_before_subscription_orderform', $sw_direct, $aparams_array);
+
+$business_next_day = getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after'));
+
+if ($aparams_array['hope_delivery_date'] && isValidDate($aparams_array['hope_delivery_date'])) {
     
-    $business_next_day = getBusinessDaysNext(G5_TIME_YMD, (int) get_subs_option('su_hope_date_after'));
-    
-    if ($aparams_array['hope_delivery_date'] && isValidDate($aparams_array['hope_delivery_date'])) {
-        
-        if (strtotime($aparams_array['hope_delivery_date']) < strtotime($business_next_day)) {
-            $aparams_array['hope_delivery_date'] = $business_next_day;
-        }
-        
-    } else {
+    if (strtotime($aparams_array['hope_delivery_date']) < strtotime($business_next_day)) {
         $aparams_array['hope_delivery_date'] = $business_next_day;
     }
-
-// }
-
-// $aparams2 = base64_decode($_REQUEST['aparams']);
-
-// Array ( [delivery_cycle] => 2||3||day [usage_count] => 0||4 [hope_delivery_date] => 0||4 )
-// print_r($aparams2);
-// exit;
-
-// print_r($aparams_array);
-// exit;
+    
+} else {
+    $aparams_array['hope_delivery_date'] = $business_next_day;
+}
 
 // 모바일 주문인지
 $is_mobile_order = is_mobile();
