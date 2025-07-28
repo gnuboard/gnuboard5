@@ -4,12 +4,11 @@ include_once('./_common.php');
 include_once('../shop_admin/admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-// print_r2($_POST);
-// exit;
+check_demo();
 
 auth_check_menu($auth, $sub_menu, "w");
 
-// check_admin_token();
+check_admin_token();
 
 $pay_id = isset($_POST['pay_id']) ? preg_replace('[^0-9]', '', $_POST['pay_id']) : '';
 

@@ -2,6 +2,8 @@
 $sub_menu = '600400';
 include_once('./_common.php');
 
+check_demo();
+
 check_admin_token();
 
 auth_check_menu($auth, $sub_menu, "w");

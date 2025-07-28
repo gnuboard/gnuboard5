@@ -2192,11 +2192,22 @@ function time_select($time, $name="")
 
 
 // DEMO 라는 파일이 있으면 데모 화면으로 인식함
-function check_demo()
+function check_demo($type=0)
 {
     global $is_admin;
-    if ($is_admin != 'super' && file_exists(G5_PATH.'/DEMO'))
-        alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
+    
+    $msg = '데모 화면에서는 하실(보실) 수 없는 작업입니다.';
+    
+    if ($is_admin != 'super' && file_exists(G5_PATH.'/DEMO')) {
+        
+        if ($type === 2) {
+            die(json_encode(array('error'=>$msg)));
+        } else if ($type === 1) {
+            die($msg);
+        } else {
+            alert($msg);
+        }
+    }
 }
 
 

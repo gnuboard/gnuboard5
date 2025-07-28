@@ -2,7 +2,9 @@
 $sub_menu = '600510';
 include_once './_common.php';
 
-auth_check_menu($auth, $sub_menu, 'r');
+check_demo(1);
+
+auth_check_menu($auth, $sub_menu, 'w');
 
 $data = unserialize(base64_decode(get_subs_option('su_holiday_settings')));
 $data = is_array($data) ? $data : array();

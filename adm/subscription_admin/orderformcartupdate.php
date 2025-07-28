@@ -1,6 +1,8 @@
 <?php
-$sub_menu = '400400';
+$sub_menu = '600400';
 include_once('./_common.php');
+
+check_demo();
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -89,9 +91,10 @@ for ($i = 0; $i < $cnt; $i++) {
     }
 }
 
-$sql = "UPDATE {$g5['g5_subscription_cart_table']} 
+$sql = "UPDATE {$g5['g5_subscription_order_table']} 
         SET od_enable_status = '" . (($ct_status === '비활성화') ? 0 : 1) . "' 
         WHERE od_id = '$od_id'";
+        
 sql_query($sql);
 
 if ($ct_status === '활성화') {

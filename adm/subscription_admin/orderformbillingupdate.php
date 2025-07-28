@@ -3,12 +3,11 @@ $sub_menu = '600400';
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-// print_r2($_POST);
-// exit;
+check_demo();
 
 auth_check_menu($auth, $sub_menu, "w");
 
-//check_admin_token();
+check_admin_token();
 
 $od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
 
