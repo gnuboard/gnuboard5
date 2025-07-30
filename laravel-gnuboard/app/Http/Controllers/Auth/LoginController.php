@@ -45,7 +45,7 @@ class LoginController extends Controller
             ])->onlyInput('mb_id');
         }
 
-        // 비밀번호 확인 (PBKDF2)
+        // 비밀번호 확인 (GnuBoard5 PBKDF2)
         if (!PBKDF2::verify($credentials['mb_password'], $user->mb_password)) {
             return back()->withErrors([
                 'mb_id' => '아이디 또는 비밀번호가 일치하지 않습니다.',

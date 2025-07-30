@@ -62,8 +62,8 @@ class RegisterController extends Controller
         $validated = $request->validate([
             'mb_id' => 'required|string|min:3|max:20|unique:g5_member,mb_id|regex:/^[a-zA-Z0-9_]+$/',
             'mb_password' => 'required|string|min:3|confirmed',
-            'mb_name' => 'required|string|max:255',
-            'mb_nick' => 'required|string|max:255|unique:g5_member,mb_nick',
+            'mb_name' => 'required|string|max:255|regex:/^[가-힣a-zA-Z0-9]+$/',
+            'mb_nick' => 'required|string|max:255|unique:g5_member,mb_nick|regex:/^[가-힣a-zA-Z0-9]+$/',
             'mb_email' => 'required|string|email|max:255|unique:g5_member,mb_email',
             'mb_hp' => 'nullable|string|max:255',
             'mb_zip1' => 'nullable|string|max:3',

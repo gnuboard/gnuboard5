@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\Admin\AdminController;
 
 // 메인 페이지
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -45,4 +46,11 @@ Route::prefix('board/{board}')->group(function () {
     Route::delete('/{id}', [BoardController::class, 'destroy'])->name('board.destroy');
     Route::get('/{id}/password', [BoardController::class, 'password'])->name('board.password');
     Route::post('/{id}/password', [BoardController::class, 'checkPassword'])->name('board.checkPassword');
+});
+
+// 관리자 라우트
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/config', [\App\Http\Controllers\Admin\ConfigController::class, 'index'])->name('config');
+    Route::post('/config', [\App\Http\Controllers\Admin\ConfigController::class, 'update'])->name('config.update');
 });
