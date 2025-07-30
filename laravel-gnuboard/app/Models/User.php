@@ -30,6 +30,7 @@ class User extends Authenticatable
         'mb_certify',
         'mb_adult',
         'mb_dupinfo',
+        'mb_zip',
         'mb_zip1',
         'mb_zip2',
         'mb_addr1',
@@ -78,7 +79,6 @@ class User extends Authenticatable
         'mb_email_certify' => 'datetime',
         'mb_datetime' => 'datetime',
         'mb_today_login' => 'datetime',
-        'mb_leave_date' => 'datetime',
         'mb_nick_date' => 'date',
         'mb_open_date' => 'date',
     ];

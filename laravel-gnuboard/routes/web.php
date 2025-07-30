@@ -5,6 +5,7 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MyPageController;
 
 // 메인 페이지
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -24,6 +25,14 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::post('/register/check-mb-id', [RegisterController::class, 'checkMbId'])->name('register.check.mb_id');
 Route::post('/register/check-mb-nick', [RegisterController::class, 'checkMbNick'])->name('register.check.mb_nick');
 Route::post('/register/check-mb-email', [RegisterController::class, 'checkMbEmail'])->name('register.check.mb_email');
+
+// 마이페이지 라우트
+Route::middleware('auth')->prefix('mypage')->group(function () {
+    Route::get('/', [MyPageController::class, 'index'])->name('mypage.index');
+    Route::get('/edit', [MyPageController::class, 'edit'])->name('mypage.edit');
+    Route::put('/update', [MyPageController::class, 'update'])->name('mypage.update');
+    Route::put('/password', [MyPageController::class, 'updatePassword'])->name('mypage.password');
+});
 
 // 게시판 라우트
 Route::prefix('board/{board}')->group(function () {

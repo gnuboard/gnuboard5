@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Helpers\PBKDF2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,7 +61,7 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
             'mb_id' => 'required|string|min:3|max:20|unique:g5_member,mb_id|regex:/^[a-zA-Z0-9_]+$/',
-            'mb_password' => 'required|string|min:4|confirmed',
+            'mb_password' => 'required|string|min:3|confirmed',
             'mb_name' => 'required|string|max:255',
             'mb_nick' => 'required|string|max:255|unique:g5_member,mb_nick',
             'mb_email' => 'required|string|email|max:255|unique:g5_member,mb_email',
@@ -80,7 +81,7 @@ class RegisterController extends Controller
         // 회원 생성
         $user = new User();
         $user->mb_id = $validated['mb_id'];
-        $user->mb_password = Hash::make($validated['mb_password']);
+        $user->mb_password = PBKDF2::hash($validated['mb_password']);
         $user->mb_name = $validated['mb_name'];
         $user->mb_nick = $validated['mb_nick'];
         $user->mb_nick_date = now();
@@ -96,13 +97,43 @@ class RegisterController extends Controller
         $user->mb_mailling = $validated['mb_mailling'] ?? 0;
         $user->mb_sms = $validated['mb_sms'] ?? 0;
         $user->mb_open = $validated['mb_open'] ?? 0;
-        $user->mb_open_date = $user->mb_open ? now() : '0000-00-00';
+        $user->mb_open_date = $user->mb_open ? now()->format('Y-m-d') : '0000-00-00';
         $user->mb_datetime = now();
         $user->mb_ip = $request->ip();
         $user->mb_level = config('gnuboard.register_level', 2);
         $user->mb_point = config('gnuboard.register_point', 0);
         $user->mb_today_login = now();
         $user->mb_login_ip = $request->ip();
+        
+        // 추가 필수 필드 기본값 설정
+        $user->mb_homepage = '';
+        $user->mb_tel = '';
+        $user->mb_recommend = '';
+        $user->mb_memo = '';
+        $user->mb_lost_certify = '';
+        $user->mb_memo_cnt = 0;
+        $user->mb_scrap_cnt = 0;
+        $user->mb_adult = 0;
+        $user->mb_birth = '';
+        $user->mb_sex = 0;
+        $user->mb_certify = 0;
+        $user->mb_dupinfo = '';
+        $user->mb_addr_jibeon = '';
+        $user->mb_leave_date = '';
+        $user->mb_intercept_date = '';
+        $user->mb_email_certify = '0000-00-00 00:00:00';
+        $user->mb_email_certify2 = '';
+        $user->mb_memo_call = '';
+        $user->mb_1 = '';
+        $user->mb_2 = '';
+        $user->mb_3 = '';
+        $user->mb_4 = '';
+        $user->mb_5 = '';
+        $user->mb_6 = '';
+        $user->mb_7 = '';
+        $user->mb_8 = '';
+        $user->mb_9 = '';
+        $user->mb_10 = '';
         
         $user->save();
 

@@ -37,7 +37,7 @@
                 totalSteps: 3,
                 showPassword: false,
                 showPasswordConfirm: false 
-            }">
+            }" autocomplete="off">
                 @csrf
 
                 <!-- 필수 정보 -->
@@ -97,7 +97,7 @@
                                            name="mb_password" 
                                            id="mb_password" 
                                            class="block w-full rounded-xl border-0 px-4 py-3 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 transition-all duration-200 pr-12 @error('mb_password') ring-red-500 @enderror"
-                                           placeholder="최소 4자 이상"
+                                           placeholder="최소 3자 이상"
                                            required>
                                     <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 flex items-center pr-3">
                                         <svg x-show="!showPassword" class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

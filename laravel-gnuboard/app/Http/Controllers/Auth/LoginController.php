@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Helpers\PBKDF2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('auth.login-shadcn');
     }
 
     public function login(Request $request)
@@ -44,8 +45,8 @@ class LoginController extends Controller
             ])->onlyInput('mb_id');
         }
 
-        // 비밀번호 확인
-        if (!Hash::check($credentials['mb_password'], $user->mb_password)) {
+        // 비밀번호 확인 (PBKDF2)
+        if (!PBKDF2::verify($credentials['mb_password'], $user->mb_password)) {
             return back()->withErrors([
                 'mb_id' => '아이디 또는 비밀번호가 일치하지 않습니다.',
             ])->onlyInput('mb_id');
