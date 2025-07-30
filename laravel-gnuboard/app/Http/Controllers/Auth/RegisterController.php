@@ -23,7 +23,7 @@ class RegisterController extends Controller
             return redirect()->route('register');
         }
         
-        return view('auth.register');
+        return view('auth.register-shadcn');
     }
     
     public function showTerms()

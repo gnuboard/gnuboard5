@@ -7,77 +7,144 @@
     
     <title>@yield('title', config('app.name'))</title>
     
-    <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3 31.8% 91.4%)",
+                        input: "hsl(214.3 31.8% 91.4%)",
+                        ring: "hsl(222.2 84% 4.9%)",
+                        background: "hsl(0 0% 100%)",
+                        foreground: "hsl(222.2 84% 4.9%)",
+                        primary: {
+                            DEFAULT: "hsl(222.2 47.4% 11.2%)",
+                            foreground: "hsl(210 40% 98%)",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(210 40% 96%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(0 84.2% 60.2%)",
+                            foreground: "hsl(210 40% 98%)",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(210 40% 96%)",
+                            foreground: "hsl(215.4 16.3% 46.9%)",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(210 40% 96%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                        popover: {
+                            DEFAULT: "hsl(0 0% 100%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                        card: {
+                            DEFAULT: "hsl(0 0% 100%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                }
+            }
+        }
+    </script>
     <style>
-        body { padding-top: 70px; }
+        :root {
+            --radius: 0.5rem;
+        }
     </style>
     @stack('styles')
 </head>
-<body>
+<body class="min-h-screen bg-background font-sans antialiased">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name') }}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('board.index', 'free') }}">자유게시판</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('board.index', 'notice') }}">공지사항</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('board.index', 'gallery') }}">갤러리</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('board.index', 'qa') }}">Q&A</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
+    <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <a href="{{ route('home') }}" class="flex items-center space-x-2">
+                        <span class="text-xl font-bold">{{ config('app.name') }}</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="{{ route('board.index', 'free') }}" class="text-sm font-medium transition-colors hover:text-primary">
+                        자유게시판
+                    </a>
+                    <a href="{{ route('board.index', 'notice') }}" class="text-sm font-medium transition-colors hover:text-primary">
+                        공지사항
+                    </a>
+                    <a href="{{ route('board.index', 'gallery') }}" class="text-sm font-medium transition-colors hover:text-primary">
+                        갤러리
+                    </a>
+                    <a href="{{ route('board.index', 'qa') }}" class="text-sm font-medium transition-colors hover:text-primary">
+                        Q&A
+                    </a>
+                </nav>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
                     @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">로그인</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">회원가입</a>
-                        </li>
+                        <a href="{{ route('login') }}" class="text-sm font-medium transition-colors hover:text-primary">
+                            로그인
+                        </a>
+                        <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2">
+                            회원가입
+                        </a>
                     @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                {{ Auth::user()->mb_nick }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">마이페이지</a></li>
-                                <li><a class="dropdown-item" href="#">포인트: {{ number_format(Auth::user()->mb_point) }}</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center space-x-2 text-sm font-medium transition-colors hover:text-primary">
+                                <span>{{ Auth::user()->mb_nick }}</span>
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div class="py-1">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">마이페이지</a>
+                                    <div class="block px-4 py-2 text-sm text-gray-500">포인트: {{ number_format(Auth::user()->mb_point) }}</div>
+                                    <hr class="my-1">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button type="submit" class="dropdown-item">로그아웃</button>
+                                        <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">로그아웃</button>
                                     </form>
-                                </li>
-                            </ul>
-                        </li>
+                                </div>
+                            </div>
+                        </div>
                     @endguest
-                </ul>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" x-data="{ open: false }" @click="open = !open">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
 
     <!-- Main Content -->
-    <main>
+    <main class="flex-1">
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="border border-green-200 bg-green-50 text-green-800 px-4 py-3 rounded relative mb-4 mx-4 mt-4">
                 {{ session('success') }}
             </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger">
+            <div class="border border-red-200 bg-red-50 text-red-800 px-4 py-3 rounded relative mb-4 mx-4 mt-4">
                 {{ session('error') }}
             </div>
         @endif
@@ -86,57 +153,59 @@
     </main>
 
     <!-- Footer -->
-    <footer id="ft" class="bg-light py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>사이트 정보</h5>
-                    <p class="small text-muted">
-                        회사명 : 회사명 / 대표 : 대표자명<br>
-                        주소 : OO도 OO시 OO구 OO동 123-45<br>
-                        사업자 등록번호 : 123-45-67890<br>
-                        전화 : 02-123-4567 팩스 : 02-123-4568<br>
-                        통신판매업신고번호 : 제 OO구 - 123호<br>
-                        개인정보관리책임자 : 정보책임자명
-                    </p>
+    <footer class="border-t bg-muted/50 mt-auto">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">사이트 정보</h5>
+                    <div class="text-sm text-muted-foreground space-y-1">
+                        <p>회사명 : 회사명 / 대표 : 대표자명</p>
+                        <p>주소 : OO도 OO시 OO구 OO동 123-45</p>
+                        <p>사업자 등록번호 : 123-45-67890</p>
+                        <p>전화 : 02-123-4567 팩스 : 02-123-4568</p>
+                        <p>통신판매업신고번호 : 제 OO구 - 123호</p>
+                        <p>개인정보관리책임자 : 정보책임자명</p>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h5>최신 공지사항</h5>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">최신 공지사항</h5>
                     {!! latest('notice', 'notice', 4, 30) !!}
                 </div>
-                <div class="col-md-4">
-                    <h5>빠른 링크</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted">회사소개</a></li>
-                        <li><a href="#" class="text-muted">개인정보처리방침</a></li>
-                        <li><a href="#" class="text-muted">서비스이용약관</a></li>
-                        <li><a href="{{ route('board.index', 'qa') }}" class="text-muted">Q&A</a></li>
-                        <li><a href="#" class="text-muted">FAQ</a></li>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">빠른 링크</h5>
+                    <ul class="text-sm text-muted-foreground space-y-2">
+                        <li><a href="#" class="hover:text-foreground transition-colors">회사소개</a></li>
+                        <li><a href="#" class="hover:text-foreground transition-colors">개인정보처리방침</a></li>
+                        <li><a href="#" class="hover:text-foreground transition-colors">서비스이용약관</a></li>
+                        <li><a href="{{ route('board.index', 'qa') }}" class="hover:text-foreground transition-colors">Q&A</a></li>
+                        <li><a href="#" class="hover:text-foreground transition-colors">FAQ</a></li>
                     </ul>
                 </div>
             </div>
-            <hr>
+            <hr class="my-8 border-border">
             <div class="text-center">
-                <p class="mb-0">&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                <p class="text-sm text-muted-foreground">&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
             </div>
         </div>
         
         <!-- Top Button -->
-        <button type="button" id="top_btn" class="btn btn-secondary position-fixed" style="bottom: 20px; right: 20px; display: none;">
-            <i class="bi bi-arrow-up"></i>
+        <button type="button" id="top_btn" class="fixed bottom-5 right-5 hidden inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-10">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
         </button>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         // Top Button
         window.addEventListener('scroll', function() {
             var topBtn = document.getElementById('top_btn');
             if (window.pageYOffset > 100) {
-                topBtn.style.display = 'block';
+                topBtn.classList.remove('hidden');
             } else {
-                topBtn.style.display = 'none';
+                topBtn.classList.add('hidden');
             }
         });
         
