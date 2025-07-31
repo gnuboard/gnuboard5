@@ -1961,9 +1961,9 @@ function inicis_billing($od, $tmp_cart_id = '')
     $detail["goodName"] = $goodsname['full_name'];
     $detail["buyerName"] = $od['od_name'];
     $detail["buyerEmail"] = $od['od_email'];
-    $detail["buyerTel"] = $od['od_hp'];
+    $detail["buyerTel"] = $od['od_tel'] ? $od['od_tel'] : $od['od_hp'];
 
-    // 장바구니 금액이 변경될수 있으니, $od['od_receipt_price'] 가 아니라 장바구니 금액을 체크해서 가져와야 한다.
+    // 장바구니 금액이 변경될수 있으니, cron에서 updateSubscriptionItemIfChanged 함수를 이용하여 장바구니 금액 변동을 체크한다.
     $detail["price"] = $od['od_receipt_price'];
 
     $detail["billKey"] = get_card_billkey($od);
