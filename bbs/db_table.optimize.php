@@ -14,7 +14,9 @@ if($config['cf_visit_del'] > 0) {
     $tmp_before_date = date("Y-m-d", G5_SERVER_TIME - ($config['cf_visit_del'] * 86400));
     $sql = " delete from {$g5['visit_table']} where vi_date < '$tmp_before_date' ";
     sql_query($sql);
-    sql_query(" OPTIMIZE TABLE `{$g5['visit_table']}`, `{$g5['visit_sum_table']}` ");
+    if (defined('G5_USE_OPTIMIZE_DBTABLE') && G5_USE_OPTIMIZE_DBTABLE) {
+        sql_query(" OPTIMIZE TABLE `{$g5['visit_table']}`, `{$g5['visit_sum_table']}` ");
+    }
 }
 
 // 설정일이 지난 인기검색어 삭제
@@ -22,7 +24,9 @@ if($config['cf_popular_del'] > 0) {
     $tmp_before_date = date("Y-m-d", G5_SERVER_TIME - ($config['cf_popular_del'] * 86400));
     $sql = " delete from {$g5['popular_table']} where pp_date < '$tmp_before_date' ";
     sql_query($sql);
-    sql_query(" OPTIMIZE TABLE `{$g5['popular_table']}` ");
+    if (defined('G5_USE_OPTIMIZE_DBTABLE') && G5_USE_OPTIMIZE_DBTABLE) {
+        sql_query(" OPTIMIZE TABLE `{$g5['popular_table']}` ");
+    }
 }
 
 // 설정일이 지난 최근게시물 삭제
@@ -40,7 +44,9 @@ if($config['cf_new_del'] > 0) {
 if($config['cf_memo_del'] > 0) {
     $sql = " delete from {$g5['memo_table']} where (TO_DAYS('".G5_TIME_YMDHIS."') - TO_DAYS(me_send_datetime)) > '{$config['cf_memo_del']}' ";
     sql_query($sql);
-    sql_query(" OPTIMIZE TABLE `{$g5['memo_table']}` ");
+    if (defined('G5_USE_OPTIMIZE_DBTABLE') && G5_USE_OPTIMIZE_DBTABLE) {
+        sql_query(" OPTIMIZE TABLE `{$g5['memo_table']}` ");
+    }
 }
 
 // 탈퇴회원 자동 삭제
