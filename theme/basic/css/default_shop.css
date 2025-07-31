@@ -808,6 +808,7 @@ box-shadow: 1px 2px 2px #eee;}
 #sod_frm_paysel .inicis_kakaopay em{position:absolute;top:15px;left:45px;width:70px;height:30px;background:url('../../../img/kakao.png') no-repeat 50% 50% #ffeb00;overflow:hidden;text-indent:-999px;border-radius:30px}
 #sod_frm_paysel .kakaopay_icon{background:url('../../../img/kakao.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .naverpay_icon{background:url('../../../img/ico-default-naverpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .naverpay_icon.nhnkcp_icon{text-indent:0;background-position: 50% 30%;padding-top:35px;padding-left:0;text-align:center}
 #sod_frm_paysel .samsungpay_icon{background:url('../../../img/samsungpay.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .ssgpay_icon{background:url('../../../img/ssgpay_icon.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .skpay_icon{background:url('../../../img/skpay11_icon.png') no-repeat 50% 50% #fff; background-size: 70px;display:inline-block;overflow:hidden;text-indent:-999px}
@@ -1176,6 +1177,7 @@ a.btn_frmline.is-long-text{height:auto;width:160px}
 .sod_frm_mobile #m_sod_frm_paysel .kakaopay_icon{background:url(../../../img/kakao.png) no-repeat 50% 50% #f4dc34;border-radius:30px;height:22px;width:74px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:35px auto}
 .sod_frm_mobile #m_sod_frm_paysel .applepay_icon{background:url(../../../img/ico-mobile-applepay.png) no-repeat 50% 50% #fff;border-radius:30px;height:23px;width:50px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:35px auto}
 .sod_frm_mobile #m_sod_frm_paysel .naverpay_icon{background:url(../../../img/ico-default-naverpay.png) no-repeat 50% 50% #fff;border-radius:30px;height:22px;width:50px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:35px auto}
+.sod_frm_mobile #m_sod_frm_paysel .naverpay_icon.nhnkcp_icon{text-indent:0;padding-left:50px;padding-top:2px;width:83px}
 .sod_frm_mobile #m_sod_frm_paysel .samsung_pay{margin-left:-23px;background:url(../../../img/samsungpay.png) no-repeat 24px 3px;height:25px;width:106px;display:inline-block;overflow:hidden;text-indent:-999px}
 .sod_frm_mobile #sod_frm_pay{border-top:1px solid #f3f3f3}
 .sod_frm_mobile #sod_frm_pay h2{margin:10px 0;font-size:1.25em}

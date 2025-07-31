@@ -279,7 +279,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <?php } ?>
 <?php if($naverpay_direct){ ?>
 <input type="hidden" name="naverpay_direct"   value="<?php echo get_text($naverpay_direct); ?>">      <!-- 네이버페이 결제창 호출 -->
-    <?php if(isset($default['de_easy_pay_services']) && in_array('used_nhnkcp_naverpay_point', explode(',', $default['de_easy_pay_services'])) ){     // 네이버페이 포인트 결제 옵션 ?>
+    <?php if(isset($_POST['naverpay_point_direct']) && $_POST['naverpay_point_direct'] && isset($default['de_easy_pay_services']) && in_array('used_nhnkcp_naverpay_point', explode(',', $default['de_easy_pay_services'])) ){     // 네이버페이 포인트 결제 옵션 ?>
     <input type="hidden" name="naverpay_point_direct" value="Y">    <!-- 네이버페이 포인트 결제를 하려면 naverpay_point_direct 를 Y  -->
     <?php } ?>
 <?php } ?>

@@ -2865,7 +2865,7 @@ function check_pay_name_replace($payname, $od=array(), $is_client=0){
         } else if( isset($od['od_pg']) && $od['od_pg'] === 'inicis' ){
             return 'KPAY';
         } else if( isset($od['od_pg']) && $od['od_pg'] === 'kcp' ){
-            if( isset($od['od_other_pay_type']) && $od['od_other_pay_type'] === 'OT16' ){
+            if( isset($od['od_other_pay_type']) && ($od['od_other_pay_type'] === 'OT16' || $od['od_other_pay_type'] === 'NHNKCP_NAVERMONEY')){
                 return '네이버페이_NHNKCP'.$add_str;
             } else if( isset($od['od_other_pay_type']) && ($od['od_other_pay_type'] === 'OT13' || $od['od_other_pay_type'] === 'NHNKCP_KAKAOMONEY') ){
                 return '카카오페이_NHNKCP'.$add_str;

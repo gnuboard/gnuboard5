@@ -3706,6 +3706,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
     }
 
+    if (preg_match('#//[^/@]+@#', $url)) {
+        alert('url에 사용자 정보가 포함되어 있어 접근할 수 없습니다.');
+    }
+
     while ( ( $replace_url = preg_replace(array('/\/{2,}/', '/\\@/'), array('//', ''), urldecode($url)) ) != $url ) {
         $url = $replace_url;
     }

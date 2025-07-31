@@ -23,6 +23,14 @@ jQuery(function($){
 
             if( nhnkcp_settle_case == "naverpay" ){
                 if(typeof nhnkcp_pay_form.naverpay_direct !== "undefined") nhnkcp_pay_form.naverpay_direct.value = "Y";
+                
+                 var is_money = jQuery("input[name='od_settle_case']:checked" ).attr("data-money");
+                
+                if (is_money) {     // 머니/포인트 결제
+                    jQuery(nhnkcp_pay_form).find("input[name='naverpay_point_direct']").val("Y");
+                } else {    // 카드 결제
+                    jQuery(nhnkcp_pay_form).find("input[name='naverpay_point_direct']").val("");
+                }
             }
 
             if( ! jQuery("form[name='sm_form']").length ){
