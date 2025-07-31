@@ -342,6 +342,13 @@ jQuery(function($) {
         $form.submit(); // 폼 제출
     });
 
+    function formatKSTDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+    
     // 1회차 배송일 계산
     function calculateFirstDeliveryDate() {
         var $nextEl = $('.next-delivery-date-el').length ? $('.next-delivery-date-el') : $('<div class="next-delivery-date-el"></div>').appendTo(".jquery-pg-datepicker"); // 다음 배송일 표시 요소
@@ -383,11 +390,11 @@ jQuery(function($) {
             var no = cycleParts[0], plus = parseInt(cycleParts[1]) || 1, interval = cycleParts[2] || "day", etc_data = cycleParts[3]; // 값 추출
 
             var nextDeliveryDate = getNextDeliveryDate(baseDate, 0, interval); // 다음 배송일 계산
-            $nextEl.html('1회차 예상 배송일: ' + nextDeliveryDate.toISOString().slice(0, 10)); // 결과 표시
+            $nextEl.html('1회차 예상 배송일: ' + formatKSTDate(nextDeliveryDate)); // 결과 표시
         } else {
             baseDate.setDate(baseDate.getDate() + parseInt(deliveryCycle)); // 단순 일수 추가
             var nextDeliveryDate = getNextDeliveryDate(baseDate); // 다음 배송일 계산
-            $nextEl.html('1회차 예상 배송일: ' + nextDeliveryDate.toISOString().slice(0, 10)); // 결과 표시
+            $nextEl.html('1회차 예상 배송일: ' + formatKSTDate(nextDeliveryDate)); // 결과 표시
         }
         
         
