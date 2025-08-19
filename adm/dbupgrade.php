@@ -269,6 +269,26 @@ while ($row = sql_fetch_array($result)){
     }
 }
 
+// SMS5 테이블 G5_TABLE_PREFIX 적용
+if($g5['sms5_prefix'] != 'sms5_' && sql_num_rows(sql_query("show tables like 'sms5_config'")))
+{
+    $tables = array('config','write','history','book','book_group','form','form_group');
+
+    foreach($tables as $name){
+        $old_table = 'sms5_' . $name;
+        $new_table = $g5['sms5_prefix'] . $name;
+
+        // 기존 테이블이 있고, G5_TABLE_PREFIX 적용 테이블이 없을 경우 → 테이블명 변경
+        if(sql_num_rows(sql_query("SHOW TABLES LIKE '{$old_table}' "))){
+            if(!sql_num_rows(sql_query("SHOW TABLES LIKE '{$new_table}' "))){
+                sql_query("RENAME TABLE {$old_table} TO {$new_table}", false);
+            }
+        }
+    }
+
+    $is_check = true;
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
