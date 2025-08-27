@@ -37,7 +37,7 @@ include_once('./_common.php');
     $tran_cd         = isset($_POST["tran_cd"]) ? $_POST["tran_cd"] : ''; // 트랜잭션 코드
     $ordr_idxx       = isset($_POST["ordr_idxx"]) ? $_POST["ordr_idxx"] : ''; // 쇼핑몰 주문번호
     $good_name       = isset($_POST["good_name"]) ? $_POST["good_name"] : ''; // 상품명
-    $good_mny        = isset($_POST["good_mny"]) ? $_POST["good_mny"] : ''; // 결제 총금액
+    $good_mny        = isset($_POST["good_mny"]) ? (int) $_POST["good_mny"] : ''; // 결제 총금액
     $buyr_name       = isset($_POST["buyr_name"]) ? $_POST["buyr_name"] : ''; // 주문자명
     $buyr_tel1       = isset($_POST["buyr_tel1"]) ? $_POST["buyr_tel1"] : ''; // 주문자 전화번호
     $buyr_tel2       = isset($_POST["buyr_tel2"]) ? $_POST["buyr_tel2"] : ''; // 주문자 핸드폰 번호
@@ -60,9 +60,9 @@ include_once('./_common.php');
     $bask_cntx       = isset($_POST["bask_cntx"]) ? $_POST["bask_cntx"] : ''; // 장바구니 상품수
     $tablet_size     = isset($_POST["tablet_size"]) ? $_POST["tablet_size"] : ''; // 모바일기기 화면비율
 
-    $comm_tax_mny    = isset($_POST["comm_tax_mny"]) ? $_POST["comm_tax_mny"] : ''; // 과세금액
-    $comm_vat_mny    = isset($_POST["comm_vat_mny"]) ? $_POST["comm_vat_mny"] : ''; // 부가세
-    $comm_free_mny   = isset($_POST["comm_free_mny"]) ? $_POST["comm_free_mny"] : ''; // 비과세금액
+    $comm_tax_mny    = isset($_POST["comm_tax_mny"]) ? (int) $_POST["comm_tax_mny"] : ''; // 과세금액
+    $comm_vat_mny    = isset($_POST["comm_vat_mny"]) ? (int) $_POST["comm_vat_mny"] : ''; // 부가세
+    $comm_free_mny   = isset($_POST["comm_free_mny"]) ? (int) $_POST["comm_free_mny"] : ''; // 비과세금액
 
     $payco_direct    = isset($_POST["payco_direct"]) ? $_POST["payco_direct"] : ''; // PAYCO 결제창 호출
     $naverpay_direct = isset($_POST["naverpay_direct"]) ? $_POST["naverpay_direct"] : ''; // NAVERPAY 결제창 호출
@@ -253,7 +253,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
     echo make_order_field($data, $exclude);
 
     foreach($_POST as $key=>$value) {
-        echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
+        echo '<input type="hidden" name="'.get_text($key).'" value="'.get_text($value).'">'.PHP_EOL;
     }
 
     echo '</form>'.PHP_EOL;
@@ -262,12 +262,12 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 
 <form name="sm_form" method="POST" accept-charset="euc-kr">
 
-<input type="hidden" name="good_name" value="<?php echo $good_name; ?>">
+<input type="hidden" name="good_name" value="<?php echo get_text($good_name); ?>">
 <input type="hidden" name="good_mny"  value="<?php echo $good_mny; ?>" >
-<input type="hidden" name='buyr_name' value="<?php echo $buyr_name; ?>">
-<input type="hidden" name="buyr_tel1" value="<?php echo $buyr_tel1; ?>">
-<input type="hidden" name="buyr_tel2" value="<?php echo $buyr_tel2; ?>">
-<input type="hidden" name="buyr_mail" value="<?php echo $buyr_mail; ?>">
+<input type="hidden" name='buyr_name' value="<?php echo get_text($buyr_name); ?>">
+<input type="hidden" name="buyr_tel1" value="<?php echo get_text($buyr_tel1); ?>">
+<input type="hidden" name="buyr_tel2" value="<?php echo get_text($buyr_tel2); ?>">
+<input type="hidden" name="buyr_mail" value="<?php echo get_text($buyr_mail); ?>">
 <?php
 // 가상계좌 입금 마감일을 설정하려면 아래 주석을 풀어서 사용해 주세요.
 //$ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
@@ -294,13 +294,13 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <!-- 요청 구분 -->
 <input type="hidden" name="req_tx"       value="pay">
 <!-- 사이트 코드 -->
-<input type="hidden" name="site_cd"      value="<?php echo $g_conf_site_cd; ?>">
+<input type="hidden" name="site_cd"      value="<?php echo get_text($g_conf_site_cd); ?>">
  <!-- 사이트 이름 -->
-<input type="hidden" name="shop_name"    value="<?php echo $g_conf_site_name; ?>">
+<input type="hidden" name="shop_name"    value="<?php echo get_text($g_conf_site_name); ?>">
 <!-- 결제수단-->
-<input type="hidden" name="pay_method"   value="<?php echo $pay_method; ?>">
+<input type="hidden" name="pay_method"   value="<?php echo get_text($pay_method); ?>">
 <!-- 주문번호 -->
-<input type="hidden"   name="ordr_idxx"    value="<?php echo $ordr_idxx; ?>">
+<input type="hidden"   name="ordr_idxx"    value="<?php echo get_text($ordr_idxx); ?>">
 <!-- 최대 할부개월수 -->
 <input type="hidden" name="quotaopt"     value="12">
 <!-- 통화 코드 -->
@@ -311,29 +311,29 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <!-- 반드시 가맹점 주문페이지의 URL을 입력 해주시기 바랍니다. -->
 <input type="hidden" name="Ret_URL"      value="<?php echo G5_MSHOP_URL; ?>/kcp/order_approval_form.php">
 <!-- 인증시 필요한 파라미터(변경불가)-->
-<input type="hidden" name="ActionResult" value="<?php echo $ActionResult; ?>">
+<input type="hidden" name="ActionResult" value="<?php echo get_text($ActionResult); ?>">
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->
-<input type="hidden" name="escw_used"  value="<?php echo $escw_used; ?>">
+<input type="hidden" name="escw_used"  value="<?php echo get_text($escw_used); ?>">
 <!-- 에스크로 결제처리모드 -->
 <input type="hidden" name="pay_mod"   value="<?php echo ($default['de_escrow_use']?'O':'N'); ?>">
 <!-- 수취인이름 -->
-<input type="hidden" name="rcvr_name" value="<?php echo $rcvr_name; ?>">
+<input type="hidden" name="rcvr_name" value="<?php echo get_text($rcvr_name); ?>">
 <!-- 수취인 연락처 -->
-<input type="hidden" name="rcvr_tel1" value="<?php echo $rcvr_tel1; ?>">
+<input type="hidden" name="rcvr_tel1" value="<?php echo get_text($rcvr_tel1); ?>">
 <!-- 수취인 휴대폰 번호 -->
-<input type="hidden" name="rcvr_tel2" value="<?php echo $rcvr_tel2; ?>">
+<input type="hidden" name="rcvr_tel2" value="<?php echo get_text($rcvr_tel2); ?>">
 <!-- 수취인 E-MAIL -->
-<input type="hidden" name="rcvr_add1" value="<?php echo $rcvr_add1; ?>">
+<input type="hidden" name="rcvr_add1" value="<?php echo get_text($rcvr_add1); ?>">
 <!-- 수취인 우편번호 -->
-<input type="hidden" name="rcvr_add2" value="<?php echo $rcvr_add2; ?>">
+<input type="hidden" name="rcvr_add2" value="<?php echo get_text($rcvr_add2); ?>">
 <!-- 수취인 주소 -->
-<input type="hidden" name="rcvr_mail" value="<?php echo $rcvr_mail; ?>">
+<input type="hidden" name="rcvr_mail" value="<?php echo get_text($rcvr_mail); ?>">
 <!-- 수취인 상세 주소 -->
-<input type="hidden" name="rcvr_zipx" value="<?php echo $rcvr_zipx; ?>">
+<input type="hidden" name="rcvr_zipx" value="<?php echo get_text($rcvr_zipx); ?>">
 <!-- 장바구니 상품 개수 -->
-<input type="hidden" name="bask_cntx" value="<?php echo $bask_cntx; ?>">
+<input type="hidden" name="bask_cntx" value="<?php echo get_text($bask_cntx); ?>">
 <!-- 장바구니 정보(상단 스크립트 참조) -->
-<input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
+<input type="hidden" name="good_info" value="<?php echo get_text($good_info); ?>">
 <!-- 배송소요기간 -->
 <input type="hidden" name="deli_term" value="03">
 <!-- 기타 파라메터 추가 부분 - Start - -->
@@ -343,7 +343,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <input type="hidden" name="disp_tax_yn"  value="N">
 <!-- 기타 파라메터 추가 부분 - End - -->
 <!-- 화면 크기조정 부분 - Start - -->
-<input type="hidden" name="tablet_size"	 value="<?php echo $tablet_size; ?>"/>
+<input type="hidden" name="tablet_size"	 value="<?php echo get_text($tablet_size); ?>"/>
 <!-- 화면 크기조정 부분 - End - -->
 <!--
 	사용 카드 설정
@@ -383,15 +383,15 @@ if($default['de_tax_flag_use']) {
 }
 ?>
 
-<input type="hidden" name="res_cd"         value="<?php echo $res_cd; ?>">      <!-- 결과 코드          -->
-<input type="hidden" name="tran_cd"        value="<?php echo $tran_cd; ?>">     <!-- 트랜잭션 코드      -->
-<input type="hidden" name="enc_info"       value="<?php echo $enc_info; ?>">    <!-- 암호화 정보        -->
-<input type="hidden" name="enc_data"       value="<?php echo $enc_data; ?>">    <!-- 암호화 데이터      -->
+<input type="hidden" name="res_cd"         value="<?php echo get_text($res_cd); ?>">      <!-- 결과 코드          -->
+<input type="hidden" name="tran_cd"        value="<?php echo get_text($tran_cd); ?>">     <!-- 트랜잭션 코드      -->
+<input type="hidden" name="enc_info"       value="<?php echo get_text($enc_info); ?>">    <!-- 암호화 정보        -->
+<input type="hidden" name="enc_data"       value="<?php echo get_text($enc_data); ?>">    <!-- 암호화 데이터      -->
 </form>
 
     <div id="pay_fail">
         <p>결제가 실패한 경우 아래 돌아가기 버튼을 클릭해주세요.</p>
-        <a href="<?php echo $js_return_url; ?>">돌아가기</a>
+        <a href="<?php echo get_text($js_return_url); ?>">돌아가기</a>
     </div>
     <div id="show_progress" style="display:none;">
         <span style="display:block; text-align:center;margin-top:120px"><img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt="" ></span>

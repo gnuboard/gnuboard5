@@ -1447,12 +1447,12 @@ function frm_check_file(){
 
 jQuery(function($){
     if( window.self !== window.top ){   // frame 또는 iframe을 사용할 경우 체크
-        $("#bo_include_head, #bo_include_tail").on("change paste keyup", function(e) {
-            frm_check_file();
-        });
-
         use_captcha_check();
     }
+    
+    $("#bo_include_head, #bo_include_tail").on("change paste keyup", function(e) {
+        frm_check_file();
+    });
 });
 
 function fboardform_submit(f)
@@ -1487,10 +1487,14 @@ function fboardform_submit(f)
         return false;
     }
 
+    if (frm_check_file() == false) {
+        jQuery(window).scrollTop($('#bo_include_tail').offset().top - 30);
+    }
+    
     if( captcha_chk ) {
         <?php echo isset($captcha_js) ? $captcha_js : ''; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
     }
-
+    
     return true;
 }
 </script>
