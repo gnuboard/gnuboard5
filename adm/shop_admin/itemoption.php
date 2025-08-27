@@ -84,11 +84,11 @@ if($po_run) {
     ?>
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="opt_id[]" value="<?php echo $opt_id; ?>">
+            <input type="hidden" name="opt_id[]" value="<?php echo get_text($opt_id); ?>">
             <label for="opt_chk_<?php echo $i; ?>" class="sound_only"></label>
             <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
-        <td class="opt-cell"><?php echo $opt_1; if ($opt_2_len) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3_len) echo ' <small>&gt;</small> '.$opt_3; ?></td>
+        <td class="opt-cell"><?php echo get_text($opt_1); if ($opt_2_len) echo ' <small>&gt;</small> '.get_text($opt_2); if ($opt_3_len) echo ' <small>&gt;</small> '.get_text($opt_3); ?></td>
         <td class="td_numsmall">
             <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
             <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">

@@ -1010,7 +1010,7 @@ function get_item_options($it_id, $subject, $is_div='', $is_first_option_title='
                 for($k=0; $k<$opt_count; $k++) {
                     $opt_val = $opt[$k];
                     if(strlen($opt_val)) {
-                        $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
+                        $select .= '<option value="'.get_text($opt_val).'">'.get_text($opt_val).'</option>'.PHP_EOL;
                     }
                 }
                 $select .= '</select>'.PHP_EOL;
@@ -1046,7 +1046,7 @@ function get_item_options($it_id, $subject, $is_div='', $is_first_option_title='
             else
                 $soldout = '';
 
-            $select .= '<option value="'.$row['io_id'].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$row['io_id'].$price.$soldout.'</option>'.PHP_EOL;
+            $select .= '<option value="'.get_text($row['io_id']).','.$row['io_price'].','.$row['io_stock_qty'].'">'.get_text($row['io_id']).$price.$soldout.'</option>'.PHP_EOL;
         }
         $select .= '</select>'.PHP_EOL;
         
@@ -1101,7 +1101,7 @@ function get_item_supply($it_id, $subject, $is_div='', $is_first_option_title=''
             else
                 $soldout = '';
 
-            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$io_stock_qty.'">'.$opt_id[1].$price.$soldout.'</option>';
+            $options[$opt_id[0]][] = '<option value="'.get_text($opt_id[1]).','.$row['io_price'].','.$io_stock_qty.'">'.get_text($opt_id[1]).$price.$soldout.'</option>';
         }
     }
 
@@ -1122,7 +1122,7 @@ function get_item_supply($it_id, $subject, $is_div='', $is_first_option_title=''
             $first_option_title = $is_first_option_title ? $subj[$i] : '선택';
 
             $select = '<select id="it_supply_'.$seq.'" class="it_supply">'.PHP_EOL;
-            $select .= '<option value="">'.$first_option_title.'</option>'.PHP_EOL;
+            $select .= '<option value="">'.get_text($first_option_title).'</option>'.PHP_EOL;
             for($k=0; $k<$opt_count; $k++) {
                 $opt_val = $opt[$k];
                 if($opt_val) {
