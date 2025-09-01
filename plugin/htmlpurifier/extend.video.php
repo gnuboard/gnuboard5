@@ -95,7 +95,10 @@ if( !class_exists('HTMLPurifierContinueParamFilter') ){
             }
             
             if ($query) {
-                if (isset($query_params['continue'])) {
+                
+                parse_str($query, $query_params);
+                
+                if (isset($query_params['continue']) || isset($query_params['pcurl'])) {
                     return false;
                 }
             }

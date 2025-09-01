@@ -3450,6 +3450,12 @@ function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len
         $result = preg_replace('#([^\p{L}]|^)(?:javascript|jar|applescript|vbscript|vbs|wscript|jscript|behavior|mocha|livescript|view-source)\s*:(?:.*?([/\\\;()\'">]|$))#ius',
                 '$1$2', $result);
 
+        // 이벤트 핸들러 속성 제거 (예: onclick=, onerror= 등)
+        $result = preg_replace('/on\w+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/i', '', $result);
+        
+        // 속성 제거 (CSS 기반 인젝션 차단)
+        $result = preg_replace('/\s*style\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/i', '', $result);
+        
         if((string)$result === (string)$str) break;
 
         $str = $result;
@@ -4269,7 +4275,7 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
             
-            if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pear(cmd)?\.php/i', $replace_path)){
+            if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pe(?:ar|cl)(?:cmd)?\.php/i', $replace_path)){
                 return false;
             }
             if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) || (preg_match('/search\.skin\.php/i', $replace_path) ) ){
