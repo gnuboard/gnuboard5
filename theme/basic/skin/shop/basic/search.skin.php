@@ -67,7 +67,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <!-- 검색결과 시작 { -->
     <div>
         <?php
-        // 리스트 유형별로 출력
         if (isset($list) && is_object($list) && method_exists($list, 'run')) {
             $list->set_is_page(true);
             $list->set_view('it_img', true);
@@ -127,7 +126,7 @@ $(function(){
     });
 });
 
-// 검색옵션
+ 검색옵션
 $("#ssch_sort_all li a").click(function() {
     $(this).parent().addClass('active');
 });
