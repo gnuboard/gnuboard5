@@ -1439,7 +1439,7 @@ function frm_check_file(){
 
         return false;
     } else {
-        jQuery("#admin_captcha_box").hide();
+        // jQuery("#admin_captcha_box").hide();
     }
 
     return true;
