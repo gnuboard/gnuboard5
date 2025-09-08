@@ -260,6 +260,56 @@ if ($w == 'c') // 댓글 입력
         }
     }
 
+    // 알림톡 발송 BEGIN: 새 댓글 작성(CU-BO02,CU-BO03) -------------------------------------
+    if ($config['cf_kakaotalk_use'] && $board['bo_use_kakaotalk']) {
+        include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
+
+        // 댓글 작성자 ID (회원/게스트 모두 고려)
+        $current_mb_id = $member['mb_id'] ?? '';
+
+        // 방금 저장된 댓글 레코드 로드 (실패 시 중단)
+        $comment = get_write($write_table, $comment_id);
+        if ($comment && !empty($comment['wr_id'])) {
+            $conditions = ['bo_table' => $bo_table, 'wr_id'=> $wr['wr_id'], 'wr_name_comment' => $comment['wr_name'] ?? ''];  // 변수 치환 정보
+
+            // 1) 원글 작성자 알림 (CU-BO02)
+            $post_mb_id = $wr['mb_id'] ?? '';
+            if ($post_mb_id !== '' && $post_mb_id !== $current_mb_id) {
+                $mb_post = get_member($post_mb_id);
+                if (!empty($mb_post['mb_board_comment']) && !empty($mb_post['mb_hp'])) {
+                    $cu_atk = send_alimtalk_preset('CU-BO02', ['rcv' => $mb_post['mb_hp'], 'rcvnm' => ($mb_post['mb_name'] ?? $mb_post['mb_nick'] ?? '')], $conditions);
+                }
+            }
+
+            // 2) 직속 부모 댓글 작성자 알림 (CU-BO03)
+            $reply = $comment['wr_comment_reply'] ?? '';
+            if ($reply !== '') {
+                $parent_reply_esc = sql_escape_string(substr($reply, 0, -1));
+                $wr_parent  = $wr['wr_id'];
+                $wr_comment = $comment['wr_comment'];
+            
+                $sql_parent = "
+                    SELECT wr_id, mb_id
+                    FROM {$write_table}
+                    WHERE wr_parent = {$wr_parent}
+                      AND wr_is_comment = 1
+                      AND wr_comment = {$wr_comment}
+                      AND wr_comment_reply = '{$parent_reply_esc}'
+                    LIMIT 1
+                ";
+                $pr = sql_fetch($sql_parent);
+
+                if (!empty($pr['mb_id']) && $pr['mb_id'] !== $current_mb_id && $pr['mb_id'] !== ($post_mb_id ?: '')) {
+                    $mb_parent = get_member($pr['mb_id']);
+                    if (!empty($mb_parent['mb_board_recomment']) && !empty($mb_parent['mb_hp'])) {
+                        $cu_atk = send_alimtalk_preset('CU-BO03', ['rcv' => $mb_parent['mb_hp'], 'rcvnm' => ($mb_parent['mb_name'] ?? $mb_parent['mb_nick'] ?? '')], $conditions);
+                    }
+                }
+            }
+        }
+    }
+    // 알림톡 발송 END ------------------------------------------------------------------
+
     // SNS 등록
     include_once("./write_comment_update.sns.php");
     if($wr_facebook_user || $wr_twitter_user) {

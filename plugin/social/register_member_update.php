@@ -97,6 +97,44 @@ if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_u
 $mb_mailling = (isset($_POST['mb_mailling']) && $_POST['mb_mailling']) ? 1 : 0;
 //회원 정보 공개
 $mb_open = (isset($_POST['mb_open']) && $_POST['mb_open']) ? 1 : 0;
+//회원 SMS 동의
+$mb_sms = isset($_POST['mb_sms']) ? trim($_POST['mb_sms']) : "0";
+//마케팅 목적의 개인정보 수집 및 이용 동의
+$mb_marketing_agree = isset($_POST['mb_marketing_agree']) ? trim($_POST['mb_marketing_agree']) : "0";
+//개인정보 제3자 제공 동의
+$mb_thirdparty_agree = isset($_POST['mb_thirdparty_agree']) ? trim($_POST['mb_thirdparty_agree']) : "0";
+
+$agree_items = [];
+$sql_agree = "";
+// 마케팅 목적의 개인정보 수집 및 이용
+if ($mb_marketing_agree == 1) {
+    $sql_agree .=  " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(동의)";
+}
+
+// 광고성 이메일 수신
+if ($mb_mailling == 1) {
+    $sql_agree .=  " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "광고성 이메일 수신(동의)";
+}
+
+// 광고성 SMS/카카오톡 수신
+if ($mb_sms == 1) {
+    $sql_agree .=  " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "광고성 SMS/카카오톡 수신(동의)";
+}
+
+// 개인정보 제3자 제공
+if ($mb_thirdparty_agree == 1) {
+    $sql_agree .=  " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "개인정보 제3자 제공(동의)";
+}
+
+// 동의 로그 추가
+if (!empty($agree_items)) {
+    $agree_log = "[".G5_TIME_YMDHIS.", ". $provider_name ." 회원가입] " . implode(' | ', $agree_items) . "\n";
+    $sql_agree .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+}
 
 //===============================================================
 //  본인확인
@@ -164,9 +202,12 @@ $sql = " insert into {$g5['member_table']}
                 mb_level = '{$config['cf_register_level']}',
                 mb_login_ip = '{$_SERVER['REMOTE_ADDR']}',
                 mb_mailling = '{$mb_mailling}',
-                mb_sms = '0',
+                mb_sms = '{$mb_sms}',
                 mb_open = '{$mb_open}',
-                mb_open_date = '".G5_TIME_YMD."'
+                mb_open_date = '".G5_TIME_YMD."',
+                mb_marketing_agree = '{$mb_marketing_agree}',
+                mb_thirdparty_agree = '{$mb_thirdparty_agree}'
+                {$sql_agree}
                 {$sql_certify} ";
 $result = sql_query($sql, false);
 
@@ -289,6 +330,18 @@ if($result) {
                 set_session('ss_member_reg_coupon', 1);
         }
     }
+
+    // 알림톡 발송 BEGIN: 회원가입 (CU-MB01/AD-MB01) -------------------------------------
+    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
+    $conditions = ['mb_id' => $mb_id]; // 변수 치환 정보
+
+    $ad_atk = send_admin_alimtalk('AD-MB01', 'super', $conditions); // 관리자
+
+    // 회원 - 휴대폰 번호가 있을 경우만
+    if (!empty($mb_hp)) {
+        $cu_atk = send_alimtalk_preset('CU-MB01', ['rcv' => $mb_hp, 'rcvnm' => $mb_name], $conditions); // 회원
+    }
+    // 알림톡 발송 END   --------------------------------------------------------
 
     // 사용자 코드 실행
     @include_once ($member_skin_path.'/register_form_update.tail.skin.php');

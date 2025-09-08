@@ -13,7 +13,6 @@
 .mbskin .frm_input {width:100%}
 .mbskin .btn_submit {width:100%;margin:10px 0 0;height:45px;font-weight:bold;font-size:1.25em}
 .mbskin h1 {margin:60px 0 30px;font-size:2em}
-.mbskin .tbl_frm01 th {width:85px}
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 회원가입 약관 */
@@ -31,12 +30,11 @@
 #fregister_chkall {position:relative;text-align:center;background:#f5f7fa;line-height:50px;border:1px solid #e5e9f0;border-radius:3px;margin-bottom:15px}
 #fregister h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
 #fregister textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
-#fregister_private {position:relative}
-#fregister_private div {padding:20px;background:#fff}
-#fregister_private table {width:100%;border-collapse:collapse;font-size:1em;}
-#fregister_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#fregister_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf}
-#fregister_private table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
+.fregister_terms div {padding:20px;background:#fff}
+.fregister_terms table {width:100%;border-collapse:collapse;font-size:1em;}
+.fregister_terms table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.fregister_terms table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf}
+.fregister_terms table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
 
 .fregister_agree {position:absolute;top:0;right:0}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}
@@ -70,6 +68,11 @@
 #fregisterform .captcha {display:block;margin:5px 0 0}
 #fregisterform .reg_mb_img_file img {max-width:100%;height:auto}
 #reg_mb_icon, #reg_mb_img {float:right}
+#fregisterform .consent-line {display: flex; margin: 0 !important;}
+#fregisterform .consent-line .chk_li {padding-left: 0;}
+#fregisterform .consent-date { margin: 5px 0 0 20px !important; }
+#fregisterform .consent-group .sub-consents {padding: 0 20px 0px}
+#fregisterform .js-open-consent {display: block; margin-left: 10px; font-size: 12px; color: #3f51b5; background: none; border: none; cursor: pointer; text-decoration: underline; }
 
 /* 회원가입 완료 */
 #reg_result {padding:40px 30px;text-align:center;background:#edf3fc;border:1px solid #d6e2f4;border-radius:5px}
@@ -93,7 +96,7 @@
 
 .tooltip_icon {display:inline-block;vertical-align:baseline;color:#b3b5b8;border:0;font-size:1.4em;background:transparent;cursor:pointer}
 .tooltip_icon:hover {color:#448bf5}
-.tooltip {position:relative;width:auto;color:#fff;background:#000;padding:10px;font-size:small;line-height:18px;display:none;position:absolute;z-index:9;font-weight:normal;margin-left:15px;margin-top:10px}
+.tooltip {position:absolute;width:auto;color:#fff;background:#000;padding:10px;font-size:small;line-height:18px;display:none;z-index:9;font-weight:normal;margin-left:15px;margin-top:10px}
 .tooltip:before {content:"";position:absolute;top:0;left:-10px;width:0;height:0;border-style:solid;border-top:0px solid transparent;border-bottom:10px solid transparent;border-left:0;border-right:10px solid #000}
 
 /* 아이디/비밀번호 찾기 */
@@ -152,12 +155,12 @@
 #login_info .login_if_lpl {float:right}
 #login_password_lost {display:inline-block;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;line-height:20px}
 
-#mb_login_notmb {margin:30px auto;padding:20px 30px}
+#mb_login_notmb {margin:30px auto;padding:20px 30px;border: 1px solid #dde7e9}
 #mb_login_notmb h2 {font-size:1.25em;margin:20px 0 10px}
 #guest_privacy {border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:150px;margin:10px 0;overflow-y:auto}
 #mb_login_notmb .btn_submit {display:block;text-align:center;line-height:45px}
 
-#mb_login_od_wr {margin:30px auto;padding:20px 30px}
+#mb_login_od_wr {margin:30px auto;padding:20px 30px;border: 1px solid #dde7e9}
 #mb_login_od_wr h2 {font-size:1.25em;margin:20px 0 10px}
 #mb_login_od_wr .frm_input {margin:10px 0 0}
 #mb_login_od_wr p {background:#f3f3f3;margin:20px 0 0;padding:15px 20px;line-height:1.5em}

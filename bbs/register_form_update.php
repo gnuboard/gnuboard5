@@ -50,8 +50,8 @@ $mb_addr_jibeon = isset($_POST['mb_addr_jibeon'])   ? trim($_POST['mb_addr_jibeo
 $mb_signature   = isset($_POST['mb_signature'])     ? trim($_POST['mb_signature'])   : "";
 $mb_profile     = isset($_POST['mb_profile'])       ? trim($_POST['mb_profile'])     : "";
 $mb_recommend   = isset($_POST['mb_recommend'])     ? trim($_POST['mb_recommend'])   : "";
-$mb_mailling    = isset($_POST['mb_mailling'])      ? trim($_POST['mb_mailling'])    : "";
-$mb_sms         = isset($_POST['mb_sms'])           ? trim($_POST['mb_sms'])         : "";
+$mb_mailling    = isset($_POST['mb_mailling'])      ? trim($_POST['mb_mailling'])    : "0";
+$mb_sms         = isset($_POST['mb_sms'])           ? trim($_POST['mb_sms'])         : "0";
 $mb_open        = isset($_POST['mb_open'])          ? trim($_POST['mb_open'])        : "0";
 $mb_1           = isset($_POST['mb_1'])             ? trim($_POST['mb_1'])           : "";
 $mb_2           = isset($_POST['mb_2'])             ? trim($_POST['mb_2'])           : "";
@@ -63,7 +63,6 @@ $mb_7           = isset($_POST['mb_7'])             ? trim($_POST['mb_7'])      
 $mb_8           = isset($_POST['mb_8'])             ? trim($_POST['mb_8'])           : "";
 $mb_9           = isset($_POST['mb_9'])             ? trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])          : "";
-
 $mb_name        = clean_xss_tags($mb_name, 1, 1);
 $mb_email       = get_email_address($mb_email);
 $mb_homepage    = clean_xss_tags($mb_homepage, 1, 1);
@@ -74,6 +73,13 @@ $mb_addr1       = clean_xss_tags($mb_addr1, 1, 1);
 $mb_addr2       = clean_xss_tags($mb_addr2, 1, 1);
 $mb_addr3       = clean_xss_tags($mb_addr3, 1, 1);
 $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
+
+$mb_marketing_agree     = isset($_POST['mb_marketing_agree'])   ? trim($_POST['mb_marketing_agree'])    : "0";
+$mb_thirdparty_agree    = isset($_POST['mb_thirdparty_agree'])  ? trim($_POST['mb_thirdparty_agree'])   : "0";
+$mb_board_post          = isset($_POST['mb_board_post'])        ? trim($_POST['mb_board_post'])         : "0";
+$mb_board_reply         = isset($_POST['mb_board_reply'])       ? trim($_POST['mb_board_reply'])        : "0";
+$mb_board_comment       = isset($_POST['mb_board_comment'])     ? trim($_POST['mb_board_comment'])      : "0";
+$mb_board_recomment     = isset($_POST['mb_board_recomment'])   ? trim($_POST['mb_board_recomment'])    : "0";
 
 run_event('register_form_update_before', $mb_id, $w);
 
@@ -250,12 +256,50 @@ if ($w == '') {
                      mb_7 = '{$mb_7}',
                      mb_8 = '{$mb_8}',
                      mb_9 = '{$mb_9}',
-                     mb_10 = '{$mb_10}'
+                     mb_10 = '{$mb_10}',
+                     mb_marketing_agree = '{$mb_marketing_agree}',
+                     mb_thirdparty_agree = '{$mb_thirdparty_agree}',
+                     mb_board_post = '{$mb_board_post}',
+                     mb_board_reply = '{$mb_board_reply}',
+                     mb_board_comment = '{$mb_board_comment}',
+                     mb_board_recomment = '{$mb_board_recomment}'
                      {$sql_certify} ";
 
     // 이메일 인증을 사용하지 않는다면 이메일 인증시간을 바로 넣는다
     if (!$config['cf_use_email_certify'])
         $sql .= " , mb_email_certify = '".G5_TIME_YMDHIS."' ";
+
+    $agree_items = [];
+    // 마케팅 목적의 개인정보 수집 및 이용
+    if ($mb_marketing_agree == 1) {
+        $sql .=  " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(동의)";
+    }
+
+    // 광고성 이메일 수신
+    if ($mb_mailling == 1) {
+        $sql .=  " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 이메일 수신(동의)";
+    }
+
+    // 광고성 SMS/카카오톡 수신
+    if ($mb_sms == 1) {
+        $sql .=  " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 SMS/카카오톡 수신(동의)";
+    }
+
+    // 개인정보 제3자 제공
+    if ($mb_thirdparty_agree == 1) {
+        $sql .=  " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "개인정보 제3자 제공(동의)";
+    }
+
+    // 동의 로그 추가
+    if (!empty($agree_items)) {
+        $agree_log = "[".G5_TIME_YMDHIS.", 회원가입] " . implode(' | ', $agree_items) . "\n";
+        $sql .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+    }
+
     sql_query($sql);
 
     // 회원가입 포인트 부여
@@ -322,6 +366,17 @@ if ($w == '') {
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
     }
 
+    // 알림톡 발송 BEGIN: 회원가입 (CU-MB01/AD-MB01) -------------------------------------
+    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
+    $conditions = ['mb_id' => $mb_id]; // 변수 치환 정보
+
+    $ad_atk = send_admin_alimtalk('AD-MB01', 'super', $conditions); // 관리자
+
+    // 회원 - 휴대폰 번호가 있을 경우만
+    if (!empty($mb_hp)) {
+        $cu_atk = send_alimtalk_preset('CU-MB01', ['rcv' => $mb_hp, 'rcvnm' => $mb_name], $conditions); // 회원
+    }
+    // 알림톡 발송 END   --------------------------------------------------------
 } else if ($w == 'u') {
     if (!trim(get_session('ss_mb_id')))
         alert('로그인 되어 있지 않습니다.');
@@ -345,6 +400,43 @@ if ($w == '') {
     $sql_email_certify = '';
     if ($old_email != $mb_email && $config['cf_use_email_certify'])
         $sql_email_certify = " , mb_email_certify = '' ";
+
+    $agree_items = [];
+    
+    // 마케팅 목적의 개인정보 수집 및 이용
+    $sql_marketing_date = "";
+    if ($mb_marketing_agree_default !== $mb_marketing_agree) {
+        $sql_marketing_date .= " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(" . ($mb_marketing_agree == 1 ? "동의" : "철회") . ")";
+    }
+
+    // 광고성 이메일 수신
+    $sql_mailling_date = "";
+    if ($mb_mailling_default !== $mb_mailling) {
+        $sql_mailling_date .= " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 이메일 수신(" . ($mb_mailling == 1 ? "동의" : "철회") . ")";
+    }
+    
+    // 광고성 SMS/카카오톡 수신
+    $sql_sms_date = "";
+    if ($mb_sms_default !== $mb_sms) {
+        $sql_sms_date .= " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 SMS/카카오톡 수신(" . ($mb_sms == 1 ? "동의" : "철회") . ")";
+    }
+    
+    // 개인정보 제3자 제공
+    $sql_thirdparty_date = "";
+    if ($mb_thirdparty_agree_default !== $mb_thirdparty_agree) {
+        $sql_thirdparty_date .= " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "개인정보 제3자 제공(" . ($mb_thirdparty_agree == 1 ? "동의" : "철회") . ")";
+    }
+    
+    // 동의 로그 추가
+    $sql_agree_log = "";
+    if (!empty($agree_items)) {
+        $agree_log = "[".G5_TIME_YMDHIS.", 회원 정보 수정] " . implode(' | ', $agree_items) . "\n";
+        $sql_agree_log .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+    }
 
     $sql = " update {$g5['member_table']}
                 set mb_nick = '{$mb_nick}',
@@ -371,12 +463,23 @@ if ($w == '') {
                     mb_7 = '{$mb_7}',
                     mb_8 = '{$mb_8}',
                     mb_9 = '{$mb_9}',
-                    mb_10 = '{$mb_10}'
+                    mb_10 = '{$mb_10}',
+                    mb_marketing_agree = '{$mb_marketing_agree}',
+                    mb_thirdparty_agree = '{$mb_thirdparty_agree}',
+                    mb_board_post = '{$mb_board_post}',
+                    mb_board_reply = '{$mb_board_reply}',
+                    mb_board_comment = '{$mb_board_comment}',
+                    mb_board_recomment = '{$mb_board_recomment}'
                     {$sql_password}
                     {$sql_nick_date}
                     {$sql_open_date}
                     {$sql_email_certify}
                     {$sql_certify}
+                    {$sql_mailling_date}
+                    {$sql_sms_date}
+                    {$sql_marketing_date}
+                    {$sql_thirdparty_date}
+                    {$sql_agree_log}
               where mb_id = '$mb_id' ";
     sql_query($sql);
 

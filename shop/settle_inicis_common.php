@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 //**********************************************************************************
 //이니시스가 전달하는 가상계좌이체의 결과를 수신하여 DB 처리 하는 부분 입니다.
@@ -127,6 +128,19 @@ if (in_array($_SERVER['REMOTE_ADDR'], $allowed_ips)) {   //PG에서 보냈는지
                     sql_query($sql, FALSE);
                 }
             }
+
+            // 알림톡 발송 BEGIN: 입금완료(CU-OR03/AD-OR03) ------------------------------
+            // 주문정보 체크
+            $sql = "select od_name, od_hp, od_tel from {$g5['g5_shop_order_table']} where od_id = '$od_id' limit 1";
+            $od_result = sql_fetch($sql);
+            $it_name_str = get_alimtalk_cart_item_name($od_id); // 상품명
+
+            if (isset($od_result)) {
+                $conditions = ['od_id' => $od_id, 'od_name' => $od_result['od_name'], 'it_name' => $it_name_str]; // 변수 치환 정보
+                $cu_atk = send_alimtalk_preset('CU-OR03', ['rcv' => $od_result['od_hp'] ?: $od_result['od_tel'], 'rcvnm' => $od_result['od_name']], $conditions); // 회원
+                $ad_atk = send_admin_alimtalk('AD-OR03', 'super', $conditions); // 관리자
+            }
+            // 알림톡 발송 END   -------------------------------------------------------
         }
 
         if($INIpayLog) {

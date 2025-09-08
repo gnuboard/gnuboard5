@@ -18,6 +18,16 @@ $mb_certify_case = isset($_POST['mb_certify_case']) ? preg_replace('/[^0-9a-z_]/
 $mb_certify     = isset($_POST['mb_certify']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['mb_certify']) : '';
 $mb_zip         = isset($_POST['mb_zip']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['mb_zip']) : '';
 
+// 광고성 정보 수신
+$mb_marketing_agree         = isset($_POST['mb_marketing_agree']) ? clean_xss_tags($_POST['mb_marketing_agree'], 1, 1) : '0';
+$mb_thirdparty_agree         = isset($_POST['mb_thirdparty_agree']) ? clean_xss_tags($_POST['mb_thirdparty_agree'], 1, 1) : '0';
+
+// 게시판알림 설정
+$mb_board_post      = isset($_POST['mb_board_post']) ? (int)$_POST['mb_board_post'] : 0;
+$mb_board_reply     = isset($_POST['mb_board_reply']) ? (int)$_POST['mb_board_reply'] : 0;
+$mb_board_comment   = isset($_POST['mb_board_comment']) ? (int)$_POST['mb_board_comment'] : 0;
+$mb_board_recomment = isset($_POST['mb_board_recomment']) ? (int)$_POST['mb_board_recomment'] : 0;
+
 // 관리자가 자동등록방지를 사용해야 할 경우 ( 회원의 비밀번호 변경시 캡챠를 체크한다 )
 if ($mb_password) {
     include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
@@ -86,8 +96,6 @@ foreach ($check_keys as $key) {
     }
 }
 
-$mb_memo = isset($_POST['mb_memo']) ? $_POST['mb_memo'] : '';
-
 $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_nick = '{$mb_nick}',
                  mb_email = '{$mb_email}',
@@ -109,8 +117,15 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_mailling = '{$posts['mb_mailling']}',
                  mb_sms = '{$posts['mb_sms']}',
                  mb_open = '{$posts['mb_open']}',
+                 mb_open_date = '".G5_TIME_YMDHIS."',
                  mb_profile = '{$posts['mb_profile']}',
                  mb_level = '{$posts['mb_level']}',
+                 mb_marketing_agree = '{$mb_marketing_agree}',
+                 mb_thirdparty_agree = '{$mb_thirdparty_agree}',
+                 mb_board_post      = '{$mb_board_post}',
+                 mb_board_reply     = '{$mb_board_reply}',
+                 mb_board_comment   = '{$mb_board_comment}',
+                 mb_board_recomment = '{$mb_board_recomment}',
                  mb_1 = '{$posts['mb_1']}',
                  mb_2 = '{$posts['mb_2']}',
                  mb_3 = '{$posts['mb_3']}',
@@ -142,6 +157,36 @@ if ($w == '') {
         alert('이미 존재하는 이메일입니다.\\nＩＤ : ' . $row['mb_id'] . '\\n이름 : ' . $row['mb_name'] . '\\n닉네임 : ' . $row['mb_nick'] . '\\n메일 : ' . $row['mb_email']);
     }
 
+    $agree_items = [];
+    // 마케팅 목적의 개인정보 수집 및 이용
+    if ($mb_marketing_agree == 1) {
+        $sql_common .=  " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(동의)";
+    }
+
+    // 광고성 이메일 수신
+    if ($mb_mailling == 1) {
+        $sql_common .=  " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 이메일 수신(동의)";
+    }
+
+    // 광고성 SMS/카카오톡 수신
+    if ($mb_sms == 1) {
+        $sql_common .=  " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 SMS/카카오톡 수신(동의)";
+    }
+
+    // 개인정보 제3자 제공 
+    if ($mb_thirdparty_agree == 1) {
+        $sql_common .=  " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "개인정보 제3자 제공(동의)";
+    }
+
+    // 동의 로그 추가
+    if (!empty($agree_items)) {
+        $agree_log = "[".G5_TIME_YMDHIS.", 관리자 회원추가] " . implode(' | ', $agree_items) . "\n";
+        $sql_common .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+    }
     sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '" . get_encrypt_string($mb_password) . "', mb_datetime = '" . G5_TIME_YMDHIS . "', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '" . G5_TIME_YMDHIS . "', {$sql_common} ");
 } elseif ($w == 'u') {
     $mb = get_member($mb_id);
@@ -193,10 +238,54 @@ if ($w == '') {
         $sql_certify = "";
     }
 
+    // 현재 데이터 조회
+    $row = sql_fetch("select * from {$g5['member_table']} where mb_id = '{$mb_id}' ");
+    $agree_items = [];
+        
+    // 마케팅 목적의 개인정보 수집 및 이용
+    $sql_marketing_date = "";
+    if ($row['mb_marketing_agree'] !== $mb_marketing_agree) {
+        $sql_marketing_date .= " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(" . ($mb_marketing_agree == 1 ? "동의" : "철회") . ")";
+    }
+
+    // 광고성 이메일 수신
+    $sql_mailling_date = "";
+    if ($row['mb_mailling'] !== $mb_mailling) {
+        $sql_mailling_date .= " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 이메일 수신(" . ($mb_mailling == 1 ? "동의" : "철회") . ")";
+    }
+    
+    // 광고성 SMS/카카오톡 수신
+    $sql_sms_date = "";
+    if ($row['mb_sms'] !== $mb_sms) {
+        $sql_sms_date .= " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "광고성 SMS/카카오톡 수신(" . ($mb_sms == 1 ? "동의" : "철회") . ")";
+    }
+    
+    // 개인정보 제3자 제공
+    $sql_thirdparty_date = "";
+    if ($row['mb_thirdparty_agree'] !== $mb_thirdparty_agree) {
+        $sql_thirdparty_date .= " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
+        $agree_items[] = "개인정보 제3자 제공(" . ($mb_thirdparty_agree == 1 ? "동의" : "철회") . ")";
+    }
+    
+    // 동의 로그 추가
+    $sql_agree_log = "";
+    if (!empty($agree_items)) {
+        $agree_log = "[".G5_TIME_YMDHIS.", 관리자 회원수정] " . implode(' | ', $agree_items) . "\n";
+        $sql_agree_log .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+    }
+    
     $sql = " update {$g5['member_table']}
                 set {$sql_common}
                      {$sql_password}
                      {$sql_certify}
+                     {$sql_mailling_date}
+                     {$sql_sms_date}
+                     {$sql_marketing_date}
+                     {$sql_thirdparty_date}
+                     {$sql_agree_log}
                 where mb_id = '{$mb_id}' ";
     sql_query($sql);
 } else {

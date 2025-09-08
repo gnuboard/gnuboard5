@@ -14,7 +14,6 @@ $print_version = ($is_admin == 'super') ? 'Version ' . G5_GNUBOARD_VER : '';
         <strong>자바스크립트를 사용하지 않음</strong>으로 설정하신 경우는 수정이나 삭제시 별도의 경고창이 나오지 않으므로 이점 주의하시기 바랍니다.
     </p>
 </noscript>
-
 </div>
 <footer id="ft">
     <p>
@@ -22,8 +21,25 @@ $print_version = ($is_admin == 'super') ? 'Version ' . G5_GNUBOARD_VER : '';
         <button type="button" class="scroll_top"><span class="top_img"></span><span class="top_txt">TOP</span></button>
     </p>
 </footer>
-</div>
 
+<!-- 공통 레이어 팝업 컨테이너 -->
+<div id="adminPopupContainer">
+    <div id="popupOverlay" class="popup-overlay is-hidden" onclick="PopupManager.close('popupOverlay')">
+        <div class="popup-content" onclick="event.stopPropagation()">
+            <div class="popup-header">
+                <strong id="popupTitle" class="popup-title"></strong>
+                <button type="button" class="popup-close-btn" onclick="PopupManager.close('popupOverlay')">
+                    <i class="fa fa-close"></i><span class="sound_only">팝업 닫기</span>
+                </button>
+            </div>
+            <div class="popup-body" id="popupBody">
+                <!-- 동적으로 내용 주입 -->
+            </div>
+            <div class="popup-footer" id="popupFooter">
+                <!-- 버튼 등 동적으로 -->
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
