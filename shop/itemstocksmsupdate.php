@@ -11,7 +11,7 @@ if(! (isset($it['it_id']) && $it['it_id']))
     alert_close('상품정보가 존재하지 않습니다.');
 
 if(!$it['it_soldout'] || !$it['it_stock_sms'])
-    alert_close('재입고SMS 알림을 신청할 수 없는 상품입니다.');
+    alert_close('재입고 알림을 신청할 수 없는 상품입니다.');
 
 $ss_hp = hyphen_hp_number($ss_hp);
 if(!$ss_hp)
@@ -39,4 +39,4 @@ $sql = " insert into {$g5['g5_shop_item_stocksms_table']}
                 ss_datetime = '".G5_TIME_YMDHIS."' ";
 sql_query($sql);
 
-alert_close('재입고SMS 알림 요청 등록이 완료됐습니다.');
+alert_close('재입고 알림 요청 등록이 완료됐습니다.');

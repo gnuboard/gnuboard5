@@ -257,7 +257,7 @@ function captcha_html($class="captcha")
     $html .= "\n".'<button type="button" id="captcha_reload"><span></span>새로고침</button>';
     $html .= "\n".'<span id="captcha_info">자동등록방지 숫자를 순서대로 입력하세요.</span>';
     $html .= "\n".'</fieldset>';
-    return $html;
+    return run_replace('kcaptcha_captcha_html', $html, $class);
 }
 
 

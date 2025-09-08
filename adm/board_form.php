@@ -89,6 +89,11 @@ if (!isset($board['bo_select_editor'])) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_select_editor` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_dhtml_editor` ", false);
 }
 
+// SMS/알림톡 사용 여부 추가
+if (!isset($board['bo_use_kakaotalk'])) {
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_kakaotalk` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_email` ", false);
+}
+
 $board_default = array(
 'bo_mobile_subject'=>'',
 'bo_device'=>'',
@@ -700,6 +705,19 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_grp_use_email">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_email" value="1" id="chk_all_use_email">
                 <label for="chk_all_use_email">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="bo_use_kakaotalk">SMS/알림톡 사용</label></th>
+            <td>
+                <input type="checkbox" name="bo_use_kakaotalk" value="1" id="bo_use_kakaotalk" <?php echo $board['bo_use_kakaotalk']?'checked':''; ?>>
+                사용
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_use_kakaotalk" value="1" id="chk_grp_use_kakaotalk">
+                <label for="chk_grp_use_kakaotalk">그룹적용</label>
+                <input type="checkbox" name="chk_all_use_kakaotalk" value="1" id="chk_all_use_kakaotalk">
+                <label for="chk_all_use_kakaotalk">전체적용</label>
             </td>
         </tr>
         <tr>

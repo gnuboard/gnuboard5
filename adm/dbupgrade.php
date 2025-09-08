@@ -289,6 +289,166 @@ if($g5['sms5_prefix'] != 'sms5_' && sql_num_rows(sql_query("show tables like 'sm
     $is_check = true;
 }
 
+// 카카오톡 프리셋 테이블
+if( isset($g5['kakao5_preset_table']) && !sql_query(" DESC {$g5['kakao5_preset_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['kakao5_preset_table']}` (
+        `kp_id` int(11) NOT NULL AUTO_INCREMENT,
+        `kp_type` varchar(20) NOT NULL DEFAULT '',
+        `kp_category` varchar(20) NOT NULL DEFAULT '',
+        `kp_preset_code` varchar(100) NOT NULL DEFAULT '',
+        `kp_preset_name` varchar(100) NOT NULL DEFAULT '',
+        `kp_template_name` varchar(100) NOT NULL DEFAULT '',
+        `kp_alt_send` varchar(100) NOT NULL DEFAULT '1',
+        `kp_active` tinyint(1) NOT NULL DEFAULT '1',
+        `kp_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `kp_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (`kp_id`)
+      ) ", true);
+
+    // 기본 프리셋 데이터 추가
+    sql_query("INSERT INTO `{$g5['kakao5_preset_table']}`
+        (`kp_type`, `kp_category`, `kp_preset_code`, `kp_preset_name`, `kp_template_name`, `kp_alt_send`, `kp_active`, `kp_created_at`, `kp_updated_at`)
+        VALUES
+        ('회원', '회원', 'CU-MB01', '회원가입완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '회원', 'AD-MB01', '회원가입완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+        ('작성자', '게시판', 'CU-BO01', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '게시판', 'AD-BO01', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('그룹관리자', '게시판', 'AD-BO02', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('게시판관리자', '게시판', 'AD-BO03', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('작성자', '게시판', 'CU-BO02', '새 댓글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('댓글 작성자', '게시판', 'CU-BO03', '새 댓글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('답변글 작성자', '게시판', 'CU-BO04', '답변글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '투표', 'AD-VO01', '기타의견 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+        ('주문자', '쇼핑몰', 'CU-OR01', '주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '쇼핑몰', 'AD-OR01', '주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-OR02', '무통장입금 주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '쇼핑몰', 'AD-OR02', '무통장입금 주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-OR03', '무통장입금 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '쇼핑몰', 'AD-OR03', '무통장입금 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-OR04', '(주문자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '쇼핑몰', 'AD-OR04', '(주문자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-OR05', '(관리자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '쇼핑몰', 'AD-OR05', '(관리자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-OR06', '반품', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-OR07', '품절', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-DE01', '배송 준비', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-DE02', '배송중', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('주문자', '쇼핑몰', 'CU-DE03', '배송 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('요청자', '쇼핑몰', 'CU-ST01', '재입고알림', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+        ('문의자', '1:1문의', 'CU-IQ01', '문의 등록', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('최고관리자', '1:1문의', 'AD-IQ01', '문의 등록', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+        ('문의자', '1:1문의', 'CU-IQ02', '답변 등록', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    ", true);
+    $is_check = true;
+}
+
+// 카카오톡 프리셋 전송내역 테이블
+if( isset($g5['kakao5_preset_history_table']) && !sql_query(" DESC {$g5['kakao5_preset_history_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['kakao5_preset_history_table']}` (
+        `ph_id` int(11) NOT NULL AUTO_INCREMENT,
+        `kp_id` int(11) NOT NULL DEFAULT '0',
+        `mb_id` varchar(20) NOT NULL DEFAULT '',
+        `ph_rcvnm` varchar(100) NOT NULL DEFAULT '',
+        `ph_rcv` varchar(100) NOT NULL DEFAULT '',
+        `ph_template_code` varchar(100) NOT NULL DEFAULT '',
+        `ph_alt_send` varchar(100) NOT NULL DEFAULT '',
+        `ph_request_num` varchar(100) NOT NULL DEFAULT '',
+        `ph_receipt_num` varchar(100) NOT NULL DEFAULT '',
+        `ph_send_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        `ph_state` tinyint(1) NOT NULL DEFAULT '0',
+        `ph_log` text NOT NULL,
+        PRIMARY KEY (`ph_id`),
+        KEY `kp_id` (`kp_id`),
+        KEY `mb_id` (`mb_id`)
+      ) ", true);
+
+    $is_check = true;
+}
+
+// 카카오톡 설정 필드 추가
+if (!isset($config['cf_kakaotalk_use'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['config_table']}`
+            ADD `cf_kakaotalk_use` varchar(50) NOT NULL DEFAULT '' AFTER `cf_recaptcha_secret_key`,
+            ADD `cf_kakaotalk_corpnum` varchar(50) NOT NULL DEFAULT '' AFTER `cf_kakaotalk_use`,
+            ADD `cf_kakaotalk_sender_hp` varchar(50) NOT NULL DEFAULT '' AFTER `cf_kakaotalk_corpnum`,
+            ADD `cf_popbill_userid` varchar(100) NOT NULL DEFAULT '' AFTER `cf_kakaotalk_sender_hp`,
+            ADD `cf_popbill_link_id` varchar(100) NOT NULL DEFAULT '' AFTER `cf_popbill_userid`,
+            ADD `cf_popbill_secretkey` varchar(255) NOT NULL DEFAULT '' AFTER `cf_popbill_link_id` ",
+        true
+    );
+
+    $is_check = true;
+}
+
+// 광고성 정보 수신 동의 사용 필드 추가
+if (!isset($config['cf_use_promotion'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['config_table']}`
+            ADD `cf_use_promotion` tinyint(1) NOT NULL DEFAULT '0' AFTER `cf_privacy` ",
+        true
+    );
+
+    $is_check = true;
+}
+
+// 광고성 정보 수신 동의 여부 필드 추가 + 메일 / SMS 수신 일자 추가
+if (!isset($member['mb_marketing_agree'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_marketing_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_scrap_cnt`,
+                ADD `mb_marketing_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_marketing_agree`,
+                ADD `mb_thirdparty_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_marketing_date`,
+                ADD `mb_thirdparty_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_thirdparty_agree`,
+                ADD `mb_agree_log` TEXT NOT NULL AFTER `mb_thirdparty_date`,
+                ADD `mb_mailling_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_mailling`,
+                ADD `mb_sms_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_sms` ",
+        true
+    );
+
+    $is_check = true;
+}
+
+// 게시판 설정 - SMS/알림톡 사용 여부 추가
+if(!sql_query(" select bo_use_kakaotalk from {$g5['board_table']} limit 1", false)) {
+    sql_query(
+        " ALTER TABLE `{$g5['board_table']}` 
+            ADD `bo_use_kakaotalk` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_email` ", 
+        true
+    );
+
+    $is_check = true;
+}
+
+// 게시판 알림 설정 필드 추가
+if (!isset($member['mb_board_post'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['member_table']}`
+            ADD `mb_board_post`      tinyint(1) NOT NULL DEFAULT '0' AFTER `mb_agree_log`,
+            ADD `mb_board_reply`     tinyint(1) NOT NULL DEFAULT '0' AFTER `mb_board_post`,
+            ADD `mb_board_comment`   tinyint(1) NOT NULL DEFAULT '0' AFTER `mb_board_reply`,
+            ADD `mb_board_recomment` tinyint(1) NOT NULL DEFAULT '0' AFTER `mb_board_comment` ",
+        true
+    );
+
+    $is_check = true;
+}
+
+// 재입고 알림 - 채널 구분 (1=SMS, 2=알림톡)
+if(sql_query(" DESC {$g5['g5_shop_item_stocksms_table']} ", false) && !sql_query(" select ss_channel from {$g5['g5_shop_item_stocksms_table']} limit 1", false)) {
+    sql_query(
+        " ALTER TABLE `{$g5['g5_shop_item_stocksms_table']}`
+            ADD `ss_channel` tinyint(4) NOT NULL DEFAULT '1' AFTER `ss_ip` ", 
+        true
+    );
+
+    $is_check = true;
+}
+
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
