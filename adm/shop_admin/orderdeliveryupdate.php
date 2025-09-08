@@ -3,6 +3,7 @@ $sub_menu = '400400';
 include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
+include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -98,6 +99,14 @@ if(isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) 
 
             include(G5_SHOP_PATH.'/'.$od['od_pg'].'/escrow.register.php');
         }
+        
+        // 알림톡 발송 BEGIN: 배송중(CU-DE02/AD-DE02) ------------------------------
+        $it_name_str = get_alimtalk_cart_item_name($od_id); // 상품명
+
+        $conditions = ['od_id' => $od_id, 'od_name' => $od['od_name'], 'it_name' => $it_name_str]; // 변수 치환 정보
+        $cu_atk = send_alimtalk_preset('CU-DE02', ['rcv' => $od['od_hp'] ?: $od['od_tel'], 'rcvnm' => $od['od_name']], $conditions); // 회원
+        $ad_atk = send_admin_alimtalk('AD-DE02', 'super', $conditions); // 관리자
+        // 알림톡 발송 END   --------------------------------------------------------
     }
 }
 
