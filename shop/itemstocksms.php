@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
 
-$g5['title'] = '상품 재입고 알림 (SMS)';
+$g5['title'] = '상품 재입고 알림';
 include_once(G5_PATH.'/head.sub.php');
 
 // 상품정보
@@ -13,7 +13,7 @@ if(! (isset($it['it_id']) && $it['it_id']))
     alert_close('상품정보가 존재하지 않습니다.');
 
 if(!$it['it_soldout'] || !$it['it_stock_sms'])
-    alert_close('재입고SMS 알림을 신청할 수 없는 상품입니다.');
+    alert_close('재입고 알림을 신청할 수 없는 상품입니다.');
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
@@ -34,6 +34,9 @@ if (G5_IS_MOBILE) {
         <ul>
             <li class="prd_name">
                 <?php echo $it['it_name']; ?>
+            </li>
+            <li>
+                <strong>* 재입고 알림은 SMS 문자 또는 카카오 알림톡으로 발송됩니다.</strong>
             </li>
             <li>
                 <label for="ss_hp" class="sound_only">휴대폰번호<strong> 필수</strong></label>
@@ -66,7 +69,7 @@ function fstocksms_submit(f)
         return false;
     }
 
-    if(confirm("재입고SMS 알림 요청을 등록하시겠습니까?")) {
+    if(confirm("재입고 알림 요청을 등록하시겠습니까?")) {
         return true;
     } else {
         window.close();

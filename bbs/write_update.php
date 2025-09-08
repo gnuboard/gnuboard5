@@ -756,6 +756,45 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     }
 }
 
+// 알림톡 발송 BEGIN: 새 게시글/답변 작성 (CU-BO01,CU-BO04/AD-BO01,AD-BO02,AD-BO03) -------------------------------------
+if ($config['cf_kakaotalk_use'] && $board['bo_use_kakaotalk'])
+{
+    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
+    $conditions = ['bo_table' => $bo_table, 'wr_id' => $wr_id, 'mb_id' => $mb_id]; // 변수 치환 정보
+
+    // 새 게시글 작성
+    if ($w === '') {
+        // 관리자 알림
+        $ad_atk_super = send_admin_alimtalk('AD-BO01', 'super', $conditions); // 관리자
+        $ad_atk_group = send_admin_alimtalk('AD-BO02', 'group', $conditions, ['super']); // 그룹 관리자
+        $ad_atk_board = send_admin_alimtalk('AD-BO03', 'board', $conditions, ['super', 'group']); // 게시판 관리자
+
+        // 작성자 본인 알림
+        if (!empty($mb_id)) {
+            $writer = get_member($mb_id);
+            if ($writer && !empty($writer['mb_board_post']) && !empty($writer['mb_hp'])) {
+                $cu_atk = send_alimtalk_preset('CU-BO01', ['rcv' => $writer['mb_hp'], 'rcvnm' => ($writer['mb_name'] ?? '')], $conditions); // 회원
+            }
+        }
+    }
+
+    // 답변 작성
+    else if ($w === 'r') {
+        $parent_mb_id = $wr['mb_id'] ?? '';
+
+        if ($parent_mb_id && $parent_mb_id !== ($member['mb_id'] ?? '')) {
+            $conditions['mb_id'] = $parent_mb_id;
+            $conditions['wr_subject'] = $wr['wr_subject'];
+            $writer = get_member($parent_mb_id);
+
+            if ($writer && !empty($writer['mb_board_reply']) && !empty($writer['mb_hp'])) {
+                $cu_atk = send_alimtalk_preset('CU-BO04', ['rcv' => $writer['mb_hp'], 'rcvnm' => ($writer['mb_name'] ?? '')], $conditions); // 회원
+            }
+        }
+    }
+}
+// 알림톡 발송 END   --------------------------------------------------------
+
 // 사용자 코드 실행
 @include_once($board_skin_path.'/write_update.skin.php');
 @include_once($board_skin_path.'/write_update.tail.skin.php');

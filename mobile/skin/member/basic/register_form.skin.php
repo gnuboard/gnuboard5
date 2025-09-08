@@ -45,8 +45,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
     <div class="form_01">
         <h2>개인정보 입력</h2>
         <ul>
-            <li>
-                <?php 
+            <?php 
                 $desc_name = '';
                 $desc_phone = '';
 	            if ($config['cf_cert_use']) {
@@ -56,7 +55,9 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
                     if (!$config['cf_cert_simple'] && !$config['cf_cert_hp'] && $config['cf_cert_ipin']) {
                         $desc_phone = '';
                     }
-
+            ?>
+            <li>
+                <?php
                     if($config['cf_cert_simple']) {
                         echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">간편인증</button>'.PHP_EOL;
                     }
@@ -67,11 +68,10 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	
                     echo '<span class="cert_req">(필수)</span>';
 	                echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
-	            }
 	            ?>
 	            <?php
-	            if ($config['cf_cert_use'] && $member['mb_certify']) {
-	                switch  ($member['mb_certify']) {
+	            if ($member['mb_certify']) {
+	                switch ($member['mb_certify']) {
                         case "simple": 
                             $mb_cert = "간편인증";
                             break;
@@ -86,8 +86,9 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	            <div id="msg_certify">
 	                <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	            </div>
-            <?php } ?>
+                <?php } ?>
             </li>
+            <?php } ?>
 	        <li class="rgs_name_li">
                 <label for="reg_mb_name" class="sound_only">이름 (필수)<?php echo $desc_name ?></label>
 	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $name_readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" placeholder="이름 (필수)<?php echo $desc_name ?>">
@@ -129,7 +130,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	        <?php if ($config['cf_use_tel']) { ?>
 	        <li>
 	            <label for="reg_mb_tel" class="sound_only">전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?></label>
-	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple']) && $member['mb_certify']) { echo "readonly"; } ?> maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?>">
+	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?>">
 	        </li>
 	        <?php } ?>
 	
@@ -218,26 +219,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	        </li>
 	        <?php } ?>
 
-	        <li class="chk_box">
-	        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">
-	            <label for="reg_mb_mailling">
-	            	<span></span>
-	            	<b class="sound_only">메일링서비스</b>
-	            </label>
-	            <span class="chk_li">정보 메일을 받겠습니다.</span>
-	        </li>
-
-	        <?php if ($config['cf_use_hp']) { ?>
-	        <li class="chk_box">
-	            <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?> class="selec_chk">
-	        	<label for="reg_mb_sms">
-	            	<span></span>
-	            	<b class="sound_only">SMS 수신여부</b>
-	            </label>        
-	            <span class="chk_li">휴대폰 문자메세지를 받겠습니다.</span>
-	        </li>
-	        <?php } ?>
-
 	        <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
 	        <li class="chk_box">
 	            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> class="selec_chk">
@@ -246,7 +227,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	      			<b class="sound_only">정보공개</b>
 	      		</label>      
 	            <span class="chk_li">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
-	            <span class="frm_info">
+	            <span class="frm_info add_info">
 	                정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
 	            </span>
 	            <input type="hidden" name="mb_open_default" value="<?php echo $member['mb_open'] ?>"> 
@@ -276,12 +257,164 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	            <input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input full_input" placeholder="추천인아이디">
 	        </li>
 	        <?php } ?>
-
-	        <li class="is_captcha_use">
-	            <span  class="frm_label">자동등록방지</span>
-	            <?php echo captcha_html(); ?>
-	        </li>
 	    </ul>
+    </div>
+
+    <?php if($config['cf_kakaotalk_use'] != "") { ?>
+    <div class="form_01">
+        <h2>게시판 알림설정</h2>
+        <span class="frm_info add_info">게시판이나 댓글이 등록되면 알림톡으로 안내를 받을 수 있습니다.<br>알림은 등록된 휴대폰 번호로 발송됩니다.</span>
+
+        <ul>
+            <!-- 게시글 알림 -->
+            <li class="chk_box consent-group">
+                <label><b>게시글 알림</b></label>
+                <ul class="sub-consents">
+                    <li class="chk_box is-inline">
+                        <input type="checkbox" name="mb_board_post" value="1" id="mb_board_post" <?php echo ($w=='' || $member['mb_board_post'])?'checked':''; ?> class="selec_chk">
+                        <label for="mb_board_post"><span></span><b class="sound_only">내 게시글 작성 완료 알림</b></label>
+                        <span class="chk_li">내 게시글 작성 완료 알림</span>
+                    </li>
+                    <li class="chk_box is-inline">
+                        <input type="checkbox" name="mb_board_reply" value="1" id="mb_board_reply" <?php echo ($w=='' || $member['mb_board_reply'])?'checked':''; ?> class="selec_chk">
+                        <label for="mb_board_reply"><span></span><b class="sound_only">내 게시글에 달린 답변 알림</b></label>
+                        <span class="chk_li">내 게시글에 달린 답변 알림</span>
+                    </li>
+                </ul>
+            </li>
+            
+            <br>
+
+            <!-- 댓글 알림 -->
+            <li class="chk_box consent-group">
+                <label><b>댓글 알림</b></label>
+                <ul class="sub-consents">
+                    <li class="chk_box is-inline">
+                        <input type="checkbox" name="mb_board_comment" value="1" id="mb_board_comment" <?php echo ($w=='' || $member['mb_board_comment'])?'checked':''; ?> class="selec_chk">
+                        <label for="mb_board_comment"><span></span><b class="sound_only">내 게시글에 달린 댓글 알림</b></label>
+                        <span class="chk_li">내 게시글에 달린 댓글 알림</span>
+                    </li>
+                    <li class="chk_box is-inline">
+                        <input type="checkbox" name="mb_board_recomment" value="1" id="mb_board_recomment" <?php echo ($w=='' || $member['mb_board_recomment'])?'checked':''; ?> class="selec_chk">
+                        <label for="mb_board_recomment"><span></span><b class="sound_only">댓글에 대댓글 알림</b></label>
+                        <span class="chk_li">내 댓글에 달린 대댓글 알림</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <?php } ?>
+
+    <!-- 회원가입 약관 동의에 광고성 정보 수신 동의 표시 여부가 사용시에만 -->
+    <?php if($config['cf_use_promotion'] == 1) { ?>
+    <div class="form_01">
+        <h2>수신설정</h2>
+            <!-- 수신설정만 팝업 및 체크박스 관련 class 적용 -->
+			<ul>
+				<!-- (선택) 마케팅 목적의 개인정보 수집 및 이용 -->
+				<li class="chk_box">
+				<div class="consent-line">
+					<input type="checkbox" name="mb_marketing_agree" value="1" id="reg_mb_marketing_agree" aria-describedby="desc_marketing" <?php echo $member['mb_marketing_agree'] ? 'checked' : ''; ?> class="selec_chk marketing-sync">
+					<label for="reg_mb_marketing_agree"><span></span><b class="sound_only">(선택) 마케팅 목적의 개인정보 수집 및 이용</b></label>
+					<span class="chk_li">(선택) 마케팅 목적의 개인정보 수집 및 이용</span>
+					<button type="button" class="js-open-consent" data-title="마케팅 목적의 개인정보 수집 및 이용" data-template="#tpl_marketing" data-check="#reg_mb_marketing_agree" aria-controls="consentDialog">자세히보기</button>
+				</div>
+				<input type="hidden" name="mb_marketing_agree_default" value="<?php echo $member['mb_marketing_agree'] ?>">
+				<div id="desc_marketing" class="sound_only">마케팅 목적의 개인정보 수집·이용에 대한 안내입니다. 자세히보기를 눌러 전문을 확인할 수 있습니다.</div>
+				<div class="consent-date"><?php if ($member['mb_marketing_agree'] == 1 && $member['mb_marketing_date'] != "0000-00-00 00:00:00") echo "(동의일자: ".$member['mb_marketing_date'].")"; ?></div>
+
+				<template id="tpl_marketing">
+					* 목적: 서비스 마케팅 및 프로모션<br>
+					* 항목: 이름, 이메일<?php echo ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_simple']))) ? ", 휴대폰 번호" : "";?><br>
+					* 보유기간: 회원 탈퇴 시까지<br>
+					동의를 거부하셔도 서비스 기본 이용은 가능하나, 맞춤형 혜택 제공은 제한될 수 있습니다.
+				</template>
+				</li>
+
+				<!-- (선택) 광고성 정보 수신 동의 (상위) -->
+				<li class="chk_box consent-group">
+					<div class="consent-line">
+						<input type="checkbox" name="mb_promotion_agree" value="1" id="reg_mb_promotion_agree" aria-describedby="desc_promotion" class="selec_chk marketing-sync parent-promo">
+						<label for="reg_mb_promotion_agree"><span></span><b class="sound_only">(선택) 광고성 정보 수신 동의</b></label>
+						<span class="chk_li">(선택) 광고성 정보 수신 동의</span>
+						<button type="button" class="js-open-consent" data-title="광고성 정보 수신 동의" data-template="#tpl_promotion" data-check="#reg_mb_promotion_agree" data-check-group=".child-promo" aria-controls="consentDialog">자세히보기</button>
+					</div>
+				
+				<div id="desc_promotion" class="sound_only">광고성 정보(이메일/SMS·카카오톡) 수신 동의의 상위 항목입니다. 자세히보기를 눌러 전문을 확인할 수 있습니다.</div>
+
+				<!-- 하위 채널(이메일/SMS) -->
+				<ul class="sub-consents">
+					<li class="chk_box is-inline">
+						<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo $member['mb_mailling'] ? 'checked' : ''; ?> class="selec_chk child-promo">
+						<label for="reg_mb_mailling"><span></span><b class="sound_only">광고성 이메일 수신 동의</b></label>
+						<span class="chk_li">광고성 이메일 수신 동의</span>
+						<input type="hidden" name="mb_mailling_default" value="<?php echo $member['mb_mailling']; ?>">
+						<div class="consent-date"><?php if ($w == 'u' && $member['mb_mailling'] == 1 && $member['mb_mailling_date'] != "0000-00-00 00:00:00") echo "(동의일자: ".$member['mb_mailling_date'].")"; ?></div>
+					</li>
+
+                    <!-- 휴대폰번호 입력 보이기 or 필수입력일 경우에만 -->
+                    <?php if ($config['cf_use_hp'] || $config['cf_req_hp']) { ?>
+					<li class="chk_box is-inline">
+						<input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo $member['mb_sms'] ? 'checked' : ''; ?> class="selec_chk child-promo">
+						<label for="reg_mb_sms"><span></span><b class="sound_only">광고성 SMS/카카오톡 수신 동의</b></label>
+						<span class="chk_li">광고성 SMS/카카오톡 수신 동의</span>
+						<input type="hidden" name="mb_sms_default" value="<?php echo $member['mb_sms']; ?>">
+						<div class="consent-date"><?php if ($w == 'u' && $member['mb_sms'] == 1 && $member['mb_sms_date'] != "0000-00-00 00:00:00") echo "(동의일자: ".$member['mb_sms_date'].")"; ?></div>
+					</li>
+					<?php } ?>
+                </ul>
+
+				<template id="tpl_promotion">
+					수집·이용에 동의한 개인정보를 이용하여 이메일/SMS/카카오톡 등으로 오전 8시~오후 9시에 광고성 정보를 전송할 수 있습니다.<br>
+					동의는 언제든지 마이페이지에서 철회할 수 있습니다.
+				</template>
+				</li>
+
+				<!-- (선택) 개인정보 제3자 제공 동의 -->
+				<!-- SMS 및 카카오톡 사용시에만 -->
+				<?php
+					$configKeys = ['cf_sms_use', 'cf_kakaotalk_use'];
+					$companies = ['icode' => '아이코드', 'popbill' => '팝빌'];
+
+					$usedCompanies = [];
+					foreach ($configKeys as $key) {
+						if (!empty($config[$key]) && isset($companies[$config[$key]])) {
+							$usedCompanies[] = $companies[$config[$key]];
+						}
+					}
+				?>
+				<?php if (!empty($usedCompanies)) { ?>
+				<li class="chk_box">
+				<div class="consent-line">
+					<input type="checkbox" name="mb_thirdparty_agree" value="1" id="reg_mb_thirdparty_agree" aria-describedby="desc_thirdparty" <?php echo $member['mb_thirdparty_agree'] ? 'checked' : ''; ?> class="selec_chk marketing-sync">
+					<label for="reg_mb_thirdparty_agree"><span></span><b class="sound_only">(선택) 개인정보 제3자 제공 동의</b></label>
+					<span class="chk_li">(선택) 개인정보 제3자 제공 동의</span>
+					<button type="button" class="js-open-consent" data-title="개인정보 제3자 제공 동의" data-template="#tpl_thirdparty" data-check="#reg_mb_thirdparty_agree" aria-controls="consentDialog">자세히보기</button>
+				</div>
+				<input type="hidden" name="mb_thirdparty_agree_default" value="<?php echo $member['mb_thirdparty_agree'] ?>">
+				<div id="desc_thirdparty" class="sound_only">개인정보 제3자 제공 동의에 대한 안내입니다. 자세히보기를 눌러 전문을 확인할 수 있습니다.</div>
+				<div class="consent-date"><?php if ($member['mb_thirdparty_agree'] == 1 && $member['mb_thirdparty_date'] != "0000-00-00 00:00:00") echo "(동의일자: ".$member['mb_thirdparty_date'].")"; ?></div>
+
+				<template id="tpl_thirdparty">
+					* 목적: 상품/서비스, 사은/판촉행사, 이벤트 등의 마케팅 안내(카카오톡 등)<br>
+					* 항목: 이름, 휴대폰 번호<br>
+					* 제공받는 자: <?php echo implode(', ', $usedCompanies);?><br>
+					* 보유기간: 제공 목적 서비스 기간 또는 동의 철회 시까지
+				</template>
+				</li>
+				<?php } ?>
+			</ul>
+    </div>
+    <?php } ?>
+
+    <div class="form_01">
+        <h2>자동등록방지</h2>
+        <ul>
+            <li class="is_captcha_use">
+                <span  class="frm_label">자동등록방지</span>
+                <?php echo captcha_html(); ?>
+            </li>
+        </ul>
     </div>
 
     <div class="btn_confirm">
@@ -289,6 +422,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
         <button type="submit" id="btn_submit" class="btn_submit" accesskey="s"><?php echo $w==''?'회원가입':'정보수정'; ?></button>
     </div>
     </form>
+
+    <?php include_once(__DIR__ . '/consent_modal.inc.php'); ?>
 
     <script>
     $(function() {
@@ -513,5 +648,29 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 		}
 		$(this).siblings('.fileName').val(filename);
 	});
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const parentPromo = document.getElementById('reg_mb_promotion_agree');
+        const childPromo  = Array.from(document.querySelectorAll('.child-promo'));
+        if (!parentPromo || childPromo.length === 0) return;
+
+        const syncParentFromChildren = () => {
+            const anyChecked = childPromo.some(cb => cb.checked);
+            parentPromo.checked = anyChecked; // 하나라도 체크되면 부모 체크
+        };
+
+        const syncChildrenFromParent = () => {
+            const isChecked = parentPromo.checked;
+            childPromo.forEach(cb => {
+            cb.checked = isChecked;
+            cb.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+        };
+
+        syncParentFromChildren();
+
+        parentPromo.addEventListener('change', syncChildrenFromParent);
+        childPromo.forEach(cb => cb.addEventListener('change', syncParentFromChildren));
+    });
     </script>
 </div>

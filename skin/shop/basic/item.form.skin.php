@@ -340,11 +340,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 	            }
 	        }
 	
-	        // 재입고SMS 알림
+	        // 재입고 알림
 	        function popup_stocksms(it_id)
 	        {
 	            url = "<?php echo G5_SHOP_URL; ?>/itemstocksms.php?it_id=" + it_id;
-	            opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
+	            opt = "scrollbars=yes,width=616,height=500,top=10,left=10";
 	            popup_window(url, "itemstocksms", opt);
 	        }
 	        </script>
