@@ -55,6 +55,8 @@ if ($w == '') {
     $mb['mb_sms'] = 1;
     $mb['mb_open'] = 1;
     $mb['mb_level'] = $config['cf_register_level'];
+    $mb['mb_marketing_agree'] = 0;
+    $mb['mb_thirdparty_agree'] = 0;
     $mb['mb_board_post'] = 1;
     $mb['mb_board_reply'] = 1;
     $mb['mb_board_comment'] = 1;

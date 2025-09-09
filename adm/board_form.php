@@ -136,6 +136,7 @@ $board_default = array(
 'bo_mobile_content_tail'=>'',
 'bo_insert_content'=>'',
 'bo_sort_field'=>'',
+'bo_use_kakaotalk'=>0,
 );
 
 for ($i = 0; $i <= 10; $i++) {
