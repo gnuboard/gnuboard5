@@ -342,11 +342,15 @@ jQuery(function($) {
         $form.submit(); // 폼 제출
     });
 
-    function formatKSTDate(date) {
+    function formatKSTDate(date, is_print_yoil=0) {
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
+        
+        const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+        const dayName = daysOfWeek[date.getDay()];
+        const str = `${year}-${month}-${day} (${dayName})`;
+        return str;
     }
     
     // 1회차 배송일 계산

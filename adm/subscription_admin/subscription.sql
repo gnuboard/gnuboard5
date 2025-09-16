@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_config` (
   `su_nice_clientid` varchar(80) NOT NULL DEFAULT '',
   `su_nice_secretkey` varchar(80) NOT NULL DEFAULT '',
   `su_nicepay_mid` varchar(80) NOT NULL DEFAULT '',
-  `su_nicepay_key` varchar(80) NOT NULL DEFAULT '',
+  `su_nicepay_key` varchar(120) NOT NULL DEFAULT '',
   `su_cron_updatetime` datetime DEFAULT NULL,
   `su_opt_settings` text NOT NULL,
   `su_use_settings` text NOT NULL,
@@ -350,6 +350,25 @@ CREATE TABLE IF NOT EXISTS `g5_subscription_uniqid` (
   `suq_ip` varchar(100) NOT NULL,
   PRIMARY KEY (`suq_id`),
   UNIQUE KEY `unique_key` (`suq_key`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_subscription_coupon_log`
+--
+
+DROP TABLE IF EXISTS `g5_subscription_coupon_log`;
+CREATE TABLE IF NOT EXISTS `g5_subscription_coupon_log` (
+  `cl_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cp_id` varchar(100) NOT NULL DEFAULT '',
+  `mb_id` varchar(100) NOT NULL DEFAULT '',
+  `od_id` bigint(20) NOT NULL,
+  `cp_price` int(11) NOT NULL DEFAULT '0',
+  `cl_datetime` datetime NOT NULL,
+  PRIMARY KEY (`cl_id`),
+  KEY `mb_id` (`mb_id`),
+  KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

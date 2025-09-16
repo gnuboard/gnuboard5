@@ -316,6 +316,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <th scope="col">주문총액</th>
                     <th scope="col">배송비</th>
                     <th scope="col">총결제액</th>
+                    <th scope="col">쿠폰</th>
                 </tr>
             </thead>
             <tbody>
@@ -325,6 +326,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td class="td_numbig td_numsum" title="주문총액"><?php echo display_price($amount['order']); ?></td>
                     <td class="td_numbig" title="배송비"><?php echo display_price($od['od_send_cost'] + $od['od_send_cost2']); ?></td>
                     <td class="td_numbig td_numincome" title="총결제액"><?php echo number_format($amount['receipt']); ?>원</td>
+                    <td class="td_numbig td_numcoupon"><?php echo display_price($amount['coupon']); ?></td>
                 </tr>
             </tbody>
         </table>
@@ -556,7 +558,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <th>결제PG</th>
                 <th>결제카드</th>
                 <th>결제된날짜</th>
-                <th>결제금액</th>
+                <th>결제된금액</th>
                 <th>보기</th>
             </tr>
             <?php foreach ($subscription_pays as $key => $v) { ?>
@@ -565,7 +567,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <td><?php echo $v['py_pg']; ?></td>
                     <td><?php echo $v['card_txt']; ?></td>
                     <td><?php echo $v['py_receipt_time']; ?></td>
-                    <td><?php echo display_price($v['py_cart_price'] + $v['py_send_cost'] + $v['py_send_cost2']); ?></td>
+                    <td><?php echo display_price($v['py_receipt_price']); ?></td>
                     <td><a href="<?php echo G5_SUBSCRIPTION_ADMIN_URL; ?>/payform.php?pay_id=<?php echo $v['pay_id']; ?>" target="_blank" class="mng_mod btn btn_02">상세보기</a></td>
                 </tr>
             <?php } ?>

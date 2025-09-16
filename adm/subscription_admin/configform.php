@@ -733,6 +733,9 @@ include_once(G5_ADMIN_PATH . '/admin.head.php');
                                 <?php echo help('정기결제에서 사용할 결제대행사를 선택합니다.'); ?>
                                 <ul class="de_pg_tab">
                                     <li class="<?php if (get_subs_option('su_pg_service') == 'inicis') echo 'tab-current'; ?>"><a href="#inicis_info_anchor" data-value="inicis" title="KG이니시스 선택하기">KG이니시스</a></li>
+                                    <li class="<?php if (get_subs_option('su_pg_service') == 'kcp') echo 'tab-current'; ?>"><a href="#kcp_info_anchor" data-value="kcp" title="NHN KCP 선택하기">NHN KCP</a></li>
+                                    <li class="<?php if (get_subs_option('su_pg_service') == 'nicepay') echo 'tab-current'; ?>"><a href="#nicepay_info_anchor" data-value="nicepay" title="NICEPAY 선택하기">NICEPAY</a></li>
+                                    <li class="<?php if (get_subs_option('su_pg_service') == 'tosspayments') echo 'tab-current'; ?>"><a href="#tosspayment_info_anchor" data-value="tosspayments" title="토스페이먼츠 선택하기">토스페이먼츠</a></li>
                                 </ul>
                             </td>
                         </tr>
@@ -765,6 +768,73 @@ include_once(G5_ADMIN_PATH . '/admin.head.php');
                             <td>
                                 <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI IV 생성 조회 하여 KEY를 여기에 입력합니다."); ?>
                                 <input type="text" name="su_inicis_iniapi_iv" value="<?php echo get_sanitize_input(get_subs_option('su_inicis_iniapi_iv')); ?>" id="su_inicis_iniapi_iv" class="frm_input" size="30" maxlength="30">
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld kcp_info_fld" id="kcp_info_anchor">
+                            <th scope="row">
+                                <label for="su_kcp_mid">KCP SITE CODE</label><br>
+                                <a href="http://sir.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="kcp_btn">NHN KCP 신청하기</a>
+                            </th>
+                            <td>
+                                <?php echo help("NHN KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 NHN KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
+                                <span class="sitecode">SR</span> <input type="text" name="su_kcp_mid" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_mid')); ?>" id="su_kcp_mid" class="frm_input code_input" size="2" maxlength="3"> 영대문자, 숫자 혼용 3자리
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld kcp_info_fld">
+                            <th scope="row"><label for="su_kcp_site_key">NHN KCP SITE KEY</label></th>
+                            <td>
+                                <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
+                                <input type="text" name="su_kcp_site_key" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_site_key')); ?>" id="su_kcp_site_key" class="frm_input" size="36" maxlength="25">
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld kcp_info_fld">
+                            <th scope="row"><label for="su_kcp_group_id">NHN KCP 그룹아이디</label></th>
+                            <td>
+                                <?php echo help("KCP상점관리자 페이지 접속 -> 결제관리 -> 일반결제 -> 배치결제 -> 그룹관리를 통해 그룹아이디 생성 Ex) BA0011000348"); ?>
+                                <input type="text" name="su_kcp_group_id" value="<?php echo get_sanitize_input(get_subs_option('su_kcp_group_id')); ?>" id="su_kcp_group_id" class="frm_input" size="36" maxlength="25">
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld kcp_info_fld">
+                            <th scope="row"><label for="su_kcp_cert_info">NHN KCP 인증서 정보</label></th>
+                            <td>
+                                <?php echo help("kcp_cert_info는 결제 승인, 거래취소, 거래등록 시에 필요합니다.\n추가적으로 NHNKCP 상점 관리자 > 기술관리센터 > 인증센터 > KCP PG-API > 발급하기 경로에서 개인키 + 인증서 발급이 가능합니다."); ?>
+                                <textarea id="su_kcp_cert_info" name="su_kcp_cert_info" rows="7"><?php echo html_purifier(get_subs_option('su_kcp_cert_info')); ?></textarea>
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld nicepay_info_fld" id="nicepay_info_anchor">
+                            <th scope="row"><label for="su_nicepay_mid">NICEPAY MID</label>
+                                <br>
+                                <a href="https://sir.kr/main/service/nicepayments_pg.php" target="_blank" id="scf_nicepay_reg" class="nicepay_btn">NICEPAY 신청하기</a>
+                            </th>
+                            <td>
+                                <span class="frm_info">NICEPAY로 부터 발급 받으신 상점MID를 SRB 을 제외한 나머지 자리를 입력 합니다.<br>NICEPAY 상점관리자 > 가맹점정보 > KEY관리에서 확인 할수 있습니다.<br>만약, 상점아이디가 SRB로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. 예) SRBpaytesm</span>
+                                <span class="sitecode">SRB</span>
+                                <input type="text" name="su_nicepay_mid" value="<?php echo get_sanitize_input(get_subs_option('su_nicepay_mid')); ?>" id="su_nicepay_mid" class="frm_input" size="12" maxlength="12">
+                                영문소문자(숫자포함 가능)
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld nicepay_info_fld">
+                            <th scope="row"><label for="su_nicepay_key">NICEPAY KEY</label></th>
+                            <td>
+                                <input type="text" name="su_nicepay_key" value="<?php echo get_sanitize_input(get_subs_option('su_nicepay_key')); ?>" id="su_nicepay_key" class="frm_input" size="100" maxlength="100">
+                            </td>
+                        </tr>
+
+                        <tr class="pg_info_fld tosspayment_info_fld" id="tosspayment_info_anchor">
+                            <th scope="row">
+                                <label for="su_tosspayments_api_clientkey">토스페이먼츠 API 클라이언트키</label>
+                                <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="lg_btn">토스페이먼츠 신청하기</a>
+                            </th>
+                            <td>
+                                <?php echo help("토스페이먼츠 API 클라이언트키는 토스페이먼츠 전체상점홈 -> 내개발정보확인 -> API키 -> API 개별 연동 키 에서 확인에서 확인하실 수 있습니다."); ?>
+                                <input type="text" name="su_tosspayments_api_clientkey" value="<?php echo get_sanitize_input(get_subs_option('su_tosspayments_api_clientkey')); ?>" id="su_tosspayments_api_clientkey" class="frm_input " size="36" maxlength="50">
+                            </td>
+                        </tr>
+                        <tr class="pg_info_fld tosspayment_info_fld">
+                            <th scope="row"><label for="su_tosspayments_api_secretkey">토스페이먼츠 API 시크릿키</label></th>
+                            <td>
+                                <?php echo help("토스페이먼츠 API 시크릿키는 토스페이먼츠 전체상점홈 -> 내개발정보확인 -> API키 -> API 개별 연동 키 에서 확인에서 확인하실 수 있습니다."); ?>
+                                <input type="text" name="su_tosspayments_api_secretkey" value="<?php echo get_sanitize_input(get_subs_option('su_tosspayments_api_secretkey')); ?>" id="su_tosspayments_api_secretkey" class="frm_input " size="36" maxlength="50">
                             </td>
                         </tr>
                         <tr>

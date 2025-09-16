@@ -410,7 +410,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 $sql = "SELECT cp_id 
                     FROM {$g5['g5_shop_coupon_table']} 
                     WHERE mb_id IN ('" . $member['mb_id'] . "', '전체회원') 
-                    AND cp_method = '2' 
+                    AND cp_method = '4' 
                     AND cp_start <= '" . G5_TIME_YMD . "' 
                     AND cp_end >= '" . G5_TIME_YMD . "' 
                     AND cp_minimum <= '" . $tot_sell_price . "'";
@@ -418,7 +418,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 $member_coupons = sql_result_array($results);
 
                 foreach ($member_coupons as $cp) {
-                    if (is_used_coupon($member['mb_id'], $cp['cp_id'])) {
+                    if (is_used_subscription_coupon($member['mb_id'], $cp['cp_id'])) {
                         continue;
                     }
 
@@ -438,7 +438,7 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                     $delivery_coupons = sql_result_array($results);
 
                     foreach ($delivery_coupons as $cp) {
-                        if (is_used_coupon($member['mb_id'], $cp['cp_id'])) {
+                        if (is_used_subscription_coupon($member['mb_id'], $cp['cp_id'])) {
                             continue;
                         }
 
@@ -454,27 +454,16 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 <div class="pay_tbl">
                     <table>
                         <tbody>
-                            <?php if ($oc_cnt > 0) { ?>
-                                <tr>
-                                    <th scope="row">주문할인</th>
-                                    <td>
-                                        <strong id="od_cp_price">0</strong>원
-                                        <input type="hidden" name="od_cp_id" value="">
-                                        <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
-                                    </td>
-                                </tr>
+                            <?php if($oc_cnt > 0) { ?>
+                            <tr>
+                                <th scope="row">주문할인</th>
+                                <td>
+                                    <strong id="od_cp_price">0</strong>원
+                                    <input type="hidden" name="od_cp_id" value="">
+                                    <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
+                                </td>
+                            </tr>
                             <?php } ?>
-                            <?php if ($sc_cnt > 0) { ?>
-                                <tr>
-                                    <th scope="row">배송비할인</th>
-                                    <td>
-                                        <strong id="sc_cp_price">0</strong>원
-                                        <input type="hidden" name="sc_cp_id" value="">
-                                        <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-
                             <tr>
                                 <th>추가배송비</th>
                                 <td><strong id="od_send_cost2">0</strong>원<br>(지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
@@ -581,6 +570,217 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
             );
         });
 
+        $(document).on("click", ".cp_apply", function() {
+            var $el = $(this).closest("tr");
+            var cp_id = $el.find("input[name='f_cp_id[]']").val();
+            var price = $el.find("input[name='f_cp_prc[]']").val();
+            var subj = $el.find("input[name='f_cp_subj[]']").val();
+            var sell_price;
+
+            if(parseInt(price) == 0) {
+                if(!confirm(subj+"쿠폰의 할인 금액은 "+price+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                    return false;
+                }
+            }
+
+            // 이미 사용한 쿠폰이 있는지
+            var cp_dup = false;
+            var cp_dup_idx;
+            var $cp_dup_el;
+            $("input[name^=cp_id]").each(function(index) {
+                var id = $(this).val();
+
+                if(id == cp_id) {
+                    cp_dup_idx = index;
+                    cp_dup = true;
+                    $cp_dup_el = $(this).closest("tr");;
+
+                    return false;
+                }
+            });
+
+            if(cp_dup) {
+                var it_name = $("input[name='it_name["+cp_dup_idx+"]']").val();
+                if(!confirm(subj+ "쿠폰은 "+it_name+"에 사용되었습니다.\n"+it_name+"의 쿠폰을 취소한 후 적용하시겠습니까?")) {
+                    return false;
+                } else {
+                    coupon_cancel($cp_dup_el);
+                    $("#cp_frm").remove();
+                    $cp_dup_el.find(".cp_btn").text("적용").focus();
+                    $cp_dup_el.find(".cp_cancel").remove();
+                }
+            }
+
+            var $s_el = $cp_row_el.find(".total_price");;
+            sell_price = parseInt($cp_row_el.find("input[name^=it_price]").val());
+            sell_price = sell_price - parseInt(price);
+            if(sell_price < 0) {
+                alert("쿠폰할인금액이 상품 주문금액보다 크므로 쿠폰을 적용할 수 없습니다.");
+                return false;
+            }
+            $s_el.text(number_format(String(sell_price)));
+            $cp_row_el.find("input[name^=cp_id]").val(cp_id);
+            $cp_row_el.find("input[name^=cp_price]").val(price);
+
+            calculate_total_price();
+            $("#cp_frm").remove();
+            $cp_btn_el.text("변경").focus();
+            if(!$cp_row_el.find(".cp_cancel").length)
+                $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel\">취소</button>");
+        });
+    
+        $(document).on("click", "#cp_close", function() {
+            $("#cp_frm").remove();
+            $cp_btn_el.focus();
+        });
+
+        $(document).on("click", ".cp_cancel", function() {
+            coupon_cancel($(this).closest("tr"));
+            calculate_total_price();
+            $("#cp_frm").remove();
+            $(this).closest("tr").find(".cp_btn").text("적용").focus();
+            $(this).remove();
+        });
+    
+        $("#od_coupon_btn").click(function() {
+            if( $("#od_coupon_frm").parent(".od_coupon_wrap").length ){
+                $("#od_coupon_frm").parent(".od_coupon_wrap").remove();
+            }
+            $("#od_coupon_frm").remove();
+            var $this = $(this);
+            var price = parseInt($("input[name=org_od_price]").val()) - parseInt($("input[name=item_coupon]").val());
+            if(price <= 0) {
+                alert('상품금액이 0원이므로 쿠폰을 사용할 수 없습니다.');
+                return false;
+            }
+            $.post(
+                "./ordercoupon.php",
+                { price: price },
+                function(data) {
+                    $this.after(data);
+                }
+            );
+        });
+
+        $(document).on("click", ".od_cp_apply", function() {
+            var $el = $(this).closest("tr");
+            var cp_id = $el.find("input[name='o_cp_id[]']").val();
+            var price = parseInt($el.find("input[name='o_cp_prc[]']").val());
+            var subj = $el.find("input[name='o_cp_subj[]']").val();
+            var send_cost = $("input[name=od_send_cost]").val();
+            var item_coupon = parseInt($("input[name=item_coupon]").val());
+            var od_price = parseInt($("input[name=org_od_price]").val()) - item_coupon;
+
+            if(price == 0) {
+                if(!confirm(subj+"쿠폰의 할인 금액은 "+price+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                    return false;
+                }
+            }
+
+            if(od_price - price <= 0) {
+                alert("쿠폰할인금액이 주문금액보다 크므로 쿠폰을 적용할 수 없습니다.");
+                return false;
+            }
+
+            $("input[name=sc_cp_id]").val("");
+            $("#sc_coupon_btn").text("쿠폰적용");
+            $("#sc_coupon_cancel").remove();
+
+            $("input[name=od_price]").val(od_price - price);
+            $("input[name=od_cp_id]").val(cp_id);
+            $("input[name=od_coupon]").val(price);
+            $("input[name=od_send_coupon]").val(0);
+            $("#od_cp_price").text(number_format(String(price)));
+            $("#sc_cp_price").text(0);
+            calculate_order_price();
+            if( $("#od_coupon_frm").parent(".od_coupon_wrap").length ){
+                $("#od_coupon_frm").parent(".od_coupon_wrap").remove();
+            }
+            $("#od_coupon_frm").remove();
+            $("#od_coupon_btn").text("변경").focus();
+            if(!$("#od_coupon_cancel").length)
+                $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"cp_cancel\">취소</button>");
+        });
+
+        $(document).on("click", "#od_coupon_close", function() {
+            if( $("#od_coupon_frm").parent(".od_coupon_wrap").length ){
+                $("#od_coupon_frm").parent(".od_coupon_wrap").remove();
+            }
+            $("#od_coupon_frm").remove();
+            $("#od_coupon_btn").focus();
+        });
+
+        $(document).on("click", "#od_coupon_cancel", function() {
+            var org_price = $("input[name=org_od_price]").val();
+            var item_coupon = parseInt($("input[name=item_coupon]").val());
+            $("input[name=od_price]").val(org_price - item_coupon);
+            $("input[name=sc_cp_id]").val("");
+            $("input[name=od_coupon]").val(0);
+            $("input[name=od_send_coupon]").val(0);
+            $("#od_cp_price").text(0);
+            $("#sc_cp_price").text(0);
+            calculate_order_price();
+            if( $("#od_coupon_frm").parent(".od_coupon_wrap").length ){
+                $("#od_coupon_frm").parent(".od_coupon_wrap").remove();
+            }
+            $("#od_coupon_frm").remove();
+            $("#od_coupon_btn").text("쿠폰적용").focus();
+            $(this).remove();
+            $("#sc_coupon_btn").text("쿠폰적용");
+            $("#sc_coupon_cancel").remove();
+        });
+
+        $("#sc_coupon_btn").click(function() {
+            $("#sc_coupon_frm").remove();
+            var $this = $(this);
+            var price = parseInt($("input[name=od_price]").val());
+            var send_cost = parseInt($("input[name=od_send_cost]").val());
+            $.post(
+                "./ordersendcostcoupon.php",
+                { price: price, send_cost: send_cost },
+                function(data) {
+                    $this.after(data);
+                }
+            );
+        });
+
+        $(document).on("click", ".sc_cp_apply", function() {
+            var $el = $(this).closest("tr");
+            var cp_id = $el.find("input[name='s_cp_id[]']").val();
+            var price = parseInt($el.find("input[name='s_cp_prc[]']").val());
+            var subj = $el.find("input[name='s_cp_subj[]']").val();
+            var send_cost = parseInt($("input[name=od_send_cost]").val());
+
+            if(parseInt(price) == 0) {
+                if(!confirm(subj+"쿠폰의 할인 금액은 "+price+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                    return false;
+                }
+            }
+
+            $("input[name=sc_cp_id]").val(cp_id);
+            $("input[name=od_send_coupon]").val(price);
+            $("#sc_cp_price").text(number_format(String(price)));
+            calculate_order_price();
+            $("#sc_coupon_frm").remove();
+            $("#sc_coupon_btn").text("변경").focus();
+            if(!$("#sc_coupon_cancel").length)
+                $("#sc_coupon_btn").after("<button type=\"button\" id=\"sc_coupon_cancel\" class=\"cp_cancel\">취소</button>");
+        });
+
+        $(document).on("click", "#sc_coupon_close", function() {
+            $("#sc_coupon_frm").remove();
+            $("#sc_coupon_btn").focus();
+        });
+
+        $(document).on("click", "#sc_coupon_cancel", function() {
+            $("input[name=od_send_coupon]").val(0);
+            $("#sc_cp_price").text(0);
+            calculate_order_price();
+            $("#sc_coupon_frm").remove();
+            $("#sc_coupon_btn").text("쿠폰적용").focus();
+            $(this).remove();
+        });
+    
         $("#od_b_addr2").focus(function() {
             var zip = $("#od_b_zip").val().replace(/[^0-9]/g, "");
             if (zip == "")
@@ -1021,6 +1221,8 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 }
 
                 requestBillingAuth({
+                    od_id: "<?php echo $od_id; ?>",
+                    price: tot_price,
                     customerEmail: f.od_name.value,
                     customerName: f.od_email.value
                 });
@@ -1040,50 +1242,10 @@ require_once G5_SUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/o
                 if (!make_signature(f))
                     return false;
 
-                // console.log(f);
-                // return false;
-
                 paybtn(f);
 
             <?php } ?>
             <?php if (get_subs_option('su_pg_service') == 'nicepay') { ?>
-
-                /*
-                console.log(f);
-
-                var cardNo = f.cardNo.value,
-                    expMonth = f.expMonth.value,
-                    expYear = f.expYear.value,
-                    idNo = f.idNo.value,
-                    cardPw = f.cardPw.value;
-
-                if (!(validateCreditCard(cardNo))) {
-                    alert("카드번호 형식이 아닙니다. 16자리의 숫자로 입력해 주세요.");
-                    f.cardNo.focus();
-                    return false;
-                }
-
-                if (!(validateCardExpiry(expMonth + "/" + expYear))) {
-                    alert("카드유효기간 검증에 실패했습니다. 다시 확인해 주세요.");
-                    f.expMonth.focus();
-                    return false;
-                }
-
-                if (!/^[0-9]+$/.test(cardPw)) {
-                    alert("카드 비밀번호 2자리 숫자로만 입력해 주세요.");
-                    f.cardPw.focus();
-                    return false;
-                }
-
-                f.submit();
-                */
-
-                /*
-                if (f.gopaymethod.value == "무통장" || f.gopaymethod.value == "exist_card") {
-                    f.submit();
-                    return false;
-                }
-                */
 
                 if (f.PayMethod.value == "무통장" || f.PayMethod.value == "exist_card") {
                     f.submit();

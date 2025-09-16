@@ -23,7 +23,7 @@ $sql = " select cp_id
 $res = sql_query($sql);
 
 for ($k = 0; $cp = sql_fetch_array($res); $k++) {
-    if (!is_used_coupon($member['mb_id'], $cp['cp_id']))
+    if (!(is_used_coupon($member['mb_id'], $cp['cp_id']) || is_used_subscription_coupon($member['mb_id'], $cp['cp_id'])))
         $cp_count++;
 }
 ?>

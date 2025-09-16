@@ -504,7 +504,7 @@ include_once('./_head.php');
                                 <td><?php echo $v['py_round_no']; ?></td>
                                 <td><?php echo $v['card_txt']; ?></td>
                                 <td><?php echo date('y-m-d', strtotime($v['py_receipt_time'])); ?></td>
-                                <td><?php echo display_price($v['py_cart_price'] + $v['py_send_cost'] + $v['py_send_cost2']); ?></td>
+                                <td><?php echo display_price($v['py_receipt_price']); ?></td>
                                 <td><a href="#ex_modal1" rel="modal:open" data-payid="<?php echo $v['pay_id']; ?>" class="mng_mod btn btn_02">상세보기</a></td>
                             </tr>
                         <?php } // end for 
@@ -557,6 +557,18 @@ include_once('./_head.php');
                 <span>주문총액</span>
                 <strong><?php echo number_format($od['od_cart_price']); ?> 원</strong>
             </li>
+            <?php if($od['od_cart_coupon'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>개별상품 쿠폰할인</span>
+                <strong><?php echo number_format($od['od_cart_coupon']); ?> 원</strong>
+            </li>
+            <?php } ?>
+            <?php if($od['od_coupon'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>주문금액 쿠폰할인</span>
+                <strong><?php echo number_format($od['od_coupon']); ?> 원</strong>
+            </li>
+            <?php } ?>
             <?php if ($od['od_send_cost'] > 0) { ?>
                 <li class="sod_bsk_dvr">
                     <span>배송비</span>
@@ -763,6 +775,9 @@ function calculate_sendcost() {
                             html += "<li><span class='th'>주문총액 :</span> " + number_format(data.py_cart_price) + " 원</li>";
                             if (data.py_send_cost) {
                                 html += "<li><span class='th'>배송비 :</span> " + number_format(data.py_send_cost) + " 원</li>";
+                            }
+                            if (data.py_coupon && parseInt(data.py_coupon) > 0) {
+                                html += "<li><span class='th'>쿠폰할인 :</span> - " + number_format(data.py_coupon) + " 원</li>";
                             }
                             html += "<li><span class='th'>총계 :</span> " + number_format(data.py_tot_price) + " 원</li>";
 

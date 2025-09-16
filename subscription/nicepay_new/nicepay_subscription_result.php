@@ -7,10 +7,6 @@ if (!defined('_GNUBOARD_')) {
 // 나이스페이 공통 설정
 require_once G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php';
 
-if (function_exists('add_log')) {
-    add_log($_POST);
-}
-
 function billing($bid)
 {
     global $nicepay_clientid;
@@ -100,10 +96,6 @@ try {
 // 0000이 아니면 실패
 if ($resObject['resultCode'] !== '0000') {
     alert($resObject['resultMsg'], G5_SHOP_URL);
-}
-
-if (function_exists('add_log')) {
-    add_log($resObject);
 }
 
 $od_tno = $resObject['tid'];

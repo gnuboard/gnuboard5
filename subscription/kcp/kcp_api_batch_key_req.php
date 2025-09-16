@@ -89,4 +89,4 @@ $card_billkey = $response['batch_key'];
 $card_name = $response['card_name'];
 // NHN_KCP는 tno값이 없다.
 $tno = '';
-$amount = $_POST['od_price'] ? (int) $_POST['od_price'] : 0;
+$amount = $order_price;

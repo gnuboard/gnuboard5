@@ -354,11 +354,38 @@ function before_check_subscription_cart_price($s_cart_id, $is_ct_select_conditio
 
 function subscription_order_pay_price($od_id)
 {
-
+    global $g5;
+    
     $pay_infos = get_subscription_cart_data($od_id);
 
     $total_price = (int)$pay_infos['tot_sell_price'] + (int)$pay_infos['send_cost'];
-
+    
+    // 정기결제할인 쿠폰이 있는지 체크
+    $od = get_subscription_order($od_id);
+    
+    $couponprice = $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'];
+    
+    if ($couponprice > 0) {
+        $sql = " select cp_id, cp_price from {$g5['g5_subscription_coupon_log_table']} where mb_id = '{$od['mb_id']}' and od_id = '$od_id' ";
+        $result = sql_query($sql);
+        
+        $cp_ids = array();
+        $cp_ids_price = array();
+        
+        $total_cp_price = 0;
+        
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            $cp_ids[] = $row['cp_id'];
+            $cp_ids_price[] = $row['cp_price'];
+            
+            $total_cp_price += $row['cp_price'];
+        }
+        
+        run_event('event_subscription_order_pay_price', $od_id, $od, $cp_ids, $total_cp_price);
+        
+        $total_price = $total_price - $total_cp_price;
+    }
+    
     return $total_price;
 }
 
@@ -1107,6 +1134,11 @@ function subscription_order_pay($od, $pg_data, $pay_round_no)
         'py_b_addr2' => $od['od_b_addr2'],
         'py_b_addr3' => $od['od_b_addr3'],
         'py_b_addr_jibeon' => $od['od_b_addr_jibeon'],
+        'py_cart_coupon' => $od['od_cart_coupon'],
+        'py_send_cost' => $od['od_send_cost'],
+        'py_send_cost2' => $od['od_send_cost2'],
+        'py_send_coupon' => $od['od_send_coupon'],
+        'py_coupon' => $od['od_coupon'],
         // 'py_receipt_price' => $od['od_receipt_price'],
         'py_receipt_price' => $od_receipt_price,
         'py_receipt_time' => G5_TIME_YMDHIS,
@@ -1471,9 +1503,11 @@ function kcp_billing($od, $tmp_cart_id = '')
         'bt_group_id' => $bt_group_id,
         'bt_batch_key' => $bt_batch_key,
     );
-
+    
+    $results = array('res_cd'=>null, 'res_msg'=>null);
+    
     include_once(G5_SUBSCRIPTION_PATH . '/kcp/pay_pp_cli_hub.php');
-
+    
     run_event('subscription_order_pg_pay', 'kcp', $results, $posts);
 
     if (isset($results['res_cd']) && $results['res_cd'] === '0000') {
@@ -1540,10 +1574,6 @@ function kcp_new_billing($od, $tmp_cart_id = '')
         "bt_group_id"    => $bt_group_id
     );
 
-    if (function_exists('add_log')) {
-        add_log($data, false, 'kcp');
-    }
-
     $req_data = json_encode($data);
 
     $header_data = array("Content-Type: application/json", "charset=utf-8");
@@ -1559,10 +1589,6 @@ function kcp_new_billing($od, $tmp_cart_id = '')
 
     // API RES
     $res_data  = curl_exec($ch);
-
-    if (function_exists('add_log')) {
-        add_log($res_data, false, 'kcp');
-    }
 
     curl_close($ch);
 
@@ -1761,10 +1787,6 @@ function nicepay_billing($od, $tmp_cart_id = '')
     $nice_response['py_app_no'] = $nice_response['AuthCode'];     // 승인번호
     $nice_response['tid'] = $nice_response['TID'];
 
-    if (function_exists('add_log')) {
-        add_log($nice_response, false, 'nice');
-    }
-
     run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $data);
 
     // $res 형식은 json
@@ -1816,10 +1838,6 @@ function nicepay_new_billing($od, $tmp_cart_id = '')
         'buyerEmail' => $buyerEmail
     );
 
-    if (function_exists('add_log')) {
-        add_log($request_data, false, 'nice');
-    }
-
     try {
         $res = requestPost(
             get_nicepay_api_url() . "/v1/subscribe/" . $bid . "/payments",
@@ -1852,10 +1870,6 @@ function nicepay_new_billing($od, $tmp_cart_id = '')
         $message = $nice_response['resultMsg'];
     }
 
-    if (function_exists('add_log')) {
-        add_log($nice_response, false, 'nice');
-    }
-
     run_event('subscription_order_pg_pay', 'nicepay', $nice_response, $request_data);
 
     // $res 형식은 json
@@ -1880,10 +1894,70 @@ function subscription_sendRequest($url, $authKey, $postData)
     return $response;
 }
 
+function get_tosspayments_by_cardcode($key){
+    $card_org_codes = array(
+        // ===== 국내 카드사 =====
+        '3K' => array('ko' => '기업비씨',   'en' => 'IBK_BC'),
+        '46' => array('ko' => '광주',       'en' => 'GWANGJUBANK'),
+        '71' => array('ko' => '롯데',       'en' => 'LOTTE'),
+        '30' => array('ko' => '산업',       'en' => 'KDBBANK'),
+        '31' => array('ko' => 'BC카드',          'en' => 'BC'),
+        '51' => array('ko' => '삼성',       'en' => 'SAMSUNG'),
+        '38' => array('ko' => '새마을',     'en' => 'SAEMAUL'),
+        '41' => array('ko' => '신한',       'en' => 'SHINHAN'),
+        '62' => array('ko' => '신협',       'en' => 'SHINHYEOP'),
+        '36' => array('ko' => '씨티',       'en' => 'CITI'),
+        '33' => array('ko' => '우리(BC매입)', 'en' => 'WOORI_BC'),
+        'W1' => array('ko' => '우리',       'en' => 'WOORI'),
+        '37' => array('ko' => '우체국',     'en' => 'POST'),
+        '39' => array('ko' => '저축은행',   'en' => 'SAVINGBANK'),
+        '35' => array('ko' => '전북',       'en' => 'JEONBUKBANK'),
+        '42' => array('ko' => '제주',       'en' => 'JEJUBANK'),
+        '15' => array('ko' => '카카오뱅크', 'en' => 'KAKAOBANK'),
+        '3A' => array('ko' => '케이뱅크',   'en' => 'KBANK'),
+        '24' => array('ko' => '토스뱅크',   'en' => 'TOSSBANK'),
+        '21' => array('ko' => '하나',       'en' => 'HANA'),
+        '61' => array('ko' => '현대',       'en' => 'HYUNDAI'),
+        '11' => array('ko' => '국민',       'en' => 'KOOKMIN'),
+        '91' => array('ko' => '농협',       'en' => 'NONGHYEOP'),
+        '34' => array('ko' => '수협',       'en' => 'SUHYEOP'),
+
+        // ===== 해외 카드사 =====
+        'AMEX'     => array('ko' => '아메리칸 익스프레스', 'en' => 'AMERICANEXPRESS'),
+        'DINERS'   => array('ko' => '다이너스 클럽',       'en' => 'DINERSCLUB'),
+        'DISCOVER' => array('ko' => '디스커버',             'en' => 'DISCOVER'),
+        'JCB'      => array('ko' => 'JCB',                'en' => 'JCB'),
+        'MASTER'   => array('ko' => '마스터카드',           'en' => 'MASTER'),
+        'UNIONPAY' => array('ko' => '유니온페이',           'en' => 'UNIONPAY'),
+        'VISA'     => array('ko' => '비자',                'en' => 'VISA')
+    );
+        
+    return isset($card_org_codes[$key]) ? $card_org_codes[$key]['ko'] : $key;
+}
+
+function tosspayments_customerkey_uuidv4($str) {
+    // 다른 사용자가 이 값을 알게 되면 악의적으로 사용될 수 있습니다.
+    // 자동 증가하는 숫자 또는 이메일・전화번호・사용자 아이디와 같이 유추가 가능한 값은 안전하지 않습니다. ( tosspayments 의 customerKey 메뉴얼 확인 )
+    // G5_TOKEN_ENCRYPTION_KEY 값을 수정하게 된다면, 기존에 등록했던 빌링키가 유효성에 검사에 틀리게 되어 사용을 할수 없다.
+    $add_hash = defined('G5_TOKEN_ENCRYPTION_KEY') ? substr(G5_TOKEN_ENCRYPTION_KEY, 0, 9) : '';
+    
+    // 입력값으로 md5 해시 생성
+    $hash = md5($str.$add_hash);
+    
+    $plus_str = '_';
+    
+    // UUID 형식으로 포맷
+    return substr($hash, 0, 8) . $plus_str .
+           substr($hash, 8, 4) . $plus_str .
+           substr($hash, 12, 4) . $plus_str .
+           substr($hash, 16, 4) . $plus_str .
+           substr($hash, 20, 12);
+}
+
 function tosspayments_billing($od, $tmp_cart_id = '')
 {
     global $g5;
-
+    
     include_once(G5_SUBSCRIPTION_PATH . '/settle_tosspayments.inc.php');
 
     $apiSecretKey = get_subs_option('su_tosspayments_api_secretkey');
@@ -1895,7 +1969,6 @@ function tosspayments_billing($od, $tmp_cart_id = '')
     $goodsname = get_subscription_goods($cart_id);
 
     $data = array(
-        'customerKey' => $billingKey,
         'amount' => $od['od_receipt_price'],
         // 'orderId' => substr($od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(), 0, 64),  // 64길이
         'orderId' => generate_subscription_id($od['od_id'], $od['mb_id'], 64),  // 64길이 가능
@@ -1903,9 +1976,9 @@ function tosspayments_billing($od, $tmp_cart_id = '')
         'customerEmail' => $od['od_email'],
         'customerName' => $od['od_name']
     );
-
+    
     $postData = json_encode(array(
-        'customerKey' => $od['od_id'],
+        'customerKey' => tosspayments_customerkey_uuidv4($od['mb_id']),
         'amount' => $data['amount'],
         'orderId' => $data['orderId'],
         'orderName' => $data['orderName'],
@@ -1916,11 +1989,20 @@ function tosspayments_billing($od, $tmp_cart_id = '')
     $response = subscription_sendRequest("https://api.tosspayments.com/v1/billing/$billingKey", $encryptedApiSecretKey, $postData);
 
     $res_result = json_decode($response, true);
-
+    
+    // 영카트5 정기결제 공통규격에 맞게 수정
+    $res_result['payMethod'] = 'CARD';
+    $res_result['amount'] = $res_result['totalAmount'];
+    $res_result['receiptUrl'] = '';    // 토스페이먼츠는 영수증 url 이 없다.
+    $res_result['cardname'] = get_tosspayments_by_cardcode($res_result['card']['issuerCode']);
+    $res_result['cardnumber'] = $res_result['card']['number'];   // 카드 마스킹번호
+    $res_result['py_app_no'] = $res_result['card']['approveNo'];     // 승인번호
+    $res_result['tid'] = $res_result['lastTransactionKey'];
+    
     if (isset($res_result['code']) && $res_result['code']) {
         // 자동결제 실패했음
 
-        return array('code' => $res_result['code'], 'message' => $res_result['message']);
+        return array('code' => $res_result['code'], 'message' => $res_result['message'], 'response' => $res_result);
     }
 
     // 결제 성공시
@@ -2564,6 +2646,23 @@ function get_subscription_pay_sendcost($pay_id, $cart_id, $selected = 1)
     }
 
     return ($total_send_cost + $send_cost);
+}
+
+// 쿠폰 사용체크
+function is_used_subscription_coupon($mb_id, $cp_id)
+{
+    global $g5;
+
+    $used = false;
+
+    $sql = " select count(*) as cnt from {$g5['g5_subscription_coupon_log_table']} where mb_id = '$mb_id' and cp_id = '$cp_id' ";
+    $row = sql_fetch($sql);
+
+    if (isset($row['cnt']) && $row['cnt']) {
+        $used = true;
+    }
+    
+    return $used;
 }
 
 // 상품별 배송비 (정기구독 결제)

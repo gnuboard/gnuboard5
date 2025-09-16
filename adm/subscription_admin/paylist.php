@@ -242,7 +242,7 @@ if (function_exists('pg_setting_check')) {
         <th scope="col" id="th_odrertel">주문자전화</th>
         <th scope="col" id="th_recvr">받는분</th>
         <th scope="col" rowspan="3">주문합계<br>선불배송비포함</th>
-        <th scope="col" rowspan="3">입금합계</th>
+        <th scope="col" rowspan="2">입금합계</th>
         <th scope="col" rowspan="3">주문취소</th>
         <th scope="col" rowspan="3">미수금</th>
         <th scope="col" rowspan="3">보기</th>
@@ -258,6 +258,7 @@ if (function_exists('pg_setting_check')) {
         <th scope="col" id="delino">운송장번호</th>
         <th scope="col" id="delicom">배송회사</th>
         <th scope="col" id="delidate">배송일시</th>
+        <th scope="col" >쿠폰</th>
     </tr>
     </thead>
     <tbody>
@@ -340,7 +341,7 @@ if (function_exists('pg_setting_check')) {
         <td headers="th_odrertel" class="td_tel"><?php echo get_text($row['py_hp']); ?></td>
         <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=py_b_name&amp;search=<?php echo get_text($row['py_b_name']); ?>"><?php echo get_text($row['py_b_name']); ?></a></td>
         <td rowspan="3" class="td_num td_numsum"><?php echo number_format($row['py_cart_price'] + $row['py_send_cost'] + $row['py_send_cost2']); ?></td>
-        <td rowspan="3" class="td_num_right"><?php echo number_format($row['py_receipt_price']); ?></td>
+        <td rowspan="2" class="td_num_right"><?php echo number_format($row['py_receipt_price']);    // 입금합계 금액 ?></td>
         <td rowspan="3" class="td_numcancel<?php echo $td_color; ?> td_num"><?php echo number_format($row['py_cancel_price']); ?></td>
         <td rowspan="3" class="td_num_right"><?php echo number_format($row['py_misu']); ?></td>
         <td rowspan="3" class="td_mng td_mng_s">
@@ -394,6 +395,9 @@ if (function_exists('pg_setting_check')) {
             <?php } else {
                 echo is_null_time($row['py_invoice_time']) ? '-' : substr($row['py_invoice_time'], 2, 14);
             } ?>
+        </td>
+        <td class="td_num_right">
+            <?php echo $row['py_coupon'];    // 사용된 쿠폰 금액 ?>
         </td>
     </tr>
     <?php

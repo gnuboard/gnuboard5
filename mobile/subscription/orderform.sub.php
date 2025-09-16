@@ -478,19 +478,6 @@ require_once G5_MSUBSCRIPTION_PATH . '/settle_' . get_subs_option('su_pg_service
                                 <td><span id="od_cp_price">0</span>원</td>
                             </tr>
                         <?php } ?>
-                        <?php if ($sc_cnt > 0) { ?>
-                            <tr>
-                                <th scope="row">배송비할인쿠폰</th>
-                                <td>
-                                    <input type="hidden" name="sc_cp_id" value="">
-                                    <button type="button" id="sc_coupon_btn" class="cp_btn1">쿠폰적용</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">배송비할인금액</th>
-                                <td><span id="sc_cp_price">0</span>원</td>
-                            </tr>
-                        <?php } ?>
                         <tr>
                             <th>총 주문금액</th>
                             <td><span id="od_tot_price"><?php echo number_format($tot_price); ?></span>원</td>
@@ -1056,13 +1043,12 @@ require_once(G5_MSUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/
             return false;
 
         // pg 결제 금액에서 포인트 금액 차감
-        if (settle_method != "무통장") {
-            var od_price = parseInt(pf.od_price.value);
-            var send_cost = parseInt(pf.od_send_cost.value);
-            var send_cost2 = parseInt(pf.od_send_cost2.value);
-            var send_coupon = parseInt(pf.od_send_coupon.value);
-            f.good_mny.value = od_price + send_cost + send_cost2 - send_coupon - temp_point;
-        }
+        var od_price = parseInt(pf.od_price.value);
+        var send_cost = parseInt(pf.od_send_cost.value);
+        var send_cost2 = parseInt(pf.od_send_cost2.value);
+        var send_coupon = parseInt(pf.od_send_coupon.value);
+        var tot_price = od_price + send_cost + send_cost2 - send_coupon - temp_point;
+        f.good_mny.value = tot_price;
 
         var form_order_method = '';
         var is_subscription_card_checked = $(".od_subscription_ids").is(':checked');
@@ -1146,6 +1132,8 @@ require_once(G5_MSUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/
                 }
 
                 requestBillingAuth({
+                    od_id: "<?php echo $od_id; ?>",
+                    price: tot_price,
                     customerEmail: pf.od_name.value,
                     customerName: pf.od_email.value
                 });
@@ -1413,6 +1401,8 @@ require_once(G5_MSUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/
                 }
 
                 requestBillingAuth({
+                    od_id: "<?php echo $od_id; ?>",
+                    price: tot_price,
                     customerEmail: f.od_name.value,
                     customerName: f.od_email.value
                 });

@@ -185,14 +185,110 @@ $tot_it_cp_price = 0;
 $tot_od_cp_price = 0;
 $tot_sc_cp_price = 0;
 
+if($is_member) {
+    // 정기결제 상품쿠폰 의 cp_method 값은 4이다
+    $it_cp_cnt = (isset($_POST['cp_id']) && is_array($_POST['cp_id'])) ? count($_POST['cp_id']) : 0;
+    $arr_it_cp_prc = array();
+    for($i=0; $i<$it_cp_cnt; $i++) {
+        $cid = isset($_POST['cp_id'][$i]) ? clean_xss_tags($_POST['cp_id'][$i], 1, 1) : '';
+        $it_id = isset($_POST['it_id'][$i]) ? safe_replace_regex($_POST['it_id'][$i], 'it_id') : '';
+        $sql = " select cp_id, cp_method, cp_target, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
+                    from {$g5['g5_shop_coupon_table']}
+                    where cp_id = '$cid'
+                      and mb_id IN ( '{$member['mb_id']}', '전체회원' )
+                      and cp_start <= '".G5_TIME_YMD."'
+                      and cp_end >= '".G5_TIME_YMD."'
+                      and cp_method = '4' ";
+        $cp = sql_fetch($sql);
+        if(! (isset($cp['cp_id']) && $cp['cp_id']))
+            continue;
+
+        // 사용한 쿠폰인지
+        if(is_used_subscription_coupon($member['mb_id'], $cp['cp_id']))
+            continue;
+
+        if($cp['cp_target'] != $it_id)
+            continue;
+
+        // 상품금액
+        $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
+                    from {$g5['g5_shop_cart_table']}
+                    where od_id = '$tmp_cart_id'
+                      and it_id = '$it_id'
+                      and ct_select = '1' ";
+        $ct = sql_fetch($sql);
+        $item_price = $ct['sum_price'];
+
+        if($cp['cp_minimum'] > $item_price)
+            continue;
+
+        $dc = 0;
+        if($cp['cp_type']) {
+            $dc = floor(($item_price * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+        } else {
+            $dc = $cp['cp_price'];
+        }
+
+        if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+            $dc = $cp['cp_maximum'];
+
+        if($item_price < $dc)
+            continue;
+
+        $tot_it_cp_price += $dc;
+        $arr_it_cp_prc[$it_id] = $dc;
+    }
+
+    $tot_od_price -= $tot_it_cp_price;
+
+    // 주문쿠폰, 정기결제 상품쿠폰 의 cp_method 값은 4이다
+    if(isset($_POST['od_cp_id']) && $_POST['od_cp_id']) {
+        $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
+                    from {$g5['g5_shop_coupon_table']}
+                    where cp_id = '{$_POST['od_cp_id']}'
+                      and mb_id IN ( '{$member['mb_id']}', '전체회원' )
+                      and cp_start <= '".G5_TIME_YMD."'
+                      and cp_end >= '".G5_TIME_YMD."'
+                      and cp_method = '4' ";
+        $cp = sql_fetch($sql);
+
+        // 사용한 쿠폰인지
+        $cp_used = is_used_subscription_coupon($member['mb_id'], $cp['cp_id']);
+
+        $dc = 0;
+        if(!$cp_used && $cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
+            if($cp['cp_type']) {
+                $dc = floor(($tot_od_price * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+            } else {
+                $dc = $cp['cp_price'];
+            }
+
+            if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                $dc = $cp['cp_maximum'];
+
+            if($tot_od_price < $dc)
+                die('Order coupon error.');
+
+            $tot_od_cp_price = $dc;
+            $tot_od_price -= $tot_od_cp_price;
+        }
+    }
+
+    $tot_cp_price = $tot_it_cp_price + $tot_od_cp_price;
+}
+
+if ((int)($row['od_price'] - $tot_cp_price) !== $i_price) {
+    if(function_exists('add_order_post_log')) add_order_post_log('쿠폰금액 최종 계산 Error.');
+    die("Error.");
+}
+
 // 배송비가 상이함
 $send_cost = get_subscription_sendcost($tmp_cart_id);
 
 $tot_sc_cp_price = 0;
-// 배송비 쿠폰 적용해야 해야함
+// 배송비 쿠폰 적용해야 해야함, 아직 정기결제에 쿠폰이 완전히 적용이 안됨
 
 $send_cost2 = 0;
-
 
 // 추가배송비가 상이함
 $od_b_zip   = preg_replace('/[^0-9]/', '', $od_b_zip);
@@ -369,13 +465,28 @@ $lead_days = get_subs_option('su_auto_payment_lead_days') ? (int) get_subs_optio
 
 // 주 또는 월 단위에 요일이나 날이 지정되어 있는 경우
 if (isset($subscription_selected_data['opt_etc']) && $subscription_selected_data['opt_etc']) {
+    
     $next_delivery_date = getIntervalBasedNextDate(G5_SERVER_TIME, $subscription_selected_data, $subscription_selected_number, 1);
     $nextBillingDate = getNextPaymentDate($next_delivery_date, $lead_days);
+    
 } else {
-    // 바로 1회차 결제 되게 한다.
-    $nextBillingDate = G5_TIME_YMDHIS;
-    // 배송 예정일은 영업일 이후로 한다.
-    $next_delivery_date = $lead_days ? getBusinessDaysNext(date('Y-m-d H:i:s', strtotime("+$lead_days days", strtotime(G5_TIME_YMDHIS)))) : G5_TIME_YMDHIS;
+    
+    // 희망배송일이 있다면
+    if (get_subs_option('su_hope_date_use') && $od_hope_date) {
+        
+        // 설정값: 결제 전 여유 일수
+        $config_before_pay_date = get_subs_option('su_auto_payment_lead_days') ? (int) get_subs_option('su_auto_payment_lead_days') : 0;
+        
+        $nextBillingDate = getNextPaymentDate($od_hope_date, $config_before_pay_date);
+        $next_delivery_date = $od_hope_date.' '.SUBSCRIPTION_DEFAULT_TIME_SUFFIX;
+            
+    } else {
+        // 바로 1회차 결제 되게 한다.
+        $nextBillingDate = G5_TIME_YMDHIS;
+        // 배송 예정일은 영업일 이후로 한다.
+        $next_delivery_date = $lead_days ? getBusinessDaysNext(date('Y-m-d H:i:s', strtotime("+$lead_days days", strtotime(G5_TIME_YMDHIS)))) : G5_TIME_YMDHIS;
+    }
+    
 }
 
 if ($od_settle_case === '카드재사용') {
@@ -536,6 +647,9 @@ $pay_id = 0;
 
 // 희망배송일과 배송일 이전 자동결제 설정일이 있으면 다시 계산한다.
 if (get_subs_option('su_hope_date_use') && $od_hope_date) {
+    
+    $is_first_pay = false;
+    
     $nextBillingDate = calculateNextBillingDate($exists_order, $od_hope_date);
 
     // 결제일이 오늘이거나 이전일이면 바로 1회차 결제한다.
@@ -632,6 +746,56 @@ $current_cycle_str = $crp['current_cycle_str'];
 
 include_once G5_SUBSCRIPTION_PATH . '/ordermail1.inc.php';
 include_once G5_SUBSCRIPTION_PATH . '/ordermail2.inc.php';
+
+// 쿠폰사용내역기록
+if($is_member) {
+    $it_cp_cnt = (isset($_POST['cp_id']) && is_array($_POST['cp_id'])) ? count($_POST['cp_id']) : 0;
+    for($i=0; $i<$it_cp_cnt; $i++) {
+        $cid = isset($_POST['cp_id'][$i]) ? clean_xss_tags($_POST['cp_id'][$i], 1, 1) : '';
+        $cp_it_id = isset($_POST['it_id'][$i]) ? clean_xss_tags($_POST['it_id'][$i], 1, 1) : '';
+        $cp_prc = isset($arr_it_cp_prc[$cp_it_id]) ? (int) $arr_it_cp_prc[$cp_it_id] : 0;
+
+        if(trim($cid)) {
+            $sql = " insert into {$g5['g5_subscription_coupon_log_table']}
+                        set cp_id       = '$cid',
+                            mb_id       = '{$member['mb_id']}',
+                            od_id       = '$od_id',
+                            cp_price    = '$cp_prc',
+                            cl_datetime = '".G5_TIME_YMDHIS."' ";
+            sql_query($sql);
+        }
+
+        // 쿠폰사용금액 cart에 기록
+        $sql = " update {$g5['g5_subscription_cart_table']}
+                    set cp_price = '$cp_prc'
+                    where od_id = '$od_id'
+                      and it_id = '$cp_it_id'
+                      and ct_select = '1'
+                    order by ct_id asc
+                    limit 1 ";
+        sql_query($sql);
+    }
+
+    if(isset($_POST['od_cp_id']) && $_POST['od_cp_id']) {
+        $sql = " insert into {$g5['g5_subscription_coupon_log_table']}
+                    set cp_id       = '{$_POST['od_cp_id']}',
+                        mb_id       = '{$member['mb_id']}',
+                        od_id       = '$od_id',
+                        cp_price    = '$tot_od_cp_price',
+                        cl_datetime = '".G5_TIME_YMDHIS."' ";
+        sql_query($sql);
+    }
+
+    if(isset($_POST['sc_cp_id']) && $_POST['sc_cp_id']) {
+        $sql = " insert into {$g5['g5_subscription_coupon_log_table']}
+                    set cp_id       = '{$_POST['sc_cp_id']}',
+                        mb_id       = '{$member['mb_id']}',
+                        od_id       = '$od_id',
+                        cp_price    = '$tot_sc_cp_price',
+                        cl_datetime = '".G5_TIME_YMDHIS."' ";
+        sql_query($sql);
+    }
+}
 
 // 1회차가 오늘 결제일이고 1회차가 결제 되었다면 1회차가 결제 되었다고 메일을 보낸다.
 if ($is_pay_success) {

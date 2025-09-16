@@ -1,3 +1,3 @@
 <?php
-
-print_r($_REQEUST);
+// fail
+// print_r($_REQEUST);

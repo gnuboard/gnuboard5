@@ -34,15 +34,23 @@ if($sch_target == 1) {
 } else {
     $sql_common = " from {$g5['g5_shop_item_table']} ";
     $sql_where = " where it_use = '1' and it_nocoupon = '0' ";
-    if($sch_word)
+    if($sch_word) {
         $sql_where .= " and it_name like '%".sql_real_escape_string($sch_word)."%' ";
+    }
+    
+    // 정기결제의 경우 $sch_target의 값은 4
+    if ($sch_target == 4) {
+        $sql_where .= " and it_class_num IN (1, 2) ";
+    }
+    
     $sql_select = " select it_id as t_id, it_name as t_name ";
     $sql_order = " order by it_order, it_name ";
 }
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common . $sql_where;
-$row = sql_fetch($sql);
+
+$row = sql_fetch($sql, false);
 $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
@@ -52,7 +60,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = $sql_select . $sql_common . $sql_where . $sql_order . " limit $from_record, $rows ";
 
-$result = sql_query($sql);
+$result = sql_query($sql, false);
 
 $qstr1 = 'sch_target='.$sch_target.'&amp;sch_word='.urlencode($sch_word);
 ?>

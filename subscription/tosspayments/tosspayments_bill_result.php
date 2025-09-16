@@ -13,11 +13,11 @@ $encryptedApiSecretKey = "Basic " . base64_encode($apiSecretKey . ":");
 $billingKeyMap = array();
 
 $postData = json_encode(array(
-    'customerKey' => $orderNumber,
+    'customerKey' => tosspayments_customerkey_uuidv4($member['mb_id']),
     'authKey' => $authKey
 ));
 
-$response = sendRequest("https://api.tosspayments.com/v1/billing/authorizations/issue", $encryptedApiSecretKey, $postData);
+$response = subscription_sendRequest("https://api.tosspayments.com/v1/billing/authorizations/issue", $encryptedApiSecretKey, $postData);
 $result = json_decode($response, true);
 
 if (isset($result['billingKey']) && $result['billingKey']) { // 성공이면
@@ -39,8 +39,8 @@ if (isset($result['billingKey']) && $result['billingKey']) { // 성공이면
     }
     */
     // 마스킹 된 카드번호 : 숫자8자리 마스킹* 4자리 숫자 3자리 마스킹* 1자리 이렇게 마스킹 되어 넘겨 받는다.
-    $amount = $save_forms['od_price'];
-    $pg_price = $save_forms['od_price'];
+    $amount = $order_price;
+    $pg_price = $order_price;
     $card_mask_number = $result['cardNumber'];
     $card_billkey = $result['billingKey'];
     

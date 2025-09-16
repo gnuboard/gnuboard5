@@ -221,10 +221,6 @@ foreach ($result_row as $od) {
         } else {
             // DB 실패시 처리
 
-            if (function_exists('add_log')) {
-                add_log(array('error' => 'fail1'), false, '_subscription_fail_');
-            }
-
             $failure_reason = '(크론) 결제에 성공했으나, DB 쓰기에 실패했습니다.(' . $pay_round_no . '회차) ';
 
             add_subscription_order_history($failure_reason, array(
@@ -242,10 +238,6 @@ foreach ($result_row as $od) {
         }
     } else {
         // 결제 실패시 처리
-
-        if (function_exists('add_log')) {
-            add_log(array('error' => 'fail2'), false, '_subscription_fail_');
-        }
 
         $failure_reason = '결제가 실패 되었습니다. (' . $pay_round_no . '회차) 코드 : ' . $pays['code'] . ' 이유 : ' . $pays['message'];
 

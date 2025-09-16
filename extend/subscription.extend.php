@@ -44,6 +44,7 @@ $g5['g5_subscription_order_history_table'] = $g5['subscription_prefix'] . 'order
 $g5['g5_subscription_delay_schedules_table'] = $g5['subscription_prefix'] . 'delay_schedules'; // 구독 미루기 기록 테이블
 
 $g5['g5_subscription_uniqid_table'] = $g5['subscription_prefix'] . 'uniqid'; // 정기구독 uniqid 테이블
+$g5['g5_subscription_coupon_log_table'] = $g5['subscription_prefix'] . 'coupon_log'; // 정기구독 쿠폰 로그 테이블
 
 $subscriptions_default = array(
 'su_card_test' => 1,
@@ -173,6 +174,33 @@ if (get_subs_option('su_card_test')) {
 
 if (defined('IS_SUBSCRIPTION_ORDER_FORM') && IS_SUBSCRIPTION_ORDER_FORM) {
     add_event('common_header', 'nocache_nostore_subscription_headers', 1, 0);
+}
+
+// db 업그레이드 훅
+add_replace('admin_dbupgrade', 'subscription_add_admin_dbupgrade', 1, 1);
+
+function subscription_add_admin_dbupgrade($is_check) {
+    
+    // 정기구독 쿠폰 로그 테이블 없을 경우 생성
+    global $g5;
+
+    if (isset($g5['g5_subscription_coupon_log_table']) && !sql_query(" DESC {$g5['g5_subscription_coupon_log_table']} ", false)) {
+        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_subscription_coupon_log_table']}` (
+                      `cl_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `cp_id` varchar(100) NOT NULL DEFAULT '',
+                      `mb_id` varchar(100) NOT NULL DEFAULT '',
+                      `od_id` bigint(20) NOT NULL,
+                      `cp_price` int(11) NOT NULL DEFAULT '0',
+                      `cl_datetime` datetime NOT NULL,
+                      PRIMARY KEY (`cl_id`),
+                      KEY `mb_id` (`mb_id`),
+                      KEY `od_id` (`od_id`)
+                    ) ", true);
+
+        return true;
+    }
+    
+    return $is_check;
 }
 
 add_event('admin_notice_messages', 'subscription_check_admin_warning', 1, 0);

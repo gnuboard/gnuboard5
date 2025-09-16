@@ -104,7 +104,7 @@ if ($res_cd != '0000')
         $card_name = $card_cd && isset($kcp_card_codes[$card_cd]) ? $kcp_card_codes[$card_cd] : $card_cd;
         // NHN_KCP는 batch키를 발급받는 것에 tno값을 보내지 않는다.
         $tno = '';
-        $amount = $_POST['od_price'] ? (int) $_POST['od_price'] : 0;
+        $amount = $order_price;
 
     }
     /* ============================================================================== */

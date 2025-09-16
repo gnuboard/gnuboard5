@@ -212,6 +212,7 @@ subscription_pg_setting_check(true);
         <th scope="col" id="th_odrertel">주문자전화</th>
         <th scope="col" id="th_recvr">받는분</th>
         <th scope="col" rowspan="2">주문합계<br>선불배송비포함</th>
+        <th scope="col" >입금합계</th>
         <th scope="col" rowspan="2">배송주기</th>
         <th scope="col" rowspan="2">주문회차</th>
         <th scope="col" rowspan="2">카드정보</th>
@@ -223,6 +224,7 @@ subscription_pg_setting_check(true);
         <th scope="col" id="th_odrid">회원ID</th>
         <th scope="col" id="th_odrcnt">주문상품수</th>
         <th scope="col" id="th_odrall">누적구독수</th>
+        <th scope="col" id="th_odrall">쿠폰</th>
     </tr>
     </thead>
     <tbody>
@@ -321,6 +323,7 @@ subscription_pg_setting_check(true);
         <td headers="th_odrertel" class="td_tel"><?php echo get_text($row['od_tel']); ?></td>
         <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo get_text($row['od_b_name']); ?>"><?php echo get_text($row['od_b_name']); ?></a></td>
         <td rowspan="3" class="td_num td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
+        <td rowspan="1" class="td_num_right"><?php echo number_format($row['od_receipt_price']); ?></td>
         <td rowspan="3">
             <?php echo $od_deliverys; ?>
         </td>
@@ -342,6 +345,7 @@ subscription_pg_setting_check(true);
         </td>
         <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
         <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
+        <td rowspan="2" class="td_num_right"><?php echo number_format($row['couponprice']); ?></td>
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td headers="odrstat" class="odrstat">
@@ -383,7 +387,7 @@ subscription_pg_setting_check(true);
         $tot_orderprice += ($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']);
         //$tot_ordercancel += 0;
         //$tot_receiptprice += $row['od_receipt_price'];
-        //$tot_couponprice += $row['couponprice'];
+        $tot_couponprice += $row['couponprice'];
         
         //$tot_misu += 0;
     }

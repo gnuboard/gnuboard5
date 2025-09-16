@@ -135,8 +135,6 @@ jQuery(function($){
         });
         
         if (isValid) {
-            console.log( expMonth );
-            console.log( expYear );
             
             if (!expMonth.match(/^(0[1-9]|1[0-2])$/)) {
                 isValid = false;
@@ -148,12 +146,7 @@ jQuery(function($){
                 focusTarget = focusTarget || $($nicepay_form + ' input[name="expYear"]');
             }
             
-            console.log( expMonth );
-            console.log( expYear );
         }
-        
-            console.log("a" + expMonth );
-            console.log("b" + expYear );
             
         if (isValid) {
             // 생년월일(6) 또는 사업자번호 검증 (숫자만 입력, 최소 6자리)
@@ -181,12 +174,6 @@ jQuery(function($){
             }
             return false;
         }
-        
-        console.log(cardNo);
-        console.log(expMonth);
-        console.log(expYear);
-        console.log(idNo);
-        console.log(cardPw);
         
         $('input[type="hidden"][name="cardNo"]').val(cardNo);
         $('input[type="hidden"][name="expMonth"]').val(expMonth);

@@ -307,6 +307,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <th scope="col">배송비</th>
             <th scope="col">총결제액</th>
             <th scope="col">주문취소</th>
+            <th scope="col">쿠폰</th>
         </tr>
         </thead>
         <tbody>
@@ -318,6 +319,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <td class="td_numbig"><?php echo display_price($pay['py_send_cost'] + $pay['py_send_cost2']); ?></td>
             <td class="td_numbig td_numincome"><?php echo number_format($amount['receipt']); ?>원</td>
             <td class="td_numbig td_numcancel"><?php echo number_format($amount['cancel']); ?>원</td>
+            <td class="td_numbig td_numcoupon"><?php echo number_format($amount['coupon']); ?></td>
         </tr>
         </tbody>
         </table>

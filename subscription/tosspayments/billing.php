@@ -24,8 +24,7 @@ if (!function_exists('sendRequest')) {
     }
 }
 
-// $orderNumber = isset($_POST['orderNumber']) ? preg_replace("/[ #\&\+%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", '', strip_tags($_POST['orderNumber'])) : 0;
-$orderNumber = isset($_REQUEST['customerKey']) ? preg_replace("/[ #\&\+%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", '', strip_tags($_REQUEST['customerKey'])) : 0;
+$orderNumber = isset($_REQUEST['od_id']) ? preg_replace("/[ #\&\+%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", '', strip_tags($_REQUEST['od_id'])) : 0;
 $authKey = isset($_REQUEST['authKey']) ? clean_xss_tags($_REQUEST['authKey']) : '';
 $session_order_num = get_session('subs_order_id');
 

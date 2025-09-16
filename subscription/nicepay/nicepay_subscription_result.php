@@ -6,11 +6,6 @@ if (!defined('_GNUBOARD_')) {
 // 나이스페이 공통 설정
 require_once G5_SUBSCRIPTION_PATH.'/settle_nicepay.inc.php';
 
-if (function_exists('add_log')) {
-    add_log($_POST);
-}
-
-
 // 빌키 발급(비인증) API 요청 URL
 $postURL = "https://webapi.nicepay.co.kr/webapi/billing/billing_regist.jsp";
 
@@ -77,10 +72,6 @@ if ($respArr['ResultCode'] !== 'F100') {
     alert($respArr['ResultMsg']);
 }
 
-if (function_exists('add_log')) {
-    add_log($respArr);
-}
-
 $od_tno = $respArr['TID'];
 
 $card_mask_number = mask_card_number($cardNo);
@@ -107,7 +98,7 @@ $app_time = '';
     [AuthDate] => 20250102
     [CardCode] => 08
     [CardName] => [롯데]
-    [TID] => nictest04m01162501021117517554
+    [TID] => nictest04m0*******021117517554
     [CardCl] => 0
     [AcquCardCode] => 08
     [AcquCardName] => [롯데]

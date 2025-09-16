@@ -9,5 +9,5 @@ if (get_subs_option('su_pg_service') !== 'nicepay') {
 }
 ?>
 <input type="hidden" name="PayMethod" value="">
-<input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">
-<input type="hidden" name="oid"         value="<?php echo $od_id; ?>">
+<input type="hidden" name="good_mny"    value="<?php echo sanitize_input($tot_price); ?>">
+<input type="hidden" name="oid"         value="<?php echo sanitize_input($od_id); ?>">

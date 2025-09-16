@@ -2,30 +2,6 @@
 $sub_menu = '600100';
 include_once('./_common.php');
 
-// print_r2($_POST);
-// exit;
-
-/*
-print_r2($_POST);
-
-
-$opts = array();
-$opts_keys = array('opt_id', 'opt_chk', 'opt_input', 'opt_date_format', 'opt_etc', 'opt_print', 'opt_use');
-$opt_ids = isset($_POST['opt_id']) ? $_POST['opt_id'] : array();
-
-if ($opt_ids) {
-    foreach($opt_ids as $index=>$value) {
-        foreach($opts_keys as $key) {
-            $opts[$index][$key] = (isset($_POST[$key]) && isset($_POST[$key][$index])) ? $_POST[$key][$index] : '';
-        }
-    }
-}
-
-print_r2($opts);
-
-exit;
-*/
-
 check_demo();
 
 auth_check_menu($auth, $sub_menu, "w");
@@ -44,8 +20,8 @@ $check_sanitize_keys = array(
     'su_inicis_iniapi_key',         //KG이니시스 INIAPI KEY
     'su_inicis_iniapi_iv',          //KG이니시스 INIAPI IV
     'su_inicis_sign_key',           //KG이니시스 웹결제 사인키
-    'su_nice_clientid',             //나이스페이 클라이언트 키
-    'su_nice_secretkey',            //나이스페이 비밀 키
+    'su_nicepay_mid',             //나이스페이 mid
+    'su_nicepay_key',            //나이스페이 키
     'su_tosspayments_mid',           // 토스페이먼츠 상점 아이디
     'su_tosspayments_api_clientkey',    // 토스페이먼츠 API 클라이언트키
     'su_tosspayments_api_secretkey',  // 토스페이먼츠 API 시크릿키
