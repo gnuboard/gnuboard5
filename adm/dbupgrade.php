@@ -438,14 +438,18 @@ if (!isset($member['mb_board_post'])) {
 }
 
 // 재입고 알림 - 채널 구분 (1=SMS, 2=알림톡)
-if(sql_query(" DESC {$g5['g5_shop_item_stocksms_table']} ", false) && !sql_query(" select ss_channel from {$g5['g5_shop_item_stocksms_table']} limit 1", false)) {
-    sql_query(
-        " ALTER TABLE `{$g5['g5_shop_item_stocksms_table']}`
-            ADD `ss_channel` tinyint(4) NOT NULL DEFAULT '1' AFTER `ss_ip` ", 
-        true
-    );
+if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
+    if(sql_query(" DESC {$g5['g5_shop_item_stocksms_table']} ", false)) {
+        if(!sql_query(" select ss_channel from {$g5['g5_shop_item_stocksms_table']} limit 1", false)) {
+            sql_query(
+                " ALTER TABLE `{$g5['g5_shop_item_stocksms_table']}`
+                    ADD `ss_channel` tinyint(4) NOT NULL DEFAULT '1' AFTER `ss_ip` ", 
+                true
+            );
 
-    $is_check = true;
+            $is_check = true;
+        }
+    }
 }
 
 

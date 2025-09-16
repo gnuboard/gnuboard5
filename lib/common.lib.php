@@ -3450,11 +3450,8 @@ function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len
         $result = preg_replace('#([^\p{L}]|^)(?:javascript|jar|applescript|vbscript|vbs|wscript|jscript|behavior|mocha|livescript|view-source)\s*:(?:.*?([/\\\;()\'">]|$))#ius',
                 '$1$2', $result);
 
-        // 이벤트 핸들러 속성 제거 (예: onclick=, onerror= 등)
-        $result = preg_replace('/on\w+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/i', '', $result);
-        
-        // 속성 제거 (CSS 기반 인젝션 차단)
-        $result = preg_replace('/\s*style\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/i', '', $result);
+        // 따옴표 + 속성으로 강제 진입 차단 (예: "style=..., 'onerror=...)
+        $result = preg_replace('/["\']\s*(?:on\w+|style)\s*=\s*/i', '', $result);
         
         if((string)$result === (string)$str) break;
 

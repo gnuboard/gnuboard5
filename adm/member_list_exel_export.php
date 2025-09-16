@@ -1,7 +1,11 @@
 <?php
+$sub_menu = "200400";
 require_once './_common.php';
 require_once './member_list_exel.lib.php'; // 회원관리파일 공통 라이브러리 (상수, 검색 옵션 설정, SQL WHERE 등)
 include_once(G5_LIB_PATH.'/PHPExcel.php');
+
+check_demo();
+auth_check_menu($auth, $sub_menu, 'w');
 
 ini_set('memory_limit', '-1');
 session_write_close(); // 세션 종료 및 잠금 해제 (백그라운드 작업을 위해 필요)
