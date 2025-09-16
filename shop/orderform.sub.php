@@ -81,6 +81,9 @@ if($is_kakaopay_use) {
         $comm_free_mny = 0; // 면세금액
         $tot_tax_mny = 0;
 
+        // 토스페이먼츠 escrowProducts 배열 생성
+        $escrow_products = array();
+
         for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             // 합계금액 계산
@@ -131,6 +134,15 @@ if($is_kakaopay_use) {
 
             $point      = $sum['point'];
             $sell_price = $sum['price'];
+
+            // 토스페이먼츠 escrowProducts 배열에 상품 정보 추가
+            $escrow_products[] = array(
+                'id'        => $row['ct_id'],
+                'name'      => $row['it_name'],
+                'code'      => $row['it_id'],
+                'unitPrice' => (int) $row['ct_price'],
+                'quantity'  => (int) $row['ct_qty']
+            );
 
             // 쿠폰
             $cp_button = '';
@@ -596,7 +608,8 @@ if($is_kakaopay_use) {
                 // 계좌이체 사용
                 if ($default['de_iche_use']) {
                     $multi_settle++;
-                    echo '<input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche" class="lb_icon iche_icon">'.$escrow_title.'계좌이체</label>'.PHP_EOL;
+                    // 토스페이먼츠 v2 - 퀵계좌이체 명칭 사용
+                    echo '<input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche" class="lb_icon iche_icon">'.$escrow_title. ($default['de_pg_service'] == 'toss' ? '퀵계좌이체' :'계좌이체') . '</label>'.PHP_EOL;
                     $checked = '';
                 }
 
@@ -1541,6 +1554,28 @@ function forderform_check(f)
                 f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
                 break;
         }
+        <?php } else if($default['de_pg_service'] == 'toss') { ?>
+            switch(settle_method)
+            {
+                case "계좌이체":
+                    f.method.value = "TRANSFER";
+                    break;
+                case "가상계좌":
+                    f.method.value = "VIRTUAL_ACCOUNT";
+                    break;
+                case "휴대폰":
+                    f.method.value = "MOBILE_PHONE";
+                    break;
+                case "신용카드":
+                    f.method.value = "CARD";
+                    break;
+                case "간편결제":
+                    f.method.value = "CARD";
+                    break;
+                default:
+                    f.method.value = "무통장";
+                    break;
+            }
         <?php } else if($default['de_pg_service'] == 'inicis') { ?>
         switch(settle_method)
         {
@@ -1671,6 +1706,62 @@ function forderform_check(f)
         <?php } ?>
 
         if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
+            launchCrossPlatform(f);
+        } else {
+            f.submit();
+        }
+        <?php } ?>
+        <?php if($default['de_pg_service'] == 'toss') { ?>
+
+        f.orderId.value = '<?=$od_id?>';
+        f.orderName.value = '<?=$goods?>';
+
+        f.customerName.value = f.od_name.value;
+        f.customerEmail.value = f.od_email.value;
+        f.customerMobilePhone.value = f.od_hp.value.replace(/[^0-9]/g, '');
+        if (f.customerMobilePhone.value == '') {
+            f.customerMobilePhone.value = f.od_tel.value.replace(/[^0-9]/g, '');
+        }
+
+        f.cardUseCardPoint.value = false;
+        f.cardUseAppCardOnly.value = false;
+
+        <?php if($default['de_escrow_use']) { ?>
+        f.cardUseEscrow.value = 'true';
+        f.escrowProducts.value = JSON.stringify(<?php echo json_encode($escrow_products, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>);
+        <?php } ?>
+        
+        if(settle_method == "간편결제") {
+            f.cardflowMode.value = 'DIRECT';
+        }
+
+        f.amountCurrency.value = 'KRW';
+        f.amountValue.value = f.good_mny.value;
+        <?php if($default['de_tax_flag_use']) { ?>
+        f.taxFreeAmount.value = f.comm_free_mny.value;
+        <?php } ?>
+        f.windowTarget.value = 'iframe';
+
+        if(f.method.value != "무통장") {
+            // 주문정보 임시저장
+            var order_data = $(f).serialize();
+            var save_result = "";
+            $.ajax({
+                type: "POST",
+                data: order_data,
+                url: g5_url+"/shop/ajax.orderdatasave.php",
+                cache: false,
+                async: false,
+                success: function(data) {
+                    save_result = data;
+                }
+            });
+
+            if(save_result) {
+                alert(save_result);
+                return false;
+            }
+
             launchCrossPlatform(f);
         } else {
             f.submit();

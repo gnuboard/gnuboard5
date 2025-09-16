@@ -300,6 +300,8 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_kcp_enckey` varchar(100) NOT NULL DEFAULT '',
   `cf_lg_mid` varchar(100) NOT NULL DEFAULT '',
   `cf_lg_mert_key` varchar(100) NOT NULL DEFAULT '',
+  `cf_toss_client_key` varchar(100) NOT NULL DEFAULT '',
+  `cf_toss_secret_key` varchar(100) NOT NULL DEFAULT '',
   `cf_cert_limit` int(11) NOT NULL DEFAULT '0',
   `cf_cert_req` tinyint(4) NOT NULL DEFAULT '0',
   `cf_sms_use` varchar(255) NOT NULL DEFAULT '',

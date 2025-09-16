@@ -53,8 +53,18 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         $checked = '';
 
         $escrow_title = "";
+        $escrow_products = array(); // 토스페이먼츠 escrowProducts 배열 생성
         if ($default['de_escrow_use']) {
             $escrow_title = "에스크로 ";
+             
+            // 토스페이먼츠 escrowProducts 배열에 상품 정보 추가
+            $escrow_products[] = array(
+                'id'        => $pp['pp_id'],
+                'name'      => $pp['pp_name'].'님 개인결제',
+                'code'      => $pp['pp_id'],
+                'unitPrice' => (int) $pp['pp_price'],
+                'quantity'  => (int) 1
+            );  
         }
 
         if ($default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
@@ -73,7 +83,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         // 계좌이체 사용
         if ($default['de_iche_use']) {
             $multi_settle++;
-            echo '<li><input type="radio" id="pp_settle_iche" name="pp_settle_case" value="계좌이체" '.$checked.'> <label for="pp_settle_iche"><span></span>'.$escrow_title.'계좌이체</label></li>'.PHP_EOL;
+            echo '<li><input type="radio" id="pp_settle_iche" name="pp_settle_case" value="계좌이체" '.$checked.'> <label for="pp_settle_iche"><span></span>'.$escrow_title. ($default['de_pg_service'] == 'toss' ? '퀵계좌이체' :'계좌이체') . '</label></li>'.PHP_EOL;
             $checked = '';
         }
 
@@ -174,6 +184,51 @@ function pay_approval()
     <?php if($default['de_tax_flag_use']) { ?>
     f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
     <?php } ?>
+    <?php } else if($default['de_pg_service'] == 'toss') { ?>
+    var pay_method = "";
+    switch(settle_method) {
+        case "계좌이체":
+            pay_method = "TRANSFER";
+            break;
+        case "가상계좌":
+            pay_method = "VIRTUAL_ACCOUNT";
+            break;
+        case "휴대폰":
+            pay_method = "MOBILE_PHONE";
+            break;
+        case "신용카드":
+            pay_method = "CARD";
+            break;
+        case "간편결제":
+            pay_method = "CARD";
+            break;
+    }
+    f.method.value = pay_method;
+    f.orderId.value = '<?=$od_id?>';
+    f.orderName.value = '<?=$goods?>';
+
+    f.customerName.value = pf.pp_name.value;
+    f.customerEmail.value = pf.pp_email.value;
+    f.customerMobilePhone.value = pf.pp_hp.value.replace(/[^0-9]/g, '');
+
+    f.cardUseCardPoint.value = false;
+    f.cardUseAppCardOnly.value = false;
+
+    <?php if($default['de_escrow_use']) { ?>
+    f.cardUseEscrow.value = 'true';
+    f.escrowProducts.value = JSON.stringify(<?php echo json_encode($escrow_products, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>);
+    <?php } ?>
+
+    if(settle_method == "간편결제") {
+        f.cardflowMode.value = 'DIRECT';
+    }
+
+    f.amountCurrency.value = 'KRW';
+    f.amountValue.value = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.taxFreeAmount.value = pf.comm_free_mny.value;
+    <?php } ?>
+    f.windowTarget.value = 'self';
     <?php } else if($default['de_pg_service'] == 'inicis') { ?>
     var paymethod = "";
     var width = 330;

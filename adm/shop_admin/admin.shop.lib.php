@@ -170,6 +170,10 @@ function is_cancel_shop_pg_order($od){
         $is_od_pg_cancel = true;
     }
 
+    if($od['od_pg'] === 'toss' && in_array($od['od_settle_case'], array('계좌이체', '휴대폰'))) {
+        $is_od_pg_cancel = true;
+    }
+
     return $is_od_pg_cancel;
 }
 

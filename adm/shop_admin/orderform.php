@@ -283,7 +283,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <div class="local_desc01 local_desc">
         <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
         <p>개별적인(이곳에서의) 상태 변경은 모든 작업을 수동으로 처리합니다. 예를 들어 주문에서 입금으로 상태 변경시 입금액(결제금액)을 포함한 모든 정보는 수동 입력으로 처리하셔야 합니다.</p>
-        <?php if ($config['cf_kakaotalk_use']) { ?>
+        <?php if (isset($config['cf_kakaotalk_use']) && $config['cf_kakaotalk_use']) { ?>
             <p>* <b>알림톡 프리셋</b>: <b>[준비, 완료, 취소, 반품, 품절]</b>은 <b>자동</b>으로 발송되며, <b>[입금완료, 배송]</b>은 <b>결제상세정보에서 수동</b>으로 발송하셔야 합니다.</p>
         <?php } ?>
     </div>
@@ -533,6 +533,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                     $pg_url  = 'https://npg.nicepay.co.kr/';
                                     $pg_test = 'NICEPAY';
                                     break;
+                                case 'toss':
+                                    $pg_url  = 'https://app.tosspayments.com';
+                                    $pg_test = '토스페이먼츠 ';
+                                    break;
                                 default:
                                     $pg_url  = 'http://admin8.kcp.co.kr';
                                     $pg_test = 'KCP';
@@ -634,6 +638,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                     break;
                             }
                             $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else if($od['od_pg'] == 'toss') {
+                            $cash_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/mids/si_'.$config['cf_lg_mid'].'/orders/'.$od['od_id'].'/cash-receipt?ref=dashboard\',\'receipt\',\'width=430,height=700\');';
                         } else if($od['od_pg'] == 'inicis') {
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
@@ -844,7 +850,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <!-- 배송 알림톡 전송 -->
                         <?php
                         $alimtalk = get_alimtalk_preset_info('CU-DE02');                        
-                        if ($config['cf_kakaotalk_use'] && isset($alimtalk['success'])) {
+                        if (isset($config['cf_kakaotalk_use']) && $config['cf_kakaotalk_use'] && isset($alimtalk['success'])) {
                         ?>
                         <input type="checkbox" name="od_alimtalk_baesong_check" id="od_alimtalk_baesong_check">
                         <label for="od_alimtalk_baesong_check">배송 알림톡전송</label>
