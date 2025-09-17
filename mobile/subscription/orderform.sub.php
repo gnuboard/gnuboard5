@@ -1124,6 +1124,18 @@ require_once(G5_MSUBSCRIPTION_PATH . '/' . get_subs_option('su_pg_service') . '/
                 return false;
             }
 
+            <?php if (get_subs_option('su_pg_service') == 'kcp') { ?>
+                
+                if (is_subscription_card_checked) {
+                    pf.submit();
+                    return false;
+                }
+                
+                f.submit();
+                
+                return false;
+            <?php } ?>
+                
             <?php if (get_subs_option('su_pg_service') == 'tosspayments') { ?>
 
                 if (f.gopaymethod.value == "exist_card") {

@@ -35,7 +35,7 @@ $tablet_size     = "1.0"; // 화면 사이즈 고정
 <input type="hidden" name="ActionResult"    value="batch">
 
 <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
-<input type="hidden" name="Ret_URL"         value="<?=$url?>">
+<input type="hidden" name="Ret_URL"         value="<?php echo G5_MSUBSCRIPTION_URL; ?>/kcp/subscription_approval_form.php">
 <!-- 화면 크기조정 -->
 <input type="hidden" name="tablet_size"     value="<?php echo $tablet_size?>">
 

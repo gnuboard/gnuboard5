@@ -5,9 +5,6 @@ include_once('./_common.php');
 @header('Pragma: no-cache'); // HTTP 1.0.
 @header('Expires: 0'); // Proxies.
 
-print_r2($_REQUEST);
-//exit;
-
 /* ============================================================================== */
 /* =   PAGE : 결제 요청 PAGE                                                    = */
 /* = -------------------------------------------------------------------------- = */
@@ -285,6 +282,7 @@ if (get_session('subs_direct')) {
             <input type="hidden" name="tran_cd" value="<?php echo get_text($tran_cd); ?>"> <!-- 트랜잭션 코드      -->
             <input type="hidden" name="enc_info" value="<?php echo get_text($enc_info); ?>"> <!-- 암호화 정보        -->
             <input type="hidden" name="enc_data" value="<?php echo get_text($enc_data); ?>"> <!-- 암호화 데이터      -->
+            <input type='hidden' name='batch_cardno_return_yn'  value='Y'>
 
         </form>
 

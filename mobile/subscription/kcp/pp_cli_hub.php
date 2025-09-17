@@ -105,23 +105,16 @@ if ($res_cd != '0000')
         $card_name = $c_PayPlus->mf_get_res_data( "card_name" );       // 카드명
         $batch_key = $c_PayPlus->mf_get_res_data( "batch_key" );
         
-        echo $card_cd;
-        echo "<br>";
-        echo $card_name;
-        echo "<br>";
-        echo $batch_key;
-        echo "<br>";
-        
         // 승인결과
         // 일반 폼에서 batch_cardno_return_yn 를 Y, L 값을 주는것에 따라 다름
         $card_mask_number = isset($_POST['card_mask_no']) ? clean_xss_tags($_POST['card_mask_no']) : '';
         $card_billkey = $batch_key;
         
         // 카드사 이름이 존재하면 카드사 이름을 저장하고 그렇지 않으면 카드사 코드를 저장
-        // $card_name = $card_cd && isset($kcp_card_codes[$card_cd]) ? $kcp_card_codes[$card_cd] : $card_cd;
+        $card_name = $card_cd && isset($kcp_card_codes[$card_cd]) ? $kcp_card_codes[$card_cd] : $card_cd;
         // NHN_KCP는 batch키를 발급받는 것에 tno값을 보내지 않는다.
         $tno = '';
-        $amount = $_POST['od_price'] ? (int) $_POST['od_price'] : 0;
+        $amount = $order_price;
         $app_no = '';
         $app_time = '';
     }
