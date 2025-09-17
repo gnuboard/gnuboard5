@@ -13,7 +13,7 @@ $payLog = true; // 로그 사용 여부
 $log_file = G5_DATA_PATH . '/log/tosspayment_result_log.txt';
 
 /**
- * 토스페이먼츠 로그 기록 함수
+ * 로그 기록 함수
  */
 function write_toss_log($reason, $orderId = '', $status = '')
 {
@@ -32,7 +32,7 @@ function write_toss_log($reason, $orderId = '', $status = '')
     }
 }
 
-// 토스페이먼츠 입금통보 결과 데이터 읽기
+// 입금통보 결과 데이터 읽기
 $raw = file_get_contents('php://input');
 if ($raw == false) {
     write_toss_log("입력 데이터 읽기 실패");
@@ -375,7 +375,7 @@ elseif($TOSS_STATUS == "CANCELED")
 // 위에서 상점 데이터베이스에 등록 성공유무에 따라서 성공시에는 성공응답인 `HTTP 200` 상태 코드를 리턴해야 합니다.
 // (주의) 성공응답인 `HTTP 200` 상태 코드를 리턴하지 않으면 토스페이먼츠에서 7회까지 재전송에 실패하면 웹훅 상태가 실패로 변경됩니다.
 
-// 토스페이먼츠 로그 기록 (nicepay 형태)
+// 로그 기록
 if($payLog) {
     $logfile = fopen($log_file, "a+");
 

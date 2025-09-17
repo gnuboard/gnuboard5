@@ -743,8 +743,8 @@ a.nicepay_btn{display:inline-block;margin:5px 0 0;padding:5px 10px;background:#0
 
 ul.de_pg_tab{margin:0;padding:0;zoom:1}
 ul.de_pg_tab:after{display:block;visibility:hidden;clear:both;content:"";}
-ul.de_pg_tab li{position:relative;display:inline-block;float:left;text-align:center;margin:0;padding:0;width:140px}
-ul.de_pg_tab li a{margin:0 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:2.5;background-color:#f7f7f7;color:#74777b;font-weight:bold;font-size:1.2em;text-decoration:none}
+ul.de_pg_tab li{position:relative;display:inline-block;float:left;text-align:center;margin:0;padding:0;min-width:130px}
+ul.de_pg_tab li a{margin:0 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:2.5;background-color:#f7f7f7;color:#74777b;font-weight:bold;font-size:1.2em;text-decoration:none; padding:0px 10px;}
 ul.de_pg_tab li a:hover{text-decoration:none}
 ul.de_pg_tab li.tab-current a{background:#2CC185;color:#fff}
 
