@@ -57,10 +57,6 @@ if ($w == '') {
     $mb['mb_level'] = $config['cf_register_level'];
     $mb['mb_marketing_agree'] = 0;
     $mb['mb_thirdparty_agree'] = 0;
-    $mb['mb_board_post'] = 1;
-    $mb['mb_board_reply'] = 1;
-    $mb['mb_board_comment'] = 1;
-    $mb['mb_board_recomment'] = 1;
     $html_title = '추가';
 } elseif ($w == 'u') {
     $mb = get_member($mb_id);
@@ -153,19 +149,6 @@ $mb_marketing_agree_no      = !$mb['mb_marketing_agree'] ? 'checked="checked"' :
 // 개인정보 제3자 제공 동의
 $mb_thirdparty_agree_yes    =  $mb['mb_thirdparty_agree'] ? 'checked="checked"' : '';
 $mb_thirdparty_agree_no     = !$mb['mb_thirdparty_agree'] ? 'checked="checked"' : '';
-
-// 알림 설정 (전용 컬럼 사용)
-$mb_board_post_yes      = !empty($mb['mb_board_post']) ? 'checked="checked"' : '';
-$mb_board_post_no       =  empty($mb['mb_board_post']) ? 'checked="checked"' : '';
-
-$mb_board_reply_yes     = !empty($mb['mb_board_reply']) ? 'checked="checked"' : '';
-$mb_board_reply_no      =  empty($mb['mb_board_reply']) ? 'checked="checked"' : '';
-
-$mb_board_comment_yes   = !empty($mb['mb_board_comment']) ? 'checked="checked"' : '';
-$mb_board_comment_no    =  empty($mb['mb_board_comment']) ? 'checked="checked"' : '';
-
-$mb_board_recomment_yes = !empty($mb['mb_board_recomment']) ? 'checked="checked"' : '';
-$mb_board_recomment_no  =  empty($mb['mb_board_recomment']) ? 'checked="checked"' : '';
 
 if (isset($mb['mb_certify'])) {
     // 날짜시간형이라면 drop 시킴
@@ -638,42 +621,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
                 run_event('admin_member_form_add', $mb, $w, 'table');
                 ?>
-
-                <tr>
-                    <th scope="row">게시글 작성 완료 알림</th>
-                    <td>
-                        <input type="radio" name="mb_board_post" value="1" id="mb_board_post_yes" <?php echo !empty($mb['mb_board_post']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_post_yes">예</label>
-                        <input type="radio" name="mb_board_post" value="0" id="mb_board_post_no" <?php echo empty($mb['mb_board_post']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_post_no">아니오</label>
-                    </td>
-
-                    <th scope="row">게시글 답변 알림</th>
-                    <td>
-                        <input type="radio" name="mb_board_reply" value="1" id="mb_board_reply_yes" <?php echo !empty($mb['mb_board_reply']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_reply_yes">예</label>
-                        <input type="radio" name="mb_board_reply" value="0" id="mb_board_reply_no" <?php echo empty($mb['mb_board_reply']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_reply_no">아니오</label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th scope="row">댓글 알림</th>
-                    <td>
-                        <input type="radio" name="mb_board_comment" value="1" id="mb_board_comment_yes" <?php echo !empty($mb['mb_board_comment']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_comment_yes">예</label>
-                        <input type="radio" name="mb_board_comment" value="0" id="mb_board_comment_no" <?php echo empty($mb['mb_board_comment']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_comment_no">아니오</label>
-                    </td>
-
-                    <th scope="row">대댓글 알림</th>
-                    <td>
-                        <input type="radio" name="mb_board_recomment" value="1" id="mb_board_recomment_yes" <?php echo !empty($mb['mb_board_recomment']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_recomment_yes">예</label>
-                        <input type="radio" name="mb_board_recomment" value="0" id="mb_board_recomment_no" <?php echo empty($mb['mb_board_recomment']) ? 'checked' : ''; ?>>
-                        <label for="mb_board_recomment_no">아니오</label>
-                    </td>
-                </tr>
 
                 <?php for ($i = 1; $i <= 10; $i++) { ?>
                     <tr>

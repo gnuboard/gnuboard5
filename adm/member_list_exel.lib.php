@@ -215,8 +215,7 @@ function member_export_build_where($params)
         $range = $params['ad_range_type'] ?? '';
 
         // 공통: 마케팅 목적 수집·이용 동의 + (필요 시) 제3자 동의
-        $needs_thirdparty = ($config['cf_sms_use'] !== '' || $config['cf_kakaotalk_use'] !== '');
-        $thirdparty_clause = $needs_thirdparty ? " AND mb_thirdparty_agree = 1" : "";        
+        $thirdparty_clause = $config['cf_sms_use'] !== '' ? " AND mb_thirdparty_agree = 1" : "";        
         $base_marketing = "mb_marketing_agree = 1{$thirdparty_clause}";
 
         if ($range === 'all') {        

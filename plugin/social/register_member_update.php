@@ -331,18 +331,6 @@ if($result) {
         }
     }
 
-    // 알림톡 발송 BEGIN: 회원가입 (CU-MB01/AD-MB01) -------------------------------------
-    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
-    $conditions = ['mb_id' => $mb_id]; // 변수 치환 정보
-
-    $ad_atk = send_admin_alimtalk('AD-MB01', 'super', $conditions); // 관리자
-
-    // 회원 - 휴대폰 번호가 있을 경우만
-    if (!empty($mb_hp)) {
-        $cu_atk = send_alimtalk_preset('CU-MB01', ['rcv' => $mb_hp, 'rcvnm' => $mb_name], $conditions); // 회원
-    }
-    // 알림톡 발송 END   --------------------------------------------------------
-
     // 사용자 코드 실행
     @include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 

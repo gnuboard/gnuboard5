@@ -1,7 +1,6 @@
 <?php
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 //이니시스 lpay 요청으로 왔다면 $default['de_pg_service'] 값을 이니시스로 변경합니다.
 if( in_array($od_settle_case, array('lpay', 'inicis_kakaopay')) ){
@@ -541,9 +540,6 @@ else
 
 // 주문번호를 얻는다.
 $od_id = get_session('ss_order_id');
-    
-// 주문 상품명 및 개수 조회
-$it_name_str = get_alimtalk_cart_item_name($tmp_cart_id);
 
 $od_escrow = 0;
 if(isset($escw_yn) && $escw_yn === 'Y')
@@ -899,20 +895,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
     }
 }
 // SMS END   --------------------------------------------------------
-
-// 알림톡 발송 BEGIN: 주문완료[CU-OR01/AD-OR01] / 무통장입금 요청[CU-OR02/AD-OR02] -------------------------
-if($od_settle_case == '무통장' && $od_misu > 0) {
-    // 무통장 입금일 경우 알림톡 발송 : 주문금액 - 미결제액
-    $conditions = ['od_id' => $od_id, 'od_name' => $od_name, 'it_name' => $it_name_str, 'od_receipt_price' => number_format($od_misu)]; // 변수 치환 정보
-    $cu_atk = send_alimtalk_preset('CU-OR02', ['rcv' => $od_hp ?: $od_tel, 'rcvnm' => $od_name], $conditions); // 회원
-    $ad_atk = send_admin_alimtalk('AD-OR02', 'super', $conditions); // 관리자
-}else{
-    // 주문 완료
-    $conditions = ['od_id' => $od_id, 'od_name' => $od_name, 'it_name' => $it_name_str, 'od_receipt_price' => number_format($i_price)]; // 변수 치환 정보
-    $cu_atk = send_alimtalk_preset('CU-OR01', ['rcv' => $od_hp ?: $od_tel, 'rcvnm' => $od_name], $conditions); // 회원
-    $ad_atk = send_admin_alimtalk('AD-OR01', 'super', $conditions); // 관리자
-}
-// 알림톡 발송 END ---------------------------------------------------------------------------------------------
 
 // orderview 에서 사용하기 위해 session에 넣고
 $uid = md5($od_id.G5_TIME_YMDHIS.$REMOTE_ADDR);

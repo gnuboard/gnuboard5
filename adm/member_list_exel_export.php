@@ -76,7 +76,7 @@ function main_member_export($params)
             member_export_send_progress("progress", "", 2, $total, ($pages == $i ? $total : $i * MEMBER_EXPORT_PAGE_SIZE), $pages, $i);            
             try {
                 $data = member_export_get_data($params);
-                $fileList[] = member_export_create_excel($data, $fileName, $i, $params['formatType']);                
+                $fileList[] = member_export_create_excel($data, $fileName, $i);                
             } catch (Exception $e) {
                 throw new Exception("총 {$pages}개 중 {$i}번째 파일을 생성하지 못했습니다<br>" . $e->getMessage());
             }
@@ -103,7 +103,7 @@ function main_member_export($params)
         member_export_send_progress("progress", "", 1, $total, 0);                
         $data = member_export_get_data($params);
         member_export_send_progress("progress", "", 1, $total, $total/2);                
-        $fileList[] = member_export_create_excel($data, $fileName, 0, $params['formatType']);
+        $fileList[] = member_export_create_excel($data, $fileName, 0);
         member_export_send_progress("progress", "", 1, $total, $total);                
     }
     
@@ -142,8 +142,9 @@ function member_export_send_progress($status, $message = "", $downloadType = 1, 
 /**
  * 엑셀 내보내기 설정
  */
-function member_export_get_config($type) 
+function member_export_get_config() 
 {
+    $type = 1;
     $configs = [
         1 => [
             'title'   => ["회원관리파일(일반)"],
@@ -154,12 +155,6 @@ function member_export_get_config($type)
                             'mb_mailling','mb_mailling_date', 'mb_sms','mb_sms_date', 'mb_marketing_agree', 
                             'mb_marketing_date', 'mb_thirdparty_agree', 'mb_thirdparty_date'],
             'widths'  => [20, 20, 20, 20, 20, 30, 30, 10, 15, 25, 10, 20, 25, 20, 25, 20, 25, 20, 25],
-        ],
-        2 => [
-            'title'   => ["회원관리파일(팝빌)"],
-            'headers' => ['휴대폰번호', '이름', '변수1', '변수2', '변수3'],
-            'fields'  => ['mb_hp', 'mb_name'],
-            'widths'  => [20, 15, 30, 30, 30],
         ],
     ];
     
@@ -195,14 +190,8 @@ function member_export_get_data($params)
 {
     global $g5;
 
-    $config = member_export_get_config($params['formatType']);
+    $config = member_export_get_config();
     $fields = $config['fields'];
-
-    // 팝빌 타입인 경우 var 추가
-    if ($params['formatType'] == 2 && !empty($params['vars'])) {
-        $fields = array_merge($fields, array_values($params['vars']));
-    }
-
     $fields = array_unique($fields);
 
     // SQL 변환 맵 (가공이 필요한 필드만 정의)
@@ -255,9 +244,9 @@ function member_export_get_data($params)
 /**
  * 엑셀 파일 생성
  */
-function member_export_create_excel($data, $fileName, $index = 0, $type = 1) 
+function member_export_create_excel($data, $fileName, $index = 0) 
 {
-    $config = member_export_get_config($type);
+    $config = member_export_get_config();
     
     if (!class_exists('PHPExcel')) {
         error_log('[Member Export Error] PHPExcel 라이브러리를 찾을 수 없습니다.');
@@ -471,7 +460,6 @@ function member_export_write_log($params, $result = [])
         }
     }
 
-    $formatType = (isset($params['formatType']) && $params['formatType'] == 2) ? '팝빌' : '일반';
     $success = isset($result['success']) && $result['success'] === true;
     $status = $success ? '성공' : '실패';
 
@@ -538,7 +526,7 @@ function member_export_write_log($params, $result = [])
     }
 
     $conditionStr = !empty($condition) ? implode(', ', $condition) : '없음';
-    $line1 = "[{$datetime}] [{$status}] 관리자: {$username} | 형식: {$formatType}";
+    $line1 = "[{$datetime}] [{$status}] 관리자: {$username}";
 
     // 성공일 경우 추가 정보
     if ($success) {

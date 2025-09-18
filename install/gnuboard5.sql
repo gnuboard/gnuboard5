@@ -92,7 +92,6 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_notice` text NOT NULL,
   `bo_upload_count` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_email` tinyint(4) NOT NULL DEFAULT '0',
-  `bo_use_kakaotalk` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_cert` enum('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '',
   `bo_use_sns` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_captcha` tinyint(4) NOT NULL DEFAULT '0',
@@ -328,12 +327,6 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_captcha` varchar(100) NOT NULL DEFAULT '',
   `cf_recaptcha_site_key` varchar(100) NOT NULL DEFAULT '',
   `cf_recaptcha_secret_key` varchar(100) NOT NULL DEFAULT '',
-  `cf_kakaotalk_use` varchar(50) NOT NULL DEFAULT '',
-  `cf_kakaotalk_corpnum` varchar(50) NOT NULL DEFAULT '',
-  `cf_kakaotalk_sender_hp` varchar(50) NOT NULL DEFAULT '',
-  `cf_popbill_userid` varchar(100) NOT NULL DEFAULT '',
-  `cf_popbill_link_id` varchar(100) NOT NULL DEFAULT '',
-  `cf_popbill_secretkey` varchar(255) NOT NULL DEFAULT '',
   `cf_1_subj` varchar(255) NOT NULL DEFAULT '',
   `cf_2_subj` varchar(255) NOT NULL DEFAULT '',
   `cf_3_subj` varchar(255) NOT NULL DEFAULT '',
@@ -542,10 +535,6 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_thirdparty_agree` tinyint(1) NOT NULL default '0',
   `mb_thirdparty_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `mb_agree_log` TEXT NOT NULL,
-  `mb_board_post` tinyint(1) NOT NULL default '0',
-  `mb_board_reply` tinyint(1) NOT NULL default '0',
-  `mb_board_comment` tinyint(1) NOT NULL default '0',
-  `mb_board_recomment` tinyint(1) NOT NULL default '0',
   `mb_1` varchar(255) NOT NULL default '',
   `mb_2` varchar(255) NOT NULL default '',
   `mb_3` varchar(255) NOT NULL default '',
@@ -975,91 +964,3 @@ CREATE TABLE IF NOT EXISTS `g5_menu` (
   `me_mobile_use` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`me_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_kakao5_preset`
---
-
-DROP TABLE IF EXISTS `g5_kakao5_preset`;
-CREATE TABLE IF NOT EXISTS `g5_kakao5_preset` (
-  `kp_id` int(11) NOT NULL AUTO_INCREMENT,
-  `kp_type` varchar(20) NOT NULL DEFAULT '',
-  `kp_category` varchar(20) NOT NULL DEFAULT '',
-  `kp_preset_code` varchar(100) NOT NULL DEFAULT '',
-  `kp_preset_name` varchar(100) NOT NULL DEFAULT '',
-  `kp_template_name` varchar(100) NOT NULL DEFAULT '',
-  `kp_alt_send` varchar(100) NOT NULL DEFAULT '1',
-  `kp_active` tinyint(1) NOT NULL DEFAULT '1',
-  `kp_created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `kp_updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`kp_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Dumping data for table `g5_kakao5_preset`
---
-
-INSERT INTO `g5_kakao5_preset`
-(`kp_type`, `kp_category`, `kp_preset_code`, `kp_preset_name`, `kp_template_name`, `kp_alt_send`, `kp_active`, `kp_created_at`, `kp_updated_at`) 
-VALUES
-('회원', '회원', 'CU-MB01', '회원가입완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '회원', 'AD-MB01', '회원가입완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-('작성자', '게시판', 'CU-BO01', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '게시판', 'AD-BO01', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('그룹관리자', '게시판', 'AD-BO02', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('게시판관리자', '게시판', 'AD-BO03', '새 게시글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('작성자', '게시판', 'CU-BO02', '새 댓글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('댓글 작성자', '게시판', 'CU-BO03', '새 댓글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('답변글 작성자', '게시판', 'CU-BO04', '답변글 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '투표', 'AD-VO01', '기타의견 작성', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-('주문자', '쇼핑몰', 'CU-OR01', '주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '쇼핑몰', 'AD-OR01', '주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-OR02', '무통장입금 주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '쇼핑몰', 'AD-OR02', '무통장입금 주문 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-OR03', '무통장입금 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '쇼핑몰', 'AD-OR03', '무통장입금 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-OR04', '(주문자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '쇼핑몰', 'AD-OR04', '(주문자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-OR05', '(관리자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '쇼핑몰', 'AD-OR05', '(관리자)주문 취소', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-OR06', '반품', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-OR07', '품절', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-DE01', '배송 준비', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-DE02', '배송중', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('주문자', '쇼핑몰', 'CU-DE03', '배송 완료', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('요청자', '쇼핑몰', 'CU-ST01', '재입고알림', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-
-('문의자', '1:1문의', 'CU-IQ01', '문의 등록', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('최고관리자', '1:1문의', 'AD-IQ01', '문의 등록', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('문의자', '1:1문의', 'CU-IQ02', '답변 등록', '', 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_kakao5_preset_history`
---
-
-DROP TABLE IF EXISTS `g5_kakao5_preset_history`;
-CREATE TABLE IF NOT EXISTS `g5_kakao5_preset_history` (
-  `ph_id` int(11) NOT NULL AUTO_INCREMENT,
-  `kp_id` int(11) NOT NULL DEFAULT '0',
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
-  `ph_rcvnm` varchar(100) NOT NULL DEFAULT '',
-  `ph_rcv` varchar(100) NOT NULL DEFAULT '',
-  `ph_template_code` varchar(100) NOT NULL DEFAULT '',
-  `ph_alt_send` varchar(100) NOT NULL DEFAULT '',
-  `ph_request_num` varchar(100) NOT NULL DEFAULT '',
-  `ph_receipt_num` varchar(100) NOT NULL DEFAULT '',
-  `ph_send_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ph_state` tinyint(1) NOT NULL DEFAULT '0',
-  `ph_log` text NOT NULL,
-  PRIMARY KEY (`ph_id`),
-  KEY `kp_id` (`kp_id`),
-  KEY `mb_id` (`mb_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;

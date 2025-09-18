@@ -680,9 +680,9 @@ $(function(){
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="it_stock_sms">재입고 알림</label></th>
+            <th scope="row"><label for="it_stock_sms">재입고SMS 알림</label></th>
             <td colspan="2">
-                <?php echo help("상품이 품절인 경우에 체크해 놓으면 상품상세보기에서 고객이 재입고 알림(SMS/알림톡)을 신청할 수 있게 됩니다."); ?>
+                <?php echo help("상품이 품절인 경우에 체크해 놓으면 상품상세보기에서 고객이 재입고SMS 알림을 신청할 수 있게 됩니다."); ?>
                 <input type="checkbox" name="it_stock_sms" value="1" id="it_stock_sms" <?php echo ($it['it_stock_sms']) ? "checked" : ""; ?>> 예
             </td>
         </tr>

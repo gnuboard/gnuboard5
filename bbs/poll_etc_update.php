@@ -43,12 +43,6 @@ if ($w == '')
         $from_email = $member['mb_email'] ? $member['mb_email'] : $admin['mb_email'];
         mailer($name, $from_email, $admin['mb_email'], '['.$config['cf_title'].'] 설문조사 기타의견 메일', $content, 1);
     }
-    
-    // 알림톡 발송 BEGIN: 기타의견 작성(AD-VO01) -------------------------------------
-    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
-    $conditions = ['po_id' => $po_id, 'pc_id' => $pc_id]; // 변수 치환 정보
-    $ad_atk = send_admin_alimtalk('AD-VO01', 'super', $conditions); // 관리자
-    // 알림톡 발송 END   -------------------------------------------------------------
 }
 else if ($w == 'd')
 {

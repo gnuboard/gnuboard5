@@ -1,7 +1,6 @@
 <?php
 $sub_menu = '400400';
 include_once('./_common.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -26,7 +25,6 @@ $sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : 
 $sel_field = isset($_REQUEST['sel_field']) ? clean_xss_tags($_REQUEST['sel_field'], 1, 1) : '';
 
 $mod_history = '';
-$od_names = [];
 $cnt = (isset($_POST['ct_id']) && is_array($_POST['ct_id'])) ? count($_POST['ct_id']) : 0;
 $arr_it_id = array();
 
@@ -157,8 +155,6 @@ for ($i=0; $i<$cnt; $i++)
     // it_id를 배열에 저장
     if($ct_status == '주문' || $ct_status == '취소' || $ct_status == '반품' || $ct_status == '품절' || $ct_status == '완료')
         $arr_it_id[] = $ct['it_id'];
-    
-    $od_names[] = $ct['it_name']; // 상품명 배열 : 알림톡 사용
 }
 
 // 상품 판매수량 반영
@@ -379,28 +375,7 @@ $url = "./orderform.php?od_id=$od_id&amp;$qstr";
 // 신용카드 취소 때 오류가 있으면 알림
 if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
     alert('오류코드 : '.$pg_res_cd.' 오류내용 : '.$pg_res_msg, $url);
-} else {   
-    // 알림톡 발송 BEGIN: 배송준비(DE01) | 배송완료(DE03) | 관리자 주문취소(OR05) | 반품처리(OR06) | 품절안내(OR07) ------------------------------
-    $alimtalk_map = [ '준비' => 'DE01', '완료' => 'DE03', '취소' => 'OR05', '반품' => 'OR06', '품절' => 'OR07' ]; // 알림톡 코드 매핑
-
-    // 처리상품명 및 치환 변수 값 세팅
-    $order = sql_fetch("select * from {$g5['g5_shop_order_table']} where od_id = '$od_id'"); // 주문 정보 조회
-    $it_name = !empty($od_names) ? $od_names[0] . (count($od_names) > 1 ? ' 외 ' . (count($od_names) - 1) . '건' : '') : ''; // 상품명
-    $conditions = [ 'od_id' => $od_id, 'it_name' => $it_name ]; // 변수 치환 정보
-
-    if (isset($alimtalk_map[$_POST['ct_status']])) {
-        $status_code = $alimtalk_map[$_POST['ct_status']];
-
-        // 고객 발송 (준비, 완료, 취소, 반품, 품절 공통)
-        $cu_atk = send_alimtalk_preset('CU-' . $status_code, ['rcv' => $order['od_hp'] ?: $order['od_tel'], 'rcvnm' => $order['od_name']], $conditions); // 회원
-
-        // 관리자 발송 (취소만)
-        if ($_POST['ct_status'] === '취소') {
-            $ad_atk = send_admin_alimtalk('AD-' . $status_code, 'super', $conditions); // 관리자
-        }
-    }
-    // 알림톡 발송 END   -------------------------------------------------------------------------------------------------------------------
-
+} else {
     // 1.06.06
     $od = sql_fetch(" select od_receipt_point from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if ($od['od_receipt_point'])

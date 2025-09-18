@@ -35,16 +35,6 @@ include_once('./admin.head.php');
     <div class="service_2">
         <div class="svc_ri svc_sms">
             <div class="svc_a">
-                <h3>카카오톡 발송 서비스</h3>
-                <p>주문이나 배송시에 상점운영자 또는 고객에게 휴대폰으로 카카오톡을 발송합니다. <b>연동회원</b>으로 선택한 후 링크아이디 [<b>SIRSOFT</b>]를 입력해 주세요.</p>
-            </div>
-            <div class="svc_btn2"><a href="https://www.popbill.com/App/SignUp" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_07.jpg" alt="팝빌 카카오톡 서비스 신청하기"></a></div>
-        </div>
-    </div>
-
-    <div class="service_2">
-        <div class="svc_ri svc_sms">
-            <div class="svc_a">
                 <h3>SMS 문자 서비스</h3>
                 <p>주문이나 배송시에 상점운영자 또는 고객에게 휴대폰으로 단문메세지 (최대 한글 40자, 영문 80자)를 발송합니다.</p>
             </div>

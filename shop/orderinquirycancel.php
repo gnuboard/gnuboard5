@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 $od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
 
@@ -173,17 +172,5 @@ sql_query($sql);
 // 주문취소 회원의 포인트를 되돌려 줌
 if ($od['od_receipt_point'] > 0)
     insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
-
-// 알림톡 발송 BEGIN: 고객주문취소완료(CU-OR04/AD-OR04) -------------------------------------
-$it_name_str = get_alimtalk_cart_item_name($od_id); // 상품명
-
-// 총구매액
-$tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'] - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'] - $od['od_cancel_price'];
-
-$conditions = ['od_id' => $od_id, 'cancel_memo' => $cancel_memo, 'it_name' => $it_name_str, 'od_receipt_price' => number_format($tot_price)]; // 변수 치환 정보
-
-$cu_atk = send_alimtalk_preset('CU-OR04', ['rcv' => $od['od_hp'] ?: $od['od_tel'], 'rcvnm' => $od['od_name']], $conditions); // 회원
-$ad_atk = send_admin_alimtalk('AD-OR04', 'super', $conditions); // 관리자
-// 알림톡 발송 END   -------------------------------------------------------------
 
 goto_url(G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");

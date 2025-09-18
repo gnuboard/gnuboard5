@@ -6,7 +6,6 @@ $menu['menu100'] = array(
     array('100280', '테마설정', G5_ADMIN_URL . '/theme.php',     'cf_theme', 1),
     array('100290', '메뉴설정', G5_ADMIN_URL . '/menu_list.php',     'cf_menu', 1),
     array('100300', '메일 테스트', G5_ADMIN_URL . '/sendmail_test.php', 'cf_mailtest'),
-    array('100320', '알림톡프리셋관리', G5_ADMIN_URL . '/alimtalkpreset.php', 'alimtalk_preset'),
     array('100310', '팝업레이어관리', G5_ADMIN_URL . '/newwinlist.php', 'scf_poplayer'),
     array('100800', '세션파일 일괄삭제', G5_ADMIN_URL . '/session_file_delete.php', 'cf_session', 1),
     array('100900', '캐시파일 일괄삭제', G5_ADMIN_URL . '/cache_file_delete.php',   'cf_cache', 1),

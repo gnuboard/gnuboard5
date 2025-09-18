@@ -76,10 +76,6 @@ $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '
 
 $mb_marketing_agree     = isset($_POST['mb_marketing_agree'])   ? trim($_POST['mb_marketing_agree'])    : "0";
 $mb_thirdparty_agree    = isset($_POST['mb_thirdparty_agree'])  ? trim($_POST['mb_thirdparty_agree'])   : "0";
-$mb_board_post          = isset($_POST['mb_board_post'])        ? trim($_POST['mb_board_post'])         : "0";
-$mb_board_reply         = isset($_POST['mb_board_reply'])       ? trim($_POST['mb_board_reply'])        : "0";
-$mb_board_comment       = isset($_POST['mb_board_comment'])     ? trim($_POST['mb_board_comment'])      : "0";
-$mb_board_recomment     = isset($_POST['mb_board_recomment'])   ? trim($_POST['mb_board_recomment'])    : "0";
 
 run_event('register_form_update_before', $mb_id, $w);
 
@@ -258,11 +254,7 @@ if ($w == '') {
                      mb_9 = '{$mb_9}',
                      mb_10 = '{$mb_10}',
                      mb_marketing_agree = '{$mb_marketing_agree}',
-                     mb_thirdparty_agree = '{$mb_thirdparty_agree}',
-                     mb_board_post = '{$mb_board_post}',
-                     mb_board_reply = '{$mb_board_reply}',
-                     mb_board_comment = '{$mb_board_comment}',
-                     mb_board_recomment = '{$mb_board_recomment}'
+                     mb_thirdparty_agree = '{$mb_thirdparty_agree}'
                      {$sql_certify} ";
 
     // 이메일 인증을 사용하지 않는다면 이메일 인증시간을 바로 넣는다
@@ -366,17 +358,6 @@ if ($w == '') {
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
     }
 
-    // 알림톡 발송 BEGIN: 회원가입 (CU-MB01/AD-MB01) -------------------------------------
-    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
-    $conditions = ['mb_id' => $mb_id]; // 변수 치환 정보
-
-    $ad_atk = send_admin_alimtalk('AD-MB01', 'super', $conditions); // 관리자
-
-    // 회원 - 휴대폰 번호가 있을 경우만
-    if (!empty($mb_hp)) {
-        $cu_atk = send_alimtalk_preset('CU-MB01', ['rcv' => $mb_hp, 'rcvnm' => $mb_name], $conditions); // 회원
-    }
-    // 알림톡 발송 END   --------------------------------------------------------
 } else if ($w == 'u') {
     if (!trim(get_session('ss_mb_id')))
         alert('로그인 되어 있지 않습니다.');
@@ -465,11 +446,7 @@ if ($w == '') {
                     mb_9 = '{$mb_9}',
                     mb_10 = '{$mb_10}',
                     mb_marketing_agree = '{$mb_marketing_agree}',
-                    mb_thirdparty_agree = '{$mb_thirdparty_agree}',
-                    mb_board_post = '{$mb_board_post}',
-                    mb_board_reply = '{$mb_board_reply}',
-                    mb_board_comment = '{$mb_board_comment}',
-                    mb_board_recomment = '{$mb_board_recomment}'
+                    mb_thirdparty_agree = '{$mb_thirdparty_agree}'
                     {$sql_password}
                     {$sql_nick_date}
                     {$sql_open_date}

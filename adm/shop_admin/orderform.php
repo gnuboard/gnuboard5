@@ -1,7 +1,6 @@
 <?php
 $sub_menu = '400400';
 include_once('./_common.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 $cart_title3 = '주문번호';
 $cart_title4 = '배송완료';
@@ -283,9 +282,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <div class="local_desc01 local_desc">
         <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
         <p>개별적인(이곳에서의) 상태 변경은 모든 작업을 수동으로 처리합니다. 예를 들어 주문에서 입금으로 상태 변경시 입금액(결제금액)을 포함한 모든 정보는 수동 입력으로 처리하셔야 합니다.</p>
-        <?php if ($config['cf_kakaotalk_use']) { ?>
-            <p>* <b>알림톡 프리셋</b>: <b>[준비, 완료, 취소, 반품, 품절]</b>은 <b>자동</b>으로 발송되며, <b>[입금완료, 배송]</b>은 <b>결제상세정보에서 수동</b>으로 발송하셔야 합니다.</p>
-        <?php } ?>
     </div>
 
     </form>
@@ -724,15 +720,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <br>
                         <?php } ?>
 
-                        <!-- 입금완료 알림톡 전송 -->
-                        <?php
-                        $alimtalk = get_alimtalk_preset_info('CU-OR03');
-                        if ($config['cf_kakaotalk_use'] && isset($alimtalk['success'])) {?>
-                        <input type="checkbox" name="od_alimtalk_ipgum_check" id="od_alimtalk_ipgum_check">
-                        <label for="od_alimtalk_ipgum_check">입금완료 알림톡전송</label>
-                        <br>
-                        <?php } ?>
-
                         <input type="text" name="od_deposit_name" value="<?php echo get_text($od['od_deposit_name']); ?>" id="od_deposit_name" class="frm_input">
                     </td>
                 </tr>
@@ -838,16 +825,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php if ($config['cf_sms_use'] && $default['de_sms_use5']) { ?>
                         <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
                         <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
-                        <br>
-                        <?php } ?>
-
-                        <!-- 배송 알림톡 전송 -->
-                        <?php
-                        $alimtalk = get_alimtalk_preset_info('CU-DE02');                        
-                        if ($config['cf_kakaotalk_use'] && isset($alimtalk['success'])) {
-                        ?>
-                        <input type="checkbox" name="od_alimtalk_baesong_check" id="od_alimtalk_baesong_check">
-                        <label for="od_alimtalk_baesong_check">배송 알림톡전송</label>
                         <br>
                         <?php } ?>
 

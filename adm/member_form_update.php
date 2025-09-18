@@ -22,12 +22,6 @@ $mb_zip         = isset($_POST['mb_zip']) ? preg_replace('/[^0-9a-z_]/i', '', $_
 $mb_marketing_agree         = isset($_POST['mb_marketing_agree']) ? clean_xss_tags($_POST['mb_marketing_agree'], 1, 1) : '0';
 $mb_thirdparty_agree         = isset($_POST['mb_thirdparty_agree']) ? clean_xss_tags($_POST['mb_thirdparty_agree'], 1, 1) : '0';
 
-// 게시판알림 설정
-$mb_board_post      = isset($_POST['mb_board_post']) ? (int)$_POST['mb_board_post'] : 0;
-$mb_board_reply     = isset($_POST['mb_board_reply']) ? (int)$_POST['mb_board_reply'] : 0;
-$mb_board_comment   = isset($_POST['mb_board_comment']) ? (int)$_POST['mb_board_comment'] : 0;
-$mb_board_recomment = isset($_POST['mb_board_recomment']) ? (int)$_POST['mb_board_recomment'] : 0;
-
 // 관리자가 자동등록방지를 사용해야 할 경우 ( 회원의 비밀번호 변경시 캡챠를 체크한다 )
 if ($mb_password) {
     include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
@@ -122,10 +116,6 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_level = '{$posts['mb_level']}',
                  mb_marketing_agree = '{$mb_marketing_agree}',
                  mb_thirdparty_agree = '{$mb_thirdparty_agree}',
-                 mb_board_post      = '{$mb_board_post}',
-                 mb_board_reply     = '{$mb_board_reply}',
-                 mb_board_comment   = '{$mb_board_comment}',
-                 mb_board_recomment = '{$mb_board_recomment}',
                  mb_1 = '{$posts['mb_1']}',
                  mb_2 = '{$posts['mb_2']}',
                  mb_3 = '{$posts['mb_3']}',
