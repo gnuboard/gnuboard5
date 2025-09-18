@@ -49,7 +49,7 @@ function get_export_config($type = null)
         ],
     ];
 
-    return $type ? ($config[$type] ?? []) : $config;
+    return $type ? (isset($config[$type]) ? $config[$type] : []) : $config;
 }
 
 /**
@@ -58,7 +58,7 @@ function get_export_config($type = null)
 function get_member_export_params() 
 {
     // 친구톡 양식 - 엑셀 양식에 포함할 항목
-    $fieldArray = array_map('trim', explode(',',  $_GET['fields'] ?? ''));
+    $fieldArray = array_map('trim', explode(',',  isset($_GET['fields']) ? $_GET['fields'] : ''));
     $vars = [];
     foreach ($fieldArray as $index => $field) {
         if(!empty($field)){
@@ -68,29 +68,29 @@ function get_member_export_params()
 
     $params = [    
         'page'              => 1,
-        'formatType'        => (int)($_GET['formatType'] ?? 1),
-        'use_stx'           => $_GET['use_stx'] ?? 0,
-        'stx_cond'          => clean_xss_tags($_GET['stx_cond'] ?? 'like'),
-        'sfl'               => clean_xss_tags($_GET['sfl'] ?? ''),
-        'stx'               => clean_xss_tags($_GET['stx'] ?? ''),
-        'use_level'         => $_GET['use_level'] ?? 0,
-        'level_start'       => (int)($_GET['level_start'] ?? 1),
-        'level_end'         => (int)($_GET['level_end'] ?? 10),
-        'use_date'          => $_GET['use_date'] ?? 0,
-        'date_start'        => clean_xss_tags($_GET['date_start'] ?? ''),
-        'date_end'          => clean_xss_tags($_GET['date_end'] ?? ''),
-        'use_point'         => $_GET['use_point'] ?? 0,
-        'point'             => $_GET['point'] ?? '',
-        'point_cond'        => $_GET['point_cond'] ?? 'gte',
-        'use_hp_exist'      => $_GET['use_hp_exist'] ?? 0,
-        'ad_range_only'     => $_GET['ad_range_only'] ?? 0,
-        'ad_range_type'     => clean_xss_tags($_GET['ad_range_type'] ?? 'all'),
-        'ad_mailling'       => $_GET['ad_mailling'] ?? 0,
-        'ad_sms'            => $_GET['ad_sms'] ?? 0,
-        'agree_date_start'  => clean_xss_tags($_GET['agree_date_start'] ?? ''),
-        'agree_date_end'    => clean_xss_tags($_GET['agree_date_end'] ?? ''),
-        'use_intercept'     => $_GET['use_intercept'] ?? 0,
-        'intercept'         => clean_xss_tags($_GET['intercept'] ?? 'exclude'),
+        'formatType'        => (int)(isset($_GET['formatType']) ? $_GET['formatType'] : 1),
+        'use_stx'           => isset($_GET['use_stx']) ? $_GET['use_stx'] : 0,
+        'stx_cond'          => clean_xss_tags(isset($_GET['stx_cond']) ? $_GET['stx_cond'] : 'like'),
+        'sfl'               => clean_xss_tags(isset($_GET['sfl']) ? $_GET['sfl'] : ''),
+        'stx'               => clean_xss_tags(isset($_GET['stx']) ? $_GET['stx'] : ''),
+        'use_level'         => isset($_GET['use_level']) ? $_GET['use_level'] : 0,
+        'level_start'       => (int)(isset($_GET['level_start']) ? $_GET['level_start'] : 1),
+        'level_end'         => (int)(isset($_GET['level_end']) ? $_GET['level_end'] : 10),
+        'use_date'          => isset($_GET['use_date']) ? $_GET['use_date'] : 0,
+        'date_start'        => clean_xss_tags(isset($_GET['date_start']) ? $_GET['date_start'] : ''),
+        'date_end'          => clean_xss_tags(isset($_GET['date_end']) ? $_GET['date_end'] : ''),
+        'use_point'         => isset($_GET['use_point']) ? $_GET['use_point'] : 0,
+        'point'             => isset($_GET['point']) ? $_GET['point'] : '',
+        'point_cond'        => isset($_GET['point_cond']) ? $_GET['point_cond'] : 'gte',
+        'use_hp_exist'      => isset($_GET['use_hp_exist']) ? $_GET['use_hp_exist'] : 0,
+        'ad_range_only'     => isset($_GET['ad_range_only']) ? $_GET['ad_range_only'] : 0,
+        'ad_range_type'     => clean_xss_tags(isset($_GET['ad_range_type']) ? $_GET['ad_range_type'] : 'all'),
+        'ad_mailling'       => isset($_GET['ad_mailling']) ? $_GET['ad_mailling'] : 0,
+        'ad_sms'            => isset($_GET['ad_sms']) ? $_GET['ad_sms'] : 0,
+        'agree_date_start'  => clean_xss_tags(isset($_GET['agree_date_start']) ? $_GET['agree_date_start'] : ''),
+        'agree_date_end'    => clean_xss_tags(isset($_GET['agree_date_end']) ? $_GET['agree_date_end'] : ''),
+        'use_intercept'     => isset($_GET['use_intercept']) ? $_GET['use_intercept'] : 0,
+        'intercept'         => clean_xss_tags(isset($_GET['intercept']) ? $_GET['intercept'] : 'exclude'),
         'vars'              => $vars,
     ];
     
@@ -212,7 +212,7 @@ function member_export_build_where($params)
     
     // 정보수신동의 조건
     if (!empty($params['ad_range_only']) && $params['ad_range_only'] === '1') {
-        $range = $params['ad_range_type'] ?? '';
+        $range = isset($params['ad_range_type']) ? $params['ad_range_type'] : '';
 
         // 공통: 마케팅 목적 수집·이용 동의 + (필요 시) 제3자 동의
         $thirdparty_clause = $config['cf_sms_use'] !== '' ? " AND mb_thirdparty_agree = 1" : "";        
@@ -241,8 +241,8 @@ function member_export_build_where($params)
         
             } else {
                 // 수신동의기간 직접 입력 - custom_period
-                $date_start = $params['agree_date_start'] ?? '';
-                $date_end   = $params['agree_date_end'] ?? '';
+                $date_start = isset($params['agree_date_start']) ? $params['agree_date_start'] : '';
+                $date_end   = isset($params['agree_date_end']) ? $params['agree_date_end'] : '';
 
                 if ($date_start && $date_end) {
                     $emailDateCond = "mb_mailling_date BETWEEN '{$date_start} 00:00:00' AND '{$date_end} 23:59:59'";

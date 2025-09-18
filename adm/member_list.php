@@ -260,7 +260,7 @@ $colspan = 16;
                         <td headers="mb_list_mailr" class="td_consent">
                             <label for="mb_mailling_<?php echo $i; ?>" class="sound_only">메일수신</label>
                             <input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling'] ? 'checked' : ''; ?> value="1" id="mb_mailling_<?php echo $i; ?>">
-                            <input type="hidden" name="mb_mailling_default[<?php echo $i; ?>]" value="<?php echo $row['mb_mailling'] ?? '0'; ?> " id="mb_mailling_default_<?php echo $i; ?>">
+                            <input type="hidden" name="mb_mailling_default[<?php echo $i; ?>]" value="<?php echo isset($row['mb_mailling']) ? $row['mb_mailling'] : '0'; ?> " id="mb_mailling_default_<?php echo $i; ?>">
                         </td>
                         <td headers="mb_list_auth" class="td_mbstat">
                             <?php
@@ -285,7 +285,7 @@ $colspan = 16;
                         <td headers="mb_list_sms">
                             <label for="mb_sms_<?php echo $i; ?>" class="sound_only">SMS수신</label>
                             <input type="checkbox" name="mb_sms[<?php echo $i; ?>]" <?php echo $row['mb_sms'] ? 'checked' : ''; ?> value="1" id="mb_sms_<?php echo $i; ?>">
-                            <input type="hidden" name="mb_sms_default[<?php echo $i; ?>]" value="<?php echo $row['mb_sms'] ?? '0'; ?> " id="mb_sms_default_<?php echo $i; ?>">
+                            <input type="hidden" name="mb_sms_default[<?php echo $i; ?>]" value="<?php echo isset($row['mb_sms']) ? $row['mb_sms'] : '0'; ?> " id="mb_sms_default_<?php echo $i; ?>">
                         </td>
                         <td headers="mb_list_adultc">
                             <label for="mb_adult_<?php echo $i; ?>" class="sound_only">성인인증</label>

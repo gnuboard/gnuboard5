@@ -69,10 +69,10 @@ $colspan = 14;
                             }
                         ?>
                     </select>
-                    <input type="text" name="stx" value="<?php echo htmlspecialchars($_GET['stx'] ?? ''); ?>" placeholder="검색어 입력">
+                    <input type="text" name="stx" value="<?php echo htmlspecialchars(isset($_GET['stx']) ? $_GET['stx'] : ''); ?>" placeholder="검색어 입력">
                     <span class="radio_group">
-                        <label><input type="radio" name="stx_cond" value="like" <?php echo ($_GET['stx_cond'] ?? 'like') === 'like' ? 'checked' : ''; ?>> 포함</label>
-                        <label><input type="radio" name="stx_cond" value="equal" <?php echo ($_GET['stx_cond'] ?? '') === 'equal' ? 'checked' : ''; ?>> 일치</label>
+                        <label><input type="radio" name="stx_cond" value="like" <?php echo (isset($_GET['stx_cond']) ? $_GET['stx_cond'] : 'like') === 'like' ? 'checked' : ''; ?>> 포함</label>
+                        <label><input type="radio" name="stx_cond" value="equal" <?php echo (isset($_GET['stx_cond']) ? $_GET['stx_cond'] : '') === 'equal' ? 'checked' : ''; ?>> 일치</label>
                     </span>
                 </div>
             </div>
@@ -102,8 +102,8 @@ $colspan = 14;
                     <label><input type="checkbox" name="use_date" value="1" <?php echo isset($_GET['use_date']) ? 'checked' : ''; ?>> 가입기간 적용</label>
                 </div>
                 <div class="field">
-                    <input type="date" name="date_start" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['date_start'] ?? ''); ?>"> ~
-                    <input type="date" name="date_end" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['date_end'] ?? ''); ?>">
+                    <input type="date" name="date_start" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['date_start']) ? $_GET['date_start'] : ''); ?>"> ~
+                    <input type="date" name="date_end" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['date_end']) ? $_GET['date_end'] : ''); ?>">
                 </div>
             </div>
 
@@ -113,11 +113,11 @@ $colspan = 14;
                     <label><input type="checkbox" name="use_point" value="1" <?php echo isset($_GET['use_point']) ? 'checked' : ''; ?>> 포인트 적용</label>
                 </div>
                 <div class="field">
-                    <input type="number" name="point" value="<?php echo htmlspecialchars($_GET['point'] ?? ''); ?>" placeholder="포인트 입력">
+                    <input type="number" name="point" value="<?php echo htmlspecialchars(isset($_GET['point']) ? $_GET['point'] : ''); ?>" placeholder="포인트 입력">
                     <span class="radio_group">
-                        <label><input type="radio" name="point_cond" value="gte" <?php echo ($_GET['point_cond'] ?? 'gte') === 'gte' ? 'checked' : ''; ?>> 이상</label>
-                        <label><input type="radio" name="point_cond" value="lte" <?php echo ($_GET['point_cond'] ?? '') === 'lte' ? 'checked' : ''; ?>> 이하</label>
-                        <label><input type="radio" name="point_cond" value="eq" <?php echo ($_GET['point_cond'] ?? '') === 'eq' ? 'checked' : ''; ?>> 일치</label>
+                        <label><input type="radio" name="point_cond" value="gte" <?php echo (isset($_GET['point_cond']) ? $_GET['point_cond'] : 'gte') === 'gte' ? 'checked' : ''; ?>> 이상</label>
+                        <label><input type="radio" name="point_cond" value="lte" <?php echo (isset($_GET['point_cond']) ? $_GET['point_cond'] : '') === 'lte' ? 'checked' : ''; ?>> 이하</label>
+                        <label><input type="radio" name="point_cond" value="eq" <?php echo (isset($_GET['point_cond']) ? $_GET['point_cond'] : '') === 'eq' ? 'checked' : ''; ?>> 일치</label>
                     </span>
                 </div>
             </div>
@@ -132,7 +132,7 @@ $colspan = 14;
                         <?php
                             // 차단회원 옵션 : [정의] get_export_config() - adm/member_list_exel.lib.php
                             foreach (get_export_config('intercept_list') as $val => $label) {
-                                $selected = (($_GET['intercept'] ?? '') === $val) ? 'selected' : '';
+                                $selected = ((isset($_GET['intercept']) ? $_GET['intercept'] : '') === $val) ? 'selected' : '';
                                 echo "<option value=\"$val\" $selected>$label</option>";
                             }
                         ?>
@@ -171,7 +171,7 @@ $colspan = 14;
                             <select name="ad_range_type" id="ad_range_type">
                                 <?php 
                                     foreach (get_export_config('ad_range_list') as $val => $label) {
-                                        $selected = (($_GET['ad_range_type'] ?? '') === $val) ? 'selected' : '';
+                                        $selected = ((isset($_GET['ad_range_type']) ? $_GET['ad_range_type'] : '') === $val) ? 'selected' : '';
                                         echo "<option value=\"$val\" $selected>$label</option>";
                                     }
                                 ?>
@@ -179,10 +179,10 @@ $colspan = 14;
 
                             <div class="ad_range_wrap">
                                 <!-- 기간 직접 입력 -->
-                                <div class="ad_range_box <?php echo isset($_GET['ad_range_only']) && ($_GET['ad_range_type'] ?? '') == 'custom_period' ? '' : 'is-hidden'; ?>">
+                                <div class="ad_range_box <?php echo isset($_GET['ad_range_only']) && (isset($_GET['ad_range_type']) ? $_GET['ad_range_type'] : '') == 'custom_period' ? '' : 'is-hidden'; ?>">
                                     <div class="field">
-                                        <input type="date" name="agree_date_start" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['agree_date_start'] ?? date('Y-m-d', strtotime('-1 month'))); ?>"> ~
-                                        <input type="date" name="agree_date_end" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['agree_date_end'] ?? date('Y-m-d')); ?>">
+                                        <input type="date" name="agree_date_start" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['agree_date_start']) ? $_GET['agree_date_start'] : date('Y-m-d', strtotime('-1 month'))); ?>"> ~
+                                        <input type="date" name="agree_date_end" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['agree_date_end']) ? $_GET['agree_date_end'] : date('Y-m-d')); ?>">
                                         <p>* 광고성 정보 수신(<b>이메일 또는 SMS/카카오톡</b>) 동의일자 기준</p>
                                     </div>
                                 </div>

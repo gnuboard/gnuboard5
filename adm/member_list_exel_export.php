@@ -25,7 +25,7 @@ $resultExcelDelete = member_export_delete();
 member_export_set_sse_headers();
 
 // 모드 확인 
-$mode = $_GET['mode'] ?? '';
+$mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 if ($mode !== 'start') {
     member_export_send_progress("error", "잘못된 요청 입니다.");
     member_export_write_log($params, ['success' => false, 'error' => '잘못된 요청 입니다.']);
@@ -107,7 +107,7 @@ function main_member_export($params)
         member_export_send_progress("progress", "", 1, $total, $total);                
     }
     
-    member_export_write_log($params, ['success' => true, 'total' => $total, 'files' => $fileList, 'zip' => $zipFileName ?? null]);
+    member_export_write_log($params, ['success' => true, 'total' => $total, 'files' => $fileList, 'zip' => isset($zipFileName) ? $zipFileName : null]);
     member_export_send_progress("done", "", 2, $total, $total, $pages, $pages, $fileList, $zipFileName);                
 }
 
@@ -211,13 +211,13 @@ function member_export_get_data($params)
     // SQL 필드 생성
     $sqlFields = [];
     foreach ($fields as $field) {
-        $sqlFields[] = $sqlTransformMap[$field] ?? $field;
+        $sqlFields[] = isset($sqlTransformMap[$field]) ? $sqlTransformMap[$field] : $field;
     }
     $field_list = implode(', ', $sqlFields);
 
     $where = member_export_build_where($params);
 
-    $page = (int)($params['page'] ?? 1);
+    $page = (int)(isset($params['page']) ? $params['page'] : 1);
     if ($page < 1) $page = 1;
     $offset = ($page - 1) * MEMBER_EXPORT_PAGE_SIZE;
 
@@ -233,7 +233,7 @@ function member_export_get_data($params)
     while ($row = sql_fetch_array($result)) {
         $rowData = [];
         foreach ($fields as $field) {
-            $rowData[] = $row[$field] ?? '';
+            $rowData[] = isset($row[$field]) ? $row[$field] : '';
         }
         $excelData[] = $rowData;
     }
@@ -430,7 +430,7 @@ function member_export_write_log($params, $result = [])
 
     $maxSize = 1024 * 1024 * 2; // 2MB
     $maxFiles = 10; // 최대 로그 파일 수 (필요시 조정)
-    $username = $member['mb_id'] ?? 'guest';
+    $username = isset($member['mb_id']) ? $member['mb_id'] : 'guest';
     $datetime = date("Y-m-d H:i:s");
 
     if (!is_dir(MEMBER_LOG_DIR)) {
@@ -443,7 +443,7 @@ function member_export_write_log($params, $result = [])
     // 최신 파일 기준 정렬 (최신 → 오래된)
     usort($logFiles, fn($a, $b) => filemtime($b) - filemtime($a));
     
-    $latestLogFile = $logFiles[0] ?? null;
+    $latestLogFile = isset($logFiles[0]) ? $logFiles[0] : null;
 
     // 용량 기준으로 새 파일 생성
     if (!$latestLogFile || filesize($latestLogFile) >= $maxSize) {
@@ -470,7 +470,7 @@ function member_export_write_log($params, $result = [])
     if ($params['use_stx'] == 1 && !empty($params['stx'])) {
         $sfl_list = get_export_config('sfl_list');
 
-        $label = $sfl_list[$params['sfl']] ?? '';
+        $label = isset($sfl_list[$params['sfl']]) ? $sfl_list[$params['sfl']] : '';
         $condition[] = "검색({$params['stx_cond']}) : {$label} - {$params['stx']}";
     }
     
@@ -487,7 +487,7 @@ function member_export_write_log($params, $result = [])
     // 포인트 조건
     if ($params['use_point'] == 1 && $params['point'] !== '') {
         $point_cond_map = get_export_config('point_cond_map');
-        $symbol = $point_cond_map[$params['point_cond']] ?? '≥';
+        $symbol = isset($point_cond_map[$params['point_cond']]) ? $point_cond_map[$params['point_cond']] : '≥';
         $condition[] = "포인트 {$symbol} {$params['point']}";
     }
     
@@ -499,7 +499,7 @@ function member_export_write_log($params, $result = [])
     // 광고 수신 동의
     if ($params['ad_range_only'] == 1) {
         $ad_range_list = get_export_config('ad_range_list');
-        $label = $ad_range_list[$params['ad_range_type']] ?? '';
+        $label = isset($ad_range_list[$params['ad_range_type']]) ? $ad_range_list[$params['ad_range_type']] : '';
         $condition[] = "수신동의: 예 ({$label})";
 
         if ($params['ad_range_type'] == "custom_period" && ($params['agree_date_start'] || $params['agree_date_end'])) {
@@ -521,7 +521,7 @@ function member_export_write_log($params, $result = [])
     // 차단회원 처리
     if ($params['use_intercept'] == 1) {
         $intercept_list = get_export_config('intercept_list');
-        $label = $intercept_list[$params['intercept']] ?? '';
+        $label = isset($intercept_list[$params['intercept']]) ? $intercept_list[$params['intercept']] : '';
         if ($label) $condition[] = $label;
     }
 
@@ -530,8 +530,8 @@ function member_export_write_log($params, $result = [])
 
     // 성공일 경우 추가 정보
     if ($success) {
-        $total = $result['total'] ?? 0;
-        $fileCount = isset($result['zip']) ? 1 : count($result['files'] ?? []);
+        $total = isset($result['total']) ? $result['total'] : 0;
+        $fileCount = isset($result['zip']) ? 1 : count(isset($result['files']) ? $result['files'] : []);
         $line1 .= " | 총 {$total}건 | 파일: {$fileCount}개";
     }
 
