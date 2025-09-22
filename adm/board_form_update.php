@@ -121,7 +121,6 @@ $bo_use_list_view = isset($_POST['bo_use_list_view']) ? (int) $_POST['bo_use_lis
 $bo_use_list_file = isset($_POST['bo_use_list_file']) ? (int) $_POST['bo_use_list_file'] : 0;
 $bo_use_list_content = isset($_POST['bo_use_list_content']) ? (int) $_POST['bo_use_list_content'] : 0;
 $bo_use_email = isset($_POST['bo_use_email']) ? (int) $_POST['bo_use_email'] : 0;
-$bo_use_kakaotalk = isset($_POST['bo_use_kakaotalk']) ? (int) $_POST['bo_use_kakaotalk'] : 0;
 $bo_use_sns = isset($_POST['bo_use_sns']) ? (int) $_POST['bo_use_sns'] : 0;
 $bo_use_captcha = isset($_POST['bo_use_captcha']) ? (int) $_POST['bo_use_captcha'] : 0;
 $bo_table_width = isset($_POST['bo_table_width']) ? (int) $_POST['bo_table_width'] : 0;
@@ -224,7 +223,6 @@ $sql_common = " gr_id               = '{$gr_id}',
                 bo_use_list_file    = '{$bo_use_list_file}',
                 bo_use_list_content = '{$bo_use_list_content}',
                 bo_use_email        = '{$bo_use_email}',
-                bo_use_kakaotalk    = '{$bo_use_kakaotalk}',
                 bo_use_cert         = '{$bo_use_cert}',
                 bo_use_sns          = '{$bo_use_sns}',
                 bo_use_captcha      = '{$bo_use_captcha}',
@@ -409,7 +407,6 @@ if (is_checked('chk_grp_use_list_view'))        $grp_fields .= " , bo_use_list_v
 if (is_checked('chk_grp_use_list_file'))        $grp_fields .= " , bo_use_list_file = '{$bo_use_list_file}' ";
 if (is_checked('chk_grp_use_list_content'))     $grp_fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_grp_use_email'))            $grp_fields .= " , bo_use_email = '{$bo_use_email}' ";
-if (is_checked('chk_grp_use_kakaotalk'))        $grp_fields .= " , bo_use_kakaotalk = '{$bo_use_kakaotalk}' ";
 if (is_checked('chk_grp_use_cert'))             $grp_fields .= " , bo_use_cert = '{$bo_use_cert}' ";
 if (is_checked('chk_grp_use_sns'))              $grp_fields .= " , bo_use_sns = '{$bo_use_sns}' ";
 if (is_checked('chk_grp_use_captcha'))          $grp_fields .= " , bo_use_captcha = '{$bo_use_captcha}' ";
@@ -500,7 +497,6 @@ if (is_checked('chk_all_use_list_view'))        $all_fields .= " , bo_use_list_v
 if (is_checked('chk_all_use_list_file'))        $all_fields .= " , bo_use_list_file = '{$bo_use_list_file}' ";
 if (is_checked('chk_all_use_list_content'))     $all_fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_all_use_email'))            $all_fields .= " , bo_use_email = '{$bo_use_email}' ";
-if (is_checked('chk_all_use_kakaotalk'))        $all_fields .= " , bo_use_kakaotalk = '{$bo_use_kakaotalk}' ";
 if (is_checked('chk_all_use_cert'))             $all_fields .= " , bo_use_cert = '{$bo_use_cert}' ";
 if (is_checked('chk_all_use_sns'))              $all_fields .= " , bo_use_sns = '{$bo_use_sns}' ";
 if (is_checked('chk_all_use_captcha'))          $all_fields .= " , bo_use_captcha = '{$bo_use_captcha}' ";

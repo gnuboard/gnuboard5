@@ -112,7 +112,6 @@ $sql = " insert into {$g5['board_table']}
                 bo_notice = '{$board['bo_notice']}',
                 bo_upload_count = '{$board['bo_upload_count']}',
                 bo_use_email = '{$board['bo_use_email']}',
-                bo_use_kakaotalk = '{$board['bo_use_kakaotalk']}',
                 bo_use_cert = '{$board['bo_use_cert']}',
                 bo_use_sns = '{$board['bo_use_sns']}',
                 bo_use_captcha = '{$board['bo_use_captcha']}',

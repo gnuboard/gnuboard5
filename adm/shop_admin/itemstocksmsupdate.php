@@ -45,8 +45,7 @@ if ($_POST['act_button'] == "선택SMS전송") {
         // SMS 전송으로 변경함
         $sql = " update {$g5['g5_shop_item_stocksms_table']}
                     set ss_send = '1',
-                        ss_send_time = '".G5_TIME_YMDHIS."',
-                        ss_channel = '1'
+                        ss_send_time = '".G5_TIME_YMDHIS."'
                     where ss_id = '{$ss_id}' ";
         sql_query($sql);
     }
@@ -99,52 +98,6 @@ if ($_POST['act_button'] == "선택SMS전송") {
             $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
         }
     }
-} else if ($_POST['act_button'] == "선택알림톡전송") {
-    // 알림톡 발송 BEGIN: 재입고알림(CU-ST01) -------------------------------------
-    auth_check_menu($auth, $sub_menu, 'w');
-    include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
-    
-    if (!$config['cf_kakaotalk_use']) {
-        alert('카카오톡 사용 설정이 되어 있지 않아 발송할 수 없습니다.\n[환경설정>기본환경설정>기본알림환경]에서 사용 설정을 해주세요.');
-    } else {
-        // 프리셋 정보 가져오기
-        $alimtalk = get_alimtalk_preset_info('CU-ST01');
-    
-        if (empty($alimtalk['success'])) {
-            alert('재입고 알림톡 설정이 되어 있지 않아 발송할 수 없습니다.\n[환경설정>알림톡프리셋 관리]에서 설정해주세요.');
-        } else {
-            for ($i=0; $i<$count_post_chk; $i++) {
-
-                // 실제 번호를 넘김
-                $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
-                $ss_id = isset($_POST['ss_id'][$k]) ? (int) $_POST['ss_id'][$k] : 0;
-
-                $sql = " select a.ss_id, a.ss_hp, a.ss_send, b.it_id, b.it_name
-                            from {$g5['g5_shop_item_stocksms_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-                            where a.ss_id = '$ss_id' ";
-                $row = sql_fetch($sql);
-
-                if(!$row['ss_id'] || !$row['it_id'] || $row['ss_send'])
-                    continue;
-
-                $conditions = ['it_id' => $row['it_id'], 'it_name' => get_text($row['it_name'])]; // 변수 치환 정보
-
-                $cu_atk = send_alimtalk_preset('CU-ST01', ['rcv' => $row['ss_hp']], $conditions); // 회원
-
-                // 성공한 건만 완료 처리
-                if (!empty($cu_atk) && !empty($cu_atk['success']))
-                {
-                    sql_query(" update {$g5['g5_shop_item_stocksms_table']}
-                                set ss_send = '1',
-                                    ss_send_time = '".G5_TIME_YMDHIS."',
-                                    ss_channel = '2'
-                                where ss_id = '{$ss_id}' ");
-                }
-            }
-        }
-    }
-    // 알림톡 발송 END -------------------------------------------------------------
-
 } else if ($_POST['act_button'] == "선택삭제") {
 
     if ($is_admin != 'super')

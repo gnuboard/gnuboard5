@@ -25,7 +25,7 @@ $resultExcelDelete = member_export_delete();
 member_export_set_sse_headers();
 
 // 모드 확인 
-$mode = $_GET['mode'] ?? '';
+$mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 if ($mode !== 'start') {
     member_export_send_progress("error", "잘못된 요청 입니다.");
     member_export_write_log($params, ['success' => false, 'error' => '잘못된 요청 입니다.']);
@@ -76,7 +76,7 @@ function main_member_export($params)
             member_export_send_progress("progress", "", 2, $total, ($pages == $i ? $total : $i * MEMBER_EXPORT_PAGE_SIZE), $pages, $i);            
             try {
                 $data = member_export_get_data($params);
-                $fileList[] = member_export_create_excel($data, $fileName, $i, $params['formatType']);                
+                $fileList[] = member_export_create_excel($data, $fileName, $i);                
             } catch (Exception $e) {
                 throw new Exception("총 {$pages}개 중 {$i}번째 파일을 생성하지 못했습니다<br>" . $e->getMessage());
             }
@@ -103,11 +103,11 @@ function main_member_export($params)
         member_export_send_progress("progress", "", 1, $total, 0);                
         $data = member_export_get_data($params);
         member_export_send_progress("progress", "", 1, $total, $total/2);                
-        $fileList[] = member_export_create_excel($data, $fileName, 0, $params['formatType']);
+        $fileList[] = member_export_create_excel($data, $fileName, 0);
         member_export_send_progress("progress", "", 1, $total, $total);                
     }
     
-    member_export_write_log($params, ['success' => true, 'total' => $total, 'files' => $fileList, 'zip' => $zipFileName ?? null]);
+    member_export_write_log($params, ['success' => true, 'total' => $total, 'files' => $fileList, 'zip' => isset($zipFileName) ? $zipFileName : null]);
     member_export_send_progress("done", "", 2, $total, $total, $pages, $pages, $fileList, $zipFileName);                
 }
 
@@ -142,8 +142,9 @@ function member_export_send_progress($status, $message = "", $downloadType = 1, 
 /**
  * 엑셀 내보내기 설정
  */
-function member_export_get_config($type) 
+function member_export_get_config() 
 {
+    $type = 1;
     $configs = [
         1 => [
             'title'   => ["회원관리파일(일반)"],
@@ -154,12 +155,6 @@ function member_export_get_config($type)
                             'mb_mailling','mb_mailling_date', 'mb_sms','mb_sms_date', 'mb_marketing_agree', 
                             'mb_marketing_date', 'mb_thirdparty_agree', 'mb_thirdparty_date'],
             'widths'  => [20, 20, 20, 20, 20, 30, 30, 10, 15, 25, 10, 20, 25, 20, 25, 20, 25, 20, 25],
-        ],
-        2 => [
-            'title'   => ["회원관리파일(팝빌)"],
-            'headers' => ['휴대폰번호', '이름', '변수1', '변수2', '변수3'],
-            'fields'  => ['mb_hp', 'mb_name'],
-            'widths'  => [20, 15, 30, 30, 30],
         ],
     ];
     
@@ -195,14 +190,8 @@ function member_export_get_data($params)
 {
     global $g5;
 
-    $config = member_export_get_config($params['formatType']);
+    $config = member_export_get_config();
     $fields = $config['fields'];
-
-    // 팝빌 타입인 경우 var 추가
-    if ($params['formatType'] == 2 && !empty($params['vars'])) {
-        $fields = array_merge($fields, array_values($params['vars']));
-    }
-
     $fields = array_unique($fields);
 
     // SQL 변환 맵 (가공이 필요한 필드만 정의)
@@ -222,13 +211,13 @@ function member_export_get_data($params)
     // SQL 필드 생성
     $sqlFields = [];
     foreach ($fields as $field) {
-        $sqlFields[] = $sqlTransformMap[$field] ?? $field;
+        $sqlFields[] = isset($sqlTransformMap[$field]) ? $sqlTransformMap[$field] : $field;
     }
     $field_list = implode(', ', $sqlFields);
 
     $where = member_export_build_where($params);
 
-    $page = (int)($params['page'] ?? 1);
+    $page = (int)(isset($params['page']) ? $params['page'] : 1);
     if ($page < 1) $page = 1;
     $offset = ($page - 1) * MEMBER_EXPORT_PAGE_SIZE;
 
@@ -244,7 +233,7 @@ function member_export_get_data($params)
     while ($row = sql_fetch_array($result)) {
         $rowData = [];
         foreach ($fields as $field) {
-            $rowData[] = $row[$field] ?? '';
+            $rowData[] = isset($row[$field]) ? $row[$field] : '';
         }
         $excelData[] = $rowData;
     }
@@ -255,9 +244,9 @@ function member_export_get_data($params)
 /**
  * 엑셀 파일 생성
  */
-function member_export_create_excel($data, $fileName, $index = 0, $type = 1) 
+function member_export_create_excel($data, $fileName, $index = 0) 
 {
-    $config = member_export_get_config($type);
+    $config = member_export_get_config();
     
     if (!class_exists('PHPExcel')) {
         error_log('[Member Export Error] PHPExcel 라이브러리를 찾을 수 없습니다.');
@@ -441,7 +430,7 @@ function member_export_write_log($params, $result = [])
 
     $maxSize = 1024 * 1024 * 2; // 2MB
     $maxFiles = 10; // 최대 로그 파일 수 (필요시 조정)
-    $username = $member['mb_id'] ?? 'guest';
+    $username = isset($member['mb_id']) ? $member['mb_id'] : 'guest';
     $datetime = date("Y-m-d H:i:s");
 
     if (!is_dir(MEMBER_LOG_DIR)) {
@@ -454,7 +443,7 @@ function member_export_write_log($params, $result = [])
     // 최신 파일 기준 정렬 (최신 → 오래된)
     usort($logFiles, fn($a, $b) => filemtime($b) - filemtime($a));
     
-    $latestLogFile = $logFiles[0] ?? null;
+    $latestLogFile = isset($logFiles[0]) ? $logFiles[0] : null;
 
     // 용량 기준으로 새 파일 생성
     if (!$latestLogFile || filesize($latestLogFile) >= $maxSize) {
@@ -471,7 +460,6 @@ function member_export_write_log($params, $result = [])
         }
     }
 
-    $formatType = (isset($params['formatType']) && $params['formatType'] == 2) ? '팝빌' : '일반';
     $success = isset($result['success']) && $result['success'] === true;
     $status = $success ? '성공' : '실패';
 
@@ -482,7 +470,7 @@ function member_export_write_log($params, $result = [])
     if ($params['use_stx'] == 1 && !empty($params['stx'])) {
         $sfl_list = get_export_config('sfl_list');
 
-        $label = $sfl_list[$params['sfl']] ?? '';
+        $label = isset($sfl_list[$params['sfl']]) ? $sfl_list[$params['sfl']] : '';
         $condition[] = "검색({$params['stx_cond']}) : {$label} - {$params['stx']}";
     }
     
@@ -499,7 +487,7 @@ function member_export_write_log($params, $result = [])
     // 포인트 조건
     if ($params['use_point'] == 1 && $params['point'] !== '') {
         $point_cond_map = get_export_config('point_cond_map');
-        $symbol = $point_cond_map[$params['point_cond']] ?? '≥';
+        $symbol = isset($point_cond_map[$params['point_cond']]) ? $point_cond_map[$params['point_cond']] : '≥';
         $condition[] = "포인트 {$symbol} {$params['point']}";
     }
     
@@ -511,7 +499,7 @@ function member_export_write_log($params, $result = [])
     // 광고 수신 동의
     if ($params['ad_range_only'] == 1) {
         $ad_range_list = get_export_config('ad_range_list');
-        $label = $ad_range_list[$params['ad_range_type']] ?? '';
+        $label = isset($ad_range_list[$params['ad_range_type']]) ? $ad_range_list[$params['ad_range_type']] : '';
         $condition[] = "수신동의: 예 ({$label})";
 
         if ($params['ad_range_type'] == "custom_period" && ($params['agree_date_start'] || $params['agree_date_end'])) {
@@ -533,17 +521,17 @@ function member_export_write_log($params, $result = [])
     // 차단회원 처리
     if ($params['use_intercept'] == 1) {
         $intercept_list = get_export_config('intercept_list');
-        $label = $intercept_list[$params['intercept']] ?? '';
+        $label = isset($intercept_list[$params['intercept']]) ? $intercept_list[$params['intercept']] : '';
         if ($label) $condition[] = $label;
     }
 
     $conditionStr = !empty($condition) ? implode(', ', $condition) : '없음';
-    $line1 = "[{$datetime}] [{$status}] 관리자: {$username} | 형식: {$formatType}";
+    $line1 = "[{$datetime}] [{$status}] 관리자: {$username}";
 
     // 성공일 경우 추가 정보
     if ($success) {
-        $total = $result['total'] ?? 0;
-        $fileCount = isset($result['zip']) ? 1 : count($result['files'] ?? []);
+        $total = isset($result['total']) ? $result['total'] : 0;
+        $fileCount = isset($result['zip']) ? 1 : count(isset($result['files']) ? $result['files'] : []);
         $line1 .= " | 총 {$total}건 | 파일: {$fileCount}개";
     }
 

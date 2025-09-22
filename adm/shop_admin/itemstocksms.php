@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
 
-$g5['title'] = '재입고 알림';
+$g5['title'] = '재입고SMS 알림';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 // 테이블 생성
@@ -22,12 +22,6 @@ if(!sql_query(" select ss_id from {$g5['g5_shop_item_stocksms_table']} limit 1",
                   `ss_ip` varchar(25) NOT NULL DEFAULT '',
                   PRIMARY KEY (`ss_id`)
                 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ", true);
-}
-
-// 채널 구분 (1=SMS, 2=알림톡)
-if(!sql_query(" select ss_channel from {$g5['g5_shop_item_stocksms_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_item_stocksms_table']}`
-                ADD `ss_channel` tinyint(4) NOT NULL DEFAULT '1' AFTER `ss_ip` ", true);
 }
 
 $doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
@@ -115,9 +109,8 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </th>
         <th scope="col">상품명</th>
         <th scope="col">휴대폰번호</th>
-        <th scope="col">전송결과</th>
-        <th scope="col">전송채널</th>
-        <th scope="col">전송일시</th>
+        <th scope="col">SMS전송</th>
+        <th scope="col">SMS전송일시</th>
         <th scope="col">등록일시</th>
     </tr>
     </thead>
@@ -146,14 +139,13 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <td class="td_left"><?php echo $it_name; ?></td>
         <td class="td_telbig"><?php echo $row['ss_hp']; ?></td>
         <td class="td_stat"><?php echo ($row['ss_send'] ? '전송완료' : '전송전'); ?></td>
-        <td class="td_stat"><?php echo ($row['ss_send'] ? ($row['ss_channel'] == 2 ? " 알림톡" : " SMS") : ''); ?></td>
         <td class="td_datetime"><?php echo (is_null_time($row['ss_send_time']) ? '' : $row['ss_send_time']); ?></td>
         <td class="td_datetime"><?php echo (is_null_time($row['ss_datetime']) ? '' : $row['ss_datetime']); ?></td>
     </tr>
     <?php
     }
     if (!$i)
-        echo '<tr><td colspan="7" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="6" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
     ?>
     </tbody>
     </table>
@@ -165,10 +157,6 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     <?php } ?>
     <input type="submit" name="act_button" value="선택SMS전송" class="btn_submit btn" onclick="document.pressed=this.value">
-    
-    <?php if($config['cf_kakaotalk_use']) { ?>
-        <input type="submit" name="act_button" value="선택알림톡전송" class="btn_submit btn" onclick="document.pressed=this.value">
-    <?php } ?>
 </div>
 </form>
 
@@ -189,8 +177,6 @@ function fitemstocksms_submit(f)
             return confirm("선택한 자료를 정말 삭제하시겠습니까?");
         case "선택SMS전송":
             return confirm("선택한 자료에 대해서 SMS로 재입고 알림을 전송하시겠습니까?");
-        case "선택알림톡전송":
-            return confirm("선택한 자료에 대해서 알림톡으로 재입고 알림을 전송하시겠습니까?");
         default:
             return true;
     }

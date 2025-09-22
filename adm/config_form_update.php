@@ -158,13 +158,7 @@ $check_keys = array(
     'cf_icode_server_ip' => 'char',
     'cf_captcha' => 'char',
     'cf_syndi_token' => '',
-    'cf_syndi_except' => '',
-    'cf_kakaotalk_use' => 'char',
-    'cf_kakaotalk_corpnum' => 'char',
-    'cf_kakaotalk_sender_hp' => 'char',
-    'cf_popbill_userid' => 'char',
-    'cf_popbill_link_id' => 'char',
-    'cf_popbill_secretkey' => 'char'
+    'cf_syndi_except' => ''
 );
 
 for ($i = 1; $i <= 10; $i++) {
@@ -356,12 +350,6 @@ $sql = " update {$g5['config_table']}
                 cf_recaptcha_secret_key   =   '{$_POST['cf_recaptcha_secret_key']}',
                 cf_payco_clientid = '{$_POST['cf_payco_clientid']}',
                 cf_payco_secret = '{$_POST['cf_payco_secret']}',
-                cf_kakaotalk_use = '{$_POST['cf_kakaotalk_use']}',
-                cf_kakaotalk_corpnum = '{$_POST['cf_kakaotalk_corpnum']}',
-                cf_kakaotalk_sender_hp = '{$_POST['cf_kakaotalk_sender_hp']}',
-                cf_popbill_userid = '{$_POST['cf_popbill_userid']}',
-                cf_popbill_link_id = '{$_POST['cf_popbill_link_id']}',
-                cf_popbill_secretkey = '{$_POST['cf_popbill_secretkey']}',
                 cf_1_subj = '{$_POST['cf_1_subj']}',
                 cf_2_subj = '{$_POST['cf_2_subj']}',
                 cf_3_subj = '{$_POST['cf_3_subj']}',
