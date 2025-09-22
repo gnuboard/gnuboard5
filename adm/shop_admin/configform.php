@@ -640,7 +640,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr id="kcp_vbank_url" class="pg_vbank_url">
             <th scope="row">NHN KCP 가상계좌<br>입금통보 URL</th>
             <td>
-                <?php echo help("NHN KCP 가상계좌 사용시 다음 주소를 <strong><a href=\"http://admin.kcp.co.kr\" target=\"_blank\">NHN KCP 관리자</a> &gt; 상점정보관리 &gt; 정보변경 &gt; 공통URL 정보 &gt; 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
+                <?php echo help("NHN KCP 가상계좌 사용시 다음 주소를 <strong><a href=\"https://partner.kcp.co.kr\" target=\"_blank\">NHN KCP 관리자</a> &gt; 상점정보관리 &gt; 정보변경 &gt; 공통URL 정보 &gt; 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
         </tr>
         <tr id="inicis_vbank_url" class="pg_vbank_url">
@@ -694,7 +694,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr>
             <th scope="row"><label for="de_easy_pay_use">PG사 간편결제 버튼 사용</label></th>
             <td>
-                <?php echo help("주문서 작성 페이지에 PG사 간편결제(PAYCO, PAYNOW, KPAY) 버튼의 별도 사용 여부를 설정합니다.", 50); ?>
+                <?php echo help("주문서 작성 페이지에 PG사 간편결제(PAYCO, 토스, KPAY...) 버튼의 별도 사용 여부를 설정합니다.", 50); ?>
                 <select id="de_easy_pay_use" name="de_easy_pay_use">
                     <option value="0" <?php echo get_selected($default['de_easy_pay_use'], 0); ?>>노출안함</option>
                     <option value="1" <?php echo get_selected($default['de_easy_pay_use'], 1); ?>>노출함</option>
@@ -1097,8 +1097,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <a href="http://testadmin8.kcp.co.kr/" target="_blank" class="btn_frmline">테스트 관리자</a>
                 </div>
                 <div class="scf_cardtest lg_cardtest">
-                    <a href="https://app.tosspayments.com/" target="_blank" class="btn_frmline">실결제 관리자</a>
-                    <a href="https://pgweb.tosspayments.com/tmert" target="_blank" class="btn_frmline">테스트 관리자</a>
+                    <a href="https://app.tosspayments.com/" target="_blank" class="btn_frmline">상점 관리자</a>
                 </div>
                 <div class="scf_cardtest toss_cardtest">
                     <a href="https://app.tosspayments.com/" target="_blank" class="btn_frmline">상점 관리자</a>
@@ -1122,14 +1121,14 @@ if(!$default['de_kakaopay_cancelpwd']){
                         <dt>휴대폰</dt><dd>테스트 지원되지 않음.</dd>
                     </dl>
                     <ul id="kcp_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
-                        <li>테스트결제의 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">상점관리자</a> 로그인 정보는 NHN KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
+                        <li>테스트결제의 <a href="https://testpartner.kcp.co.kr/" target="_blank">상점관리자</a> 로그인 정보는 NHN KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
                         <li><b>일반결제</b>의 테스트 사이트코드는 <b>T0000</b> 이며, <b>에스크로 결제</b>의 테스트 사이트코드는 <b>T0007</b> 입니다.</li>
                     </ul>
                     <ul id="lg_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
-                        <li>테스트결제의 <a href="https://pgweb.tosspayments.com/tmert" target="_blank">상점관리자</a> 로그인 정보는 토스페이먼츠 상점아이디 첫 글자에 t를 추가해서 로그인하시기 바랍니다. 예) tsi_lguplus</li>
+                        <li>테스트 결제건에 대한 <a href="https://app.tosspayments.com/" target="_blank">상점관리자</a> 접근은, 상점관리자 상단 '테스트 모드'를 활성화 하여서 접근할 수 있습니다.</li>
                     </ul>
                     <ul id="toss_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
-                        <li>테스트 결제 시 <a href="https://app.tosspayments.com/" target="_blank">상점관리자</a> 로그인 정보는 실결제용 키와는 다르니 반드시 <b>[테스트] API 연동 키</b>로 로그인해야 합니다. 예) test_ck_toss</li>
+                        <li>테스트 결제건에 대한 <a href="https://app.tosspayments.com/" target="_blank">상점관리자</a> 접근은, 상점관리자 상단 '테스트 모드'를 활성화 하여서 접근할 수 있습니다.</li>
                     </ul>
                     <ul id="inicis_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
                         <li><b>일반결제</b>의 테스트 사이트 mid는 <b>INIpayTest</b> 이며, <b>에스크로 결제</b>의 테스트 사이트 mid는 <b>iniescrow0</b> 입니다.</li>
@@ -2141,5 +2140,6 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         }
     }
 }
+
 
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
