@@ -159,6 +159,8 @@ $check_sanitize_keys = array(
 'de_kcp_site_key',              //NHN KCP SITE KEY
 'cf_lg_mid',                    //LG유플러스 상점아이디
 'cf_lg_mert_key',               //LG유플러스 MERT KEY
+'cf_toss_client_key',           //토스페이먼츠 MERT KEY
+'cf_toss_secret_key',           //토스페이먼츠 MERT KEY
 'de_inicis_mid',                //KG이니시스 상점아이디
 'de_inicis_iniapi_key',         //KG이니시스 INIAPI KEY
 'de_inicis_iniapi_iv',          //KG이니시스 INIAPI IV
@@ -465,7 +467,9 @@ $sql = " update {$g5['config_table']}
                 cf_icode_server_port    = '{$_POST['cf_icode_server_port']}',
                 cf_icode_token_key      = '{$cf_icode_token_key}',
                 cf_lg_mid               = '{$cf_lg_mid}',
-                cf_lg_mert_key          = '{$cf_lg_mert_key}' ";
+                cf_lg_mert_key          = '{$cf_lg_mert_key}',
+                cf_toss_client_key      = '{$cf_toss_client_key}',
+                cf_toss_secret_key      = '{$cf_toss_secret_key}' ";
 sql_query($sql);
 
 run_event('shop_admin_configformupdate');

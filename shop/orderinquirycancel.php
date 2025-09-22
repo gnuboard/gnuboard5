@@ -65,6 +65,10 @@ if($od['od_tno']) {
                 alert($msg);
             }
             break;
+        case 'toss':
+            $cancel_msg = '주문자 본인 취소-'.$cancel_memo;
+            include_once(G5_SHOP_PATH.'/toss/toss_cancel.php');
+            break;
         case 'inicis':
             include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
             $cancel_msg = '주문자 본인 취소-'.$cancel_memo;

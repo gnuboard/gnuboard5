@@ -215,6 +215,14 @@ if (! isset($default['de_nicepay_mid'])) {
     sql_query($sql, false);
 }
 
+// 토스페이먼츠 client, secret key 추가
+if( ! isset($config['cf_toss_client_key']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_toss_client_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_lg_mert_key`,
+            ADD COLUMN `cf_toss_secret_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_toss_client_key`; ";
+    sql_query($sql, false);
+}
+
 if( function_exists('pg_setting_check') ){
     pg_setting_check(true);
 }
@@ -636,16 +644,22 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
         </tr>
         <tr id="inicis_vbank_url" class="pg_vbank_url">
-            <th scope="row">KG이니시스 가상계좌 입금통보 URL</th>
+            <th scope="row">KG이니시스 가상계좌<br>입금통보 URL</th>
             <td>
                 <?php echo help("KG이니시스 가상계좌 사용시 다음 주소를 <strong><a href=\"https://iniweb.inicis.com/\" target=\"_blank\">KG이니시스 관리자</a> &gt; 거래내역 &gt; 가상계좌 &gt; 입금통보방식선택 &gt; URL 수신 설정</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/settle_inicis_common.php</td>
         </tr>
         <tr id="nicepay_vbank_url" class="pg_vbank_url">
-            <th scope="row">NICEPAY 가상계좌 입금통보 URL</th>
+            <th scope="row">NICEPAY 가상계좌<br>입금통보 URL</th>
             <td>
                 <?php echo help("NICEPAY 가상계좌 사용시 다음 주소를 <strong><a href=\"https://npg.nicepay.co.kr/\" target=\"_blank\">NICEPAY 관리자</a> &gt; 가맹점관리자페이지 설정 (메인화면 → 가맹점정보 클릭)</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/settle_nicepay_common.php</td>
+        </tr>
+        <tr id="toss_vbank_url" class="pg_vbank_url">
+            <th scope="row">토스페이먼츠 가상계좌<br>입금통보 URL</th>
+            <td>
+                <?php echo help("토스페이먼츠 가상계좌 사용시 다음 주소를 <strong><a href=\"https://app.tosspayments.com/\" target=\"_blank\">토스페이먼츠 상점관리자</a> &gt; 개발자센터 &gt; 웹훅 &gt; 웹훅 등록하기에 URL</strong>에 넣으시고, <strong>구독할 이벤트를 [DEPOSIT_CALLBACK]</strong>을 선택하셔야 상점에 자동으로 입금 통보됩니다."); ?>
+                <?php echo G5_SHOP_URL; ?>/settle_toss_common.php</td>
         </tr>
         <tr>
             <th scope="row"><label for="de_hp_use">휴대폰결제사용</label></th>
@@ -687,6 +701,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 </select>
             </td>
         </tr>
+
         <tr>
             <th scope="row"><label for="de_taxsave_use">현금영수증<br>발급사용</label></th>
             <td>
@@ -775,7 +790,8 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <?php echo help('쇼핑몰에서 사용할 결제대행사를 선택합니다.'); ?>
                 <ul class="de_pg_tab">
                     <li class="<?php if($default['de_pg_service'] == 'kcp') echo 'tab-current'; ?>"><a href="#kcp_info_anchor" data-value="kcp" title="NHN KCP 선택하기" >NHN KCP</a></li>
-                    <li class="<?php if($default['de_pg_service'] == 'lg') echo 'tab-current'; ?>"><a href="#lg_info_anchor" data-value="lg" title="토스페이먼츠 선택하기">토스페이먼츠</a></li>
+                    <li class="<?php if($default['de_pg_service'] == 'lg') echo 'tab-current'; ?>"><a href="#lg_info_anchor" data-value="lg" title="토스페이먼츠(구버전) 선택하기">토스페이먼츠(구버전)</a></li>
+                    <li class="<?php if($default['de_pg_service'] == 'toss') echo 'tab-current'; ?>"><a href="#lg_info_anchor" data-value="toss" title="토스페이먼츠 선택하기">토스페이먼츠</a></li>
                     <li class="<?php if($default['de_pg_service'] == 'inicis') echo 'tab-current'; ?>"><a href="#inicis_info_anchor" data-value="inicis" title="KG이니시스 선택하기">KG이니시스</a></li>
                     <li class="<?php if($default['de_pg_service'] == 'nicepay') echo 'tab-current'; ?>"><a href="#nicepay_info_anchor" data-value="nicepay" title="NICEPAY 선택하기">NICEPAY</a></li>
                 </ul>
@@ -833,10 +849,24 @@ if(!$default['de_kakaopay_cancelpwd']){
             </td>
         </tr>
         <tr class="pg_info_fld lg_info_fld">
-            <th scope="row"><label for="cf_lg_mert_key">토스페이먼츠 MERT KEY</label></th>
+            <th scope="row"><label for="cf_lg_mert_key">토스페이먼츠(구버전) MERT KEY</label></th>
             <td>
-                <?php echo help("토스페이먼츠 상점MertKey는 상점관리자 -> 개발자센터 -> API키 -> 머트 키에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
+                <?php echo help("토스페이먼츠(구버전) 상점 MertKey는 상점관리자 -> 개발자센터 -> API키 -> 머트 키에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
                 <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld lg_info_fld_v2">
+            <th scope="row"><label for="cf_toss_client_key">토스페이먼츠 API Client Key</label></th>
+            <td>
+                <?php echo help("토스페이먼츠 API 클라이언트 키는 상점관리자 -> 개발자센터 -> API키 -> 클라이언트 키에서 확인하실 수 있습니다. 예) live_ck_tosspayment\n실결제용 [라이브] 키와 테스트용 [테스트] 키는 서로 다르므로, <b>테스트로 결제시에는 [테스트] 키</b>로 변경하여 사용해주시기 바랍니다. 예) 테스트 키: test_ck_tosspayment"); ?>
+                <input type="text" name="cf_toss_client_key" value="<?php echo get_sanitize_input($config['cf_toss_client_key']); ?>" id="cf_toss_client_key" class="frm_input " size="40" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld lg_info_fld_v2">
+            <th scope="row"><label for="cf_toss_secret_key">토스페이먼츠 API Secret Key</label></th>
+            <td>
+                <?php echo help("토스페이먼츠 API 시크릿 키는 상점관리자 -> 개발자센터 -> API키 -> 시크릿 키에서 확인하실 수 있습니다. 예) live_sk_tosspayment\n실결제용 [라이브] 키와 테스트용 [테스트] 키는 서로 다르므로, <b>테스트로 결제시에는 [테스트] 키</b>로 변경하여 사용해주시기 바랍니다. 예) 테스트 키: test_sk_tosspayment"); ?>
+                <input type="text" name="cf_toss_secret_key" value="<?php echo get_sanitize_input($config['cf_toss_secret_key']); ?>" id="cf_toss_secret_key" class="frm_input " size="40" maxlength="50">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
@@ -1070,6 +1100,9 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <a href="https://app.tosspayments.com/" target="_blank" class="btn_frmline">실결제 관리자</a>
                     <a href="https://pgweb.tosspayments.com/tmert" target="_blank" class="btn_frmline">테스트 관리자</a>
                 </div>
+                <div class="scf_cardtest toss_cardtest">
+                    <a href="https://app.tosspayments.com/" target="_blank" class="btn_frmline">상점 관리자</a>
+                </div>
                 <div class="scf_cardtest inicis_cardtest">
                     <a href="https://iniweb.inicis.com/" target="_blank" class="btn_frmline">상점 관리자</a>
                 </div>
@@ -1094,6 +1127,9 @@ if(!$default['de_kakaopay_cancelpwd']){
                     </ul>
                     <ul id="lg_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
                         <li>테스트결제의 <a href="https://pgweb.tosspayments.com/tmert" target="_blank">상점관리자</a> 로그인 정보는 토스페이먼츠 상점아이디 첫 글자에 t를 추가해서 로그인하시기 바랍니다. 예) tsi_lguplus</li>
+                    </ul>
+                    <ul id="toss_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
+                        <li>테스트 결제 시 <a href="https://app.tosspayments.com/" target="_blank">상점관리자</a> 로그인 정보는 실결제용 키와는 다르니 반드시 <b>[테스트] API 연동 키</b>로 로그인해야 합니다. 예) test_ck_toss</li>
                     </ul>
                     <ul id="inicis_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
                         <li><b>일반결제</b>의 테스트 사이트 mid는 <b>INIpayTest</b> 이며, <b>에스크로 결제</b>의 테스트 사이트 mid는 <b>iniescrow0</b> 입니다.</li>
@@ -1769,7 +1805,11 @@ function fconfig_check(f)
         }
     } else if ( f.de_pg_service.value == "lg" ) {
         if( f.cf_lg_mid.value && f.cf_lg_mert_key.value && parseInt(f.de_card_test.value) > 0 ){
-            pg_msg = "토스페이먼츠";
+            pg_msg = "토스페이먼츠(구버전)";
+        }
+    } else if ( f.de_pg_service.value == "toss" ) {
+        if( f.cf_lg_mid.value && f.cf_toss_client_key.value && f.cf_toss_secret_key.value && parseInt(f.de_card_test.value) > 0 ){
+            msg += "(주의!) 토스페이먼츠 결제의 결제 설정이 현재 테스트결제로 되어 있습니다.\n상점 API키를 [테스트]키로 설정한 후 테스트결제를 진행해주세요.\n쇼핑몰 운영중이면 반드시 실결제 전환 및 [라이브]키로 설정하여 운영하셔야 합니다.\n실결제로 변경하려면 결제설정 탭 -> 결제 테스트에서 실결제를 선택해 주세요.\n정말로 테스트결제로 설정하시겠습니까?";
         }
     } else if ( f.de_pg_service.value == "inicis" ) {
         if( f.de_inicis_mid.value && f.de_inicis_sign_key.value && parseInt(f.de_card_test.value) > 0 ){

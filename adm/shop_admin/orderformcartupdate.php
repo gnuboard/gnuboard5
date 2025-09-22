@@ -224,6 +224,10 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                             $pg_res_msg = $xpay->Response_Msg();
                         }
                         break;
+                    case 'toss':
+                        $cancel_msg = '쇼핑몰 운영자 승인 취소';
+                        include_once(G5_SHOP_PATH.'/toss/toss_cancel.php');
+                        break;
                     case 'inicis':
                         include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
