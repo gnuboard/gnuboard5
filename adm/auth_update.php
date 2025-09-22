@@ -13,7 +13,7 @@ if ($is_admin != 'super') {
 }
 
 $mb = get_member($mb_id);
-if (!$mb['mb_id']) {
+if (!(isset($mb['mb_id']) && $mb['mb_id'])) {
     alert('존재하는 회원아이디가 아닙니다.');
 }
 
