@@ -534,7 +534,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                         // 로그인 아이디 / 비번
                                         // 일반 : test1234 / test12345
                                         // 에스크로 : escrow / escrow913
-                                        $pg_url = 'https://partner.kcp.co.kr';
+                                        $pg_url = 'https://testpartner.kcp.co.kr';
                                         $pg_test .= '테스트 ';
                                     }
 
