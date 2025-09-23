@@ -3,7 +3,6 @@ $sub_menu = '400400';
 include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 check_admin_token();
 
@@ -49,7 +48,6 @@ for ($i=0; $i<$count_post_chk; $i++)
 
     $current_status = $od['od_status'];
     $change_status  = isset($_POST['od_status']) ? clean_xss_tags($_POST['od_status'], 1, 1) : '';
-    $it_name_str = get_alimtalk_cart_item_name($od_id); // 상품명
 
     switch ($current_status)
     {
@@ -71,12 +69,6 @@ for ($i=0; $i<$count_post_chk; $i++)
                 }
             }
 
-            // 알림톡 발송 BEGIN: 입금완료(CU-OR03/AD-OR03) ------------------------------
-            $conditions = ['od_id' => $od_id, 'od_name' => $od['od_name'], 'it_name' => $it_name_str]; // 변수 치환 정보
-            $cu_atk = send_alimtalk_preset('CU-OR03', ['rcv' => $od['od_hp'] ?: $od['od_tel'], 'rcvnm' => $od['od_name']], $conditions); // 회원
-            $ad_atk = send_admin_alimtalk('AD-OR03', 'super', $conditions); // 관리자
-            // 알림톡 발송 END   --------------------------------------------------------
-
             // 메일
             if($config['cf_email_use'] && $od_send_mail)
                 include './ordermail.inc.php';
@@ -86,12 +78,6 @@ for ($i=0; $i<$count_post_chk; $i++)
         case '입금' :
             if ($change_status != '준비') continue 2;
             change_status($od_id, '입금', '준비');
-
-            // 알림톡 발송 BEGIN: 배송준비(CU-DE01/AD-DE01) ------------------------------
-            $conditions = ['od_id' => $od_id, 'it_name' => $it_name_str]; // 변수 치환 정보
-            $cu_atk = send_alimtalk_preset('CU-DE01', ['rcv' => $od['od_hp'] ?: $od['od_tel'], 'rcvnm' => $od['od_name']], $conditions); // 회원
-            $ad_atk = send_admin_alimtalk('AD-DE01', 'super', $conditions); // 관리자
-            // 알림톡 발송 END   -------------------------------------------------------------
             break;
 
         case '준비' :
@@ -129,11 +115,6 @@ for ($i=0; $i<$count_post_chk; $i++)
                 include(G5_SHOP_PATH.'/'.$od['od_pg'].'/escrow.register.php');
             }
 
-            // 알림톡 발송 BEGIN: 배송중(CU-DE02/AD-DE02) -------------------------------------
-            $conditions = ['od_id' => $od_id, 'it_name' => $it_name_str]; // 변수 치환 정보
-            $cu_atk = send_alimtalk_preset('CU-DE02', ['rcv' => $od['od_hp'] ?: $od['od_tel'], 'rcvnm' => $od['od_name']], $conditions); // 회원
-            $ad_atk = send_admin_alimtalk('AD-DE02', 'super', $conditions); // 관리자
-            // 알림톡 발송 END   -------------------------------------------------------------
             break;
 
         case '배송' :
@@ -158,12 +139,6 @@ for ($i=0; $i<$count_post_chk; $i++)
                 sql_query($sql3);
             }
             */
-
-            // 알림톡 발송 BEGIN: 배송완료(CU-DE03/AD-DE03) -------------------------------------
-            $conditions = ['od_id' => $od_id, 'it_name' => $it_name_str]; // 변수 치환 정보
-            $cu_atk = send_alimtalk_preset('CU-DE03', ['rcv' => $od['od_hp'] ?: $od['od_tel'], 'rcvnm' => $od['od_name']], $conditions); // 회원
-            $ad_atk = send_admin_alimtalk('AD-DE03', 'super', $conditions); // 관리자
-            // 알림톡 발송 END   -------------------------------------------------------------
             break;
 
     } // switch end

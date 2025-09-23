@@ -472,25 +472,6 @@ if(($w == '' || $w == 'r') && trim($qaconfig['qa_admin_email'])) {
     mailer($config['cf_admin_email_name'], $qa_email, $qaconfig['qa_admin_email'], $subject, $content, 1);
 }
 
-// 알림톡 발송 BEGIN: 1:1 문의(CU-IQ01/CU-IQ02/AD-IQ01) -------------------------------------
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
-$conditions = ['qa_id' => $qa_id, 'qa_name' => $write['qa_name'] ?? $member['mb_nick'], 'mb_name' => $write['qa_name'] ?? $member['mb_nick']]; // 변수 치환 정보
-
-// 답변글은 질문 등록자에게 전송
-if ($w == 'a' && !empty($write['qa_hp'])) {
-    $cu_atk = send_alimtalk_preset('CU-IQ02', ['rcv' => $write['qa_hp'], 'rcvnm' => $write['qa_name']], $conditions); // 회원
-}
-
-// 문의글 등록시 질문등록자/관리자에게 전송
-if ($w == '' || $w == 'r') {
-    $ad_atk = send_admin_alimtalk('AD-IQ01', 'super', $conditions); // 관리자
-
-    if (!empty($qa_hp)) {
-        $cu_atk = send_alimtalk_preset('CU-IQ01', ['rcv' => $qa_hp, 'rcvnm' => $member['mb_nick']], $conditions); // 회원
-    }
-}
-// 알림톡 발송 END   -------------------------------------------------------------
-
 if($w == 'a')
     $result_url = G5_BBS_URL.'/qaview.php?qa_id='.$qa_id.$qstr;
 else if($w == 'u' && $write['qa_type'])

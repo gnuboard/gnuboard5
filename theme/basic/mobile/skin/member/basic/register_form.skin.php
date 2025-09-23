@@ -259,51 +259,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	    </ul>
     </div>
 
-    <?php if($config['cf_kakaotalk_use'] != "") { ?>
-    <div class="form_01">
-        <h2>게시판 알림설정</h2>       	            
-        <span class="frm_info add_info">게시판이나 댓글이 등록되면 알림톡으로 안내를 받을 수 있습니다.<br>알림은 등록된 휴대폰 번호로 발송됩니다.</span>
-
-        <ul>
-            <!-- 게시글 알림 -->
-            <li class="chk_box consent-group">
-                <label><b>게시글 알림</b></label>
-                <ul class="sub-consents">
-                    <li class="chk_box is-inline">
-                        <input type="checkbox" name="mb_board_post" value="1" id="mb_board_post" <?php echo ($w=='' || $member['mb_board_post'])?'checked':''; ?> class="selec_chk">
-                        <label for="mb_board_post"><span></span><b class="sound_only">내 게시글 작성 완료 알림</b></label>
-                        <span class="chk_li">내 게시글 작성 완료 알림</span>
-                    </li>
-                    <li class="chk_box is-inline">
-                        <input type="checkbox" name="mb_board_reply" value="1" id="mb_board_reply" <?php echo ($w=='' || $member['mb_board_reply'])?'checked':''; ?> class="selec_chk">
-                        <label for="mb_board_reply"><span></span><b class="sound_only">내 게시글에 달린 답변 알림</b></label>
-                        <span class="chk_li">내 게시글에 달린 답변 알림</span>
-                    </li>
-                </ul>
-            </li>
-            
-            <br>
-
-            <!-- 댓글 알림 -->
-            <li class="chk_box consent-group">
-                <label><b>댓글 알림</b></label>
-                <ul class="sub-consents">
-                    <li class="chk_box is-inline">
-                        <input type="checkbox" name="mb_board_comment" value="1" id="mb_board_comment" <?php echo ($w=='' || $member['mb_board_comment'])?'checked':''; ?> class="selec_chk">
-                        <label for="mb_board_comment"><span></span><b class="sound_only">내 게시글에 달린 댓글 알림</b></label>
-                        <span class="chk_li">내 게시글에 달린 댓글 알림</span>
-                    </li>
-                    <li class="chk_box is-inline">
-                        <input type="checkbox" name="mb_board_recomment" value="1" id="mb_board_recomment" <?php echo ($w=='' || $member['mb_board_recomment'])?'checked':''; ?> class="selec_chk">
-                        <label for="mb_board_recomment"><span></span><b class="sound_only">댓글에 대댓글 알림</b></label>
-                        <span class="chk_li">내 댓글에 달린 대댓글 알림</span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <?php } ?>
-
     <!-- 회원가입 약관 동의에 광고성 정보 수신 동의 표시 여부가 사용시에만 -->
     <?php if($config['cf_use_promotion'] == 1) { ?>
     <div class="form_01">
@@ -370,10 +325,10 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 				</li>
 
 				<!-- (선택) 개인정보 제3자 제공 동의 -->
-				<!-- SMS 및 카카오톡 사용시에만 -->
+				<!-- SMS 사용시에만 -->
 				<?php
-					$configKeys = ['cf_sms_use', 'cf_kakaotalk_use'];
-					$companies = ['icode' => '아이코드', 'popbill' => '팝빌'];
+					$configKeys = ['cf_sms_use'];
+					$companies = ['icode' => '아이코드'];
 
 					$usedCompanies = [];
 					foreach ($configKeys as $key) {

@@ -208,10 +208,10 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                     </li>
 
                     <!-- (선택) 개인정보 제3자 제공 동의 -->
-                    <!-- SMS 및 카카오톡 사용시에만 -->
+                    <!-- SMS 사용시에만 -->
                     <?php
-                        $configKeys = ['cf_sms_use', 'cf_kakaotalk_use'];
-                        $companies = ['icode' => '아이코드', 'popbill' => '팝빌'];
+                        $configKeys = ['cf_sms_use'];
+                        $companies = ['icode' => '아이코드'];
 
                         $usedCompanies = [];
                         foreach ($configKeys as $key) {

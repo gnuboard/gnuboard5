@@ -1,13 +1,13 @@
 <?php
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php');
 
 $post_p_hash = isset($_POST['P_HASH']) ? $_POST['P_HASH'] : '';
 $post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
 $post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
 $post_tran_cd = isset($_POST['tran_cd']) ? $_POST['tran_cd'] : '';
 $post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
+$paymentKey = isset($_POST['paymentKey']) ? $_POST['paymentKey'] : '';
 
 //삼성페이 또는 lpay 또는 이니시스 카카오페이 요청으로 왔다면 현재 삼성페이 또는 lpay 또는 이니시스 카카오페이는 이니시스 밖에 없으므로 $default['de_pg_service'] 값을 이니시스로 변경한다.
 if( is_inicis_order_pay($od_settle_case) && !empty($_POST['P_HASH']) ){
@@ -40,6 +40,9 @@ if($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') {
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
     if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
+        alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
+
+    if($default['de_pg_service'] == 'toss' && ! $paymentKey)
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
     if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
@@ -358,6 +361,9 @@ else if ($od_settle_case == "계좌이체")
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
+        case 'toss':
+            include G5_SHOP_PATH.'/toss/toss_result.php';
+            break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
@@ -386,6 +392,9 @@ else if ($od_settle_case == "가상계좌")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'toss':
+            include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
@@ -416,6 +425,9 @@ else if ($od_settle_case == "휴대폰")
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
+        case 'toss':
+            include G5_SHOP_PATH.'/toss/toss_result.php';
+            break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
@@ -442,6 +454,9 @@ else if ($od_settle_case == "신용카드")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'toss':
+            include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
@@ -471,6 +486,9 @@ else if ($od_settle_case == "간편결제")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'toss':
+            include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
@@ -543,6 +561,9 @@ if($tno) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
+            case 'toss':
+                include G5_SHOP_PATH.'/toss/toss_cancel.php';
+                break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
@@ -581,9 +602,6 @@ if( !$od_id ){
     if(function_exists('add_order_post_log')) add_order_post_log('주문번호가 없습니다.');
     die("주문번호가 없습니다.");
 }
-    
-// 주문 상품명 및 개수 조회
-$it_name_str = get_alimtalk_cart_item_name($od_id); // 상품명
 
 $od_escrow = 0;
 if(isset($escw_yn) && $escw_yn == 'Y')
@@ -699,6 +717,9 @@ if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
+            case 'toss':
+                include G5_SHOP_PATH.'/toss/toss_cancel.php';
+                break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
@@ -760,6 +781,9 @@ if(!$result) {
         switch($od_pg) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+                break;
+            case 'toss':
+                include G5_SHOP_PATH.'/toss/toss_cancel.php';
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
@@ -948,19 +972,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
 }
 // SMS END   --------------------------------------------------------
 
-// 알림톡 발송 BEGIN: 주문완료[CU-OR01/AD-OR01] / 무통장입금 요청[CU-OR02/AD-OR02] -------------------------
-if($od_settle_case == '무통장' && $od_misu > 0) {
-    // 무통장 입금일 경우 알림톡 발송 : 주문금액 - 미결제액
-    $conditions = ['od_id' => $od_id, 'od_name' => $od_name, 'it_name' => $it_name_str, 'od_receipt_price' => number_format($od_misu)]; // 변수 치환 정보
-    $cu_atk = send_alimtalk_preset('CU-OR02', ['rcv' => $od_hp ?: $od_tel, 'rcvnm' => $od_name], $conditions); // 회원
-    $ad_atk = send_admin_alimtalk('AD-OR02', 'super', $conditions); // 관리자
-}else{
-    // 주문 완료
-    $conditions = ['od_id' => $od_id, 'od_name' => $od_name, 'it_name' => $it_name_str, 'od_receipt_price' => number_format($i_price)]; // 변수 치환 정보
-    $cu_atk = send_alimtalk_preset('CU-OR01', ['rcv' => $od_hp ?: $od_tel, 'rcvnm' => $od_name], $conditions); // 회원
-    $ad_atk = send_admin_alimtalk('AD-OR01', 'super', $conditions); // 관리자
-}
-// 알림톡 발송 END ---------------------------------------------------------------------------------------------
 
 // orderview 에서 사용하기 위해 session에 넣고
 $uid = md5($od_id.G5_TIME_YMDHIS.$REMOTE_ADDR);

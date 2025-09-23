@@ -104,8 +104,6 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 #gnb .on .btn_op.menu-400{background:url(../img/menu-7.png) 50% 50% no-repeat #fff}
 #gnb .gnb_li .btn_op.menu-500{background:url(../img/menu-6-1.png) 50% 50% no-repeat #ebebeb }
 #gnb .on .btn_op.menu-500{background:url(../img/menu-6.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .btn_op.menu-800{background:url(../img/menu-8-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .btn_op.menu-800{background:url(../img/menu-8.png) 50% 50% no-repeat #fff}
 #gnb .gnb_li .btn_op.menu-900{background:url(../img/menu-4-1.png) 50% 50% no-repeat #ebebeb }
 #gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat #fff}
 #gnb .gnb_li button:hover{background-color:#f3f3f3}
@@ -233,8 +231,6 @@ a.btn_submit{background:#ff4081;color:#fff}
 
 .btn_02,a.btn_02{background:#9eacc6;color:#fff;}
 .btn_03,a.btn_03{background:#3f51b5;color:#fff;}
-.btn_04,a.btn_04{background:#555;color:#fff}
-.btn_04:hover,a.btn_04:hover{background:#666}
 
 .btn_frmline{display:inline-block;background:#9eacc6;color:#fff;height:35px;border:0;border-radius:5px;padding:0 10px}
 a.btn_frmline{display:inline-block;background:#9eacc6;color:#fff;height:35px;line-height:33px;border-radius:5px;padding:0 10px;text-decoration:none !important}
@@ -743,14 +739,15 @@ a.nicepay_btn{display:inline-block;margin:5px 0 0;padding:5px 10px;background:#0
 
 ul.de_pg_tab{margin:0;padding:0;zoom:1}
 ul.de_pg_tab:after{display:block;visibility:hidden;clear:both;content:"";}
-ul.de_pg_tab li{position:relative;display:inline-block;float:left;text-align:center;margin:0;padding:0;width:120px}
-ul.de_pg_tab li a{margin:0 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:2.5;background-color:#f7f7f7;color:#74777b;font-weight:bold;font-size:1.2em;text-decoration:none}
+ul.de_pg_tab li{position:relative;display:inline-block;float:left;text-align:center;margin:0;padding:0;min-width:130px}
+ul.de_pg_tab li a{margin:0 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:2.5;background-color:#f7f7f7;color:#74777b;font-weight:bold;font-size:1.2em;text-decoration:none; padding:0px 10px;}
 ul.de_pg_tab li a:hover{text-decoration:none}
 ul.de_pg_tab li.tab-current a{background:#2CC185;color:#fff}
 
 .pg_info_fld{position:relative}
 .kcp_info_fld th{background-color:#F6FCFF}
 .lg_info_fld th{background-color:#FFF4FA}
+.lg_info_fld_v2 th{background-color:#ffe8f5}
 .inicis_info_fld th{background-color:#F6F1FF}
 .kakao_info_fld th{background-color:#FFFCED}
 .naver_info_fld th{background-color:#F3FFF3}
@@ -1221,24 +1218,3 @@ input[type="text"]{max-width:200px}
 /* Styles */
 input[type="text"]{max-width:200px}
 }
-
-/* 쇼핑몰관리 > 알림톡프리셋관리 */
-.template_preview {display:none;z-index:10;position:absolute;padding:20px;width:400px;min-height:300px;max-height:300px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;text-align: left;}
-.template_preview_txt {padding:10px;width:100%;height:300px;border:1px solid #696c71;background:#f7f7f7;overflow-y:scroll;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
-.btn_template_preview_open {padding:5px 10px;width:77px;height:30px;line-height:10px;border:0;border-radius:5px;background:#484848;color:#fff}
-.btn_template_preview_close {margin:0;padding:0;width:100%;height:40px;line-height:40px;border:0;background:#484848;color:#fff}
-.variable_table {overflow:hidden;max-height:0;transition:max-height 0.7s}
-.variable_table.is-visible {max-height:1000px !important;}
-.variable_table .tbl_head01 tbody td {background-color: #fff;}
-
-.preset-toggle{position:relative;display:inline-block;width:50px;height:24px}
-.preset-toggle input{opacity:0;width:0;height:0}
-.preset-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;transition:.4s;border-radius:24px}
-.preset-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;transition:.4s;border-radius:50%}
-input:checked+.preset-slider{background:#4CAF50}
-input:checked+.preset-slider:before{transform:translateX(26px)}
-
-/* 친구톡 전송 관련 */
-.kakao-send-svg { width: 16px; height: 16px; fill: currentColor; margin-bottom: -3px; }
-.kakao-setting-btn { height: auto; padding: 7px 12px; background: #3d70ff; color: white; border: none; border-radius: 6px; font-weight: 600; min-width: 110px;}
-.kakao-setting-btn:hover { background: #2c5bd3; }

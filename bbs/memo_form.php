@@ -20,7 +20,7 @@ $me_id           = isset($_REQUEST['me_id']) ? clean_xss_tags($_REQUEST['me_id']
 if ($me_recv_mb_id)
 {
     $mb = get_member($me_recv_mb_id);
-    if (!$mb['mb_id'])
+    if (!(isset($mb['mb_id']) && $mb['mb_id']))
         alert_close('회원정보가 존재하지 않습니다.\\n\\n탈퇴하였을 수 있습니다.');
 
     if (!$mb['mb_open'] && $is_admin != 'super')

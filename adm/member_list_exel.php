@@ -31,24 +31,7 @@ $colspan = 14;
     <br>
     <p>파일 생성 시 서버에 임시 생성된 파일 중 <b>오늘 날짜를 제외 한 파일은 자동 삭제</b>되며, 수동 삭제 필요 시 <a href="<?php echo G5_ADMIN_URL;?>/member_list_file_delete.php"><b>회원관리파일 일괄삭제</b></a>에서 진행하시기 바랍니다.</p>
     <p>회원 정보 수정은 <a href="<?php echo G5_ADMIN_URL;?>/member_list.php" class="link"><b>회원 관리</b></a>에서 진행하실 수 있습니다.</p>
-
-    <br>
-    <p><strong>친구톡 양식</strong>은 <b>카카오톡 사용 시</b>에만 이용 가능합니다.</p>
-    <?php if($config['cf_kakaotalk_use'] == "popbill") { ?>
-        <p><b>친구톡 (광고성 카카오톡 포함)</b>의 경우 기존 회원 데이터 엑셀 파일 다운로드 후 상단 <b>[친구톡 보내기]</b> 버튼을 누르면 <b>팝빌 홈페이지</b>로 이동하여 업로드 진행하실 수 있습니다.</p>
-    <?php } ?>
 </div>
-
-<?php if($config['cf_kakaotalk_use'] == "popbill") { ?>
-<div class="btn_fixed_top">
-    <a href="https://popbill.com/App/Kakaotalk/FTS" target="_blank" class="btn btn_submit btn kakao_setting_btn" >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="kakao-send-svg">
-            <path d="M2 21l21-9L2 3v7l15 2-15 2z"></path>
-        </svg>
-        친구톡 전송하기
-    </a>
-</div>
-<?php } ?>
 
 <div class="local_ov01 local_ov">
     <span class="btn_ov01">
@@ -86,10 +69,10 @@ $colspan = 14;
                             }
                         ?>
                     </select>
-                    <input type="text" name="stx" value="<?php echo htmlspecialchars($_GET['stx'] ?? ''); ?>" placeholder="검색어 입력">
+                    <input type="text" name="stx" value="<?php echo htmlspecialchars(isset($_GET['stx']) ? $_GET['stx'] : ''); ?>" placeholder="검색어 입력">
                     <span class="radio_group">
-                        <label><input type="radio" name="stx_cond" value="like" <?php echo ($_GET['stx_cond'] ?? 'like') === 'like' ? 'checked' : ''; ?>> 포함</label>
-                        <label><input type="radio" name="stx_cond" value="equal" <?php echo ($_GET['stx_cond'] ?? '') === 'equal' ? 'checked' : ''; ?>> 일치</label>
+                        <label><input type="radio" name="stx_cond" value="like" <?php echo (isset($_GET['stx_cond']) ? $_GET['stx_cond'] : 'like') === 'like' ? 'checked' : ''; ?>> 포함</label>
+                        <label><input type="radio" name="stx_cond" value="equal" <?php echo (isset($_GET['stx_cond']) ? $_GET['stx_cond'] : '') === 'equal' ? 'checked' : ''; ?>> 일치</label>
                     </span>
                 </div>
             </div>
@@ -119,8 +102,8 @@ $colspan = 14;
                     <label><input type="checkbox" name="use_date" value="1" <?php echo isset($_GET['use_date']) ? 'checked' : ''; ?>> 가입기간 적용</label>
                 </div>
                 <div class="field">
-                    <input type="date" name="date_start" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['date_start'] ?? ''); ?>"> ~
-                    <input type="date" name="date_end" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['date_end'] ?? ''); ?>">
+                    <input type="date" name="date_start" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['date_start']) ? $_GET['date_start'] : ''); ?>"> ~
+                    <input type="date" name="date_end" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['date_end']) ? $_GET['date_end'] : ''); ?>">
                 </div>
             </div>
 
@@ -130,11 +113,11 @@ $colspan = 14;
                     <label><input type="checkbox" name="use_point" value="1" <?php echo isset($_GET['use_point']) ? 'checked' : ''; ?>> 포인트 적용</label>
                 </div>
                 <div class="field">
-                    <input type="number" name="point" value="<?php echo htmlspecialchars($_GET['point'] ?? ''); ?>" placeholder="포인트 입력">
+                    <input type="number" name="point" value="<?php echo htmlspecialchars(isset($_GET['point']) ? $_GET['point'] : ''); ?>" placeholder="포인트 입력">
                     <span class="radio_group">
-                        <label><input type="radio" name="point_cond" value="gte" <?php echo ($_GET['point_cond'] ?? 'gte') === 'gte' ? 'checked' : ''; ?>> 이상</label>
-                        <label><input type="radio" name="point_cond" value="lte" <?php echo ($_GET['point_cond'] ?? '') === 'lte' ? 'checked' : ''; ?>> 이하</label>
-                        <label><input type="radio" name="point_cond" value="eq" <?php echo ($_GET['point_cond'] ?? '') === 'eq' ? 'checked' : ''; ?>> 일치</label>
+                        <label><input type="radio" name="point_cond" value="gte" <?php echo (isset($_GET['point_cond']) ? $_GET['point_cond'] : 'gte') === 'gte' ? 'checked' : ''; ?>> 이상</label>
+                        <label><input type="radio" name="point_cond" value="lte" <?php echo (isset($_GET['point_cond']) ? $_GET['point_cond'] : '') === 'lte' ? 'checked' : ''; ?>> 이하</label>
+                        <label><input type="radio" name="point_cond" value="eq" <?php echo (isset($_GET['point_cond']) ? $_GET['point_cond'] : '') === 'eq' ? 'checked' : ''; ?>> 일치</label>
                     </span>
                 </div>
             </div>
@@ -149,7 +132,7 @@ $colspan = 14;
                         <?php
                             // 차단회원 옵션 : [정의] get_export_config() - adm/member_list_exel.lib.php
                             foreach (get_export_config('intercept_list') as $val => $label) {
-                                $selected = (($_GET['intercept'] ?? '') === $val) ? 'selected' : '';
+                                $selected = ((isset($_GET['intercept']) ? $_GET['intercept'] : '') === $val) ? 'selected' : '';
                                 echo "<option value=\"$val\" $selected>$label</option>";
                             }
                         ?>
@@ -188,7 +171,7 @@ $colspan = 14;
                             <select name="ad_range_type" id="ad_range_type">
                                 <?php 
                                     foreach (get_export_config('ad_range_list') as $val => $label) {
-                                        $selected = (($_GET['ad_range_type'] ?? '') === $val) ? 'selected' : '';
+                                        $selected = ((isset($_GET['ad_range_type']) ? $_GET['ad_range_type'] : '') === $val) ? 'selected' : '';
                                         echo "<option value=\"$val\" $selected>$label</option>";
                                     }
                                 ?>
@@ -196,17 +179,17 @@ $colspan = 14;
 
                             <div class="ad_range_wrap">
                                 <!-- 기간 직접 입력 -->
-                                <div class="ad_range_box <?php echo isset($_GET['ad_range_only']) && ($_GET['ad_range_type'] ?? '') == 'custom_period' ? '' : 'is-hidden'; ?>">
+                                <div class="ad_range_box <?php echo isset($_GET['ad_range_only']) && (isset($_GET['ad_range_type']) ? $_GET['ad_range_type'] : '') == 'custom_period' ? '' : 'is-hidden'; ?>">
                                     <div class="field">
-                                        <input type="date" name="agree_date_start" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['agree_date_start'] ?? date('Y-m-d', strtotime('-1 month'))); ?>"> ~
-                                        <input type="date" name="agree_date_end" max="9999-12-31" value="<?php echo htmlspecialchars($_GET['agree_date_end'] ?? date('Y-m-d')); ?>">
+                                        <input type="date" name="agree_date_start" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['agree_date_start']) ? $_GET['agree_date_start'] : date('Y-m-d', strtotime('-1 month'))); ?>"> ~
+                                        <input type="date" name="agree_date_end" max="9999-12-31" value="<?php echo htmlspecialchars(isset($_GET['agree_date_end']) ? $_GET['agree_date_end'] : date('Y-m-d')); ?>">
                                         <p>* 광고성 정보 수신(<b>이메일 또는 SMS/카카오톡</b>) 동의일자 기준</p>
                                     </div>
                                 </div>
 
                                 <!-- 설명 문구 -->
                                 <?php
-                                    $thirdpartyLbl = (!empty($config['cf_sms_use']) || !empty($config['cf_kakaotalk_use'])) ? ' / <b>개인정보 제3자 제공</b>' : '';
+                                    $thirdpartyLbl = (!empty($config['cf_sms_use'])) ? ' / <b>개인정보 제3자 제공</b>' : '';
 
                                     $ad_range_text = [
                                         'all'           => "* <b>광고성 정보 수신(이메일 또는 SMS/카카오톡)</b> / <b>마케팅 목적의 개인정보 수집 및 이용</b>{$thirdpartyLbl}에 모두 동의한 회원을 선택합니다.",
@@ -244,11 +227,6 @@ $colspan = 14;
 
             <div class="sch_btn">
                 <button type="button" id="btnExcelDownload">엑셀파일 다운로드</button>
-
-                <?php if($config['cf_kakaotalk_use'] == "popbill") { ?>
-                <button type="button" id="btnExcelDownloadPopbill">엑셀파일 다운로드 (친구톡 양식)</button>
-                <?php } ?>
-
                 <button type="button" class="btn_reset" onclick="location.href='?'">초기화</button>
             </div>
         </div>
@@ -280,15 +258,8 @@ let eventSource = null;
 
 // 일반 엑셀 다운로드 버튼 클릭
 document.getElementById('btnExcelDownload').addEventListener('click', () => {
-    startExcelDownload(1);
+    startExcelDownload();
 });
-
-// 팝빌 양식 다운로드 버튼 클릭
-<?php if($config['cf_kakaotalk_use'] == "popbill") { ?>
-    document.getElementById('btnExcelDownloadPopbill').addEventListener('click', () => {
-    showDownloadPopupPopill();
-});
-<?php } ?>
 
 // 엑셀 다운로드 실행
 // 1. 기존 SSE 종료
@@ -300,25 +271,20 @@ function closePreviousEventSource() {
 }
 
 // 2. FormData QueryString 변환
-function buildDownloadParams(formatType, selectedFields = []) {
+function buildDownloadParams(selectedFields = []) {
     const formData = new FormData(document.getElementById('fsearch'));
     const params = new URLSearchParams(formData);
 
     params.append('mode', 'start');
-    params.append('formatType', formatType);
-
-    if (formatType === 2 && selectedFields.length > 0) {
-        params.append('fields', selectedFields.join(','));
-    }
 
     return params.toString();
 }
 
 // 3. 메인 함수
-function startExcelDownload(formatType, selectedFields = []) {
+function startExcelDownload(selectedFields = []) {
     closePreviousEventSource();
 
-    const query = buildDownloadParams(formatType, selectedFields);
+    const query = buildDownloadParams(selectedFields);
     showDownloadPopup();
 
     eventSource = new EventSource(`member_list_exel_export.php?${query}`);
@@ -374,47 +340,6 @@ function handlePopupCloseWithConfirm(e) {
     PopupManager.close('popupOverlay');
 }
 
-// 친구톡 양식(팝빌) - 항목 선택 팝업
-function showDownloadPopupPopill() {
-    const baseFields = [
-        ['mb_id', '아이디'], ['mb_nick', '닉네임'], ['mb_point', '포인트'], ['mb_level', '권한'], 
-        ['mb_email', '이메일'], ['mb_homepage', '홈페이지'], ['mb_datetime', '회원가입일'], ['mb_intercept_date', '차단여부'], 
-        ['mb_mailling', '광고성 이메일 수신동의'], ['mb_mailling_date', '광고성 이메일 수신동의일자'],
-        ['mb_sms', '광고성 SMS/카카오톡 수신동의'], ['mb_sms_date', '광고성 SMS/카카오톡 수신동의일자'],
-        ['mb_marketing_agree', '마케팅목적의개인정보수집및이용동의여부'], ['mb_marketing_date', '마케팅목적의개인정보수집및이용동의일자'],
-        ['mb_thirdparty_agree', '개인정보제3자제공동의여부'], ['mb_thirdparty_date', '개인정보제3자제공동의일자']
-    ];    
-    const extraFields = Array.from({ length: 10 }, (_, i) => [`mb_${i + 1}`, `여분 필드 ${i + 1}`]);
-
-    let baseFieldHTML = '';
-    baseFields.forEach(([value, label]) => {
-        baseFieldHTML += `<label><input type="checkbox" name="fields" value="${value}"> ${label}</label>\n`;
-    });
-
-    let extraFieldHTML = '';
-    extraFields.forEach(([value, label]) => {
-        extraFieldHTML += `<label><input type="checkbox" name="fields" value="${value}"> ${label}</label>\n`;
-    });
-
-    const bodyHTML = `
-        <div class="excel-download-progress">
-        <p>팝빌 친구톡 전송을 위한 엑셀 양식을 다운로드하실 수 있습니다.</p>
-        <p><b>전화번호</b>와 <b>이름</b>은 필수 입력 항목이며, 추가로 변수1부터 변수3까지 최대 3개의 선택 항목을 입력하실 수 있습니다.</p>
-        <div id="selectedFieldsPreview" class="selected-fields-preview"><strong>선택된 항목:</strong></div>
-        <div id="fieldSelectForm" class="field-select-form">
-            ${baseFieldHTML}
-            <div class="field-separator"></div>
-            ${extraFieldHTML}
-        </div>
-        </div>
-    `;
-
-    const footerHTML = `<button type="button" onclick="submitSelectedFields()">선택 완료</button>`;
-    PopupManager.render('엑셀 양식에 포함할 항목 선택', bodyHTML, footerHTML, { disableOutsideClose: true });
-
-    bindFieldSelectEvents();
-}
-
 // 체크박스 선택 시 최대 3개 제한 및 선택된 항목 미리보기 표시
 function bindFieldSelectEvents() {
     const fieldSelectForm = document.getElementById('fieldSelectForm');
@@ -439,26 +364,6 @@ function bindFieldSelectEvents() {
             previewContainer.innerHTML = spans;
         }
     });
-}
-
-// 친구톡 양식 - 항목 선택 후 선택완료 버튼 클릭
-function submitSelectedFields() {
-    const checkboxes = document.querySelectorAll('#fieldSelectForm input[name="fields"]:checked');
-    const selected = Array.from(checkboxes).map(cb => cb.value);
-
-    if (selected.length > 3) {
-        alert("최대 3개까지만 선택할 수 있습니다.");
-        return;
-    }
-
-    // 항목을 하나도 선택하지 않았을 때 안내 알럿
-    if (selected.length === 0) {
-        const confirmProceed = confirm("선택한 항목이 없습니다. 항목 없이 엑셀을 다운로드하시겠습니까?");
-        if (!confirmProceed) return;
-    }
-
-    PopupManager.close('popupOverlay');
-    startExcelDownload(2, selected); // formatType 2: Popbill 다운로드
 }
 
 // 엑셀 생성 및 다운로드 실행

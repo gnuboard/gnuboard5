@@ -8,8 +8,6 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php'); // 카카오톡 설정 확인
-
 // https://github.com/gnuboard/gnuboard5/issues/296 이슈처리
 $sql = " select * from {$g5['config_table']} limit 1";
 $config = sql_fetch($sql);
@@ -424,20 +422,6 @@ if (!isset($config['cf_cert_kcp_enckey'])) {
     $config['cf_cert_kcp_enckey'] = '';
 }
 
-// 카카오톡 설정 필드 추가
-if (!isset($config['cf_kakaotalk_use'])) {
-    sql_query(
-        " ALTER TABLE `{$g5['config_table']}`
-            ADD `cf_kakaotalk_use` varchar(50) NOT NULL DEFAULT '' AFTER `cf_recaptcha_secret_key`,
-            ADD `cf_kakaotalk_corpnum` varchar(50) NOT NULL DEFAULT '' AFTER `cf_kakaotalk_use`,
-            ADD `cf_kakaotalk_sender_hp` varchar(50) NOT NULL DEFAULT '' AFTER `cf_kakaotalk_corpnum`,
-            ADD `cf_popbill_userid` varchar(100) NOT NULL DEFAULT '' AFTER `cf_kakaotalk_sender_hp`,
-            ADD `cf_popbill_link_id` varchar(100) NOT NULL DEFAULT '' AFTER `cf_popbill_userid`,
-            ADD `cf_popbill_secretkey` varchar(255) NOT NULL DEFAULT '' AFTER `cf_popbill_link_id` ",
-        true
-    );
-}
-
 // 광고성 정보 수신 동의 사용 필드 추가
 if (!isset($config['cf_use_promotion'])) {
     sql_query(
@@ -478,10 +462,10 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_join">회원가입</a></li>
     <li><a href="#anc_cf_cert">본인확인</a></li>
     <li><a href="#anc_cf_url">짧은주소</a></li>
-    <li><a href="#anc_cf_mail">기본알림환경</a></li>
-    <li><a href="#anc_cf_article_mail">글작성알림</a></li>
-    <li><a href="#anc_cf_join_mail">가입알림</a></li>
-    <li><a href="#anc_cf_vote_mail">투표알림</a></li>
+    <li><a href="#anc_cf_mail">기본메일환경</a></li>
+    <li><a href="#anc_cf_article_mail">글작성메일</a></li>
+    <li><a href="#anc_cf_join_mail">가입메일</a></li>
+    <li><a href="#anc_cf_vote_mail">투표메일</a></li>
     <li><a href="#anc_cf_sns">SNS</a></li>
     <li><a href="#anc_cf_lay">레이아웃 추가설정</a></li>
     <li><a href="#anc_cf_sms">SMS</a></li>
@@ -1156,12 +1140,12 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     ?>
 
     <section id="anc_cf_mail">
-        <h2 class="h2_frm">기본 알림 환경 설정</h2>
+        <h2 class="h2_frm">기본 메일 환경 설정</h2>
         <?php echo $pg_anchor ?>
 
         <div class="tbl_frm01 tbl_wrap">
             <table>
-                <caption>기본 알림 환경 설정</caption>
+                <caption>기본 메일 환경 설정</caption>
                 <colgroup>
                     <col class="grid_4">
                     <col>
@@ -1189,85 +1173,19 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <input type="checkbox" name="cf_formmail_is_member" value="1" id="cf_formmail_is_member" <?php echo $config['cf_formmail_is_member'] ? 'checked' : ''; ?>> 회원만 사용
                         </td>
                     </tr>
-                <tr>
-                    <th scope="row"><label for="cf_kakaotalk_use">카카오톡 사용</label></th>
-                    <td>
-                        <?php echo help("카카오톡 발송 서비스 회사를 선택하십시오. 서비스 회사를 선택하지 않으면, 카카오톡 발송 기능이 동작하지 않습니다."); ?>
-                        <select name="cf_kakaotalk_use" id="cf_kakaotalk_use">
-                            <option value="" <?php echo get_selected($config['cf_kakaotalk_use'], ''); ?>>사용안함</option>
-                            <option value="popbill" <?php echo get_selected($config['cf_kakaotalk_use'], 'popbill'); ?>>팝빌</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">사업자등록번호</th>
-                    <td>
-                        <?php echo help('서비스 등록 시 사용했던 사업자등록번호를 입력하세요.'); ?>
-                        <input type="text" name="cf_kakaotalk_corpnum" id="cf_kakaotalk_corpnum" value="<?php echo get_sanitize_input($config['cf_kakaotalk_corpnum']); ?>" class="frm_input" size="30">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">회신번호</th>
-                    <td>
-                        <?php echo help('대체문자 발송 시 사용할 회신번호를 입력하세요.'); ?>
-                        <input type="text" name="cf_kakaotalk_sender_hp" id="cf_kakaotalk_sender_hp" value="<?php echo get_sanitize_input($config['cf_kakaotalk_sender_hp']); ?>" class="frm_input" size="30">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="cf_popbill_userid">팝빌 회원아이디</label></th>
-                    <td>
-                        <?php echo help('팝빌에 가입한 회원 아이디를 입력하세요.'); ?>
-                        <input type="text" name="cf_popbill_userid" id="cf_popbill_userid" value="<?php echo get_sanitize_input($config['cf_popbill_userid']); ?>" class="frm_input" size="30">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="cf_popbill_link_id">팝빌 링크아이디(LinkID)</label></th>
-                    <td>
-                        <?php echo help('팝빌에서 발급한 API KEY - 링크아이디(LinkID)를 입력하세요.'); ?>
-                        <input type="text" name="cf_popbill_link_id" id="cf_popbill_link_id" value="<?php echo get_sanitize_input($config['cf_popbill_link_id']); ?>" class="frm_input" size="30">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="cf_popbill_secretkey">팝빌 비밀키(SecretKey)</label></th>
-                    <td>
-                        <?php echo help('팝빌에서 발급한 API KEY - 비밀키(SecretKey)를 입력하세요.'); ?>
-                        <input type="text" name="cf_popbill_secretkey" id="cf_popbill_secretkey" value="<?php echo get_sanitize_input($config['cf_popbill_secretkey']); ?>" class="frm_input" size="60">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="cf_phone">팝빌 설정 확인 및 포인트 조회</label></th>
-                    <td>
-                        <!-- 팝빌 설정 확인 및 잔여포인트 조회 -->
-                        <?php echo help("팝빌 설정 정보를 확인하고, 잔여 포인트를 조회할 수 있습니다.<br>설정 확인 버튼을 클릭하면 팝빌 API와의 연결 상태 및 포인트 정보를 확인할 수 있습니다."); ?>
-                        <button type="button" class="btn btn_02" id="btn_check_popbill">설정 확인</button>
-                        <div id="popbill_check_result"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">팝빌 연동신청</th>
-                    <td>
-                        <?php echo help('팝빌 연동신청이 필요할 경우 아래 버튼을 클릭하세요.<br>회원가입 시 연동회원으로 선택후 링크아이디 [SIRSOFT]를 넣어주세요.'); ?>
-                        <a href="https://www.popbill.com/App/SignUp" target="_blank" class="btn_frmline">팝빌 연동신청</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">알림톡 프리셋 설정</th>
-                    <td>
-                        <a href="<?php echo G5_ADMIN_URL; ?>/alimtalkpreset.php" class="btn_frmline">환경설정 &gt; 알림톡프리셋관리</a> 에서 설정하실 수 있습니다.
-                    </td>
-                </tr>
+                </tbody>
             </table>
         </div>
     </section>
 
 
     <section id="anc_cf_article_mail">
-        <h2 class="h2_frm">게시판 글 작성 시 알림 설정</h2>
+        <h2 class="h2_frm">게시판 글 작성 시 메일 설정</h2>
         <?php echo $pg_anchor ?>
 
         <div class="tbl_frm01 tbl_wrap">
             <table>
-                <caption>게시판 글 작성 시 알림 설정</caption>
+                <caption>게시판 글 작성 시 메일 설정</caption>
                 <colgroup>
                     <col class="grid_4">
                     <col>
@@ -1315,12 +1233,12 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
 
 
     <section id="anc_cf_join_mail">
-        <h2 class="h2_frm">회원가입 시 알림 설정</h2>
+        <h2 class="h2_frm">회원가입 시 메일 설정</h2>
         <?php echo $pg_anchor ?>
 
         <div class="tbl_frm01 tbl_wrap">
             <table>
-                <caption>회원가입 시 알림 설정</caption>
+                <caption>회원가입 시 메일 설정</caption>
                 <colgroup>
                     <col class="grid_4">
                     <col>
@@ -1347,12 +1265,12 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
 
 
     <section id="anc_cf_vote_mail">
-        <h2 class="h2_frm">투표 기타의견 작성 시 알림 설정</h2>
+        <h2 class="h2_frm">투표 기타의견 작성 시 메일 설정</h2>
         <?php echo $pg_anchor ?>
 
         <div class="tbl_frm01 tbl_wrap">
             <table>
-                <caption>투표 기타의견 작성 시 알림 설정</caption>
+                <caption>투표 기타의견 작성 시 메일 설정</caption>
                 <colgroup>
                     <col class="grid_4">
                     <col>
@@ -1847,50 +1765,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         // 추가 script, css 변경시
         $(document).on('input', '#cf_add_script', check_config_captcha_open);
     });
-</script>
-
-<!-- 카카오톡 - 팝빌 설정 확인 -->
-<?php add_javascript('<script src="'.G5_JS_URL.'/kakao5.js"></script>', 1); // 카카오톡5 솔루션 js 추가 ?>
-<script>
-$(function() {
-    $('#btn_check_popbill').on('click', function() {
-        var $resultDiv = $('#popbill_check_result');
-        $resultDiv.html('<i class="fa fa-spinner fa-spin"></i> 확인 중...');
-
-        $.ajax({
-            url: '<?php echo G5_KAKAO5_URL;?>/ajax.check_popbill.php',
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
-                var html = '';
-                if (data.error) {
-                    html = '<div class="alert alert-danger" style="margin-top:10px;"><i class="fa fa-exclamation-triangle"></i> ' + data.error + '</div>';
-                } else {
-                    html = '<div class="alert alert-success"><i class="fa fa-check-circle"></i> 팝빌이 정상적으로 설정되었습니다.</div>';
-                    if (typeof data.balance !== 'undefined') {
-                        html += '<div class="alert alert-info"><i class="fa fa-info-circle"></i> 잔여포인트: ' + Number(data.balance).toLocaleString() + '원';
-                        html += ' <a href="#" id="btn_point_charge" class="btn btn_02">포인트 충전하기</a>';
-                        html += '</div>';
-                    }
-                }
-                $resultDiv.html(html); // 팝빌 설정 결과 출력
-                $('#btn_check_popbill').hide();
-
-                // 포인트 충전 팝업: [정의] openKakao5PopupFromAjax() - js/kakao5.js
-                var $chargeBtn = $('#btn_point_charge');
-                if ($chargeBtn.length) {
-                    $chargeBtn.off('click').on('click', async function(e) {
-                        e.preventDefault();
-                        await openKakao5PopupFromAjax('<?php echo G5_KAKAO5_URL; ?>', 5);
-                    });
-                }
-            },
-            error: function() {
-                $resultDiv.html('<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> 네트워크 오류</div>');
-            }
-        });
-    });
-});
 </script>
 
 <?php
