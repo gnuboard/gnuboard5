@@ -357,8 +357,7 @@ if ($od_settle_case == "카드재사용") {
             break;
         case 'kcp':
         default:
-            // include G5_SUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_req.php';
-            include G5_MSUBSCRIPTION_PATH . '/kcp/pp_cli_hub.php';
+            include G5_MSUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_req.php';
             break;
     }
 

@@ -340,6 +340,9 @@ if ($od_settle_case == '카드재사용') {
     $od_subscription_date_format = '';
     $od_firstshipment_date = '';
 } elseif ($od_settle_case == '신용카드') {
+    
+    $card_billkey = '';
+    
     switch ($od_pg) {
         case 'inicis':
             include G5_SUBSCRIPTION_PATH . '/inicis/inicis_bill_result.php';
@@ -352,8 +355,8 @@ if ($od_settle_case == '카드재사용') {
             break;
         case 'kcp':
         default:
-            // include G5_SUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_req.php';
-            include G5_SUBSCRIPTION_PATH . '/kcp/pp_cli_hub.php';
+            include G5_SUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_req.php';
+            // include G5_SUBSCRIPTION_PATH . '/kcp/pp_cli_hub.php';
             break;
     }
 
@@ -364,6 +367,10 @@ if ($od_settle_case == '카드재사용') {
     $od_card_name = $card_name;
     $pg_price = $amount;
     $od_misu = $i_price - $od_receipt_price;
+    
+    if (!$card_billkey) {
+        alert('실패 : 카드 billkey 를 받아오지 못했습니다.');
+    }
 } else {
     exit('od_settle_case Error!!!');
 }

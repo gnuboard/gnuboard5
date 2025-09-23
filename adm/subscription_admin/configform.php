@@ -947,24 +947,4 @@ include_once(G5_ADMIN_PATH . '/admin.head.php');
 </script>
 <?php
 
-// kcp의 경우 pp_cli 체크
-if (get_subs_option('su_pg_service') == 'kcp') {
-
-    $is_linux = true;
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-        $is_linux = false;
-
-    $exe = '/kcp/bin/';
-    if ($is_linux) {
-        if (PHP_INT_MAX == 2147483647) // 32-bit
-            $exe .= 'pp_cli';
-        else
-            $exe .= 'pp_cli_x64';
-    } else {
-        $exe .= 'pp_cli_exe.exe';
-    }
-
-    echo module_exec_check(G5_SUBSCRIPTION_PATH . $exe, 'pp_cli');
-}
-
 include_once(G5_ADMIN_PATH . '/admin.tail.php');

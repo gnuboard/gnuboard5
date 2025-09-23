@@ -1463,77 +1463,6 @@ function kcp_billing($od, $tmp_cart_id = '')
 {
     global $g5, $default, $is_member, $member;
 
-    include_once(G5_SUBSCRIPTION_PATH . '/settle_kcp.inc.php');
-
-    $site_cd            = get_subs_option('su_kcp_mid'); // 사이트 코드
-    // 인증서 정보(직렬화)
-    $kcp_cert_info      = get_subs_option('su_kcp_cert_info');
-
-    $cart_id = $tmp_cart_id ? $tmp_cart_id : $od['od_id'];
-    $goodsname = get_subscription_goods($cart_id);
-
-    $cust_ip            = "";
-    $currency           = '410'; // 화폐 단위
-    // $ordr_idxx          = $od['od_id'].'_'.md5($od['mb_id']).'_'.uniqid(); // 주문번호 
-    $ordr_idxx          = generate_subscription_id($od['od_id'], $od['mb_id']); // 주문번호 
-    $good_name          = $goodsname['full_name']; // 상품명
-    $buyr_name          = $od['od_name']; // 주문자명
-    $buyr_mail          = $od['od_email']; // 주문자 E-mail
-    $buyr_tel1          = $od['od_tel']; // 주문자 전화번호번호
-    $buyr_tel2          = $od['od_hp']; // 주문자 휴대폰번호
-
-    $bt_batch_key       = get_card_billkey($od); // 배치키 정보
-    $bt_group_id        = get_subs_option('su_kcp_group_id'); // 배치키 그룹아이디
-
-    $posts = array(
-        'pay_method' => SUBSCRIPTION_DEFAULT_PAYMETHOD,
-        'ordr_idxx' => $ordr_idxx,
-        'good_name' => $good_name,
-        'good_mny' => $od['od_receipt_price'],
-        'buyr_name' => $buyr_name,
-        'buyr_mail' => $buyr_mail,
-        'buyr_tel1' => $buyr_tel1,
-        'buyr_tel2' => $buyr_tel2,
-        'req_tx' => 'pay',  // req_tx : 요청종류 승인(pay)/취소,매입(mod) 요청시 사용
-        'currency' => $currency,
-        'mod_type' => '',   // 변경TYPE(승인취소시 필요)
-        'mod_desc' => '',   // 변경사유
-        'card_pay_method' => 'Batch',
-        'quotaopt' => "00",
-        'bt_group_id' => $bt_group_id,
-        'bt_batch_key' => $bt_batch_key,
-    );
-    
-    $results = array('res_cd'=>null, 'res_msg'=>null);
-    
-    include_once(G5_SUBSCRIPTION_PATH . '/kcp/pay_pp_cli_hub.php');
-    
-    run_event('subscription_order_pg_pay', 'kcp', $results, $posts);
-
-    if (isset($results['res_cd']) && $results['res_cd'] === '0000') {
-
-        // 공통형식에 맞추어야 한다.
-        $results['orderId'] = $results['ordr_idxx'];
-        $results['payMethod'] = $results['pay_method'];
-        $results['amount'] = $results['good_mny'];
-        $results['receiptUrl'] = '';    // kcp 는 영수증 url 이 없다.
-        $results['cardname'] = $results['card_name'];
-        $results['cardnumber'] = mask_card_number($results['card_no']);   // kcp 는 정기결제시 결제카드 번호를 다 알려주지만, 여기서는 마스킹하여 저장한다.
-        $results['py_app_no'] = $results['app_no'];
-        $results['tid'] = $results['tno'];
-
-        return array('code' => 'success', 'message' => $results['res_msg'], 'response' => $results);
-    } else {
-        return array('code' => 'fail', 'message' => $results['res_cd'] . ':' . $results['res_msg'], 'response' => $results);
-    }
-
-    return array();
-}
-
-function kcp_new_billing($od, $tmp_cart_id = '')
-{
-    global $g5, $default, $is_member, $member;
-
     include(G5_SUBSCRIPTION_PATH . '/settle_kcp.inc.php');
 
     $site_cd            = get_subs_option('su_kcp_mid'); // 사이트 코드
@@ -1558,7 +1487,7 @@ function kcp_new_billing($od, $tmp_cart_id = '')
     $data = array(
         "site_cd"        => $site_cd,
         "kcp_cert_info"  => $kcp_cert_info,
-        "pay_method"     => "CARD",
+        "pay_method"     => SUBSCRIPTION_DEFAULT_PAYMETHOD,
         "cust_ip"        => "",
         "amount"         => $od['od_receipt_price'],
         "card_mny"       => $od['od_receipt_price'],
@@ -1591,39 +1520,31 @@ function kcp_new_billing($od, $tmp_cart_id = '')
     $res_data  = curl_exec($ch);
 
     curl_close($ch);
-
-    // 요청 DATA 변수
-    //print_r($req_data);
-
-    //echo "<br><br>";
-
-    // 응답 DATA 변수
-    //print_r($res_data);
-
-    $res = null;
+    
+    $results = array('res_cd'=>null, 'res_msg'=>null);
 
     // $res_data 형식은 json
     if ($res_data) {
-        $res = json_decode($res_data, true);
+        $results = json_decode($res_data, true);
     }
 
-    run_event('subscription_order_pg_pay', 'kcp', $res, $data);
-
-    if (isset($res['res_cd']) && $res['res_cd'] === '0000') {
+    run_event('subscription_order_pg_pay', 'kcp', $results, $data);
+    
+    if (isset($results['res_cd']) && $results['res_cd'] === '0000') {
 
         // 공통형식에 맞추어야 한다.
-        $results['orderId'] = $results['ordr_idxx'];
+        $results['orderId'] = $results['order_no'];
         $results['payMethod'] = $results['pay_method'];
-        $results['amount'] = $results['good_mny'];
+        // $results['amount'] = $results['amount'];
         $results['receiptUrl'] = '';    // kcp 는 영수증 url 이 없다.
         $results['cardname'] = $results['card_name'];
         $results['cardnumber'] = mask_card_number($results['card_no']);   // kcp 는 정기결제시 결제카드 번호를 다 알려주지만, 여기서는 마스킹하여 저장한다.
         $results['py_app_no'] = $results['app_no'];
         $results['tid'] = $results['tno'];
 
-        return array('code' => 'success', 'message' => $res['res_msg'], 'response' => $res);
+        return array('code' => 'success', 'message' => $results['res_msg'], 'response' => $results);
     } else {
-        return array('code' => 'fail', 'message' => $res['res_cd'] . ':' . $res['res_msg'], 'response' => $res);
+        return array('code' => 'fail', 'message' => $results['res_cd'] . ':' . $results['res_msg'], 'response' => $results);
     }
 
     return array();

@@ -5,8 +5,6 @@ if (!$is_member) {
     alert('회원 전용 서비스 입니다.', G5_BBS_URL . '/login.php?url=' . urlencode($url));
 }
 
-print_r2($_POST);
-
 $post_ct_chk = (isset($_POST['chk_ci_id']) && is_array($_POST['chk_ci_id'])) ? $_POST['chk_ci_id'] : array();
 $post_ci_ids = (isset($_POST['ci_id']) && is_array($_POST['ci_id'])) ? $_POST['ci_id'] : array();
 $fldcnt = count($post_ci_ids);

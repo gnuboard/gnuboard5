@@ -21,7 +21,7 @@ $tablet_size     = "1.0"; // 화면 사이즈 고정
 
 <!-- 공통정보 -->
 <input type="hidden" name="req_tx"          value="pay">                           <!-- 요청 구분 -->
-<input type="hidden" name="shop_name"       value="<?php echo $g_conf_site_name; ?>">       <!-- 사이트 이름 --> 
+<input type="hidden" name="shop_name"       value="<?php echo sanitize_input($g_conf_site_name); ?>">       <!-- 사이트 이름 --> 
 <!-- 가맹점 정보 설정-->
 <input type="hidden" name="site_cd"         value="<?php echo get_subs_option('su_kcp_mid'); ?>" />
 <input type="hidden" name="currency"        value="410"/>                          <!-- 통화 코드 -->
@@ -35,9 +35,9 @@ $tablet_size     = "1.0"; // 화면 사이즈 고정
 <input type="hidden" name="ActionResult"    value="batch">
 
 <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
-<input type="hidden" name="Ret_URL"         value="<?php echo G5_MSUBSCRIPTION_URL; ?>/kcp/subscription_approval_form.php">
+<input type="hidden" name="Ret_URL"         value="<?php echo G5_MSUBSCRIPTION_URL; ?>/kcp/kcp_api_trade_reg.php">
 <!-- 화면 크기조정 -->
-<input type="hidden" name="tablet_size"     value="<?php echo $tablet_size?>">
+<input type="hidden" name="tablet_size"     value="<?php echo sanitize_input($tablet_size); ?>">
 
 <!-- 추가 파라미터 ( 가맹점에서 별도의 값전달시 param_opt 를 사용하여 값 전달 ) -->
 <input type="hidden" name="param_opt_1"     value="">

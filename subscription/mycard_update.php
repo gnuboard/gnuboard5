@@ -31,7 +31,6 @@ if ($w == "d")
             'mb_id' => $member['mb_id']
         ));
     }
-    
     // 해당 주문들을 비활성화 합니다.
     $sql = "update {$g5['g5_subscription_order_table']} set od_enable_status = 0 where ci_id = '{$row['ci_id']}' and mb_id = '{$member['mb_id']}' ";
     
@@ -41,7 +40,17 @@ if ($w == "d")
     $sql = " delete from {$g5['g5_subscription_mb_cardinfo_table']}
               where (ci_id = '{$row['ci_id']}' or (pg_service = '{$row['pg_service']}' and card_mask_number = '{$row['card_mask_number']}')) and mb_id = '{$member['mb_id']}' ";
               
-   sql_query($sql);
+   sql_query($sql, false);
+   
+   // PG사 배치키 삭제
+   
+   if ($row['pg_service'] === 'kcp') {
+       $batch_key = $row['card_billkey'];
+       
+       if ($batch_key) {
+           include(G5_SUBSCRIPTION_PATH.'/kcp/kcp_api_batch_key_del.php');
+       }
+   }
 }
 
 goto_url(G5_SUBSCRIPTION_URL . '/mycard.php');
