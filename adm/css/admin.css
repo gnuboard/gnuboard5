@@ -586,7 +586,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_time{text-align:center;width:130px}
 .td_center{text-align:center;}
 .td_type{width:120px}
-.td_consent{width:200px}
+.td_consent{min-width:70px;max-width:200px}
 
 .td_mng_s{width:60px}
 .td_mng_m{width:100px}
