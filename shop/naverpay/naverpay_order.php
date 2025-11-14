@@ -3,6 +3,8 @@ include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 include_once(G5_LIB_PATH.'/naverpay.lib.php');
 
+if (!(defined('G5_SHOP_USE_NAVERPAY') && G5_SHOP_USE_NAVERPAY)) return;
+
 $pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#';
 $post_naverpay_form = isset($_POST['naverpay_form']) ? clean_xss_tags($_POST['naverpay_form']) : '';
 
@@ -98,7 +100,8 @@ for($i=0; $i<$count; $i++) {
     $opt_count = (isset($_POST['io_id'][$it_id]) && is_array($_POST['io_id'][$it_id])) ? count($_POST['io_id'][$it_id]) : 0;
     
     if( ! $it_id) continue;
-
+    if (!preg_match('/^[a-zA-Z0-9_-]+$/', $it_id)) continue;
+    
     if($opt_count && $_POST['io_type'][$it_id][0] != 0)
         return_error2json('상품의 선택옵션을 선택해 주십시오.');
 

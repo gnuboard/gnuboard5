@@ -64,6 +64,8 @@ foreach($check_skin_keys as $key){
     if( isset($_POST[$key]) && preg_match('#\.+(\/|\\\)#', $_POST[$key]) ){
         alert('스킨설정에 유효하지 문자가 포함되어 있습니다.');
     }
+    
+    $$key = $_POST[$key] = sql_real_escape_string($_POST[$key]);
 }
 
 // 현금영수증 발급수단

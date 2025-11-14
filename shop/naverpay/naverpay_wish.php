@@ -3,6 +3,8 @@ include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 include_once(G5_LIB_PATH.'/naverpay.lib.php');
 
+if (!(defined('G5_SHOP_USE_NAVERPAY') && G5_SHOP_USE_NAVERPAY)) return;
+
 $count = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? count($_POST['it_id']) : 0;
 
 if ($count < 1)
@@ -13,6 +15,8 @@ $item  = '';
 
 for($i=0; $i<$count; $i++) {
     $it_id = isset($_POST['it_id']) ? $_POST['it_id'][$i] : '';
+    
+    if (!preg_match('/^[a-zA-Z0-9_-]+$/', $it_id)) continue;
 
     // 상품정보
     $it = get_shop_item($it_id, true);
