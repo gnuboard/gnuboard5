@@ -173,7 +173,7 @@ define('G5_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션
 define('G5_FILE_PERMISSION', 0644); // 파일 생성시 퍼미션
 
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
-define('G5_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|[^A]skt|nokia|blackberry|BB10|android|sony');
+define('G5_MOBILE_AGENT',   'phone|samsung.*mobile|lgtel|mobile|[^A]skt|nokia|blackberry|BB10|android|sony');
 
 // SMTP
 // lib/mailer.lib.php 에서 사용
