@@ -8,8 +8,9 @@ $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' and it
 $it = sql_fetch($sql);
 $it_point = get_item_point($it);
 
-if(!$it['it_id'])
+if (!(isset($it['it_id']) && $it['it_id'])) {
     die('no-item');
+}
 
 // 장바구니 자료
 $cart_id = get_session('ss_cart_id');

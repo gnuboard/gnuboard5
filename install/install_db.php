@@ -131,6 +131,29 @@ if($g5_shop_install) {
         $sql = get_db_create_replace($f[$i]);
         sql_query($sql, true, $dblink);
     }
+    
+    $subscription_file = '../adm/subscription_admin/subscription.sql';
+    
+    if (file_exists($subscription_file)) {
+        
+        $file = implode('', file($subscription_file));
+        
+        $file = preg_replace('/^--.*$/m', '', $file);
+        $file = preg_replace('/`g5_([^`]+`)/', '`'.$table_prefix.'$1', $file);
+        $f = explode(';', $file);
+        for ($i=0; $i<count($f); $i++) {
+            if (trim($f[$i]) == '') {
+                continue;
+            }
+            
+            $sql = get_db_create_replace($f[$i]);
+            sql_query($sql, true, $dblink);
+        }
+        
+        $file = null;
+    }
+    
+    $subscription_file = '';
 }
 // 테이블 생성 ------------------------------------
 ?>
@@ -516,6 +539,42 @@ if($g5_shop_install) {
                     de_sms_cont4 = '{이름}님 입금 감사합니다.\n{입금액}원\n주문번호:\n{주문번호}\n{회사명}',
                     de_sms_cont5 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
                     ";
+    sql_query($sql, true, $dblink);
+    
+    // 정기결제 설정
+    $sql = " insert into `{$table_prefix}subscription_config` SET
+    su_pg_service = 'inicis',
+    su_kcp_mid = '',
+    su_kcp_site_key = '',
+    su_kcp_group_id = '',
+    su_kcp_cert_info = '',
+    su_inicis_mid = '',
+    su_inicis_iniapi_key = '',
+    su_inicis_iniapi_iv = '',
+    su_inicis_sign_key = '',
+    su_nice_clientid = '',
+    su_nice_secretkey = '',
+    su_tosspayments_mid = '',
+    su_tosspayments_api_clientkey = '',
+    su_tosspayments_api_secretkey = '',
+    su_card_test = '1',
+    su_hope_date_use = '1',
+    su_hope_date_after = '2',
+    su_output_display_type = '1',
+    su_auto_payment_lead_days = '2',
+    su_chk_user_delivery = '',
+    su_user_delivery_title = '',
+    su_user_delivery_minimum = '0',
+    su_user_select_title = '',
+    su_user_delivery_default_day = '0',
+    api_holiday_data_go_key = '',
+    cron_night_block = '',
+    su_subscription_content_first = '',
+    su_subscription_content_end = '',
+    su_opt_settings = 'YToxOntpOjA7YTo3OntzOjY6Im9wdF9pZCI7czoxOiIxIjtzOjc6Im9wdF9jaGsiO3M6MDoiIjtzOjk6Im9wdF9pbnB1dCI7czoxOiIxIjtzOjE1OiJvcHRfZGF0ZV9mb3JtYXQiO3M6NDoid2VlayI7czo3OiJvcHRfZXRjIjtzOjA6IiI7czo5OiJvcHRfcHJpbnQiO3M6MDoiIjtzOjc6Im9wdF91c2UiO3M6MToiMSI7fX0=',
+    su_use_settings = 'YToxOntpOjA7YTo1OntzOjY6InVzZV9pZCI7czoxOiIxIjtzOjc6InVzZV9jaGsiO3M6MDoiIjtzOjk6InVzZV9pbnB1dCI7czoxOiIxIjtzOjk6InVzZV9wcmludCI7czowOiIiO3M6NzoibnVtX3VzZSI7czoxOiIxIjt9fQ=='
+    ";
+    
     sql_query($sql, true, $dblink);
 }
 ?>

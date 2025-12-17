@@ -41,6 +41,8 @@ if($cp['cp_method'] == 1) {
     $cp_target_btn = '상품검색';
 }
 
+$cp_subscription_message = "정기결제에 쿠폰을 등록하면, 쿠폰 만료일이 지나더라도 구독이 유지되는 동안 다음 결제에도 계속 할인 혜택이 적용됩니다.";
+
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 ?>
@@ -77,6 +79,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
                 <option value="1"<?php echo get_selected('1', $cp['cp_method']); ?>>카테고리할인</option>
                 <option value="2"<?php echo get_selected('2', $cp['cp_method']); ?>>주문금액할인</option>
                 <option value="3"<?php echo get_selected('3', $cp['cp_method']); ?>>배송비할인</option>
+                <option value="4"<?php echo get_selected('4', $cp['cp_method']); ?>>정기결제할인</option>
            </select>
         </td>
     </tr>
@@ -107,6 +110,11 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
         <th scope="row"><label for="cp_end">사용종료일</label></th>
         <td>
             <?php echo help('입력 예: '.date('Y-m-d')); ?>
+            <div class="more_help_cp_end frm_info">
+                <?php if (isset($cp['cp_method']) && $cp['cp_method'] == "4") {     // 정기결제할인이면
+                    echo $cp_subscription_message;
+                } ?>
+            </div>
             <input type="text" name="cp_end" value="<?php echo stripslashes($cp['cp_end']); ?>" id="cp_end" required class="frm_input required">
         </td>
     </tr>
@@ -200,6 +208,8 @@ $(function() {
             window.open(url+"0", "win_target", opt);
         } else if(cp_method == "1") {
             window.open(url+"1", "win_target", opt);
+        } else if(cp_method == "4") {
+            window.open(url+"4", "win_target", opt);
         } else {
             return false;
         }
@@ -223,7 +233,7 @@ $(function() {
 
 function change_method(cp_method)
 {
-    if(cp_method == "0") {
+    if(cp_method == "0" || cp_method == "4") {
         $("#sch_target").text("상품검색");
         $("#tr_cp_target").find("label").text("적용상품");
         $("#tr_cp_target").find("input").attr("required", true).addClass("required");
@@ -236,6 +246,14 @@ function change_method(cp_method)
     } else {
         $("#tr_cp_target").hide();
         $("#tr_cp_target").find("input").attr("required", false).removeClass("required");
+    }
+    
+    var $more_help_cp_end = jQuery(".more_help_cp_end");
+    
+    if (cp_method == "4") {
+        $more_help_cp_end.html("정기결제에 쿠폰을 등록하면, 쿠폰 만료일이 지나더라도 구독이 유지되는 동안 다음 결제에도 계속 할인 혜택이 적용됩니다.");
+    } else {
+        $more_help_cp_end.html("");
     }
 }
 

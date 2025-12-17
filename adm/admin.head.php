@@ -213,3 +213,5 @@ if (!empty($_COOKIE['g5_admin_btn_gnb'])) {
 
         <h1 id="container_title"><?php echo $g5['title'] ?></h1>
         <div class="container_wr">
+        
+        <?php run_event('admin_notice_messages'); ?>

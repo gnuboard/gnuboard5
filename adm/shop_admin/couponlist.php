@@ -97,6 +97,9 @@ $colspan = 9;
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $cp_method = '';
+        $cp_target = '';
+        
         switch($row['cp_method']) {
             case '0':
                 $row3 = get_shop_item($row['cp_target'], true);
@@ -116,6 +119,11 @@ $colspan = 9;
             case '3':
                 $cp_method = '배송비할인';
                 $cp_target = '배송비';
+                break;
+            case '4':
+                $row3 = get_shop_item($row['cp_target'], true);
+                $cp_method = '정기결제상품할인';
+                $cp_target = get_text($row3['it_name']);
                 break;
         }
 

@@ -38,6 +38,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
     		</ul>
             <?php } ?>
 			<ul id="hd_qnb">
+                <?php if (defined('G5_USE_SUBSCRIPTION') && G5_USE_SUBSCRIPTION) { ?>
+                <li><a href="<?php echo G5_SUBSCRIPTION_URL ?>/list.php">정기결제</a></li>
+                <?php } ?>
 	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
 	            <li><a href="<?php echo G5_SHOP_URL ?>/personalpay.php">개인결제</a></li>
@@ -256,7 +259,7 @@ jQuery(function ($){
             }
         ?>
         <!-- .shop-content 시작 { -->
-        <div class="<?php echo implode(' ', $content_class); ?>">
+        <div class="<?php echo implode(' ', run_replace('shop_content_html_class', $content_class, $wrapper_class)); ?>">
             <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g5['title'] ?></div><?php } ?>
             <!-- 글자크기 조정 display:none 되어 있음 시작 { -->
             <div id="text_size">

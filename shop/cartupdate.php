@@ -3,6 +3,12 @@ include_once('./_common.php');
 
 // print_r2($_POST); exit;
 
+$is_subscription = (isset($_REQUEST['is_subscription']) && $_REQUEST['is_subscription']) ? 1 : 0;
+
+if ($is_subscription) {
+    alert('잘못된 정기구독 요청 입니다.');
+}
+
 // 보관기간이 지난 상품 삭제
 cart_item_clean();
 
