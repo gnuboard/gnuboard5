@@ -238,6 +238,13 @@ if ($w == 'c') // 댓글 입력
         if ($config['cf_email_wr_group_admin']) $array_email[] = $group_admin['mb_email'];
         // 최고관리자에게 보내는 메일
         if ($config['cf_email_wr_super_admin']) $array_email[] = $super_admin['mb_email'];
+        // 사이트 관리자에게 보내는 메일
+        if ($config['cf_email_wr_site_admin']) {
+            $site_admin = sql_fetch("select mb_email from {$g5['member_table']} where mb_level = '9' limit 1");
+            if ($site_admin && $site_admin['mb_email']) {
+                $array_email[] = $site_admin['mb_email'];
+            }
+        }
 
         // 원글게시자에게 보내는 메일
         if ($config['cf_email_wr_write']) $array_email[] = $wr['wr_email'];

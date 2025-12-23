@@ -140,6 +140,27 @@ for ($i = 0; $i <= 10; $i++) {
 
 $board = array_merge($board_default, $board);
 
+// 활성화된 언어 목록 가져오기
+$lang_types = !empty($config['cf_lang_type']) ? explode(',', $config['cf_lang_type']) : array('ko');
+$lang_names = array('ko' => '한국어', 'en' => '영어', 'zh' => '중국어', 'ja' => '일본어');
+
+// 현재 선택된 언어 결정
+$current_lang = '';
+if ($w == 'u' && !empty($board['bo_table'])) {
+    // 수정 모드: bo_table에서 언어 접미사 추출
+    if (preg_match('/_(en|zh|ja)$/', $board['bo_table'], $matches)) {
+        $current_lang = $matches[1];
+    } else {
+        $current_lang = 'ko';
+    }
+} else {
+    // 생성 모드: GET 파라미터 또는 기본값
+    $current_lang = isset($_GET['lang']) ? preg_replace('/[^a-z]/', '', $_GET['lang']) : '';
+    if (!$current_lang || !in_array($current_lang, $lang_types)) {
+        $current_lang = in_array('ko', $lang_types) ? 'ko' : (isset($lang_types[0]) ? $lang_types[0] : 'ko');
+    }
+}
+
 run_event('adm_board_form_before', $board, $w);
 
 $required = "";
@@ -252,6 +273,26 @@ $pg_anchor = '<ul class="anchor">
                 <?php } ?>
             </td>
         </tr>
+        <?php if (count($lang_types) > 1) { ?>
+        <tr>
+            <th scope="row"><label for="bo_lang">언어</label></th>
+            <td colspan="2">
+                <select name="bo_lang" id="bo_lang" <?php echo $w == 'u' ? 'disabled' : ''; ?>>
+                    <?php foreach ($lang_types as $lang) {
+                        $lang_name = isset($lang_names[$lang]) ? $lang_names[$lang] : $lang;
+                        $selected = ($current_lang == $lang) ? 'selected' : '';
+                        echo '<option value="' . $lang . '" ' . $selected . '>' . $lang_name . '</option>';
+                    } ?>
+                </select>
+                <?php if ($w == 'u') { ?>
+                    <input type="hidden" name="bo_lang" value="<?php echo $current_lang; ?>">
+                    <span class="frm_info">수정 모드에서는 언어를 변경할 수 없습니다.</span>
+                <?php } ?>
+            </td>
+        </tr>
+        <?php } else { ?>
+            <input type="hidden" name="bo_lang" value="ko">
+        <?php } ?>
         <tr>
             <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
             <td colspan="2">

@@ -1,0 +1,143 @@
+/* Error Page Styles - Minimal & Clean */
+.error-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #ffffff;
+}
+
+.error-page #logo {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
+
+.error-page #logo .logo {
+    max-width: 150px;
+    height: auto;
+    filter:invert(1);
+}
+
+.error-content {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 0;
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #000000;
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.02em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+}
+
+.error-title {
+    display: none;
+}
+
+.error-message {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: #000000;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.6;
+}
+
+.error-description {
+    font-size: 0.9375rem;
+    color: #666666;
+    line-height: 1.6;
+    margin: 0 0 3rem 0;
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+}
+
+.error-btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    background: #000000;
+    color: #ffffff;
+}
+
+.error-btn:hover {
+    opacity: 0.8;
+}
+
+.error-btn.secondary {
+    display: none;
+}
+
+.dev-pass-btn {
+    position:absolute;bottom:2rem;right:2rem;width:3rem;aspect-ratio: 1/1;border-radius:50%;;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .error-page {
+        padding: 1.5rem;
+    }
+
+    .error-page #logo {
+        top: 1.5rem;
+        left: 1.5rem;
+    }
+
+    .error-page #logo .logo {
+        max-width: 120px;
+    }
+
+    .error-code {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+    }
+
+    .error-description {
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+    }
+
+    .error-btn {
+        padding: 0.625rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-code {
+        font-size: 3rem;
+    }
+
+    .error-message {
+        font-size: 0.9375rem;
+    }
+
+    .error-description {
+        font-size: 0.8125rem;
+    }
+}
+

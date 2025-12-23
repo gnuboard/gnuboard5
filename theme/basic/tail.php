@@ -12,22 +12,20 @@ if(G5_COMMUNITY_USE === false) {
 }
 ?>
 
-    </div>
-    <div id="aside">
+    </section>
+    <aside id="aside">
         <?php echo outlogin('theme/basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
         <?php echo poll('theme/basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
-    </div>
-</div>
+    </aside>
+</section>
 
-</div>
+</main>
 <!-- } 콘텐츠 끝 -->
 
-<hr>
-
 <!-- 하단 시작 { -->
-<div id="ft">
+<footer id="ft">
 
-    <div id="ft_wr">
+    <section id="ft_wr">
         <div id="ft_link" class="ft_cnt">
             <a href="<?php echo get_pretty_url('content', 'company'); ?>">회사소개</a>
             <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보처리방침</a>
@@ -54,23 +52,15 @@ if(G5_COMMUNITY_USE === false) {
         ?>
         
 		<?php echo visit('theme/basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
-	</div>      
+	</section>      
         <!-- <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.png" alt="<?php echo G5_VERSION ?>"></div> -->
-        <div id="ft_copy">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
+        <div id="ft_copy">Copyright &copy; <b><?php echo $g5['cf_title']; ?></b> All rights reserved.</div>
     
     
     <button type="button" id="top_btn">
     	<i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span>
     </button>
-    <script>
-    $(function() {
-        $("#top_btn").on("click", function() {
-            $("html, body").animate({scrollTop:0}, '500');
-            return false;
-        });
-    });
-    </script>
-</div>
+</footer>
 
 <?php
 if(G5_DEVICE_BUTTON_DISPLAY && !G5_IS_MOBILE) { ?>
@@ -88,6 +78,21 @@ if ($config['cf_analytics']) {
 $(function() {
     // 폰트 리사이즈 쿠키있으면 실행
     font_resize("container", get_cookie("ck_font_resize_rmv_class"), get_cookie("ck_font_resize_add_class"));
+
+    // 상단으로 이동
+    $("#top_btn").on("click", function() {
+        $("html, body").animate({scrollTop:0}, '500');
+        return false;
+    });
+
+    $(".gnb_menu_btn").click(function(){
+        $("#gnb_all, #gnb_all_bg").show();
+    });
+    $(".gnb_close_btn, #gnb_all_bg").click(function(){
+        $("#gnb_all, #gnb_all_bg").hide();
+    });
+    
+    
 });
 </script>
 

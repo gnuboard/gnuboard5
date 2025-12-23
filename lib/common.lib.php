@@ -971,18 +971,31 @@ function get_admin($admin='super', $fields='*')
 // 관리자인가?
 function is_admin($mb_id)
 {
-    global $config, $group, $board;
+    global $config, $group, $board, $g5;
 
     if (!$mb_id) return '';
 
     $is_authority = '';
 
+    // 회원 레벨 체크 (레벨 10: 최고관리자, 레벨 9: 사이트 관리자)
+    $mb = sql_fetch(" select mb_level from {$g5['member_table']} where mb_id = '{$mb_id}' ");
+    if ($mb && isset($mb['mb_level'])) {
+        if ($mb['mb_level'] == 10) {
+            $is_authority = 'super';
+        } else if ($mb['mb_level'] == 9) {
+            $is_authority = 'site';
+        }
+    }
+
+    // 레벨 기반 권한이 없으면 기존 방식 체크
+    if (!$is_authority) {
     if ($config['cf_admin'] == $mb_id){
         $is_authority = 'super';
     } else if (isset($group['gr_admin']) && ($group['gr_admin'] == $mb_id)){
         $is_authority = 'group';
     } else if (isset($board['bo_admin']) && ($board['bo_admin'] == $mb_id)){
         $is_authority = 'board';
+        }
     }
 
     return run_replace('is_admin', $is_authority, $mb_id);

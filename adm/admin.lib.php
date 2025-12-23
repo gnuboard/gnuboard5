@@ -266,8 +266,14 @@ function auth_check($auth, $attr, $return = false)
 {
     global $is_admin;
 
+    // 최고관리자(레벨 10)는 모든 권한 허용
     if ($is_admin == 'super') {
         return;
+    }
+
+    // 사이트 관리자(레벨 9)는 auth 테이블 기반 권한 체크
+    if ($is_admin == 'site') {
+        // auth 체크는 아래에서 진행
     }
 
     if (!trim($auth)) {
@@ -613,7 +619,55 @@ function admin_menu_find_by($call, $search_key)
 // 접근 권한 검사
 if (!$member['mb_id']) {
     alert('로그인 하십시오.', G5_BBS_URL . '/login.php?url=' . urlencode(correct_goto_url(G5_ADMIN_URL)));
+}
+
+// 관리자 페이지 접근가능 IP 체크
+$cf_admins_ip = trim($config['cf_admins_ip']);
+// 비어있으면 모든 IP 허용, 등록되어 있으면 등록된 IP만 허용
+if ($cf_admins_ip) {
+    $is_admins_ip = false;
+    $pattern = explode("\n", $cf_admins_ip);
+    for ($i = 0; $i < count($pattern); $i++) {
+        $pattern[$i] = trim($pattern[$i]);
+        if (empty($pattern[$i]))
+            continue;
+
+        $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
+        $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
+        $pat = "/^{$pattern[$i]}$/";
+        $is_admins_ip = preg_match($pat, get_real_client_ip());
+        if ($is_admins_ip)
+            break;
+    }
+    if (!$is_admins_ip) {
+        // 403 에러 페이지로 리다이렉트
+        http_response_code(403);
+        $_SERVER['REDIRECT_STATUS'] = 403;
+        include_once(G5_THEME_PATH . '/error.php');
+        exit;
+    }
+}
+
+if ($is_admin == 'site') {
+    // 사이트 관리자(레벨 9): 제한된 권한만 허용
+    // 관리자 메인페이지(index.php)는 예외적으로 접근 허용
+    $current_page = basename($_SERVER['SCRIPT_NAME']);
+    $is_main_page = ($current_page == 'index.php');
+    
+    // 사이트 관리자는 auth 테이블 기반 권한 체크
+    $auth = array();
+    $sql = " select au_menu, au_auth from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
+    $result = sql_query($sql);
+    for ($i = 0; $row = sql_fetch_array($result); $i++) {
+        $auth[$row['au_menu']] = $row['au_auth'];
+    }
+
+    // 메인페이지가 아니고 권한이 없으면 차단
+    if (!$is_main_page && !$i) {
+        alert('사이트 관리자는 관리권한이 부여된 메뉴만 접근 가능합니다.', G5_URL);
+    }
 } else if ($is_admin != 'super') {
+    // 그룹 관리자, 게시판 관리자 등
     $auth = array();
     $sql = " select au_menu, au_auth from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
     $result = sql_query($sql);

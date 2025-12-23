@@ -99,7 +99,12 @@ function get_menu_db($use_mobile=0, $is_cache=false){
 
     $cache = run_replace('get_menu_db_cache', $cache, $use_mobile, $is_cache);
 
-    $key = md5($use_mobile);
+    // 세션 언어에 맞는 메뉴 테이블 사용
+    $current_lang = get_current_lang();
+    $menu_table = get_menu_table_by_lang($current_lang);
+    
+    // 캐시 키에 언어 포함
+    $key = md5($use_mobile . '_' . $current_lang);
 
     if( $is_cache && isset($cache[$key]) ){
         return $cache[$key];
@@ -109,7 +114,7 @@ function get_menu_db($use_mobile=0, $is_cache=false){
 
     if( !($cache[$key] = run_replace('get_menu_db', array(), $use_mobile)) ){
         $sql = " select *
-                from {$g5['menu_table']}
+                from {$menu_table}
                 where $where
                 and length(me_code) = '2'
                 order by me_order, me_id ";
@@ -123,7 +128,7 @@ function get_menu_db($use_mobile=0, $is_cache=false){
             $cache[$key][$i] = $row;
 
             $sql2 = " select *
-                    from {$g5['menu_table']}
+                    from {$menu_table}
                     where $where
                     and length(me_code) = '4'
                     and substring(me_code, 1, 2) = '{$row['me_code']}'

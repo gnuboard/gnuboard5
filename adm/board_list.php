@@ -4,8 +4,27 @@ require_once './_common.php';
 
 auth_check_menu($auth, $sub_menu, 'r');
 
+// 활성화된 언어 목록 가져오기
+$lang_types = !empty($config['cf_lang_type']) ? explode(',', $config['cf_lang_type']) : array('ko');
+$lang_names = array('ko' => '한국어', 'en' => '영어', 'zh' => '중국어', 'ja' => '일본어');
+
+// 현재 선택된 언어 (기본값: ko 또는 첫 번째 언어)
+$current_lang = isset($_GET['lang']) ? preg_replace('/[^a-z]/', '', $_GET['lang']) : '';
+if (!$current_lang || !in_array($current_lang, $lang_types)) {
+    $current_lang = in_array('ko', $lang_types) ? 'ko' : (isset($lang_types[0]) ? $lang_types[0] : 'ko');
+}
+
 $sql_common = " from {$g5['board_table']} a ";
 $sql_search = " where (1) ";
+
+// 언어별 게시판 필터링
+if ($current_lang == 'ko') {
+    // 한국어: 언어 접미사 없는 게시판만
+    $sql_search .= " and a.bo_table NOT REGEXP '_(en|zh|ja)$' ";
+} else {
+    // 다른 언어: 해당 언어 접미사가 있는 게시판만
+    $sql_search .= " and a.bo_table LIKE '%_{$current_lang}' ";
+}
 
 if ($is_admin != "super") {
     $sql_common .= " , {$g5['group_table']} b ";
@@ -61,7 +80,21 @@ $colspan = 15;
     <span class="btn_ov01"><span class="ov_txt">생성된 게시판수</span><span class="ov_num"> <?php echo number_format($total_count) ?>개</span></span>
 </div>
 
+<?php if (count($lang_types) > 1) { ?>
+<div class="local_tabs">
+    <ul class="local_tabs_ul">
+        <?php foreach ($lang_types as $lang) { 
+            $lang_name = isset($lang_names[$lang]) ? $lang_names[$lang] : $lang;
+            $active_class = ($current_lang == $lang) ? ' class="active"' : '';
+        ?>
+        <li<?php echo $active_class; ?>><a href="./board_list.php?lang=<?php echo $lang; ?>"><?php echo $lang_name; ?></a></li>
+        <?php } ?>
+    </ul>
+</div>
+<?php } ?>
+
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
+    <input type="hidden" name="lang" value="<?php echo $current_lang; ?>">
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
         <option value="bo_table" <?php echo get_selected($sfl, "bo_table", true); ?>>TABLE</option>
@@ -79,6 +112,7 @@ $colspan = 15;
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
     <input type="hidden" name="stx" value="<?php echo $stx ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="lang" value="<?php echo $current_lang; ?>">
     <input type="hidden" name="token" value="<?php echo isset($token) ? $token : ''; ?>">
 
     <div class="tbl_head01 tbl_wrap">
@@ -109,8 +143,9 @@ $colspan = 15;
             <tbody>
                 <?php
                 for ($i = 0; $row = sql_fetch_array($result); $i++) {
-                    $one_update = '<a href="./board_form.php?w=u&amp;bo_table=' . $row['bo_table'] . '&amp;' . $qstr . '" class="btn btn_03">수정</a>';
-                    $one_copy = '<a href="./board_copy.php?bo_table=' . $row['bo_table'] . '" class="board_copy btn btn_02" target="win_board_copy">복사</a>';
+                    $lang_param = $current_lang != 'ko' ? '&lang=' . $current_lang : '';
+                    $one_update = '<a href="./board_form.php?w=u&amp;bo_table=' . $row['bo_table'] . '&amp;' . $qstr . $lang_param . '" class="btn btn_03">수정</a>';
+                    $one_copy = '<a href="./board_copy.php?bo_table=' . $row['bo_table'] . $lang_param . '" class="board_copy btn btn_02" target="win_board_copy">복사</a>';
 
                     $bg = 'bg' . ($i % 2);
                 ?>
@@ -198,7 +233,7 @@ $colspan = 15;
         <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn_02 btn">
         <?php if ($is_admin == 'super') { ?>
             <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn_02 btn">
-            <a href="./board_form.php" id="bo_add" class="btn_01 btn">게시판 추가</a>
+            <a href="./board_form.php<?php echo $current_lang != 'ko' ? '?lang=' . $current_lang : ''; ?>" id="bo_add" class="btn_01 btn">게시판 추가</a>
         <?php } ?>
     </div>
 

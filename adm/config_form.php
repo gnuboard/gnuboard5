@@ -4,8 +4,8 @@ require_once './_common.php';
 
 auth_check_menu($auth, $sub_menu, 'r');
 
-if ($is_admin != 'super') {
-    alert('최고관리자만 접근 가능합니다.');
+if ($is_admin != 'super' && $is_admin != 'site') {
+    alert('최고관리자 또는 사이트 관리자만 접근 가능합니다.');
 }
 
 // https://github.com/gnuboard/gnuboard5/issues/296 이슈처리
@@ -503,14 +503,68 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <col>
                 </colgroup>
                 <tbody>
+                    <?php if ($is_admin == 'super') { ?>
+                    <tr>
+                        <th scope="row">홈페이지 검색 허용/차단</th>
+                        <td colspan="3">
+                            <input type="radio" name="cf_robots" value="1" id="cf_robots_yes" <?php echo ($config['cf_robots'] == 1) ? 'checked="checked"' : ''; ?>>
+                            <label for="cf_robots_yes">허용</label>
+                            <input type="radio" name="cf_robots" value="0" id="cf_robots_no" <?php echo ($config['cf_robots'] != 1) ? 'checked="checked"' : ''; ?>>
+                            <label for="cf_robots_no">차단</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">개발 모드</th>
+                        <td colspan="3">
+                            <input type="radio" name="cf_dev_mode" value="1" id="cf_dev_mode_yes" <?php echo ($config['cf_dev_mode'] == 1) ? 'checked="checked"' : ''; ?>>
+                            <label for="cf_dev_mode_yes">사용</label>
+                            <input type="radio" name="cf_dev_mode" value="0" id="cf_dev_mode_no" <?php echo ($config['cf_dev_mode'] != 1) ? 'checked="checked"' : ''; ?>>
+                            <label for="cf_dev_mode_no">미사용</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="cf_dev_ip">개발자 IP<strong class="sound_only">필수</strong></label></th>
+                        <td colspan="3">
+                            <input type="text" name="cf_dev_ip" value="<?php echo !empty($config['cf_dev_ip']) ? $config['cf_dev_ip'] : '' ?>" id="cf_dev_ip" class="frm_input" size="40">
+                            <button type="button" id="btn_get_dev_ip" class="btn btn_02" style="margin-left:5px;">내 IP 가져오기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">홈페이지 언어</th>
+                        <td colspan="3">
+                            <?php
+                            $lang_types = array('ko' => '한국어', 'en' => '영어', 'zh' => '중국어', 'ja' => '일본어');
+                            $selected_lang = !empty($config['cf_lang_type']) ? explode(',', $config['cf_lang_type']) : array('ko');
+                            $previous_lang_str = !empty($config['cf_lang_type']) ? $config['cf_lang_type'] : 'ko';
+                            foreach ($lang_types as $code => $name) {
+                                $checked = in_array($code, $selected_lang) ? 'checked' : '';
+                                echo '<input type="checkbox" name="cf_lang_type[]" value="' . $code . '" id="cf_lang_type_' . $code . '" ' . $checked . '>';
+                                echo '<label for="cf_lang_type_' . $code . '" style="margin-right: 20px; margin-left: 5px;">' . $name . '</label>';
+                            }
+                            echo '<input type="hidden" id="previous_languages" value="' . htmlspecialchars($previous_lang_str) . '">';
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">다크모드 사용</th>
+                        <td colspan="3">
+                            <input type="radio" name="cf_view_mode" value="1" id="cf_view_mode_yes" <?php echo ($config['cf_view_mode'] == 1) ? 'checked="checked"' : ''; ?>>
+                            <label for="cf_view_mode_yes">사용</label>
+                            <input type="radio" name="cf_view_mode" value="0" id="cf_view_mode_no" <?php echo ($config['cf_view_mode'] != 1) ? 'checked="checked"' : ''; ?>>
+                            <label for="cf_view_mode_no">미사용</label>
+                        </td>
+                    </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
                         <td colspan="3"><input type="text" name="cf_title" value="<?php echo get_sanitize_input($config['cf_title']); ?>" id="cf_title" required class="required frm_input" size="40"></td>
                     </tr>
+                    <?php if ($is_admin == 'super') { ?>
                     <tr>
                         <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
                         <td colspan="3"><?php echo get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required') ?></td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row"><label for="cf_admin_email">관리자 메일 주소<strong class="sound_only">필수</strong></label></th>
                         <td colspan="3">
@@ -610,6 +664,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <th scope="row"><label for="cf_mobile_pages">모바일 페이지 표시 수<strong class="sound_only">필수</strong></label></th>
                         <td><input type="text" name="cf_mobile_pages" value="<?php echo (int) $config['cf_mobile_pages'] ?>" id="cf_mobile_pages" required class="required numeric frm_input" size="3"> 페이지씩 표시</td>
                     </tr>
+                    <?php if ($is_admin == 'super') { ?>
                     <tr>
                         <th scope="row"><label for="cf_new_skin">최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
                         <td>
@@ -695,6 +750,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             </select>
                         </td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row"><label for="cf_recaptcha_site_key">구글 reCAPTCHA Site key</label></th>
                         <td colspan="3">
@@ -741,6 +797,15 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <textarea name="cf_analytics" id="cf_analytics"><?php echo get_text($config['cf_analytics']); ?></textarea>
                         </td>
                     </tr>
+                    <?php if ($is_admin == 'super') { ?>
+                    <tr>
+                        <th scope="row"><label for="cf_admins_ip">관리자 페이지 접근가능 IP</label></th>
+                        <td colspan="3">
+                            <?php echo help('입력된 IP의 컴퓨터만 관리자 페이지에 접근할 수 있습니다.<br>123.123.+ 도 입력 가능. (엔터로 구분)<br>비어있으면 모든 IP에서 접근 가능합니다.') ?>
+                            <textarea name="cf_admins_ip" id="cf_admins_ip" rows="5"><?php echo get_sanitize_input($config['cf_admins_ip']); ?></textarea>
+                            <button type="button" id="btn_get_my_ip" class="btn btn_02" style="margin-top:5px;">내 IP 가져오기</button>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row"><label for="cf_add_meta">추가 메타태그</label></th>
                         <td colspan="3">
@@ -748,6 +813,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <textarea name="cf_add_meta" id="cf_add_meta"><?php echo get_text($config['cf_add_meta']); ?></textarea>
                         </td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row"><label for="cf_syndi_token">네이버 신디케이션 연동키</label></th>
                         <td colspan="3">
@@ -868,6 +934,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <col>
                 </colgroup>
                 <tbody>
+                    <?php if ($is_admin == 'super') { ?>
                     <tr>
                         <th scope="row"><label for="cf_member_skin">회원 스킨<strong class="sound_only">필수</strong></label></th>
                         <td>
@@ -878,6 +945,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <?php echo get_mobile_skin_select('member', 'cf_mobile_member_skin', 'cf_mobile_member_skin', $config['cf_mobile_member_skin'], 'required'); ?>
                         </td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row">홈페이지 입력</th>
                         <td>
@@ -1191,6 +1259,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <col>
                 </colgroup>
                 <tbody>
+                    <?php if ($is_admin == 'super') { ?>
                     <tr>
                         <th scope="row"><label for="cf_email_wr_super_admin">최고관리자</label></th>
                         <td>
@@ -1198,6 +1267,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <input type="checkbox" name="cf_email_wr_super_admin" value="1" id="cf_email_wr_super_admin" <?php echo $config['cf_email_wr_super_admin'] ? 'checked' : ''; ?>> 사용
                         </td>
                     </tr>
+                    <?php } ?>
+                    <?php if ($is_admin == 'site') { ?>
+                    <tr>
+                        <th scope="row"><label for="cf_email_wr_site_admin">사이트 관리자</label></th>
+                        <td>
+                            <?php echo help('사이트 관리자에게 메일을 발송합니다.') ?>
+                            <input type="checkbox" name="cf_email_wr_site_admin" value="1" id="cf_email_wr_site_admin" <?php echo $config['cf_email_wr_site_admin'] ? 'checked' : ''; ?>> 사용
+                        </td>
+                    </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row"><label for="cf_email_wr_group_admin">그룹관리자</label></th>
                         <td>
@@ -1244,6 +1323,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <col>
                 </colgroup>
                 <tbody>
+                    <?php if ($is_admin == 'super') { ?>
                     <tr>
                         <th scope="row"><label for="cf_email_mb_super_admin">최고관리자 메일발송</label></th>
                         <td>
@@ -1251,6 +1331,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <input type="checkbox" name="cf_email_mb_super_admin" value="1" id="cf_email_mb_super_admin" <?php echo $config['cf_email_mb_super_admin'] ? 'checked' : ''; ?>> 사용
                         </td>
                     </tr>
+                    <?php } ?>
+                    <?php if ($is_admin == 'site') { ?>
+                    <tr>
+                        <th scope="row"><label for="cf_email_mb_site_admin">사이트 관리자 메일발송</label></th>
+                        <td>
+                            <?php echo help('사이트 관리자에게 메일을 발송합니다.') ?>
+                            <input type="checkbox" name="cf_email_mb_site_admin" value="1" id="cf_email_mb_site_admin" <?php echo $config['cf_email_mb_site_admin'] ? 'checked' : ''; ?>> 사용
+                        </td>
+                    </tr>
+                    <?php } ?>
                     <tr>
                         <th scope="row"><label for="cf_email_mb_member">회원님께 메일발송</label></th>
                         <td>
@@ -1746,8 +1836,96 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             }
         }
 
+        // 언어 선택 체크
+        var selected_languages = [];
+        jQuery('input[name="cf_lang_type[]"]:checked').each(function() {
+            selected_languages.push(jQuery(this).val());
+        });
+        
+        var previous_languages = jQuery('#previous_languages').val() || '';
+        
+        if (selected_languages.length > 0) {
+            var previous_lang_array = [];
+            if (previous_languages) {
+                previous_lang_array = previous_languages.split(',').map(function(lang) {
+                    return lang.trim();
+                }).filter(function(lang) {
+                    return lang.length > 0;
+                });
+            }
+            
+            var new_languages = selected_languages.filter(function(lang) {
+                return previous_lang_array.indexOf(lang) === -1;
+            });
+            
+            if (new_languages.length > 0) {
+                // AJAX로 테이블 존재 여부 먼저 확인
+                var lang_confirm_result = true;
+                
+                try {
+                    jQuery.ajax({
+                        url: './language_table_check.php',
+                        type: 'POST',
+                        data: {
+                            languages: selected_languages,
+                            previous_languages: previous_languages || '',
+                            token: f.token.value
+                        },
+                        dataType: 'json',
+                        async: false,
+                        success: function(response) {
+                            if (response.error) {
+                                // 오류가 있어도 폼 제출은 허용 (서버에서 처리)
+                                return;
+                            }
+                            
+                            if (response.has_new && response.new_languages && response.new_languages.length > 0) {
+                                var need_confirm = false;
+                                var new_lang_names = [];
+                                
+                                for (var i = 0; i < response.new_languages.length; i++) {
+                                    var lang_info = response.new_languages[i];
+                                    
+                                    // 이름 추가
+                                    if (lang_info.name) {
+                                        new_lang_names.push(lang_info.name);
+                                    }
+                                    
+                                    // 테이블이 없으면 컨펌 필요
+                                    if (lang_info.menu_table_exists === false) {
+                                        need_confirm = true;
+                                    }
+                                }
+                                
+                                // 테이블이 없을 때만 컨펌
+                                if (need_confirm && new_lang_names.length > 0) {
+                                    var confirm_msg = '선택한 언어(' + new_lang_names.join(', ') + ')의 사용이 가능하도록 세팅됩니다.';
+                                    lang_confirm_result = confirm(confirm_msg);
+                                }
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // AJAX 오류가 있어도 폼 제출은 허용 (서버에서 처리)
+                            console.warn('언어 테이블 확인 AJAX 오류:', status, error, xhr.responseText);
+                        }
+                    });
+                } catch(e) {
+                    // 예외가 있어도 폼 제출은 허용 (서버에서 처리)
+                    console.warn('언어 테이블 확인 예외:', e);
+                }
+                
+                if (!lang_confirm_result) {
+                    return false;
+                }
+            }
+        }
+
+        console.log('폼 제출 준비 완료');
         f.action = "./config_form_update.php";
-        return true;
+        console.log('action 설정:', f.action);
+        var result = true;
+        console.log('return 값:', result);
+        return result;
     }
     
     jQuery(function($){
@@ -1764,6 +1942,27 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         
         // 추가 script, css 변경시
         $(document).on('input', '#cf_add_script', check_config_captcha_open);
+        
+        // 내 IP 가져오기 버튼 (개발자 IP)
+        $(document).on('click', '#btn_get_dev_ip', function() {
+            var current_ip = "<?php echo get_real_client_ip(); ?>";
+            $('#cf_dev_ip').val(current_ip);
+        });
+        
+        // 내 IP 가져오기 버튼 (관리자 페이지 접근가능 IP)
+        $(document).on('click', '#btn_get_my_ip', function() {
+            var current_ip = "<?php echo get_real_client_ip(); ?>";
+            var $textarea = $('#cf_admins_ip');
+            var current_value = $textarea.val().trim();
+            
+            if (current_value && current_value.indexOf(current_ip) === -1) {
+                // 기존 값이 있고 현재 IP가 없으면 줄바꿈 후 추가
+                $textarea.val(current_value + "\n" + current_ip);
+            } else if (!current_value) {
+                // 비어있으면 현재 IP만 추가
+                $textarea.val(current_ip);
+            }
+        });
     });
 </script>
 

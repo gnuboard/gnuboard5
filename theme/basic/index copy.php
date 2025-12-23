@@ -14,58 +14,8 @@ if(G5_COMMUNITY_USE === false) {
 
 include_once(G5_THEME_PATH.'/head.php');
 ?>
-<style>
-    .swiper {width:100%;height:100vh;position:relative;}
-    .swiper-slide {
-        width: 100%;
-        height: 100%;color:#fff;
-    }
-    .swiper-slide:nth-child(1) {
-        background-color: red;
-    }
-    .swiper-slide:nth-child(2) {
-        background-color: green;
-    }
-    .swiper-slide:nth-child(3) {
-        background-color: #000;
-    }
-    .swiper-slide:nth-child(4) {
-        background-color: blue;
-    }
-    .swiper-progress-bar {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);height:10px;background-color:#ddd;z-index: 999;}
-    .margin-test{width:100%;height:100vh;}
-</style>
+
 <h2 class="sound_only">최신글</h2>
-
-<div class="margin-test"></div>
-
-<div class="swiper" data-swiper-autoplay="3000" data-swiper-loop="true">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">슬라이드 1</div>
-        <div class="swiper-slide">슬라이드 2</div>
-        <div class="swiper-slide">슬라이드 3</div>
-        <div class="swiper-slide">슬라이드 4</div>
-    </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-progress-bar"></div>
-</div>
-
-
-
-<div class="swiper" data-swiper-autoplay="3000" data-swiper-loop="true">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">슬라이드 4</div>
-        <div class="swiper-slide">슬라이드 3</div>
-        <div class="swiper-slide">슬라이드 2</div>
-        <div class="swiper-slide">슬라이드 1</div>
-    </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-progress-bar"></div>
-</div>
 
 <div class="latest_top_wr">
     <?php

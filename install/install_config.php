@@ -123,6 +123,41 @@ $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'
     </tbody>
     </table>
 
+    <table class="ins_frm">
+    <caption>사이트 관리자(메인 관리자) 정보입력</caption>
+    <input type="hidden" name="ajax_token" value="<?php echo $ajax_token; ?>" >
+    <colgroup>
+        <col style="width:150px">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="site_admin_id">회원 ID</label></th>
+        <td>
+            <input name="site_admin_id" type="text" value="site_admin" id="site_admin_id">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="site_admin_pass">비밀번호</label></th>
+        <td>
+            <input name="site_admin_pass" type="text" id="site_admin_pass">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="site_admin_name">이름</label></th>
+        <td>
+            <input name="site_admin_name" type="text" value="사이트 관리자" id="site_admin_name">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="site_admin_email">E-mail</label></th>
+        <td>
+            <input name="site_admin_email" type="text" value="site_admin@domain.com" id="site_admin_email">
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
     <p>
         <strong class="st_strong">주의! 이미 <?php echo G5_VERSION ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
         주의사항을 이해했으며, 그누보드 설치를 계속 진행하시려면 다음을 누르십시오.

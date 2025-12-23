@@ -145,6 +145,7 @@ include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
 include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함수 모음
 include_once(G5_LIB_PATH.'/cache.lib.php');     // cache 함수 및 object cache class 모음
 include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
+include_once(G5_LIB_PATH.'/lang.lib.php');    // 다국어 함수 파일
 
 $g5_object = new G5_object_cache();
 
@@ -524,6 +525,14 @@ if (isset($_REQUEST['gr_id'])) {
     $gr_id = '';
 }
 //===================================
+
+// 세션 언어 초기화
+$current_lang = get_current_lang();
+
+// bo_table 자동 변환 (세션 언어에 맞게)
+if ($bo_table) {
+    $bo_table = get_bo_table_by_lang($bo_table, $current_lang);
+}
 
 // 자동로그인 부분에서 첫로그인에 포인트 부여하던것을 로그인중일때로 변경하면서 코드도 대폭 수정하였습니다.
 if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이라면

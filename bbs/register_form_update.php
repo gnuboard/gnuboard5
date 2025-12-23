@@ -344,6 +344,25 @@ if ($w == '') {
         run_event('register_form_update_send_admin_mail', $mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content);
     }
 
+    // 사이트 관리자님께 메일 발송
+    if ($config['cf_email_mb_site_admin']) {
+        $site_admin = sql_fetch("select mb_id, mb_email, mb_name from {$g5['member_table']} where mb_level = '9' limit 1");
+        if ($site_admin && $site_admin['mb_email']) {
+            $subject = run_replace('register_form_update_mail_admin_subject', '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.', $mb_id, $mb_nick);
+
+            ob_start();
+            include_once ('./register_form_update_mail2.php');
+            $content = ob_get_contents();
+            ob_end_clean();
+            
+            $content = run_replace('register_form_update_mail_admin_content', $content, $mb_id);
+
+            mailer($mb_nick, $mb_email, $site_admin['mb_email'], $subject, $content, 1);
+
+            run_event('register_form_update_send_admin_mail', $mb_nick, $mb_email, $site_admin['mb_email'], $subject, $content);
+        }
+    }
+
     // 메일인증 사용하지 않는 경우에만 로그인
     if (!$config['cf_use_email_certify']) {
         set_session('ss_mb_id', $mb_id);

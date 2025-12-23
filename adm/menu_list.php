@@ -2,8 +2,8 @@
 $sub_menu = "100290";
 require_once './_common.php';
 
-if ($is_admin != 'super') {
-    alert('최고관리자만 접근 가능합니다.');
+if ($is_admin != 'super' && $is_admin != 'site') {
+    alert('최고관리자 또는 사이트 관리자만 접근 가능합니다.');
 }
 
 // 메뉴테이블 생성
@@ -28,7 +28,38 @@ if (!sql_query(" DESCRIBE {$g5['menu_table']} ", false)) {
     );
 }
 
-$sql = " select * from {$g5['menu_table']} order by me_id ";
+// 활성화된 언어 목록 가져오기
+$lang_types = !empty($config['cf_lang_type']) ? explode(',', $config['cf_lang_type']) : array('ko');
+$lang_names = array('ko' => '한국어', 'en' => '영어', 'zh' => '중국어', 'ja' => '일본어');
+
+// 현재 선택된 언어 (기본값: ko 또는 첫 번째 언어)
+$current_lang = isset($_GET['lang']) ? preg_replace('/[^a-z]/', '', $_GET['lang']) : '';
+if (!$current_lang || !in_array($current_lang, $lang_types)) {
+    $current_lang = in_array('ko', $lang_types) ? 'ko' : (isset($lang_types[0]) ? $lang_types[0] : 'ko');
+}
+
+// 사용할 메뉴 테이블 결정
+$menu_table = ($current_lang == 'ko') ? $g5['menu_table'] : $g5['menu_table'] . '_' . $current_lang;
+
+// 테이블이 없으면 생성
+if (!sql_query(" DESCRIBE {$menu_table} ", false)) {
+    sql_query(
+        " CREATE TABLE IF NOT EXISTS `{$menu_table}` (
+                  `me_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `me_code` varchar(255) NOT NULL DEFAULT '',
+                  `me_name` varchar(255) NOT NULL DEFAULT '',
+                  `me_link` varchar(255) NOT NULL DEFAULT '',
+                  `me_target` varchar(255) NOT NULL DEFAULT '0',
+                  `me_order` int(11) NOT NULL DEFAULT '0',
+                  `me_use` tinyint(4) NOT NULL DEFAULT '0',
+                  `me_mobile_use` tinyint(4) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (`me_id`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ",
+        true
+    );
+}
+
+$sql = " select * from {$menu_table} order by me_id ";
 $result = sql_query($sql);
 
 $g5['title'] = "메뉴설정";
@@ -42,8 +73,22 @@ $sub_menu_info = '';
     <p><strong>주의!</strong> 메뉴설정 작업 후 반드시 <strong>확인</strong>을 누르셔야 저장됩니다.</p>
 </div>
 
+<?php if (count($lang_types) > 1) { ?>
+<div class="local_tabs">
+    <ul class="local_tabs_ul">
+        <?php foreach ($lang_types as $lang) { 
+            $lang_name = isset($lang_names[$lang]) ? $lang_names[$lang] : $lang;
+            $active_class = ($current_lang == $lang) ? ' class="active"' : '';
+        ?>
+        <li<?php echo $active_class; ?>><a href="./menu_list.php?lang=<?php echo $lang; ?>"><?php echo $lang_name; ?></a></li>
+        <?php } ?>
+    </ul>
+</div>
+<?php } ?>
+
 <form name="fmenulist" id="fmenulist" method="post" action="./menu_list_update.php" onsubmit="return fmenulist_submit(this);">
     <input type="hidden" name="token" value="">
+    <input type="hidden" name="lang" value="<?php echo $current_lang; ?>">
 
 
 
@@ -175,13 +220,15 @@ $sub_menu_info = '';
                 max_code = me_code;
         });
 
-        var url = "./menu_form.php?code=" + max_code + "&new=new";
+        var lang = $("input[name='lang']").val() || '';
+        var url = "./menu_form.php?code=" + max_code + "&new=new" + (lang ? "&lang=" + lang : "");
         window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");
         return false;
     }
 
     function add_submenu(code) {
-        var url = "./menu_form.php?code=" + code;
+        var lang = $("input[name='lang']").val() || '';
+        var url = "./menu_form.php?code=" + code + (lang ? "&lang=" + lang : "");
         window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");
         return false;
     }

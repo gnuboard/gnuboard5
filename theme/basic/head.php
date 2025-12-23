@@ -21,7 +21,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 <!-- 상단 시작 { -->
-<div id="hd">
+<header id="hd">
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
@@ -40,6 +40,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <?php } ?>
     		</ul>
             <?php } ?>
+            <?php
+            if($config['cf_lang_type'] != '') {
+                include G5_PATH.'/inc/lang.inc.php';
+            }
+            if($config['cf_view_mode'] == 1) {
+                include G5_PATH.'/inc/viewmode.inc.php';
+            }
+            ?>
 			<ul id="hd_qnb">
 	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">Q&A</a></li>
@@ -193,27 +201,13 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <div id="gnb_all_bg"></div>
         </div>
     </nav>
-    <script>
-    
-    $(function(){
-        $(".gnb_menu_btn").click(function(){
-            $("#gnb_all, #gnb_all_bg").show();
-        });
-        $(".gnb_close_btn, #gnb_all_bg").click(function(){
-            $("#gnb_all, #gnb_all_bg").hide();
-        });
-    });
-
-    </script>
-</div>
+</header>
 <!-- } 상단 끝 -->
 
 
-<hr>
-
 <!-- 콘텐츠 시작 { -->
-<div id="wrapper">
-    <div id="container_wr">
+<main id="wrapper">
+    <section id="container_wr">
    
-    <div id="container">
+    <section id="container">
         <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></span></h2><?php }

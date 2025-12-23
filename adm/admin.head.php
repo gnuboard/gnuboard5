@@ -42,6 +42,7 @@ function print_menu2($key, $no = '')
             continue;
         }
 
+        // 권한 체크: 메뉴코드(0번 인덱스)로 auth 테이블과 매칭 (원본 그누보드 방식)
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0], $auth) || !strstr($auth[$menu[$key][$i][0]], 'r'))) {
             continue;
         }

@@ -35,6 +35,10 @@ $admin_id    = isset($_POST['admin_id']) ? $_POST['admin_id'] : '';
 $admin_pass  = isset($_POST['admin_pass']) ? $_POST['admin_pass'] : '';
 $admin_name  = isset($_POST['admin_name']) ? $_POST['admin_name'] : '';
 $admin_email = isset($_POST['admin_email']) ? $_POST['admin_email'] : '';
+$site_admin_id    = isset($_POST['site_admin_id']) ? $_POST['site_admin_id'] : '';
+$site_admin_pass  = isset($_POST['site_admin_pass']) ? $_POST['site_admin_pass'] : '';
+$site_admin_name  = isset($_POST['site_admin_name']) ? $_POST['site_admin_name'] : '';
+$site_admin_email = isset($_POST['site_admin_email']) ? $_POST['site_admin_email'] : '';
 
 if (preg_match("/[^0-9a-z_]+/i", $table_prefix) ) {
     die('<div class="ins_inner"><p>TABLE명 접두사는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
@@ -245,6 +249,69 @@ if ($g5_install || $is_install === false) {
                      ";
     sql_query($sql, true, $dblink);
 
+    // 사이트 관리자 회원가입
+    if ($site_admin_id && $site_admin_pass && $site_admin_name && $site_admin_email) {
+        $sql = " insert into `{$table_prefix}member`
+                    set mb_id = '$site_admin_id',
+                         mb_password = '".get_encrypt_string($site_admin_pass)."',
+                         mb_name = '$site_admin_name',
+                         mb_nick = '$site_admin_name',
+                         mb_email = '$site_admin_email',
+                         mb_level = '9',
+                         mb_mailling = '1',
+                         mb_open = '1',
+                         mb_nick_date = '".G5_TIME_YMDHIS."',
+                         mb_email_certify = '".G5_TIME_YMDHIS."',
+                         mb_datetime = '".G5_TIME_YMDHIS."',
+                         mb_ip = '{$_SERVER['REMOTE_ADDR']}'
+                         ";
+        sql_query($sql, true, $dblink);
+
+        // 사이트 관리자 기본 권한 자동 부여 (읽기, 쓰기, 삭제 권한)
+        // 메뉴코드로 저장 (원본 그누보드 방식)
+        $default_auth_menus = array(
+            '100100',  // 기본환경설정
+            '100290',  // 메뉴설정
+            '100300', // 메일 테스트
+            '100310', // 팝업레이어관리
+            '200400', // 회원관리파일
+            '200300', // 회원메일발송
+            '200800', // 접속자집계
+            '200810', // 접속자검색
+            '200820', // 접속자로그삭제
+            '200200', // 포인트관리
+            '200900', // 투표관리
+            '200100',  // 회원관리
+            '300100',  // 게시판관리
+            '300200',  // 게시판그룹관리
+            '300300',  // 인기검색어관리
+            '300400',  // 인기검색어순위
+            '300500',  // 1:1문의설정
+            '300600',  // 내용관리
+            '300700',  // FAQ관리
+            '300820',  // 글,댓글 현황
+            '900100', // SMS 기본설정
+            '900200', // 회원정보업데이트
+            '900300', // 문자 보내기
+            '900400', // 전송내역-건별
+            '900410', // 전송내역-번호별
+            '900500', // 이모티콘 그룹
+            '900600', // 이모티콘 관리
+            '900700', // 휴대폰번호 그룹
+            '900800', // 휴대폰번호 관리
+            '900900', // 휴대폰번호 파일
+        );
+        
+        foreach ($default_auth_menus as $menu_code) {
+            $sql = " insert into `{$table_prefix}auth`
+                        set mb_id = '$site_admin_id',
+                            au_menu = '$menu_code',
+                            au_auth = 'r,w,d'
+                        ";
+            sql_query($sql, true, $dblink);
+        }
+    }
+
     // 내용관리 생성
     sql_query(" insert into `{$table_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ", true, $dblink);
     sql_query(" insert into `{$table_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ", true, $dblink);
@@ -263,103 +330,103 @@ if ($g5_install || $is_install === false) {
     sql_query(" insert into `{$table_prefix}group` set gr_id = '$tmp_gr_id', gr_subject = '$tmp_gr_subject' ", true, $dblink);
 
     // 게시판 생성
-    $tmp_bo_subject = array ("공지사항", "질문답변", "자유게시판", "갤러리");
-    for ($i=0; $i<count($tmp_bo_table); $i++)
-    {
+    // $tmp_bo_subject = array ("공지사항", "질문답변", "자유게시판", "갤러리");
+    // for ($i=0; $i<count($tmp_bo_table); $i++)
+    // {
 
-        $bo_skin = ($tmp_bo_table[$i] === 'gallery') ? 'gallery' : 'basic';
+    //     $bo_skin = ($tmp_bo_table[$i] === 'gallery') ? 'gallery' : 'basic';
 
-        if (in_array($tmp_bo_table[$i], array('gallery', 'qa'))) {
-            $read_bo_point = -1;
-            $write_bo_point = 5;
-            $comment_bo_point = 1;
-            $download_bo_point = -20;
-        } else {
-            $read_bo_point = $read_point;
-            $write_bo_point = $write_point;
-            $comment_bo_point = $comment_point;
-            $download_bo_point = $download_point;
-        }
+    //     if (in_array($tmp_bo_table[$i], array('gallery', 'qa'))) {
+    //         $read_bo_point = -1;
+    //         $write_bo_point = 5;
+    //         $comment_bo_point = 1;
+    //         $download_bo_point = -20;
+    //     } else {
+    //         $read_bo_point = $read_point;
+    //         $write_bo_point = $write_point;
+    //         $comment_bo_point = $comment_point;
+    //         $download_bo_point = $download_point;
+    //     }
 
-        $sql = " insert into `{$table_prefix}board`
-                    set bo_table = '$tmp_bo_table[$i]',
-                        gr_id = '$tmp_gr_id',
-                        bo_subject = '$tmp_bo_subject[$i]',
-                        bo_device           = 'both',
-                        bo_admin            = '',
-                        bo_list_level       = '1',
-                        bo_read_level       = '1',
-                        bo_write_level      = '1',
-                        bo_reply_level      = '1',
-                        bo_comment_level    = '1',
-                        bo_html_level       = '1',
-                        bo_link_level       = '1',
-                        bo_count_modify     = '1',
-                        bo_count_delete     = '1',
-                        bo_upload_level     = '1',
-                        bo_download_level   = '1',
-                        bo_read_point       = '$read_bo_point',
-                        bo_write_point      = '$write_bo_point',
-                        bo_comment_point    = '$comment_bo_point',
-                        bo_download_point   = '$download_bo_point',
-                        bo_use_category     = '0',
-                        bo_category_list    = '',
-                        bo_use_sideview     = '0',
-                        bo_use_file_content = '0',
-                        bo_use_secret       = '0',
-                        bo_use_dhtml_editor = '0',
-                        bo_use_rss_view     = '0',
-                        bo_use_good         = '0',
-                        bo_use_nogood       = '0',
-                        bo_use_name         = '0',
-                        bo_use_signature    = '0',
-                        bo_use_ip_view      = '0',
-                        bo_use_list_view    = '0',
-                        bo_use_list_content = '0',
-                        bo_use_email        = '0',
-                        bo_table_width      = '100',
-                        bo_subject_len      = '60',
-                        bo_mobile_subject_len      = '30',
-                        bo_page_rows        = '15',
-                        bo_mobile_page_rows = '15',
-                        bo_new              = '24',
-                        bo_hot              = '100',
-                        bo_image_width      = '835',
-                        bo_skin             = '$bo_skin',
-                        bo_mobile_skin      = '$bo_skin',
-                        bo_include_head     = '_head.php',
-                        bo_include_tail     = '_tail.php',
-                        bo_content_head     = '',
-                        bo_content_tail     = '',
-                        bo_mobile_content_head     = '',
-                        bo_mobile_content_tail     = '',
-                        bo_insert_content   = '',
-                        bo_gallery_cols     = '4',
-                        bo_gallery_width    = '202',
-                        bo_gallery_height   = '150',
-                        bo_mobile_gallery_width = '125',
-                        bo_mobile_gallery_height= '100',
-                        bo_upload_count     = '2',
-                        bo_upload_size      = '1048576',
-                        bo_reply_order      = '1',
-                        bo_use_search       = '0',
-                        bo_order            = '0'
-                        ";
-        sql_query($sql, true, $dblink);
+    //     $sql = " insert into `{$table_prefix}board`
+    //                 set bo_table = '$tmp_bo_table[$i]',
+    //                     gr_id = '$tmp_gr_id',
+    //                     bo_subject = '$tmp_bo_subject[$i]',
+    //                     bo_device           = 'both',
+    //                     bo_admin            = '',
+    //                     bo_list_level       = '1',
+    //                     bo_read_level       = '1',
+    //                     bo_write_level      = '1',
+    //                     bo_reply_level      = '1',
+    //                     bo_comment_level    = '1',
+    //                     bo_html_level       = '1',
+    //                     bo_link_level       = '1',
+    //                     bo_count_modify     = '1',
+    //                     bo_count_delete     = '1',
+    //                     bo_upload_level     = '1',
+    //                     bo_download_level   = '1',
+    //                     bo_read_point       = '$read_bo_point',
+    //                     bo_write_point      = '$write_bo_point',
+    //                     bo_comment_point    = '$comment_bo_point',
+    //                     bo_download_point   = '$download_bo_point',
+    //                     bo_use_category     = '0',
+    //                     bo_category_list    = '',
+    //                     bo_use_sideview     = '0',
+    //                     bo_use_file_content = '0',
+    //                     bo_use_secret       = '0',
+    //                     bo_use_dhtml_editor = '0',
+    //                     bo_use_rss_view     = '0',
+    //                     bo_use_good         = '0',
+    //                     bo_use_nogood       = '0',
+    //                     bo_use_name         = '0',
+    //                     bo_use_signature    = '0',
+    //                     bo_use_ip_view      = '0',
+    //                     bo_use_list_view    = '0',
+    //                     bo_use_list_content = '0',
+    //                     bo_use_email        = '0',
+    //                     bo_table_width      = '100',
+    //                     bo_subject_len      = '60',
+    //                     bo_mobile_subject_len      = '30',
+    //                     bo_page_rows        = '15',
+    //                     bo_mobile_page_rows = '15',
+    //                     bo_new              = '24',
+    //                     bo_hot              = '100',
+    //                     bo_image_width      = '835',
+    //                     bo_skin             = '$bo_skin',
+    //                     bo_mobile_skin      = '$bo_skin',
+    //                     bo_include_head     = '_head.php',
+    //                     bo_include_tail     = '_tail.php',
+    //                     bo_content_head     = '',
+    //                     bo_content_tail     = '',
+    //                     bo_mobile_content_head     = '',
+    //                     bo_mobile_content_tail     = '',
+    //                     bo_insert_content   = '',
+    //                     bo_gallery_cols     = '4',
+    //                     bo_gallery_width    = '202',
+    //                     bo_gallery_height   = '150',
+    //                     bo_mobile_gallery_width = '125',
+    //                     bo_mobile_gallery_height= '100',
+    //                     bo_upload_count     = '2',
+    //                     bo_upload_size      = '1048576',
+    //                     bo_reply_order      = '1',
+    //                     bo_use_search       = '0',
+    //                     bo_order            = '0'
+    //                     ";
+    //     sql_query($sql, true, $dblink);
 
-        // 게시판 테이블 생성
-        $file = file("../".G5_ADMIN_DIR."/sql_write.sql");
-        $file = get_db_create_replace($file);
-        $sql = implode("\n", $file);
+    //     // 게시판 테이블 생성
+    //     $file = file("../".G5_ADMIN_DIR."/sql_write.sql");
+    //     $file = get_db_create_replace($file);
+    //     $sql = implode("\n", $file);
 
-        $create_table = $table_prefix.'write_' . $tmp_bo_table[$i];
+    //     $create_table = $table_prefix.'write_' . $tmp_bo_table[$i];
 
-        // sql_board.sql 파일의 테이블명을 변환
-        $source = array("/__TABLE_NAME__/", "/;/");
-        $target = array($create_table, "");
-        $sql = preg_replace($source, $target, $sql);
-        sql_query($sql, false, $dblink);
-    }
+    //     // sql_board.sql 파일의 테이블명을 변환
+    //     $source = array("/__TABLE_NAME__/", "/;/");
+    //     $target = array($create_table, "");
+    //     $sql = preg_replace($source, $target, $sql);
+    //     sql_query($sql, false, $dblink);
+    // }
 }
 
 if($g5_shop_install) {
@@ -517,6 +584,44 @@ if($g5_shop_install) {
                     de_sms_cont5 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
                     ";
     sql_query($sql, true, $dblink);
+
+    // 사이트 관리자 기본 권한 자동 부여 (읽기, 쓰기, 삭제 권한)
+    // 메뉴코드로 저장 (원본 그누보드 방식)
+    $default_auth_menus = array(
+        '400010',  // 쇼핑몰현황
+        '400100',  // 쇼핑몰설정
+        '400400',  // 주문내역
+        '400440',  // 개인결제관리
+        '400200',  // 분류관리
+        '400300',  // 상품관리
+        '400660',  // 상품문의
+        '400650',  // 사용후기
+        '400620',  // 상품재고관리
+        '400610',  // 상품유형관리
+        '400500',  // 상품옵션재고관리
+        '400800',  // 쿠폰관리
+        '400810',  // 쿠폰존관리
+        '400750',  // 추가배송비관리
+        '400410',  // 미완료주문
+        '500110', // 매출현황
+        '500100', // 상품판매순위
+        '500120', // 주문내역출력
+        '500400', // 재입고SMS알림
+        '500300', // 이벤트관리
+        '500310', // 이벤트일괄처리
+        '500500', // 배너관리
+        '500140', // 보관함현황
+        '500210', // 가격비교사이트
+    );
+    
+    foreach ($default_auth_menus as $menu_code) {
+        $sql = " insert into `{$table_prefix}auth`
+                    set mb_id = '$site_admin_id',
+                        au_menu = '$menu_code',
+                        au_auth = 'r,w,d'
+                    ";
+        sql_query($sql, true, $dblink);
+    }
 }
 ?>
 

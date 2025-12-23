@@ -233,6 +233,21 @@ if($result) {
         mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
     }
 
+    // 사이트 관리자님께 메일 발송
+    if ($config['cf_email_mb_site_admin']) {
+        $site_admin = sql_fetch("select mb_id, mb_email, mb_name from {$g5['member_table']} where mb_level = '9' limit 1");
+        if ($site_admin && $site_admin['mb_email']) {
+            $subject = '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.';
+
+            ob_start();
+            include_once (G5_BBS_PATH.'/register_form_update_mail2.php');
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            mailer($mb_nick, $mb_email, $site_admin['mb_email'], $subject, $content, 1);
+        }
+    }
+
     $mb = get_member($mb_id);
 
     //소셜 로그인 계정 추가

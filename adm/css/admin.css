@@ -377,6 +377,14 @@ border-bottom: 5px solid black;}
 .local_wr{margin:0 0 10px }
 .local_wr:after{display:block;visibility:hidden;clear:both;content:""}
 
+/* 언어 탭 */
+.local_tabs {margin:10px 0;border-bottom:1px solid #d6dce7}
+.local_tabs_ul {margin:0;padding:0;list-style:none;display:flex}
+.local_tabs_ul li {margin:0}
+.local_tabs_ul li a {display:block;padding:10px 20px;text-decoration:none;color:#666;border-bottom:2px solid transparent;transition:all 0.2s}
+.local_tabs_ul li.active a {color:#333;font-weight:bold;border-bottom-color:#3f51b5}
+.local_tabs_ul li a:hover {color:#3f51b5}
+
 .local_desc01 {margin:10px 0 10px ;padding:10px 20px;border:1px solid #f2f2f2;background:#f9f9f9}
 .local_desc01 strong {color:#ff3061}
 .local_desc01 a {text-decoration:underline;text-underline-offset:2px;}
