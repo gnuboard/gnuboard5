@@ -39,14 +39,17 @@ $bo_include_tail = isset($_POST['bo_include_tail']) ? preg_replace(array("#[\\\]
 $check_captcha = false;
 
 // 관리자가 자동등록방지 CAPTCHA를 사용해야 할 경우
-if ($w === 'u') {
-    if (isset($board['bo_include_head'], $board['bo_include_tail']) &&
-        ($board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail)) {
-        $check_captcha = true;
-    }
-} elseif ($w === '') {
-    if ($bo_include_head !== '_head.php' || $bo_include_tail !== '_tail.php') {
-        $check_captcha = true;
+// 최고 관리자인 경우에만 수정가능
+if ($is_admin === 'super') {
+    if ($w === 'u') {
+        if (isset($board['bo_include_head'], $board['bo_include_tail']) &&
+            ($board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail)) {
+            $check_captcha = true;
+        }
+    } elseif ($w === '') {
+        if ($bo_include_head !== '_head.php' || $bo_include_tail !== '_tail.php') {
+            $check_captcha = true;
+        }
     }
 }
 
