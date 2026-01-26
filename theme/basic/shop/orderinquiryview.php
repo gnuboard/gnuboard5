@@ -536,13 +536,13 @@ if($od['od_pg'] == 'lg') {
                 // 현금영수증 발급을 사용하는 경우 또는 현금영수증 발급을 한 주문건이면
 	            if ((function_exists('shop_is_taxsave') && shop_is_taxsave($od)) || (function_exists('is_order_cashreceipt') && is_order_cashreceipt($od))) {
 	                // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-	                if ($misu_price == 0 && is_order_cashreceipt($od)) {
+	                if ($misu_price == 0) {
 	            ?>
 	            <li>
 	                <strong class="letter-2px">현금영수증</strong>
 	                <span>
 	                <?php
-	                if ($od['od_cash'])
+	                if ($od['od_cash'] && is_order_cashreceipt($od))
 	                {
 	                    if($od['od_pg'] == 'lg') {
 	                        require_once G5_SHOP_PATH.'/settle_lg.inc.php';
