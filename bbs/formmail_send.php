@@ -40,6 +40,12 @@ if ($type) {
 else
     $mail_content = $content;
 
+// 환경설정에서 폼메일 사용 여부가 회원만 사용에 체크되어 있으면
+if ($config['cf_formmail_is_member']) {
+    $fnick = (isset($member['mb_nick']) && $member['mb_nick']) ? $member['mb_nick'] : $member['mb_name'];
+    $fmail = $member['mb_email'];
+}
+
 mailer($fnick, $fmail, $to, $subject, $mail_content, $type, $file);
 
 // 임시 첨부파일 삭제
