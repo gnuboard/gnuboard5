@@ -1444,8 +1444,8 @@ function pay_approval()
                 break;
         }
         f.method.value = pay_method;
-        f.orderId.value = '<?=$od_id?>';
-        f.orderName.value = '<?=$goods?>';
+        f.orderId.value = "<?php echo $od_id; ?>";
+        f.orderName.value = "<?php echo $goods; ?>";
 
         f.customerName.value = pf.od_name.value;
         f.customerEmail.value = pf.od_email.value;
@@ -1468,6 +1468,10 @@ function pay_approval()
 
         f.amountCurrency.value = 'KRW';
         f.amountValue.value = f.good_mny.value;
+        if (pf && pf.amountValue) {
+            pf.amountValue.value = f.good_mny.value;
+        }
+        
         <?php if($default['de_tax_flag_use']) { ?>
         f.taxFreeAmount.value = pf.comm_free_mny.value;
         <?php } ?>

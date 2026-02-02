@@ -16,9 +16,9 @@ $row = sql_fetch($sql);
 
 $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
 
-$amount = isset($data['amountValue']) ? $data['amountValue'] : 0;
+$amount = isset($data['amountValue']) ? (int)$data['amountValue'] : 0;
 
-if ($amount <= 0) {
+if ($amount <= 0 || $amount !== (int)$order_price) {
     alert('결제금액이 올바르지 않습니다.', G5_SHOP_URL);
 }
 
