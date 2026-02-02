@@ -183,7 +183,7 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
             break;
         case 'toss':
-            include G5_SHOP_PATH.'/toss/toss_result.php';
+            include G5_SHOP_PATH.'/toss/toss_cancel.php';
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
@@ -271,7 +271,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
             case 'toss':
-                include G5_SHOP_PATH.'/toss/toss_result.php';
+                include G5_SHOP_PATH.'/toss/toss_cancel.php';
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';

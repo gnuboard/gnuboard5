@@ -13,7 +13,7 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 * 수정불가.
 */
 const clientKey = "<?php echo $config['cf_toss_client_key']; ?>";
-const customerKey = "<?php echo isset($member['mb_id']) ? $member['mb_id'] : ''; ?>";
+const customerKey = "<?php echo $is_member ? $member['mb_id'] : md5(get_session('ss_order_id')); ?>";
 const tossPayments = TossPayments(clientKey);
 
 const payment = tossPayments.payment({ customerKey });
