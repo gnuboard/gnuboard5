@@ -2461,7 +2461,7 @@ function get_itemuselist_thumbnail($it_id, $contents, $thumb_width, $thumb_heigh
 }
 
 function shop_is_taxsave($od, $is_view_receipt=false){
-	global $default, $is_memeber;
+	global $default, $is_member;
 
 	$od_pay_type = '';
 
