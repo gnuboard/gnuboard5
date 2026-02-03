@@ -2770,6 +2770,50 @@ function get_item_images_info($it, $size=array(), $image_width=0, $image_height=
     return $images; 
 }
 
+// 카테고리 전체 경로를 가져오는 함수 (예: 남성의류 > 상의 > 셔츠)
+function get_shop_category_path($ca_id, $separator = ' &gt; ')
+{
+    global $g5;
+    static $category_cache = array(); // 카테고리명 캐시
+    static $path_cache = array();     // 경로 캐시
+
+    if (!$ca_id) return '';
+
+    // 동일한 separator로 이미 조회한 경로가 있으면 캐시에서 반환
+    $cache_key = $ca_id . '|' . $separator;
+    if (isset($path_cache[$cache_key])) {
+        return $path_cache[$cache_key];
+    }
+
+    $path_arr = array();
+    $ca_id_len = strlen($ca_id);
+
+    // 카테고리 ID를 2자리씩 분할하여 각 단계의 카테고리명을 조회
+    for ($i = 2; $i <= $ca_id_len; $i += 2) {
+        $current_ca_id = substr($ca_id, 0, $i);
+
+        // 캐시에 없으면 DB 조회
+        if (!isset($category_cache[$current_ca_id])) {
+            $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$current_ca_id' ";
+            $row = sql_fetch($sql);
+            if ($row) {
+                $category_cache[$current_ca_id] = $row['ca_name'];
+            } else {
+                $category_cache[$current_ca_id] = '';
+            }
+        }
+
+        if ($category_cache[$current_ca_id]) {
+            $path_arr[] = $category_cache[$current_ca_id];
+        }
+    }
+
+    $result = implode($separator, $path_arr);
+    $path_cache[$cache_key] = $result; // 결과를 캐시에 저장
+
+    return $result;
+}
+
 function check_payment_method($od_settle_case) {
     global $default;
 

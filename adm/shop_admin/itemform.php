@@ -146,9 +146,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $nbsp = "";
     for ($i=0; $i<$len; $i++)
         $nbsp .= "&nbsp;&nbsp;&nbsp;";
-
-    $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
-
+    
+    // 전체 카테고리 경로 표시 (예: 남성의류 > 상의 > 셔츠)
+    $category_path = function_exists('get_shop_category_path') ? get_shop_category_path($row['ca_id']) : $row['ca_name'];
+    $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$category_path}</option>\n";
+    
     $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
     $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
     //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
@@ -1394,7 +1396,9 @@ $(function(){
                             for ($i=0; $i<$len; $i++)
                                 $nbsp .= "&nbsp;&nbsp;&nbsp;";
 
-                            echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+                            // 전체 카테고리 경로 표시
+                            $category_path = function_exists('get_shop_category_path') ? get_shop_category_path($row['ca_id']) : $row['ca_name'];
+                            echo "<option value=\"{$row['ca_id']}\">$nbsp{$category_path}</option>\n";
                         }
                     ?>
                 </select>
