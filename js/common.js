@@ -423,7 +423,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 element_wrap = document.createElement("div");
                 element_wrap.setAttribute("id", daum_pape_id);
                 element_wrap.style.cssText = 'display:none;border:1px solid;left:0;width:100%;height:300px;margin:5px 0;position:relative;-webkit-overflow-scrolling:touch;';
-                element_wrap.innerHTML = '<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-21px;z-index:1" class="close_daum_juso" alt="접기 버튼">';
+                element_wrap.innerHTML = '<img src="//t1.kakaocdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-21px;z-index:1" class="close_daum_juso" alt="접기 버튼">';
                 jQuery('form[name="'+frm_name+'"]').find('input[name="'+frm_addr1+'"]').before(element_wrap);
                 jQuery("#"+daum_pape_id).off("click", ".close_daum_juso").on("click", ".close_daum_juso", function(e){
                     e.preventDefault();
@@ -432,7 +432,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 });
             }
 
-            new daum.Postcode({
+            new kakao.Postcode({
                 oncomplete: function(data) {
                     complete_fn(data);
                     // iframe을 넣은 element를 안보이게 한다.
@@ -454,7 +454,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
             element_wrap.style.display = 'block';
             break;
         case 2 :    //새창으로 띄우기
-            new daum.Postcode({
+            new kakao.Postcode({
                 oncomplete: function(data) {
                     complete_fn(data);
                 }
@@ -467,7 +467,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 element_layer = document.createElement("div");
                 element_layer.setAttribute("id", rayer_id);
                 element_layer.style.cssText = 'display:none;border:5px solid;position:fixed;width:300px;height:460px;left:50%;margin-left:-155px;top:50%;margin-top:-235px;overflow:hidden;-webkit-overflow-scrolling:touch;z-index:10000';
-                element_layer.innerHTML = '<img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" class="close_daum_juso" alt="닫기 버튼">';
+                element_layer.innerHTML = '<img src="//t1.kakaocdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" class="close_daum_juso" alt="닫기 버튼">';
                 document.body.appendChild(element_layer);
                 jQuery("#"+rayer_id).off("click", ".close_daum_juso").on("click", ".close_daum_juso", function(e){
                     e.preventDefault();
@@ -476,7 +476,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 });
             }
 
-            new daum.Postcode({
+            new kakao.Postcode({
                 oncomplete: function(data) {
                     complete_fn(data);
                     // iframe을 넣은 element를 안보이게 한다.
