@@ -122,4 +122,4 @@ if ($sql) {
     <button type="button" id="add_manual" class="btn_submit btn">추가</button>
     <button type="button" class="btn_02 btn" onclick="window.close();">창닫기</button>
 </div>
-<?php } // end if;
+<?php }
