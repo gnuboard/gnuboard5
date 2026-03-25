@@ -2879,7 +2879,11 @@ class html_process {
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
         $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
-
+        
+        if (!isset($member['mb_id'])) {
+            $member['mb_id'] = '';
+        }
+        
         if ($tmp_row['cnt']) {
             $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
             sql_query($tmp_sql, FALSE);
@@ -4001,6 +4005,22 @@ class str_encrypt
         }
 
         return $result;
+    }
+}
+
+// 26년도에 너무 늦게 만들어서 기존의 사용자들과 충돌을 피하기 위해 get_sql_affected_rows 이라 네이밍함
+function get_sql_affected_rows($link=null)
+{
+    global $g5;
+
+    if (!$link) {
+        $link = $g5['connect_db'];
+    }
+
+    if (function_exists('mysqli_affected_rows') && G5_MYSQLI_USE) {
+        return @mysqli_affected_rows($link);
+    } else {
+        return @mysql_affected_rows($link);
     }
 }
 
