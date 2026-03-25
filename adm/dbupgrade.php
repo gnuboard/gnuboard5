@@ -317,6 +317,40 @@ if (!isset($member['mb_marketing_agree'])) {
     $is_check = true;
 }
 
+// 쿠폰 로그 테이블에 UNIQUE 인덱스 추가 (쿠폰 이중사용 방지)
+if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
+    $result = sql_query("SHOW INDEX FROM `{$g5['g5_shop_coupon_log_table']}` WHERE Key_name = 'idx_coupon_use'", false);
+    if (!$result || !sql_num_rows($result)) {
+        // 기존에 동일 쿠폰이 중복 사용된 데이터가 있으면 UNIQUE 인덱스 생성 실패하므로 중복 데이터 정리
+        $dup_sql = " SELECT cp_id, mb_id, MIN(cl_id) as keep_id
+                       FROM `{$g5['g5_shop_coupon_log_table']}`
+                      GROUP BY cp_id, mb_id
+                     HAVING COUNT(*) > 1 ";
+
+        $dup_result = sql_query($dup_sql, false);
+        if ($dup_result && sql_num_rows($dup_result)) {
+            while ($dup_row = sql_fetch_array($dup_result)) {
+                
+                echo $dup_row['cp_id']." 의 동일 쿠폰이 중복 사용된 데이터가 있으므로 인덱스 생성이 불가합니다. <br>";
+                
+                $sql = " DELETE FROM `{$g5['g5_shop_coupon_log_table']}`
+                             WHERE cp_id = '{$dup_row['cp_id']}'
+                               AND mb_id = '{$dup_row['mb_id']}'
+                               AND cl_id != '{$dup_row['keep_id']}' ";
+                if ($is_admin === 'super') {
+                    echo "데이터베이스에서 검토후에 이 쿼리문을 실행해 주세요.<br>$sql<br>";
+                }
+                // sql_query($sql);
+            }
+        }
+
+        // MyISAM + utf8mb4 환경에서 키 길이 초과 방지: cp_id varchar(100), mb_id varchar(100)으로 조정
+        sql_query("ALTER TABLE `{$g5['g5_shop_coupon_log_table']}` MODIFY `cp_id` varchar(100) NOT NULL DEFAULT '', MODIFY `mb_id` varchar(100) NOT NULL DEFAULT ''", false);
+        sql_query("ALTER TABLE `{$g5['g5_shop_coupon_log_table']}` ADD UNIQUE KEY `idx_coupon_use` (`cp_id`, `mb_id`)", false);
+        $is_check = true;
+    }
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
