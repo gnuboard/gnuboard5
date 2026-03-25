@@ -284,14 +284,19 @@ if (!auth_check_menu($auth, '200200', 'r', true)) {
                 </thead>
                 <tbody>
                     <?php
-                    $row2['mb_id'] = '';
+                    $row2 = array('mb_id'=>'');
                     for ($i = 0; $row = sql_fetch_array($result); $i++) {
-                        if ($row2['mb_id'] != $row['mb_id']) {
+                        if (empty($row2) || $row2['mb_id'] != $row['mb_id']) {
                             $sql2 = " SELECT mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
                             $row2 = sql_fetch($sql2);
                         }
 
-                        $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
+                        $mb_nick = get_sideview(
+                            $row['mb_id'], 
+                            isset($row2['mb_nick']) ? $row2['mb_nick'] : '', 
+                            isset($row2['mb_email']) ? $row2['mb_email'] : '', 
+                            isset($row2['mb_homepage']) ? $row2['mb_homepage'] : ''
+                        );
 
                         $link1 = $link2 = "";
                         if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table']) {
@@ -302,7 +307,7 @@ if (!auth_check_menu($auth, '200200', 'r', true)) {
 
                         <tr>
                             <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
-                            <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
+                            <td class="td_mbname"><?php echo isset($row2['mb_name']) ? get_text($row2['mb_name']) : ''; ?></td>
                             <td class="td_name sv_use">
                                 <div><?php echo $mb_nick ?></div>
                             </td>
