@@ -6,6 +6,12 @@ auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['member_table']} ";
 
+// $sfl 화이트리스트 검증 (KVE-2026-0340)
+$allowed_sfl = array('mb_id', 'mb_nick', 'mb_name', 'mb_level', 'mb_email', 'mb_tel', 'mb_hp', 'mb_point', 'mb_datetime', 'mb_ip', 'mb_recommend');
+if (!in_array($sfl, $allowed_sfl)) {
+    $sfl = 'mb_id';
+}
+
 $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";
