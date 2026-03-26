@@ -7,6 +7,11 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 $sql_common = " from `{$g5['g5_shop_item_use_table']}` a join `{$g5['g5_shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where a.is_confirm = '1' ";
 
+if( isset($sfl) && ! in_array($sfl, array('b.it_name', 'a.it_id', 'a.is_subject', 'a.is_content', 'a.is_name', 'a.mb_id')) ){
+    //다른값이 들어가있다면 초기화
+    $sfl = '';
+}
+
 if(!$sfl)
     $sfl = 'b.it_name';
 
