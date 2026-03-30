@@ -24,6 +24,9 @@ if (!$sst) {
     $sst  = "cp_no";
     $sod = "desc";
 }
+$allowed_sst = array('cp_no', 'cp_id', 'cp_subject', 'mb_id', 'cp_end', 'cp_start', 'cp_method');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'cp_no';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt

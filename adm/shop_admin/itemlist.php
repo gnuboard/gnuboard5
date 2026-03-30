@@ -68,6 +68,9 @@ if (!$sst) {
     $sst  = "it_id";
     $sod = "desc";
 }
+$allowed_sst = array('it_id', 'it_name', 'it_order', 'it_use', 'it_soldout', 'it_hit', 'it_price', 'it_cust_price', 'it_point', 'it_stock_qty');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'it_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = "order by $sst $sod";
 
 

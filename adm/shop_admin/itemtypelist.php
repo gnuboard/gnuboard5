@@ -46,6 +46,9 @@ if (!$sst)  {
     $sst  = "it_id";
     $sod = "desc";
 }
+$allowed_sst = array('it_id', 'it_name', 'it_type1', 'it_type2', 'it_type3', 'it_type4', 'it_type5', 'ca_id');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'it_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = "order by $sst $sod";
 
 $sql_common = "  from {$g5['g5_shop_item_table']} ";

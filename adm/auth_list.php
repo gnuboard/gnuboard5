@@ -23,6 +23,9 @@ if (!$sst) {
     $sst  = "a.mb_id, au_menu";
     $sod = "";
 }
+$allowed_sst = array('a.mb_id', 'mb_nick', 'au_menu', 'au_auth', 'a.mb_id, au_menu');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'a.mb_id, au_menu';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt
