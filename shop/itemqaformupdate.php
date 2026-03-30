@@ -15,8 +15,8 @@ $hash = isset($_REQUEST['hash']) ? trim($_REQUEST['hash']) : '';
 $get_editor_img_mode = $config['cf_editor'] ? false : true;
 
 $iq_secret = isset($_POST['iq_secret']) ? (int) $_POST['iq_secret'] : 0;
-$iq_email = isset($_POST['iq_email']) ? clean_xss_tags($_POST['iq_email'], 1, 1) : '';
-$iq_hp = isset($_POST['iq_hp']) ? clean_xss_tags($_POST['iq_hp'], 1, 1) : '';
+$iq_email = isset($_POST['iq_email']) ? addslashes(clean_xss_tags(stripslashes($_POST['iq_email']), 1, 1)) : '';
+$iq_hp = isset($_POST['iq_hp']) ? addslashes(clean_xss_tags(stripslashes($_POST['iq_hp']), 1, 1)) : '';
 $is_mobile_shop = isset($_REQUEST['is_mobile_shop']) ? (int) $_REQUEST['is_mobile_shop'] : 0;
 
 if ($w == "" || $w == "u") {
