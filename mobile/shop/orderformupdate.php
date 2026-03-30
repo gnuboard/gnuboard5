@@ -594,25 +594,25 @@ if($default['de_tax_flag_use']) {
 }
 
 $od_email         = get_email_address($od_email);
-$od_name          = clean_xss_tags($od_name);
-$od_tel           = clean_xss_tags($od_tel);
-$od_hp            = clean_xss_tags($od_hp);
+$od_name          = addslashes(clean_xss_tags(stripslashes($od_name)));
+$od_tel           = addslashes(clean_xss_tags(stripslashes($od_tel)));
+$od_hp            = addslashes(clean_xss_tags(stripslashes($od_hp)));
 $od_zip           = preg_replace('/[^0-9]/', '', $od_zip);
 $od_zip1          = substr($od_zip, 0, 3);
 $od_zip2          = substr($od_zip, 3);
-$od_addr1         = clean_xss_tags($od_addr1);
-$od_addr2         = clean_xss_tags($od_addr2);
-$od_addr3         = clean_xss_tags($od_addr3);
+$od_addr1         = addslashes(clean_xss_tags(stripslashes($od_addr1)));
+$od_addr2         = addslashes(clean_xss_tags(stripslashes($od_addr2)));
+$od_addr3         = addslashes(clean_xss_tags(stripslashes($od_addr3)));
 $od_addr_jibeon   = preg_match("/^(N|R)$/", $od_addr_jibeon) ? $od_addr_jibeon : '';
-$od_b_name        = clean_xss_tags($od_b_name);
-$od_b_tel         = clean_xss_tags($od_b_tel);
-$od_b_hp          = clean_xss_tags($od_b_hp);
-$od_b_addr1       = clean_xss_tags($od_b_addr1);
-$od_b_addr2       = clean_xss_tags($od_b_addr2);
-$od_b_addr3       = clean_xss_tags($od_b_addr3);
+$od_b_name        = addslashes(clean_xss_tags(stripslashes($od_b_name)));
+$od_b_tel         = addslashes(clean_xss_tags(stripslashes($od_b_tel)));
+$od_b_hp          = addslashes(clean_xss_tags(stripslashes($od_b_hp)));
+$od_b_addr1       = addslashes(clean_xss_tags(stripslashes($od_b_addr1)));
+$od_b_addr2       = addslashes(clean_xss_tags(stripslashes($od_b_addr2)));
+$od_b_addr3       = addslashes(clean_xss_tags(stripslashes($od_b_addr3)));
 $od_b_addr_jibeon = preg_match("/^(N|R)$/", $od_b_addr_jibeon) ? $od_b_addr_jibeon : '';
-$od_memo          = clean_xss_tags($od_memo, 0, 1, 0, 0);
-$od_deposit_name  = clean_xss_tags($od_deposit_name);
+$od_memo          = addslashes(clean_xss_tags(stripslashes($od_memo), 0, 1, 0, 0));
+$od_deposit_name  = addslashes(clean_xss_tags(stripslashes($od_deposit_name)));
 $od_tax_flag      = $default['de_tax_flag_use'];
 
 // 주문서에 입력
