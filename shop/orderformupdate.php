@@ -953,7 +953,7 @@ if($is_member) {
         sql_query($sql);
     }
 
-    $ad_subject = isset($_POST['ad_subject']) ? clean_xss_tags($_POST['ad_subject']) : '';
+    $ad_subject = isset($_POST['ad_subject']) ? addslashes(clean_xss_tags(stripslashes($_POST['ad_subject']))) : '';
 
     if(isset($row['ad_id']) && $row['ad_id']){
         $sql = " update {$g5['g5_shop_order_address_table']}

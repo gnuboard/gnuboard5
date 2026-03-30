@@ -1002,7 +1002,7 @@ if($is_member) {
         sql_query($sql);
     }
 
-    $ad_subject = clean_xss_tags($ad_subject);
+    $ad_subject = addslashes(clean_xss_tags(stripslashes($ad_subject)));
 
     if($row['ad_id']){
         $sql = " update {$g5['g5_shop_order_address_table']}
