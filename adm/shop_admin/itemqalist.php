@@ -31,6 +31,9 @@ if (!$sst) {
     $sst = "iq_id";
     $sod = "desc";
 }
+$allowed_sst = array('iq_id', 'a.it_id', 'it_name', 'iq_time');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'iq_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 
 $sql_common = "  from {$g5['g5_shop_item_qa_table']} a
                  left join {$g5['g5_shop_item_table']} b on (a.it_id = b.it_id)

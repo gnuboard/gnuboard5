@@ -8,6 +8,9 @@ $skin = isset($_REQUEST['skin']) ? safe_replace_regex($_REQUEST['skin'], 'skin')
 if( isset($sort) && ! in_array($sort, array('it_name', 'it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time')) ){
     $sort='';
 }
+if( !isset($sortodr) || !in_array(strtolower($sortodr), array('asc', 'desc')) ){
+    $sortodr='';
+}
 
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/list.php');
