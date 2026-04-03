@@ -5,12 +5,22 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 if ($w == '')
 {
     $po_id   = isset($_POST['po_id']) ? (int) $_POST['po_id'] : '';
-    $pc_name = isset($_POST['pc_name']) ? addslashes(clean_xss_tags(stripslashes($_POST['pc_name']), 1, 1)) : '';
-    $pc_idea = isset($_POST['pc_idea']) ? addslashes(clean_xss_tags(stripslashes($_POST['pc_idea']), 1, 1)) : '';
 
     $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
     if (!$po['po_id'])
         alert('po_id 값이 제대로 넘어오지 않았습니다.');
+
+    // 기타의견 사용 여부 검사
+    if (!$po['po_etc'])
+        alert('기타의견이 비활성화되어 있습니다.');
+
+    // 접근 권한 검사
+    if ($member['mb_level'] < $po['po_level'])
+        alert('권한이 없습니다.');
+
+    $pc_name = isset($_POST['pc_name']) ? addslashes(clean_xss_tags(stripslashes($_POST['pc_name']), 1, 1)) : '';
+    $pc_name = preg_replace("#[\\\]+$#", "", $pc_name);
+    $pc_idea = isset($_POST['pc_idea']) ? addslashes(clean_xss_tags(stripslashes($_POST['pc_idea']), 1, 1)) : '';
 
     $tmp_row = sql_fetch(" select max(pc_id) as max_pc_id from {$g5['poll_etc_table']} ");
     $pc_id = $tmp_row['max_pc_id'] + 1;
