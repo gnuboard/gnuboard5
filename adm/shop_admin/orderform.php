@@ -509,39 +509,33 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php
                         if ($od['od_settle_case'] != '무통장') {
                             switch($od['od_pg']) {
-                                case 'lg':
-                                    $pg_url  = 'https://app.tosspayments.com';
-                                    $pg_test = '토스페이먼츠(구버전)';
-                                    if ($default['de_card_test']) {
-                                        $pg_url = 'https://pgweb.tosspayments.com/tmert';
-                                        $pg_test .= ' 테스트 ';
-                                    }
-                                    break;
                                 case 'inicis':
                                     $pg_url  = 'https://iniweb.inicis.com/';
-                                    $pg_test = 'KG이니시스';
+                                    $pg_test = 'KG이니시스 ';
                                     break;
                                 case 'KAKAOPAY':
                                     $pg_url  = 'https://mms.cnspay.co.kr';
-                                    $pg_test = 'KAKAOPAY';
+                                    $pg_test = 'KAKAOPAY ';
                                     break;
                                 case 'nicepay':
                                     $pg_url  = 'https://npg.nicepay.co.kr/';
-                                    $pg_test = 'NICEPAY';
+                                    $pg_test = 'NICEPAY ';
                                     break;
+                                case 'lg':
                                 case 'toss':
                                     $pg_url  = 'https://app.tosspayments.com';
                                     $pg_test = '토스페이먼츠 ';
+                                    // 상점관리자 로그인 후 상단 '테스트 모드' 활성화 시 테스트 화면 노출
                                     break;
                                 default:
-                                    $pg_url  = 'http://admin8.kcp.co.kr';
-                                    $pg_test = 'KCP';
+                                    $pg_url  = 'https://partner.kcp.co.kr';
+                                    $pg_test = 'KCP ';
                                     if ($default['de_card_test']) {
                                         // 로그인 아이디 / 비번
                                         // 일반 : test1234 / test12345
                                         // 에스크로 : escrow / escrow913
-                                        $pg_url = 'http://testadmin8.kcp.co.kr';
-                                        $pg_test .= ' 테스트 ';
+                                        $pg_url = 'https://testpartner.kcp.co.kr';
+                                        $pg_test .= '테스트 ';
                                     }
 
                                 }
