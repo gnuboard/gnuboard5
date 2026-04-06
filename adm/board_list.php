@@ -32,6 +32,9 @@ if (!$sst) {
     $sst  = "a.gr_id, a.bo_table";
     $sod = "asc";
 }
+$allowed_sst = array('a.gr_id', 'bo_table', 'bo_skin', 'bo_mobile_skin', 'bo_subject', 'bo_use_sns', 'bo_use_search', 'bo_order', 'a.gr_id, a.bo_table');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'a.gr_id, a.bo_table';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";

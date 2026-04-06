@@ -158,7 +158,7 @@ if ($g5_install || $is_install === false) {
                     cf_theme = 'basic',
                     cf_admin = '$admin_id',
                     cf_admin_email = '$admin_email',
-                    cf_admin_email_name = '".G5_VERSION."',
+                    cf_admin_email_name = '".G5_VERSION.'_'.substr(base_convert(mt_rand(), 10, 36), 0, 6)."',
                     cf_use_point = '1',
                     cf_use_copy_log = '1',
                     cf_login_point = '100',

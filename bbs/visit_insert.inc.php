@@ -6,8 +6,8 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
 {
     set_cookie('ck_visit_ip', $_SERVER['REMOTE_ADDR'], 86400); // 하루동안 저장
 
-    $tmp_row = sql_fetch(" select max(vi_id) as max_vi_id from {$g5['visit_table']} ");
-    $vi_id = $tmp_row['max_vi_id'] + 1;
+    // $tmp_row = sql_fetch(" select max(vi_id) as max_vi_id from {$g5['visit_table']} ");
+    // $vi_id = $tmp_row['max_vi_id'] + 1;
 
     // $_SERVER 배열변수 값의 변조를 이용한 SQL Injection 공격을 막는 코드입니다. 110810
     $remote_addr = escape_trim($_SERVER['REMOTE_ADDR']);
@@ -23,7 +23,7 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
     if(version_compare(phpversion(), '5.3.0', '>=') && defined('G5_BROWSCAP_USE') && G5_BROWSCAP_USE) {
         include_once(G5_BBS_PATH.'/visit_browscap.inc.php');
     }
-    $sql = " insert {$g5['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent, vi_browser, vi_os, vi_device ) values ( '{$vi_id}', '{$remote_addr}', '".G5_TIME_YMD."', '".G5_TIME_HIS."', '{$referer}', '{$user_agent}', '{$vi_browser}', '{$vi_os}', '{$vi_device}' ) ";
+    $sql = " insert {$g5['visit_table']} ( vi_ip, vi_date, vi_time, vi_referer, vi_agent, vi_browser, vi_os, vi_device ) values ( '{$remote_addr}', '".G5_TIME_YMD."', '".G5_TIME_HIS."', '{$referer}', '{$user_agent}', '{$vi_browser}', '{$vi_os}', '{$vi_device}' ) ";
 
     $result = sql_query($sql, FALSE);
     // 정상으로 INSERT 되었다면 방문자 합계에 반영

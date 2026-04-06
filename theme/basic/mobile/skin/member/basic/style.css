@@ -70,6 +70,10 @@
 .fregister_agree input[type="checkbox"]:checked + label {color:#000}
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:15px}
+#fregisterform .consent-line {display: flex; align-items: baseline;}
+#fregisterform .consent-date { margin: 5px 0 0 20px !important; }
+#fregisterform .consent-group .sub-consents {padding: 10px 20px 0;}
+#fregisterform .js-open-consent {flex:1 0 auto; margin-left: 10px; text-align: right; font-size: 12px; color: #3f51b5; background: none; border: none; cursor: pointer; text-decoration: underline; }
 
 /* 회원가입 완료 */
 #reg_result {padding:20px 10px 10px}

@@ -54,8 +54,8 @@ echo '<form name="forderform" method="post" action="'.$order_action_url.'" autoc
 
 echo make_order_field($data, $exclude);
 
-echo '<input type="hidden" name="res_cd" value="'.$LGD_RESPCODE.'">'.PHP_EOL;
-echo '<input type="hidden" name="LGD_PAYKEY" value="'.$LGD_PAYKEY.'">'.PHP_EOL;
+echo '<input type="hidden" name="res_cd" value="'.get_text($LGD_RESPCODE).'">'.PHP_EOL;
+echo '<input type="hidden" name="LGD_PAYKEY" value="'.get_text($LGD_PAYKEY).'">'.PHP_EOL;
 
 echo '</form>'.PHP_EOL;
 ?>

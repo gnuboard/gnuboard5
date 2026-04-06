@@ -8,10 +8,23 @@ $skin = isset($_REQUEST['skin']) ? safe_replace_regex($_REQUEST['skin'], 'skin')
 if( isset($sort) && ! in_array($sort, array('it_name', 'it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time')) ){
     $sort='';
 }
+if( !isset($sortodr) || !in_array(strtolower($sortodr), array('asc', 'desc')) ){
+    $sortodr='';
+}
 
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/list.php');
     return;
+}
+
+// 테마에 list.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_list_file = G5_THEME_SHOP_PATH.'/list.php';
+    if(is_file($theme_list_file)) {
+        include_once($theme_list_file);
+        return;
+    }
+    unset($theme_list_file);
 }
 
 $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' and ca_use = '1'  ";

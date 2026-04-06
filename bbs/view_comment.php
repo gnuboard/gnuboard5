@@ -7,7 +7,7 @@ if ($is_guest && $board['bo_comment_level'] < 2) {
     $captcha_html = captcha_html('_comment');
 }
 
-$c_id = isset($_GET['c_id']) ? clean_xss_tags($_GET['c_id'], 1, 1) : '';
+$c_id = isset($_GET['c_id']) ? preg_replace('/[\'",]/', '', clean_xss_tags($_GET['c_id'], 1, 1)) : '';
 $c_wr_content = '';
 
 @include_once($board_skin_path.'/view_comment.head.skin.php');

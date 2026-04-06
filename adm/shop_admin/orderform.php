@@ -509,35 +509,33 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php
                         if ($od['od_settle_case'] != '무통장') {
                             switch($od['od_pg']) {
-                                case 'lg':
-                                    $pg_url  = 'https://app.tosspayments.com';
-                                    $pg_test = '토스페이먼츠';
-                                    if ($default['de_card_test']) {
-                                        $pg_url = 'https://pgweb.tosspayments.com/tmert';
-                                        $pg_test .= ' 테스트 ';
-                                    }
-                                    break;
                                 case 'inicis':
                                     $pg_url  = 'https://iniweb.inicis.com/';
-                                    $pg_test = 'KG이니시스';
+                                    $pg_test = 'KG이니시스 ';
                                     break;
                                 case 'KAKAOPAY':
                                     $pg_url  = 'https://mms.cnspay.co.kr';
-                                    $pg_test = 'KAKAOPAY';
+                                    $pg_test = 'KAKAOPAY ';
                                     break;
                                 case 'nicepay':
                                     $pg_url  = 'https://npg.nicepay.co.kr/';
-                                    $pg_test = 'NICEPAY';
+                                    $pg_test = 'NICEPAY ';
+                                    break;
+                                case 'lg':
+                                case 'toss':
+                                    $pg_url  = 'https://app.tosspayments.com';
+                                    $pg_test = '토스페이먼츠 ';
+                                    // 상점관리자 로그인 후 상단 '테스트 모드' 활성화 시 테스트 화면 노출
                                     break;
                                 default:
-                                    $pg_url  = 'http://admin8.kcp.co.kr';
-                                    $pg_test = 'KCP';
+                                    $pg_url  = 'https://partner.kcp.co.kr';
+                                    $pg_test = 'KCP ';
                                     if ($default['de_card_test']) {
                                         // 로그인 아이디 / 비번
                                         // 일반 : test1234 / test12345
                                         // 에스크로 : escrow / escrow913
-                                        $pg_url = 'http://testadmin8.kcp.co.kr';
-                                        $pg_test .= ' 테스트 ';
+                                        $pg_url = 'https://testpartner.kcp.co.kr';
+                                        $pg_test .= '테스트 ';
                                     }
 
                                 }
@@ -630,6 +628,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                     break;
                             }
                             $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else if($od['od_pg'] == 'toss') {
+                            $cash_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/mids/si_'.$config['cf_lg_mid'].'/orders/'.$od['od_id'].'/cash-receipt?ref=dashboard\',\'receipt\',\'width=430,height=700\');';
                         } else if($od['od_pg'] == 'inicis') {
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
@@ -719,6 +719,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <label for="od_sms_ipgum_check">SMS 입금 문자전송</label>
                         <br>
                         <?php } ?>
+
                         <input type="text" name="od_deposit_name" value="<?php echo get_text($od['od_deposit_name']); ?>" id="od_deposit_name" class="frm_input">
                     </td>
                 </tr>
@@ -826,6 +827,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
                         <br>
                         <?php } ?>
+
                         <input type="text" name="od_invoice" value="<?php echo $od['od_invoice']; ?>" id="od_invoice" class="frm_input">
                     </td>
                 </tr>

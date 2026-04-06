@@ -422,6 +422,30 @@ if (!isset($config['cf_cert_kcp_enckey'])) {
     $config['cf_cert_kcp_enckey'] = '';
 }
 
+// 광고성 정보 수신 동의 사용 필드 추가
+if (!isset($config['cf_use_promotion'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['config_table']}`
+            ADD `cf_use_promotion` tinyint(1) NOT NULL DEFAULT '0' AFTER `cf_privacy` ",
+        true
+    );
+}
+
+// 광고성 정보 수신 동의 여부 필드 추가 + 메일 / SMS 수신 일자 추가
+if (!isset($member['mb_marketing_agree'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_marketing_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_scrap_cnt`,
+                ADD `mb_marketing_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_marketing_agree`,
+                ADD `mb_thirdparty_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_marketing_date`,
+                ADD `mb_thirdparty_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_thirdparty_agree`,
+                ADD `mb_agree_log` TEXT NOT NULL AFTER `mb_thirdparty_date`,
+                ADD `mb_mailling_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_mailling`,
+                ADD `mb_sms_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_sms` ",
+        true
+    );
+}
+
 if (!$config['cf_faq_skin']) {
     $config['cf_faq_skin'] = "basic";
 }
@@ -963,6 +987,17 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <th scope="row"><label for="cf_privacy">개인정보처리방침</label></th>
                         <td colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?php echo html_purifier($config['cf_privacy']); ?></textarea></td>
                     </tr>
+                    <tr>
+                        <th scope="row"><label for="cf_use_promotion">회원가입 약관 동의에<br>광고성 정보 수신 동의 표시 여부</label></th>
+                        <td colspan="3">
+                            <?php echo help('<b>광고성 정보 수신 · 마케팅 목적의 개인정보 수집 및 이용 · 개인정보 제 3자 제공</b> 여부를 설정합니다. <b>SMS 또는 카카오톡</b> 사용 시 <b>개인정보 제3자 제공</b>이 활성화됩니다.'); ?>
+                            <?php echo help('동의한 회원에게 <b>카카오톡(친구톡)·문자</b>로 광고성 메시지를 발송할 수 있습니다.'); ?>
+                            <?php echo help('<b>휴대전화번호</b> 사용을 위해서는 <b>기본환경설정 > 회원가입 > 휴대전화번호 입력</b>을 <b>[보이기]</b> 또는 <b>[필수입력]</b>으로 설정해야 하며, 미설정 시 수집이 불가합니다.'); ?>
+                            <?php echo help('* 「정보통신망이용촉진및정보보호등에관한법률」에 따라 <b>광고성 정보 수신 동의</b>를 매 2년마다 반드시 확인해야 합니다.'); ?>
+                            <input type="checkbox" name="cf_use_promotion" value="1" id="cf_use_promotion" <?php echo $config['cf_use_promotion'] ? 'checked' : ''; ?>> 
+                            <label for="cf_use_promotion">사용</label>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -1138,6 +1173,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <input type="checkbox" name="cf_formmail_is_member" value="1" id="cf_formmail_is_member" <?php echo $config['cf_formmail_is_member'] ? 'checked' : ''; ?>> 회원만 사용
                         </td>
                     </tr>
+                </tbody>
             </table>
         </div>
     </section>
@@ -1525,7 +1561,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </table>
         </div>
     </section>
-
 
     <section id="anc_cf_extra">
         <h2 class="h2_frm">여분필드 기본 설정</h2>

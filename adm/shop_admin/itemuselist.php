@@ -33,6 +33,9 @@ if (!$sst) {
     $sst = "is_id";
     $sod = "desc";
 }
+$allowed_sst = array('is_id', 'a.it_id', 'it_name', 'is_name', 'is_score', 'is_time');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'is_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 
 $sql_common = "  from {$g5['g5_shop_item_use_table']} a
                  left join {$g5['g5_shop_item_table']} b on (a.it_id = b.it_id)
@@ -81,7 +84,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         $nbsp = "";
         for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
         $selected = ($row1['ca_id'] == $sca) ? ' selected="selected"' : '';
-        echo '<option value="'.$row1['ca_id'].'"'.$selected.'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
+        // 전체 카테고리 경로 표시
+        $category_path = function_exists('get_shop_category_path') ? get_shop_category_path($row1['ca_id']) : $row1['ca_name'];
+        echo '<option value="'.$row1['ca_id'].'"'.$selected.'>'.$nbsp.$category_path.PHP_EOL;
     }
     ?>
 </select>

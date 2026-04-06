@@ -111,7 +111,7 @@ $ct_cert->mf_clear();
 <input type="hidden" name="param_opt_2"  value="opt2"/>
 <input type="hidden" name="param_opt_3"  value="opt3"/>
 
-<?php if ($config['cf_cert_kcp_enckey']) { ?>
+<?php if ($config['cf_cert_kcp_enckey'] || $kcp_enc_key) { ?>
 <!-- 리턴 암호화 고도화 -->
 <input type="hidden" name="cert_enc_use_ext" value="Y"/>
 <input type='hidden' name='kcp_cert_lib_ver' value="<?php echo $ct_cert->get_kcp_lib_ver( $home_dir ); ?>"/>

@@ -269,6 +269,88 @@ while ($row = sql_fetch_array($result)){
     }
 }
 
+// SMS5 테이블 G5_TABLE_PREFIX 적용
+if($g5['sms5_prefix'] != 'sms5_' && sql_num_rows(sql_query("show tables like 'sms5_config'")))
+{
+    $tables = array('config','write','history','book','book_group','form','form_group');
+
+    foreach($tables as $name){
+        $old_table = 'sms5_' . $name;
+        $new_table = $g5['sms5_prefix'] . $name;
+
+        // 기존 테이블이 있고, G5_TABLE_PREFIX 적용 테이블이 없을 경우 → 테이블명 변경
+        if(sql_num_rows(sql_query("SHOW TABLES LIKE '{$old_table}' "))){
+            if(!sql_num_rows(sql_query("SHOW TABLES LIKE '{$new_table}' "))){
+                sql_query("RENAME TABLE {$old_table} TO {$new_table}", false);
+            }
+        }
+    }
+
+    $is_check = true;
+}
+
+// 광고성 정보 수신 동의 사용 필드 추가
+if (!isset($config['cf_use_promotion'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['config_table']}`
+            ADD `cf_use_promotion` tinyint(1) NOT NULL DEFAULT '0' AFTER `cf_privacy` ",
+        true
+    );
+
+    $is_check = true;
+}
+
+// 광고성 정보 수신 동의 여부 필드 추가 + 메일 / SMS 수신 일자 추가
+if (!isset($member['mb_marketing_agree'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_marketing_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_scrap_cnt`,
+                ADD `mb_marketing_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_marketing_agree`,
+                ADD `mb_thirdparty_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_marketing_date`,
+                ADD `mb_thirdparty_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_thirdparty_agree`,
+                ADD `mb_agree_log` TEXT NOT NULL AFTER `mb_thirdparty_date`,
+                ADD `mb_mailling_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_mailling`,
+                ADD `mb_sms_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_sms` ",
+        true
+    );
+
+    $is_check = true;
+}
+
+// 쿠폰 로그 테이블에 UNIQUE 인덱스 추가 (쿠폰 이중사용 방지)
+if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
+    $result = sql_query("SHOW INDEX FROM `{$g5['g5_shop_coupon_log_table']}` WHERE Key_name = 'idx_coupon_use'", false);
+    if (!$result || !sql_num_rows($result)) {
+        // 기존에 동일 쿠폰이 중복 사용된 데이터가 있으면 UNIQUE 인덱스 생성 실패하므로 중복 데이터 정리
+        $dup_sql = " SELECT cp_id, mb_id, MIN(cl_id) as keep_id
+                       FROM `{$g5['g5_shop_coupon_log_table']}`
+                      GROUP BY cp_id, mb_id
+                     HAVING COUNT(*) > 1 ";
+
+        $dup_result = sql_query($dup_sql, false);
+        if ($dup_result && sql_num_rows($dup_result)) {
+            while ($dup_row = sql_fetch_array($dup_result)) {
+                
+                echo $dup_row['cp_id']." 의 동일 쿠폰이 중복 사용된 데이터가 있으므로 인덱스 생성이 불가합니다. <br>";
+                
+                $sql = " DELETE FROM `{$g5['g5_shop_coupon_log_table']}`
+                             WHERE cp_id = '{$dup_row['cp_id']}'
+                               AND mb_id = '{$dup_row['mb_id']}'
+                               AND cl_id != '{$dup_row['keep_id']}' ";
+                if ($is_admin === 'super') {
+                    echo "데이터베이스에서 검토후에 이 쿼리문을 실행해 주세요.<br>$sql<br>";
+                }
+                // sql_query($sql);
+            }
+        }
+
+        // MyISAM + utf8mb4 환경에서 키 길이 초과 방지: cp_id varchar(100), mb_id varchar(100)으로 조정
+        sql_query("ALTER TABLE `{$g5['g5_shop_coupon_log_table']}` MODIFY `cp_id` varchar(100) NOT NULL DEFAULT '', MODIFY `mb_id` varchar(100) NOT NULL DEFAULT ''", false);
+        sql_query("ALTER TABLE `{$g5['g5_shop_coupon_log_table']}` ADD UNIQUE KEY `idx_coupon_use` (`cp_id`, `mb_id`)", false);
+        $is_check = true;
+    }
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';

@@ -16,7 +16,8 @@ if (substr_count($wr_content, "&#") > 50) {
 }
 
 $w = isset($_POST['w']) ? clean_xss_tags($_POST['w']) : '';
-$wr_name  = isset($_POST['wr_name']) ? clean_xss_tags(trim($_POST['wr_name'])) : '';
+$wr_name  = isset($_POST['wr_name']) ? addslashes(clean_xss_tags(stripslashes(trim($_POST['wr_name'])))) : '';
+$wr_name  = preg_replace("#[\\\]+$#", "", $wr_name);
 $wr_secret = isset($_POST['wr_secret']) ? clean_xss_tags($_POST['wr_secret']) : '';
 $wr_email = $wr_subject = '';
 $reply_array = array();
@@ -33,7 +34,7 @@ $wr_9 = isset($_POST['wr_9']) ? $_POST['wr_9'] : '';
 $wr_10 = isset($_POST['wr_10']) ? $_POST['wr_10'] : '';
 $wr_facebook_user = isset($_POST['wr_facebook_user']) ? clean_xss_tags($_POST['wr_facebook_user'], 1, 1) : '';
 $wr_twitter_user = isset($_POST['wr_twitter_user']) ? clean_xss_tags($_POST['wr_twitter_user'], 1, 1) : '';
-$wr_homepage = isset($_POST['wr_homepage']) ? clean_xss_tags($_POST['wr_homepage'], 1, 1) : '';
+$wr_homepage = isset($_POST['wr_homepage']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_homepage']), 1, 1)) : '';
 
 if (!empty($_POST['wr_email']))
     $wr_email = get_email_address(trim($_POST['wr_email']));

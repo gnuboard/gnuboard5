@@ -46,6 +46,9 @@ if (!$sst)  {
     $sst  = "it_id";
     $sod = "desc";
 }
+$allowed_sst = array('it_id', 'it_name', 'it_type1', 'it_type2', 'it_type3', 'it_type4', 'it_type5', 'ca_id');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'it_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = "order by $sst $sod";
 
 $sql_common = "  from {$g5['g5_shop_item_table']} ";
@@ -98,7 +101,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         $len = strlen($row1['ca_id']) / 2 - 1;
         $nbsp = "";
         for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-        echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].PHP_EOL;
+        // 전체 카테고리 경로 표시
+        $category_path = function_exists('get_shop_category_path') ? get_shop_category_path($row1['ca_id']) : $row1['ca_name'];
+        echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$category_path.PHP_EOL;
     }
     ?>
 </select>

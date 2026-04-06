@@ -17,7 +17,7 @@ if ($is_member && $count) {
         $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
         $ad_id = isset($_POST['ad_id'][$k]) ? (int) $_POST['ad_id'][$k] : 0;
 
-        $ad_subject = isset($_POST['ad_subject'][$k]) ? clean_xss_tags($_POST['ad_subject'][$k]) : '';
+        $ad_subject = isset($_POST['ad_subject'][$k]) ? addslashes(clean_xss_tags(stripslashes($_POST['ad_subject'][$k]))) : '';
 
         $sql = " update {$g5['g5_shop_order_address_table']}
                     set ad_subject = '".sql_real_escape_string($ad_subject)."' ";

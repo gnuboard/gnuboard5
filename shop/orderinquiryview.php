@@ -334,6 +334,8 @@ if($od['od_pg'] == 'lg') {
                                 $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
 
                                 $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else if($od['od_pg'] == 'toss') {
+	                            $hp_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/phone?transactionId='.$od['od_tno'].'&ref=PX\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'inicis') {
                                 $hp_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'nicepay') {
@@ -355,6 +357,8 @@ if($od['od_pg'] == 'lg') {
                                 $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
 
                                 $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else if($od['od_pg'] == 'toss') {
+	                            $card_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/redirection?transactionId='.$od['od_tno'].'&ref=PX\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'inicis') {
                                 $card_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'nicepay') {
@@ -406,13 +410,13 @@ if($od['od_pg'] == 'lg') {
                 // 현금영수증 발급을 사용하는 경우에만
                 if ((function_exists('shop_is_taxsave') && shop_is_taxsave($od)) || (function_exists('is_order_cashreceipt') && is_order_cashreceipt($od))) {
                     // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                    if ($misu_price == 0 && is_order_cashreceipt($od)) {
+                    if ($misu_price == 0) {
                 ?>
                 <tr>
                     <th scope="row">현금영수증</th>
                     <td>
                     <?php
-                    if ($od['od_cash'])
+                    if ($od['od_cash'] && is_order_cashreceipt($od))
                     {
                         if($od['od_pg'] == 'lg') {
                             require_once G5_SHOP_PATH.'/settle_lg.inc.php';
@@ -429,6 +433,8 @@ if($od['od_pg'] == 'lg') {
                                     break;
                             }
                             $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else if($od['od_pg'] == 'toss') {
+                            $cash_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/mids/si_'.$config['cf_lg_mid'].'/orders/'.$od['od_id'].'/cash-receipt?ref=dashboard\',\'receipt\',\'width=430,height=700\');';
                         } else if($od['od_pg'] == 'inicis') {
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';

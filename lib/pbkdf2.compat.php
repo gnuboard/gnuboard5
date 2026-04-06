@@ -50,6 +50,7 @@ function create_hash($password, $force_compat = false)
         $salt = base64_encode(mcrypt_create_iv(PBKDF2_COMPAT_SALT_BYTES, MCRYPT_DEV_URANDOM));
     } elseif (@file_exists('/dev/urandom') && $fp = @fopen('/dev/urandom', 'r')) {
         $salt = base64_encode(fread($fp, PBKDF2_COMPAT_SALT_BYTES));
+        fclose($fp); // 파일 닫기
     } else {
         $salt = '';
         for ($i = 0; $i < PBKDF2_COMPAT_SALT_BYTES; $i += 2) {

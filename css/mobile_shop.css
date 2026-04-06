@@ -228,6 +228,7 @@ box-shadow: 0 0 6px rgba(0,0,0,0.2);}
 #m_sod_frm_paysel .inicis_kakaopay{background:url('../img/kakao.png') no-repeat 50% 50% #ffeb00;border-radius:30px;height:26px;width:74px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:36px auto}
 #m_sod_frm_paysel .kakaopay_icon{background:url('../img/ico-mobile-kakaopay.png') no-repeat #fff;height:23px;width:63px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:45px auto;background-position: 10% 40%}
 #m_sod_frm_paysel .naverpay_icon{background:url('../img/ico-mobile-naverpay.png') no-repeat #fff;height:23px;width:60px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:45px auto;background-position: 0% 30%}
+#m_sod_frm_paysel .naverpay_icon.nhnkcp_icon{text-indent:0;padding-left:50px;padding-top:2px;width:83px}
 #m_sod_frm_paysel .applepay_icon{background:url('../img/ico-mobile-applepay.png') no-repeat #fff;height:30px;width:60px;display:inline-block;overflow:hidden;text-indent:-999px;background-size:43px auto}
 #m_sod_frm_paysel .ssgpay_icon{background:url('../img/ssgpay_icon.png') no-repeat 0px 3px #fff;width:55px;height:20px;background-size:100%;display:inline-block;overflow:hidden;text-indent:-999px}
 #m_sod_frm_paysel .skpay_icon{background:url('../img/skpay11_icon.png') no-repeat 0px 3px #fff;width:55px;height:20px;background-size:100%;display:inline-block;overflow:hidden;text-indent:-999px}
@@ -914,6 +915,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #sod_frm_paysel .inicis_kakaopay{background:url('../img/kakao.png') no-repeat 50% 50% #f4dc34;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .kakaopay_icon{background:url('../img/kakao.png') no-repeat 50% 50% #f4dc34;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .naverpay_icon{background:url('../img/ico-default-naverpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .naverpay_icon.nhnkcp_icon{text-indent:0;background-position: 50% 30%;padding-top:35px;padding-left:0;text-align:center}
 #sod_frm_paysel .samsungpay_icon{background:url('../img/samsungpay.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .ssgpay_icon{background:url('../img/ssgpay_icon.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .skpay_icon{background:url('../img/skpay11_icon.png') no-repeat 50% 50% #fff; background-size: 70px;display:inline-block;overflow:hidden;text-indent:-999px}

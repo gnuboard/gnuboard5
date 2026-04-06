@@ -130,6 +130,9 @@
 #fregisterform .rgs_name_li button {margin:5px 0 0;width:auto}
 #fregisterform .reg_mb_img_file {margin-bottom:30px}
 #fregisterform .reg_mb_img_file img {max-width:100%;height:auto}
+#fregisterform .consent-line {display: flex; align-items: baseline;}
+#fregisterform .consent-group .sub-consents {padding: 10px 20px 0;}
+#fregisterform .js-open-consent {flex:1 0 auto; margin-left: 10px; text-align: right; font-size: 12px; color: #3f51b5; background: none; border: none; cursor: pointer; text-decoration: underline; }
 
 .filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:10px;margin-right:5px;line-height:30px;border: 1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle}
 .filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:70px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;text-align:center;vertical-align:middle}

@@ -257,7 +257,13 @@ function url_auto_link($str)
 {
     global $g5;
     global $config;
-
+    
+    if ($replace_str = run_replace('url_auto_link_before', '', $str)) {
+        return $replace_str;
+    }
+    
+    $ori_str = $str;
+    
     // 140326 유창화님 제안코드로 수정
     // http://sir.kr/pg_lecture/461
     // http://sir.kr/pg_lecture/463
@@ -290,7 +296,7 @@ function url_auto_link($str)
     $str = preg_replace("/\t_gt_\t/", "&gt;", $str);
     */
 
-    return run_replace('url_auto_link', $str);
+    return run_replace('url_auto_link', $str, $ori_str);
 }
 
 
@@ -1135,7 +1141,11 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 function insert_use_point($mb_id, $point, $po_id='')
 {
     global $g5, $config;
-
+    
+    if ($replace_insert = run_replace('insert_use_point_before', '', $mb_id, $point, $po_id)) {
+        return $replace_insert;
+    }
+    
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date asc, po_id asc ";
     else
@@ -2668,6 +2678,10 @@ function get_uniqid()
 {
     global $g5;
 
+    if ($get_uniqid_key = run_replace('get_uniqid_key', '')) {
+        return $get_uniqid_key;
+    }
+    
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
@@ -2998,7 +3012,11 @@ class html_process {
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
         $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
-
+        
+        if (!isset($member['mb_id'])) {
+            $member['mb_id'] = '';
+        }
+        
         if ($tmp_row['cnt']) {
             $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
             sql_query($tmp_sql, FALSE);
@@ -3548,6 +3566,9 @@ function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len
         $result = preg_replace('#([^\p{L}]|^)(?:javascript|jar|applescript|vbscript|vbs|wscript|jscript|behavior|mocha|livescript|view-source)\s*:(?:.*?([/\\\;()\'">]|$))#ius',
                 '$1$2', $result);
 
+        // 따옴표 + 속성으로 강제 진입 차단 (예: "style=..., 'onerror=...)
+        $result = preg_replace('/["\']\s*(?:on\w+|style)\s*=\s*/i', '', $result);
+        
         if((string)$result === (string)$str) break;
 
         $str = $result;
@@ -3802,6 +3823,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     // KVE-2021-1277 Open Redirect 취약점 해결
     if (preg_match('#\\\0#', $url) || preg_match('/^\/{1,}\\\/', $url)) {
         alert('url 에 올바르지 않은 값이 포함되어 있습니다.');
+    }
+
+    if (preg_match('#//[^/@]+@#', $url)) {
+        alert('url에 사용자 정보가 포함되어 있어 접근할 수 없습니다.');
     }
 
     while ( ( $replace_url = preg_replace(array('/\/{2,}/', '/\\@/'), array('//', ''), urldecode($url)) ) != $url ) {
@@ -4071,10 +4096,16 @@ class str_encrypt
 
     function __construct($salt='')
     {
-        if(!$salt)
-            $this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr(G5_MYSQL_USER, -1), $_SERVER['SERVER_SOFTWARE'].$_SERVER['DOCUMENT_ROOT']));
-        else
+        global $config;
+        
+        if (!$salt) {
+            $config_hash = md5(serialize(array($config['cf_title'], $config['cf_theme'], $config['cf_admin_email_name'], $config['cf_login_point'], $config['cf_memo_send_point'])));
+            
+            //$this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr($config_hash, -1), $_SERVER['SERVER_SOFTWARE'].$config_hash.$_SERVER['DOCUMENT_ROOT']));
+            $this->salt = hash('sha256', preg_replace('/[^0-9A-Za-z]/', substr($config_hash, -1), $_SERVER['SERVER_SOFTWARE'].$config_hash.$_SERVER['DOCUMENT_ROOT']));
+        } else {
             $this->salt = $salt;
+        }
 
         $this->length = strlen($this->salt);
     }
@@ -4107,6 +4138,22 @@ class str_encrypt
         }
 
         return $result;
+    }
+}
+
+// 26년도에 너무 늦게 만들어서 기존의 사용자들과 충돌을 피하기 위해 get_sql_affected_rows 이라 네이밍함
+function get_sql_affected_rows($link=null)
+{
+    global $g5;
+
+    if (!$link) {
+        $link = $g5['connect_db'];
+    }
+
+    if (function_exists('mysqli_affected_rows') && G5_MYSQLI_USE) {
+        return @mysqli_affected_rows($link);
+    } else {
+        return @mysql_affected_rows($link);
     }
 }
 
@@ -4248,15 +4295,9 @@ function safe_replace_regex($str, $str_case=''){
     return preg_replace('/[^0-9a-z_\-]/i', '', $str);
 }
 
-function get_real_client_ip(){
-
-    $real_ip = $_SERVER['REMOTE_ADDR'];
-
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $_SERVER['HTTP_X_FORWARDED_FOR']) ){
-        $real_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
-
-    return preg_replace('/[^0-9.]/', '', $real_ip);
+function get_real_client_ip() {
+    
+    return run_replace('get_real_client_ip', $_SERVER['REMOTE_ADDR']);
 }
 
 function check_mail_bot($ip=''){
@@ -4325,7 +4366,14 @@ function is_include_path_check($path='', $is_input='')
             if ( $peer_count && $peer_count > $slash_count ){
                 return false;
             }
-
+            
+            $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(__DIR__)));
+            
+            // 웹서버 폴더만 허용
+            if ($dirname_doc_root && file_exists($path) && strpos(realpath($path), realpath($dirname_doc_root)) !== 0) {
+                return false;
+            }
+            
             try {
                 // whether $path is unix or not
                 $unipath = strlen($path)==0 || substr($path, 0, 1) != '/';
@@ -4361,8 +4409,8 @@ function is_include_path_check($path='', $is_input='')
                 //echo 'Caught exception: ',  $e->getMessage(), "\n";
                 return false;
             }
-
-            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
+            
+            if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pe(?:ar|cl)(?:cmd)?\.php/i', $replace_path)){
                 return false;
             }
             if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) || (preg_match('/search\.skin\.php/i', $replace_path) ) ){

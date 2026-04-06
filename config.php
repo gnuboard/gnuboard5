@@ -173,7 +173,7 @@ define('G5_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션
 define('G5_FILE_PERMISSION', 0644); // 파일 생성시 퍼미션
 
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
-define('G5_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|[^A]skt|nokia|blackberry|BB10|android|sony');
+define('G5_MOBILE_AGENT',   'phone|samsung.*mobile|lgtel|mobile|[^A]skt|nokia|blackberry|BB10|android|sony');
 
 // SMTP
 // lib/mailer.lib.php 에서 사용
@@ -239,4 +239,4 @@ define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 define('G5_USE_DB_PDO', 0);
 
 // KAKAO 우편번호 서비스 CDN
-define('G5_POSTCODE_JS', '<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');
+define('G5_POSTCODE_JS', '<script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>');

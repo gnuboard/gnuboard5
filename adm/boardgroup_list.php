@@ -34,6 +34,9 @@ if ($stx) {
     $sql_search .= " ) ";
 }
 
+$allowed_sst = array('gr_id', 'gr_subject', 'gr_admin', 'gr_order');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = '';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 } else {

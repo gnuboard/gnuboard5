@@ -1010,7 +1010,7 @@ function get_item_options($it_id, $subject, $is_div='', $is_first_option_title='
                 for($k=0; $k<$opt_count; $k++) {
                     $opt_val = $opt[$k];
                     if(strlen($opt_val)) {
-                        $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
+                        $select .= '<option value="'.get_text($opt_val).'">'.get_text($opt_val).'</option>'.PHP_EOL;
                     }
                 }
                 $select .= '</select>'.PHP_EOL;
@@ -1046,7 +1046,7 @@ function get_item_options($it_id, $subject, $is_div='', $is_first_option_title='
             else
                 $soldout = '';
 
-            $select .= '<option value="'.$row['io_id'].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$row['io_id'].$price.$soldout.'</option>'.PHP_EOL;
+            $select .= '<option value="'.get_text($row['io_id']).','.$row['io_price'].','.$row['io_stock_qty'].'">'.get_text($row['io_id']).$price.$soldout.'</option>'.PHP_EOL;
         }
         $select .= '</select>'.PHP_EOL;
         
@@ -1101,7 +1101,7 @@ function get_item_supply($it_id, $subject, $is_div='', $is_first_option_title=''
             else
                 $soldout = '';
 
-            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$io_stock_qty.'">'.$opt_id[1].$price.$soldout.'</option>';
+            $options[$opt_id[0]][] = '<option value="'.get_text($opt_id[1]).','.$row['io_price'].','.$io_stock_qty.'">'.get_text($opt_id[1]).$price.$soldout.'</option>';
         }
     }
 
@@ -1122,7 +1122,7 @@ function get_item_supply($it_id, $subject, $is_div='', $is_first_option_title=''
             $first_option_title = $is_first_option_title ? $subj[$i] : '선택';
 
             $select = '<select id="it_supply_'.$seq.'" class="it_supply">'.PHP_EOL;
-            $select .= '<option value="">'.$first_option_title.'</option>'.PHP_EOL;
+            $select .= '<option value="">'.get_text($first_option_title).'</option>'.PHP_EOL;
             for($k=0; $k<$opt_count; $k++) {
                 $opt_val = $opt[$k];
                 if($opt_val) {
@@ -2461,7 +2461,7 @@ function get_itemuselist_thumbnail($it_id, $contents, $thumb_width, $thumb_heigh
 }
 
 function shop_is_taxsave($od, $is_view_receipt=false){
-	global $default, $is_memeber;
+	global $default, $is_member;
 
 	$od_pay_type = '';
 
@@ -2641,10 +2641,10 @@ function make_order_field($data, $exclude)
 
         if(is_array($value)) {
             foreach($value as $k=>$v) {
-                $field .= '<input type="hidden" name="'.$key.'['.$k.']" value="'.get_text($v).'">'.PHP_EOL;
+                $field .= '<input type="hidden" name="'.get_text($key.'['.$k.']').'" value="'.get_text($v).'">'.PHP_EOL;
             }
         } else {
-            $field .= '<input type="hidden" name="'.$key.'" value="'.get_text($value).'">'.PHP_EOL;
+            $field .= '<input type="hidden" name="'.get_text($key).'" value="'.get_text($value).'">'.PHP_EOL;
         }
     }
 
@@ -2770,6 +2770,50 @@ function get_item_images_info($it, $size=array(), $image_width=0, $image_height=
     return $images; 
 }
 
+// 카테고리 전체 경로를 가져오는 함수 (예: 남성의류 > 상의 > 셔츠)
+function get_shop_category_path($ca_id, $separator = ' &gt; ')
+{
+    global $g5;
+    static $category_cache = array(); // 카테고리명 캐시
+    static $path_cache = array();     // 경로 캐시
+
+    if (!$ca_id) return '';
+
+    // 동일한 separator로 이미 조회한 경로가 있으면 캐시에서 반환
+    $cache_key = $ca_id . '|' . $separator;
+    if (isset($path_cache[$cache_key])) {
+        return $path_cache[$cache_key];
+    }
+
+    $path_arr = array();
+    $ca_id_len = strlen($ca_id);
+
+    // 카테고리 ID를 2자리씩 분할하여 각 단계의 카테고리명을 조회
+    for ($i = 2; $i <= $ca_id_len; $i += 2) {
+        $current_ca_id = substr($ca_id, 0, $i);
+
+        // 캐시에 없으면 DB 조회
+        if (!isset($category_cache[$current_ca_id])) {
+            $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$current_ca_id' ";
+            $row = sql_fetch($sql);
+            if ($row) {
+                $category_cache[$current_ca_id] = $row['ca_name'];
+            } else {
+                $category_cache[$current_ca_id] = '';
+            }
+        }
+
+        if ($category_cache[$current_ca_id]) {
+            $path_arr[] = $category_cache[$current_ca_id];
+        }
+    }
+
+    $result = implode($separator, $path_arr);
+    $path_cache[$cache_key] = $result; // 결과를 캐시에 저장
+
+    return $result;
+}
+
 function check_payment_method($od_settle_case) {
     global $default;
 
@@ -2865,7 +2909,7 @@ function check_pay_name_replace($payname, $od=array(), $is_client=0){
         } else if( isset($od['od_pg']) && $od['od_pg'] === 'inicis' ){
             return 'KPAY';
         } else if( isset($od['od_pg']) && $od['od_pg'] === 'kcp' ){
-            if( isset($od['od_other_pay_type']) && $od['od_other_pay_type'] === 'OT16' ){
+            if( isset($od['od_other_pay_type']) && ($od['od_other_pay_type'] === 'OT16' || $od['od_other_pay_type'] === 'NHNKCP_NAVERMONEY')){
                 return '네이버페이_NHNKCP'.$add_str;
             } else if( isset($od['od_other_pay_type']) && ($od['od_other_pay_type'] === 'OT13' || $od['od_other_pay_type'] === 'NHNKCP_KAKAOMONEY') ){
                 return '카카오페이_NHNKCP'.$add_str;

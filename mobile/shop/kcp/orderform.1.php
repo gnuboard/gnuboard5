@@ -23,6 +23,9 @@ $param_opt_3 = isset($_REQUEST['param_opt_3']) ? clean_xss_tags($_REQUEST['param
 <input type="hidden" name="settle_method" value="">
 <input type="hidden" name="payco_direct"   value="">      <!-- PAYCO 결제창 호출 -->
 <input type="hidden" name="naverpay_direct" value="A" >    <!-- NAVERPAY 결제창 호출 -->
+<?php if(isset($default['de_easy_pay_services']) && in_array('used_nhnkcp_naverpay_point', explode(',', $default['de_easy_pay_services'])) ){     // 네이버페이 포인트 결제 옵션 ?>
+<input type="hidden" name="naverpay_point_direct" value="Y">    <!-- 네이버페이 포인트 결제를 하려면 naverpay_point_direct 를 Y  -->
+<?php } ?>
 <input type="hidden" name="kakaopay_direct" value="A" >    <!-- KAKAOPAY 결제창 호출 -->
 <input type="hidden" name="applepay_direct" value="A" >    <!-- APPLEPAY 결제창 호출 -->
 <!-- 주문번호 -->

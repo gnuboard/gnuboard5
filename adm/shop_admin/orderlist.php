@@ -16,6 +16,7 @@ $sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc')
 $sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('od_id', 'mb_id', 'od_name', 'od_tel', 'od_hp', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_deposit_name', 'od_invoice')) ) ? $_GET['sel_field'] : ''; 
 $od_status = isset($_GET['od_status']) ? get_search_string($_GET['od_status']) : '';
 $search = isset($_GET['search']) ? get_search_string($_GET['search']) : '';
+$save_search = isset($_GET['save_search']) ? get_search_string($_GET['save_search']) : '';
 
 $fr_date = (isset($_GET['fr_date']) && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_GET['fr_date'])) ? $_GET['fr_date'] : '';
 $to_date = (isset($_GET['to_date']) && preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_GET['to_date'])) ? $_GET['to_date'] : '';

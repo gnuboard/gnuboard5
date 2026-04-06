@@ -44,6 +44,9 @@ if (!$sst)
     $sst  = "ca_id";
     $sod = "asc";
 }
+$allowed_sst = array('ca_id', 'ca_name', 'ca_mb_id', 'ca_use');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'ca_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = "order by $sst $sod";
 
 // 출력할 레코드를 얻음

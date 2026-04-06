@@ -27,6 +27,30 @@ if ($_POST['act_button'] == "선택수정") {
         $post_mb_sms = isset($_POST['mb_sms'][$k]) ? (int) $_POST['mb_sms'][$k] : 0;
         $post_mb_open = isset($_POST['mb_open'][$k]) ? (int) $_POST['mb_open'][$k] : 0;
 
+        $agree_items = [];
+        // 광고성 이메일 수신동의 일자 추가
+        $post_mb_mailling_default = isset($_POST['mb_mailling_default'][$k]) ? (int) $_POST['mb_mailling_default'][$k] : 0;
+        $sql_mailling_date = "";
+        if ($post_mb_mailling_default != $post_mb_mailling) {
+            $sql_mailling_date =  " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+            $agree_items[] = "광고성 이메일 수신(" . ($post_mb_mailling == 1 ? "동의" : "철회") . ")";
+        }
+
+        // 광고성 SMS/카카오톡 수신동의 일자 추가
+        $post_mb_sms_default = isset($_POST['mb_sms_default'][$k]) ? (int) $_POST['mb_sms_default'][$k] : 0;
+        $sql_sms_date = "";
+        if ($post_mb_sms_default != $post_mb_sms) {
+            $sql_sms_date =  " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+            $agree_items[] = "광고성 SMS/카카오톡 수신(" . ($post_mb_sms == 1 ? "동의" : "철회") . ")";
+        }
+
+        // 동의 로그 추가
+        $sql_agree_log = "";
+        if (!empty($agree_items)) {
+            $agree_log = "[".G5_TIME_YMDHIS.", 회원관리 선택수정] " . implode(' | ', $agree_items) . "\n";
+            $sql_agree_log .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+        }
+
         $mb_datas[] = $mb = get_member($_POST['mb_id'][$k]);
 
         if (!(isset($mb['mb_id']) && $mb['mb_id'])) {
@@ -50,6 +74,9 @@ if ($_POST['act_button'] == "선택수정") {
                             mb_open = '" . $post_mb_open . "',
                             mb_certify = '" . sql_real_escape_string($post_mb_certify) . "',
                             mb_adult = '{$mb_adult}'
+                            {$sql_mailling_date}
+                            {$sql_sms_date}
+                            {$sql_agree_log}
                         where mb_id = '" . sql_real_escape_string($mb['mb_id']) . "' ";
             sql_query($sql);
         }

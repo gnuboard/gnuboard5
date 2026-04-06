@@ -22,18 +22,20 @@
         Contact @<a href='http://twitter.com/abraham'>abraham</a>
       </p>
       <hr />
-      <?php if (isset($menu)) { ?>
-        <?php echo $menu; ?>
+      <?php if (isset($menu) && is_string($menu)) { ?>
+        <?php echo htmlspecialchars($menu, ENT_QUOTES, 'UTF-8'); ?>
       <?php } ?>
     </div>
-    <?php if (isset($status_text)) { ?>
-      <?php echo '<h3>'.$status_text.'</h3>'; ?>
+    <?php if (isset($status_text) && is_string($status_text)) { ?>
+      <?php echo '<h3>'.htmlspecialchars($status_text, ENT_QUOTES, 'UTF-8').'</h3>'; ?>
     <?php } ?>
-    <p>
+    <div>
       <pre>
-        <?php print_r($content); ?>
+        <?php if (isset($content) && (is_array($content) || is_object($content))) {
+            echo htmlspecialchars(json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), ENT_QUOTES, 'UTF-8');
+        } ?>
       </pre>
-    </p>
+    </div>
 
   </body>
 </html>

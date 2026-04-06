@@ -117,7 +117,6 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
                                 where od_id = '$od_id' ";
                     sql_query($sql, FALSE);
                 }
-
             }
         }
 

@@ -293,11 +293,14 @@ if ( $req_tx == "pay" )
 
             $kcp_pay_method = $c_PayPlus->mf_get_res_data( "pay_method" ); // 카카오페이 결제수단
             // 카드 코드는 PACA, 카카오머니 코드는 PAKM
-
+            // https://developer.kcp.co.kr/page/document/directpay
+            
             if( $kcp_pay_method == "PAKM" ){    // 카카오머니
                 $card_mny = $kakaomny_mny = $c_PayPlus->mf_get_res_data( "kakaomny_mny" );
                 $app_time = $app_kakaomny_time = $c_PayPlus->mf_get_res_data( "app_kakaomny_time" );
                 $od_other_pay_type = 'NHNKCP_KAKAOMONEY';
+            } else if( $kcp_pay_method == "PANP" ){    // 네이버페이머니
+                $od_other_pay_type = 'NHNKCP_NAVERMONEY';
             }
 
             /* = -------------------------------------------------------------- = */

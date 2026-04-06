@@ -62,8 +62,18 @@ require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
         $checked = '';
 
         $escrow_title = "";
+        $escrow_products = array(); // 토스페이먼츠 escrowProducts 배열 생성
         if ($default['de_escrow_use']) {
             $escrow_title = "에스크로<br>";
+             
+            // 토스페이먼츠 escrowProducts 배열에 상품 정보 추가
+            $escrow_products[] = array(
+                'id'        => $pp['pp_id'],
+                'name'      => $pp['pp_name'].'님 개인결제',
+                'code'      => $pp['pp_id'],
+                'unitPrice' => (int) $pp['pp_price'],
+                'quantity'  => (int) 1
+            );  
         }
 
         if ($default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
@@ -89,7 +99,7 @@ require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 	        // 계좌이체 사용
 	        if ($default['de_iche_use']) {
 	            $multi_settle++;
-	            echo '<input type="radio" id="pp_settle_iche" name="pp_settle_case" value="계좌이체" '.$checked.'> <label for="pp_settle_iche" class="lb_icon"><span></span>'.$escrow_title.'계좌이체</label>'.PHP_EOL;
+	            echo '<input type="radio" id="pp_settle_iche" name="pp_settle_case" value="계좌이체" '.$checked.'> <label for="pp_settle_iche" class="lb_icon"><span></span>'.$escrow_title. ($default['de_pg_service'] == 'toss' ? '퀵계좌이체' :'계좌이체') . '</label>'.PHP_EOL;
 	            $checked = '';
 	        }
 			?>
@@ -233,6 +243,28 @@ function forderform_check(f)
             f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
             break;
     }
+    <?php } else if($default['de_pg_service'] == 'toss') { ?>
+    switch(settle_method)
+    {        
+        case "계좌이체":
+            f.method.value = "TRANSFER";
+            break;
+        case "가상계좌":
+            f.method.value = "VIRTUAL_ACCOUNT";
+            break;
+        case "휴대폰":
+            f.method.value = "MOBILE_PHONE";
+            break;
+        case "신용카드":
+            f.method.value = "CARD";
+            break;
+        case "간편결제":
+            f.method.value = "CARD";
+            break;
+        default:
+            f.method.value = "무통장";
+            break;
+    }
     <?php }  else if($default['de_pg_service'] == 'inicis') { ?>
     switch(settle_method)
     {
@@ -305,6 +337,59 @@ function forderform_check(f)
     f.LGD_TAXFREEAMOUNT.value = 0;
 
     if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
+          launchCrossPlatform(f);
+    } else {
+        f.submit();
+    }
+    <?php } ?>
+    <?php if($default['de_pg_service'] == 'toss') { ?>
+
+    f.orderId.value = '<?=$od_id?>';
+    f.orderName.value = '<?=$goods?>';
+
+    f.customerName.value = f.pp_name.value;
+    f.customerEmail.value = f.pp_email.value;
+    f.customerMobilePhone.value = f.pp_hp.value.replace(/[^0-9]/g, '');
+
+    f.cardUseCardPoint.value = false;
+    f.cardUseAppCardOnly.value = false;
+
+    <?php if($default['de_escrow_use']) { ?>
+    f.cardUseEscrow.value = 'true';
+    f.escrowProducts.value = JSON.stringify(<?php echo json_encode($escrow_products, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>);
+    <?php } ?>
+
+    if(settle_method == "간편결제") {
+        f.cardflowMode.value = 'DIRECT';
+    }
+
+    f.amountCurrency.value = 'KRW';
+    f.amountValue.value = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.taxFreeAmount.value = f.comm_free_mny.value;
+    <?php } ?>
+    f.windowTarget.value = 'iframe';
+
+    if(f.method.value != "무통장") {
+        // 주문정보 임시저장
+        var order_data = $(f).serialize();
+        var save_result = "";
+        $.ajax({
+            type: "POST",
+            data: order_data,
+            url: g5_url+"/shop/ajax.orderdatasave.php",
+            cache: false,
+            async: false,
+            success: function(data) {
+                save_result = data;
+            }
+        });
+
+        if(save_result) {
+            alert(save_result);
+            return false;
+        }
+
           launchCrossPlatform(f);
     } else {
         f.submit();
