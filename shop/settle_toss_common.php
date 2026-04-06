@@ -49,12 +49,19 @@ if (!is_array($data)) {
     exit;
 }
 
-// 공통 필드 정리
-$TOSS_CREATEDAT = isset($data["createdAt"]) ? $data["createdAt"] : '';
-$TOSS_SECRET = isset($data["secret"]) ? $data["secret"] : '';
-$TOSS_ORDERID = isset($data["orderId"]) ? $data["orderId"] : '';
-$TOSS_STATUS = isset($data["status"]) ? $data["status"] : '';
-$TOSS_TRANSACTIONKEY = isset($data["transactionKey"]) ? $data["transactionKey"] : '';
+// 공통 필드 정리 (php://input은 전역 addslashes()를 거치지 않으므로 sql_real_escape_string 적용)
+$TOSS_CREATEDAT = sql_real_escape_string(isset($data["createdAt"]) ? $data["createdAt"] : '');
+$TOSS_SECRET = sql_real_escape_string(isset($data["secret"]) ? $data["secret"] : '');
+$TOSS_ORDERID = sql_real_escape_string(isset($data["orderId"]) ? $data["orderId"] : '');
+$TOSS_STATUS = sql_real_escape_string(isset($data["status"]) ? $data["status"] : '');
+$TOSS_TRANSACTIONKEY = sql_real_escape_string(isset($data["transactionKey"]) ? $data["transactionKey"] : '');
+
+// orderId 형식 검증 (영문, 숫자, 하이픈, 언더스코어만 허용)
+if ($TOSS_ORDERID && !preg_match('/^[a-zA-Z0-9_-]+$/', $TOSS_ORDERID)) {
+    write_toss_log("잘못된 orderId 형식", $TOSS_ORDERID, $TOSS_STATUS);
+    http_response_code(400);
+    exit;
+}
 
 // 결제 상세 조회
 $toss = new TossPayments(
