@@ -1154,43 +1154,71 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 function insert_use_point($mb_id, $point, $po_id='')
 {
     global $g5, $config;
-    
+
     if ($replace_insert = run_replace('insert_use_point_before', '', $mb_id, $point, $po_id)) {
         return $replace_insert;
     }
-    
+
+    // 레이스 컨디션 방지: 매 단계마다 가장 오래된 행 1개를 SELECT한 후
+    // WHERE 절에 사전 검증 조건을 포함한 원자적 UPDATE로 차감한다.
+    // affected_rows로 성공/실패를 판별하고 실패 시 재시도하므로 락 없이 무결성 보장.
+    // (MyISAM/InnoDB 모두 호환, FOR UPDATE 불필요)
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date asc, po_id asc ";
     else
         $sql_order = " order by po_id asc ";
 
-    $point1 = abs($point);
-    $sql = " select po_id, po_point, po_use_point
-                from {$g5['point_table']}
-                where mb_id = '$mb_id'
-                  and po_id <> '$po_id'
-                  and po_expired = '0'
-                  and po_point > po_use_point
-                $sql_order ";
-    $result = sql_query($sql);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $point2 = $row['po_point'];
-        $point3 = $row['po_use_point'];
+    $remaining = abs($point);
+    $max_iter = 1000; // 무한루프 안전장치 (정상 케이스는 차감 행 수만큼만 반복)
 
-        if(($point2 - $point3) > $point1) {
+    while ($remaining > 0 && $max_iter-- > 0) {
+        // 사용 가능한 가장 오래된 행 1개 조회
+        $sql = " select po_id, po_point, po_use_point
+                    from {$g5['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_id <> '$po_id'
+                      and po_expired = '0'
+                      and po_point > po_use_point
+                    $sql_order
+                    limit 1 ";
+        $row = sql_fetch($sql);
+        if (!$row || empty($row['po_id'])) {
+            break; // 더 이상 사용 가능한 포인트 없음
+        }
+
+        $available = $row['po_point'] - $row['po_use_point'];
+
+        if ($available > $remaining) {
+            // 이 행만으로 충분 (부분 차감)
+            // WHERE 절에서 "현재도 충분한 잔여가 있는가"를 원자적으로 재검증
             $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point + '$point1'
-                        where po_id = '{$row['po_id']}' ";
+                        set po_use_point = po_use_point + '$remaining'
+                        where po_id = '{$row['po_id']}'
+                          and po_expired = '0'
+                          and (po_point - po_use_point) > '$remaining' ";
             sql_query($sql);
-            break;
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining = 0;
+                break;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 차감 → 다시 SELECT로 재시도
         } else {
-            $point4 = $point2 - $point3;
+            // 이 행을 완전 소진 + expired 마킹
+            // WHERE 절에서 SELECT 시점의 po_use_point 값과 일치할 때만 UPDATE
+            $consume = $available;
             $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point + '$point4',
+                        set po_use_point = po_use_point + '$consume',
                             po_expired = '100'
-                        where po_id = '{$row['po_id']}' ";
+                        where po_id = '{$row['po_id']}'
+                          and po_use_point = '{$row['po_use_point']}'
+                          and po_expired = '0' ";
             sql_query($sql);
-            $point1 -= $point4;
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining -= $consume;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 다시 SELECT로 재시도
         }
     }
 }
@@ -1200,41 +1228,68 @@ function delete_use_point($mb_id, $point)
 {
     global $g5, $config;
 
+    // 레이스 컨디션 방지: 매 단계마다 사용된 가장 최근 행 1개를 조회한 후
+    // WHERE 절에 SELECT 시점의 상태를 검증하는 원자적 UPDATE로 환원한다.
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date desc, po_id desc ";
     else
         $sql_order = " order by po_id desc ";
 
-    $point1 = abs($point);
-    $sql = " select po_id, po_use_point, po_expired, po_expire_date
-                from {$g5['point_table']}
-                where mb_id = '$mb_id'
-                  and po_expired <> '1'
-                  and po_use_point > 0
-                $sql_order ";
-    $result = sql_query($sql);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $point2 = $row['po_use_point'];
+    $remaining = abs($point);
+    $max_iter = 1000;
 
-        $po_expired = $row['po_expired'];
-        if($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G5_TIME_YMD))
-            $po_expired = 0;
-
-        if($point2 > $point1) {
-            $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point - '$point1',
-                            po_expired = '$po_expired'
-                        where po_id = '{$row['po_id']}' ";
-            sql_query($sql);
+    while ($remaining > 0 && $max_iter-- > 0) {
+        // 사용분이 있는 가장 최근 행 1개 조회
+        $sql = " select po_id, po_use_point, po_expired, po_expire_date
+                    from {$g5['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_expired <> '1'
+                      and po_use_point > 0
+                    $sql_order
+                    limit 1 ";
+        $row = sql_fetch($sql);
+        if (!$row || empty($row['po_id'])) {
             break;
+        }
+
+        $row_used = $row['po_use_point'];
+
+        // 만료 마커(100) 복구 여부 결정
+        $po_expired_new = $row['po_expired'];
+        if ($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G5_TIME_YMD))
+            $po_expired_new = 0;
+
+        if ($row_used > $remaining) {
+            // 부분 환원
+            // WHERE에 현재 po_use_point가 차감 가능한 수준인지와 expired 상태를 함께 검증
+            $sql = " update {$g5['point_table']}
+                        set po_use_point = po_use_point - '$remaining',
+                            po_expired = '$po_expired_new'
+                        where po_id = '{$row['po_id']}'
+                          and po_use_point >= '$remaining'
+                          and po_expired = '{$row['po_expired']}' ";
+            sql_query($sql);
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining = 0;
+                break;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
         } else {
+            // 사용분 전체 환원
+            $consume = $row_used;
             $sql = " update {$g5['point_table']}
                         set po_use_point = '0',
-                            po_expired = '$po_expired'
-                        where po_id = '{$row['po_id']}' ";
+                            po_expired = '$po_expired_new'
+                        where po_id = '{$row['po_id']}'
+                          and po_use_point = '{$row['po_use_point']}'
+                          and po_expired = '{$row['po_expired']}' ";
             sql_query($sql);
 
-            $point1 -= $point2;
+            if (get_sql_affected_rows() > 0) {
+                $remaining -= $consume;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
         }
     }
 }
@@ -1244,39 +1299,63 @@ function delete_expire_point($mb_id, $point)
 {
     global $g5, $config;
 
-    $point1 = abs($point);
-    $sql = " select po_id, po_use_point, po_expired, po_expire_date
-                from {$g5['point_table']}
-                where mb_id = '$mb_id'
-                  and po_expired = '1'
-                  and po_point >= 0
-                  and po_use_point > 0
-                order by po_expire_date desc, po_id desc ";
-    $result = sql_query($sql);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $point2 = $row['po_use_point'];
-        $po_expired = '0';
+    // 레이스 컨디션 방지: 매 단계마다 소멸된 가장 최근 행 1개를 조회한 후
+    // WHERE 절에 SELECT 시점의 상태를 검증하는 원자적 UPDATE로 환원한다.
+    $remaining = abs($point);
+    $max_iter = 1000;
+
+    while ($remaining > 0 && $max_iter-- > 0) {
+        // 소멸 처리된 가장 최근 행 1개 조회
+        $sql = " select po_id, po_use_point, po_expired, po_expire_date
+                    from {$g5['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_expired = '1'
+                      and po_point >= 0
+                      and po_use_point > 0
+                    order by po_expire_date desc, po_id desc
+                    limit 1 ";
+        $row = sql_fetch($sql);
+        if (!$row || empty($row['po_id'])) {
+            break;
+        }
+
+        $row_used = $row['po_use_point'];
         $po_expire_date = '9999-12-31';
-        if($config['cf_point_term'] > 0)
+        if ($config['cf_point_term'] > 0)
             $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G5_SERVER_TIME));
 
-        if($point2 > $point1) {
+        if ($row_used > $remaining) {
+            // 부분 환원
             $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point - '$point1',
-                            po_expired = '$po_expired',
+                        set po_use_point = po_use_point - '$remaining',
+                            po_expired = '0',
                             po_expire_date = '$po_expire_date'
-                        where po_id = '{$row['po_id']}' ";
-            sql_query($sql);
-            break;
-        } else {
-            $sql = " update {$g5['point_table']}
-                        set po_use_point = '0',
-                            po_expired = '$po_expired',
-                            po_expire_date = '$po_expire_date'
-                        where po_id = '{$row['po_id']}' ";
+                        where po_id = '{$row['po_id']}'
+                          and po_expired = '1'
+                          and po_use_point >= '$remaining' ";
             sql_query($sql);
 
-            $point1 -= $point2;
+            if (get_sql_affected_rows() > 0) {
+                $remaining = 0;
+                break;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
+        } else {
+            // 사용분 전체 환원
+            $consume = $row_used;
+            $sql = " update {$g5['point_table']}
+                        set po_use_point = '0',
+                            po_expired = '0',
+                            po_expire_date = '$po_expire_date'
+                        where po_id = '{$row['po_id']}'
+                          and po_expired = '1'
+                          and po_use_point = '{$row['po_use_point']}' ";
+            sql_query($sql);
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining -= $consume;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
         }
     }
 }
