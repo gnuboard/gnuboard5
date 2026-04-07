@@ -72,7 +72,9 @@ if ($stx) {
     $field = explode('||', trim($sfl));
 
     $str = '(';
-    for ($i=0; $i<count($s); $i++) {
+    $s_cnt = count($s);
+    $field_cnt = count($field);
+    for ($i=0; $i<$s_cnt; $i++) {
         if (trim($s[$i]) == '') continue;
 
         $search_str = $s[$i];
@@ -85,7 +87,7 @@ if ($stx) {
 
         $op2 = '';
         // 필드의 수만큼 다중 필드 검색 가능 (필드1+필드2...)
-        for ($k=0; $k<count($field); $k++) {
+        for ($k=0; $k<$field_cnt; $k++) {
             $str .= $op2;
             switch ($field[$k]) {
                 case 'mb_id' :
@@ -119,7 +121,8 @@ if ($stx) {
     $time1 = get_microtime();
 
     $total_count = 0;
-    for ($i=0; $i<count($g5_search['tables']); $i++) {
+    $tables_cnt = count($g5_search['tables']);
+    for ($i=0; $i<$tables_cnt; $i++) {
         $tmp_write_table   = $g5['write_prefix'] . $g5_search['tables'][$i];
 
         $sql = " select wr_id from {$tmp_write_table} where {$sql_search} ";
@@ -148,7 +151,8 @@ if ($stx) {
     if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
     $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-    for ($i=0; $i<count($search_table); $i++) {
+    $search_table_cnt = count($search_table);
+    for ($i=0; $i<$search_table_cnt; $i++) {
         if ($from_record < $search_table_count[$i]) {
             $table_index = $i;
             $from_record = $from_record - ($i > 0 ? $search_table_count[$i-1] : 0);

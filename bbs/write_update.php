@@ -433,7 +433,8 @@ if ($w == '' || $w == 'r') {
         }
     } else {
         $bo_notice = '';
-        for ($i=0; $i<count($notice_array); $i++)
+        $notice_array_cnt = count($notice_array);
+        for ($i=0; $i<$notice_array_cnt; $i++)
             if ((int)$wr_id != (int)$notice_array[$i])
                 $bo_notice .= $notice_array[$i] . ',';
         $bo_notice = trim($bo_notice);
@@ -483,7 +484,8 @@ $file_upload_msg = '';
 $upload = array();
 
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
-    for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
+    $bf_file_cnt = count($_FILES['bf_file']['name']);
+    for ($i=0; $i<$bf_file_cnt; $i++) {
         $upload[$i]['file']     = '';
         $upload[$i]['source']   = '';
         $upload[$i]['filesize'] = 0;
@@ -598,7 +600,8 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 }   // end if
 
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
-for ($i=0; $i<count($upload); $i++)
+$upload_cnt = count($upload);
+for ($i=0; $i<$upload_cnt; $i++)
 {
     $upload[$i]['source'] = sql_real_escape_string($upload[$i]['source']);
     $bf_content[$i] = isset($bf_content[$i]) ? sql_real_escape_string($bf_content[$i]) : '';
@@ -754,7 +757,8 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $unique_email = array_unique($array_email);
     $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
 
-    for ($i=0; $i<count($unique_email); $i++) {
+    $unique_email_cnt = count($unique_email);
+    for ($i=0; $i<$unique_email_cnt; $i++) {
         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
     }
 }

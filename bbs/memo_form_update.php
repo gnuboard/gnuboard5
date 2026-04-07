@@ -18,7 +18,8 @@ $me_memo = isset($_POST['me_memo']) ? preg_replace("#[\\\]+$#", "", substr(trim(
 
 run_event('memo_form_update_before', $recv_list);
 
-for ($i=0; $i<count($recv_list); $i++) {
+$recv_list_cnt = count($recv_list);
+for ($i=0; $i<$recv_list_cnt; $i++) {
 
     $recv_list_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $recv_list[$i]), 0, 20);
 
@@ -63,7 +64,8 @@ if (!$is_admin) {
     }
 }
 
-for ($i=0; $i<count($member_list['id']); $i++) {
+$member_list_cnt = count($member_list['id']);
+for ($i=0; $i<$member_list_cnt; $i++) {
     $tmp_row = sql_fetch(" select max(me_id) as max_me_id from {$g5['memo_table']} ");
     $me_id = $tmp_row['max_me_id'] + 1;
 

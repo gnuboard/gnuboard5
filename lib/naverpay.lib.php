@@ -89,7 +89,8 @@ class naverpay_register
             $send_cost_limit = explode(";", $default['de_send_cost_limit']);
             $send_cost_list  = explode(";", $default['de_send_cost_list']);
 
-            for ($k=0; $k<count($send_cost_limit); $k++) {
+            $send_cost_limit_cnt = count($send_cost_limit);
+            for ($k=0; $k<$send_cost_limit_cnt; $k++) {
                 // 총판매금액이 배송비 상한가 보다 작다면
                 if ($total_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
                     $diff_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);

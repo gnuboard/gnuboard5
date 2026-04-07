@@ -609,7 +609,8 @@ if (!(isset($member['mb_id']) && $config['cf_admin'] === $member['mb_id'])) {
     if ($cf_possible_ip) {
         $is_possible_ip = false;
         $pattern = explode("\n", $cf_possible_ip);
-        for ($i=0; $i<count($pattern); $i++) {
+        $pattern_cnt = count($pattern);
+        for ($i=0; $i<$pattern_cnt; $i++) {
             $pattern[$i] = trim($pattern[$i]);
             if (empty($pattern[$i]))
                 continue;
@@ -628,7 +629,8 @@ if (!(isset($member['mb_id']) && $config['cf_admin'] === $member['mb_id'])) {
     // 접근차단 IP
     $is_intercept_ip = false;
     $pattern = explode("\n", trim($config['cf_intercept_ip']));
-    for ($i=0; $i<count($pattern); $i++) {
+    $pattern_cnt = count($pattern);
+    for ($i=0; $i<$pattern_cnt; $i++) {
         $pattern[$i] = trim($pattern[$i]);
         if (empty($pattern[$i]))
             continue;

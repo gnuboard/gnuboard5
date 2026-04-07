@@ -233,10 +233,12 @@ delete_cache_latest($bo_table);
 
 if ($sw == 'move')
 {
-    for ($i=0; $i<count($save); $i++)
+    $save_cnt = count($save);
+    for ($i=0; $i<$save_cnt; $i++)
     {
         if( isset($save[$i]['bf_file']) && $save[$i]['bf_file'] ){
-            for ($k=0; $k<count($save[$i]['bf_file']); $k++) {
+            $bf_file_cnt = count($save[$i]['bf_file']);
+            for ($k=0; $k<$bf_file_cnt; $k++) {
                 $del_file = run_replace('delete_file_path', clean_relative_paths($save[$i]['bf_file'][$k]), $save[$i]);
 
                 if ( is_file($del_file) && file_exists($del_file) ){
@@ -248,7 +250,8 @@ if ($sw == 'move')
             }
         }
         
-        for ($k=0; $k<count($save[$i]['wr_contents']); $k++){
+        $wr_contents_cnt = count($save[$i]['wr_contents']);
+        for ($k=0; $k<$wr_contents_cnt; $k++){
             delete_editor_thumbnail($save[$i]['wr_contents'][$k]);
         }
 
@@ -262,7 +265,8 @@ if ($sw == 'move')
     $sql = " select bo_notice from {$g5['board_table']} where bo_table = '{$bo_table}' ";
     $row = sql_fetch($sql);
     $arr_notice = explode(',', $row['bo_notice']);
-    for ($i=0; $i<count($arr_notice); $i++) {
+    $arr_notice_cnt = count($arr_notice);
+    for ($i=0; $i<$arr_notice_cnt; $i++) {
         $move_id = (int)$arr_notice[$i];
         // 게시판에 wr_id 가 있다면 이동한게 아니므로 bo_notice 에 다시 넣음
         $row2 = sql_fetch(" select count(*) as cnt from $write_table where wr_id = '{$move_id}' ");

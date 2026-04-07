@@ -97,7 +97,8 @@ for($i=0;$i<$count_chk_bn_id;$i++)
         $notice_array = explode(",", trim($board['bo_notice']));
         $bo_notice = "";
         $lf = '';
-        for ($k=0; $k<count($notice_array); $k++) {
+        $notice_array_cnt = count($notice_array);
+        for ($k=0; $k<$notice_array_cnt; $k++) {
             if ((int)$write['wr_id'] != (int)$notice_array[$k])
                 $bo_notice .= $lf.$notice_array[$k];
 

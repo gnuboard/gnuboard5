@@ -753,7 +753,8 @@ if($is_kakaopay_use) {
             {
                 $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
                 $bank_account .= '<option value="">선택하십시오.</option>';
-                for ($i=0; $i<count($str); $i++)
+                $str_cnt = count($str);
+                for ($i=0; $i<$str_cnt; $i++)
                 {
                     //$str[$i] = str_replace("\r", "", $str[$i]);
                     $str[$i] = trim($str[$i]);

@@ -29,7 +29,8 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         $edt = true;
         
         if( $matches = get_editor_image($write['wr_content'], false) ){
-            for($i=0; $i<count($matches[1]); $i++)
+            $matches_cnt = count($matches[1]);
+            for($i=0; $i<$matches_cnt; $i++)
             {
                 // 이미지 path 구함
                 $p = parse_url($matches[1][$i]);
@@ -117,7 +118,8 @@ function get_view_thumbnail($contents, $thumb_width=0)
 
     $extensions = array(1=>'gif', 2=>'jpg', 3=>'png', 18=>'webp');
 
-    for($i=0; $i<count($matches[1]); $i++) {
+    $matches_cnt = count($matches[1]);
+    for($i=0; $i<$matches_cnt; $i++) {
 
         $img = $matches[1][$i];
         $img_tag = isset($matches[0][$i]) ? $matches[0][$i] : '';

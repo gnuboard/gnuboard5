@@ -572,7 +572,8 @@ function search_font($stx, $str)
     // "/(검색1|검색2)/i" 와 같은 패턴을 만듬
     $pattern = '';
     $bar = '';
-    for ($m=0; $m<count($s); $m++) {
+    $s_cnt = count($s);
+    for ($m=0; $m<$s_cnt; $m++) {
         if (trim($s[$m]) == '') continue;
         // 태그는 포함하지 않아야 하는데 잘 안되는군. ㅡㅡa
         //$pattern .= $bar . '([^<])(' . quotemeta($s[$m]) . ')';
@@ -799,7 +800,9 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         $not_comment = $tmp[1];
 
     $str .= "(";
-    for ($i=0; $i<count($s); $i++) {
+    $s_cnt = count($s);
+    $field_cnt = count($field);
+    for ($i=0; $i<$s_cnt; $i++) {
         // 검색어
         $search_str = trim($s[$i]);
         if ($search_str == "") continue;
@@ -811,7 +814,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         $str .= "(";
 
         $op2 = "";
-        for ($k=0; $k<count($field); $k++) { // 필드의 수만큼 다중 필드 검색 가능 (필드1+필드2...)
+        for ($k=0; $k<$field_cnt; $k++) { // 필드의 수만큼 다중 필드 검색 가능 (필드1+필드2...)
 
             // SQL Injection 방지
             // 필드값에 a-z A-Z 0-9 _ , | 이외의 값이 있다면 검색필드를 wr_subject 로 설정한다.
@@ -1056,7 +1059,8 @@ function get_category_option($bo_table='', $ca_name='')
 
     $categories = explode("|", $board['bo_category_list'].($is_admin?"|공지":"")); // 구분자가 | 로 되어 있음
     $str = "";
-    for ($i=0; $i<count($categories); $i++) {
+    $categories_cnt = count($categories);
+    for ($i=0; $i<$categories_cnt; $i++) {
         $category = trim($categories[$i]);
         if (!$category) continue;
 
@@ -2889,7 +2893,8 @@ function delete_editor_thumbnail($contents)
     if(!$matchs)
         return;
 
-    for($i=0; $i<count($matchs[1]); $i++) {
+    $matchs_cnt = count($matchs[1]);
+    for($i=0; $i<$matchs_cnt; $i++) {
         // 이미지 path 구함
         $imgurl = @parse_url($matchs[1][$i]);
         // $srcfile = dirname(G5_PATH).$imgurl['path'];
@@ -3508,7 +3513,8 @@ function module_exec_check($exe, $type)
                             break;
                         }
 
-                        for($i=0; $i<count($out); $i++) {
+                        $out_cnt = count($out);
+                        for($i=0; $i<$out_cnt; $i++) {
                             if(strpos($out[$i], 'KCP ENC') !== false) {
                                 $search = true;
                                 break;
@@ -3523,7 +3529,8 @@ function module_exec_check($exe, $type)
                             break;
                         }
 
-                        for($i=0; $i<count($out); $i++) {
+                        $out_cnt = count($out);
+                        for($i=0; $i<$out_cnt; $i++) {
                             if(strpos($out[$i], 'CLIENT') !== false) {
                                 $search = true;
                                 break;
@@ -3538,7 +3545,8 @@ function module_exec_check($exe, $type)
                             break;
                         }
 
-                        for($i=0; $i<count($out); $i++) {
+                        $out_cnt = count($out);
+                        for($i=0; $i<$out_cnt; $i++) {
                             if(strpos(strtolower($out[$i]), 'ret code') !== false) {
                                 $search = true;
                                 break;

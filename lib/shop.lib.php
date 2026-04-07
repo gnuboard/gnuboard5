@@ -1819,7 +1819,8 @@ function get_sendcost($cart_id, $selected=1)
         $send_cost_limit = explode(";", $default['de_send_cost_limit']);
         $send_cost_list  = explode(";", $default['de_send_cost_list']);
         $send_cost = 0;
-        for ($k=0; $k<count($send_cost_limit); $k++) {
+        $send_cost_limit_cnt = count($send_cost_limit);
+        for ($k=0; $k<$send_cost_limit_cnt; $k++) {
             // 총판매금액이 배송비 상한가 보다 작다면
             if ($total_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
                 $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
@@ -1894,7 +1895,8 @@ function get_item_sendcost2($it_id, $price, $qty)
             $send_cost_limit = explode(";", $default['de_send_cost_limit']);
             $send_cost_list  = explode(";", $default['de_send_cost_list']);
 
-            for ($k=0; $k<count($send_cost_limit); $k++) {
+            $send_cost_limit_cnt = count($send_cost_limit);
+            for ($k=0; $k<$send_cost_limit_cnt; $k++) {
                 // 총판매금액이 배송비 상한가 보다 작다면
                 if ($price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
                     $sendcost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
@@ -2134,8 +2136,9 @@ function get_delivery_inquiry($company, $invoice, $class='')
 
     $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
 
-    for($i=0; $i<count($dlcomp); $i++) {
-        if(strstr($dlcomp[$i], $company)) {
+    $dlcomp_cnt = count($dlcomp);
+    for($i=0; $i<$dlcomp_cnt; $i++) {
+        if(strpos($dlcomp[$i], $company) !== false) {
             list($com, $url, $tel) = explode("^", $dlcomp[$i]);
             break;
         }
@@ -2411,7 +2414,8 @@ function get_delivery_company($company)
     $option .= '<option value="자체배송" '.get_selected($company, '자체배송').'>자체배송</option>'.PHP_EOL;
 
     $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
-    for ($i=0; $i<count($dlcomp); $i++) {
+    $dlcomp_cnt = count($dlcomp);
+    for ($i=0; $i<$dlcomp_cnt; $i++) {
         if (trim($dlcomp[$i])=="") continue;
         list($value, $url, $tel) = explode("^", $dlcomp[$i]);
         $option .= '<option value="'.$value.'" '.get_selected($company, $value).'>'.$value.'</option>'.PHP_EOL;
@@ -2429,7 +2433,8 @@ function get_itemuse_thumb($contents, $thumb_width, $thumb_height, $is_create=fa
 
     $matches = get_editor_image($contents, false);
 
-    for($i=0; $i<count($matches[1]); $i++)
+    $matches_cnt = count($matches[1]);
+    for($i=0; $i<$matches_cnt; $i++)
     {
         // 이미지 path 구함
         $p = parse_url($matches[1][$i]);

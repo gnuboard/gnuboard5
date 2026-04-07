@@ -64,7 +64,8 @@ if($search_all) {
 if ($q) {
     $arr = explode(" ", $q);
     $detail_where = array();
-    for ($i=0; $i<count($arr); $i++) {
+    $arr_cnt = count($arr);
+    for ($i=0; $i<$arr_cnt; $i++) {
         $word = trim($arr[$i]);
         if (!$word) continue;
 
