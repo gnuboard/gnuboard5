@@ -29,7 +29,7 @@ if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.', $page_return_url);
 
 $hash_data = md5($pp_id.$good_mny.$pp['pp_time']);
-if($pp_id != get_session('ss_personalpay_id') || $hash_data != get_session('ss_personalpay_hash'))
+if($pp_id !== get_session('ss_personalpay_id') || $hash_data !== get_session('ss_personalpay_hash'))
     die('개인결제 정보가 올바르지 않습니다.');
 
 // PG사의 가상계좌 또는 계좌이체의 자동 현금영수증 초기배열값

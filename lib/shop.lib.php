@@ -2403,7 +2403,7 @@ function exists_inicis_shop_order($oid, $pp=array(), $od_time='', $od_ip='')
     //개인결제
     if( $pp ) {
         $hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);
-        if( $hash_data == get_session('ss_personalpay_hash') ){
+        if( $hash_data === get_session('ss_personalpay_hash') ){
             // 개인결제번호제거
             set_session('ss_personalpay_id', '');
             set_session('ss_personalpay_hash', '');
