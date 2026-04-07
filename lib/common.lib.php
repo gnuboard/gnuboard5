@@ -1743,18 +1743,27 @@ function view_link($view, $number, $attribute)
 
 function cut_str($str, $len, $suffix="…")
 {
-    $arr_str = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
-    $str_len = count($arr_str);
-
-    if ($str_len >= $len) {
-        $slice_str = array_slice($arr_str, 0, $len);
-        $str = join("", $slice_str);
-
-        return $str . ($str_len > $len ? $suffix : '');
-    } else {
-        $str = join("", $arr_str);
+    // 빠른 경로: 바이트 길이가 이미 제한 이내라면 문자 수 계산 불필요
+    // UTF-8의 모든 문자는 최소 1바이트이므로 bytes <= len이면 chars <= len이 보장됨
+    if (strlen($str) <= $len) {
         return $str;
     }
+
+    // mbstring 확장 사용 (PHP 4.0.6+ 기본 내장): 문자 배열 생성 없이 길이/슬라이스 처리
+    if (function_exists('mb_strlen')) {
+        if (mb_strlen($str, 'UTF-8') > $len) {
+            return mb_substr($str, 0, $len, 'UTF-8') . $suffix;
+        }
+        return $str;
+    }
+
+    // mbstring 미설치 환경 폴백 (기존 동작 유지)
+    $arr_str = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+    $str_len = count($arr_str);
+    if ($str_len > $len) {
+        return join("", array_slice($arr_str, 0, $len)) . $suffix;
+    }
+    return join("", $arr_str);
 }
 
 
