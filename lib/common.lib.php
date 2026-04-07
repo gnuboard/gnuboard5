@@ -1929,7 +1929,24 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
     if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
         if ($error) {
-            $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            $result = @mysqli_query($link, $sql);
+            if (!$result) {
+                $err_no   = mysqli_errno($link);
+                $err_msg  = mysqli_error($link);
+                $err_file = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
+
+                // 서버 로그에는 항상 상세 기록 (운영자가 추적 가능하도록)
+                @error_log("[g5 sql_query] {$err_no}: {$err_msg} | SQL: {$sql} | file: {$err_file}");
+
+                if ($is_debug) {
+                    // 디버그 모드: 상세 표시 (XSS 방지를 위해 escape)
+                    die("<p>" . htmlspecialchars($sql, ENT_QUOTES, 'UTF-8')
+                        . "<p>" . (int)$err_no . " : " . htmlspecialchars($err_msg, ENT_QUOTES, 'UTF-8')
+                        . "<p>error file : " . htmlspecialchars($err_file, ENT_QUOTES, 'UTF-8'));
+                }
+                // 운영 환경: 일반 메시지로만 처리하여 DB 구조/경로 정보 노출 방지
+                die('데이터베이스 처리 중 오류가 발생했습니다.');
+            }
         } else {
             try {
                 $result = @mysqli_query($link, $sql);
@@ -1939,7 +1956,21 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         }
     } else {
         if ($error) {
-            $result = @mysql_query($sql, $link) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            $result = @mysql_query($sql, $link);
+            if (!$result) {
+                $err_no   = mysql_errno();
+                $err_msg  = mysql_error();
+                $err_file = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
+
+                @error_log("[g5 sql_query] {$err_no}: {$err_msg} | SQL: {$sql} | file: {$err_file}");
+
+                if ($is_debug) {
+                    die("<p>" . htmlspecialchars($sql, ENT_QUOTES, 'UTF-8')
+                        . "<p>" . (int)$err_no . " : " . htmlspecialchars($err_msg, ENT_QUOTES, 'UTF-8')
+                        . "<p>error file : " . htmlspecialchars($err_file, ENT_QUOTES, 'UTF-8'));
+                }
+                die('데이터베이스 처리 중 오류가 발생했습니다.');
+            }
         } else {
             $result = @mysql_query($sql, $link);
         }
