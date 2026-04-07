@@ -89,15 +89,31 @@ if (!$is_search_bbs) {
     $from_notice_idx = ($page - 1) * $page_rows;
     if($from_notice_idx < 0)
         $from_notice_idx = 0;
-    $board_notice_count = count($arr_notice);
 
-    for ($k=0; $k<$board_notice_count; $k++) {
-        if (trim($arr_notice[$k]) == '') continue;
+    // 유효한 공지 wr_id만 수집 (정수화로 SQL injection 방지)
+    $notice_ids_int = array();
+    foreach ($arr_notice as $k_idx => $nid_raw) {
+        $nid_int = (int) trim($nid_raw);
+        if ($nid_int > 0) {
+            $notice_ids_int[$k_idx] = $nid_int;
+        }
+    }
 
-        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' ");
+    // N+1 쿼리 제거: 공지 전체를 단일 IN 쿼리로 일괄 조회
+    $notice_rows_by_id = array();
+    if (!empty($notice_ids_int)) {
+        $sql = " select * from {$write_table} where wr_id in (" . implode(',', $notice_ids_int) . ") ";
+        $result = sql_query($sql);
+        while ($nrow = sql_fetch_array($result)) {
+            $notice_rows_by_id[$nrow['wr_id']] = $nrow;
+        }
+    }
 
-        if (!isset($row['wr_id']) || !$row['wr_id']) continue;
+    // 원래 bo_notice 순서대로 처리 (페이징 로직의 $k 인덱스 의미 보존)
+    foreach ($notice_ids_int as $k => $nid) {
+        if (!isset($notice_rows_by_id[$nid])) continue;
 
+        $row = $notice_rows_by_id[$nid];
         $notice_array[] = $row['wr_id'];
 
         if($k < $from_notice_idx) continue;
@@ -106,7 +122,7 @@ if (!$is_search_bbs) {
         $list[$i]['is_notice'] = true;
         $list[$i]['list_content'] = $list[$i]['wr_content'];
 
-        // 비밀글인 경우 리스트에서 내용이 출력되지 않게 글 내용을 지웁니다. 
+        // 비밀글인 경우 리스트에서 내용이 출력되지 않게 글 내용을 지웁니다.
         if (strstr($list[$i]['wr_option'], "secret")) {
             $list[$i]['wr_content'] = '';
         }
@@ -178,45 +194,72 @@ if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 }
 
-if ($is_search_bbs) {
-    $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, $page_rows ";
-} else {
-    $sql = " select * from {$write_table} where wr_is_comment = 0 ";
-    if(!empty($notice_array))
-        $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
-    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+// 페이지의 공지개수가 목록수 보다 작을 때만 실행
+$rows_to_process = array();
+if ($page_rows > 0) {
+    if ($is_search_bbs) {
+        // 1차: 검색 결과의 wr_parent ID 목록 조회
+        $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, $page_rows ";
+        $result = sql_query($sql);
+
+        $parent_ids_in_order = array();
+        while ($id_row = sql_fetch_array($result)) {
+            $pid = (int) $id_row['wr_parent'];
+            if ($pid > 0) {
+                $parent_ids_in_order[] = $pid;
+            }
+        }
+
+        // 2차: N+1 쿼리 제거 - 단일 IN 쿼리로 전체 행 일괄 조회
+        if (!empty($parent_ids_in_order)) {
+            $batch_sql = " select * from {$write_table} where wr_id in (" . implode(',', $parent_ids_in_order) . ") ";
+            $batch_result = sql_query($batch_sql);
+
+            $rows_by_id = array();
+            while ($br = sql_fetch_array($batch_result)) {
+                $rows_by_id[$br['wr_id']] = $br;
+            }
+
+            // DISTINCT 쿼리의 원래 정렬 순서대로 재구성
+            foreach ($parent_ids_in_order as $pid) {
+                if (isset($rows_by_id[$pid])) {
+                    $rows_to_process[] = $rows_by_id[$pid];
+                }
+            }
+        }
+    } else {
+        $sql = " select * from {$write_table} where wr_is_comment = 0 ";
+        if(!empty($notice_array))
+            $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+        $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
+
+        $result = sql_query($sql);
+        while ($row = sql_fetch_array($result)) {
+            $rows_to_process[] = $row;
+        }
+    }
 }
 
-// 페이지의 공지개수가 목록수 보다 작을 때만 실행
-if($page_rows > 0) {
-    $result = sql_query($sql);
-
-    $k = 0;
-
-    while ($row = sql_fetch_array($result))
-    {
-        // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        if ($is_search_bbs)
-            $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
-
-        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-        if (strstr($sfl, 'subject')) {
-            $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
-        }
-        $list[$i]['is_notice'] = false;
-        $list[$i]['list_content'] = $list[$i]['wr_content'];
-
-        // 비밀글인 경우 리스트에서 내용이 출력되지 않게 글 내용을 지웁니다. 
-        if (strstr($list[$i]['wr_option'], "secret")) {
-            $list[$i]['wr_content'] = '';
-        }
-
-        $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
-        $list[$i]['num'] = $list_num - $k;
-
-        $i++;
-        $k++;
+$k = 0;
+foreach ($rows_to_process as $row)
+{
+    $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
+    if (strstr($sfl, 'subject')) {
+        $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
     }
+    $list[$i]['is_notice'] = false;
+    $list[$i]['list_content'] = $list[$i]['wr_content'];
+
+    // 비밀글인 경우 리스트에서 내용이 출력되지 않게 글 내용을 지웁니다.
+    if (strstr($list[$i]['wr_option'], "secret")) {
+        $list[$i]['wr_content'] = '';
+    }
+
+    $list_num = $total_count - ($page - 1) * $list_page_rows - $notice_count;
+    $list[$i]['num'] = $list_num - $k;
+
+    $i++;
+    $k++;
 }
 
 g5_latest_cache_data($board['bo_table'], $list);
