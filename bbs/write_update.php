@@ -710,9 +710,9 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $wr_subject = get_text(stripslashes($wr_subject));
 
     $tmp_html = 0;
-    if (strstr($html, 'html1'))
+    if (strpos($html, 'html1') !== false)
         $tmp_html = 1;
-    else if (strstr($html, 'html2'))
+    else if (strpos($html, 'html2') !== false)
         $tmp_html = 2;
 
     $wr_content = conv_content(conv_unescape_nl(stripslashes($wr_content)), $tmp_html);

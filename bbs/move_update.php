@@ -61,7 +61,7 @@ while ($row = sql_fetch_array($result))
 
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
             if (!$row2['wr_is_comment'] && $config['cf_use_copy_log']) {
-                if(strstr($row2['wr_option'], 'html')) {
+                if(strpos($row2['wr_option'], 'html') !== false) {
                     $log_tag1 = '<div class="content_'.$sw.'">';
                     $log_tag2 = '</div>';
                 } else {

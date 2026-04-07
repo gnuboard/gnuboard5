@@ -4,7 +4,7 @@ include_once ('../../common.php');
 include_once(G5_ADMIN_PATH.'/admin.lib.php');
 include_once(G5_SMS5_PATH.'/sms5.lib.php');
 
-if (!strstr($_SERVER['SCRIPT_NAME'], 'install.php')) {
+if (strpos($_SERVER['SCRIPT_NAME'], 'install.php') === false) {
     // SMS5 테이블 G5_TABLE_PREFIX 적용
     if($g5['sms5_prefix'] != 'sms5_' && sql_num_rows(sql_query("show tables like 'sms5_config'")))
     {

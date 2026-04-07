@@ -40,7 +40,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     //$list[$i]['content'] = eregi_replace("[^ \n<>]{130}", "\\0\n", $row['wr_content']);
 
     $list[$i]['content'] = $list[$i]['content1']= '비밀글 입니다.';
-    if (!strstr($row['wr_option'], 'secret') ||
+    if (strpos($row['wr_option'], 'secret') === false ||
         $is_admin ||
         ($write['mb_id']===$member['mb_id'] && $member['mb_id']) ||
         ($row['mb_id']===$member['mb_id'] && $member['mb_id'])) {

@@ -281,7 +281,7 @@ function auth_check($auth, $attr, $return = false)
 
     $attr = strtolower($attr);
 
-    if (!strstr($auth, $attr)) {
+    if (strpos($auth, $attr) === false) {
         if ($attr == 'r') {
             $msg = '읽을 권한이 없습니다.';
             if ($return) {

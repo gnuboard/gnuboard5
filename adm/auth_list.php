@@ -154,7 +154,7 @@ $colspan = 5;
     //if (isset($stx))
     //    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'."\n";
 
-    if (strstr($sfl, 'mb_id')) {
+    if (strpos($sfl, 'mb_id') !== false) {
         $mb_id = $stx;
     } else {
         $mb_id = '';

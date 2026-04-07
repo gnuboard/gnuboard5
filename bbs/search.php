@@ -187,11 +187,11 @@ if ($stx) {
             }
 
             // 비밀글은 검색 불가
-            if (strstr($row['wr_option'].(isset($row2['wr_option']) ? $row2['wr_option'] : ''), 'secret'))
+            if (strpos($row['wr_option'].(isset($row2['wr_option']) ? $row2['wr_option'] : ''), 'secret') !== false)
                 $row['wr_content'] = '[비밀글 입니다.]';
 
             $subject = get_text($row['wr_subject']);
-            if (strstr($sfl, 'wr_subject'))
+            if (strpos($sfl, 'wr_subject') !== false)
                 $subject = search_font($stx, $subject);
 
             if ($read_level[$idx] <= $member['mb_level'])
@@ -203,7 +203,7 @@ if ($stx) {
                 $content = str_replace('&nbsp;', '', $content);
                 $content = cut_str($content, 300, "…");
 
-                if (strstr($sfl, 'wr_content'))
+                if (strpos($sfl, 'wr_content') !== false)
                     $content = search_font($stx, $content);
             }
             else

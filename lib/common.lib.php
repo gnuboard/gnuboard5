@@ -462,9 +462,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     if ($board['bo_use_list_content'])
 	{
 		$html = 0;
-		if (strstr($list['wr_option'], 'html1'))
+		if (strpos($list['wr_option'], 'html1') !== false)
 			$html = 1;
-		else if (strstr($list['wr_option'], 'html2'))
+		else if (strpos($list['wr_option'], 'html2') !== false)
 			$html = 2;
 
         $list['content'] = conv_content($list['wr_content'], $html);
@@ -525,7 +525,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_hot'] = '<i class="fa fa-heart" aria-hidden="true"></i> ';
 
     $list['icon_secret'] = '';
-    if (strstr($list['wr_option'], 'secret'))
+    if (strpos($list['wr_option'], 'secret') !== false)
         $list['icon_secret'] = '<i class="fa fa-lock" aria-hidden="true"></i> ';
 
     // 링크

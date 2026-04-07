@@ -15,7 +15,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     $write = get_thumbnail_find_cache($bo_table, $wr_id, 'content');
 
     // 비밀글이면 썸네일을 노출하지 않습니다.
-    if (isset($write['wr_option']) && strstr($write['wr_option'], "secret")) {
+    if (isset($write['wr_option']) && strpos($write['wr_option'], "secret") !== false) {
         return run_replace('is_secret_list_thumbnail', $empty_array, $bo_table, $write);
     }
 

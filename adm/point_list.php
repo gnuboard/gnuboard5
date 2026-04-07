@@ -69,7 +69,7 @@ if ($config['cf_point_term'] > 0) {
     $po_expire_term = $config['cf_point_term'];
 }
 
-if (strstr($sfl, "mb_id")) {
+if (strpos($sfl, "mb_id") !== false) {
     $mb_id = $stx;
 } else {
     $mb_id = "";

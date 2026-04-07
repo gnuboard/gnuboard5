@@ -60,7 +60,7 @@ $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $file = '';
 
-    if (strstr($row['wr_option'], 'html'))
+    if (strpos($row['wr_option'], 'html') !== false)
         $html = 1;
     else
         $html = 0;

@@ -715,13 +715,13 @@ if(!$default['de_kakaopay_cancelpwd']){
         <?php
         $account_checked = $vbank_checked = $transfer_checked = '';
 
-        if (strstr($default['de_taxsave_types'], 'account')) {
+        if (strpos($default['de_taxsave_types'], 'account') !== false) {
             $account_checked = 'checked="checked"';
         }
-        if (strstr($default['de_taxsave_types'], 'vbank')) {
+        if (strpos($default['de_taxsave_types'], 'vbank') !== false) {
             $vbank_checked = 'checked="checked"';
         }
-        if (strstr($default['de_taxsave_types'], 'transfer')) {
+        if (strpos($default['de_taxsave_types'], 'transfer') !== false) {
             $transfer_checked = 'checked="checked"';
         }
         ?>
