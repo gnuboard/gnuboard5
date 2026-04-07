@@ -645,20 +645,51 @@ function html_purifier($html)
 {
     global $is_admin, $write;
 
-    $f = file(G5_PLUGIN_PATH . '/htmlpurifier/safeiframe.txt');
-    $domains = array();
-    foreach ($f as $domain) {
-        // 첫행이 # 이면 주석 처리
-        if (!preg_match("/^#/", $domain)) {
-            $domain = trim($domain);
-            if ($domain) {
-                array_push($domains, $domain);
+    // 요청 단위로 HTMLPurifier 인스턴스를 캐싱한다.
+    // HTMLPurifier 인스턴스 하나는 약 10~15MB의 메모리를 사용하므로,
+    // 같은 요청 내에서 여러 번 호출되는 경우(예: 게시글 목록의 첨부파일 설명)
+    // 매번 새 인스턴스를 만드는 것은 메모리 사용량을 수십~수백 MB까지 증가시킨다.
+    //
+    // config에 영향을 주는 변수는 "글쓴이가 관리자인지" 하나뿐이므로
+    // 캐시 키를 admin/normal 두 가지로 분리하여 최대 2개의 인스턴스만 유지한다.
+    //
+    // 캐싱이 동작 변경을 일으키는 경우(html_purifier_config / html_purifier_safeiframes
+    // hook이 $html 내용에 따라 동적으로 config를 바꾸는 플러그인을 사용하는 경우)
+    // G5_HTMLPURIFIER_NO_CACHE 상수를 정의하여 비활성화할 수 있다.
+    static $purifier_cache = array();
+    static $domains_cache = null;
+
+    $cache_enabled = !(defined('G5_HTMLPURIFIER_NO_CACHE') && G5_HTMLPURIFIER_NO_CACHE);
+    $is_admin_post = (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id']));
+    $cache_key = $is_admin_post ? 'admin' : 'normal';
+
+    // 캐시 적중 시 인스턴스 재사용
+    if ($cache_enabled && isset($purifier_cache[$cache_key])) {
+        $purifier = $purifier_cache[$cache_key];
+        return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
+    }
+
+    // safeiframe.txt 파싱 결과를 요청 단위로 캐싱 (파일 I/O + 정규식 비용 절감)
+    if ($domains_cache === null) {
+        $domains_cache = array();
+        $f = @file(G5_PLUGIN_PATH . '/htmlpurifier/safeiframe.txt');
+        if ($f !== false) {
+            foreach ($f as $domain) {
+                // 첫행이 # 이면 주석 처리
+                if (preg_match("/^#/", $domain)) continue;
+                $domain = trim($domain);
+                if ($domain !== '') {
+                    $domains_cache[] = $domain;
+                }
             }
+            unset($f);
         }
     }
+
+    $domains = $domains_cache;
     // 글쓴이가 관리자인 경우에만 현재 사이트 도메인을 허용
-    if (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id'])) {
-        array_push($domains, $_SERVER['HTTP_HOST'] . '/');
+    if ($is_admin_post) {
+        $domains[] = $_SERVER['HTTP_HOST'] . '/';
     }
     $safeiframe = implode('|', run_replace('html_purifier_safeiframes', $domains, $html));
 
@@ -682,7 +713,10 @@ function html_purifier($html)
 
     /*
      * HTMLPurifier 설정을 변경할 수 있는 Event hook
-     * 리스너에서는 첫번째 인자($config)로 `HTMLPurifier_Config` 객체를 받을 수 있다
+     * 리스너에서는 첫번째 인자($config)로 `HTMLPurifier_Config` 객체를 받을 수 있다.
+     * NB: 인스턴스 캐싱이 활성화된 경우(기본값) 이 hook은 캐시 미스 시점에만 실행됨
+     *     (요청당 최대 2회). $html 내용에 따라 동적으로 config를 변경해야 한다면
+     *     G5_HTMLPURIFIER_NO_CACHE 상수를 정의해 캐시를 비활성화하라.
      */
     run_event('html_purifier_config', $config, array(
         'html' => $html,
@@ -696,6 +730,11 @@ function html_purifier($html)
     $def->addFilter(new HTMLPurifierContinueParamFilter(), $config); // 커스텀 필터 추가
 
     $purifier = new HTMLPurifier($config);
+
+    // 인스턴스 캐싱
+    if ($cache_enabled) {
+        $purifier_cache[$cache_key] = $purifier;
+    }
 
     return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
 }
