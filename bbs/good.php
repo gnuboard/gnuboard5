@@ -76,16 +76,22 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
         }
         else
         {
-            // 추천(찬성), 비추천(반대) 카운트 증가
+            // 레이스 컨디션 방지: g5_board_good 테이블의 UNIQUE KEY(bo_table, wr_id, mb_id)를
+            // 이용해 INSERT IGNORE를 먼저 수행하고, 성공한 경우에만 카운터를 증가시킨다.
+            sql_query(" insert ignore into {$g5['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G5_TIME_YMDHIS."' ");
+            if (get_sql_affected_rows() <= 0) {
+                $error = '이미 추천 또는 비추천 하신 글 입니다.';
+                print_result($error, $count);
+            }
+
+            // INSERT 성공 시에만 카운터 증가
             sql_query(" update {$g5['write_prefix']}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
-            // 내역 생성
-            sql_query(" insert {$g5['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G5_TIME_YMDHIS."' ");
 
             $sql = " select wr_{$good} as count from {$g5['write_prefix']}{$bo_table} where wr_id = '$wr_id' ";
             $row = sql_fetch($sql);
 
             $count = $row['count'];
-			
+
 			run_event('bbs_increase_good_json', $bo_table, $wr_id, $good);
 
             print_result($error, $count);
@@ -140,10 +146,15 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
         }
         else
         {
-            // 추천(찬성), 비추천(반대) 카운트 증가
+            // 레이스 컨디션 방지: g5_board_good 테이블의 UNIQUE KEY(bo_table, wr_id, mb_id)를
+            // 이용해 INSERT IGNORE를 먼저 수행하고, 성공한 경우에만 카운터를 증가시킨다.
+            sql_query(" insert ignore into {$g5['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G5_TIME_YMDHIS."' ");
+            if (get_sql_affected_rows() <= 0) {
+                alert('이미 추천 또는 비추천 하신 글 입니다.');
+            }
+
+            // INSERT 성공 시에만 카운터 증가
             sql_query(" update {$g5['write_prefix']}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
-            // 내역 생성
-            sql_query(" insert {$g5['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G5_TIME_YMDHIS."' ");
 
             if ($good == 'good')
                 $status = '추천';
@@ -151,7 +162,7 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
                 $status = '비추천';
 
             $href = get_pretty_url($bo_table, $wr_id);
-			
+
 			run_event('bbs_increase_good_html', $bo_table, $wr_id, $good, $href);
 
             alert("이 글을 $status 하셨습니다.", '', false);

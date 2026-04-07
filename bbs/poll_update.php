@@ -14,50 +14,32 @@ $gb_poll = isset($_POST['gb_poll']) ? preg_replace('/[^0-9]/', '', $_POST['gb_po
 if(!$gb_poll)
     alert_close('항목을 선택하세요.');
 
-$search_mb_id = false;
-$search_ip = false;
-
-if($is_member) {
-    // 투표했던 회원아이디들 중에서 찾아본다
-    $ids = explode(',', trim($po['mb_ids']));
-    for ($i=0; $i<count($ids); $i++) {
-        if ($member['mb_id'] == trim($ids[$i])) {
-            $search_mb_id = true;
-            break;
-        }
-    }
-} else {
-    // 투표했던 ip들 중에서 찾아본다
-    $ips = explode(',', trim($po['po_ips']));
-    for ($i=0; $i<count($ips); $i++) {
-        if ($_SERVER['REMOTE_ADDR'] == trim($ips[$i])) {
-            $search_ip = true;
-            break;
-        }
-    }
-}
-
 $post_skin_dir = isset($_POST['skin_dir']) ? clean_xss_tags($_POST['skin_dir'], 1, 1) : '';
 $result_url = G5_BBS_URL."/poll_result.php?po_id=$po_id&skin_dir={$post_skin_dir}";
 
-// 없다면 선택한 투표항목을 1증가 시키고 ip, id를 저장
-if (!($search_ip || $search_mb_id)) {
-    $po_ips = $po['po_ips'] . $_SERVER['REMOTE_ADDR'].",";
-    $mb_ids = $po['mb_ids'];
-    if ($is_member) { // 회원일 때는 id만 추가
-        $mb_ids .= $member['mb_id'].',';
-        $sql = " update {$g5['poll_table']} set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1, mb_ids = '$mb_ids' where po_id = '$po_id' ";
-    } else {
-        $sql = " update {$g5['poll_table']} set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1, po_ips = '$po_ips' where po_id = '$po_id' ";
-    }
-
-    sql_query($sql);
+// 레이스 컨디션 방지: MyISAM은 트랜잭션을 지원하지 않으므로,
+// WHERE 조건에 중복 검증(FIND_IN_SET)을 포함한 원자적 UPDATE로 처리한다.
+// 기존 투표자 목록에 없을 때만 갱신되며, 동시 요청이 와도 DB 서버 레벨에서 직렬화된다.
+if ($is_member) {
+    $sql = " update {$g5['poll_table']}
+                set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1,
+                    mb_ids = concat(ifnull(mb_ids, ''), '".$member['mb_id'].",')
+              where po_id = '$po_id'
+                and find_in_set('".$member['mb_id']."', ifnull(mb_ids, '')) = 0 ";
 } else {
+    $sql = " update {$g5['poll_table']}
+                set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1,
+                    po_ips = concat(ifnull(po_ips, ''), '".$_SERVER['REMOTE_ADDR'].",')
+              where po_id = '$po_id'
+                and find_in_set('".$_SERVER['REMOTE_ADDR']."', ifnull(po_ips, '')) = 0 ";
+}
+sql_query($sql);
+
+if (get_sql_affected_rows() <= 0) {
     alert(addcslashes($po['po_subject'], '"\\/').'에 이미 참여하셨습니다.', $result_url);
 }
 
-if (!$search_mb_id)
-    insert_point($member['mb_id'], $po['po_point'], $po['po_id'] . '. ' . cut_str($po['po_subject'],20) . ' 투표 참여 ', '@poll', $po['po_id'], '투표');
+insert_point($member['mb_id'], $po['po_point'], $po['po_id'] . '. ' . cut_str($po['po_subject'],20) . ' 투표 참여 ', '@poll', $po['po_id'], '투표');
 
 //goto_url($g5['bbs_url'].'/poll_result.php?po_id='.$po_id.'&amp;skin_dir='.$skin_dir);
 goto_url($result_url);

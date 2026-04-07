@@ -1083,16 +1083,24 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     $mb_point = get_point_sum($mb_id);
 
     // 이미 등록된 내역이라면 건너뜀
+    // 레이스 컨디션 방지: MyISAM은 트랜잭션을 지원하지 않으므로 MySQL named lock(GET_LOCK)으로
+    // 검증/INSERT 구간을 직렬화한다. rel 키가 없는 일반 포인트 지급은 락 대상이 아니다.
+    $point_lock_name = '';
     if ($rel_table || $rel_id || $rel_action)
     {
+        $point_lock_name = 'g5pt_' . md5($mb_id.'|'.$rel_table.'|'.$rel_id.'|'.$rel_action);
+        sql_fetch(" select get_lock('$point_lock_name', 5) as got_lock ");
+
         $sql = " select count(*) as cnt from {$g5['point_table']}
                   where mb_id = '$mb_id'
                     and po_rel_table = '$rel_table'
                     and po_rel_id = '$rel_id'
                     and po_rel_action = '$rel_action' ";
         $row = sql_fetch($sql);
-        if ($row['cnt'])
+        if ($row['cnt']) {
+            sql_query(" select release_lock('$point_lock_name') ");
             return -1;
+        }
     }
 
     // 포인트 건별 생성
@@ -1133,6 +1141,11 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     // 포인트 UPDATE
     $sql = " update {$g5['member_table']} set mb_point = '$po_mb_point' where mb_id = '$mb_id' ";
     sql_query($sql);
+
+    // named lock 해제
+    if ($point_lock_name) {
+        sql_query(" select release_lock('$point_lock_name') ");
+    }
 
     return 1;
 }
