@@ -549,6 +549,18 @@ function social_check_login_before($p_service=''){
                 
                 if( $mylink ){
 
+                    // CSRF 토큰 검증 (popup.php에서 설정한 세션 토큰 확인)
+                    $mylink_token = get_session('ss_social_mylink_token');
+                    set_session('ss_social_mylink_token', '');
+                    if (!$mylink_token) {
+                        if ($use_popup == 1 || !$use_popup) {
+                            alert_close('올바른 방법으로 이용해 주십시오.');
+                        } else {
+                            alert('올바른 방법으로 이용해 주십시오.');
+                        }
+                        exit;
+                    }
+
                     social_user_profile_replace($member['mb_id'], $provider_name, $user_profile);
 
                     if( is_object( $adapter ) ){    //연결한것은 인증 받은 즉시 로그아웃한다.
