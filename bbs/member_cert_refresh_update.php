@@ -3,13 +3,19 @@ define('G5_CERT_IN_PROG', true);
 include_once('./_common.php');
 global $g5;
 
+// 로그인 검증 (본인인증 갱신은 로그인 필수)
+if (!$is_member) {
+    alert('로그인 후 이용해 주십시오.', G5_BBS_URL.'/login.php');
+}
+
 if (!($w == '' || $w == 'u')) {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 $url = urldecode($url);
 
 if($w == '') {
-    $mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
+    // 본인 계정만 수정 가능 (POST mb_id 무시, 세션 회원 ID 사용)
+    $mb_id = $member['mb_id'];
     $mb_name = isset($_POST['mb_name']) ? trim($_POST['mb_name']) : '';
     $mb_hp = isset($_POST['mb_hp']) ? trim($_POST['mb_hp']) : '';
 } else

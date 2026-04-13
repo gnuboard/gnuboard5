@@ -28,6 +28,7 @@ if(!$ckey || $ckey !== $key)
 
 <form method="post" name="fregister_email" action="<?php echo G5_HTTPS_BBS_URL.'/register_email_update.php'; ?>" onsubmit="return fregister_email_submit(this);">
 <input type="hidden" name="mb_id" value="<?php echo $mb_id; ?>">
+<input type="hidden" name="ckey" value="<?php echo $key; ?>">
 
 <div class="tbl_frm01 tbl_frm rg_em">
     <table>
