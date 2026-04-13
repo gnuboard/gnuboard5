@@ -9,6 +9,13 @@ if (!$config['cf_email_use'])
 if (!$is_member && $config['cf_formmail_is_member'])
     alert_close('회원만 이용하실 수 있습니다.');
 
+// 발송 횟수 제한 (직접 POST 우회 방지)
+$sendmail_count = (int)get_session('ss_sendmail_count') + 1;
+set_session('ss_sendmail_count', $sendmail_count);
+if ($sendmail_count > 3) {
+    alert_close('폼메일 발송 횟수를 초과하였습니다.');
+}
+
 $email_enc = new str_encrypt();
 $to = $email_enc->decrypt($to);
 
@@ -40,13 +47,23 @@ if ($type) {
 else
     $mail_content = $content;
 
-// 환경설정에서 폼메일 사용 여부가 회원만 사용에 체크되어 있으면
-if ($config['cf_formmail_is_member']) {
+// 발신자 정보 서버측 강제 설정
+$reply_to_email = '';
+if ($is_member) {
     $fnick = (isset($member['mb_nick']) && $member['mb_nick']) ? $member['mb_nick'] : $member['mb_name'];
     $fmail = $member['mb_email'];
+} else {
+    // 비회원: From을 관리자 이메일로 고정 (발신자 위장 방지)
+    // 비회원이 입력한 이메일은 Reply-To로 설정하여 회신 기능 유지
+    $user_email = get_email_address(trim($fmail));
+    $fnick = strip_tags(trim($fnick));
+    $fmail = $config['cf_admin_email'];
+    if ($user_email) {
+        $reply_to_email = $user_email;
+    }
 }
 
-mailer($fnick, $fmail, $to, $subject, $mail_content, $type, $file);
+mailer($fnick, $fmail, $to, $subject, $mail_content, $type, $file, '', '', $reply_to_email);
 
 // 임시 첨부파일 삭제
 if(!empty($file)) {
