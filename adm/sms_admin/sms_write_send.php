@@ -125,7 +125,7 @@ while ($row = array_shift($send_list))
                     continue 2;
                 }
 
-                array_push($list, array('bk_hp' => $hp, 'bk_name' => $name));
+                array_push($list, array('bk_hp' => $hp, 'bk_name' => $name, 'mb_id' => '', 'bg_no' => '', 'bk_no' => ''));
                 array_push($hps, $hp);
                 break;
 
