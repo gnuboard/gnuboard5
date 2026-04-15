@@ -1,0 +1,5 @@
+<FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp][Hh][Tt]|[Ss]?[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll]|[Pp][Hh][Aa][Rr]|[Ss][Vv][Gg][Zz]?)">
+Order allow,deny
+Deny from all
+</FilesMatch>
+RedirectMatch 403 /session/.*
