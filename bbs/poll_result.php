@@ -3,6 +3,7 @@ include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 $po_id   = isset($_REQUEST['po_id']) ? (int) $_REQUEST['po_id'] : '';
+$skin_dir = isset($skin_dir) ? clean_relative_paths(strip_tags($skin_dir)) : '';
 
 $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
 if (!$po['po_id'])
