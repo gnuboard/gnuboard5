@@ -36,12 +36,12 @@ if (empty($mb['mb_id']) || $mb['mb_leave_date'] || is_admin($mb['mb_id'])) {
     alert_close($generic_message);
 }
 
-// 임시비밀번호 발급
-$change_password = rand(100000, 999999);
+// 임시비밀번호 발급 (CSPRNG 사용)
+$change_password = get_random_token_string(5);  // 10자리 hex (0-9, a-f)
 $mb_lost_certify = get_encrypt_string($change_password);
 
-// 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-$mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));
+// 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용 (CSPRNG 사용)
+$mb_nonce = get_random_token_string(16);
 
 // 임시비밀번호와 난수를 mb_lost_certify 필드에 저장
 $sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_certify' where mb_id = '{$mb['mb_id']}' ";
