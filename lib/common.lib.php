@@ -2515,28 +2515,73 @@ function _token()
 
 
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
-// HMAC 기반 stateless 방식 — 세션에 저장하지 않으므로 다중 탭 문제 없음
+// HMAC 기반 — 세션 내부 비밀값 사용, 타임스탬프 포함, 다중 탭 호환
+// 토큰 형식: 타임스탬프.HMAC
 function get_token()
 {
-    $key = (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
-         ? G5_TOKEN_ENCRYPTION_KEY
-         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
+    $key = _get_token_key();
+    $secret = _get_token_secret();
+    $time = time();
 
-    return hash_hmac('sha256', session_id() . '|csrf_token', $key);
+    $hmac = hash_hmac('sha256', $secret . '|csrf_token|' . $time, $key);
+
+    return $time . '.' . $hmac;
 }
 
 
-// POST로 넘어온 토큰과 HMAC 토큰 비교
-function check_token()
+// POST로 넘어온 토큰의 HMAC 및 만료 시간 검증
+// 기본 만료: 7200초(2시간)
+function check_token($expire = 7200)
 {
     $token = isset($_POST['token']) ? $_POST['token'] : '';
 
-    if (!$token || $token !== get_token()) {
+    $dot = strpos($token, '.');
+    if (!$token || $dot === false) {
+        alert('올바른 방법으로 이용해 주십시오.');
+        return false;
+    }
+
+    $time = (int)substr($token, 0, $dot);
+    $hmac = substr($token, $dot + 1);
+
+    // 만료 검증
+    if (abs(time() - $time) > $expire) {
+        alert('토큰이 만료되었습니다. 페이지를 새로고침 해주십시오.');
+        return false;
+    }
+
+    // HMAC 검증
+    $key = _get_token_key();
+    $secret = _get_token_secret();
+    $expected = hash_hmac('sha256', $secret . '|csrf_token|' . $time, $key);
+
+    if ($hmac !== $expected) {
         alert('올바른 방법으로 이용해 주십시오.');
         return false;
     }
 
     return true;
+}
+
+
+// 토큰 암호화 키 반환 (내부용)
+function _get_token_key()
+{
+    return (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
+         ? G5_TOKEN_ENCRYPTION_KEY
+         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
+}
+
+
+// 세션 내부 비밀값 반환 (내부용, 서버측에만 존재)
+function _get_token_secret()
+{
+    $secret = get_session('ss_token_secret');
+    if (!$secret) {
+        $secret = md5(uniqid(rand(), true));
+        set_session('ss_token_secret', $secret);
+    }
+    return $secret;
 }
 
 /**
