@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+if (function_exists('check_request_origin')) check_request_origin(G5_BBS_URL);
+
 $po_id = isset($_POST['po_id']) ? preg_replace('/[^0-9]/', '', $_POST['po_id']) : 0;
 
 $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '$po_id' ");

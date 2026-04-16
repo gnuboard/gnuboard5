@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+if (function_exists('check_request_origin')) check_request_origin(G5_BBS_URL);
+
 if ($w == '')
 {
     $po_id   = isset($_POST['po_id']) ? (int) $_POST['po_id'] : '';

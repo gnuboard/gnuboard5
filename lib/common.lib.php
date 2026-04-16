@@ -2515,19 +2515,27 @@ function _token()
 
 
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
+// HMAC 기반 stateless 방식 — 세션에 저장하지 않으므로 다중 탭 문제 없음
 function get_token()
 {
-    $token = md5(uniqid(rand(), true));
-    set_session('ss_token', $token);
+    $key = (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
+         ? G5_TOKEN_ENCRYPTION_KEY
+         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
 
-    return $token;
+    return hash_hmac('sha256', session_id() . '|csrf_token', $key);
 }
 
 
-// POST로 넘어온 토큰과 세션에 저장된 토큰 비교
+// POST로 넘어온 토큰과 HMAC 토큰 비교
 function check_token()
 {
-    set_session('ss_token', '');
+    $token = isset($_POST['token']) ? $_POST['token'] : '';
+
+    if (!$token || $token !== get_token()) {
+        alert('올바른 방법으로 이용해 주십시오.');
+        return false;
+    }
+
     return true;
 }
 
@@ -2601,6 +2609,12 @@ function check_request_origin($redirect_url = '')
         return true;
     }
 
+    // GET 요청은 검증하지 않음 (CSRF는 상태 변경 요청에만 의미 있음)
+    $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
+    if ($method === 'GET' || $method === 'HEAD') {
+        return true;
+    }
+
     if (!$redirect_url) {
         $redirect_url = defined('G5_URL') ? G5_URL : '/';
     }
@@ -2619,12 +2633,19 @@ function check_request_origin($redirect_url = '')
         alert('올바른 경로로 접근해 주십시오.', $redirect_url);
     }
 
-    // 현재 서버 호스트 (포트 분리)
-    $server_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
-    $colon = strpos($server_host, ':');
-    if ($colon !== false) {
-        $server_host = substr($server_host, 0, $colon);
+    // config.php의 G5_URL에서 호스트 추출 (HTTP_HOST보다 신뢰할 수 있음)
+    $server_host = defined('G5_URL') ? @parse_url(G5_URL, PHP_URL_HOST) : '';
+    if (!$server_host) {
+        $server_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $colon = strpos($server_host, ':');
+        if ($colon !== false) {
+            $server_host = substr($server_host, 0, $colon);
+        }
     }
+
+    // www. 접두사 제거하여 비교 (www.example.com == example.com)
+    $source_host = preg_replace('/^www\./i', '', $source_host);
+    $server_host = preg_replace('/^www\./i', '', $server_host);
 
     if (!$server_host || strcasecmp($source_host, $server_host) !== 0) {
         alert('올바른 경로로 접근해 주십시오.', $redirect_url);

@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+if (function_exists('check_request_origin')) check_request_origin(G5_BBS_URL);
+
 $count = (isset($_POST['chk_wr_id']) && is_array($_POST['chk_wr_id'])) ? count($_POST['chk_wr_id']) : 0;
 $post_btn_submit = isset($_POST['btn_submit']) ? clean_xss_tags($_POST['btn_submit'], 1, 1) : '';
 

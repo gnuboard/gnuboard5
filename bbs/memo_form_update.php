@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+if (function_exists('check_request_origin')) check_request_origin(G5_BBS_URL);
+
 if ($is_guest)
     alert('회원만 이용하실 수 있습니다.');
 
