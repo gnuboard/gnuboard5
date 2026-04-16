@@ -18,7 +18,7 @@ if (substr_count($wr_content, "&#") > 50) {
 $w = isset($_POST['w']) ? clean_xss_tags($_POST['w']) : '';
 $wr_name  = isset($_POST['wr_name']) ? addslashes(clean_xss_tags(stripslashes(trim($_POST['wr_name'])))) : '';
 $wr_name  = preg_replace("#[\\\]+$#", "", $wr_name);
-$wr_secret = isset($_POST['wr_secret']) ? clean_xss_tags($_POST['wr_secret']) : '';
+$wr_secret = isset($_POST['wr_secret']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_secret']))) : '';
 $wr_email = $wr_subject = '';
 $reply_array = array();
 

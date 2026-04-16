@@ -19,8 +19,8 @@ $mb_certify     = isset($_POST['mb_certify']) ? preg_replace('/[^0-9a-z_]/i', ''
 $mb_zip         = isset($_POST['mb_zip']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['mb_zip']) : '';
 
 // 광고성 정보 수신
-$mb_marketing_agree         = isset($_POST['mb_marketing_agree']) ? clean_xss_tags($_POST['mb_marketing_agree'], 1, 1) : '0';
-$mb_thirdparty_agree         = isset($_POST['mb_thirdparty_agree']) ? clean_xss_tags($_POST['mb_thirdparty_agree'], 1, 1) : '0';
+$mb_marketing_agree         = isset($_POST['mb_marketing_agree']) ? addslashes(clean_xss_tags(stripslashes($_POST['mb_marketing_agree']), 1, 1)) : '0';
+$mb_thirdparty_agree         = isset($_POST['mb_thirdparty_agree']) ? addslashes(clean_xss_tags(stripslashes($_POST['mb_thirdparty_agree']), 1, 1)) : '0';
 
 // 관리자가 자동등록방지를 사용해야 할 경우 ( 회원의 비밀번호 변경시 캡챠를 체크한다 )
 if ($mb_password) {
@@ -84,9 +84,9 @@ for ($i = 1; $i <= 10; $i++) {
 
 foreach ($check_keys as $key) {
     if( in_array($key, array('mb_signature', 'mb_profile')) ){
-        $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1, 0, 0) : '';
+        $posts[$key] = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1, 0, 0)) : '';
     } else {
-        $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+        $posts[$key] = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
 }
 
