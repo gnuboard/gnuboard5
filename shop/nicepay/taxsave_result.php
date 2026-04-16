@@ -8,10 +8,18 @@ include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
  *
  */
 
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
+$tx    = isset($_REQUEST['tx']) ? clean_xss_tags($_REQUEST['tx'], 1, 1) : '';
+
 if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ");
     if (!$od)
         die('<p id="scash_empty">개인결제 내역이 존재하지 않습니다.</p>');
+
+    // IDOR 방지: 본인 개인결제거나 정당한 세션 uid 보유 시에만 허용
+    if (function_exists('is_shop_order_owner') && !is_shop_order_owner($od, 'personalpay')) {
+        alert('해당 개인결제 정보에 접근 권한이 없습니다.', G5_SHOP_URL);
+    }
 
     if($od['pp_cash'] == 1)
         alert('이미 등록된 현금영수증 입니다.');
@@ -26,6 +34,11 @@ if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if (!$od)
         die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
+
+    // IDOR 방지: 본인 주문이거나 정당한 세션 uid 보유 시에만 허용
+    if (function_exists('is_shop_order_owner') && !is_shop_order_owner($od, 'order')) {
+        alert('해당 주문 정보에 접근 권한이 없습니다.', G5_SHOP_URL);
+    }
 
     if($od['od_cash'] == 1)
         alert('이미 등록된 현금영수증 입니다.');

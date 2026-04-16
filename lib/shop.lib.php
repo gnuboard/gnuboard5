@@ -26,6 +26,56 @@ function get_shop_uid($type, $id, $time, $ip)
     return hash_hmac('sha256', $payload, $key);
 }
 
+/**
+ * 현금영수증 발급 또는 조회에 대한 검증
+ *
+ * 다음 셋 중 하나여야 접근 허용:
+ *   1. 관리자
+ *   2. 본인 주문/개인결제 (로그인 회원이고 mb_id 일치)
+ *   3. 비회원이지만 정당한 세션 uid 보유 (orderinquiry.php에서 비밀번호 검증 통과 후
+ *      또는 주문 완료 직후 세션에 저장된 ss_orderview_uid / ss_personalpay_uid가
+ *      현재 주문/개인결제의 HMAC uid와 일치)
+ *
+ * @param array  $od    주문 또는 개인결제 행 (DB에서 fetch한 결과)
+ * @param string $type  'order' (g5_shop_order) 또는 'personalpay' (g5_shop_personalpay)
+ * @return bool
+ */
+function is_shop_order_owner($od, $type = 'order')
+{
+    global $is_admin, $is_member, $member;
+
+    if (!is_array($od)) {
+        return false;
+    }
+
+    // 관리자
+    if ($is_admin) {
+        return true;
+    }
+
+    // 본인 주문/개인결제 (로그인 회원)
+    if ($is_member && isset($od['mb_id']) && $od['mb_id'] !== '' && $od['mb_id'] === $member['mb_id']) {
+        return true;
+    }
+
+    // 세션 uid 검증
+    if ($type === 'personalpay') {
+        if (empty($od['pp_id'])) {
+            return false;
+        }
+        $expected = get_shop_uid('personalpay', $od['pp_id'], $od['pp_time'], $_SERVER['REMOTE_ADDR']);
+        $session_uid = get_session('ss_personalpay_uid');
+    } else {
+        if (empty($od['od_id'])) {
+            return false;
+        }
+        $expected = get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']);
+        $session_uid = get_session('ss_orderview_uid');
+    }
+
+    return ($session_uid !== '' && $expected === $session_uid);
+}
+
 /*
 간편 사용법 : 상품유형을 1~5 사이로 지정합니다.
 $disp = new item_list(1);
