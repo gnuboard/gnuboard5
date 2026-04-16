@@ -2532,6 +2532,34 @@ function check_token()
 }
 
 /**
+ * 세션 기반 단순 Rate Limit. 자동화 도구의 무차별 호출을 늦추기 위한 용도.
+ *
+ * 같은 키에 대해 $window 초 동안 $max 회까지만 허용. 초과 시 false 반환.
+ * 세션 쿠키를 무시하는 정교한 봇은 우회 가능하지만, 세션 생성 비용으로 attack rate가 떨어지고
+ * 가장 흔한 form-only enumeration 시나리오는 효과적으로 차단된다.
+ *
+ * @param string $key    레이트 리밋 식별자 (예: 'ajax_mb_id_check')
+ * @param int    $max    윈도우당 최대 허용 횟수
+ * @param int    $window 윈도우 크기 (초)
+ * @return bool true = 허용, false = 차단
+ */
+function check_rate_limit($key, $max = 30, $window = 60)
+{
+    $session_key = 'ss_rate_' . $key;
+    $now = time();
+
+    $data = get_session($session_key);
+    if (!is_array($data) || !isset($data['reset']) || $data['reset'] < $now) {
+        $data = array('count' => 0, 'reset' => $now + $window);
+    }
+
+    $data['count']++;
+    set_session($session_key, $data);
+
+    return $data['count'] <= $max;
+}
+
+/**
  * 이메일 미인증 회원의 메일주소 변경 페이지 접근 토큰을 생성한다.
  *
  * HMAC-SHA256 + 서버 시크릿(G5_TOKEN_ENCRYPTION_KEY)

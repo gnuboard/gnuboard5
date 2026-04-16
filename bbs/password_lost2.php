@@ -16,17 +16,24 @@ $email = get_email_address(trim($_POST['mb_email']));
 if (!$email)
     alert_close('메일주소 오류입니다.');
 
+// OWASP 권장: 이메일 존재 여부와 무관하게 동일한 응답 메시지 사용
+// (이메일 열거 공격 방지)
+$generic_message = $email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.';
+
 $sql = " select count(*) as cnt from {$g5['member_table']} where mb_email = '$email' ";
 $row = sql_fetch($sql);
-if ($row['cnt'] > 1)
-    alert('동일한 메일주소가 2개 이상 존재합니다.\\n\\n관리자에게 문의하여 주십시오.');
+if ($row['cnt'] > 1) {
+    // 시스템 데이터 무결성 이슈 - 운영자 로그에만 기록하고 사용자에겐 일반 메시지
+    @error_log("[g5 password_lost2] Duplicate email detected: $email (count={$row['cnt']})");
+    alert_close($generic_message);
+}
 
 $sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime, mb_leave_date from {$g5['member_table']} where mb_email = '$email' ";
 $mb = sql_fetch($sql);
-if (empty($mb['mb_id']) || $mb['mb_leave_date']) {
-    alert('존재하지 않는 회원입니다.');
-} elseif (is_admin($mb['mb_id'])) {
-    alert('관리자 아이디는 접근 불가합니다.');
+
+// 회원이 없거나 탈퇴했거나 관리자이면 메일 발송 없이 동일한 메시지로 응답
+if (empty($mb['mb_id']) || $mb['mb_leave_date'] || is_admin($mb['mb_id'])) {
+    alert_close($generic_message);
 }
 
 // 임시비밀번호 발급
@@ -74,4 +81,4 @@ mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb['mb_email'
 
 run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
 
-alert_close($email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.');
+alert_close($generic_message);
