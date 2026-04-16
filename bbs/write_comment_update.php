@@ -32,8 +32,8 @@ $wr_7 = isset($_POST['wr_7']) ? $_POST['wr_7'] : '';
 $wr_8 = isset($_POST['wr_8']) ? $_POST['wr_8'] : '';
 $wr_9 = isset($_POST['wr_9']) ? $_POST['wr_9'] : '';
 $wr_10 = isset($_POST['wr_10']) ? $_POST['wr_10'] : '';
-$wr_facebook_user = isset($_POST['wr_facebook_user']) ? clean_xss_tags($_POST['wr_facebook_user'], 1, 1) : '';
-$wr_twitter_user = isset($_POST['wr_twitter_user']) ? clean_xss_tags($_POST['wr_twitter_user'], 1, 1) : '';
+$wr_facebook_user = isset($_POST['wr_facebook_user']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_facebook_user']), 1, 1)) : '';
+$wr_twitter_user = isset($_POST['wr_twitter_user']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_twitter_user']), 1, 1)) : '';
 $wr_homepage = isset($_POST['wr_homepage']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_homepage']), 1, 1)) : '';
 
 if (!empty($_POST['wr_email']))
