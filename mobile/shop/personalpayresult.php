@@ -3,7 +3,8 @@ include_once('./_common.php');
 
 $sql = "select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $pp = sql_fetch($sql);
-if (! (isset($pp['pp_id']) && $pp['pp_id']) || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
+$pp_uid = function_exists('get_shop_uid') ? get_shop_uid('personalpay', $pp['pp_id'], $pp['pp_time'], $_SERVER['REMOTE_ADDR']) : md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']);
+if (! (isset($pp['pp_id']) && $pp['pp_id']) || ($pp_uid != get_session('ss_personalpay_uid'))) {
     if( isset($_GET['ini_noti']) && $pp['pp_tno'] ){
         alert("해당 개인결제는 정상적으로 결제되었습니다.", G5_SHOP_URL."/personalpay.php");
     } else {

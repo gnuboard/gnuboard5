@@ -3,6 +3,29 @@
 // 쇼핑몰 라이브러리 모음 시작
 //==============================================================================
 
+/**
+ * 쇼핑몰 주문/개인결제 조회용 식별자(uid)를 생성한다.
+ *
+ * 결정적(deterministic) 생성 방식은 유지되므로 여러 파일에서 독립적으로 호출해도
+ * 동일한 값을 얻을 수 있어 기존 검증 구조를 그대로 사용 가능하다.
+ *
+ * @param string $type 'order' 또는 'personalpay' 등 네임스페이스 구분자
+ * @param string $id   주문번호 / 개인결제번호 등
+ * @param string $time 생성 시각 (od_time / pp_time)
+ * @param string $ip   생성 시 IP (od_ip / pp_ip)
+ * @return string 64자 hex
+ */
+function get_shop_uid($type, $id, $time, $ip)
+{
+    $key = (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
+         ? G5_TOKEN_ENCRYPTION_KEY
+         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
+
+    $payload = $type . '|' . $id . '|' . $time . '|' . $ip;
+
+    return hash_hmac('sha256', $payload, $key);
+}
+
 /*
 간편 사용법 : 상품유형을 1~5 사이로 지정합니다.
 $disp = new item_list(1);
@@ -2332,7 +2355,7 @@ function exists_inicis_shop_order($oid, $pp=array(), $od_time='', $od_ip='')
             set_session('ss_personalpay_id', '');
             set_session('ss_personalpay_hash', '');
 
-            $uid = md5($pp['pp_id'].$pp['pp_time'].$od_ip);
+            $uid = get_shop_uid('personalpay', $pp['pp_id'], $pp['pp_time'], $od_ip);
             set_session('ss_personalpay_uid', $uid);
             
             goto_url(G5_SHOP_URL.'/personalpayresult.php?pp_id='.$pp['pp_id'].'&amp;uid='.$uid.'&amp;ini_noti=1');
@@ -2346,7 +2369,7 @@ function exists_inicis_shop_order($oid, $pp=array(), $od_time='', $od_ip='')
 
         if( $oid == get_session('ss_order_id') ){
             // orderview 에서 사용하기 위해 session에 넣고
-            $uid = md5($oid.$od_time.$od_ip);
+            $uid = get_shop_uid('order', $oid, $od_time, $od_ip);
             set_session('ss_orderview_uid', $uid);
             goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$oid.'&amp;uid='.$uid.'&amp;ini_noti=1');
         } else {

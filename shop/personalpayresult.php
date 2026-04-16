@@ -10,7 +10,8 @@ if (G5_IS_MOBILE) {
 
 $sql = "select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $pp = sql_fetch($sql);
-if (! (isset($pp['pp_id']) && $pp['pp_id']) || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
+$pp_uid = function_exists('get_shop_uid') ? get_shop_uid('personalpay', $pp['pp_id'], $pp['pp_time'], $_SERVER['REMOTE_ADDR']) : md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']);
+if (! (isset($pp['pp_id']) && $pp['pp_id']) || ($pp_uid != get_session('ss_personalpay_uid'))) {
     alert("조회하실 개인결제 내역이 없습니다.", G5_SHOP_URL);
 }
 

@@ -918,7 +918,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
 // SMS END   --------------------------------------------------------
 
 // orderview 에서 사용하기 위해 session에 넣고
-$uid = md5($od_id.G5_TIME_YMDHIS.$REMOTE_ADDR);
+$uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od_id, G5_TIME_YMDHIS, $REMOTE_ADDR) : md5($od_id.G5_TIME_YMDHIS.$REMOTE_ADDR);
 set_session('ss_orderview_uid', $uid);
 
 // 주문 정보 임시 데이터 삭제

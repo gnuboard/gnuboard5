@@ -40,7 +40,7 @@ if(defined('G5_THEME_SHOP_PATH')) {
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
+        $uid = function_exists('get_shop_uid') ? get_shop_uid('order', $row['od_id'], $row['od_time'], $row['od_ip']) : md5($row['od_id'].$row['od_time'].$row['od_ip']);
 
         switch($row['od_status']) {
             case '주문':

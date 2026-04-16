@@ -23,7 +23,8 @@ if($is_member && !$is_admin)
     $sql .= " and mb_id = '{$member['mb_id']}' ";
 $od = sql_fetch($sql);
 
-if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
+$uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']) : md5($od['od_id'].$od['od_time'].$od['od_ip']);
+if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && $uid != get_session('ss_orderview_uid'))) {
     alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
 }
 

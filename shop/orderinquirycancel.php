@@ -25,7 +25,7 @@ $sql = " select SUM(IF(ct_status = '주문', 1, 0)) as od_count2,
             where od_id = '$od_id' ";
 $ct = sql_fetch($sql);
 
-$uid = md5($od['od_id'].$od['od_time'].$od['od_ip']);
+$uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']) : md5($od['od_id'].$od['od_time'].$od['od_ip']);
 
 if($od['od_cancel_price'] > 0 || $ct['od_count1'] != $ct['od_count2']) {
     alert("취소할 수 있는 주문이 아닙니다.", G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");

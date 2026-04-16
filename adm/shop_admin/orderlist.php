@@ -350,7 +350,7 @@ if( function_exists('pg_setting_check') ){
         if($default['de_escrow_use'] && $row['od_escrow'])
             $od_paytype .= '<span class="list_escrow">에스크로</span>';
 
-        $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
+        $uid = function_exists('get_shop_uid') ? get_shop_uid('order', $row['od_id'], $row['od_time'], $row['od_ip']) : md5($row['od_id'].$row['od_time'].$row['od_ip']);
 
         $invoice_time = is_null_time($row['od_invoice_time']) ? G5_TIME_YMDHIS : $row['od_invoice_time'];
         $delivery_company = $row['od_delivery_company'] ? $row['od_delivery_company'] : $default['de_delivery_company'];

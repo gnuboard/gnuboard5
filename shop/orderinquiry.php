@@ -73,7 +73,7 @@ if (!$is_member)
     }
 
     if ($row['od_id']) {
-        $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
+        $uid = function_exists('get_shop_uid') ? get_shop_uid('order', $row['od_id'], $row['od_time'], $row['od_ip']) : md5($row['od_id'].$row['od_time'].$row['od_ip']);
         set_session('ss_orderview_uid', $uid);
         goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uid='.$uid);
     }
