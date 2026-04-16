@@ -8,7 +8,7 @@ if( isset($_GET['ini_noti']) && !isset($_GET['uid']) ){
 }
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
-$token = md5(uniqid(rand(), true));
+$token = get_random_token_string(16);
 set_session("ss_token", $token);
 
 if (!$is_member) {

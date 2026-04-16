@@ -2510,7 +2510,7 @@ function _callback_normalizeString($matches){
 // 토큰 생성
 function _token()
 {
-    return md5(uniqid(rand(), true));
+    return get_random_token_string(16);
 }
 
 
@@ -2578,7 +2578,7 @@ function _get_token_secret()
 {
     $secret = get_session('ss_token_secret');
     if (!$secret) {
-        $secret = md5(uniqid(rand(), true));
+        $secret = get_random_token_string(16);
         set_session('ss_token_secret', $secret);
     }
     return $secret;
@@ -4395,7 +4395,7 @@ function get_sql_affected_rows($link=null)
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
 function get_write_token($bo_table)
 {
-    $token = md5(uniqid(rand(), true));
+    $token = get_random_token_string(16);
     set_session('ss_write_'.$bo_table.'_token', $token);
 
     return $token;

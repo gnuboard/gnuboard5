@@ -130,7 +130,7 @@ function no_hp_click(val)
 
 <form name="search_form" class="local_sch01 local_sch">
 <label for="bg_no" class="sound_only">그룹명</label>
-<select name="bg_no" id="bg_no" onchange="location.href='<?php echo $_SERVER['SCRIPT_NAME']?>?bg_no='+this.value;">
+<select name="bg_no" id="bg_no" onchange="location.href='<?php echo htmlspecialchars($_SERVER['SCRIPT_NAME'])?>?bg_no='+this.value;">
     <option value=""<?php echo get_selected('', $bg_no); ?>> 전체 </option>
     <option value="<?php echo $no_group['bg_no']?>"<?php echo get_selected($no_group['bg_no'], $bg_no); ?>> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명) </option>
     <?php for($i=0; $i<count($group); $i++) {?>

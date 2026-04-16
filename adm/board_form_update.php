@@ -139,7 +139,7 @@ $bo_hot = isset($_POST['bo_hot']) ? (int) $_POST['bo_hot'] : 0;
 $bo_image_width = isset($_POST['bo_image_width']) ? (int) $_POST['bo_image_width'] : 0;
 $bo_use_search = isset($_POST['bo_use_search']) ? (int) $_POST['bo_use_search'] : 0;
 $bo_use_cert = isset($_POST['bo_use_cert']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['bo_use_cert']) : '';
-$bo_device = isset($_POST['bo_device']) ? clean_xss_tags($_POST['bo_device'], 1, 1) : '';
+$bo_device = isset($_POST['bo_device']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_device']), 1, 1)) : '';
 $bo_list_level = isset($_POST['bo_list_level']) ? (int) $_POST['bo_list_level'] : 0;
 $bo_read_level = isset($_POST['bo_read_level']) ? (int) $_POST['bo_read_level'] : 0;
 $bo_write_level = isset($_POST['bo_write_level']) ? (int) $_POST['bo_write_level'] : 0;
@@ -155,9 +155,9 @@ $bo_read_point = isset($_POST['bo_read_point']) ? (int) $_POST['bo_read_point'] 
 $bo_write_point = isset($_POST['bo_write_point']) ? (int) $_POST['bo_write_point'] : 0;
 $bo_comment_point = isset($_POST['bo_comment_point']) ? (int) $_POST['bo_comment_point'] : 0;
 $bo_download_point = isset($_POST['bo_download_point']) ? (int) $_POST['bo_download_point'] : 0;
-$bo_select_editor = isset($_POST['bo_select_editor']) ? clean_xss_tags($_POST['bo_select_editor'], 1, 1) : '';
-$bo_skin = isset($_POST['bo_skin']) ? clean_xss_tags($_POST['bo_skin'], 1, 1) : '';
-$bo_mobile_skin = isset($_POST['bo_mobile_skin']) ? clean_xss_tags($_POST['bo_mobile_skin'], 1, 1) : '';
+$bo_select_editor = isset($_POST['bo_select_editor']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_select_editor']), 1, 1)) : '';
+$bo_skin = isset($_POST['bo_skin']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_skin']), 1, 1)) : '';
+$bo_mobile_skin = isset($_POST['bo_mobile_skin']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_mobile_skin']), 1, 1)) : '';
 $bo_content_head = isset($_POST['bo_content_head']) ? $_POST['bo_content_head'] : '';
 $bo_content_tail = isset($_POST['bo_content_tail']) ? $_POST['bo_content_tail'] : '';
 $bo_mobile_content_head = isset($_POST['bo_mobile_content_head']) ? $_POST['bo_mobile_content_head'] : '';
@@ -176,7 +176,7 @@ $bo_write_min = isset($_POST['bo_write_min']) ? (int) $_POST['bo_write_min'] : 0
 $bo_write_max = isset($_POST['bo_write_max']) ? (int) $_POST['bo_write_max'] : 0;
 $bo_comment_min = isset($_POST['bo_comment_min']) ? (int) $_POST['bo_comment_min'] : 0;
 $bo_comment_max = isset($_POST['bo_comment_max']) ? (int) $_POST['bo_comment_max'] : 0;
-$bo_sort_field = isset($_POST['bo_sort_field']) ? clean_xss_tags($_POST['bo_sort_field'], 1, 1) : '';
+$bo_sort_field = isset($_POST['bo_sort_field']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_sort_field']), 1, 1)) : '';
 
 if (strpbrk($bo_skin.$bo_mobile_skin, "?%*:|\"<>") !== false) {
     alert('스킨 디렉토리명 오류!');

@@ -36,7 +36,7 @@ if (isset($_REQUEST['mylink']) && !empty($_REQUEST['mylink'])) {
             alert_close('올바른 방법으로 이용해 주십시오.');
         }
 
-        set_session('ss_social_mylink_token', md5(uniqid(rand(), true)));
+        set_session('ss_social_mylink_token', get_random_token_string(16));
     }
 }
 

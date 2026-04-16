@@ -22,11 +22,11 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
     $name           = isset($_POST['name']) ? clean_xss_tags($_POST['name']) : '';                //구매자명
     $GoodsName      = isset($_POST['GoodsName']) ? clean_xss_tags($_POST['GoodsName']) : '';           //상품명
     $TID            = isset($_POST['TID']) ? clean_xss_tags($_POST['TID']) : '';                 //거래번호
-    $MOID           = isset($_POST['MOID']) ? clean_xss_tags($_POST['MOID']) : '';                //주문번호
+    $MOID           = isset($_POST['MOID']) ? addslashes(clean_xss_tags(stripslashes($_POST['MOID']))) : '';                //주문번호
     $AuthDate       = isset($_POST['AuthDate']) ? clean_xss_tags($_POST['AuthDate']) : '';            //입금일시 (yyMMddHHmmss) 12 자리
     $ResultCode     = isset($_POST['ResultCode']) ? clean_xss_tags($_POST['ResultCode']) : '';          //결과코드 ('4110' 경우 입금통보)
     $ResultMsg      = isset($_POST['ResultMsg']) ? clean_xss_tags($_POST['ResultMsg']) : '';           //결과메시지
-    $VbankNum       = isset($_POST['VbankNum']) ? clean_xss_tags($_POST['VbankNum']) : '';            //가상계좌번호
+    $VbankNum       = isset($_POST['VbankNum']) ? addslashes(clean_xss_tags(stripslashes($_POST['VbankNum']))) : '';            //가상계좌번호
     $FnCd           = isset($_POST['FnCd']) ? clean_xss_tags($_POST['FnCd']) : '';                //가상계좌 은행코드
     $VbankName      = isset($_POST['VbankName']) ? clean_xss_tags($_POST['VbankName']) : '';           //가상계좌 은행명
     $VbankInputName = isset($_POST['VbankInputName']) ? clean_xss_tags($_POST['VbankInputName']) : '';      //입금자 명

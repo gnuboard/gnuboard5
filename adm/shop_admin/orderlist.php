@@ -26,8 +26,8 @@ $od_cancel_price = isset($_GET['od_cancel_price']) ? preg_replace('/[^0-9a-z]/i'
 $od_refund_price = isset($_GET['od_refund_price']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_refund_price']) : '';
 $od_receipt_point = isset($_GET['od_receipt_point']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_receipt_point']) : '';
 $od_coupon = isset($_GET['od_coupon']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['od_coupon']) : ''; 
-$od_settle_case = isset($_GET['od_settle_case']) ? clean_xss_tags($_GET['od_settle_case'], 1, 1) : ''; 
-$od_escrow = isset($_GET['od_escrow']) ? clean_xss_tags($_GET['od_escrow'], 1, 1) : ''; 
+$od_settle_case = isset($_GET['od_settle_case']) ? addslashes(clean_xss_tags(stripslashes($_GET['od_settle_case']), 1, 1)) : '';
+$od_escrow = isset($_GET['od_escrow']) ? addslashes(clean_xss_tags(stripslashes($_GET['od_escrow']), 1, 1)) : '';
 
 $tot_itemcount = $tot_orderprice = $tot_receiptprice = $tot_ordercancel = $tot_misu = $tot_couponprice = 0;
 $sql_search = "";

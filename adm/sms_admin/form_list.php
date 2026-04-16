@@ -114,7 +114,7 @@ function multi_update(sel)
 <div class="local_sch01 local_sch sms_preset_sch">
     <form>
     <label for="fg_no" class="sound_only">그룹명</label>
-    <select name="fg_no" id="fg_no" onchange="location.href='<?php echo $_SERVER['SCRIPT_NAME']?>?fg_no='+this.value;">
+    <select name="fg_no" id="fg_no" onchange="location.href='<?php echo htmlspecialchars($_SERVER['SCRIPT_NAME'])?>?fg_no='+this.value;">
         <option value="" <?php echo $fg_no?'':'selected'?>> 전체 </option>
         <option value="0" <?php echo $fg_no=='0'?'selected':''?>> 미분류 (<?php echo number_format($no_count)?>) </option>
         <?php for($i=0; $i<count($group); $i++) {?>

@@ -30,7 +30,7 @@ $mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '
 $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';
 $mb_nick        = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
 $mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
-$mb_name        = isset($_POST['mb_name']) ? clean_xss_tags(trim(strip_tags($_POST['mb_name']))) : '';
+$mb_name        = isset($_POST['mb_name']) ? addslashes(clean_xss_tags(trim(strip_tags(stripslashes($_POST['mb_name']))))) : '';
 $mb_hp          = isset($_POST['mb_hp']) ? trim($_POST['mb_hp']) : '';
 $mb_email       = get_email_address($mb_email);
 
@@ -54,7 +54,7 @@ if( ! $mb_nick || ! $mb_name ){
 
 if( ! isset($mb_password) || ! $mb_password ){
 
-    $mb_password = md5(pack('V*', rand(), rand(), rand(), rand()));
+    $mb_password = get_random_token_string(16);
 
 }
 
@@ -272,8 +272,8 @@ if($result) {
     } else {    // 메일인증을 사용한다면
         $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-        $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용 (CSPRNG 사용)
+        $mb_md5 = get_random_token_string(16);
 
         sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
 

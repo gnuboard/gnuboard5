@@ -12,10 +12,10 @@ $sql_common = " from {$g5['member_table']} ";
 $sql_where = " where (1) ";
 
 $mb_id1         = isset($_POST['mb_id1'])       ? (int) $_POST['mb_id1'] : 1;
-$mb_id1_from    = isset($_POST['mb_id1_from'])  ? clean_xss_tags($_POST['mb_id1_from'], 1, 1, 30) : '';
-$mb_id1_to      = isset($_POST['mb_id1_to'])    ? clean_xss_tags($_POST['mb_id1_to'], 1, 1, 30) : '';
-$mb_email       = isset($_POST['mb_email'])     ? clean_xss_tags($_POST['mb_email'], 1, 1, 100) : '';
-$mb_mailling    = isset($_POST['mb_mailling'])  ? clean_xss_tags($_POST['mb_mailling'], 1, 1, 100) : '';
+$mb_id1_from    = isset($_POST['mb_id1_from'])  ? addslashes(clean_xss_tags(stripslashes($_POST['mb_id1_from']), 1, 1, 30)) : '';
+$mb_id1_to      = isset($_POST['mb_id1_to'])    ? addslashes(clean_xss_tags(stripslashes($_POST['mb_id1_to']), 1, 1, 30)) : '';
+$mb_email       = isset($_POST['mb_email'])     ? addslashes(clean_xss_tags(stripslashes($_POST['mb_email']), 1, 1, 100)) : '';
+$mb_mailling    = isset($_POST['mb_mailling'])  ? addslashes(clean_xss_tags(stripslashes($_POST['mb_mailling']), 1, 1, 100)) : '';
 $mb_level_from  = isset($_POST['mb_level_from'])? (int) $_POST['mb_level_from'] : 1;
 $mb_level_to    = isset($_POST['mb_level_to'])  ? (int) $_POST['mb_level_to'] : 10;
 
