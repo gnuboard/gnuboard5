@@ -2,6 +2,11 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+// CSRF 방지: 무통장입금만 Origin/Referer 검증 (PG 결제는 PG사에서 검증하므로 제외)
+if (isset($od_settle_case) && $od_settle_case == '무통장' && function_exists('check_request_origin')) {
+    check_request_origin(G5_SHOP_URL);
+}
+
 //이니시스 lpay 요청으로 왔다면 $default['de_pg_service'] 값을 이니시스로 변경합니다.
 if( in_array($od_settle_case, array('lpay', 'inicis_kakaopay')) ){
     $default['de_pg_service'] = 'inicis';

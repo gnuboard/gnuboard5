@@ -2468,6 +2468,61 @@ function check_token()
 }
 
 /**
+ * CSRF 방지용 Origin/Referer 검증 (OWASP 권장 패턴).
+ *
+ * 브라우저가 자동으로 보내는 Origin 헤더를 우선 확인하고, 없으면 Referer를 사용해
+ * 요청이 현재 사이트에서 발생했는지 검증한다. 크로스 오리진에서 유입된 요청은
+ * 두 헤더 모두 공격자가 제어할 수 없으므로 위조가 불가능하다.
+ *
+ * 폼 파일(스킨) 수정 없이 처리 파일에만 호출을 추가하면 되므로 적용 범위가 넓고
+ * 커스텀 테마 호환성에 영향이 없다.
+ *
+ * 특수 환경(프록시 등)에서 헤더가 유실되는 경우 G5_DISABLE_ORIGIN_CHECK 상수로
+ * 비활성화할 수 있다.
+ *
+ * @param string $redirect_url 검증 실패 시 리다이렉트할 URL (기본: G5_URL)
+ * @return bool
+ */
+function check_request_origin($redirect_url = '')
+{
+    // 환경에 따라 opt-out 가능
+    if (defined('G5_DISABLE_ORIGIN_CHECK') && G5_DISABLE_ORIGIN_CHECK) {
+        return true;
+    }
+
+    if (!$redirect_url) {
+        $redirect_url = defined('G5_URL') ? G5_URL : '/';
+    }
+
+    // Origin 우선, 없으면 Referer 사용
+    $origin  = isset($_SERVER['HTTP_ORIGIN'])  ? trim($_SERVER['HTTP_ORIGIN'])  : '';
+    $referer = isset($_SERVER['HTTP_REFERER']) ? trim($_SERVER['HTTP_REFERER']) : '';
+    $source  = $origin !== '' ? $origin : $referer;
+
+    if ($source === '') {
+        alert('올바른 경로로 접근해 주십시오.', $redirect_url);
+    }
+
+    $source_host = @parse_url($source, PHP_URL_HOST);
+    if (!$source_host) {
+        alert('올바른 경로로 접근해 주십시오.', $redirect_url);
+    }
+
+    // 현재 서버 호스트 (포트 분리)
+    $server_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+    $colon = strpos($server_host, ':');
+    if ($colon !== false) {
+        $server_host = substr($server_host, 0, $colon);
+    }
+
+    if (!$server_host || strcasecmp($source_host, $server_host) !== 0) {
+        alert('올바른 경로로 접근해 주십시오.', $redirect_url);
+    }
+
+    return true;
+}
+
+/**
  * 브라우저 검증을 위한 세션 반환 및 재생성
  * @param array $member 로그인 된 회원의 정보. 가입일시(mb_datetime)를 반드시 포함해야 한다.
  * @param bool $regenerate true 이면 재생성

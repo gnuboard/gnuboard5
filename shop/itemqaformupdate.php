@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// CSRF 방지: Origin/Referer 헤더로 요청 출처 검증
+if (function_exists('check_request_origin')) check_request_origin(G5_SHOP_URL);
+
 if (!$is_member) {
     alert_close("상품문의는 회원만 작성이 가능합니다.");
 }

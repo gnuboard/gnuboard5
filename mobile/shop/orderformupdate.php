@@ -2,6 +2,11 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+// CSRF 방지: 무통장입금만 Origin/Referer 검증 (PG 결제는 PG사에서 검증하므로 제외)
+if (isset($od_settle_case) && $od_settle_case == '무통장' && function_exists('check_request_origin')) {
+    check_request_origin(G5_SHOP_URL);
+}
+
 $post_p_hash = isset($_POST['P_HASH']) ? $_POST['P_HASH'] : '';
 $post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
 $post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
