@@ -2468,6 +2468,25 @@ function check_token()
 }
 
 /**
+ * 이메일 미인증 회원의 메일주소 변경 페이지 접근 토큰을 생성한다.
+ *
+ * HMAC-SHA256 + 서버 시크릿(G5_TOKEN_ENCRYPTION_KEY)
+ * @param string $mb_id
+ * @param string $mb_datetime
+ * @return string 64자 hex
+ */
+function get_email_cert_key($mb_id, $mb_datetime)
+{
+    $key = (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
+         ? G5_TOKEN_ENCRYPTION_KEY
+         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
+
+    $payload = 'email_cert|' . $mb_id . '|' . $mb_datetime;
+
+    return hash_hmac('sha256', $payload, $key);
+}
+
+/**
  * CSRF 방지용 Origin/Referer 검증 (OWASP 권장 패턴).
  *
  * 브라우저가 자동으로 보내는 Origin 헤더를 우선 확인하고, 없으면 Referer를 사용해
