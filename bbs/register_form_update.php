@@ -77,6 +77,20 @@ $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '
 $mb_marketing_agree     = isset($_POST['mb_marketing_agree'])   ? trim($_POST['mb_marketing_agree'])    : "0";
 $mb_thirdparty_agree    = isset($_POST['mb_thirdparty_agree'])  ? trim($_POST['mb_thirdparty_agree'])   : "0";
 
+// _default 변수 명시적 초기화 (폼에 해당 섹션이 없으면 null)
+$mb_marketing_agree_default  = isset($_POST['mb_marketing_agree_default'])  ? trim($_POST['mb_marketing_agree_default'])  : null;
+$mb_mailling_default         = isset($_POST['mb_mailling_default'])         ? trim($_POST['mb_mailling_default'])         : null;
+$mb_sms_default              = isset($_POST['mb_sms_default'])              ? trim($_POST['mb_sms_default'])              : null;
+$mb_thirdparty_agree_default = isset($_POST['mb_thirdparty_agree_default']) ? trim($_POST['mb_thirdparty_agree_default']) : null;
+
+// 폼에 수신설정 섹션이 없는 경우 기존 DB 값 유지 (회원정보 수정 시)
+if ($w == 'u') {
+    if ($mb_marketing_agree_default === null) $mb_marketing_agree = $member['mb_marketing_agree'];
+    if ($mb_mailling_default === null)        $mb_mailling = $member['mb_mailling'];
+    if ($mb_sms_default === null)             $mb_sms = $member['mb_sms'];
+    if ($mb_thirdparty_agree_default === null) $mb_thirdparty_agree = $member['mb_thirdparty_agree'];
+}
+
 run_event('register_form_update_before', $mb_id, $w);
 
 if ($w == '' || $w == 'u') {
@@ -386,28 +400,28 @@ if ($w == '') {
     
     // 마케팅 목적의 개인정보 수집 및 이용
     $sql_marketing_date = "";
-    if ($mb_marketing_agree_default !== $mb_marketing_agree) {
+    if ($mb_marketing_agree_default !== null && $mb_marketing_agree_default !== $mb_marketing_agree) {
         $sql_marketing_date .= " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
         $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(" . ($mb_marketing_agree == 1 ? "동의" : "철회") . ")";
     }
 
     // 광고성 이메일 수신
     $sql_mailling_date = "";
-    if ($mb_mailling_default !== $mb_mailling) {
+    if ($mb_mailling_default !== null && $mb_mailling_default !== $mb_mailling) {
         $sql_mailling_date .= " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
         $agree_items[] = "광고성 이메일 수신(" . ($mb_mailling == 1 ? "동의" : "철회") . ")";
     }
     
     // 광고성 SMS/카카오톡 수신
     $sql_sms_date = "";
-    if ($mb_sms_default !== $mb_sms) {
+    if ($mb_sms_default !== null && $mb_sms_default !== $mb_sms) {
         $sql_sms_date .= " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
         $agree_items[] = "광고성 SMS/카카오톡 수신(" . ($mb_sms == 1 ? "동의" : "철회") . ")";
     }
     
     // 개인정보 제3자 제공
     $sql_thirdparty_date = "";
-    if ($mb_thirdparty_agree_default !== $mb_thirdparty_agree) {
+    if ($mb_thirdparty_agree_default !== null && $mb_thirdparty_agree_default !== $mb_thirdparty_agree) {
         $sql_thirdparty_date .= " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
         $agree_items[] = "개인정보 제3자 제공(" . ($mb_thirdparty_agree == 1 ? "동의" : "철회") . ")";
     }
