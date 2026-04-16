@@ -11,6 +11,18 @@ session_unset(); // 모든 세션변수를 언레지스터 시켜줌
 session_destroy(); // 세션해제함
 
 // 자동로그인 해제 --------------------------------
+// DB에 저장된 해당 디바이스의 자동 로그인 토큰만 무효화
+// (다른 디바이스의 자동 로그인은 유지)
+// DB에는 토큰의 SHA256 해시가 저장되어 있으므로 비교 시에도 해시값 사용
+$logout_token = get_cookie('ck_auto');
+$logout_mb_id = get_cookie('ck_mb_id');
+if (isset($g5['member_auto_login_table']) && $logout_token && $logout_mb_id && preg_match('/^[a-f0-9]{64}$/', $logout_token)) {
+    $logout_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $logout_mb_id), 0, 20);
+    $logout_token_hash = hash('sha256', $logout_token);
+    sql_query(" delete from {$g5['member_auto_login_table']}
+                 where mb_id = '{$logout_mb_id}'
+                   and al_token = '{$logout_token_hash}' ");
+}
 set_cookie('ck_mb_id', '', 0);
 set_cookie('ck_auto', '', 0);
 // 자동로그인 해제 end --------------------------------

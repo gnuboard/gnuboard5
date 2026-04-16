@@ -90,10 +90,33 @@ if($config['cf_use_point']) {
 if (isset($auto_login) && $auto_login) {
     // 3.27
     // 자동로그인 ---------------------------
-    // 쿠키 한달간 저장
-    $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['SERVER_SOFTWARE'] . $_SERVER['HTTP_USER_AGENT'] . $mb['mb_password']);
+    // 예측 불가능한 랜덤 토큰을 생성하여 g5_member_auto_login 테이블에 저장.
+    // 다중 디바이스 지원: 디바이스마다 별도의 토큰 행이 생성되며 서로 독립적으로 동작.
+
+    $auto_token = get_random_token_string(32);              // 64자 hex - 쿠키에는 원본
+    $auto_token_hash = hash('sha256', $auto_token);         // 64자 hex - DB에는 해시
+    $auto_ua    = isset($_SERVER['HTTP_USER_AGENT']) ? substr($_SERVER['HTTP_USER_AGENT'], 0, 255) : '';
+    $auto_ip    = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+    $auto_now   = G5_TIME_YMDHIS;
+    $auto_expire = date('Y-m-d H:i:s', G5_SERVER_TIME + 86400 * 31);
+
+    // 만료된 토큰 정리 (해당 회원 한정)
+    sql_query(" delete from {$g5['member_auto_login_table']}
+                 where mb_id = '{$mb['mb_id']}'
+                   and al_expire < '{$auto_now}' ");
+
+    // 새 토큰 INSERT (해시값만 저장)
+    sql_query(" insert into {$g5['member_auto_login_table']}
+                  set mb_id = '{$mb['mb_id']}',
+                      al_token = '{$auto_token_hash}',
+                      al_user_agent = '".addslashes($auto_ua)."',
+                      al_ip = '".addslashes($auto_ip)."',
+                      al_created = '{$auto_now}',
+                      al_last_used = '{$auto_now}',
+                      al_expire = '{$auto_expire}' ");
+
     set_cookie('ck_mb_id', $mb['mb_id'], 86400 * 31);
-    set_cookie('ck_auto', $key, 86400 * 31);
+    set_cookie('ck_auto', $auto_token, 86400 * 31);   // 쿠키에는 원본 토큰
     // 자동로그인 end ---------------------------
 } else {
     set_cookie('ck_mb_id', '', 0);

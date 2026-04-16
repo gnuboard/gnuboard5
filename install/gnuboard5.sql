@@ -555,6 +555,28 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `g5_member_auto_login`
+-- KVE-2026-0610: 자동 로그인 토큰 저장 (다중 디바이스 지원)
+--
+
+DROP TABLE IF EXISTS `g5_member_auto_login`;
+CREATE TABLE IF NOT EXISTS `g5_member_auto_login` (
+  `al_id` int(11) NOT NULL auto_increment,
+  `mb_id` varchar(20) NOT NULL default '',
+  `al_token` varchar(64) NOT NULL default '',
+  `al_user_agent` varchar(255) NOT NULL default '',
+  `al_ip` varchar(45) NOT NULL default '',
+  `al_created` datetime DEFAULT NULL,
+  `al_last_used` datetime DEFAULT NULL,
+  `al_expire` datetime DEFAULT NULL,
+  PRIMARY KEY  (`al_id`),
+  UNIQUE KEY `al_token` (`al_token`),
+  KEY `mb_id` (`mb_id`),
+  KEY `al_expire` (`al_expire`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `g5_memo`
 --
 

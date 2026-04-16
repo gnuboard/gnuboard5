@@ -351,6 +351,29 @@ if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
     }
 }
 
+// 자동 로그인 토큰 테이블 생성 (KVE-2026-0610: 추측 가능한 자동 로그인 쿠키 위조 방지)
+// 다중 디바이스 지원을 위해 회원당 여러 토큰을 별도 테이블로 관리
+if (!isset($g5['member_auto_login_table'])) {
+    $g5['member_auto_login_table'] = G5_TABLE_PREFIX.'member_auto_login';
+}
+if (!sql_query(" DESC `{$g5['member_auto_login_table']}` ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['member_auto_login_table']}` (
+                  `al_id` int(11) NOT NULL auto_increment,
+                  `mb_id` varchar(20) NOT NULL default '',
+                  `al_token` varchar(64) NOT NULL default '',
+                  `al_user_agent` varchar(255) NOT NULL default '',
+                  `al_ip` varchar(45) NOT NULL default '',
+                  `al_created` datetime DEFAULT NULL,
+                  `al_last_used` datetime DEFAULT NULL,
+                  `al_expire` datetime DEFAULT NULL,
+                  PRIMARY KEY  (`al_id`),
+                  UNIQUE KEY `al_token` (`al_token`),
+                  KEY `mb_id` (`mb_id`),
+                  KEY `al_expire` (`al_expire`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ", true);
+    $is_check = true;
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';

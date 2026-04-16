@@ -4344,10 +4344,49 @@ function get_token_encryption_key($str=''){
 
 function get_random_token_string($length=6)
 {
-    if(function_exists('random_bytes')){
-        return bin2hex(random_bytes($length));
+    // 사용 가능한 가장 안전한 CSPRNG를 우선순위대로 시도하여 $length 바이트의 무작위 값을 얻는다.
+    // PHP 5.2.17 ~ 8.x 호환. 모든 단계는 function_exists/defined로 가드되어 구버전에서도 안전.
+    $bytes = false;
+
+    // 1순위. PHP 7.0+ : random_bytes() — OS의 CSPRNG 직접 사용 (가장 안전)
+    if (function_exists('random_bytes')) {
+        $bytes = random_bytes($length);
+    }
+    // 2순위. PHP 5.3+ : openssl_random_pseudo_bytes() — OpenSSL 확장이 있으면 사용
+    elseif (function_exists('openssl_random_pseudo_bytes')) {
+        $strong = false;
+        $tmp = openssl_random_pseudo_bytes($length, $strong);
+        if ($tmp !== false && $strong === true) {
+            $bytes = $tmp;
+        }
     }
 
+    // 3순위. Linux/Unix : /dev/urandom 직접 읽기 (PHP 5.2 호환, OS 차원의 CSPRNG)
+    if ($bytes === false && DIRECTORY_SEPARATOR === '/' && @is_readable('/dev/urandom')) {
+        $fp = @fopen('/dev/urandom', 'rb');
+        if ($fp !== false) {
+            $tmp = @fread($fp, $length);
+            @fclose($fp);
+            if ($tmp !== false && strlen($tmp) === $length) {
+                $bytes = $tmp;
+            }
+        }
+    }
+
+    // 4순위. mcrypt 확장 (PHP 5.2 호환, PHP 7.2에서 제거됨) — Windows 등에서 fallback
+    if ($bytes === false && function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM')) {
+        $tmp = @mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+        if ($tmp !== false && strlen($tmp) === $length) {
+            $bytes = $tmp;
+        }
+    }
+
+    if ($bytes !== false) {
+        return bin2hex($bytes);
+    }
+
+    // 최후 수단: 약한 RNG (암호학적 안전성 없음, 기존 동작 호환을 위해 유지)
+    // 이 경로에 도달하면 시스템에 안전한 난수 소스가 전혀 없는 비정상 환경이므로 점검 필요.
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     $output = substr(str_shuffle($characters), 0, $length);
 
