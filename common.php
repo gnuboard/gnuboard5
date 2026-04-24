@@ -295,7 +295,7 @@ if( ! class_exists('XenoPostToForm') ){
         public static function makeInputArray($posts) {
             $res = array();
             foreach($posts as $k => $v) {
-                $res[] = self::makeInputArray_($k, $v);
+                $res[] = self::makeInputArray_(htmlspecialchars($k), $v);
             }
             return implode('', $res);
         }
