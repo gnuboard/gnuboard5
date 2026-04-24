@@ -365,6 +365,32 @@ $it_explan = isset($_POST['it_explan']) ? $_POST['it_explan'] : '';
 if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
 
+// 스킨 경로 검증
+$it_skin = isset($_POST['it_skin']) ? strip_tags(clean_xss_attributes($_POST['it_skin'])) : '';
+$it_mobile_skin = isset($_POST['it_mobile_skin']) ? strip_tags(clean_xss_attributes($_POST['it_mobile_skin'])) : '';
+
+$check_files = array();
+if( !empty($it_skin) )          $check_files[] = $it_skin;
+if( !empty($it_mobile_skin) )   $check_files[] = $it_mobile_skin;
+
+foreach( $check_files as $file ){
+    if( empty($file) ) continue;
+
+    if( preg_match('#\.+(\/|\\\)#', $file) ){
+        alert('스킨파일명에 포함될수 없는 문자가 들어있습니다.');
+    }
+
+    if( ! is_include_path_check($file) ){
+        alert('오류 : 데이터폴더가 포함된 path 또는 잘못된 path 를 포함할수 없습니다.');
+    }
+
+    $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $file) ) {
+        alert('스킨 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
+    }
+}
+
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',

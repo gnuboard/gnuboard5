@@ -26,7 +26,7 @@ if($mp_no){
     $sql = "SELECT * from {$g5['social_profile_table']} where mb_id= '".$mb_id."' and mp_no= $mp_no";
     $row = sql_fetch($sql);
 } else if($provider){
-    $sql = "SELECT * from {$g5['social_profile_table']} where mb_id= '".$mb_id."' and provider= '".$provider."'";
+    $sql = "SELECT * from {$g5['social_profile_table']} where mb_id= '".$mb_id."' and provider= '".sql_real_escape_string($provider)."'";
     $row = sql_fetch($sql);
 }
 

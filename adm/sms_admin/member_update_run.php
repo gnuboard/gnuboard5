@@ -26,6 +26,8 @@ if( $mtype == "json" ){
     auth_check_menu($auth, $sub_menu, "w");
 }
 
+check_admin_token();
+
 $count      = 0;
 $hp_yes     = 0;
 $hp_no      = 0;

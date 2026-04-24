@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "r");
 
+$token = get_token();
+
 $g5['title'] = "회원정보 업데이트";
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
@@ -37,7 +39,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     $( "#mb_update_form" ).submit(function( e ) {
         e.preventDefault();
         $("#res_msg").html('업데이트 중입니다. 잠시만 기다려 주십시오...');
-        var params = { mtype : 'json' };
+        var params = { mtype : 'json', token : '<?php echo $token; ?>' };
         $.ajax({
             url: $(this).attr("action"),
             cache:false,
