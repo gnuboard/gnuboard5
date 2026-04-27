@@ -48,7 +48,7 @@ if($error) {
 ?>
 
 <script>
-alert("<?php echo $msg; ?>");
+alert(<?php echo function_exists('get_js_safe_string') ? get_js_safe_string($msg) : '""'; ?>);
 <?php if ($url) { ?>
 document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
 <?php } else { ?>

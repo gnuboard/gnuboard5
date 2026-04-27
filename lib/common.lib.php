@@ -179,6 +179,40 @@ function get_cookie($cookie_name)
 }
 
 
+// JavaScript 문자열 컨텍스트에 삽입할 값을 안전하게 이스케이프하여 따옴표를 포함한 JS 리터럴로 반환
+// PHP 5.3+ 에서는 json_encode 의 JSON_HEX_* 플래그를 사용하고, 5.2 환경에서는 직접 치환으로 폴백
+if (!function_exists('get_js_safe_string')) {
+    function get_js_safe_string($s)
+    {
+        $s = (string)$s;
+        if (defined('JSON_HEX_TAG')) {
+            $flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
+            if (defined('JSON_UNESCAPED_UNICODE')) {
+                $flags |= JSON_UNESCAPED_UNICODE;
+            }
+            $encoded = @json_encode($s, $flags);
+            if ($encoded !== false && $encoded !== null) {
+                return $encoded;
+            }
+        }
+        return '"' . strtr($s, array(
+            '\\' => '\\\\',
+            '"'  => '\\"',
+            "'"  => '\\u0027',
+            '/'  => '\\/',
+            "\r" => '\\r',
+            "\n" => '\\n',
+            "\t" => '\\t',
+            '<'  => '\\u003C',
+            '>'  => '\\u003E',
+            '&'  => '\\u0026',
+            "\xE2\x80\xA8" => '\\u2028',
+            "\xE2\x80\xA9" => '\\u2029',
+        )) . '"';
+    }
+}
+
+
 // 경고메세지를 경고창으로
 function alert($msg='', $url='', $error=true, $post=false)
 {
