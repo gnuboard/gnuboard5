@@ -380,7 +380,7 @@ foreach( $check_files as $file ){
         alert('스킨파일명에 포함될수 없는 문자가 들어있습니다.');
     }
 
-    if( ! is_include_path_check($file) ){
+    if( ! is_include_path_check($file, 1) ){
         alert('오류 : 데이터폴더가 포함된 path 또는 잘못된 path 를 포함할수 없습니다.');
     }
 

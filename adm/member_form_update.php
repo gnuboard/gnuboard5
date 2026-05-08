@@ -127,6 +127,11 @@ $sql_common = "  mb_name = '{$posts['mb_name']}',
                  mb_9 = '{$posts['mb_9']}',
                  mb_10 = '{$posts['mb_10']}' ";
 
+// 부여하려는 mb_level 상한 검증 (자기보다 높은 권한 부여 차단)
+if ($is_admin !== 'super' && (int) $posts['mb_level'] >= (int) $member['mb_level']) {
+    alert('자신보다 권한이 높거나 같은 등급은 부여할 수 없습니다.');
+}
+
 if ($w == '') {
     $mb = get_member($mb_id);
     if (isset($mb['mb_id']) && $mb['mb_id']) {
