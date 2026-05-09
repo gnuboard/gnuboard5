@@ -523,6 +523,15 @@ function fitem_submit(f)
 
     return true;
 }
+
+//뒤로가기나 앞으로가기를 감지하는 스크립트
+window.onpageshow = function(event) {
+	if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+		//새로고침 스크립트
+		 window.location.reload (true);	  
+	}
+}
+
 </script>
 <?php /* 2017 리뉴얼한 테마 적용 스크립트입니다. 기존 스크립트를 오버라이드 합니다. */ ?>
 <script src="<?php echo G5_JS_URL; ?>/shop.override.js"></script>
