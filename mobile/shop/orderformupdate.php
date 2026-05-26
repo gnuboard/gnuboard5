@@ -754,27 +754,42 @@ if(!$result) {
 if ($is_member && $od_receipt_point) {
     $point_lock_key = 'g5pt_order_'.md5($member['mb_id']);
     $lock_row = sql_fetch(" select get_lock('$point_lock_key', 5) as lk ");
+    $lock_acquired = !empty($lock_row['lk']);
+    $point_shortage = false;
 
-    if (!empty($lock_row['lk'])) {
+    if ($lock_acquired) {
         $current_point = (int) get_point_sum($member['mb_id']);
 
         if ($current_point >= $od_receipt_point) {
             insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
         } else {
-            // race condition 으로 잔액 부족 — 사용 가능한 만큼만 차감하고 부족분은 미수금 처리
-            $actual_point = $current_point > 0 ? $current_point : 0;
-            $shortage = $od_receipt_point - $actual_point;
-
-            if ($actual_point > 0) {
-                insert_point($member['mb_id'], (-1) * $actual_point, "주문번호 $od_id 결제");
-            }
-            sql_query(" update {$g5['g5_shop_order_table']}
-                          set od_receipt_point = '$actual_point',
-                              od_misu = od_misu + '$shortage'
-                        where od_id = '$od_id' ");
+            $point_shortage = true;
         }
 
         sql_query(" do release_lock('$point_lock_key') ");
+    } else {
+        // lock timeout — 안전을 위해 결제 취소 처리
+        $point_shortage = true;
+    }
+
+    if ($point_shortage) {
+        // race condition 으로 잔액 부족 — PG 환불 + 장바구니 복구 + 주문 삭제
+        if ($tno) {
+            $cancel_msg = '포인트 잔액 부족으로 결제 취소 (동시 주문 race)';
+            include G5_SHOP_PATH.'/cancel_pg.inc.php';
+        }
+
+        // 장바구니 복구
+        sql_query(" update {$g5['g5_shop_cart_table']} set od_id = '$tmp_cart_id', ct_status = '쇼핑' where od_id = '$od_id' ", false);
+
+        // 주문 삭제
+        sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
+
+        if (function_exists('add_order_post_log')) {
+            add_order_post_log("동시 주문 race 로 인한 포인트 잔액 부족. 주문 $od_id 취소.");
+        }
+
+        die('<p>회원님의 포인트 잔액이 부족하여 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.</p>');
     }
 }
 
