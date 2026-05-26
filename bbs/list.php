@@ -191,6 +191,9 @@ if (!$sst) {
 if(!$sst)
     $sst  = "wr_num, wr_reply";
 
+// 정렬 방향 화이트리스트
+$sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
+
 if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 }
