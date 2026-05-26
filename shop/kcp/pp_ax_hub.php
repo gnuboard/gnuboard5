@@ -243,7 +243,8 @@ else
     $c_PayPlus->m_res_msg = "연동 오류|Payplus Plugin이 설치되지 않았거나 tran_cd값이 설정되지 않았습니다.";
 }
 
-if ($res_cd != '0000')
+// 가상계좌 발급 정상 응답은 V000 으로 옴 (KCP 정책 변경)
+if ($res_cd != '0000' && $res_cd != 'V000')
 {
     $res_msg = iconv("euc-kr", "utf-8", $res_msg);
 
@@ -267,7 +268,7 @@ if ($res_cd != '0000')
 /* = -------------------------------------------------------------------------- = */
 if ( $req_tx == "pay" )
 {
-    if( $res_cd == "0000" )
+    if( $res_cd == "0000" || $res_cd == "V000" )
     {
         $tno       = $c_PayPlus->mf_get_res_data( "tno"       ); // KCP 거래 고유 번호
         $amount    = $c_PayPlus->mf_get_res_data( "amount"    ); // KCP 실제 거래 금액
