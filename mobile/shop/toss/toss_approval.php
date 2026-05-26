@@ -40,7 +40,7 @@ $sql = "
         {$addQuery}
 ";
 $res = sql_fetch($sql);
-$dt_data = [];
+$dt_data = array();
 if (isset($res['dt_data'])) {
     $dt_data = unserialize(base64_decode($res['dt_data']));
 }

@@ -390,7 +390,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	</form>
 </div>
 
-<?php include_once(__DIR__ . '/consent_modal.inc.php'); ?>
+<?php include_once(dirname(__FILE__) . '/consent_modal.inc.php'); ?>
 
 <script>
 $(function() {

@@ -21,7 +21,7 @@ if (!is_file(G5_DATA_PATH . '/cache/browscap_cache.php')) {
 }
 
 require_once G5_PLUGIN_PATH . '/browscap/Browscap.php';
-$browscap = new phpbrowscap\Browscap(G5_DATA_PATH . '/cache');
+$browscap = new Browscap(G5_DATA_PATH . '/cache');
 $browscap->doAutoUpdate = false;
 $browscap->cacheFilename = 'browscap_cache.php';
 

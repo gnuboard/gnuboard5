@@ -32,20 +32,61 @@ function write_toss_log($reason, $orderId = '', $status = '')
     }
 }
 
+function g5_toss_http_response_code($code)
+{
+    if (function_exists('http_response_code')) {
+        http_response_code($code);
+        return;
+    }
+
+    $messages = array(
+        200 => 'OK',
+        400 => 'Bad Request',
+    );
+    $message = isset($messages[$code]) ? $messages[$code] : 'Status';
+    header('HTTP/1.1 ' . $code . ' ' . $message);
+}
+
+function g5_toss_json_last_error_msg()
+{
+    if (function_exists('json_last_error_msg')) {
+        return json_last_error_msg();
+    }
+
+    if (!function_exists('json_last_error')) {
+        return 'JSON error';
+    }
+
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+            return 'No error';
+        case JSON_ERROR_DEPTH:
+            return 'Maximum stack depth exceeded';
+        case JSON_ERROR_STATE_MISMATCH:
+            return 'State mismatch';
+        case JSON_ERROR_CTRL_CHAR:
+            return 'Control character error';
+        case JSON_ERROR_SYNTAX:
+            return 'Syntax error';
+    }
+
+    return 'Unknown error';
+}
+
 // 입금통보 결과 데이터 읽기
 $raw = file_get_contents('php://input');
 if ($raw == false) {
     write_toss_log("입력 데이터 읽기 실패");
-    http_response_code(400);
+    g5_toss_http_response_code(400);
     exit;
 }
 
 // json 파싱 체크
 $data = json_decode($raw, true);
 if (!is_array($data)) {
-    $json_error = json_last_error_msg();
+    $json_error = g5_toss_json_last_error_msg();
     write_toss_log("데이터 파싱 실패: " . $json_error);
-    http_response_code(400);
+    g5_toss_http_response_code(400);
     exit;
 }
 
@@ -59,7 +100,7 @@ $TOSS_TRANSACTIONKEY = sql_real_escape_string(isset($data["transactionKey"]) ? $
 // orderId 형식 검증 (영문, 숫자, 하이픈, 언더스코어만 허용)
 if ($TOSS_ORDERID && !preg_match('/^[a-zA-Z0-9_-]+$/', $TOSS_ORDERID)) {
     write_toss_log("잘못된 orderId 형식", $TOSS_ORDERID, $TOSS_STATUS);
-    http_response_code(400);
+    g5_toss_http_response_code(400);
     exit;
 }
 
@@ -78,7 +119,7 @@ if (!$orderResult || $order_info['secret'] !== $TOSS_SECRET) {
     $error_msg = isset($order_info['message']) ? $order_info['message'] : '주문 정보 조회 실패';
     $error_code = isset($order_info['code']) ? $order_info['code'] : 'UNKNOWN_ERROR';
     write_toss_log("주문 정보 조회 실패 - {$error_code} : {$error_msg}", $TOSS_ORDERID, $TOSS_STATUS);
-    http_response_code(400);
+    g5_toss_http_response_code(400);
     exit;
 }
 
@@ -150,7 +191,7 @@ if($TOSS_STATUS == "DONE"){
         $row = sql_fetch($sql);
         if(!$row['od_id']) {
             write_toss_log("주문내역 조회 실패", $TOSS_ORDERID, $TOSS_STATUS);
-            http_response_code(400);
+            g5_toss_http_response_code(400);
             exit;
         }
 
@@ -244,7 +285,7 @@ elseif($TOSS_STATUS == "WAITING_FOR_DEPOSIT")
         $row = sql_fetch($sql);
         if(empty($row['od_id'])) {
             write_toss_log("주문 데이터가 존재하지 않음", $TOSS_ORDERID, $TOSS_STATUS);
-            http_response_code(400);
+            g5_toss_http_response_code(400);
             exit;
         }
         
@@ -415,13 +456,13 @@ if($payLog) {
 
 if ($result)
 {
-    http_response_code(200); // 절대로 지우지마세요
+    g5_toss_http_response_code(200); // 절대로 지우지마세요
     echo "OK";
     exit;
 }
 else
 {
-    http_response_code(400);
+    g5_toss_http_response_code(400);
     echo "FAIL";
     exit;
 }

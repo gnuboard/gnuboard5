@@ -14,11 +14,11 @@ $orderId = isset($_REQUEST['orderId']) ? $_REQUEST['orderId'] : '';
 $amount = isset($_REQUEST['amount']) ? $_REQUEST['amount'] : '';
 $paymentKey = isset($_REQUEST['paymentKey']) ? $_REQUEST['paymentKey'] : '';
 
-$toss->setPaymentData([
+$toss->setPaymentData(array(
     'orderId' => $orderId,
     'amount' => $amount,
     'paymentKey' => $paymentKey,
-]);
+));
 
 // 장바구니 ID 설정 (바로구매 여부 확인)
 $ss_cart_id = get_session('ss_direct') ? get_session('ss_cart_direct') : get_session('ss_cart_id');
@@ -48,7 +48,7 @@ $sql = "
     LIMIT 1
 ";
 $res = sql_fetch($sql);
-$dt_data = [];
+$dt_data = array();
 if (isset($res['dt_data'])) {
     $dt_data = unserialize(base64_decode($res['dt_data']));
 }

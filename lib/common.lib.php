@@ -3249,8 +3249,7 @@ class html_process {
         if (isset(self::$instances[self::$id])) {
             return self::$instances[self::$id];
         }
-        $calledClass = get_called_class();
-        return self::$instances[self::$id] = new $calledClass;
+        return self::$instances[self::$id] = new self;
     }
 
     public static function merge_stylesheet($stylesheet, $order)
@@ -4655,7 +4654,7 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
             
-            $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(__DIR__)));
+            $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(dirname(__FILE__))));
             
             // 웹서버 폴더만 허용
             if ($dirname_doc_root && file_exists($path) && strpos(realpath($path), realpath($dirname_doc_root)) !== 0) {

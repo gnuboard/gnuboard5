@@ -27,7 +27,7 @@ if ($_POST['act_button'] == "선택수정") {
         $post_mb_sms = isset($_POST['mb_sms'][$k]) ? (int) $_POST['mb_sms'][$k] : 0;
         $post_mb_open = isset($_POST['mb_open'][$k]) ? (int) $_POST['mb_open'][$k] : 0;
 
-        $agree_items = [];
+        $agree_items = array();
         // 광고성 이메일 수신동의 일자 추가
         $post_mb_mailling_default = isset($_POST['mb_mailling_default'][$k]) ? (int) $_POST['mb_mailling_default'][$k] : 0;
         $sql_mailling_date = "";

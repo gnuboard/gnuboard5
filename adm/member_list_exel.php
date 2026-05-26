@@ -191,12 +191,12 @@ $colspan = 14;
                                 <?php
                                     $thirdpartyLbl = (!empty($config['cf_sms_use'])) ? ' / <b>개인정보 제3자 제공</b>' : '';
 
-                                    $ad_range_text = [
+                                    $ad_range_text = array(
                                         'all'           => "* <b>광고성 정보 수신(이메일 또는 SMS/카카오톡)</b> / <b>마케팅 목적의 개인정보 수집 및 이용</b>{$thirdpartyLbl}에 모두 동의한 회원을 선택합니다.",
                                         'mailling_only' => "* <b>광고성 이메일 수신</b> / <b>마케팅 목적의 개인정보 수집 및 이용</b>{$thirdpartyLbl}에 모두 동의한 회원을 선택합니다.",
                                         'sms_only'      => "* <b>광고성 SMS/카카오톡 수신</b> / <b>마케팅 목적의 개인정보 수집 및 이용</b>{$thirdpartyLbl}에 모두 동의한 회원을 선택합니다.",
                                         'month_confirm' => "* 23개월 전(" . date('Y년 m월', strtotime('-23 month')) . ") <b>광고성 정보 수신 동의(이메일 또는 SMS/카카오톡)</b>한 회원을 선택합니다."
-                                    ];
+                                    );
 
                                     if (isset($_GET['ad_range_only'], $_GET['ad_range_type']) && isset($ad_range_text[$_GET['ad_range_type']])) {
                                         echo '<div class="ad_range_box"><p>' . $ad_range_text[$_GET['ad_range_type']] . '</p></div>';
@@ -210,7 +210,7 @@ $colspan = 14;
             </div>
 
             <!-- 채널 체크박스 -->
-            <div class="sch_row <?php echo isset($_GET['ad_range_only']) && in_array($_GET['ad_range_type'], ['month_confirm', 'custom_period']) ? '' : 'is-hidden'; ?>">
+            <div class="sch_row <?php echo isset($_GET['ad_range_only']) && in_array($_GET['ad_range_type'], array('month_confirm', 'custom_period')) ? '' : 'is-hidden'; ?>">
                 <div class="ad_range_wrap">
                     <div class="ad_range_box">
                         <div class="label">

@@ -29,11 +29,11 @@ $toss = new TossPayments(
 );
 
 // 결제데이터 셋팅
-$toss->setPaymentData([
+$toss->setPaymentData(array(
     'amount' => $amount,
     'orderId' => $orderId,
     'paymentKey' => $paymentKey
-]);
+));
 $toss->setPaymentHeader();
 
 // 결제승인 요청

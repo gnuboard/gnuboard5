@@ -327,10 +327,10 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 				<!-- (선택) 개인정보 제3자 제공 동의 -->
 				<!-- SMS 사용시에만 -->
 				<?php
-					$configKeys = ['cf_sms_use'];
-					$companies = ['icode' => '아이코드'];
+					$configKeys = array('cf_sms_use');
+					$companies = array('icode' => '아이코드');
 
-					$usedCompanies = [];
+					$usedCompanies = array();
 					foreach ($configKeys as $key) {
 						if (!empty($config[$key]) && isset($companies[$config[$key]])) {
 							$usedCompanies[] = $companies[$config[$key]];
@@ -377,7 +377,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
     </div>
     </form>
 
-    <?php include_once(__DIR__ . '/consent_modal.inc.php'); ?>
+    <?php include_once(dirname(__FILE__) . '/consent_modal.inc.php'); ?>
 
     <script>
     $(function() {

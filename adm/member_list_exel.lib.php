@@ -21,8 +21,8 @@ define('MEMBER_LOG_DIR', G5_DATA_PATH . "/" . MEMBER_BASE_DIR . "/" . "log");   
  */
 function get_export_config($type = null)
 {
-    $config = [
-        'sfl_list' => [
+    $config = array(
+        'sfl_list' => array(
             'mb_id'=>'아이디',
             'mb_name'=>'이름',
             'mb_nick'=>'닉네임',
@@ -30,26 +30,26 @@ function get_export_config($type = null)
             'mb_tel'=>'전화번호',
             'mb_hp'=>'휴대폰번호',
             'mb_addr1'=>'주소'
-        ],
-        'point_cond_map' => [
+        ),
+        'point_cond_map' => array(
             'gte'=>'≥',
             'lte'=>'≤',
             'eq'=>'='
-        ],
-        'intercept_list' => [
+        ),
+        'intercept_list' => array(
             'exclude'=>'차단회원 제외',
             'only'=>'차단회원만'
-        ],
-        'ad_range_list' => [
+        ),
+        'ad_range_list' => array(
             'all'           => '수신동의 회원 전체',
             'mailling_only' => '이메일 수신동의 회원만',
             'sms_only'      => 'SMS/카카오톡 수신동의 회원만',
             'month_confirm' => date('m월').' 수신동의 확인 대상만',
             'custom_period' => '수신동의 기간 직접 입력'
-        ],
-    ];
+        ),
+    );
 
-    return $type ? (isset($config[$type]) ? $config[$type] : []) : $config;
+    return $type ? (isset($config[$type]) ? $config[$type] : array()) : $config;
 }
 
 /**
@@ -59,14 +59,14 @@ function get_member_export_params()
 {
     // 친구톡 양식 - 엑셀 양식에 포함할 항목
     $fieldArray = array_map('trim', explode(',',  isset($_GET['fields']) ? $_GET['fields'] : ''));
-    $vars = [];
+    $vars = array();
     foreach ($fieldArray as $index => $field) {
         if(!empty($field)){
             $vars['var' . ($index + 1)] = $field;
         }
     }
 
-    $params = [    
+    $params = array(
         'page'              => 1,
         'formatType'        => (int)(isset($_GET['formatType']) ? $_GET['formatType'] : 1),
         'use_stx'           => isset($_GET['use_stx']) ? $_GET['use_stx'] : 0,
@@ -92,24 +92,30 @@ function get_member_export_params()
         'use_intercept'     => isset($_GET['use_intercept']) ? $_GET['use_intercept'] : 0,
         'intercept'         => clean_xss_tags(isset($_GET['intercept']) ? $_GET['intercept'] : 'exclude'),
         'vars'              => $vars,
-    ];
+    );
     
     // 레벨 범위 검증
     if ($params['level_start'] > $params['level_end']) {
-            [$params['level_start'] , $params['level_end']] = [$params['level_end'], $params['level_start']];
+        $tmp_level = $params['level_start'];
+        $params['level_start'] = $params['level_end'];
+        $params['level_end'] = $tmp_level;
     }
     
     // 가입기간 - 날짜 범위 검증
     if ($params['use_date'] && $params['date_start'] && $params['date_end']) {
         if ($params['date_start'] > $params['date_end']) {
-            [$params['date_start'] , $params['date_end']] = [$params['date_end'], $params['date_start']];
+            $tmp_date = $params['date_start'];
+            $params['date_start'] = $params['date_end'];
+            $params['date_end'] = $tmp_date;
         }
     }
     
     // 수신동의기간 - 날짜 범위 검증
     if ($params['ad_range_type'] == 'custom_period' && $params['agree_date_start'] && $params['agree_date_end']) {
         if ($params['agree_date_start'] > $params['agree_date_end']) {
-            [$params['agree_date_start'] , $params['agree_date_end']] = [$params['agree_date_end'], $params['agree_date_start']];
+            $tmp_agree_date = $params['agree_date_start'];
+            $params['agree_date_start'] = $params['agree_date_end'];
+            $params['agree_date_end'] = $tmp_agree_date;
         }
     }
     
@@ -141,7 +147,7 @@ function member_export_get_total_count($params)
 function member_export_build_where($params) 
 {
     global $config;
-    $conditions = [];
+    $conditions = array();
     
     // 기본 조건 - 탈퇴하지 않은 사용자
     $conditions[] = "mb_leave_date = ''";
@@ -263,7 +269,7 @@ function member_export_build_where($params)
                 $conditions[] = "0=1"; // 둘 다 해제 ⇒ 결과 0건
             } else {
                 // 조건 조립
-                $parts = [];
+                $parts = array();
                 if ($useEmail) $parts[] = "(mb_mailling = 1 AND {$emailDateCond})";
                 if ($useSms)   $parts[] = "(mb_sms = 1 AND {$smsDateCond})";
             

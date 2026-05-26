@@ -61,17 +61,17 @@ $amount = $order_price;
 $type = ($_POST['tr_code'] == '0') ? '소득공제' : '지출증빙';
 $customerIdentityNumber = $_POST['id_info'];
 $orderName = $od_name;
-$customerEmail = $_POST['buyeremail'] ?: $od_email;
-$customerMobilePhone = $_POST['buyertel'] ?: $od_tel;
+$customerEmail = !empty($_POST['buyeremail']) ? $_POST['buyeremail'] : $od_email;
+$customerMobilePhone = !empty($_POST['buyertel']) ? $_POST['buyertel'] : $od_tel;
 
 // 토스페이먼츠 현금영수증 발급 API 호출
-$toss->setCashReceiptsData([
+$toss->setCashReceiptsData(array(
     'orderId' => $orderId,
     'amount' => $amount,
     'type' => $type,
     'customerIdentityNumber' => $customerIdentityNumber,
     'orderName' => $goods_name,
-]);
+));
 $toss_result = $toss->issueCashReceipt();
 
 /*

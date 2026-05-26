@@ -104,7 +104,7 @@ $mb_marketing_agree = isset($_POST['mb_marketing_agree']) ? trim($_POST['mb_mark
 //개인정보 제3자 제공 동의
 $mb_thirdparty_agree = isset($_POST['mb_thirdparty_agree']) ? trim($_POST['mb_thirdparty_agree']) : "0";
 
-$agree_items = [];
+$agree_items = array();
 $sql_agree = "";
 // 마케팅 목적의 개인정보 수집 및 이용
 if ($mb_marketing_agree == 1) {
