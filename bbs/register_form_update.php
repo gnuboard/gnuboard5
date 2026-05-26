@@ -72,7 +72,7 @@ $mb_zip2        = preg_replace('/[^0-9]/', '', $mb_zip2);
 $mb_addr1       = addslashes(clean_xss_tags(stripslashes($mb_addr1), 1, 1));
 $mb_addr2       = addslashes(clean_xss_tags(stripslashes($mb_addr2), 1, 1));
 $mb_addr3       = addslashes(clean_xss_tags(stripslashes($mb_addr3), 1, 1));
-$mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
+$mb_addr_jibeon = preg_match("/^(N|R|J)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
 
 $mb_marketing_agree     = isset($_POST['mb_marketing_agree'])   ? trim($_POST['mb_marketing_agree'])    : "0";
 $mb_thirdparty_agree    = isset($_POST['mb_thirdparty_agree'])  ? trim($_POST['mb_thirdparty_agree'])   : "0";
