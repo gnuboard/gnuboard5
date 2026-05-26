@@ -1,7 +1,8 @@
 <?php
 include_once('../../common.php');
 
-if (isset($_REQUEST['sort']))  {
+// SQL 주석 토큰 차단 추가 — 데스크톱 shop/_common.php 와 동일 패턴
+if (isset($_REQUEST['sort']) && !preg_match("/(--|#|\/\*|\*\/)/", $_REQUEST['sort']))  {
     $sort = trim($_REQUEST['sort']);
     $sort = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sort);
 } else {

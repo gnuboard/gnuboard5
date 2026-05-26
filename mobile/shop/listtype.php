@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// 상품 정렬 컬럼 화이트리스트 — 데스크톱 shop/listtype.php 와 동일 패턴
+$sort = (isset($_REQUEST['sort']) && in_array($_REQUEST['sort'], array('it_name', 'it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time'))) ? $_REQUEST['sort'] : '';
+
 $type = isset($_REQUEST['type']) ? (int) preg_replace("/[^0-9]/", "", $_REQUEST['type']) : 1;
 if ($type === 1)      $g5['title'] = '히트상품';
 else if ($type === 2) $g5['title'] = '추천상품';
