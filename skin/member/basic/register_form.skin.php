@@ -339,10 +339,10 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 				<!-- (선택) 개인정보 제3자 제공 동의 -->
 				<!-- SMS 사용시에만 -->
 				<?php
-					$configKeys = ['cf_sms_use'];
-					$companies = ['icode' => '아이코드'];
+					$configKeys = array('cf_sms_use');
+					$companies = array('icode' => '아이코드');
 
-					$usedCompanies = [];
+					$usedCompanies = array();
 					foreach ($configKeys as $key) {
 						if (!empty($config[$key]) && isset($companies[$config[$key]])) {
 							$usedCompanies[] = $companies[$config[$key]];

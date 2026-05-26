@@ -275,7 +275,7 @@ if ($w == '') {
     if (!$config['cf_use_email_certify'])
         $sql .= " , mb_email_certify = '".G5_TIME_YMDHIS."' ";
 
-    $agree_items = [];
+    $agree_items = array();
     // 마케팅 목적의 개인정보 수집 및 이용
     if ($mb_marketing_agree == 1) {
         $sql .=  " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
@@ -396,7 +396,7 @@ if ($w == '') {
     if ($old_email != $mb_email && $config['cf_use_email_certify'])
         $sql_email_certify = " , mb_email_certify = '' ";
 
-    $agree_items = [];
+    $agree_items = array();
     
     // 마케팅 목적의 개인정보 수집 및 이용
     $sql_marketing_date = "";

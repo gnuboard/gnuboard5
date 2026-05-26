@@ -152,7 +152,7 @@ if ($w == '') {
         alert('이미 존재하는 이메일입니다.\\nＩＤ : ' . $row['mb_id'] . '\\n이름 : ' . $row['mb_name'] . '\\n닉네임 : ' . $row['mb_nick'] . '\\n메일 : ' . $row['mb_email']);
     }
 
-    $agree_items = [];
+    $agree_items = array();
     // 마케팅 목적의 개인정보 수집 및 이용
     if ($mb_marketing_agree == 1) {
         $sql_common .=  " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
@@ -235,7 +235,7 @@ if ($w == '') {
 
     // 현재 데이터 조회
     $row = sql_fetch("select * from {$g5['member_table']} where mb_id = '{$mb_id}' ");
-    $agree_items = [];
+    $agree_items = array();
         
     // 마케팅 목적의 개인정보 수집 및 이용
     $sql_marketing_date = "";
