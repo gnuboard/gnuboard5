@@ -213,6 +213,25 @@ if (!function_exists('get_js_safe_string')) {
 }
 
 
+// CSV/Excel 셀에 출력할 값을 안전하게 변환 (수식 인젝션 방지)
+// 값이 = + - @ TAB CR 로 시작하면 작은따옴표를 prefix 해 수식 해석을 차단
+if (!function_exists('csv_safe_cell')) {
+    function csv_safe_cell($v)
+    {
+        if ($v === null || $v === '') {
+            return $v;
+        }
+        $s = (string)$v;
+        $first = substr($s, 0, 1);
+        if ($first === '=' || $first === '+' || $first === '-' || $first === '@'
+            || $first === "\t" || $first === "\r") {
+            return "'" . $s;
+        }
+        return $s;
+    }
+}
+
+
 // 경고메세지를 경고창으로
 function alert($msg='', $url='', $error=true, $post=false)
 {

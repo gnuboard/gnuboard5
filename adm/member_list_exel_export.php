@@ -233,7 +233,11 @@ function member_export_get_data($params)
     while ($row = sql_fetch_array($result)) {
         $rowData = [];
         foreach ($fields as $field) {
-            $rowData[] = isset($row[$field]) ? $row[$field] : '';
+            if (isset($row[$field])) {
+                $rowData[] = function_exists('csv_safe_cell') ? csv_safe_cell($row[$field]) : $row[$field];
+            } else {
+                $rowData[] = '';
+            }
         }
         $excelData[] = $rowData;
     }
