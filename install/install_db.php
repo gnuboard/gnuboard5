@@ -44,6 +44,12 @@ if (preg_match("/[^0-9a-z_]+/i", $admin_id)) {
     die('<div class="ins_inner"><p>관리자 아이디는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
 }
 
+// 관리자 이메일 형식 검증
+$admin_email = trim($admin_email);
+if (!$admin_email || !filter_var($admin_email, FILTER_VALIDATE_EMAIL)) {
+    die('<div class="ins_inner"><p>올바른 관리자 E-mail 주소를 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
+}
+
 $g5_install = isset($_POST['g5_install']) ? (int) $_POST['g5_install'] : 0;
 $g5_shop_prefix = isset($_POST['g5_shop_prefix']) ? safe_install_string_check($_POST['g5_shop_prefix']) : 'yc5_';
 $g5_shop_install = isset($_POST['g5_shop_install']) ? (int) $_POST['g5_shop_install'] : 0;
@@ -83,6 +89,10 @@ if (!$select_db) {
 
 $mysql_set_mode = 'false';
 sql_set_charset(G5_DB_CHARSET, $dblink);
+
+// 관리자 입력값 SQL escape — sql_set_charset 이후 적용
+$admin_name = sql_real_escape_string(trim($admin_name), $dblink);
+$admin_email = sql_real_escape_string($admin_email, $dblink);
 $result = sql_query(" SELECT @@sql_mode as mode ", true, $dblink);
 $row = sql_fetch_array($result);
 if($row['mode']) {
