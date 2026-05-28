@@ -9,7 +9,7 @@ callback function can be used for any purpose. With minor modifications, the
 callback function can be used to create CSV logs, post results to databases,
 etc.
 
-Please review the test.php script for the example.
+Please review the  script for the example.
 
 It's pretty straight forward.
 

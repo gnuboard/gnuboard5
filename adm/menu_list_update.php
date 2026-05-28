@@ -10,7 +10,6 @@ if ($is_admin != 'super') {
 
 check_admin_token();
 
-// 이전 메뉴정보 삭제
 $sql = " delete from {$g5['menu_table']} ";
 sql_query($sql);
 
@@ -38,6 +37,7 @@ for ($i = 0; $i < $count; $i++) {
 
     $sub_code = '';
     if ($group_code == $code) {
+        //첫번째 메뉴 항목 아닌 경우 동일한 그룹의 서브 메뉴로 처리
         $sql = " select MAX(SUBSTRING(me_code,3,2)) as max_me_code
                     from {$g5['menu_table']}
                     where SUBSTRING(me_code,1,2) = '$primary_code' ";
@@ -49,20 +49,36 @@ for ($i = 0; $i < $count; $i++) {
 
         $me_code = $primary_code . $sub_code;
     } else {
-        $sql = " select MAX(SUBSTRING(me_code,1,2)) as max_me_code
-                    from {$g5['menu_table']}
-                    where LENGTH(me_code) = '2' ";
-        $row = sql_fetch($sql);
+    $sql = "select MAX(SUBSTRING(me_code,1,2)) as max_me_code
+                from {$g5['menu_table']}
+                where LENGTH(me_code) = '2' ";
+    $row = sql_fetch($sql);
 
-        $me_code = (int)base_convert($row['max_me_code'], 36, 10);
-        $me_code += 36;
-        $me_code = base_convert((string)$me_code, 10, 36);
+    $me_code = (int)base_convert($row['max_me_code'], 36, 10);
+    $me_code += 36;
+    $me_code = base_convert((string)$me_code, 10, 36);
 
+    /*if (isset($_POST['code']) && in_array($code, $_POST['code'])) {
         $group_code = $code;
-        $primary_code = $me_code;
+    } else {
+        $group_code = null;
+    }*/
+
+    if(isset($_POST['btn_add_submenu'])) {
+        $group_code = $code;
+    } else {
+        $group_code = null;
     }
 
-    // 메뉴 등록
+    /*if(strpos($url, '&new=new') !== false) {
+        $group_code = null;
+    } else {
+        $group_code = $code;
+    }*/
+
+    $primary_code = $me_code;
+    }
+
     $sql = " insert into {$g5['menu_table']}
                 set me_code         = '" . $me_code . "',
                     me_name         = '" . $me_name . "',

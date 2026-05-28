@@ -6,7 +6,6 @@ if ($is_admin != 'super') {
     alert('최고관리자만 접근 가능합니다.');
 }
 
-// 메뉴테이블 생성
 if (!isset($g5['menu_table'])) {
     die('<meta charset="utf-8">dbconfig.php 파일에 <strong>$g5[\'menu_table\'] = G5_TABLE_PREFIX.\'menu\';</strong> 를 추가해 주세요.');
 }
@@ -141,27 +140,35 @@ $sub_menu_info = '';
         $(document).on("click", ".btn_add_submenu", function() {
             var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
             add_submenu(code);
+            
+            var form = document.getElementById("fmenulist");
+            form.action = "./menu_list_update.php";
+            form.method = "post";
+            
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+            });
+
+            /*var form = document.getElementById("fmenulist");
+            form.action = "./menu_list_update.php";
+            form.method = "post";
+            form.submit();*/
         });
 
         $(document).on("click", ".btn_del_menu", function() {
-            if (!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제후 메뉴설정의 확인 버튼을 눌러 메뉴를 저장해 주세요."))
+            if (!confirm("메뉴를 삭제하시겠습니까?\n메뉴 삭제 후 메뉴 설정의 확인 버튼을 눌러 메뉴를 저장해 주세요.")) {
                 return false;
+            }
 
             var $tr = $(this).closest("tr");
-            if ($tr.find("td.sub_menu_class").length > 0) {
                 $tr.remove();
-            } else {
-                var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
-                $("tr.menu_group_" + code).remove();
-            }
 
             if ($("#menulist tr.menu_list").length < 1) {
                 var list = "<tr id=\"empty_menu_list\"><td colspan=\"<?php echo $colspan; ?>\" class=\"empty_table\">자료가 없습니다.</td></tr>\n";
                 $("#menulist table tbody").append(list);
             } else {
                 $("#menulist tr.menu_list").each(function(index) {
-                    $(this).removeClass("bg0 bg1")
-                        .addClass("bg" + (index % 2));
+                    $(this).removeClass("bg0 bg1").addClass("bg" + (index % 2));
                 });
             }
         });

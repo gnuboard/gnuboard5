@@ -1,0 +1,47 @@
+# check version compatibility
+name: Run Tests
+# 매 push시 실행
+on: [ push ]
+
+jobs:
+  output_releases:
+    name: Generate PHP Releases Array
+    runs-on: ubuntu-latest
+    outputs:
+      range: ${{ steps.releases.outputs.range }}
+    steps:
+      - name: Fetch Current Releases
+        uses: tighten/phpreleases-action@v1
+        id: releases
+        with:
+          releases: '8.0' #version update
+  tests:
+    needs: output_releases
+    strategy:
+      matrix:
+        os: [Ubuntu, Windows, macOS]
+        php: ${{ fromJSON(needs.output_releases.outputs.range) }}
+
+        include:
+        - os: Ubuntu
+          os-version: ubuntu-latest
+
+        - os: Windows
+          os-version: windows-latest
+
+        - os: macOS
+          os-version: macos-latest
+
+    name: ${{ matrix.os }} - PHP ${{ matrix.php }}
+
+    runs-on: ${{ matrix.os-version }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+          php-version: ${{ matrix.php }}
+          extensions: posix, dom, curl, libxml, mbstring, zip, pcntl, bcmath, soap, intl, gd, exif, iconv, imagick

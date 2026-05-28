@@ -73,7 +73,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 	            </script>
 	        </fieldset>
 		</div>
-        <!-- 쇼핑몰 배너 시작 { -->
+        <!--  { -->
         <?php // echo display_banner('왼쪽'); ?>
         <!-- } 쇼핑몰 배너 끝 -->
         
