@@ -29,7 +29,8 @@ include_once(G5_PATH.'/head.sub.php');
 // 공백이 없어야 합니다.
 
 $msg = isset($msg) ? strip_tags($msg) : '';
-$msg2 = str_replace("\\n", "<br>", $msg);
+$msg2 = str_replace(array("\\r\\n", "\\n", "\\r"), "<br>", $msg);
+$alert_msg = str_replace(array("\\r\\n", "\\n", "\\r"), "\n", $msg);
 
 $url = isset($url) ? clean_xss_tags($url, 1) : '';
 if (!$url) $url = isset($_SERVER['HTTP_REFERER']) ? clean_xss_tags($_SERVER['HTTP_REFERER'], 1) : '';
@@ -48,7 +49,7 @@ if($error) {
 ?>
 
 <script>
-alert(<?php echo function_exists('get_js_safe_string') ? get_js_safe_string($msg) : '""'; ?>);
+alert(<?php echo function_exists('get_js_safe_string') ? get_js_safe_string($alert_msg) : '""'; ?>);
 <?php if ($url) { ?>
 document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
 <?php } else { ?>
@@ -66,7 +67,7 @@ history.back();
     <form method="post" action="<?php echo $url ?>">
     <?php
     foreach($_POST as $key => $value) {
-        
+
         $key = clean_xss_tags($key);
         $value = clean_xss_tags($value);
 

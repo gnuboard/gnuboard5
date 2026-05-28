@@ -4,7 +4,8 @@ include_once(G5_PATH.'/head.sub.php');
 
 $msg = isset($msg) ? strip_tags($msg) : '';
 
-$msg2 = str_replace("\\n", "<br>", $msg);
+$msg2 = str_replace(array("\\r\\n", "\\n", "\\r"), "<br>", $msg);
+$alert_msg = str_replace(array("\\r\\n", "\\n", "\\r"), "\n", $msg);
 
 if($error) {
     $header2 = "다음 항목에 오류가 있습니다.";
@@ -16,7 +17,7 @@ if($error) {
 ?>
 
 <script>
-alert(<?php echo function_exists('get_js_safe_string') ? get_js_safe_string($msg) : '""'; ?>);
+alert(<?php echo function_exists('get_js_safe_string') ? get_js_safe_string($alert_msg) : '""'; ?>);
 try {
     window.close();
 } catch(error) {
