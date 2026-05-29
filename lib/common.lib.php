@@ -4629,6 +4629,46 @@ function get_call_func_cache($func, $args=array()){
     return $result;
 }
 
+function g5_check_data_htaccess($data_path='')
+{
+    if ($data_path === '') {
+        if (!defined('G5_DATA_PATH')) {
+            return false;
+        }
+
+        $data_path = G5_DATA_PATH;
+    }
+
+    $htaccess_file = $data_path.'/.htaccess';
+
+    if (@is_file($htaccess_file) && @filesize($htaccess_file) > 0) {
+        return true;
+    }
+
+    if (!@is_dir($data_path) || !@is_writable($data_path)) {
+        return false;
+    }
+
+    $content = <<<EOD
+<FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp][Hh][Tt]|[Ss]?[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll]|[Pp][Hh][Aa][Rr]|[Ss][Vv][Gg][Zz]?)">
+Order allow,deny
+Deny from all
+</FilesMatch>
+RedirectMatch 403 /session/.*
+EOD;
+
+    $result = @file_put_contents($htaccess_file, $content);
+    if ($result === false) {
+        return false;
+    }
+
+    if (defined('G5_FILE_PERMISSION')) {
+        @chmod($htaccess_file, G5_FILE_PERMISSION);
+    }
+
+    return true;
+}
+
 // include 하는 경로에 data file 경로나 안전하지 않은 경로가 있는지 체크합니다.
 function is_include_path_check($path='', $is_input='')
 {

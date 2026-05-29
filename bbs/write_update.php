@@ -484,6 +484,11 @@ $file_upload_msg = '';
 $upload = array();
 
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
+
+    if (function_exists('g5_check_data_htaccess')) {
+        g5_check_data_htaccess();
+    }
+
     $bf_file_cnt = count($_FILES['bf_file']['name']);
     for ($i=0; $i<$bf_file_cnt; $i++) {
         $upload[$i]['file']     = '';
