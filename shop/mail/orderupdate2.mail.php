@@ -115,7 +115,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금자 이름</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $od_deposit_name; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo get_text($od_deposit_name); ?></td>
         </tr>
         <?php } ?>
 
@@ -136,7 +136,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">이름</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $od_name; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo get_text($od_name); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">전화번호</th>
@@ -169,7 +169,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">이 름</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $od_b_name; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo get_text($od_b_name); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">전화번호</th>

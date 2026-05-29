@@ -87,7 +87,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금자명</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_deposit_name']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo get_text($bank_list['od_deposit_name']); ?></td>
         </tr>
         </tbody>
         </table>

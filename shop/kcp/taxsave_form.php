@@ -137,7 +137,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </tr>
             <tr>
                 <th scope="row">주문자 이름</th>
-                <td><?php echo $od_name; ?></td>
+                <td><?php echo get_text($od_name); ?></td>
             </tr>
             <tr>
                 <th scope="row">주문자 E-Mail</th>
@@ -160,7 +160,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
         <input type="hidden" name="ordr_idxx">
         <input type="hidden" name="good_name" value="<?php echo addslashes($goods_name); ?>">
-        <input type="hidden" name="buyr_name" value="<?php echo $od_name; ?>">
+        <input type="hidden" name="buyr_name" value="<?php echo get_text($od_name); ?>">
         <input type="hidden" name="buyr_mail" value="<?php echo $od_email; ?>">
         <input type="hidden" name="buyr_tel1" value="<?php echo $od_tel; ?>">
         <input type="hidden" name="trad_time" value="<?php echo $trad_time; ?>">

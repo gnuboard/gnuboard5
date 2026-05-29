@@ -726,7 +726,7 @@ if($od['od_pg'] == 'lg') {
         </tr>
         <tr>
             <th scope="col"><label for="req_name">입금자명</label></th>
-            <td><input type="text" name="req_name" value="<?php echo $od['od_deposit_name']; ?>"></td>
+            <td><input type="text" name="req_name" value="<?php echo get_text($od['od_deposit_name']); ?>"></td>
         </tr>
         <tr>
             <th scope="col"><label for="noti_url">입금통보 URL</label></th>
