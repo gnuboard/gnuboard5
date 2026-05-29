@@ -415,10 +415,10 @@ if (!isset($config['cf_cert_use_seed'])) {
     sql_query($sql, false);
 }
 if (!isset($config['cf_cert_kcp_enckey'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_kcp_enckey` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`; ";
     sql_query($sql, false);
-    
+
     $config['cf_cert_kcp_enckey'] = '';
 }
 
@@ -1068,7 +1068,24 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                                 <?php echo option_selected("", $config['cf_cert_hp'], "사용안함"); ?>
                                 <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
                                 <?php echo option_selected("kcp", $config['cf_cert_hp'], "NHN KCP 휴대폰 본인확인"); ?>
+                                <?php echo option_selected("kcp_v2", $config['cf_cert_hp'], "NHN KCP 휴대폰 본인확인(api_v2)"); ?>
                             </select>
+                            <div id="cf_cert_hp_kcp_v2_notice" style="display:<?php echo ($config['cf_cert_hp'] == 'kcp_v2') ? 'block' : 'none'; ?>; margin-top:8px; padding:10px 12px; background:#fff8e1; border:1px solid #ffd54f; border-radius:4px; color:#5d4037; line-height:1.5;">
+                                <strong>NHN KCP 휴대폰 본인확인(api_v2)</strong> 사용 시,<br>
+                                NHN KCP 상점관리자 &gt; 부가서비스 &gt; 휴대폰본인확인 &gt; 연동방식 설정 에서 <strong>신규 연동방식(V2) 사용여부를 &lsquo;사용&rsquo;</strong> 으로 변경해야 정상 동작합니다.
+                            </div>
+                            <script>
+                            jQuery(function($){
+                                function toggle_kcp_v2_notice() {
+                                    var is_kcp_v2 = $('#cf_cert_hp').val() === 'kcp_v2';
+                                    $('#cf_cert_hp_kcp_v2_notice').toggle(is_kcp_v2);
+                                    $('#cf_cert_kcp_cd_prefix').toggle(!is_kcp_v2);
+                                }
+
+                                $('#cf_cert_hp').on('change', toggle_kcp_v2_notice);
+                                toggle_kcp_v2_notice();
+                            });
+                            </script>
                         </td>
                     </tr>
                     <tr>
@@ -1104,16 +1121,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_cd">NHN KCP 사이트코드</label></th>
                         <td class="cf_cert_service">
-                            <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
-                            <span class="sitecode">SM</span>
-                            <input type="text" name="cf_cert_kcp_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcp_cd']); ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.kr/main/service/p_cert.php" target="_blank" class="btn_frmline">NHN KCP 휴대폰 본인확인 서비스 신청페이지</a>
+                            <?php echo help('기존 NHN KCP 휴대폰 본인확인은 SM으로 시작하는 5자리 사이트 코드 중 뒤의 3자리만 입력해 주십시오.<br>NHN KCP 휴대폰 본인확인(api_v2)은 KCP에서 발급받은 5자리 사이트코드를 그대로 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
+                            <span class="sitecode" id="cf_cert_kcp_cd_prefix" style="display:<?php echo ($config['cf_cert_hp'] == 'kcp_v2') ? 'none' : 'inline'; ?>;">SM</span>
+                            <input type="text" name="cf_cert_kcp_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcp_cd']); ?>" id="cf_cert_kcp_cd" class="frm_input" size="10" maxlength="10"> <a href="http://sir.kr/main/service/p_cert.php" target="_blank" class="btn_frmline">NHN KCP 휴대폰 본인확인 서비스 신청페이지</a>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_enckey">NHN KCP 가맹점 인증키</label></th>
                         <td class="cf_cert_service">
-                            <?php echo help('(선택사항, 추후 NHN_KCP 상점관리자에서 인증키 발급 메뉴 오픈일정 이후부터 적용되는 내용입니다.)<br>NHN_KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키 발급 후에 인증키 정보를 입력') ?>
-                            <input type="text" name="cf_cert_kcp_enckey" value="<?php echo get_sanitize_input($config['cf_cert_kcp_enckey']); ?>" id="cf_cert_kcp_enckey" class="frm_input" maxlength="100" size="40"> <a href="https://partner.kcp.co.kr" target="_blank" class="btn_frmline">NHN KCP 상점관리자</a>
+                            <?php echo help('NHN KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키를 발급받아 입력해 주십시오.<br>NHN KCP 휴대폰 본인확인(api_v2)도 이 인증키 값을 사용합니다.') ?>
+                            <input type="text" name="cf_cert_kcp_enckey" value="<?php echo get_sanitize_input($config['cf_cert_kcp_enckey']); ?>" id="cf_cert_kcp_enckey" class="frm_input" maxlength="100" size="70"> <a href="https://partner.kcp.co.kr" target="_blank" class="btn_frmline">NHN KCP 상점관리자</a>
                         </td>
                     </tr>
                     <tr>
