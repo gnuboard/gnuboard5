@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="method"    value="">
 <input type="hidden" name="orderId"    value="<?php echo isset($od_id) ? $od_id : ''; ?>">
 <input type="hidden" name="orderName"    value="<?php echo isset($goods) ? $goods : ''; ?>">
-<input type="hidden" name="customerName"    value="<?php echo isset($od_name) ? $od_name : ''; ?>">
+<input type="hidden" name="customerName"    value="<?php echo isset($od_name) ? get_text($od_name) : ''; ?>">
 <input type="hidden" name="customerEmail"    value="<?php echo isset($od_email) ? $od_email : ''; ?>">
 <input type="hidden" name="customerMobilePhone"    value="<?php echo isset($od_hp) ? $od_hp : ''; ?>">
 <input type="hidden" name="cardUseEscrow"    value="false">
