@@ -383,7 +383,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
     <input type="hidden" name="od_name" value="<?php echo get_text($od['od_name']); ?>">
-    <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
+    <input type="hidden" name="od_hp" value="<?php echo get_text($od['od_hp']); ?>">
     <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
     <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
     <input type="hidden" name="od_pg" value="<?php echo $od['od_pg']; ?>">
