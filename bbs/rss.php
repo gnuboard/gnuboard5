@@ -3,6 +3,8 @@ include_once('./_common.php');
 
 // 특수문자 변환
 function specialchars_replace($str, $len=0) {
+    $str = (string)$str;
+
     if ($len) {
         $str = substr($str, 0, $len);
     }
@@ -18,19 +20,29 @@ function specialchars_replace($str, $len=0) {
     return $str;
 }
 
+if (!isset($bo_table) || !$bo_table) {
+    echo '존재하지 않는 게시판입니다.';
+    exit;
+}
+
 $sql = " select gr_id, bo_subject, bo_page_rows, bo_read_level, bo_use_rss_view from {$g5['board_table']} where bo_table = '$bo_table' ";
-$row = sql_fetch($sql);
-$subj2 = specialchars_replace($row['bo_subject'], 255);
-$lines = $row['bo_page_rows'];
+$rss_board = sql_fetch($sql);
+if (!isset($rss_board['gr_id']) || !$rss_board['gr_id']) {
+    echo '존재하지 않는 게시판입니다.';
+    exit;
+}
+
+$subj2 = specialchars_replace($rss_board['bo_subject'], 255);
+$lines = (int)$rss_board['bo_page_rows'];
 
 // 비회원 읽기가 가능한 게시판만 RSS 지원
-if ($row['bo_read_level'] >= 2) {
+if ((int)$rss_board['bo_read_level'] >= 2) {
     echo '비회원 읽기가 가능한 게시판만 RSS 지원합니다.';
     exit;
 }
 
 // RSS 사용 체크
-if (!$row['bo_use_rss_view']) {
+if (!$rss_board['bo_use_rss_view']) {
     echo 'RSS 보기가 금지되어 있습니다.';
     exit;
 }
@@ -39,9 +51,9 @@ header('Content-type: text/xml');
 header('Cache-Control: no-cache, must-revalidate');
 header('Pragma: no-cache');
 
-$sql = " select gr_subject from {$g5['group_table']} where gr_id = '{$row['gr_id']}' ";
-$row = sql_fetch($sql);
-$subj1 = specialchars_replace($row['gr_subject'], 255);
+$sql = " select gr_subject from {$g5['group_table']} where gr_id = '{$rss_board['gr_id']}' ";
+$rss_group = sql_fetch($sql);
+$subj1 = isset($rss_group['gr_subject']) ? specialchars_replace($rss_group['gr_subject'], 255) : '';
 
 echo '<?xml version="1.0" encoding="utf-8" ?>'."\n";
 ?>
