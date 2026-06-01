@@ -19,7 +19,7 @@ for ($i=0; $i<$post_ca_id_count; $i++)
         $sql = " select mb_id from {$g5['member_table']} where mb_id = '".sql_real_escape_string($str_ca_mb_id)."' ";
         $row = sql_fetch($sql);
         if (!$row['mb_id'])
-            alert("\'{$str_ca_mb_id}\' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?$qstr");
+            alert("'{$str_ca_mb_id}' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?$qstr");
     }
     
     $check_files =  array();

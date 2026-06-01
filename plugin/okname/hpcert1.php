@@ -98,7 +98,9 @@ if ($retcode == "B000") {
     echo ("<script>request();</script>");
 } else {
     //요청 실패 페이지로 리턴
-    echo ("<script>alert(\"$retcode\"); self.close();</script>");
+    $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+    $js_retcode = function_exists('get_js_safe_string') ? get_js_safe_string($retcode) : '"'.strtr((string)$retcode, $js_replace).'"';
+    echo ("<script>alert(".$js_retcode."); self.close();</script>");
 }
 
 include_once(G5_PATH.'/tail.sub.php');

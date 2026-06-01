@@ -105,7 +105,7 @@ else if ($w == "u")
                     and b.ca_mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if (!$row['it_id'])
-            alert("\'{$member['mb_id']}\' 님께서 수정 할 권한이 없는 상품입니다.");
+            alert("'{$member['mb_id']}' 님께서 수정 할 권한이 없는 상품입니다.");
     }
 
     $it = get_shop_item($it_id);

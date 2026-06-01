@@ -1405,11 +1405,15 @@ function alert_opener($msg='', $url='')
     global $g5;
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
+    $msg = strip_tags($msg);
+    $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+    $js_msg = function_exists('get_js_safe_string') ? get_js_safe_string($msg) : '"'.strtr((string)$msg, $js_replace).'"';
+    $js_url = function_exists('get_js_safe_string') ? get_js_safe_string($url) : '"'.strtr((string)$url, $js_replace).'"';
 
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
     echo "<script>";
-    echo "alert(\"$msg\");";
-    echo "opener.location.href=\"$url\";";
+    echo "alert(".$js_msg.");";
+    echo "opener.location.href=".$js_url.";";
     echo "self.close();";
     echo "</script>";
     exit;

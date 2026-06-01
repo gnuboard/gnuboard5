@@ -112,11 +112,14 @@ function goto_url($url)
     if (!headers_sent())
         header('Location: '.$url);
     else {
+        $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+        $js_url = function_exists('get_js_safe_string') ? get_js_safe_string($url) : '"'.strtr((string)$url, $js_replace).'"';
+        $html_url = htmlspecialchars($url, ENT_QUOTES);
         echo '<script>';
-        echo 'location.replace("'.$url.'");';
+        echo 'location.replace('.$js_url.');';
         echo '</script>';
         echo '<noscript>';
-        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '<meta http-equiv="refresh" content="0;url='.$html_url.'" />';
         echo '</noscript>';
     }
     exit;
@@ -3740,7 +3743,9 @@ function module_exec_check($exe, $type)
     }
 
     if($error) {
-        $error = '<script>alert("'.$error.'");</script>';
+        $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+        $js_error = function_exists('get_js_safe_string') ? get_js_safe_string($error) : '"'.strtr((string)$error, $js_replace).'"';
+        $error = '<script>alert('.$js_error.');</script>';
     }
 
     return $error;
@@ -4165,13 +4170,16 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
         if (run_replace('check_same_url_host', (($p['host'] != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
+            $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+            $js_return_url = function_exists('get_js_safe_string') ? get_js_safe_string($return_url) : '"'.strtr((string)$return_url, $js_replace).'"';
+            $html_return_url = htmlspecialchars($return_url, ENT_QUOTES);
             echo '<script>'.PHP_EOL;
             echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
-            echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;
+            echo 'document.location.href = '.$js_return_url.';'.PHP_EOL;
             echo '</script>'.PHP_EOL;
             echo '<noscript>'.PHP_EOL;
             echo '<p>'.$msg.'</p>'.PHP_EOL;
-            echo '<p><a href="'.$return_url.'">돌아가기</a></p>'.PHP_EOL;
+            echo '<p><a href="'.$html_return_url.'">돌아가기</a></p>'.PHP_EOL;
             echo '</noscript>'.PHP_EOL;
             exit;
         }

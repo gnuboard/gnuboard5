@@ -7,7 +7,7 @@ $count = (isset($_POST['chk_wr_id']) && is_array($_POST['chk_wr_id'])) ? count($
 $post_btn_submit = isset($_POST['btn_submit']) ? clean_xss_tags($_POST['btn_submit'], 1, 1) : '';
 
 if(!$count) {
-    alert(addcslashes($post_btn_submit, '"\\/').' 하실 항목을 하나 이상 선택하세요.');
+    alert($post_btn_submit.' 하실 항목을 하나 이상 선택하세요.');
 }
 
 if($post_btn_submit === '선택삭제') {

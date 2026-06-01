@@ -38,7 +38,7 @@ if ($is_member) {
 sql_query($sql);
 
 if (get_sql_affected_rows() <= 0) {
-    alert(addcslashes($po['po_subject'], '"\\/').'에 이미 참여하셨습니다.', $result_url);
+    alert($po['po_subject'].'에 이미 참여하셨습니다.', $result_url);
 }
 
 insert_point($member['mb_id'], $po['po_point'], $po['po_id'] . '. ' . cut_str($po['po_subject'],20) . ' 투표 참여 ', '@poll', $po['po_id'], '투표');

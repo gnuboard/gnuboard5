@@ -678,8 +678,11 @@ if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_hash']);
 if(isset($_SESSION['ss_cert_birth'])) unset($_SESSION['ss_cert_birth']);
 if(isset($_SESSION['ss_cert_adult'])) unset($_SESSION['ss_cert_adult']);
 
-if ($msg)
-    echo '<script>alert(\''.$msg.'\');</script>';
+if ($msg) {
+    $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+    $js_msg = function_exists('get_js_safe_string') ? get_js_safe_string($msg) : '"'.strtr((string)$msg, $js_replace).'"';
+    echo '<script>alert('.$js_msg.');</script>';
+}
 
 run_event('register_form_update_after', $mb_id, $w);
 

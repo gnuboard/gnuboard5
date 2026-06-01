@@ -40,6 +40,10 @@ $url = preg_replace('/\r\n|\r|\n|[^\x20-\x7e]/','', $url);
 
 // url 체크
 check_url_host($url, $msg);
+$alert_url = str_replace('&amp;', '&', $url);
+$js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+$js_alert_msg = function_exists('get_js_safe_string') ? get_js_safe_string($alert_msg) : '"'.strtr((string)$alert_msg, $js_replace).'"';
+$js_alert_url = function_exists('get_js_safe_string') ? get_js_safe_string($alert_url) : '"'.strtr((string)$alert_url, $js_replace).'"';
 
 if($error) {
     $header2 = "다음 항목에 오류가 있습니다.";
@@ -49,9 +53,9 @@ if($error) {
 ?>
 
 <script>
-alert(<?php echo function_exists('get_js_safe_string') ? get_js_safe_string($alert_msg) : '""'; ?>);
+alert(<?php echo $js_alert_msg; ?>);
 <?php if ($url) { ?>
-document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
+document.location.replace(<?php echo $js_alert_url; ?>);
 <?php } else { ?>
 history.back();
 <?php } ?>

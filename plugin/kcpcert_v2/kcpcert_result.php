@@ -81,16 +81,22 @@ set_session('ss_cert_adult',   $adult);
 set_session('ss_cert_birth',   $birth_day);
 set_session('ss_cert_sex',     ($sex_code == '01' ? 'M' : 'F'));
 set_session('ss_cert_dupinfo', $mb_dupinfo);
+
+$js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+$js_cert_type = function_exists('get_js_safe_string') ? get_js_safe_string($cert_type) : '"'.strtr((string)$cert_type, $js_replace).'"';
+$js_user_name = function_exists('get_js_safe_string') ? get_js_safe_string($user_name) : '"'.strtr((string)$user_name, $js_replace).'"';
+$js_phone_no = function_exists('get_js_safe_string') ? get_js_safe_string($phone_no) : '"'.strtr((string)$phone_no, $js_replace).'"';
+$js_md5_cert_no = function_exists('get_js_safe_string') ? get_js_safe_string($md5_cert_no) : '"'.strtr((string)$md5_cert_no, $js_replace).'"';
 ?>
 <script>
 jQuery(function($) {
     var $opener = window.opener;
     if (!$opener) { window.close(); return; }
 
-    $opener.$("input[name=cert_type]").val(<?php echo get_js_safe_string($cert_type); ?>);
-    $opener.$("input[name=mb_name]").val(<?php echo get_js_safe_string($user_name); ?>).attr("readonly", true);
-    $opener.$("input[name=mb_hp]").val(<?php echo get_js_safe_string($phone_no); ?>).attr("readonly", true);
-    $opener.$("input[name=cert_no]").val(<?php echo get_js_safe_string($md5_cert_no); ?>);
+    $opener.$("input[name=cert_type]").val(<?php echo $js_cert_type; ?>);
+    $opener.$("input[name=mb_name]").val(<?php echo $js_user_name; ?>).attr("readonly", true);
+    $opener.$("input[name=mb_hp]").val(<?php echo $js_phone_no; ?>).attr("readonly", true);
+    $opener.$("input[name=cert_no]").val(<?php echo $js_md5_cert_no; ?>);
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
 

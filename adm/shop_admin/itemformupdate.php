@@ -513,7 +513,7 @@ else if ($w == "d")
                     and b.ca_mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if (!$row['it_id'])
-            alert("\'{$member['mb_id']}\' 님께서 삭제 할 권한이 없는 상품입니다.");
+            alert("'{$member['mb_id']}' 님께서 삭제 할 권한이 없는 상품입니다.");
     }
 
     itemdelete($it_id);

@@ -123,7 +123,7 @@ if ($w == "" || $w == "u")
         $sql = " select mb_id from {$g5['member_table']} where mb_id = '$ca_mb_id' ";
         $row = sql_fetch($sql);
         if (!$row['mb_id'])
-            alert("\'$ca_mb_id\' 은(는) 존재하는 회원아이디가 아닙니다.");
+            alert("'$ca_mb_id' 은(는) 존재하는 회원아이디가 아닙니다.");
     }
 }
 

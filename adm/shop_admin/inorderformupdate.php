@@ -384,10 +384,16 @@ sql_query($sql);
 $sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
 sql_query($sql, true);
 
+$orderform_url = './orderform.php?od_id='.$od_id;
+$inorderlist_url = './inorderlist.php?'.str_replace('&amp;', '&', $qstr);
+$js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+$js_orderform_url = function_exists('get_js_safe_string') ? get_js_safe_string($orderform_url) : '"'.strtr((string)$orderform_url, $js_replace).'"';
+$js_inorderlist_url = function_exists('get_js_safe_string') ? get_js_safe_string($inorderlist_url) : '"'.strtr((string)$inorderlist_url, $js_replace).'"';
+
 echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
 echo '<script>'.PHP_EOL;
 echo 'if(confirm("복구하신 주문 상세페이지로 이동하시겠습니까?"))'.PHP_EOL;
-echo 'document.location.href = "./orderform.php?od_id='.$od_id.'";'.PHP_EOL;
+echo 'document.location.href = '.$js_orderform_url.';'.PHP_EOL;
 echo 'else'.PHP_EOL;
-echo 'document.location.href = "./inorderlist.php?'.str_replace('&amp;', '&', $qstr).'";'.PHP_EOL;
+echo 'document.location.href = '.$js_inorderlist_url.';'.PHP_EOL;
 echo '</script>'.PHP_EOL;
