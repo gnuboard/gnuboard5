@@ -3304,7 +3304,7 @@ class html_process {
             $member['mb_id'] = '';
         }
         
-        if ($tmp_row['cnt']) {
+        if (!empty($tmp_row['cnt'])) {
             $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
             sql_query($tmp_sql, FALSE);
         } else {
