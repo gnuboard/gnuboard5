@@ -135,8 +135,56 @@ $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'
 
 <script src="../js/jquery-1.8.3.min.js"></script>
 <script>
+function get_install_check_error_message(xhr)
+{
+    var status = (xhr && xhr.status) ? ' (HTTP ' + xhr.status + ')' : '';
+    var default_msg = 'DB 연결 점검 중 오류가 발생했습니다.' + status + '\n'
+        + 'MySQL Host/User/Password/DB 정보가 올바른지, DB 서버가 동작 중인지 확인해 주십시오.\n'
+        + '문제가 계속되면 PHP 오류 로그를 확인하시기 바랍니다.';
+    var response_text = xhr ? (xhr.responseText || '') : '';
+
+    if (response_text && window.jQuery) {
+        try {
+            var data = jQuery.parseJSON(response_text);
+            if (data && data.error) {
+                return data.error;
+            }
+        } catch (e) {
+        }
+    }
+
+    response_text = response_text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+    response_text = window.jQuery ? jQuery.trim(response_text) : response_text;
+
+    return response_text || default_msg;
+}
+
+function set_install_submit_state(f, submitting)
+{
+    var submit_btn = f.querySelector ? f.querySelector('input[type="submit"]') : null;
+
+    if (submitting) {
+        f.setAttribute('data-install-submitting', '1');
+        if (submit_btn) {
+            submit_btn.setAttribute('data-original-value', submit_btn.value);
+            submit_btn.disabled = true;
+            submit_btn.value = '점검 중...';
+        }
+    } else {
+        f.removeAttribute('data-install-submitting');
+        if (submit_btn) {
+            submit_btn.disabled = false;
+            submit_btn.value = submit_btn.getAttribute('data-original-value') || '다음';
+        }
+    }
+}
+
 function frm_install_submit(f)
 {
+    if (f.getAttribute('data-install-submitting') == '1') {
+        return false;
+    }
+
     if (f.mysql_host.value == '')
     {
         alert('MySQL Host 를 입력하십시오.'); f.mysql_host.focus(); return false;
@@ -194,25 +242,46 @@ function frm_install_submit(f)
         f.admin_id.focus();
         return false;
     }
+
+    if (f.g5_install.checked) {
+        var reinstall_msg = '재설치를 선택했습니다.\n\n'
+            + 'DB: ' + f.mysql_db.value + '\n'
+            + 'TABLE명 접두사: ' + f.table_prefix.value + '\n'
+            + '쇼핑몰 TABLE명 접두사: ' + f.g5_shop_prefix.value + '\n\n'
+            + '기존 테이블과 자료가 삭제되거나 덮어써질 수 있습니다. 계속 진행하시겠습니까?';
+
+        if (!confirm(reinstall_msg)) {
+            return false;
+        }
+    }
+
+    set_install_submit_state(f, true);
     
     if (window.jQuery) {
 
         var jqxhr = jQuery.post( "ajax.install.check.php", $(f).serialize(), function(data) {
             
             if( data.error ){
+                set_install_submit_state(f, false);
                 alert(data.error);
             } else if( data.exists ) {
-                if( confirm(data.exists) ){
+                if( f.g5_install.checked || confirm(data.exists) ){
                     f.submit();
+                } else {
+                    set_install_submit_state(f, false);
                 }
             } else if( data.success ) {
                 f.submit();
+            } else {
+                set_install_submit_state(f, false);
+                alert(get_install_check_error_message());
             }
 
         }, "json");
 
         jqxhr.fail(function(xhr) {
-            alert( xhr.responseText );
+            set_install_submit_state(f, false);
+            alert(get_install_check_error_message(xhr));
         });
 
         return false;

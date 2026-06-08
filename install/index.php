@@ -12,6 +12,7 @@ include_once ('./install.inc.php');
 if ($exists_data_dir && $write_data_dir) {
     // 필수 모듈 체크
     require_once('./library.check.php');
+    if (empty($install_library_required_missing)) {
 ?>
 <form action="./install_config.php" method="post" onsubmit="return frm_submit(this);">
 
@@ -48,6 +49,7 @@ function frm_submit(f)
 }
 </script>
 <?php
+    }
 } // if
 ?>
 
