@@ -137,7 +137,7 @@ if($authResultCode === "0000"){
             $bank_name = $bankname = nicepay_res('VbankBankName', $respArr);
             $account = nicepay_res('VbankNum', $respArr);
             $va_date   = nicepay_res('VbankExpDate', $respArr).' '.nicepay_res('VbankExpTime', $respArr); // 가상계좌 입금마감시간
-            $app_no    = nicepay_res('VbankNum', $respArr);
+            $od_app_no = $app_no = nicepay_res('VbankNum', $respArr); // 입금통보 매칭을 위해 가상계좌번호를 보관
             if ($default['de_escrow_use'] == 1)
                 $escw_yn         = 'Y';
 
