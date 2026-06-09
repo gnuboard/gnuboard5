@@ -19,6 +19,11 @@ if (!(isset($mb['mb_id']) && $mb['mb_id'])) {
 
 check_admin_token();
 
+$assignable_auth_menu = admin_get_assignable_auth_menu();
+if (!$au_menu || !isset($assignable_auth_menu[$au_menu])) {
+    alert('해당 메뉴는 관리권한을 부여할 수 없습니다.');
+}
+
 require_once G5_CAPTCHA_PATH . '/captcha.lib.php';
 
 if (!chk_captcha()) {
