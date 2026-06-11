@@ -232,7 +232,11 @@ if($pp['pp_pg'] == 'lg') {
                             $cash = unserialize($pp['pp_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
                         } else if($pp['pp_pg'] == 'nicepay') {
-                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&TID='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
+                            $cash = $pp['pp_cash_info'] ? unserialize($pp['pp_cash_info']) : array();
+                            if(!is_array($cash))
+                                $cash = array();
+                            $cash_tid = isset($cash['TID']) && $cash['TID'] ? $cash['TID'] : $pp['pp_tno'];
+                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&TID='.$cash_tid.'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                         } else {
                             require_once G5_SHOP_PATH.'/settle_kcp.inc.php';
 

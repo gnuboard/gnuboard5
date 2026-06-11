@@ -352,6 +352,13 @@ $order_price = $tot_od_price + $send_cost + $send_cost2 - $tot_sc_cp_price - $od
 $od_status = '주문';
 $od_tno    = '';
 
+// PG사의 가상계좌 또는 계좌이체의 자동 현금영수증 초기배열값
+$pg_receipt_infos = array(
+    'od_cash' => 0,
+    'od_cash_no' => '',
+    'od_cash_info' => '',
+);
+
 if (function_exists('check_payment_method')) {
     check_payment_method($od_settle_case);
 }
@@ -699,6 +706,9 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case',
                 od_other_pay_type = '$od_other_pay_type',
+                od_cash           = '{$pg_receipt_infos['od_cash']}',
+                od_cash_no        = '{$pg_receipt_infos['od_cash_no']}',
+                od_cash_info      = '{$pg_receipt_infos['od_cash_info']}',
                 od_test           = '{$default['de_card_test']}'
                 ";
 $result = sql_query($sql, false);

@@ -48,6 +48,14 @@ if ($Signature != $authSignData) {
     alert("유효성 검증이 틀려서 결제를 진행할수 없습니다.");
 }
 
+if (! nicepay_is_allowed_api_url($nextAppURL, array('/webapi/pay_process.jsp'))) {
+    alert("승인 요청 url이 올바르지 않습니다.", G5_SHOP_URL);
+}
+
+if (! nicepay_is_allowed_api_url($netCancelURL, array('/webapi/cancel_process.jsp'))) {
+    alert("망취소 요청 url이 올바르지 않습니다.", G5_SHOP_URL);
+}
+
 // API CALL foreach example
 if (! function_exists('jsonRespDump')) {
     function jsonRespDump($resp){
@@ -118,6 +126,8 @@ if($authResultCode === "0000"){
 	        $ResultMsg = nicepay_res('ResultMsg', $respArr);
 	        $tno             = nicepay_res('TID', $respArr);
 	        $response_amt    = nicepay_res('Amt', $respArr, 0);
+	        $response_mid    = nicepay_res('MID', $respArr);
+	        $response_moid   = nicepay_res('Moid', $respArr);
 	        $amount          = (int) $response_amt;
 	        $app_time        = nicepay_res('AuthDate', $respArr);
 	        $pay_method = nicepay_res('PayMethod', $respArr);
@@ -135,6 +145,18 @@ if($authResultCode === "0000"){
 
 	        if ($responseSignature != $responseSignData) {
 	            alert("승인 응답 유효성 검증이 틀려서 결제를 진행할수 없습니다.", G5_SHOP_URL);
+	        }
+
+	        if ($response_mid != $mid || $response_moid != $moid) {
+	            if($amount > 0) {
+	                $od_id = $moid;
+	                $cancel_msg = '승인 응답 주문정보 불일치';
+	                $cancelAmt = $amount;
+	                $partialCancelCode = 0;
+	                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+	            }
+
+	            alert("승인 응답 주문정보가 틀려서 결제를 진행할수 없습니다.", G5_SHOP_URL);
 	        }
 
 	        if ($amount != $order_price) {

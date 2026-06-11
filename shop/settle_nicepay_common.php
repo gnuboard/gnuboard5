@@ -48,7 +48,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
     // 입금통보 코드가 4110 성공이면
     if ($ResultCode === '4110') {
         // 입금결과 처리
-        $sql = " select pp_id, od_id, pp_price, pp_receipt_price from {$g5['g5_shop_personalpay_table']} where pp_id = '$MOID' and pp_app_no = '$VbankNum' ";
+        $sql = " select pp_id, od_id, pp_price, pp_receipt_price from {$g5['g5_shop_personalpay_table']} where pp_id = '$MOID' and pp_app_no = '$VbankNum' and pp_tno = '$TID' ";
         $row = sql_fetch($sql);
 
         $result = false;
@@ -97,20 +97,25 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
                 }
             }
         } else {
-            $sql = " select od_id, od_misu
+            $sql = " select od_id, od_misu, od_receipt_price
                         from {$g5['g5_shop_order_table']}
                         where od_id = '$MOID'
-                        and od_app_no = '$VbankNum' ";
+                        and od_app_no = '$VbankNum'
+                        and od_tno = '$TID' ";
             $od_row = sql_fetch($sql);
 
-            if(isset($od_row['od_id']) && $od_row['od_id'] && (int)$od_row['od_misu'] === $Amt) {
-                // 주문서 UPDATE
-                $sql = " update {$g5['g5_shop_order_table']}
-                            set od_receipt_price = '$Amt',
-                                od_receipt_time = '$receipt_time'
-                            where od_id = '$MOID'
-                            and od_app_no = '$VbankNum' ";
-                $result = sql_query($sql, FALSE);
+            if(isset($od_row['od_id']) && $od_row['od_id']) {
+                if((int)$od_row['od_misu'] === $Amt) {
+                    // 주문서 UPDATE
+                    $sql = " update {$g5['g5_shop_order_table']}
+                                set od_receipt_price = '$Amt',
+                                    od_receipt_time = '$receipt_time'
+                                where od_id = '$MOID'
+                                and od_app_no = '$VbankNum' ";
+                    $result = sql_query($sql, FALSE);
+                } else if((int)$od_row['od_receipt_price'] === $Amt && (int)$od_row['od_misu'] === 0) {
+                    $result = true;
+                }
             }
         }
 

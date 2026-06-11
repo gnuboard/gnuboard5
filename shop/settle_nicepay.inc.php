@@ -52,7 +52,7 @@ if (! function_exists('nicepay_reqPost')) {
         $url_data = parse_url($url);
 
         // 나이스페이 url이 맞는지 체크하여 틀리면 false를 리턴합니다.
-        if (! (isset($url_data['host']) && preg_match('#\.nicepay\.co\.kr$#i', $url_data['host']))) {
+        if (! (isset($url_data['scheme']) && strtolower($url_data['scheme']) === 'https' && isset($url_data['host']) && preg_match('#\.nicepay\.co\.kr$#i', $url_data['host']))) {
             return false;
         }
 
@@ -64,7 +64,29 @@ if (! function_exists('nicepay_reqPost')) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));	//POST data
         curl_setopt($ch, CURLOPT_POST, true);
         $response = curl_exec($ch);
-        curl_close($ch);	 
+        curl_close($ch);
         return $response;
+    }
+}
+
+if (! function_exists('nicepay_is_allowed_api_url')) {
+    function nicepay_is_allowed_api_url($url, $allowed_paths)
+    {
+        $url_data = parse_url($url);
+
+        if (! (isset($url_data['scheme']) && strtolower($url_data['scheme']) === 'https' && isset($url_data['host']) && isset($url_data['path']))) {
+            return false;
+        }
+
+        $host = strtolower($url_data['host']);
+        $path = $url_data['path'];
+        $allowed_hosts = array(
+            'dc1-api.nicepay.co.kr',
+            'dc2-api.nicepay.co.kr',
+            'pg-api.nicepay.co.kr',
+            'webapi.nicepay.co.kr'
+        );
+
+        return in_array($host, $allowed_hosts) && in_array($path, $allowed_paths);
     }
 }
