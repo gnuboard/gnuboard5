@@ -50,8 +50,9 @@ try{
 		$responseCancelAmt = isset($result['CancelAmt']) ? $result['CancelAmt'] : $cancelAmt;
 		$responseSignature = isset($result['Signature']) ? $result['Signature'] : '';
 		$responseSignData = bin2hex(hash('sha256', $responseTid . $mid . $responseCancelAmt . $merchantKey, true));
+		$isCancelSuccess = ($result['ResultCode'] === '2001' || $result['ResultCode'] === '2211');
 
-		if ($responseSignature != $responseSignData) {
+		if (($isCancelSuccess || $responseSignature) && $responseSignature != $responseSignData) {
 			$result['ResultCode'] = '9998';
 			$result['ResultMsg'] = '취소 응답 유효성 검증 실패';
 		}
