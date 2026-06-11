@@ -41,21 +41,6 @@ if ($order_price != $amt) {
     alert("요청한 결제금액이 틀리므로 결제를 진행할수 없습니다.", G5_SHOP_URL);
 }
 
-// hex(sha256(AuthToken+MID+Amt+MerchantKey)), 위변조 검증 데이터
-$authSignData = bin2hex(hash('sha256', $authToken. $default['de_nicepay_mid'] . $order_price . $default['de_nicepay_key'], true));
-
-if ($Signature != $authSignData) {
-    alert("유효성 검증이 틀려서 결제를 진행할수 없습니다.");
-}
-
-if (! nicepay_is_allowed_api_url($nextAppURL, array('/webapi/pay_process.jsp'))) {
-    alert("승인 요청 url이 올바르지 않습니다.", G5_SHOP_URL);
-}
-
-if (! nicepay_is_allowed_api_url($netCancelURL, array('/webapi/cancel_process.jsp'))) {
-    alert("망취소 요청 url이 올바르지 않습니다.", G5_SHOP_URL);
-}
-
 // API CALL foreach example
 if (! function_exists('jsonRespDump')) {
     function jsonRespDump($resp){
@@ -82,6 +67,21 @@ if (! function_exists('nicepay_res')) {
 $response = "";
 
 if($authResultCode === "0000"){
+    // hex(sha256(AuthToken+MID+Amt+MerchantKey)), 위변조 검증 데이터
+    $authSignData = bin2hex(hash('sha256', $authToken. $default['de_nicepay_mid'] . $order_price . $default['de_nicepay_key'], true));
+
+    if ($Signature != $authSignData) {
+        alert("유효성 검증이 틀려서 결제를 진행할수 없습니다.");
+    }
+
+    if (! nicepay_is_allowed_api_url($nextAppURL, array('/webapi/pay_process.jsp'))) {
+        alert("승인 요청 url이 올바르지 않습니다.", G5_SHOP_URL);
+    }
+
+    if (! nicepay_is_allowed_api_url($netCancelURL, array('/webapi/cancel_process.jsp'))) {
+        alert("망취소 요청 url이 올바르지 않습니다.", G5_SHOP_URL);
+    }
+
 	/*
 	****************************************************************************************
 	* <Hash encryption> (do not modify)
