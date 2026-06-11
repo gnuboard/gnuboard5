@@ -71,16 +71,18 @@ $useOpt        = $useopt;// 현금영수증 발행용도 ("1" - 소비자 소득
 $regNum        = $reg_num;// 현금결제자 주민등록번호
 
 $ediDate = preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS);
+$moid = ($tx == 'personalpay') ? $od['pp_id'] : $od['od_id'];
+$receipt_tax_free_amt = ($tx == 'personalpay') ? 0 : (int)$od['od_free_mny'];
 
 // 04 (현금영수증), 01 (매체구분 일반), 시간정보 (12자리), 랜덤 4자리숫자
 $tid = $default['de_nicepay_mid'].'04'.'01'.substr($ediDate, 2).rand(1000, 9999);
-$signData = bin2hex(hash('sha256', $default['de_nicepay_mid'].$amt_tot.$ediDate.$od['od_id'].$default['de_nicepay_key'], true));
+$signData = bin2hex(hash('sha256', $default['de_nicepay_mid'].$amt_tot.$ediDate.$moid.$default['de_nicepay_key'], true));
 
 $data = array(
     'MID' => $default['de_nicepay_mid'],
     'TID' => $tid,
     'EdiDate' => $ediDate,
-    'Moid' => $od['od_id'],
+    'Moid' => $moid,
     'SignData' => $signData,
     'GoodsName' => iconv('utf-8', 'euc-kr', $goodName),
     'ReceiptAmt' => $amt_tot,
@@ -89,7 +91,7 @@ $data = array(
     'ReceiptSupplyAmt' => $supPrice,
     'ReceiptVAT' => $tax,
     'ReceiptServiceAmt' => $srcvPrice,
-    'ReceiptTaxFreeAmt' => (int)$od['od_free_mny'],
+    'ReceiptTaxFreeAmt' => $receipt_tax_free_amt,
     'CharSet' => 'utf-8',
 );
 

@@ -18,8 +18,9 @@ $payMethod = isset($_POST['PayMethod']) ? clean_xss_tags($_POST['PayMethod']) : 
 $mid = isset($_POST['MID']) ? clean_xss_tags($_POST['MID']) : '';							// merchant id
 $moid = isset($_POST['Moid']) ? addslashes(clean_xss_tags(stripslashes($_POST['Moid']))) : '';							// order number
 $amt = isset($_POST['Amt']) ? (int) preg_replace('/[^0-9]/', '', $_POST['Amt']) : 0;							// Amount of payment
-$reqReserved = isset($_POST['ReqReserved']) ? clean_xss_tags($_POST['ReqReserved']) : '';			// mall custom field 
+$reqReserved = isset($_POST['ReqReserved']) ? clean_xss_tags($_POST['ReqReserved']) : '';			// mall custom field
 $netCancelURL = isset($_POST['NetCancelURL']) ? clean_xss_tags($_POST['NetCancelURL']) : '';			// netCancelURL
+$Signature = isset($_POST['Signature']) ? clean_xss_tags($_POST['Signature']) : '';			// authentication signature
 
 if (isset($pp['pp_id']) && $pp['pp_id']) {   //개인결제
     $session_order_id = get_session('ss_personalpay_id');
@@ -38,6 +39,13 @@ if ($default['de_nicepay_mid'] != $mid) {
 
 if ($order_price != $amt) {
     alert("요청한 결제금액이 틀리므로 결제를 진행할수 없습니다.", G5_SHOP_URL);
+}
+
+// hex(sha256(AuthToken+MID+Amt+MerchantKey)), 위변조 검증 데이터
+$authSignData = bin2hex(hash('sha256', $authToken. $default['de_nicepay_mid'] . $order_price . $default['de_nicepay_key'], true));
+
+if ($Signature != $authSignData) {
+    alert("유효성 검증이 틀려서 결제를 진행할수 없습니다.");
 }
 
 // API CALL foreach example
@@ -97,26 +105,43 @@ if($authResultCode === "0000"){
         // A000 : 휴대폰 소액결제 성공코드
         // 7001 : 현금영수증
         // https://developers.nicepay.co.kr/manual-auth.php
-		*/			
-		$response = nicepay_reqPost($data, $nextAppURL);
-        $respArr = json_decode($response, true);
-        
-        $ResultCode = nicepay_res('ResultCode', $respArr);
-        $ResultMsg = nicepay_res('ResultMsg', $respArr);
-        $tno             = nicepay_res('TID', $respArr);
-        $amount          = (int) nicepay_res('Amt', $respArr, 0);
+			*/
+			$response = nicepay_reqPost($data, $nextAppURL);
+
+	        if (! $response) {
+	            alert('응답이 없거나 잘못된 url 입니다.', G5_SHOP_URL);
+	        }
+
+	        $respArr = json_decode($response, true);
+
+	        $ResultCode = nicepay_res('ResultCode', $respArr);
+	        $ResultMsg = nicepay_res('ResultMsg', $respArr);
+	        $tno             = nicepay_res('TID', $respArr);
+	        $amount          = (int) nicepay_res('Amt', $respArr, 0);
         $app_time        = nicepay_res('AuthDate', $respArr);
         $pay_method = nicepay_res('PayMethod', $respArr);
         $od_app_no = $app_no    = nicepay_res('AuthCode', $respArr); // 승인 번호  (신용카드, 계좌이체, 휴대폰)
         $pay_type   = $NICEPAY_METHOD[$pay_method];
 
-        // 승인된 코드가 아니면 결제가 되지 않게 합니다.
-        if (! in_array($ResultCode, array('3001', '4000', '4100', 'A000', '7001'))) {
-            alert($ResultMsg.' 코드 : '.$ResultCode, G5_SHOP_URL);
-            die();
-        }
+	        // 승인된 코드가 아니면 결제가 되지 않게 합니다.
+	        if (! in_array($ResultCode, array('3001', '4000', '4100', 'A000', '7001'))) {
+	            alert($ResultMsg.' 코드 : '.$ResultCode, G5_SHOP_URL);
+	            die();
+	        }
 
-        if ($ResultCode == '3001') {    // 신용카드
+	        if ($amount != $order_price) {
+	            if($amount > 0) {
+	                $od_id = $moid;
+	                $cancel_msg = '결제금액 불일치';
+	                $cancelAmt = $amount;
+	                $partialCancelCode = 0;
+	                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+	            }
+
+	            alert("승인된 결제금액이 틀리므로 결제를 진행할수 없습니다.", G5_SHOP_URL);
+	        }
+
+	        if ($ResultCode == '3001') {    // 신용카드
 
             $card_cd   = nicepay_res('CardCode', $respArr); // 카드사 코드
             $card_name = nicepay_res('CardName', $respArr); // 카드 종류

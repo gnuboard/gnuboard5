@@ -47,33 +47,37 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
         $result = false;
         $receipt_time = preg_replace("/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $AuthDate);
 
-        if($row['pp_id']) {
-            // 개인결제 UPDATE
-            $sql = " update {$g5['g5_shop_personalpay_table']}
-                        set pp_receipt_price    = '$Amt',
-                            pp_receipt_time     = '$receipt_time'
-                        where pp_id = '$MOID'
-                            and pp_app_no = '$VbankNum' ";
-            $result = sql_query($sql, false);
+	        if($row['pp_id']) {
+	            // 개인결제 UPDATE
+	            $sql = " update {$g5['g5_shop_personalpay_table']}
+	                        set pp_receipt_price    = '$Amt',
+	                            pp_receipt_time     = '$receipt_time'
+	                        where pp_id = '$MOID'
+	                            and pp_app_no = '$VbankNum' ";
+	            $result = sql_query($sql, false);
 
-            if($row['od_id']) {
-                // 주문서 UPDATE
-                $sql = " update {$g5['g5_shop_order_table']}
-                            set od_receipt_price = od_receipt_price + '$Amt',
-                                od_receipt_time = '$receipt_time',
-                                od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
-                            where od_id = '{$row['od_id']}' ";
-                $result = sql_query($sql, FALSE);
-            }
-        } else {
-            // 주문서 UPDATE
-            $sql = " update {$g5['g5_shop_order_table']}
-                        set od_receipt_price = '$Amt',
-                            od_receipt_time = '$receipt_time'
-                        where od_id = '$MOID'
-                        and od_app_no = '$VbankNum' ";
-            $result = sql_query($sql, FALSE);
-        }
+	            if($row['od_id']) {
+	                // 주문서 UPDATE
+	                $sql = " update {$g5['g5_shop_order_table']}
+	                            set od_receipt_price = od_receipt_price + '$Amt',
+	                                od_receipt_time = '$receipt_time',
+	                                od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
+	                            where od_id = '{$row['od_id']}'
+	                            and od_status = '주문'
+	                            and od_cancel_price = '0' ";
+	                $result = sql_query($sql, FALSE);
+	            }
+	        } else {
+	            // 주문서 UPDATE
+	            $sql = " update {$g5['g5_shop_order_table']}
+	                        set od_receipt_price = '$Amt',
+	                            od_receipt_time = '$receipt_time'
+	                        where od_id = '$MOID'
+	                        and od_app_no = '$VbankNum'
+	                        and od_status = '주문'
+	                        and od_cancel_price = '0' ";
+	            $result = sql_query($sql, FALSE);
+	        }
 
         if($result) {
             if ($row['od_id'])

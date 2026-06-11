@@ -222,6 +222,13 @@ if(!$result) {
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
             break;
+        case 'nicepay':
+            $od_id = $pp['pp_id'];
+            $tno = $pp_tno;
+            $cancelAmt = (int)$pg_price;
+            $partialCancelCode = 0;
+            include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
             break;
@@ -265,6 +272,13 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                $od_id = $pp['pp_id'];
+                $tno = $pp_tno;
+                $cancelAmt = (int)$pg_price;
+                $partialCancelCode = 0;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';

@@ -127,6 +127,18 @@ if($authResultCode === "0000"){
             die();
         }
 
+        if ($amount != $order_price) {
+            if($amount > 0) {
+                $od_id = $moid;
+                $cancel_msg = '결제금액 불일치';
+                $cancelAmt = $amount;
+                $partialCancelCode = 0;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+            }
+
+            alert("승인된 결제금액이 틀리므로 결제를 진행할수 없습니다.", G5_SHOP_URL);
+        }
+
         if ($ResultCode == '3001') {    // 신용카드
 
             $card_cd   = nicepay_res('CardCode', $respArr); // 카드사 코드

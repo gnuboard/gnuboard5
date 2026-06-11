@@ -385,11 +385,18 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                         
                         $tno = $od['od_tno'];
                         
-                        $cancelAmt = $od['od_receipt_price'];
+                        $cancelAmt = (int)$od['od_receipt_price'];
+                        if($od['od_settle_case'] == '가상계좌' && $od['od_status'] == '주문' && $cancelAmt == 0)
+                            $cancelAmt = (int)$od['od_misu'];
 
                         // 0:전체 취소, 1:부분 취소(별도 계약 필요)
                         $partialCancelCode = 0;
 
+                        if($cancelAmt <= 0) {
+                            $pg_res_cd = '';
+                            $pg_res_msg = '취소 요청금액이 없습니다.';
+                            break;
+                        }
 
                         include G5_SHOP_PATH.'/nicepay/cancel_process.php';
 
