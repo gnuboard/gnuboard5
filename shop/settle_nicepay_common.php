@@ -64,9 +64,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
                                 set od_receipt_price = od_receipt_price + '$Amt',
                                     od_receipt_time = '$receipt_time',
                                     od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
-                                where od_id = '{$row['od_id']}'
-                                and od_status = '주문'
-                                and od_cancel_price = '0' ";
+                                where od_id = '{$row['od_id']}' ";
                     $result = sql_query($sql, FALSE);
                 }
             }
@@ -74,9 +72,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
             $sql = " select od_id, od_misu
                         from {$g5['g5_shop_order_table']}
                         where od_id = '$MOID'
-                        and od_app_no = '$VbankNum'
-                        and od_status = '주문'
-                        and od_cancel_price = '0' ";
+                        and od_app_no = '$VbankNum' ";
             $od_row = sql_fetch($sql);
 
             if(isset($od_row['od_id']) && $od_row['od_id'] && (int)$od_row['od_misu'] === $Amt) {
@@ -85,9 +81,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
                             set od_receipt_price = '$Amt',
                                 od_receipt_time = '$receipt_time'
                             where od_id = '$MOID'
-                            and od_app_no = '$VbankNum'
-                            and od_status = '주문'
-                            and od_cancel_price = '0' ";
+                            and od_app_no = '$VbankNum' ";
                 $result = sql_query($sql, FALSE);
             }
         }
