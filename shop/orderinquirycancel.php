@@ -27,7 +27,7 @@ $ct = sql_fetch($sql);
 
 $uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']) : md5($od['od_id'].$od['od_time'].$od['od_ip']);
 
-if($od['od_cancel_price'] > 0 || $ct['od_count1'] != $ct['od_count2']) {
+if($od['od_cancel_price'] > 0 || $od['od_status'] != '주문' || $ct['od_count1'] != $ct['od_count2']) {
     alert("취소할 수 있는 주문이 아닙니다.", G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
 }
 
@@ -102,7 +102,12 @@ if($od['od_tno']) {
 
             $tno = $od['od_tno'];
 
-            $cancelAmt = $od['od_receipt_price'];
+            $cancelAmt = (int)$od['od_receipt_price'];
+            if($od['od_settle_case'] == '가상계좌' && $od['od_status'] == '주문' && $cancelAmt == 0)
+                $cancelAmt = (int)$od['od_misu'];
+
+            if($cancelAmt <= 0)
+                alert('취소 요청금액이 없습니다.', G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
 
             // 0:전체 취소, 1:부분 취소(별도 계약 필요)
             $partialCancelCode = 0;
