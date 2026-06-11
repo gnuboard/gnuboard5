@@ -115,7 +115,8 @@ if($authResultCode === "0000"){
         $ResultCode = nicepay_res('ResultCode', $respArr);
         $ResultMsg = nicepay_res('ResultMsg', $respArr);
         $tno             = nicepay_res('TID', $respArr);
-        $amount          = (int) nicepay_res('Amt', $respArr, 0);
+        $response_amt    = nicepay_res('Amt', $respArr, 0);
+        $amount          = (int) $response_amt;
         $app_time        = nicepay_res('AuthDate', $respArr);
         $pay_method = nicepay_res('PayMethod', $respArr);
         $od_app_no = $app_no    = nicepay_res('AuthCode', $respArr); // 승인 번호  (신용카드, 계좌이체, 휴대폰)
@@ -125,6 +126,13 @@ if($authResultCode === "0000"){
         if (! in_array($ResultCode, array('3001', '4000', '4100', 'A000', '7001'))) {
             alert($ResultMsg.' 코드 : '.$ResultCode, G5_SHOP_URL);
             die();
+        }
+
+        $responseSignature = nicepay_res('Signature', $respArr);
+        $responseSignData = bin2hex(hash('sha256', $tno . $mid . $response_amt . $merchantKey, true));
+
+        if ($responseSignature != $responseSignData) {
+            alert("승인 응답 유효성 검증이 틀려서 결제를 진행할수 없습니다.", G5_SHOP_URL);
         }
 
         if ($amount != $order_price) {

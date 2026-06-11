@@ -38,15 +38,29 @@ try{
 
 	/*
 	****************************************************************************************
-	* <Cancel Request>	
+	* <Cancel Request>
 	****************************************************************************************
-	*/	
+	*/
 	$response = nicepay_reqPost($data, "https://pg-api.nicepay.co.kr/webapi/cancel_process.jsp"); //Cancel API call
 
-    $result = json_decode($response, true);
-	
+	$result = json_decode($response, true);
+
+	if (isset($result['ResultCode'])) {
+		$responseTid = isset($result['TID']) ? $result['TID'] : $tid;
+		$responseCancelAmt = isset($result['CancelAmt']) ? $result['CancelAmt'] : $cancelAmt;
+		$responseSignature = isset($result['Signature']) ? $result['Signature'] : '';
+		$responseSignData = bin2hex(hash('sha256', $responseTid . $mid . $responseCancelAmt . $merchantKey, true));
+
+		if ($responseSignature != $responseSignData) {
+			$result['ResultCode'] = '9998';
+			$result['ResultMsg'] = '취소 응답 유효성 검증 실패';
+		}
+	}
+
 }catch(Exception $e){
 	$e->getMessage();
-	$ResultCode = "9999";
-	$ResultMsg = "통신실패";
+	$result = array(
+		'ResultCode' => '9999',
+		'ResultMsg'  => '통신실패'
+	);
 }

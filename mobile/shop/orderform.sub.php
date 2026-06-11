@@ -1617,9 +1617,6 @@ function pay_approval()
         f.TaxFreeAmt.value = pf.comm_free_mny.value;
         <?php } ?>
 
-        if (! nicepay_create_signdata(f)) {
-            return false;
-        }
         <?php } ?>
 
         // 주문 정보 임시저장
@@ -1646,6 +1643,10 @@ function pay_approval()
         <?php } ?>
 
         <?php if ($default['de_pg_service'] == 'nicepay') { ?>
+        if (! nicepay_create_signdata(f)) {
+            return false;
+        }
+
         nicepayStart(f);
         return false;
         <?php } ?>

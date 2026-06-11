@@ -75,7 +75,8 @@ function nicepay_create_signdata(frm)
         url: g5_url+"/shop/nicepay/createsigndata.php",
         type: "POST",
         data: {
-            price : frm.good_mny.value
+            price : frm.good_mny.value,
+            moid : frm.Moid ? frm.Moid.value : ''
         },
         dataType: "json",
         async: false,
