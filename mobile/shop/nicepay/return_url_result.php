@@ -7,12 +7,35 @@ $authResultMsg = isset($_POST['AuthResultMsg']) ? clean_xss_tags($_POST['AuthRes
 $mid = isset($_POST['MID']) ? clean_xss_tags($_POST['MID']) : '';							// merchant id
 $moid = isset($_POST['Moid']) ? addslashes(clean_xss_tags(stripslashes($_POST['Moid']))) : '';							// order number
 
+$session_order_id = get_session('ss_order_id');
+$session_personalpay_id = get_session('ss_personalpay_id');
+
+if ($authResultCode !== '0000') {
+    $page_return_url = G5_SHOP_URL;
+
+    if ($moid && ($session_order_id == $moid || $session_personalpay_id == $moid)) {
+        $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$moid' and dt_pg = 'nicepay' ";
+        $row = sql_fetch($sql);
+
+        if (!empty($row)) {
+            $data = unserialize(base64_decode($row['dt_data']));
+
+            if(isset($data['pp_id']) && $data['pp_id']) {
+                $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.$data['pp_id'];
+            } else {
+                $page_return_url = G5_SHOP_URL.'/orderform.php';
+                if(isset($_SESSION['ss_direct']) && $_SESSION['ss_direct'])
+                    $page_return_url .= '?sw_direct=1';
+            }
+        }
+    }
+
+    alert('오류 : '.$authResultMsg.' 코드 : '.$authResultCode, $page_return_url);
+}
+
 if ($default['de_nicepay_mid'] != $mid) {
     alert("요청한 상점 mid와 설정된 mid가 틀리므로 결제를 진행할수 없습니다.", G5_SHOP_URL);
 }
-
-$session_order_id = get_session('ss_order_id');
-$session_personalpay_id = get_session('ss_personalpay_id');
 
 if (!$moid || ($session_order_id != $moid && $session_personalpay_id != $moid)) {
     alert("요청한 주문번호가 틀려서 결제를 진행할수 없습니다.", G5_SHOP_URL);

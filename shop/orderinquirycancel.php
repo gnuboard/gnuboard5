@@ -144,12 +144,12 @@ if($od['od_tno']) {
                 $res_cd = $result['ResultCode'];
 
                 // 실패했다면
-                if ($result['ResultCode'] !== '2001') {
+                if (! in_array($result['ResultCode'], array('2001', '2211'), true)) {
                     $res_msg = $result['ResultMsg'];
                 }
             }
 
-            if($res_cd != '2001') {
+            if(! in_array($res_cd, array('2001', '2211'), true)) {
                 alert($res_msg.' 코드 : '.$res_cd);
             }
             break;

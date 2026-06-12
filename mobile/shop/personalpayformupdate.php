@@ -256,6 +256,7 @@ if(!$result) {
             break;
     }
 
+    if(function_exists('add_order_post_log')) add_order_post_log($cancel_msg);
     die('개인결제 정보를 처리하는 중 오류가 발생했습니다. 결제 취소 여부를 관리자에게 문의해 주십시오.');
 }
 
@@ -307,6 +308,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 break;
         }
 
+        if(function_exists('add_order_post_log')) add_order_post_log($cancel_msg);
         die('주문 결제정보를 처리하는 중 오류가 발생했습니다. 결제 취소 여부를 관리자에게 문의해 주십시오.');
     }
 

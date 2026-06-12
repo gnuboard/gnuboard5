@@ -2,14 +2,94 @@
 include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
 
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+    alert('올바른 방법으로 이용해 주십시오.', G5_SHOP_URL);
+}
+
+if (function_exists('check_request_origin')) {
+    check_request_origin(G5_SHOP_URL);
+}
+
 /*
  *
  * 현금결제(실시간 은행계좌이체, 무통장입금)에 대한 현금결제 영수증 발행 요청한다.
  *
  */
 
-$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
-$tx    = isset($_REQUEST['tx']) ? clean_xss_tags($_REQUEST['tx'], 1, 1) : '';
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
+$tx    = isset($_POST['tx']) ? clean_xss_tags($_POST['tx'], 1, 1) : '';
+$reg_num = isset($_POST['id_info']) ? preg_replace('/[^0-9]/', '', $_POST['id_info']) : '';
+$useopt = isset($_POST['tr_code']) ? (int)$_POST['tr_code'] : 0;
+$buyeremail = isset($_POST['buyeremail']) ? clean_xss_tags($_POST['buyeremail'], 1, 1) : '';
+$buyertel = isset($_POST['buyertel']) ? clean_xss_tags($_POST['buyertel'], 1, 1) : '';
+
+if (!$od_id) {
+    alert('주문번호가 누락되었습니다.', G5_SHOP_URL);
+}
+
+if (!in_array($useopt, array(1, 2))) {
+    alert('현금영수증 발행용도가 올바르지 않습니다.');
+}
+
+if (($useopt == 1 && !in_array(strlen($reg_num), array(10, 11, 13))) || ($useopt == 2 && strlen($reg_num) != 10)) {
+    alert('현금영수증 발급번호를 정확히 입력해 주시기 바랍니다.');
+}
+
+if (!function_exists('nicepay_cancel_cash_receipt')) {
+    function nicepay_cancel_cash_receipt($tid, $order_id, $reason)
+    {
+        global $default;
+
+        if (!$tid || !$order_id) {
+            return array('resultCode' => '', 'resultMsg' => '취소 요청 정보가 올바르지 않습니다.');
+        }
+
+        $ediDate = date('c', G5_SERVER_TIME);
+        $merchantKey = $default['de_nicepay_key'];
+        $data = array(
+            'orderId' => $order_id,
+            'reason' => $reason,
+            'ediDate' => $ediDate,
+            'signData' => bin2hex(hash('sha256', $tid.$ediDate.$merchantKey, true)),
+            'returnCharSet' => 'utf-8'
+        );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.nicepay.co.kr/v1/receipt/'.rawurlencode($tid).'/cancel');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json;charset=utf-8',
+            'Authorization: Basic '.base64_encode($default['de_nicepay_mid'].':'.$merchantKey)
+        ));
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($response, true);
+
+        if (!is_array($result)) {
+            return array('resultCode' => '', 'resultMsg' => '나이스페이 현금영수증 취소 응답을 확인할 수 없습니다.');
+        }
+
+        if (isset($result['signature']) && $result['signature']) {
+            $response_tid = isset($result['tid']) ? $result['tid'] : '';
+            $response_order_id = isset($result['orderId']) ? $result['orderId'] : '';
+            $response_edi_date = isset($result['ediDate']) ? $result['ediDate'] : '';
+            $response_signature = bin2hex(hash('sha256', $response_tid.$response_order_id.$response_edi_date.$merchantKey, true));
+
+            if ($result['signature'] != $response_signature) {
+                $result['resultCode'] = '9998';
+                $result['resultMsg'] = '현금영수증 취소 응답 유효성 검증 실패';
+            }
+        }
+
+        return $result;
+    }
+}
 
 if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ");
@@ -53,9 +133,6 @@ if($tx == 'personalpay') {
     $amt_free = (int)$od['od_free_mny'];
 }
 
-
-$reg_num  = $id_info;
-$useopt   = $tr_code;
 $currency = 'WON';
 
 //step1. 요청을 위한 파라미터 설정
@@ -99,17 +176,32 @@ $response = nicepay_reqPost($data, "https://pg-api.nicepay.co.kr/webapi/cash_rec
 
 $result = json_decode($response, true);
 
+if (!is_array($result)) {
+    alert('현금영수증 발급 요청처리가 정상적으로 완료되지 않았습니다.\\n나이스페이 응답을 확인할 수 없습니다.');
+}
+
+$result_code = isset($result['ResultCode']) ? $result['ResultCode'] : '';
+$result_msg  = isset($result['ResultMsg']) ? $result['ResultMsg'] : '';
+$result_tid  = isset($result['TID']) ? $result['TID'] : '';
+$result_auth_code = isset($result['AuthCode']) ? $result['AuthCode'] : '';
+$result_auth_date = isset($result['AuthDate']) ? $result['AuthDate'] : '';
+
 // 성공이면
-if (isset($result['ResultCode']) && $result['ResultCode'] === '7001') {
+if ($result_code === '7001') {
+
+    if (!$result_tid || !$result_auth_code) {
+        alert('현금영수증 발급 응답 정보가 올바르지 않습니다.');
+    }
 
     // DB 반영
-    $cash_no = $result['AuthCode'];       // 현금영수증 승인번호
+    $cash_no = $result_auth_code;       // 현금영수증 승인번호
 
     $cash = array();
-    $cash['TID']       = $result['TID'];
+    $cash['TID']       = $result_tid;
     $cash['ApplNum']   = $cash_no;
-    $cash['AuthDate']  = $result['AuthDate'];
-    $cash_info = serialize($cash);
+    $cash['AuthDate']  = $result_auth_date;
+    $cash_info = sql_escape_string(serialize($cash));
+    $cash_no = sql_escape_string($cash_no);
 
     if($tx == 'personalpay') {
         $sql = " update {$g5['g5_shop_personalpay_table']}
@@ -127,12 +219,24 @@ if (isset($result['ResultCode']) && $result['ResultCode'] === '7001') {
 
     $sql_result = sql_query($sql, false);
 
+    if (!$sql_result) {
+        $cancel_result = nicepay_cancel_cash_receipt($result_tid, $moid, '쇼핑몰 DB 반영 실패');
+        $cancel_code = isset($cancel_result['resultCode']) ? $cancel_result['resultCode'] : '';
+        $cancel_msg = isset($cancel_result['resultMsg']) ? $cancel_result['resultMsg'] : '';
+
+        if ($cancel_code === '0000') {
+            alert_close('현금영수증은 나이스페이에 발급 요청되었으나 쇼핑몰 DB 반영에 실패하여 자동 취소를 요청했습니다.\\n관리자에게 문의해 주세요.\\n현금영수증 거래번호 : '.$result_tid);
+        }
+
+        alert_close('현금영수증은 나이스페이에 발급 요청되었으나 쇼핑몰 DB 반영에 실패했습니다.\\n자동 취소 요청도 정상적으로 완료되지 않았습니다.\\n관리자에게 문의해 주세요.\\n현금영수증 거래번호 : '.$result_tid.'\\n취소 응답 : '.$cancel_code.' '.$cancel_msg);
+    }
+
 } else {
     //2)API 요청 실패 화면처리
 
     $msg = '현금영수증 발급 요청처리가 정상적으로 완료되지 않았습니다.';
-    $msg .= '\\nTX Response_code = '.$result['ResultCode'];
-    $msg .= '\\nTX Response_msg = '.$result['ResultMsg'];
+    $msg .= '\\nTX Response_code = '.$result_code;
+    $msg .= '\\nTX Response_msg = '.$result_msg;
 
     alert($msg);
 }
@@ -144,7 +248,7 @@ include_once(G5_PATH.'/head.sub.php');
 <script>
 function showreceipt() // 현금 영수증 출력
 {
-    var showreceiptUrl = "https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&TID=<?php echo($result['TID']); ?>";
+    var showreceiptUrl = "https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&TID=" + <?php echo function_exists('get_js_safe_string') ? get_js_safe_string($result_tid) : '"'.str_replace('"', '\\"', $result_tid).'"'; ?>;
     window.open(showreceiptUrl,"showreceipt","width=430,height=700, scrollbars=no,resizable=no");
 }
 </script>
@@ -161,23 +265,23 @@ function showreceipt() // 현금 영수증 출력
         <tbody>
         <tr>
             <th scope="row">결과코드</th>
-            <td><?php echo $result['ResultCode']; ?></td>
+            <td><?php echo get_text($result_code); ?></td>
         </tr>
         <tr>
             <th scope="row">결과 메세지</th>
-            <td><?php echo $result['ResultMsg']; ?></td>
+            <td><?php echo get_text($result_msg); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 거래번호</th>
-            <td><?php echo $result['TID']; ?></td>
+            <td><?php echo get_text($result_tid); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 승인번호</th>
-            <td><?php echo $result['AuthCode']; ?></td>
+            <td><?php echo get_text($result_auth_code); ?></td>
         </tr>
         <tr>
             <th scope="row">승인시간</th>
-            <td><?php echo preg_replace("/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $result['AuthDate']); ?></td>
+            <td><?php echo get_text(preg_replace("/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $result_auth_date)); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 URL</th>

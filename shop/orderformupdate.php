@@ -672,7 +672,7 @@ $exists_order = sql_fetch($exists_sql);
 // 주문정보 입력 오류시 결제 취소
 if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
     if($tno) {
-        $cancel_msg = '주문정보 입력 오류 : '.$sql;
+        $cancel_msg = '주문정보 입력 오류';
         include G5_SHOP_PATH.'/cancel_pg.inc.php';
     }
 

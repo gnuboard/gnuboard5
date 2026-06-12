@@ -402,7 +402,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
 
                         if (isset($result['ResultCode'])) {
                             // 실패했다면
-                            if ($result['ResultCode'] !== '2001') {
+                            if (! in_array($result['ResultCode'], array('2001', '2211'), true)) {
                                 $pg_res_cd = $result['ResultCode'];
                                 $pg_res_msg = $result['ResultMsg'];
                             }
