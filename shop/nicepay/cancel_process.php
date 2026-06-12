@@ -51,7 +51,20 @@ try{
 	* <Cancel Request>
 	****************************************************************************************
 	*/
-	$cancelUrl = (isset($od['od_settle_case']) && $od['od_settle_case'] === '가상계좌')
+	$isNicepayVbankCancel = false;
+	if (isset($od['od_settle_case']) && $od['od_settle_case'] === '가상계좌') {
+		$isNicepayVbankCancel = true;
+	} else if (isset($od_settle_case) && $od_settle_case === '가상계좌') {
+		$isNicepayVbankCancel = true;
+	} else if (isset($pp_settle_case) && $pp_settle_case === '가상계좌') {
+		$isNicepayVbankCancel = true;
+	} else if (isset($nicepay_settle_case) && $nicepay_settle_case === '가상계좌') {
+		$isNicepayVbankCancel = true;
+	} else if (isset($pay_method) && $pay_method === 'VBANK') {
+		$isNicepayVbankCancel = true;
+	}
+
+	$cancelUrl = $isNicepayVbankCancel
 		? "https://webapi.nicepay.co.kr/webapi/cancel_process.jsp"
 		: "https://pg-api.nicepay.co.kr/webapi/cancel_process.jsp";
 	$response = nicepay_reqPost($data, $cancelUrl); //Cancel API call

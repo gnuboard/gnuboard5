@@ -166,6 +166,14 @@ if($authResultCode === "0000"){
         $responseSignData = bin2hex(hash('sha256', $tno . $mid . $response_amt . $merchantKey, true));
 
         if ($responseSignature != $responseSignData) {
+            if($amount > 0 && $tno) {
+                $od_id = $moid;
+                $cancel_msg = '승인 응답 유효성 검증 실패';
+                $cancelAmt = $amount;
+                $partialCancelCode = 0;
+                include G5_SHOP_PATH.'/nicepay/cancel_process.php';
+            }
+
             alert("승인 응답 유효성 검증이 틀려서 결제를 진행할수 없습니다.", G5_SHOP_URL);
         }
 

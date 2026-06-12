@@ -53,7 +53,7 @@ if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
 
         $result = false;
         $is_personalpay_order = (isset($row['pp_id']) && $row['pp_id']);
-        $receipt_time = preg_replace("/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $AuthDate);
+        $receipt_time = preg_replace("/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "20\\1-\\2-\\3 \\4:\\5:\\6", $AuthDate);
 
         if($is_personalpay_order) {
             if((int)$row['pp_price'] === $Amt) {
