@@ -51,7 +51,10 @@ try{
 	* <Cancel Request>
 	****************************************************************************************
 	*/
-	$response = nicepay_reqPost($data, "https://webapi.nicepay.co.kr/webapi/cancel_process.jsp"); //Cancel API call
+	$cancelUrl = (isset($od['od_settle_case']) && $od['od_settle_case'] === '가상계좌')
+		? "https://webapi.nicepay.co.kr/webapi/cancel_process.jsp"
+		: "https://pg-api.nicepay.co.kr/webapi/cancel_process.jsp";
+	$response = nicepay_reqPost($data, $cancelUrl); //Cancel API call
 
 	$result = json_decode($response, true);
 

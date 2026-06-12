@@ -78,10 +78,10 @@ var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key
 function form_check(f)
 {
     var max_mny = parseInt(<?php echo $od_misu; ?>);
-    var tax_mny = parseInt(f.mod_tax_mny.value.replace("/[^0-9]/g", ""));
+    var tax_mny = parseInt(f.mod_tax_mny.value.replace(/[^0-9]/g, ""), 10) || 0;
     var free_mny = 0;
-    if(typeof f.mod_free_mny.value != "undefined")
-        free_mny = parseInt(f.mod_free_mny.value.replace("/[^0-9]/g", ""));
+    if(typeof f.mod_free_mny != "undefined")
+        free_mny = parseInt(f.mod_free_mny.value.replace(/[^0-9]/g, ""), 10) || 0;
 
     if(!tax_mny && !free_mny) {
         alert("과세 취소금액 또는 비과세 취소금액을 입력해 주십시오.");

@@ -6,6 +6,8 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
+$mod_memo = isset($_POST['mod_memo']) ? trim(clean_xss_tags($_POST['mod_memo'], 1, 1)) : '';
 $tax_mny = isset($_POST['mod_tax_mny']) ? preg_replace('/[^0-9]/', '', $_POST['mod_tax_mny']) : 0;
 $free_mny = isset($_POST['mod_free_mny']) ? preg_replace('/[^0-9]/', '', $_POST['mod_free_mny']) : 0;
 
