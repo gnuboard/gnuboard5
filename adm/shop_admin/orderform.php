@@ -113,6 +113,111 @@ if ($od['od_pg'] === 'nicepay' && $od['od_settle_case'] === '가상계좌' && $o
     $print_od_deposit_name .= '_NICE';
 }
 
+if (!function_exists('shop_admin_get_nicepay_status')) {
+    function shop_admin_get_nicepay_status($tid, $default)
+    {
+        $result = array(
+            'data' => array(),
+            'error' => ''
+        );
+
+        if (!function_exists('curl_init')) {
+            $result['error'] = 'cURL 모듈이 설치되어 있지 않아 나이스페이 거래 상태를 조회할 수 없습니다.';
+            return $result;
+        }
+
+        $tid = preg_replace('/[^0-9a-zA-Z]/', '', (string) $tid);
+        if ($tid === '') {
+            $result['error'] = '거래 ID가 없어 나이스페이 거래 상태를 조회할 수 없습니다.';
+            return $result;
+        }
+
+        if (!empty($default['de_card_test'])) {
+            $mid = 'nicepay00m';
+            $merchantKey = 'EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg==';
+        } else {
+            $mid = 'SR'.$default['de_nicepay_mid'];
+            $merchantKey = $default['de_nicepay_key'];
+        }
+
+        if ($mid === 'SR' || $merchantKey === '') {
+            $result['error'] = '나이스페이 MID 또는 KEY가 설정되어 있지 않아 거래 상태를 조회할 수 없습니다.';
+            return $result;
+        }
+
+        $ediDate = preg_replace('/[^0-9]/', '', G5_TIME_YMDHIS);
+        $signData = bin2hex(hash('sha256', $tid.$mid.$ediDate.$merchantKey, true));
+        $postUrl = 'https://webapi.nicepay.co.kr/webapi/inquery/trans_status.jsp';
+        $data = array(
+            'TID' => $tid,
+            'MID' => $mid,
+            'EdiDate' => $ediDate,
+            'SignData' => $signData,
+            'CharSet' => 'utf-8',
+            'EdiType' => 'JSON'
+        );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $postUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 25);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_POST, true);
+        $response = curl_exec($ch);
+        $curl_error = curl_error($ch);
+        curl_close($ch);
+
+        if ($response === false || $response === '') {
+            $result['error'] = '나이스페이 거래 상태 조회 응답이 없습니다.'.($curl_error ? ' '.$curl_error : '');
+            return $result;
+        }
+
+        $responseData = json_decode($response, true);
+        if (!is_array($responseData)) {
+            $utf8_response = @iconv('EUC-KR', 'UTF-8//IGNORE', $response);
+            if ($utf8_response) {
+                $responseData = json_decode($utf8_response, true);
+            }
+        }
+
+        if (!is_array($responseData)) {
+            $result['error'] = '나이스페이 거래 상태 조회 응답을 해석할 수 없습니다.';
+            return $result;
+        }
+
+        $result['data'] = $responseData;
+        return $result;
+    }
+}
+
+if (!function_exists('shop_admin_format_nicepay_auth_date')) {
+    function shop_admin_format_nicepay_auth_date($auth_date)
+    {
+        $auth_date = preg_replace('/[^0-9]/', '', (string) $auth_date);
+
+        if (strlen($auth_date) === 12) {
+            return '20'.substr($auth_date, 0, 2).'-'.substr($auth_date, 2, 2).'-'.substr($auth_date, 4, 2).' '.substr($auth_date, 6, 2).':'.substr($auth_date, 8, 2).':'.substr($auth_date, 10, 2);
+        }
+
+        if (strlen($auth_date) === 14) {
+            return substr($auth_date, 0, 4).'-'.substr($auth_date, 4, 2).'-'.substr($auth_date, 6, 2).' '.substr($auth_date, 8, 2).':'.substr($auth_date, 10, 2).':'.substr($auth_date, 12, 2);
+        }
+
+        return $auth_date;
+    }
+}
+
+$nicepay_status_result = array();
+$nicepay_status_error = '';
+if ($od['od_pg'] === 'nicepay') {
+    $nicepay_status = shop_admin_get_nicepay_status($od['od_tno'], $default);
+    $nicepay_status_result = $nicepay_status['data'];
+    $nicepay_status_error = $nicepay_status['error'];
+}
+
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 ?>
@@ -310,6 +415,52 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     }   //end if
 }   //end if
 ?>
+
+<?php if ($od['od_pg'] === 'nicepay') { ?>
+<section id="anc_sodr_nicepay_status">
+    <h2 class="h2_frm">나이스페이 결제 조회</h2>
+    <?php if ($nicepay_status_error) { ?>
+    <div class="local_desc01 local_desc">
+        <p><?php echo get_text($nicepay_status_error); ?></p>
+    </div>
+    <?php } else {
+        $nicepay_status_map = array(
+            '0' => '승인 상태',
+            '1' => '취소 상태',
+            '9' => '승인 거래 없음'
+        );
+        $nicepay_status_code = isset($nicepay_status_result['Status']) ? (string) $nicepay_status_result['Status'] : '';
+        $nicepay_status_text = isset($nicepay_status_map[$nicepay_status_code]) ? $nicepay_status_map[$nicepay_status_code] : '';
+        $nicepay_auth_date = isset($nicepay_status_result['AuthDate']) ? shop_admin_format_nicepay_auth_date($nicepay_status_result['AuthDate']) : '';
+    ?>
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>나이스페이 결제 조회</caption>
+        <thead>
+        <tr>
+            <th scope="col">결과코드</th>
+            <th scope="col">결과 메시지</th>
+            <th scope="col">거래 ID</th>
+            <th scope="col">거래 상태</th>
+            <th scope="col">승인번호</th>
+            <th scope="col">승인일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><?php echo isset($nicepay_status_result['ResultCode']) ? get_text($nicepay_status_result['ResultCode']) : '-'; ?></td>
+            <td><?php echo isset($nicepay_status_result['ResultMsg']) ? get_text($nicepay_status_result['ResultMsg']) : '-'; ?></td>
+            <td><?php echo isset($nicepay_status_result['TID']) ? get_text($nicepay_status_result['TID']) : get_text($od['od_tno']); ?></td>
+            <td><?php echo $nicepay_status_code !== '' ? get_text($nicepay_status_code.($nicepay_status_text ? ' ('.$nicepay_status_text.')' : '')) : '-'; ?></td>
+            <td><?php echo isset($nicepay_status_result['AuthCode']) && $nicepay_status_result['AuthCode'] !== '' ? get_text($nicepay_status_result['AuthCode']) : '-'; ?></td>
+            <td><?php echo $nicepay_auth_date !== '' ? get_text($nicepay_auth_date) : '-'; ?></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+    <?php } ?>
+</section>
+<?php } ?>
 
 <section id="anc_sodr_pay">
     <h2 class="h2_frm">주문결제 내역</h2>
