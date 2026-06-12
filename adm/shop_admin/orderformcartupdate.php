@@ -6,6 +6,16 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
+$ct_status = isset($_POST['ct_status']) ? clean_xss_tags($_POST['ct_status'], 1, 1) : '';
+if ($ct_status === '' && isset($_POST['submit_ct_status'])) {
+    $ct_status = clean_xss_tags($_POST['submit_ct_status'], 1, 1);
+}
+$pg_cancel = isset($_POST['pg_cancel']) ? (int) $_POST['pg_cancel'] : 0;
+$nicepay_refund_acct_no = isset($_POST['RefundAcctNo']) ? preg_replace('/[^0-9]/', '', $_POST['RefundAcctNo']) : '';
+$nicepay_refund_bank_cd = isset($_POST['RefundBankCd']) ? preg_replace('/[^0-9]/', '', $_POST['RefundBankCd']) : '';
+$nicepay_refund_acct_nm = isset($_POST['RefundAcctNm']) ? trim(clean_xss_tags($_POST['RefundAcctNm'], 1, 1)) : '';
+
 $ct_chk_count = isset($_POST['ct_chk']) ? count($_POST['ct_chk']) : 0;
 if(!$ct_chk_count)
     alert('처리할 자료를 하나 이상 선택해 주십시오.');
@@ -13,7 +23,7 @@ if(!$ct_chk_count)
 $status_normal = array('주문','입금','준비','배송','완료');
 $status_cancel = array('취소','반품','품절');
 
-if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'], $status_cancel)) {
+if (in_array($ct_status, $status_normal) || in_array($ct_status, $status_cancel)) {
     ; // 통과
 } else {
     alert('변경할 상태가 올바르지 않습니다.');
@@ -141,6 +151,38 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+if ($pg_cancel === 1 && in_array($ct_status, $status_cancel)) {
+    $nicepay_refund_order = sql_fetch(" select od_id, od_pg, od_settle_case, od_status, od_receipt_price from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
+
+    if (isset($nicepay_refund_order['od_id']) && $nicepay_refund_order['od_pg'] === 'nicepay' && $nicepay_refund_order['od_settle_case'] === '가상계좌' && is_cancel_shop_pg_order($nicepay_refund_order)) {
+        $nicepay_refund_required = ((int) $nicepay_refund_order['od_receipt_price'] > 0);
+        $nicepay_refund_inputted = ($nicepay_refund_acct_no !== '' || $nicepay_refund_bank_cd !== '' || $nicepay_refund_acct_nm !== '');
+
+        if (!$nicepay_refund_required && !$nicepay_refund_inputted) {
+            $nicepay_refund_acct_no = '';
+            $nicepay_refund_bank_cd = '';
+            $nicepay_refund_acct_nm = '';
+        } else {
+            if ($nicepay_refund_acct_no === '' || strlen($nicepay_refund_acct_no) > 16) {
+                alert('나이스페이 가상계좌 취소를 위해 환불계좌번호를 숫자 16자리 이하로 입력해 주십시오.');
+            }
+
+            if (!preg_match('/^[0-9]{3}$/', $nicepay_refund_bank_cd)) {
+                alert('나이스페이 가상계좌 취소를 위해 환불계좌코드를 숫자 3자리로 입력해 주십시오.');
+            }
+
+            if ($nicepay_refund_acct_nm === '') {
+                alert('나이스페이 가상계좌 취소를 위해 환불계좌주명을 입력해 주십시오.');
+            }
+
+            $nicepay_refund_acct_nm_euckr = function_exists('iconv') ? @iconv('UTF-8', 'EUC-KR//IGNORE', $nicepay_refund_acct_nm) : $nicepay_refund_acct_nm;
+            if (strlen($nicepay_refund_acct_nm_euckr) > 10) {
+                alert('나이스페이 환불계좌주명은 10 byte 이하로 입력해 주십시오.');
             }
         }
     }
@@ -299,7 +341,7 @@ if(is_array($arr_it_id) && !empty($arr_it_id)) {
 
 // 장바구니 상품 모두 취소일 경우 주문상태 변경
 $cancel_change = false;
-if (in_array($_POST['ct_status'], $status_cancel)) {
+if (in_array($ct_status, $status_cancel)) {
     $sql = " select count(*) as od_count1,
                     SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', 1, 0)) as od_count2
                 from {$g5['g5_shop_cart_table']}
@@ -474,7 +516,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
         }
 
         // 관리자 주문취소 로그
-        $mod_history .= G5_TIME_YMDHIS.' '.$member['mb_id'].' 주문'.$_POST['ct_status'].' 처리'.$pg_cancel_log."\n";
+        $mod_history .= G5_TIME_YMDHIS.' '.$member['mb_id'].' 주문'.$ct_status.' 처리'.$pg_cancel_log."\n";
     }
 }
 
@@ -502,8 +544,8 @@ if ($mod_history) { // 주문변경 히스토리 기록
 if($cancel_change) {
     $sql .= " , od_status = '취소' "; // 주문상품 모두 취소, 반품, 품절이면 주문 취소
 } else {
-    if (isset($_POST['ct_status']) && in_array($_POST['ct_status'], $status_normal)) { // 정상인 주문상태만 기록
-        $sql .= " , od_status = '{$_POST['ct_status']}' ";
+    if ($ct_status && in_array($ct_status, $status_normal)) { // 정상인 주문상태만 기록
+        $sql .= " , od_status = '$ct_status' ";
     }
 }
 

@@ -220,6 +220,13 @@ if ($od['od_pg'] === 'nicepay') {
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
+
+$is_nicepay_vbank_pg_cancel = ($od['od_pg'] === 'nicepay' && $od['od_settle_case'] === '가상계좌' && is_cancel_shop_pg_order($od));
+if ($is_nicepay_vbank_pg_cancel) {
+    add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal.css">', 11);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-default-theme.css">', 12);
+    add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
+}
 ?>
 
 <section id="anc_sodr_list">
@@ -249,6 +256,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page;?>">
     <input type="hidden" name="pg_cancel" value="0">
+    <input type="hidden" name="submit_ct_status" value="">
+    <?php if ($is_nicepay_vbank_pg_cancel) { ?>
+    <input type="hidden" name="RefundAcctNo" value="">
+    <input type="hidden" name="RefundBankCd" value="">
+    <input type="hidden" name="RefundAcctNm" value="">
+    <input type="hidden" name="nicepay_vbank_refund_confirmed" value="0">
+    <?php } ?>
 
     <div class="tbl_head01 tbl_wrap">
         <table>
@@ -1195,7 +1209,157 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </form>
 </section>
 
+<?php if ($is_nicepay_vbank_pg_cancel) {
+    $nicepay_refund_bank_codes = array(
+        '은행/기관' => array(
+            '001' => '한국은행',
+            '002' => '산업은행',
+            '003' => '기업은행',
+            '004' => '국민은행',
+            '005' => '외환은행',
+            '007' => '수협은행',
+            '008' => '수출입은행',
+            '011' => 'NH농협은행',
+            '012' => '농협중앙회(지역농축협)',
+            '020' => '우리은행',
+            '023' => 'SC제일은행',
+            '026' => '서울은행',
+            '027' => '한국씨티은행',
+            '030' => '수협중앙회',
+            '031' => 'iM뱅크(대구)',
+            '032' => '부산은행',
+            '034' => '광주은행',
+            '035' => '제주은행',
+            '037' => '전북은행',
+            '039' => '경남은행',
+            '045' => '새마을금고',
+            '048' => '신협',
+            '050' => '저축은행',
+            '051' => '기타 외국계은행',
+            '052' => '모건스탠리은행',
+            '054' => 'HSBC은행',
+            '055' => '도이치은행',
+            '056' => '알비에스피엘씨은행',
+            '057' => '제이피모간체이스은행',
+            '058' => '미즈호은행',
+            '059' => '엠유에프지은행',
+            '060' => 'BOA은행',
+            '061' => '비엔피파리바은행',
+            '062' => '중국공상은행',
+            '063' => '중국은행',
+            '064' => '산림조합중앙회',
+            '065' => '대화은행',
+            '071' => '우체국',
+            '076' => '신용보증기금',
+            '077' => '기술보증기금',
+            '081' => '하나은행',
+            '088' => '신한은행',
+            '089' => '케이뱅크',
+            '090' => '카카오뱅크',
+            '092' => '토스뱅크',
+            '093' => '한국주택금융공사',
+            '094' => '서울보증보험',
+            '095' => '경찰청',
+            '099' => '금융결제원'
+        ),
+        '증권사' => array(
+            '209' => '유안타증권',
+            '218' => 'KB증권',
+            '238' => '미래에셋증권',
+            '240' => '삼성증권',
+            '243' => '한국투자증권',
+            '247' => 'NH투자증권',
+            '261' => '교보증권',
+            '262' => 'iM증권',
+            '263' => '현대차증권',
+            '264' => '키움증권',
+            '265' => 'LS증권',
+            '266' => '에스케이증권',
+            '267' => '대신증권',
+            '269' => '한화투자증권',
+            '270' => '하나증권',
+            '271' => '토스증권',
+            '278' => '신한투자증권',
+            '279' => 'DB증권',
+            '280' => '유진투자증권',
+            '287' => '메리츠증권',
+            '288' => '카카오페이증권',
+            '289' => '엔에이치투자증권',
+            '290' => '부국증권',
+            '291' => '신영증권',
+            '292' => '케이프투자증권'
+        )
+    );
+?>
+<div class="remodal" data-remodal-id="nicepay-vbank-refund" data-remodal-options="hashTracking:false, closeOnOutsideClick:false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h3>나이스페이 가상계좌 환불 정보</h3>
+    <p>입금 후 환불 건은 환불계좌 정보를 입력해야 합니다. 입금 전 발급취소 건은 비워두고 진행할 수 있습니다.</p>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>나이스페이 가상계좌 환불 정보 입력</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="nicepay_refund_acct_no">환불계좌번호</label></th>
+            <td><input type="text" id="nicepay_refund_acct_no" class="frm_input" size="22" maxlength="16" inputmode="numeric" autocomplete="off"> 숫자만 입력</td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="nicepay_refund_bank_cd">환불은행</label></th>
+            <td>
+                <select id="nicepay_refund_bank_cd" class="frm_input">
+                    <option value="">은행을 선택해 주세요</option>
+                    <?php foreach ($nicepay_refund_bank_codes as $bank_group => $bank_codes) { ?>
+                    <optgroup label="<?php echo $bank_group; ?>">
+                        <?php foreach ($bank_codes as $bank_code => $bank_name) { ?>
+                        <option value="<?php echo $bank_code; ?>"><?php echo $bank_name; ?> (<?php echo $bank_code; ?>)</option>
+                        <?php } ?>
+                    </optgroup>
+                    <?php } ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="nicepay_refund_acct_nm">환불계좌주명</label></th>
+            <td><input type="text" id="nicepay_refund_acct_nm" class="frm_input" size="18" maxlength="10" autocomplete="off"> 10 byte 이하</td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+    <br>
+    <button type="button" class="remodal-cancel" data-remodal-action="cancel">취소</button>
+    <button type="button" class="remodal-confirm" id="nicepay_vbank_refund_submit">확인</button>
+</div>
+<?php } ?>
+
 <script>
+<?php if ($is_nicepay_vbank_pg_cancel) { ?>
+var nicepayVbankCancel = true;
+var nicepayVbankRefundRequired = <?php echo ((int) $od['od_receipt_price'] > 0) ? 'true' : 'false'; ?>;
+<?php } else { ?>
+var nicepayVbankCancel = false;
+var nicepayVbankRefundRequired = false;
+<?php } ?>
+
+function nicepay_submit_orderform(f)
+{
+    var status = document.pressed || (f.submit_ct_status ? f.submit_ct_status.value : "");
+    var statusInput = f.querySelector("input[type=hidden][name=ct_status]");
+
+    if (!statusInput) {
+        statusInput = document.createElement("input");
+        statusInput.type = "hidden";
+        statusInput.name = "ct_status";
+        f.appendChild(statusInput);
+    }
+
+    statusInput.value = status;
+    f.submit();
+}
+
 $(function() {
     // 전체 옵션선택
     $("#sit_select_all").click(function() {
@@ -1231,12 +1395,70 @@ $(function() {
         window.open(href, "partcancelwin", "left=100, top=100, width=600, height=350, scrollbars=yes");
         return false;
     });
+
+    $("#nicepay_refund_acct_no").on("input", function() {
+        this.value = this.value.replace(/[^0-9]/g, "");
+    });
+
+    $("#nicepay_vbank_refund_submit").on("click", function() {
+        var f = document.frmorderform;
+        var acctNo = $.trim($("#nicepay_refund_acct_no").val()).replace(/[^0-9]/g, "");
+        var bankCd = $.trim($("#nicepay_refund_bank_cd").val()).replace(/[^0-9]/g, "");
+        var acctNm = $.trim($("#nicepay_refund_acct_nm").val());
+        var hasRefundInfo = (acctNo !== "" || bankCd !== "" || acctNm !== "");
+
+        if (!nicepayVbankRefundRequired && !hasRefundInfo) {
+            f.RefundAcctNo.value = "";
+            f.RefundBankCd.value = "";
+            f.RefundAcctNm.value = "";
+            f.nicepay_vbank_refund_confirmed.value = 1;
+
+            if (form_submit(f)) {
+                nicepay_submit_orderform(f);
+            }
+
+            return false;
+        }
+
+        if (acctNo === "" || acctNo.length > 16) {
+            alert("환불계좌번호를 숫자 16자리 이하로 입력해 주십시오.");
+            $("#nicepay_refund_acct_no").focus();
+            return false;
+        }
+
+        if (!/^[0-9]{3}$/.test(bankCd)) {
+            alert("환불은행을 선택해 주십시오.");
+            $("#nicepay_refund_bank_cd").focus();
+            return false;
+        }
+
+        if (acctNm === "") {
+            alert("환불계좌주명을 입력해 주십시오.");
+            $("#nicepay_refund_acct_nm").focus();
+            return false;
+        }
+
+        f.RefundAcctNo.value = acctNo;
+        f.RefundBankCd.value = bankCd;
+        f.RefundAcctNm.value = acctNm;
+        f.nicepay_vbank_refund_confirmed.value = 1;
+
+        if (form_submit(f)) {
+            nicepay_submit_orderform(f);
+        }
+
+        return false;
+    });
 });
 
 function form_submit(f)
 {
     var check = false;
-    var status = document.pressed;
+    var status = document.pressed || (f.submit_ct_status ? f.submit_ct_status.value : "");
+
+    if (f.submit_ct_status) {
+        f.submit_ct_status.value = status;
+    }
 
     for (i=0; i<f.chk_cnt.value; i++) {
         if (document.getElementById('ct_chk_'+i).checked == true)
@@ -1268,9 +1490,16 @@ function form_submit(f)
         }).length;
 
         if(chked_cnt > 0 && remain_active_cnt == 0) {
-            if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
+            if(nicepayVbankCancel && f.nicepay_vbank_refund_confirmed.value == "1") {
                 f.pg_cancel.value = 1;
                 msg = cancel_pg+" 결제 취소와 함께 ";
+            } else if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
+                f.pg_cancel.value = 1;
+                msg = cancel_pg+" 결제 취소와 함께 ";
+                if (nicepayVbankCancel && f.nicepay_vbank_refund_confirmed.value != "1") {
+                    $('[data-remodal-id=nicepay-vbank-refund]').remodal().open();
+                    return false;
+                }
             } else {
                 f.pg_cancel.value = 0;
                 msg = "";
@@ -1282,6 +1511,9 @@ function form_submit(f)
     if (confirm(msg+"\'" + status + "\' 상태를 선택하셨습니다.\n\n선택하신대로 처리하시겠습니까?")) {
         return true;
     } else {
+        if (nicepayVbankCancel && f.nicepay_vbank_refund_confirmed) {
+            f.nicepay_vbank_refund_confirmed.value = 0;
+        }
         return false;
     }
 }

@@ -13,6 +13,9 @@ $moid = isset($od_id) ? $od_id : get_session('ss_order_id');
 $cancelMsg = $cancel_msg;
 $tid = $tno;
 $partialCancelCode = isset($partialCancelCode) ? (int) $partialCancelCode : 0;
+$refundAcctNo = isset($nicepay_refund_acct_no) ? preg_replace('/[^0-9]/', '', $nicepay_refund_acct_no) : '';
+$refundBankCd = isset($nicepay_refund_bank_cd) ? preg_replace('/[^0-9]/', '', $nicepay_refund_bank_cd) : '';
+$refundAcctNm = isset($nicepay_refund_acct_nm) ? trim($nicepay_refund_acct_nm) : '';
 
 /*
 ****************************************************************************************
@@ -33,15 +36,22 @@ try{
 		'PartialCancelCode' => $partialCancelCode,
 		'EdiDate' => $ediDate,
 		'SignData' => $signData,
-		'CharSet' => 'utf-8'
+		'CharSet' => 'utf-8',
+		'EdiType' => 'JSON'
 	);
+
+	if ($refundAcctNo !== '' || $refundBankCd !== '' || $refundAcctNm !== '') {
+		$data['RefundAcctNo'] = $refundAcctNo;
+		$data['RefundBankCd'] = $refundBankCd;
+		$data['RefundAcctNm'] = function_exists('iconv') ? iconv("UTF-8", "EUC-KR//IGNORE", $refundAcctNm) : $refundAcctNm;
+	}
 
 	/*
 	****************************************************************************************
 	* <Cancel Request>
 	****************************************************************************************
 	*/
-	$response = nicepay_reqPost($data, "https://pg-api.nicepay.co.kr/webapi/cancel_process.jsp"); //Cancel API call
+	$response = nicepay_reqPost($data, "https://webapi.nicepay.co.kr/webapi/cancel_process.jsp"); //Cancel API call
 
 	$result = json_decode($response, true);
 

@@ -208,7 +208,7 @@ function is_cancel_shop_pg_order($od){
         $is_od_pg_cancel = true;
     }
 
-    if ($od['od_pg'] === 'nicepay' && (in_array($od['od_settle_case'], array('계좌이체', '휴대폰')) || ($od['od_settle_case'] === '가상계좌' && $od['od_status'] === '주문'))) {
+    if ($od['od_pg'] === 'nicepay' && in_array($od['od_settle_case'], array('계좌이체', '휴대폰', '가상계좌'))) {
         $is_od_pg_cancel = true;
     }
 
