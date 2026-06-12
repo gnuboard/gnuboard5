@@ -29,6 +29,7 @@ $od_misu = abs($od['od_misu']);
 ?>
 
 <form name="forderpartcancel" method="post" action="./orderpartcancelupdate.php" onsubmit="return form_check(this);">
+<input type="hidden" name="token" value="<?php echo get_admin_token(); ?>">
 <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
 
 <div class="new_win">
