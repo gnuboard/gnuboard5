@@ -124,10 +124,10 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                     }
 
                     $good_mny = $P_AMT;
-                    $pp_name = clean_xss_tags($data['pp_name']);
-                    $pp_email = clean_xss_tags($data['pp_email']);
-                    $pp_hp = clean_xss_tags($data['pp_hp']);
-                    $pp_settle_case = clean_xss_tags($data['pp_settle_case']);
+                    $pp_name = addslashes(clean_xss_tags($data['pp_name']));
+                    $pp_email = addslashes(clean_xss_tags($data['pp_email']));
+                    $pp_hp = addslashes(clean_xss_tags($data['pp_hp']));
+                    $pp_settle_case = addslashes(clean_xss_tags($data['pp_settle_case']));
 
                     set_session('P_TID', $P_TID);
                     set_session('P_AMT', $P_AMT);

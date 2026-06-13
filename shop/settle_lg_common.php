@@ -1,6 +1,7 @@
 <?php
 include_once('./_common.php');
 
+
 /*
  * [상점 결제결과처리(DB) 페이지]
  *

@@ -11,6 +11,11 @@ if($tx == 'personalpay') {
     if (!$od)
         die('<p id="scash_empty">개인결제 내역이 존재하지 않습니다.</p>');
 
+    // IDOR 방지: 본인 개인결제거나 정당한 세션 uid 보유 시에만 허용
+    if (function_exists('is_shop_order_owner') && !is_shop_order_owner($od, 'personalpay')) {
+        alert('해당 개인결제 정보에 접근 권한이 없습니다.', G5_SHOP_URL);
+    }
+
     $od_tno      = $od['pp_tno'];
     $goods_name  = $od['pp_name'].'님 개인결제';
     $settle_case = $od['pp_settle_case'];
@@ -20,6 +25,11 @@ if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if (!$od)
         die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
+
+    // IDOR 방지: 본인 주문이거나 정당한 세션 uid 보유 시에만 허용
+    if (function_exists('is_shop_order_owner') && !is_shop_order_owner($od, 'order')) {
+        alert('해당 주문 정보에 접근 권한이 없습니다.', G5_SHOP_URL);
+    }
 
     $od_tno      = $od['od_tno'];
     $goods       = get_goods($od['od_id']);

@@ -28,6 +28,9 @@ if (!$sst) {
     $sst = "gm_datetime";
     $sod = "desc";
 }
+$allowed_sst = array('gm_datetime', 'b.mb_id', 'b.mb_name', 'b.mb_nick', 'b.mb_today_login', 'a.gm_datetime');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'gm_datetime';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt

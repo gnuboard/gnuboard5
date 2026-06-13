@@ -8,7 +8,7 @@ if( isset($_GET['ini_noti']) && !isset($_GET['uid']) ){
 }
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
-$token = md5(uniqid(rand(), true));
+$token = get_random_token_string(16);
 set_session("ss_token", $token);
 
 if (!$is_member) {
@@ -23,7 +23,8 @@ if($is_member && !$is_admin)
     $sql .= " and mb_id = '{$member['mb_id']}' ";
 $od = sql_fetch($sql);
 
-if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
+$uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']) : md5($od['od_id'].$od['od_time'].$od['od_ip']);
+if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && $uid != get_session('ss_orderview_uid'))) {
     alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
 }
 
@@ -334,6 +335,8 @@ if($od['od_pg'] == 'lg') {
                                 $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
 
                                 $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else if($od['od_pg'] == 'toss') {
+	                            $hp_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/phone?transactionId='.$od['od_tno'].'&ref=PX\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'inicis') {
                                 $hp_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'nicepay') {
@@ -355,6 +358,8 @@ if($od['od_pg'] == 'lg') {
                                 $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
 
                                 $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else if($od['od_pg'] == 'toss') {
+	                            $card_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/redirection?transactionId='.$od['od_tno'].'&ref=PX\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'inicis') {
                                 $card_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$od['od_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                             } else if($od['od_pg'] == 'nicepay') {
@@ -406,13 +411,13 @@ if($od['od_pg'] == 'lg') {
                 // 현금영수증 발급을 사용하는 경우에만
                 if ((function_exists('shop_is_taxsave') && shop_is_taxsave($od)) || (function_exists('is_order_cashreceipt') && is_order_cashreceipt($od))) {
                     // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                    if ($misu_price == 0 && is_order_cashreceipt($od)) {
+                    if ($misu_price == 0) {
                 ?>
                 <tr>
                     <th scope="row">현금영수증</th>
                     <td>
                     <?php
-                    if ($od['od_cash'])
+                    if ($od['od_cash'] && is_order_cashreceipt($od))
                     {
                         if($od['od_pg'] == 'lg') {
                             require_once G5_SHOP_PATH.'/settle_lg.inc.php';
@@ -429,6 +434,8 @@ if($od['od_pg'] == 'lg') {
                                     break;
                             }
                             $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else if($od['od_pg'] == 'toss') {
+                            $cash_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/mids/si_'.$config['cf_lg_mid'].'/orders/'.$od['od_id'].'/cash-receipt?ref=dashboard\',\'receipt\',\'width=430,height=700\');';
                         } else if($od['od_pg'] == 'inicis') {
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
@@ -701,7 +708,7 @@ if($od['od_pg'] == 'lg') {
     ?>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
     <div class="tbl_frm01 tbl_wrap">
-        <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+        <form method="post" action="https://testadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti.jsp" target="_blank">
         <table>
         <caption>모의입금처리</caption>
         <colgroup>
@@ -719,7 +726,7 @@ if($od['od_pg'] == 'lg') {
         </tr>
         <tr>
             <th scope="col"><label for="req_name">입금자명</label></th>
-            <td><input type="text" name="req_name" value="<?php echo $od['od_deposit_name']; ?>"></td>
+            <td><input type="text" name="req_name" value="<?php echo get_text($od['od_deposit_name']); ?>"></td>
         </tr>
         <tr>
             <th scope="col"><label for="noti_url">입금통보 URL</label></th>

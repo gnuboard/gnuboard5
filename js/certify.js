@@ -64,6 +64,19 @@ function certify_win_open(type, url, event) {
             var AUTH_POP = window.open(url,'auth_popup', winopts + position);
         }
     }
+    else if(type == 'kcp_v2-hp')
+    {
+        var width  = 410;
+        var height = 500;
+
+        var leftpos = screen.width  / 2 - ( width  / 2 );
+        var toppos  = screen.height / 2 - ( height / 2 );
+
+        var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
+        var position = ",left=" + leftpos + ", top="    + toppos;
+        var AUTH_POP = window.open(url, 'auth_popup', winopts + position);
+        if (AUTH_POP) AUTH_POP.focus();
+    }
     else if(type == 'lg-hp')
     {
 

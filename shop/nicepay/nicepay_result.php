@@ -16,7 +16,7 @@ $txTid = isset($_POST['TxTid']) ? clean_xss_tags($_POST['TxTid']) : '';						// 
 $authToken = isset($_POST['AuthToken']) ? clean_xss_tags($_POST['AuthToken']) : '';				// authentication TOKEN
 $payMethod = isset($_POST['PayMethod']) ? clean_xss_tags($_POST['PayMethod']) : '';				// payment method
 $mid = isset($_POST['MID']) ? clean_xss_tags($_POST['MID']) : '';							// merchant id
-$moid = isset($_POST['Moid']) ? clean_xss_tags($_POST['Moid']) : '';							// order number
+$moid = isset($_POST['Moid']) ? addslashes(clean_xss_tags(stripslashes($_POST['Moid']))) : '';							// order number
 $amt = isset($_POST['Amt']) ? (int) preg_replace('/[^0-9]/', '', $_POST['Amt']) : 0;							// Amount of payment
 $reqReserved = isset($_POST['ReqReserved']) ? clean_xss_tags($_POST['ReqReserved']) : '';			// mall custom field 
 $netCancelURL = isset($_POST['NetCancelURL']) ? clean_xss_tags($_POST['NetCancelURL']) : '';			// netCancelURL
@@ -137,7 +137,7 @@ if($authResultCode === "0000"){
             $bank_name = $bankname = nicepay_res('VbankBankName', $respArr);
             $account = nicepay_res('VbankNum', $respArr);
             $va_date   = nicepay_res('VbankExpDate', $respArr).' '.nicepay_res('VbankExpTime', $respArr); // 가상계좌 입금마감시간
-            $app_no    = nicepay_res('VbankNum', $respArr);
+            $od_app_no = $app_no = nicepay_res('VbankNum', $respArr); // 입금통보 매칭을 위해 가상계좌번호를 보관
             if ($default['de_escrow_use'] == 1)
                 $escw_yn         = 'Y';
 

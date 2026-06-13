@@ -54,7 +54,8 @@ if(is_file($skin_file)) {
     $category_option = '';
     if(trim($qaconfig['qa_category'])) {
         $category = explode('|', $qaconfig['qa_category']);
-        for($i=0; $i<count($category); $i++) {
+        $category_cnt = count($category);
+        for($i=0; $i<$category_cnt; $i++) {
             $category_option .= option_selected($category[$i], $write['qa_category']);
         }
     } else {

@@ -17,7 +17,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     @include_once(get_social_skin_path().'/social_register.skin.php');
     ?>
     <section id="fregister_term">
-        <h2>회원가입약관</h2>
+        <h2>(필수) 회원가입약관</h2>
         <textarea readonly><?php echo get_text($config['cf_stipulation']) ?></textarea>
         <fieldset class="fregister_agree">
             <input type="checkbox" name="agree" value="1" id="agree11" class="selec_chk">
@@ -25,8 +25,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </fieldset>
     </section>
 
-    <section id="fregister_private">
-        <h2>개인정보 수집 및 이용</h2>
+    <section id="fregister_private" class="fregister_terms">
+        <h2>(필수) 개인정보 수집 및 이용</h2>
         <div>
             <table>
                 <caption>개인정보 수집 및 이용</caption>

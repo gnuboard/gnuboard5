@@ -62,8 +62,11 @@ if ($w == '') {
     $sound_only = '<strong class="sound_only">필수</strong>';
 
     $mb['mb_mailling'] = 1;
+    $mb['mb_sms'] = 1;
     $mb['mb_open'] = 1;
     $mb['mb_level'] = $config['cf_register_level'];
+    $mb['mb_marketing_agree'] = 0;
+    $mb['mb_thirdparty_agree'] = 0;
     $html_title = '추가';
 } elseif ($w == 'u') {
     $mb = get_member($mb_id);
@@ -158,6 +161,14 @@ $mb_sms_no          = !$mb['mb_sms']        ? 'checked="checked"' : '';
 // 정보 공개
 $mb_open_yes        =  $mb['mb_open']       ? 'checked="checked"' : '';
 $mb_open_no         = !$mb['mb_open']       ? 'checked="checked"' : '';
+
+// 마케팅 목적의 개인정보 수집 및 이용
+$mb_marketing_agree_yes     =  $mb['mb_marketing_agree'] ? 'checked="checked"' : '';
+$mb_marketing_agree_no      = !$mb['mb_marketing_agree'] ? 'checked="checked"' : '';
+
+// 개인정보 제3자 제공 동의
+$mb_thirdparty_agree_yes    =  $mb['mb_thirdparty_agree'] ? 'checked="checked"' : '';
+$mb_thirdparty_agree_no     = !$mb['mb_thirdparty_agree'] ? 'checked="checked"' : '';
 
 if (isset($mb['mb_certify'])) {
     // 날짜시간형이라면 drop 시킴
@@ -284,7 +295,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <th scope="row"><label for="mb_level">회원 권한</label></th>
                     <td><?php echo get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level']) ?></td>
                     <th scope="row">포인트</th>
-                    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $mb['mb_id'] ?>" target="_blank"><?php echo number_format($mb['mb_point']) ?></a> 점</td>
+                    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $mb['mb_id'] ?>" target="_blank"><?php echo number_format(isset($mb['mb_point']) ? $mb['mb_point'] : 0) ?></a> 점</td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
@@ -347,7 +358,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php echo help('이미지 크기는 <strong>넓이 ' . $config['cf_member_icon_width'] . '픽셀 높이 ' . $config['cf_member_icon_height'] . '픽셀</strong>로 해주세요.') ?>
                         <input type="file" name="mb_icon" id="mb_icon">
                         <?php
-                        $mb_dir = substr($mb['mb_id'], 0, 2);
+                        $mb_dir = substr(isset($mb['mb_id']) ? $mb['mb_id'] : '', 0, 2);
                         $icon_file = G5_DATA_PATH . '/member/' . $mb_dir . '/' . get_mb_icon_name($mb['mb_id']) . '.gif';
                         if (file_exists($icon_file)) {
                             $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file);
@@ -364,7 +375,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php echo help('이미지 크기는 <strong>넓이 ' . $config['cf_member_img_width'] . '픽셀 높이 ' . $config['cf_member_img_height'] . '픽셀</strong>로 해주세요.') ?>
                         <input type="file" name="mb_img" id="mb_img">
                         <?php
-                        $mb_dir = substr($mb['mb_id'], 0, 2);
+                        $mb_dir = substr(isset($mb['mb_id']) ? $mb['mb_id'] : '', 0, 2);
                         $icon_file = G5_DATA_PATH . '/member_image/' . $mb_dir . '/' . get_mb_icon_name($mb['mb_id']) . '.gif';
                         if (file_exists($icon_file)) {
                             echo get_member_profile_img($mb['mb_id']);
@@ -374,21 +385,64 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">메일 수신</th>
+                    <th scope="row">광고성 이메일 수신</th>
                     <td>
                         <input type="radio" name="mb_mailling" value="1" id="mb_mailling_yes" <?php echo $mb_mailling_yes; ?>>
                         <label for="mb_mailling_yes">예</label>
                         <input type="radio" name="mb_mailling" value="0" id="mb_mailling_no" <?php echo $mb_mailling_no; ?>>
                         <label for="mb_mailling_no">아니오</label>
+                        
+                        <?php if($w == "u" && $mb['mb_mailling_date'] != "0000-00-00 00:00:00"){
+                                echo $mb['mb_mailling'] == 1 ? "<br>(동의 일자: ".$mb['mb_mailling_date'].")" : '';
+                        } ?>
                     </td>
-                    <th scope="row"><label for="mb_sms_yes">SMS 수신</label></th>
+                    <th scope="row"><label for="mb_sms_yes">광고성 SMS/카카오톡 수신</label></th>
                     <td>
                         <input type="radio" name="mb_sms" value="1" id="mb_sms_yes" <?php echo $mb_sms_yes; ?>>
                         <label for="mb_sms_yes">예</label>
                         <input type="radio" name="mb_sms" value="0" id="mb_sms_no" <?php echo $mb_sms_no; ?>>
                         <label for="mb_sms_no">아니오</label>
+                        <?php if($w == "u" && $mb['mb_sms_date'] != "0000-00-00 00:00:00"){
+                                echo $mb['mb_sms'] == 1 ? "<br>(동의 일자: ".$mb['mb_sms_date'].")" : '';
+                        } ?>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">마케팅 목적의<br>개인정보 수집 및 이용</th>
+                    <td>
+                        <input type="radio" name="mb_marketing_agree" value="1" id="mb_marketing_agree_yes" <?php echo $mb_marketing_agree_yes; ?>>
+                        <label for="mb_marketing_agree_yes">예</label>
+                        <input type="radio" name="mb_marketing_agree" value="0" id="mb_marketing_agree_no" <?php echo $mb_marketing_agree_no; ?>>
+                        <label for="mb_marketing_agree_no">아니오</label>
+                        
+                        <?php if($w == "u" && $mb['mb_marketing_date'] != "0000-00-00 00:00:00"){
+                                echo $mb['mb_marketing_agree'] == 1 ? "<br>(동의 일자: ".$mb['mb_marketing_date'].")" : '';
+                        } ?>
+                    </td>
+                    <th scope="row"><label for="mb_sms_yes">개인정보 제3자 제공</label></th>
+                    <td>
+                        <input type="radio" name="mb_thirdparty_agree" value="1" id="mb_thirdparty_agree_yes" <?php echo $mb_thirdparty_agree_yes; ?>>
+                        <label for="mb_thirdparty_agree_yes">예</label>
+                        <input type="radio" name="mb_thirdparty_agree" value="0" id="mb_thirdparty_agree_no" <?php echo $mb_thirdparty_agree_no; ?>>
+                        <label for="mb_thirdparty_agree_no">아니오</label>
+                        
+                        <?php if($w == "u" && $mb['mb_thirdparty_date'] != "0000-00-00 00:00:00"){
+                                echo $mb['mb_thirdparty_agree'] == 1 ? "<br>(동의 일자: ".$mb['mb_thirdparty_date'].")" : '';
+                        } ?>
+                    </td>
+                </tr>
+                <?php if($w == "u"){?>
+                    <tr>
+                    <th scope="row">약관동의 변경내역</th>
+                    <td colspan="3">
+                        <section id="sodr_request_log_wrap" class="ad_agree_log">
+                            <div>
+                                <?php echo conv_content($mb['mb_agree_log'], 0); ?>
+                            </div>
+                        </section>
+                    </td>
+                </tr>
+                <?php } ?>
                 <tr>
                     <th scope="row">정보 공개</th>
                     <td colspan="3">
@@ -396,6 +450,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <label for="mb_open_yes">예</label>
                         <input type="radio" name="mb_open" value="0" id="mb_open_no" <?php echo $mb_open_no; ?>>
                         <label for="mb_open_no">아니오</label>
+                        <?php if($w == "u" && $mb['mb_open_date'] != "0000-00-00 00:00:00"){
+                                echo $mb['mb_open'] == 1 ? "<br>(동의 일자: ".$mb['mb_open_date'].")" : '';
+                        } ?>
                     </td>
                 </tr>
                 <tr>
@@ -522,7 +579,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                                     <span class="provider_name"><?php echo $provider_name;   //서비스이름 ?> ( <?php echo $account['displayname']; ?> )</span>
                                                     <span class="account_hidden" style="display:none"><?php echo $account['mb_id']; ?></span>
                                                 </div>
-                                                <div class="btn_info"><a href="<?php echo G5_SOCIAL_LOGIN_URL . '/unlink.php?mp_no=' . $account['mp_no'] ?>" class="social_unlink" data-provider="<?php echo $account['mp_no']; ?>">연동해제</a> <span class="sound_only"><?php echo substr($account['mp_register_day'], 2, 14); ?></span></div>
+                                                <div class="btn_info"><a href="<?php echo G5_SOCIAL_LOGIN_URL . '/unlink.php?mp_no=' . $account['mp_no'] ?>" class="social_unlink" data-provider="<?php echo $account['mp_no']; ?>">연동해제</a> <span class="sound_only"><?php echo substr(isset($account['mp_register_day']) ? $account['mp_register_day'] : '', 2, 14); ?></span></div>
                                             </div>
                                         <?php } //end foreach ?>
                                     </li>

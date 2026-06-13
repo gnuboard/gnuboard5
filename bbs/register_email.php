@@ -5,7 +5,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 $g5['title'] = '메일인증 메일주소 변경';
 include_once('./_head.php');
 
-$mb_id = isset($_GET['mb_id']) ? substr(clean_xss_tags($_GET['mb_id']), 0, 20) : '';
+$mb_id = isset($_GET['mb_id']) ? substr(addslashes(clean_xss_tags(stripslashes($_GET['mb_id']), 1, 1)), 0, 20) : '';
 $sql = " select mb_email, mb_datetime, mb_ip, mb_email_certify, mb_id from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $mb = sql_fetch($sql);
 
@@ -18,9 +18,9 @@ if (substr($mb['mb_email_certify'],0,1)!=0) {
 }
 
 $ckey = isset($_GET['ckey']) ? trim($_GET['ckey']) : '';
-$key  = md5($mb['mb_ip'].$mb['mb_datetime']);
+$key  = get_email_cert_key($mb_id, $mb['mb_datetime']);
 
-if(!$ckey || $ckey != $key)
+if(!$ckey || $ckey !== $key)
     alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 ?>
 
@@ -28,6 +28,7 @@ if(!$ckey || $ckey != $key)
 
 <form method="post" name="fregister_email" action="<?php echo G5_HTTPS_BBS_URL.'/register_email_update.php'; ?>" onsubmit="return fregister_email_submit(this);">
 <input type="hidden" name="mb_id" value="<?php echo $mb_id; ?>">
+<input type="hidden" name="ckey" value="<?php echo $key; ?>">
 
 <div class="tbl_frm01 tbl_frm rg_em">
     <table>

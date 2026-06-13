@@ -60,7 +60,7 @@ class LMS {
 		$this->Result	= array();	// 발송결과값이 배열로 들어간다.
 	}
 
-	function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
+	function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount=0) {
         global $config;
 
 		// 문자 타입별 Port 설정.

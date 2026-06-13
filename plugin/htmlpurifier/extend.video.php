@@ -21,7 +21,7 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		 */
 		public function preFilter($html, $config, $context)
 		{
-			if (strstr($html, '<iframe')) {
+			if (strstr((string)$html, '<iframe')) {
 				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.youtube\.com\/embed\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
 				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/player\.vimeo.com\/video\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
                 $html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.facebook.com\/plugins\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
@@ -95,7 +95,10 @@ if( !class_exists('HTMLPurifierContinueParamFilter') ){
             }
             
             if ($query) {
-                if (isset($query_params['continue'])) {
+                
+                parse_str($query, $query_params);
+                
+                if (isset($query_params['continue']) || isset($query_params['pcurl'])) {
                     return false;
                 }
             }

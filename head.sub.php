@@ -28,7 +28,7 @@ $g5['lo_location'] = addslashes($g5['title']);
 if (!$g5['lo_location'])
     $g5['lo_location'] = addslashes(clean_xss_tags($_SERVER['REQUEST_URI']));
 $g5['lo_url'] = addslashes(clean_xss_tags($_SERVER['REQUEST_URI']));
-if (strstr($g5['lo_url'], '/'.G5_ADMIN_DIR.'/') || $is_admin == 'super') $g5['lo_url'] = '';
+if (strpos($g5['lo_url'], '/'.G5_ADMIN_DIR.'/') !== false || $is_admin == 'super') $g5['lo_url'] = '';
 
 /*
 // 만료된 페이지로 사용하시는 경우

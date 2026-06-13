@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
+check_admin_token();
+
 $tax_mny = isset($_POST['mod_tax_mny']) ? preg_replace('/[^0-9]/', '', $_POST['mod_tax_mny']) : 0;
 $free_mny = isset($_POST['mod_free_mny']) ? preg_replace('/[^0-9]/', '', $_POST['mod_free_mny']) : 0;
 

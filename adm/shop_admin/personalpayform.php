@@ -210,6 +210,8 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
                                 break;
                         }
                         $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$pp['pp_id'].'\',\''.$pp['pp_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                    } else if($pp['pp_pg'] == 'toss') {
+                        $cash_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/mids/si_'.$config['cf_lg_mid'].'/orders/'.$pp['pp_id'].'/cash-receipt?ref=dashboard\',\'receipt\',\'width=430,height=700\');';
                     } else if($pp['pp_pg'] == 'inicis') {
                         $cash = unserialize($pp['pp_cash_info']);
                         $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';

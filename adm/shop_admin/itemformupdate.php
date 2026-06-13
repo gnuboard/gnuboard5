@@ -235,6 +235,14 @@ sql_query(" delete from {$g5['g5_shop_event_item_table']} where it_id = '$it_id'
 // 선택옵션
 sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '$it_id' "); // 기존선택옵션삭제
 
+// 금지할 패턴 목록
+$forbidden_patterns = array(
+    '/<\s*script/i',      // <script>
+    '/<\s*iframe/i',      // <iframe>
+    '/on\w+\s*=/i',       // onclick=, onerror= 등 이벤트 핸들러
+    '/javascript:/i'      // javascript: 프로토콜
+);
+
 $option_count = (isset($_POST['opt_id']) && is_array($_POST['opt_id'])) ? count($_POST['opt_id']) : array();
 $it_option_subject = '';
 $it_supply_subject = '';
@@ -243,8 +251,18 @@ if($option_count) {
     // 옵션명
     $opt1_cnt = $opt2_cnt = $opt3_cnt = 0;
     for($i=0; $i<$option_count; $i++) {
-        $post_opt_id = isset($_POST['opt_id'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['opt_id'][$i])) : '';
-
+        $post_opt_id = isset($_POST['opt_id'][$i]) ? $_POST['opt_id'][$i] : '';
+        
+        foreach ($forbidden_patterns as $pattern) {
+            if (preg_match($pattern, $post_opt_id)) {
+                $post_opt_id = '';
+                $_POST['opt_id'][$i] = '';
+                continue 2;
+            }
+        }
+        
+        $post_opt_id = preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($post_opt_id));
+            
         $opt_val = explode(chr(30), $post_opt_id);
         if(isset($opt_val[0]) && $opt_val[0])
             $opt1_cnt++;
@@ -271,8 +289,18 @@ if($supply_count) {
     // 추가옵션명
     $arr_spl = array();
     for($i=0; $i<$supply_count; $i++) {
-        $post_spl_id = isset($_POST['spl_id'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['spl_id'][$i])) : '';
-
+        $post_spl_id = isset($_POST['spl_id'][$i]) ? $_POST['spl_id'][$i] : '';
+        
+        foreach ($forbidden_patterns as $pattern) {
+            if (preg_match($pattern, $post_spl_id)) {
+                $post_spl_id = '';
+                $_POST['spl_id'][$i] = '';
+                continue 2;
+            }
+        }
+        
+        $post_spl_id = preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($post_spl_id));
+        
         $spl_val = explode(chr(30), $post_spl_id);
         if(!in_array($spl_val[0], $arr_spl))
             $arr_spl[] = $spl_val[0];
@@ -336,6 +364,32 @@ $it_explan = isset($_POST['it_explan']) ? $_POST['it_explan'] : '';
 
 if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
+
+// 스킨 경로 검증
+$it_skin = isset($_POST['it_skin']) ? strip_tags(clean_xss_attributes($_POST['it_skin'])) : '';
+$it_mobile_skin = isset($_POST['it_mobile_skin']) ? strip_tags(clean_xss_attributes($_POST['it_mobile_skin'])) : '';
+
+$check_files = array();
+if( !empty($it_skin) )          $check_files[] = $it_skin;
+if( !empty($it_mobile_skin) )   $check_files[] = $it_mobile_skin;
+
+foreach( $check_files as $file ){
+    if( empty($file) ) continue;
+
+    if( preg_match('#\.+(\/|\\\)#', $file) ){
+        alert('스킨파일명에 포함될수 없는 문자가 들어있습니다.');
+    }
+
+    if( ! is_include_path_check($file, 1) ){
+        alert('오류 : 데이터폴더가 포함된 path 또는 잘못된 path 를 포함할수 없습니다.');
+    }
+
+    $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $file) ) {
+        alert('스킨 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
+    }
+}
 
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
@@ -459,7 +513,7 @@ else if ($w == "d")
                     and b.ca_mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if (!$row['it_id'])
-            alert("\'{$member['mb_id']}\' 님께서 삭제 할 권한이 없는 상품입니다.");
+            alert("'{$member['mb_id']}' 님께서 삭제 할 권한이 없는 상품입니다.");
     }
 
     itemdelete($it_id);

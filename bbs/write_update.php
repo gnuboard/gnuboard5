@@ -241,12 +241,13 @@ if ($w == '' || $w == 'r') {
     } else {
         $mb_id = '';
         // 비회원의 경우 이름이 누락되는 경우가 있음
-        $wr_name = clean_xss_tags(trim($_POST['wr_name']));
+        $wr_name = addslashes(clean_xss_tags(stripslashes(trim($_POST['wr_name']))));
+        $wr_name = preg_replace("#[\\\]+$#", "", $wr_name);
         if (!$wr_name)
             alert('이름은 필히 입력하셔야 합니다.');
         $wr_password = get_encrypt_string($wr_password);
         $wr_email = get_email_address(trim($_POST['wr_email']));
-        $wr_homepage = clean_xss_tags($wr_homepage);
+        $wr_homepage = addslashes(clean_xss_tags(stripslashes($wr_homepage)));
     }
 
     if ($w == 'r') {
@@ -386,16 +387,17 @@ if ($w == '' || $w == 'r') {
             $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
         } else {
             $mb_id = $wr['mb_id'];
-            if(isset($_POST['wr_name']) && $_POST['wr_name'])
-                $wr_name = clean_xss_tags(trim($_POST['wr_name']));
-            else
+            if(isset($_POST['wr_name']) && $_POST['wr_name']) {
+                $wr_name = addslashes(clean_xss_tags(stripslashes(trim($_POST['wr_name']))));
+                $wr_name = preg_replace("#[\\\]+$#", "", $wr_name);
+            } else
                 $wr_name = addslashes(clean_xss_tags($wr['wr_name']));
             if(isset($_POST['wr_email']) && $_POST['wr_email'])
                 $wr_email = get_email_address(trim($_POST['wr_email']));
             else
                 $wr_email = addslashes($wr['wr_email']);
             if(isset($_POST['wr_homepage']) && $_POST['wr_homepage'])
-                $wr_homepage = addslashes(clean_xss_tags($_POST['wr_homepage']));
+                $wr_homepage = addslashes(clean_xss_tags(stripslashes($_POST['wr_homepage'])));
             else
                 $wr_homepage = addslashes(clean_xss_tags($wr['wr_homepage']));
         }
@@ -403,7 +405,8 @@ if ($w == '' || $w == 'r') {
         $mb_id = "";
         // 비회원의 경우 이름이 누락되는 경우가 있음
         if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
-        $wr_name = clean_xss_tags(trim($_POST['wr_name']));
+        $wr_name = addslashes(clean_xss_tags(stripslashes(trim($_POST['wr_name']))));
+        $wr_name = preg_replace("#[\\\]+$#", "", $wr_name);
         $wr_email = get_email_address(trim($_POST['wr_email']));
     }
 
@@ -464,7 +467,8 @@ if ($w == '' || $w == 'r') {
         }
     } else {
         $bo_notice = '';
-        for ($i=0; $i<count($notice_array); $i++)
+        $notice_array_cnt = count($notice_array);
+        for ($i=0; $i<$notice_array_cnt; $i++)
             if ((int)$wr_id != (int)$notice_array[$i])
                 $bo_notice .= $notice_array[$i] . ',';
         $bo_notice = trim($bo_notice);
@@ -525,7 +529,13 @@ $file_upload_msg = '';
 $upload = array();
 
 if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
-    for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
+
+    if (function_exists('g5_check_data_htaccess')) {
+        g5_check_data_htaccess();
+    }
+
+    $bf_file_cnt = count($_FILES['bf_file']['name']);
+    for ($i=0; $i<$bf_file_cnt; $i++) {
         $upload[$i]['file']     = '';
         $upload[$i]['source']   = '';
         $upload[$i]['filesize'] = 0;
@@ -563,11 +573,11 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
         // 서버에 설정된 값보다 큰파일을 업로드 한다면
         if ($filename) {
             if ($_FILES['bf_file']['error'][$i] == 1) {
-                $file_upload_msg .= '\"'.$filename.'\" 파일의 용량이 서버에 설정('.$upload_max_filesize.')된 값보다 크므로 업로드 할 수 없습니다.\\n';
+                $file_upload_msg .= '"'.$filename.'" 파일의 용량이 서버에 설정('.$upload_max_filesize.')된 값보다 크므로 업로드 할 수 없습니다.\\n';
                 continue;
             }
             else if ($_FILES['bf_file']['error'][$i] != 0) {
-                $file_upload_msg .= '\"'.$filename.'\" 파일이 정상적으로 업로드 되지 않았습니다.\\n';
+                $file_upload_msg .= '"'.$filename.'" 파일이 정상적으로 업로드 되지 않았습니다.\\n';
                 continue;
             }
         }
@@ -575,7 +585,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
         if (is_uploaded_file($tmp_file)) {
             // 관리자가 아니면서 설정한 업로드 사이즈보다 크다면 건너뜀
             if (!$is_admin && $filesize > $board['bo_upload_size']) {
-                $file_upload_msg .= '\"'.$filename.'\" 파일의 용량('.number_format($filesize).' 바이트)이 게시판에 설정('.number_format($board['bo_upload_size']).' 바이트)된 값보다 크므로 업로드 하지 않습니다.\\n';
+                $file_upload_msg .= '"'.$filename.'" 파일의 용량('.number_format($filesize).' 바이트)이 게시판에 설정('.number_format($board['bo_upload_size']).' 바이트)된 값보다 크므로 업로드 하지 않습니다.\\n';
                 continue;
             }
 
@@ -617,7 +627,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             $upload[$i]['filesize'] = $filesize;
 
             // 아래의 문자열이 들어간 파일은 -x 를 붙여서 웹경로를 알더라도 실행을 하지 못하도록 함
-            $filename = preg_replace("/\.(php|pht|phtm|htm|cgi|pl|exe|jsp|asp|inc|phar)/i", "$0-x", $filename);
+            $filename = preg_replace("/\.(php|pht|phtm|htm|shtml|shtm|cgi|pl|exe|jsp|asp|inc|phar|svg|svgz)/i", "$0-x", $filename);
 
             shuffle($chars_array);
             $shuffle = implode('', $chars_array);
@@ -643,7 +653,8 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 }   // end if
 
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
-for ($i=0; $i<count($upload); $i++)
+$upload_cnt = count($upload);
+for ($i=0; $i<$upload_cnt; $i++)
 {
     $upload[$i]['source'] = sql_real_escape_string($upload[$i]['source']);
     $bf_content[$i] = isset($bf_content[$i]) ? sql_real_escape_string($bf_content[$i]) : '';
@@ -752,9 +763,9 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $wr_subject = get_text(stripslashes($wr_subject));
 
     $tmp_html = 0;
-    if (strstr($html, 'html1'))
+    if (strpos($html, 'html1') !== false)
         $tmp_html = 1;
-    else if (strstr($html, 'html2'))
+    else if (strpos($html, 'html2') !== false)
         $tmp_html = 2;
 
     $wr_content = conv_content(conv_unescape_nl(stripslashes($wr_content)), $tmp_html);
@@ -799,7 +810,8 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $unique_email = array_unique($array_email);
     $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
 
-    for ($i=0; $i<count($unique_email); $i++) {
+    $unique_email_cnt = count($unique_email);
+    for ($i=0; $i<$unique_email_cnt; $i++) {
         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
     }
 }

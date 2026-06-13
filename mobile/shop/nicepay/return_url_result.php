@@ -5,7 +5,7 @@ include_once(G5_MSHOP_PATH.'/settle_nicepay.inc.php');
 $authResultCode = isset($_POST['AuthResultCode']) ? clean_xss_tags($_POST['AuthResultCode']) : '';		// authentication result code 0000:success
 $authResultMsg = isset($_POST['AuthResultMsg']) ? clean_xss_tags($_POST['AuthResultMsg']) : '';		// authentication result message
 $mid = isset($_POST['MID']) ? clean_xss_tags($_POST['MID']) : '';							// merchant id
-$moid = isset($_POST['Moid']) ? clean_xss_tags($_POST['Moid']) : '';							// order number
+$moid = isset($_POST['Moid']) ? addslashes(clean_xss_tags(stripslashes($_POST['Moid']))) : '';							// order number
 
 $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$moid' ";
 $row = sql_fetch($sql);

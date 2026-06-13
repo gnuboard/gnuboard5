@@ -18,13 +18,23 @@ if(!$cp['cz_id'])
 if(!($cp['cz_start'] <= G5_TIME_YMD && $cp['cz_end'] >= G5_TIME_YMD))
     die(json_encode(array('error' => '다운로드할 수 없는 쿠폰입니다.')));
 
-// 발급여부
-if(is_coupon_downloaded($member['mb_id'], $cp['cz_id']))
+// 동시 요청으로 인한 쿠폰 중복 발급 방지
+$lock_key = 'g5_coupon_dl_'.$cz_id.'_'.addslashes($member['mb_id']);
+$lock_row = sql_fetch(" select get_lock('$lock_key', 5) as lk ");
+if(empty($lock_row['lk']))
+    die(json_encode(array('error' => '잠시 후 다시 시도해 주십시오.')));
+
+// 발급여부 (락 획득 후 재확인)
+if(is_coupon_downloaded($member['mb_id'], $cp['cz_id'])) {
+    sql_query(" do release_lock('$lock_key') ");
     die(json_encode(array('error' => '이미 다운로드하신 쿠폰입니다.')));
+}
 
 // 포인트 쿠폰은 회원포인트 체크
-if($cp['cz_type'] && ($member['mb_point'] - $cp['cz_point']) < 0)
+if($cp['cz_type'] && ($member['mb_point'] - $cp['cz_point']) < 0) {
+    sql_query(" do release_lock('$lock_key') ");
     die(json_encode(array('error' => '보유하신 포인트가 부족하여 쿠폰을 다운로드할 수 없습니다.')));
+}
 
 // 쿠폰발급
 $j = 0;
@@ -37,8 +47,10 @@ do {
     if(!$row3['cnt'])
         break;
     else {
-        if($j > 20)
+        if($j > 20) {
+            sql_query(" do release_lock('$lock_key') ");
             die(json_encode(array('error' => 'Coupon ID Error')));
+        }
     }
     $j++;
 } while(1);
@@ -64,5 +76,7 @@ if($result && $cp['cz_type'])
 
 // 다운로드 증가
 sql_query(" update {$g5['g5_shop_coupon_zone_table']} set cz_download = cz_download + 1 where cz_id = '$cz_id' ");
+
+sql_query(" do release_lock('$lock_key') ");
 
 die(json_encode(array('error' => '')));

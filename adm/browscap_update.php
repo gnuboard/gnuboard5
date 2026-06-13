@@ -17,7 +17,7 @@ if ($is_admin != 'super') {
 
 require_once G5_PLUGIN_PATH . '/browscap/Browscap.php';
 
-$browscap = new phpbrowscap\Browscap(G5_DATA_PATH . '/cache');
+$browscap = new Browscap(G5_DATA_PATH . '/cache');
 $browscap->updateMethod = 'cURL';
 $browscap->cacheFilename = 'browscap_cache.php';
 $browscap->updateCache();

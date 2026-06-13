@@ -13,14 +13,14 @@ if (!$member['mb_open'] && $is_admin != 'super' && $member['mb_id'] != $mb_id) {
 }
 
 $content = "";
-$me_recv_mb_id   = isset($_REQUEST['me_recv_mb_id']) ? clean_xss_tags($_REQUEST['me_recv_mb_id'], 1, 1) : '';
-$me_id           = isset($_REQUEST['me_id']) ? clean_xss_tags($_REQUEST['me_id'], 1, 1) : '';
+$me_recv_mb_id   = isset($_REQUEST['me_recv_mb_id']) ? addslashes(clean_xss_tags(stripslashes($_REQUEST['me_recv_mb_id']), 1, 1)) : '';
+$me_id           = isset($_REQUEST['me_id']) ? addslashes(clean_xss_tags(stripslashes($_REQUEST['me_id']), 1, 1)) : '';
 
 // 탈퇴한 회원에게 쪽지 보낼 수 없음
 if ($me_recv_mb_id)
 {
     $mb = get_member($me_recv_mb_id);
-    if (!$mb['mb_id'])
+    if (!(isset($mb['mb_id']) && $mb['mb_id']))
         alert_close('회원정보가 존재하지 않습니다.\\n\\n탈퇴하였을 수 있습니다.');
 
     if (!$mb['mb_open'] && $is_admin != 'super')

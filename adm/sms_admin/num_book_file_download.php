@@ -46,7 +46,7 @@ for($i=1; $res=sql_fetch_array($qry); $i++)
 
     if ($no_hp && $res['bk_hp'] != '' && !$hp) continue;
 
-    $rows[] = array($res['bk_name'], ' '.$hp);
+    $rows[] = array(function_exists('csv_safe_cell') ? csv_safe_cell($res['bk_name']) : $res['bk_name'], ' '.$hp);
 }
 
 $data = array_merge(array($headers), $rows);

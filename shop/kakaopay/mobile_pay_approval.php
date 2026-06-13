@@ -138,10 +138,10 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
         }
 
         $good_mny = $PAY['P_AMT'];
-        $pp_name = clean_xss_tags($data['pp_name']);
-        $pp_email = clean_xss_tags($data['pp_email']);
-        $pp_hp = clean_xss_tags($data['pp_hp']);
-        $pp_settle_case = clean_xss_tags($data['pp_settle_case']);
+        $pp_name = addslashes(clean_xss_tags($data['pp_name']));
+        $pp_email = addslashes(clean_xss_tags($data['pp_email']));
+        $pp_hp = addslashes(clean_xss_tags($data['pp_hp']));
+        $pp_settle_case = addslashes(clean_xss_tags($data['pp_settle_case']));
 
         $_POST['P_HASH'] = $hash;
         $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];

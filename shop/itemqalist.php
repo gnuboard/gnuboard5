@@ -41,6 +41,9 @@ if (!$sst) {
     $sst  = "a.iq_id";
     $sod = "desc";
 }
+// 정렬 컬럼/방향 화이트리스트
+$sst = in_array($sst, array('a.iq_id', 'a.iq_datetime', 'a.it_id', 'b.it_name'), true) ? $sst : 'a.iq_id';
+$sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : 'desc';
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt

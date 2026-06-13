@@ -13,6 +13,17 @@ cheditor5.*/
 log/
 g5_tree/
 .vscode/
+.claude/
+.cursor/
+.windsurf/
+.idea/
+.playwright-mcp
+.mcp.json
+.agents
+.DS_Store
+*.swp
+*.swo
+CLAUDE.local.md
 naver*.html
 initests01/
 SIRsoft000/

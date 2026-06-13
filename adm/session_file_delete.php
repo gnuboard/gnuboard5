@@ -31,7 +31,7 @@ include_once("./admin.head.php");
     echo $list_tag_st;
     while($file=readdir($dir)) {
 
-        if (!strstr($file,'sess_')) continue;
+        if (strpos($file,'sess_') === false) continue;
         if (strpos($file,'sess_')!=0) continue;
 
         $session_file = G5_DATA_PATH.'/session/'.$file;

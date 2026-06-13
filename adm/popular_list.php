@@ -6,6 +6,8 @@ auth_check_menu($auth, $sub_menu, 'r');
 
 // 체크된 자료 삭제
 if (isset($_POST['chk']) && is_array($_POST['chk'])) {
+    check_admin_token();
+
     for ($i = 0; $i < count($_POST['chk']); $i++) {
         $pp_id = (int) $_POST['chk'][$i];
 
@@ -36,6 +38,9 @@ if (!$sst) {
     $sst  = "pp_id";
     $sod = "desc";
 }
+$allowed_sst = array('pp_id', 'pp_word', 'pp_date', 'pp_ip');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'pp_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt

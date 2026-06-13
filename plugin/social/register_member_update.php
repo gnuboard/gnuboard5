@@ -30,7 +30,7 @@ $mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '
 $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';
 $mb_nick        = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
 $mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
-$mb_name        = isset($_POST['mb_name']) ? clean_xss_tags(trim(strip_tags($_POST['mb_name']))) : '';
+$mb_name        = isset($_POST['mb_name']) ? addslashes(clean_xss_tags(trim(strip_tags(stripslashes($_POST['mb_name']))))) : '';
 $mb_hp          = isset($_POST['mb_hp']) ? trim($_POST['mb_hp']) : '';
 $mb_email       = get_email_address($mb_email);
 
@@ -54,7 +54,7 @@ if( ! $mb_nick || ! $mb_name ){
 
 if( ! isset($mb_password) || ! $mb_password ){
 
-    $mb_password = md5(pack('V*', rand(), rand(), rand(), rand()));
+    $mb_password = get_random_token_string(16);
 
 }
 
@@ -97,6 +97,44 @@ if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_u
 $mb_mailling = (isset($_POST['mb_mailling']) && $_POST['mb_mailling']) ? 1 : 0;
 //회원 정보 공개
 $mb_open = (isset($_POST['mb_open']) && $_POST['mb_open']) ? 1 : 0;
+//회원 SMS 동의
+$mb_sms = isset($_POST['mb_sms']) ? trim($_POST['mb_sms']) : "0";
+//마케팅 목적의 개인정보 수집 및 이용 동의
+$mb_marketing_agree = isset($_POST['mb_marketing_agree']) ? trim($_POST['mb_marketing_agree']) : "0";
+//개인정보 제3자 제공 동의
+$mb_thirdparty_agree = isset($_POST['mb_thirdparty_agree']) ? trim($_POST['mb_thirdparty_agree']) : "0";
+
+$agree_items = array();
+$sql_agree = "";
+// 마케팅 목적의 개인정보 수집 및 이용
+if ($mb_marketing_agree == 1) {
+    $sql_agree .=  " , mb_marketing_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "마케팅 목적의 개인정보 수집 및 이용(동의)";
+}
+
+// 광고성 이메일 수신
+if ($mb_mailling == 1) {
+    $sql_agree .=  " , mb_mailling_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "광고성 이메일 수신(동의)";
+}
+
+// 광고성 SMS/카카오톡 수신
+if ($mb_sms == 1) {
+    $sql_agree .=  " , mb_sms_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "광고성 SMS/카카오톡 수신(동의)";
+}
+
+// 개인정보 제3자 제공
+if ($mb_thirdparty_agree == 1) {
+    $sql_agree .=  " , mb_thirdparty_date = '".G5_TIME_YMDHIS."' ";
+    $agree_items[] = "개인정보 제3자 제공(동의)";
+}
+
+// 동의 로그 추가
+if (!empty($agree_items)) {
+    $agree_log = "[".G5_TIME_YMDHIS.", ". $provider_name ." 회원가입] " . implode(' | ', $agree_items) . "\n";
+    $sql_agree .= " , mb_agree_log = CONCAT('{$agree_log}', IFNULL(mb_agree_log, ''))";
+}
 
 //===============================================================
 //  본인확인
@@ -164,9 +202,12 @@ $sql = " insert into {$g5['member_table']}
                 mb_level = '{$config['cf_register_level']}',
                 mb_login_ip = '{$_SERVER['REMOTE_ADDR']}',
                 mb_mailling = '{$mb_mailling}',
-                mb_sms = '0',
+                mb_sms = '{$mb_sms}',
                 mb_open = '{$mb_open}',
-                mb_open_date = '".G5_TIME_YMD."'
+                mb_open_date = '".G5_TIME_YMD."',
+                mb_marketing_agree = '{$mb_marketing_agree}',
+                mb_thirdparty_agree = '{$mb_thirdparty_agree}'
+                {$sql_agree}
                 {$sql_certify} ";
 $result = sql_query($sql, false);
 
@@ -231,8 +272,8 @@ if($result) {
     } else {    // 메일인증을 사용한다면
         $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-        $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용 (CSPRNG 사용)
+        $mb_md5 = get_random_token_string(16);
 
         sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
 

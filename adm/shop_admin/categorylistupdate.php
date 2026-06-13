@@ -19,7 +19,7 @@ for ($i=0; $i<$post_ca_id_count; $i++)
         $sql = " select mb_id from {$g5['member_table']} where mb_id = '".sql_real_escape_string($str_ca_mb_id)."' ";
         $row = sql_fetch($sql);
         if (!$row['mb_id'])
-            alert("\'{$str_ca_mb_id}\' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?$qstr");
+            alert("'{$str_ca_mb_id}' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?$qstr");
     }
     
     $check_files =  array();
@@ -51,7 +51,7 @@ for ($i=0; $i<$post_ca_id_count; $i++)
             alert('스킨파일명에 포함될수 없는 문자가 들어있습니다.');
         }
 
-        if( ! is_include_path_check($file) ){
+        if( ! is_include_path_check($file, 1) ){
             alert('오류 : 데이터폴더가 포함된 path 또는 잘못된 path 를 포함할수 없습니다.');
         }
 

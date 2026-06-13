@@ -42,7 +42,7 @@ function print_menu2($key, $no = '')
             continue;
         }
 
-        if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0], $auth) || !strstr($auth[$menu[$key][$i][0]], 'r'))) {
+        if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0], $auth) || strpos($auth[$menu[$key][$i][0]], 'r') === false)) {
             continue;
         }
 
