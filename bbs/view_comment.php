@@ -7,7 +7,7 @@ if ($is_guest && $board['bo_comment_level'] < 2) {
     $captcha_html = captcha_html('_comment');
 }
 
-$c_id = isset($_GET['c_id']) ? clean_xss_tags($_GET['c_id'], 1, 1) : '';
+$c_id = isset($_GET['c_id']) ? preg_replace('/[\'",]/', '', clean_xss_tags($_GET['c_id'], 1, 1)) : '';
 $c_wr_content = '';
 
 @include_once($board_skin_path.'/view_comment.head.skin.php');
@@ -40,7 +40,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     //$list[$i]['content'] = eregi_replace("[^ \n<>]{130}", "\\0\n", $row['wr_content']);
 
     $list[$i]['content'] = $list[$i]['content1']= '비밀글 입니다.';
-    if (!strstr($row['wr_option'], 'secret') ||
+    if (strpos($row['wr_option'], 'secret') === false ||
         $is_admin ||
         ($write['mb_id']===$member['mb_id'] && $member['mb_id']) ||
         ($row['mb_id']===$member['mb_id'] && $member['mb_id'])) {

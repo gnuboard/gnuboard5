@@ -30,17 +30,17 @@ if(! function_exists('column_char')) {
     $rows = array();
 
     for($i=1; $row=sql_fetch_array($result); $i++) {
-        $rows[] = 
-                    array(' '.$row['od_id'], 
-                          $row['od_name'], 
-                          ' '.$row['od_tel'], 
-                          ' '.$row['od_hp'], 
-                          $row['od_b_name'], 
-                          ' '.$row['od_b_tel'], 
-                          ' '.$row['od_b_hp'], 
-                          print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']),
-                          $row['od_delivery_company'],
-                          $row['od_invoice']);
+        $rows[] =
+                    array(' '.$row['od_id'],
+                          function_exists('csv_safe_cell') ? csv_safe_cell($row['od_name']) : $row['od_name'],
+                          ' '.$row['od_tel'],
+                          ' '.$row['od_hp'],
+                          function_exists('csv_safe_cell') ? csv_safe_cell($row['od_b_name']) : $row['od_b_name'],
+                          ' '.$row['od_b_tel'],
+                          ' '.$row['od_b_hp'],
+                          function_exists('csv_safe_cell') ? csv_safe_cell(print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon'])) : print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']),
+                          function_exists('csv_safe_cell') ? csv_safe_cell($row['od_delivery_company']) : $row['od_delivery_company'],
+                          function_exists('csv_safe_cell') ? csv_safe_cell($row['od_invoice']) : $row['od_invoice']);
     }
 
     $data = array_merge(array($headers), $rows);

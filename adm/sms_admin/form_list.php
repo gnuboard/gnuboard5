@@ -65,7 +65,7 @@ function book_all_checked(chk)
 function book_del(fo_no)
 {
     if (confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n그래도 삭제하시겠습니까?"))
-        location.href = "./form_update.php?w=d&fo_no=" + fo_no + "&page=<?php echo $page?>&fg_no=<?php echo $fg_no?>&st=<?php echo get_text($st); ?>&sv=<?php echo get_text($sv); ?>";
+        location.href = "./form_update.php?w=d&fo_no=" + fo_no + "&page=<?php echo $page?>&fg_no=<?php echo $fg_no?>&st=<?php echo get_text($st); ?>&sv=<?php echo get_text($sv); ?>&token=<?php echo $token; ?>";
 }
 
 function multi_update(sel)
@@ -114,7 +114,7 @@ function multi_update(sel)
 <div class="local_sch01 local_sch sms_preset_sch">
     <form>
     <label for="fg_no" class="sound_only">그룹명</label>
-    <select name="fg_no" id="fg_no" onchange="location.href='<?php echo $_SERVER['SCRIPT_NAME']?>?fg_no='+this.value;">
+    <select name="fg_no" id="fg_no" onchange="location.href='<?php echo htmlspecialchars($_SERVER['SCRIPT_NAME'])?>?fg_no='+this.value;">
         <option value="" <?php echo $fg_no?'':'selected'?>> 전체 </option>
         <option value="0" <?php echo $fg_no=='0'?'selected':''?>> 미분류 (<?php echo number_format($no_count)?>) </option>
         <?php for($i=0; $i<count($group); $i++) {?>

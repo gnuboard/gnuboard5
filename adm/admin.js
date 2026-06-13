@@ -1,10 +1,114 @@
-function check_all(f)
-{
-    var chk = document.getElementsByName("chk[]");
+/** 공통 UI 모듈 */
+window.CommonUI = {
+  bindTabs(tabSelector, contentSelector, options = {}) {
+    const tabs = document.querySelectorAll(tabSelector);
+    const contents = document.querySelectorAll(contentSelector);
 
-    for (i=0; i<chk.length; i++)
-        chk[i].checked = f.chkall.checked;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab;
+        const target = document.getElementById(`tab-${tabName}`);
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        contents.forEach(c => c.classList.add('is-hidden'));
+
+        if (target) target.classList.remove('is-hidden');
+
+        options.onChange?.(tabName, target);
+      });
+    });
+  }
+};
+
+function setHtml(el, markup) {
+    if (!el) return; 
+    if (markup == null || markup === '') { 
+        el.textContent = '';
+        return;
+    }
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    el.replaceChildren(range.createContextualFragment(markup));
 }
+
+/** 팝업 관리 모듈 */
+window.PopupManager = {
+    open(id, options = {}) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.remove('is-hidden');
+            this.bindOutsideClickClose(id);
+
+            if (!options.disableOutsideClose) {
+                this.bindOutsideClickClose(id);
+            } else {
+                this.unbindOutsideClickClose(id);
+            }
+        }
+    },
+
+    close(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('is-hidden');
+    },
+
+    toggle(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('is-hidden');
+    },
+
+    bindOutsideClickClose(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.onclick = () => this.close(id);
+    },
+
+    unbindOutsideClickClose(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.onclick = null;
+    },
+
+    /**
+     * 팝업 콘텐츠 렌더링 (타이틀, 바디, 푸터 구성)
+     * @param {string} title - 팝업 제목
+     * @param {string} body - 팝업 본문 HTML
+     * @param {string} [footer] - 푸터 HTML
+     * @param {object} [options] - 팝업 열기 옵션
+     */
+    render(title, body, footer = '', options = {}) {
+        const titleEl = document.getElementById('popupTitle');
+        const bodyEl = document.getElementById('popupBody');
+        const footerEl = document.getElementById('popupFooter');
+
+        if (titleEl) titleEl.textContent = title;
+        if (bodyEl) setHtml(bodyEl, body);
+        if (footerEl) setHtml(footerEl, footer);
+
+        this.open('popupOverlay', options);
+    }
+};
+
+/** 형식 체크 */
+function check_all(target) {
+    const chkboxes = document.getElementsByName("chk[]");
+    let chkall;
+
+    if (target && target.tagName === "FORM") {
+        chkall = target.querySelector('input[name="chkall"]');
+    } else if (target && target.type === "checkbox") {
+        chkall = target;
+    }
+
+    if (!chkall) return;
+
+    for (const checkbox of chkboxes) {
+        checkbox.checked = chkall.checked;
+    }
+}
+
 
 function btn_check(f, act)
 {

@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// CSRF 방지: Origin/Referer 헤더로 요청 출처 검증
+if (function_exists('check_request_origin')) check_request_origin(G5_SHOP_URL);
+
 // print_r2($_POST); exit;
 
 // 보관기간이 지난 상품 삭제

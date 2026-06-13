@@ -36,10 +36,27 @@ if ($w == '' && in_array($bo_table, get_bo_table_banned_word())) {
 $bo_include_head = isset($_POST['bo_include_head']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['bo_include_head'], 0, 255)) : '';
 $bo_include_tail = isset($_POST['bo_include_tail']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['bo_include_tail'], 0, 255)) : '';
 
-// 관리자가 자동등록방지를 사용해야 할 경우
-if ($board && (isset($board['bo_include_head']) && $board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()) {
-    include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
+$check_captcha = false;
 
+// 관리자가 자동등록방지 CAPTCHA를 사용해야 할 경우
+// 최고 관리자인 경우에만 수정가능
+if ($is_admin === 'super') {
+    if ($w === 'u') {
+        if (isset($board['bo_include_head'], $board['bo_include_tail']) &&
+            ($board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail)) {
+            $check_captcha = true;
+        }
+    } elseif ($w === '') {
+        if ($bo_include_head !== '_head.php' || $bo_include_tail !== '_tail.php') {
+            $check_captcha = true;
+        }
+    }
+}
+
+// 실제 CAPTCHA 검증
+if ($check_captcha) {
+    include_once(G5_CAPTCHA_PATH . '/captcha.lib.php');
+    
     if (!chk_captcha()) {
         alert('자동등록방지 숫자가 틀렸습니다.');
     }
@@ -122,7 +139,7 @@ $bo_hot = isset($_POST['bo_hot']) ? (int) $_POST['bo_hot'] : 0;
 $bo_image_width = isset($_POST['bo_image_width']) ? (int) $_POST['bo_image_width'] : 0;
 $bo_use_search = isset($_POST['bo_use_search']) ? (int) $_POST['bo_use_search'] : 0;
 $bo_use_cert = isset($_POST['bo_use_cert']) ? preg_replace('/[^0-9a-z_]/i', '', $_POST['bo_use_cert']) : '';
-$bo_device = isset($_POST['bo_device']) ? clean_xss_tags($_POST['bo_device'], 1, 1) : '';
+$bo_device = isset($_POST['bo_device']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_device']), 1, 1)) : '';
 $bo_list_level = isset($_POST['bo_list_level']) ? (int) $_POST['bo_list_level'] : 0;
 $bo_read_level = isset($_POST['bo_read_level']) ? (int) $_POST['bo_read_level'] : 0;
 $bo_write_level = isset($_POST['bo_write_level']) ? (int) $_POST['bo_write_level'] : 0;
@@ -138,9 +155,9 @@ $bo_read_point = isset($_POST['bo_read_point']) ? (int) $_POST['bo_read_point'] 
 $bo_write_point = isset($_POST['bo_write_point']) ? (int) $_POST['bo_write_point'] : 0;
 $bo_comment_point = isset($_POST['bo_comment_point']) ? (int) $_POST['bo_comment_point'] : 0;
 $bo_download_point = isset($_POST['bo_download_point']) ? (int) $_POST['bo_download_point'] : 0;
-$bo_select_editor = isset($_POST['bo_select_editor']) ? clean_xss_tags($_POST['bo_select_editor'], 1, 1) : '';
-$bo_skin = isset($_POST['bo_skin']) ? clean_xss_tags($_POST['bo_skin'], 1, 1) : '';
-$bo_mobile_skin = isset($_POST['bo_mobile_skin']) ? clean_xss_tags($_POST['bo_mobile_skin'], 1, 1) : '';
+$bo_select_editor = isset($_POST['bo_select_editor']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_select_editor']), 1, 1)) : '';
+$bo_skin = isset($_POST['bo_skin']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_skin']), 1, 1)) : '';
+$bo_mobile_skin = isset($_POST['bo_mobile_skin']) ? addslashes(clean_xss_tags(stripslashes($_POST['bo_mobile_skin']), 1, 1)) : '';
 $bo_content_head = isset($_POST['bo_content_head']) ? $_POST['bo_content_head'] : '';
 $bo_content_tail = isset($_POST['bo_content_tail']) ? $_POST['bo_content_tail'] : '';
 $bo_mobile_content_head = isset($_POST['bo_mobile_content_head']) ? $_POST['bo_mobile_content_head'] : '';
@@ -159,7 +176,17 @@ $bo_write_min = isset($_POST['bo_write_min']) ? (int) $_POST['bo_write_min'] : 0
 $bo_write_max = isset($_POST['bo_write_max']) ? (int) $_POST['bo_write_max'] : 0;
 $bo_comment_min = isset($_POST['bo_comment_min']) ? (int) $_POST['bo_comment_min'] : 0;
 $bo_comment_max = isset($_POST['bo_comment_max']) ? (int) $_POST['bo_comment_max'] : 0;
-$bo_sort_field = isset($_POST['bo_sort_field']) ? clean_xss_tags($_POST['bo_sort_field'], 1, 1) : '';
+$bo_sort_field = isset($_POST['bo_sort_field']) ? trim(stripslashes($_POST['bo_sort_field'])) : '';
+$bo_allowed_sort_field = array('');
+if (function_exists('get_board_sort_fields')) {
+    foreach (get_board_sort_fields(isset($board) ? $board : array()) as $bo_sort_v) {
+        $bo_allowed_sort_field[] = $bo_sort_v[0];
+    }
+}
+if (!in_array($bo_sort_field, $bo_allowed_sort_field, true)) {
+    $bo_sort_field = '';
+}
+$bo_sort_field = addslashes($bo_sort_field);
 
 if (strpbrk($bo_skin.$bo_mobile_skin, "?%*:|\"<>") !== false) {
     alert('스킨 디렉토리명 오류!');

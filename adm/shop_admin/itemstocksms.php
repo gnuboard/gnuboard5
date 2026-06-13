@@ -170,13 +170,16 @@ function fitemstocksms_submit(f)
         return false;
     }
 
-    if(document.pressed == "선택삭제") {
-        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-            return false;
-        }
-    }
+    var action = document.pressed;
 
-    return true;
+    switch (action) {
+        case "선택삭제":
+            return confirm("선택한 자료를 정말 삭제하시겠습니까?");
+        case "선택SMS전송":
+            return confirm("선택한 자료에 대해서 SMS로 재입고 알림을 전송하시겠습니까?");
+        default:
+            return true;
+    }
 }
 </script>
 

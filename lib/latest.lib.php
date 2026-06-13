@@ -64,7 +64,7 @@ function latest($skin_dir='', $bo_table='', $rows=10, $subject_len=40, $cache_ti
             } catch (Exception $e) {
             }
             $row['wr_email'] = '';              //이메일 저장 안함
-            if (strstr($row['wr_option'], 'secret')){           // 비밀글일 경우 내용, 링크, 파일 저장 안함
+            if (strpos($row['wr_option'], 'secret') !== false){           // 비밀글일 경우 내용, 링크, 파일 저장 안함
                 $row['wr_content'] = $row['wr_link1'] = $row['wr_link2'] = '';
                 $row['file'] = array('count'=>0);
             }

@@ -6,7 +6,10 @@ include_once(G5_PATH.'/head.sub.php');
 if (!$is_member)
 {
     $href = './login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
-    echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = \''.str_replace('&amp;', '&', $href).'\'; </script>';
+    $href = str_replace('&amp;', '&', $href);
+    $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+    $js_href = function_exists('get_js_safe_string') ? get_js_safe_string($href) : '"'.strtr((string)$href, $js_replace).'"';
+    echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = '.$js_href.'; </script>';
     exit;
 }
 

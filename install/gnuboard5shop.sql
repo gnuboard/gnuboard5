@@ -169,6 +169,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_coupon_log` (
   `cp_price` int(11) NOT NULL DEFAULT '0',
   `cl_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`cl_id`),
+  UNIQUE KEY `idx_coupon_use` (`cp_id`, `mb_id`),
   KEY `mb_id` (`mb_id`),
   KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

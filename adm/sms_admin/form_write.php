@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
 
+$token = get_token();
+
 $g5['title'] = "이모티콘 ";
 
 $fo_no = isset($_REQUEST['fo_no']) ? (int) $_REQUEST['fo_no'] : 0;
@@ -34,6 +36,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="page" value="<?php echo $page?>">
 <input type="hidden" name="fo_no" value="<?php echo $write['fo_no']; ?>">
 <input type="hidden" name="get_fg_no" value="<?php echo $fg_no?>">
+<input type="hidden" name="token" value="<?php echo $token; ?>">
 
     <div class="tbl_frm01 tbl_wrap">
     <table>

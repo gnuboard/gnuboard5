@@ -37,21 +37,39 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     $( "#mb_update_form" ).submit(function( e ) {
         e.preventDefault();
         $("#res_msg").html('업데이트 중입니다. 잠시만 기다려 주십시오...');
-        var params = { mtype : 'json' };
+        var action = $(this).attr("action");
         $.ajax({
-            url: $(this).attr("action"),
-            cache:false,
-            timeout : 30000,
-            dataType:"json",
-            data:params,
-            success: function(data) {
-                if(data.error){
-                    alert( data.error );
+            url: '<?php echo G5_ADMIN_URL; ?>/ajax.token.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { admin_csrf_token_key: '<?php echo admin_csrf_token_key(1); ?>' },
+            success: function(tokenData) {
+                if(tokenData.error){
+                    alert(tokenData.error);
                     $("#res_msg").html("");
-                } else {
-                    $("#datetime").html( data.datetime );
-                    $("#res_msg").html( data.res_msg );
+                    return;
                 }
+                $.ajax({
+                    url: action,
+                    type: 'POST',
+                    cache:false,
+                    timeout : 30000,
+                    dataType:"json",
+                    data: { mtype : 'json', token : tokenData.token },
+                    success: function(data) {
+                        if(data.error){
+                            alert( data.error );
+                            $("#res_msg").html("");
+                        } else {
+                            $("#datetime").html( data.datetime );
+                            $("#res_msg").html( data.res_msg );
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                });
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);

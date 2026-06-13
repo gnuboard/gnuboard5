@@ -161,7 +161,7 @@ if($config['cf_sms_type'] == 'LMS') {
         public $Result = array();
         public $Log = array();
 
-        function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
+        function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount=0) {
             global $config;
 
             // 아이코드 JSON 모듈은 UTF-8 을 사용하며, sms 또는 lms 는 euc-kr 로 사용한다.
@@ -280,7 +280,7 @@ if($config['cf_sms_type'] == 'LMS') {
                     break;
             }
         }
-        function Add2($strDest, $strCallBack, $strCaller, $strURL, $strMessage, $strDate="", $nCount) {
+        function Add2($strDest, $strCallBack, $strCaller, $strURL, $strMessage, $strDate="", $nCount=0) {
             global $g5, $config;
 
             $Error = $this->CheckCommonTypeDest($strDest, $nCount);

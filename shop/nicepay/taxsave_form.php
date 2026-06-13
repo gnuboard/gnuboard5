@@ -102,7 +102,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </tr>
             <tr>
                 <th scope="row">주문자 이름</th>
-                <td><?php echo $od_name; ?></td>
+                <td><?php echo get_text($od_name); ?></td>
             </tr>
             <tr>
                 <th scope="row">주문자 E-Mail</th>

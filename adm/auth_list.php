@@ -23,6 +23,9 @@ if (!$sst) {
     $sst  = "a.mb_id, au_menu";
     $sod = "";
 }
+$allowed_sst = array('a.mb_id', 'mb_nick', 'au_menu', 'au_auth', 'a.mb_id, au_menu');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'a.mb_id, au_menu';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt
@@ -50,6 +53,8 @@ $listall = '<a href="' . $_SERVER['SCRIPT_NAME'] . '" class="ov_listall btn_ov02
 
 $g5['title'] = "관리권한설정";
 require_once './admin.head.php';
+
+$assignable_auth_menu = admin_get_assignable_auth_menu();
 
 $colspan = 5;
 ?>
@@ -102,8 +107,8 @@ $colspan = 5;
                         $is_continue = true;
                     }
 
-                    // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
-                    if (!isset($auth_menu[$row['au_menu']])) {
+                    // 메뉴번호가 바뀌거나 권한 부여 대상이 아닌 메뉴는 삭제함
+                    if (!isset($assignable_auth_menu[$row['au_menu']])) {
                         sql_query(" delete from {$g5['auth_table']} where au_menu = '{$row['au_menu']}' ");
                         $is_continue = true;
                     }
@@ -127,7 +132,7 @@ $colspan = 5;
                         <td class="td_auth_mbnick"><?php echo $mb_nick ?></td>
                         <td class="td_menu">
                             <?php echo $row['au_menu'] ?>
-                            <?php echo $auth_menu[$row['au_menu']] ?>
+                            <?php echo $assignable_auth_menu[$row['au_menu']] ?>
                         </td>
                         <td class="td_auth"><?php echo $row['au_auth'] ?></td>
                     </tr>
@@ -151,7 +156,7 @@ $colspan = 5;
     //if (isset($stx))
     //    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'."\n";
 
-    if (strstr($sfl, 'mb_id')) {
+    if (strpos($sfl, 'mb_id') !== false) {
         $mb_id = $stx;
     } else {
         $mb_id = '';
@@ -202,7 +207,7 @@ echo $pagelist;
                             <select id="au_menu" name="au_menu" required class="required">
                                 <option value=''>선택하세요</option>
                                 <?php
-                                foreach ($auth_menu as $key => $value) {
+                                foreach ($assignable_auth_menu as $key => $value) {
                                     if (!(substr($key, -3) == '000' || $key == '-' || !$key)) {
                                         echo '<option value="' . $key . '">' . $key . ' ' . $value . '</option>';
                                     }

@@ -29,14 +29,25 @@ $co_id = isset($_REQUEST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST
 $co_subject = isset($_POST['co_subject']) ? strip_tags(clean_xss_attributes($_POST['co_subject'])) : '';
 $co_include_head = isset($_POST['co_include_head']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['co_include_head'], 0, 255)) : '';
 $co_include_tail = isset($_POST['co_include_tail']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['co_include_tail'], 0, 255)) : '';
+
+// 최고 관리자가 아니면 include 경로 변경 불가 (board_form_update.php 와 동일 정책)
+if ($is_admin !== 'super') {
+    if ($w == 'u') {
+        $co_include_head = isset($co_row['co_include_head']) ? $co_row['co_include_head'] : '';
+        $co_include_tail = isset($co_row['co_include_tail']) ? $co_row['co_include_tail'] : '';
+    } else {
+        $co_include_head = '';
+        $co_include_tail = '';
+    }
+}
 $co_tag_filter_use = isset($_POST['co_tag_filter_use']) ? (int) $_POST['co_tag_filter_use'] : 1;
 $co_himg_del = (isset($_POST['co_himg_del']) && $_POST['co_himg_del']) ? 1 : 0;
 $co_timg_del = (isset($_POST['co_timg_del']) && $_POST['co_timg_del']) ? 1 : 0;
 $co_html = isset($_POST['co_html']) ? (int) $_POST['co_html'] : 0;
 $co_content = isset($_POST['co_content']) ? $_POST['co_content'] : '';
 $co_mobile_content = isset($_POST['co_mobile_content']) ? $_POST['co_mobile_content'] : '';
-$co_skin = isset($_POST['co_skin']) ? clean_xss_tags($_POST['co_skin'], 1, 1) : '';
-$co_mobile_skin = isset($_POST['co_mobile_skin']) ? clean_xss_tags($_POST['co_mobile_skin'], 1, 1) : '';
+$co_skin = isset($_POST['co_skin']) ? addslashes(clean_xss_tags(stripslashes($_POST['co_skin']), 1, 1)) : '';
+$co_mobile_skin = isset($_POST['co_mobile_skin']) ? addslashes(clean_xss_tags(stripslashes($_POST['co_mobile_skin']), 1, 1)) : '';
 
 // 관리자가 자동등록방지를 사용해야 할 경우
 if (((isset($co_row['co_include_head']) && $co_row['co_include_head'] !== $co_include_head) || (isset($co_row['co_include_tail']) && $co_row['co_include_tail'] !== $co_include_tail)) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()) {

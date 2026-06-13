@@ -161,10 +161,11 @@ function all_send()
     if( $write['wr_memo'] ){
         $tmp_wr_memo = @unserialize($write['wr_memo']);
         if( count($tmp_wr_memo) && is_array($tmp_wr_memo) ){
-            if(function_exists('array_fill_keys')){
-                $tmp_wr_hp = array_replace($tmp_wr_memo['hp'],array_fill_keys(array_keys($tmp_wr_memo['hp'], null),''));
-            } else {
-                $tmp_wr_hp = $tmp_wr_memo['hp'];
+            $tmp_wr_hp = $tmp_wr_memo['hp'];
+            if (is_array($tmp_wr_hp)) {
+                foreach (array_keys($tmp_wr_hp, null) as $empty_key) {
+                    $tmp_wr_hp[$empty_key] = '';
+                }
             }
             $arr_wr_memo = @array_count_values( $tmp_wr_hp );
     ?>

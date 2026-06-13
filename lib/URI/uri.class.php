@@ -25,7 +25,7 @@ class G5_URI {
 		$ext = end($script_names);
 
 		/* if extension is found in URL, eliminate it */
-		if(strstr($uri,".")) {
+		if(strpos($uri,".") !== false) {
 			$arr_uri = explode('.', $uri);
 			/* get last part */
 			$last = end($arr_uri);

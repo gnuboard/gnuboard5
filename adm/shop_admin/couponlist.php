@@ -6,6 +6,8 @@ auth_check_menu($auth, $sub_menu, "r");
 
 $sql_common = " from {$g5['g5_shop_coupon_table']} ";
 
+if ($sfl && !in_array($sfl, array('mb_id', 'cp_subject', 'cp_id'))) $sfl = '';
+
 $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";
@@ -24,6 +26,9 @@ if (!$sst) {
     $sst  = "cp_no";
     $sod = "desc";
 }
+$allowed_sst = array('cp_no', 'cp_id', 'cp_subject', 'mb_id', 'cp_end', 'cp_start', 'cp_method');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'cp_no';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt

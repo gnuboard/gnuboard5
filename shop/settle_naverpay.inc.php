@@ -15,6 +15,8 @@ if(basename($_SERVER['SCRIPT_NAME']) == 'item.php') {
         return;
 }
 
+define('G5_SHOP_USE_NAVERPAY', 1);
+
 $naverpay_button_js = '';
 
 $is_mobile_order = is_mobile();

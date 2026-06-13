@@ -25,6 +25,9 @@ if (!$sst) {
     $sst  = "po_id";
     $sod = "desc";
 }
+$allowed_sst = array('po_id', 'mb_id', 'po_content', 'po_point', 'po_datetime');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'po_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt
@@ -66,7 +69,7 @@ if ($config['cf_point_term'] > 0) {
     $po_expire_term = $config['cf_point_term'];
 }
 
-if (strstr($sfl, "mb_id")) {
+if (strpos($sfl, "mb_id") !== false) {
     $mb_id = $stx;
 } else {
     $mb_id = "";

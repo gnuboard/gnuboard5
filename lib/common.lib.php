@@ -112,11 +112,14 @@ function goto_url($url)
     if (!headers_sent())
         header('Location: '.$url);
     else {
+        $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+        $js_url = function_exists('get_js_safe_string') ? get_js_safe_string($url) : '"'.strtr((string)$url, $js_replace).'"';
+        $html_url = htmlspecialchars($url, ENT_QUOTES);
         echo '<script>';
-        echo 'location.replace("'.$url.'");';
+        echo 'location.replace('.$js_url.');';
         echo '</script>';
         echo '<noscript>';
-        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '<meta http-equiv="refresh" content="0;url='.$html_url.'" />';
         echo '</noscript>';
     }
     exit;
@@ -176,6 +179,59 @@ function get_cookie($cookie_name)
         return base64_decode($_COOKIE[$cookie]);
     else
         return "";
+}
+
+
+// JavaScript 문자열 컨텍스트에 삽입할 값을 안전하게 이스케이프하여 따옴표를 포함한 JS 리터럴로 반환
+// PHP 5.3+ 에서는 json_encode 의 JSON_HEX_* 플래그를 사용하고, 5.2 환경에서는 직접 치환으로 폴백
+if (!function_exists('get_js_safe_string')) {
+    function get_js_safe_string($s)
+    {
+        $s = (string)$s;
+        if (defined('JSON_HEX_TAG')) {
+            $flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
+            if (defined('JSON_UNESCAPED_UNICODE')) {
+                $flags |= JSON_UNESCAPED_UNICODE;
+            }
+            $encoded = @json_encode($s, $flags);
+            if ($encoded !== false && $encoded !== null) {
+                return $encoded;
+            }
+        }
+        return '"' . strtr($s, array(
+            '\\' => '\\\\',
+            '"'  => '\\"',
+            "'"  => '\\u0027',
+            '/'  => '\\/',
+            "\r" => '\\r',
+            "\n" => '\\n',
+            "\t" => '\\t',
+            '<'  => '\\u003C',
+            '>'  => '\\u003E',
+            '&'  => '\\u0026',
+            "\xE2\x80\xA8" => '\\u2028',
+            "\xE2\x80\xA9" => '\\u2029',
+        )) . '"';
+    }
+}
+
+
+// CSV/Excel 셀에 출력할 값을 안전하게 변환 (수식 인젝션 방지)
+// 값이 = + - @ TAB CR 로 시작하면 작은따옴표를 prefix 해 수식 해석을 차단
+if (!function_exists('csv_safe_cell')) {
+    function csv_safe_cell($v)
+    {
+        if ($v === null || $v === '') {
+            return $v;
+        }
+        $s = (string)$v;
+        $first = substr($s, 0, 1);
+        if ($first === '=' || $first === '+' || $first === '-' || $first === '@'
+            || $first === "\t" || $first === "\r") {
+            return "'" . $s;
+        }
+        return $s;
+    }
 }
 
 
@@ -257,22 +313,42 @@ function url_auto_link($str)
 {
     global $g5;
     global $config;
-    
+
     if ($replace_str = run_replace('url_auto_link_before', '', $str)) {
         return $replace_str;
     }
-    
+
     $ori_str = $str;
-    
+
     // 140326 유창화님 제안코드로 수정
     // http://sir.kr/pg_lecture/461
     // http://sir.kr/pg_lecture/463
+
+    // 각 패턴의 존재 여부를 빠르게 체크하여 preg_replace 호출을 최소화한다.
+    // 일반 텍스트 게시글(URL/이메일이 없는 대부분의 경우)에서는 fast path로 즉시 반환.
+    // strpos(x5) ~= 1~2ms vs preg_replace(x3) ~= 20~50ms 이므로 핫패스에서 큰 이득.
+    $has_url_scheme = strpos($str, '://') !== false;
+    $has_www        = stripos($str, 'www.') !== false;
+    $has_at         = strpos($str, '@') !== false;
+    $has_amp        = strpos($str, '&') !== false;
+    $has_quote      = strpos($str, "'") !== false;
+
+    if (!$has_url_scheme && !$has_www && !$has_at && !$has_amp && !$has_quote) {
+        return run_replace('url_auto_link', $str, $ori_str);
+    }
+
     $attr_nofollow = (function_exists('check_html_link_nofollow') && check_html_link_nofollow('url_auto_link')) ? ' rel="nofollow"' : '';
     $str = str_replace(array("&lt;", "&gt;", "&amp;", "&quot;", "&nbsp;", "&#039;"), array("\t_lt_\t", "\t_gt_\t", "&", "\"", "\t_nbsp_\t", "'"), $str);
     //$str = preg_replace("`(?:(?:(?:href|src)\s*=\s*(?:\"|'|)){0})((http|https|ftp|telnet|news|mms)://[^\"'\s()]+)`", "<A HREF=\"\\1\" TARGET='{$config['cf_link_target']}'>\\1</A>", $str);
-    $str = preg_replace("/([^(href=\"?'?)|(src=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#!=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET=\"{$config['cf_link_target']}\" $attr_nofollow>\\2</A>", $str);
-    $str = preg_replace("/(^|[\"'\s(])(www\.[^\"'\s()]+)/i", "\\1<A HREF=\"http://\\2\" TARGET=\"{$config['cf_link_target']}\" $attr_nofollow>\\2</A>", $str);
-    $str = preg_replace("/[0-9a-z_-]+@[a-z0-9._-]{4,}/i", "<a href=\"mailto:\\0\" $attr_nofollow>\\0</a>", $str);
+    if ($has_url_scheme) {
+        $str = preg_replace("/([^(href=\"?'?)|(src=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#!=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET=\"{$config['cf_link_target']}\" $attr_nofollow>\\2</A>", $str);
+    }
+    if ($has_www) {
+        $str = preg_replace("/(^|[\"'\s(])(www\.[^\"'\s()]+)/i", "\\1<A HREF=\"http://\\2\" TARGET=\"{$config['cf_link_target']}\" $attr_nofollow>\\2</A>", $str);
+    }
+    if ($has_at) {
+        $str = preg_replace("/[0-9a-z_-]+@[a-z0-9._-]{4,}/i", "<a href=\"mailto:\\0\" $attr_nofollow>\\0</a>", $str);
+    }
     $str = str_replace(array("\t_nbsp_\t", "\t_lt_\t", "\t_gt_\t", "'"), array("&nbsp;", "&lt;", "&gt;", "&#039;"), $str);
 
     /*
@@ -442,9 +518,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     if ($board['bo_use_list_content'])
 	{
 		$html = 0;
-		if (strstr($list['wr_option'], 'html1'))
+		if (strpos($list['wr_option'], 'html1') !== false)
 			$html = 1;
-		else if (strstr($list['wr_option'], 'html2'))
+		else if (strpos($list['wr_option'], 'html2') !== false)
 			$html = 2;
 
         $list['content'] = conv_content($list['wr_content'], $html);
@@ -505,7 +581,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_hot'] = '<i class="fa fa-heart" aria-hidden="true"></i> ';
 
     $list['icon_secret'] = '';
-    if (strstr($list['wr_option'], 'secret'))
+    if (strpos($list['wr_option'], 'secret') !== false)
         $list['icon_secret'] = '<i class="fa fa-lock" aria-hidden="true"></i> ';
 
     // 링크
@@ -552,7 +628,8 @@ function search_font($stx, $str)
     // "/(검색1|검색2)/i" 와 같은 패턴을 만듬
     $pattern = '';
     $bar = '';
-    for ($m=0; $m<count($s); $m++) {
+    $s_cnt = count($s);
+    for ($m=0; $m<$s_cnt; $m++) {
         if (trim($s[$m]) == '') continue;
         // 태그는 포함하지 않아야 하는데 잘 안되는군. ㅡㅡa
         //$pattern .= $bar . '([^<])(' . quotemeta($s[$m]) . ')';
@@ -645,20 +722,51 @@ function html_purifier($html)
 {
     global $is_admin, $write;
 
-    $f = file(G5_PLUGIN_PATH . '/htmlpurifier/safeiframe.txt');
-    $domains = array();
-    foreach ($f as $domain) {
-        // 첫행이 # 이면 주석 처리
-        if (!preg_match("/^#/", $domain)) {
-            $domain = trim($domain);
-            if ($domain) {
-                array_push($domains, $domain);
+    // 요청 단위로 HTMLPurifier 인스턴스를 캐싱한다.
+    // HTMLPurifier 인스턴스 하나는 약 10~15MB의 메모리를 사용하므로,
+    // 같은 요청 내에서 여러 번 호출되는 경우(예: 게시글 목록의 첨부파일 설명)
+    // 매번 새 인스턴스를 만드는 것은 메모리 사용량을 수십~수백 MB까지 증가시킨다.
+    //
+    // config에 영향을 주는 변수는 "글쓴이가 관리자인지" 하나뿐이므로
+    // 캐시 키를 admin/normal 두 가지로 분리하여 최대 2개의 인스턴스만 유지한다.
+    //
+    // 캐싱이 동작 변경을 일으키는 경우(html_purifier_config / html_purifier_safeiframes
+    // hook이 $html 내용에 따라 동적으로 config를 바꾸는 플러그인을 사용하는 경우)
+    // G5_HTMLPURIFIER_NO_CACHE 상수를 정의하여 비활성화할 수 있다.
+    static $purifier_cache = array();
+    static $domains_cache = null;
+
+    $cache_enabled = !(defined('G5_HTMLPURIFIER_NO_CACHE') && G5_HTMLPURIFIER_NO_CACHE);
+    $is_admin_post = (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id']));
+    $cache_key = $is_admin_post ? 'admin' : 'normal';
+
+    // 캐시 적중 시 인스턴스 재사용
+    if ($cache_enabled && isset($purifier_cache[$cache_key])) {
+        $purifier = $purifier_cache[$cache_key];
+        return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
+    }
+
+    // safeiframe.txt 파싱 결과를 요청 단위로 캐싱 (파일 I/O + 정규식 비용 절감)
+    if ($domains_cache === null) {
+        $domains_cache = array();
+        $f = @file(G5_PLUGIN_PATH . '/htmlpurifier/safeiframe.txt');
+        if ($f !== false) {
+            foreach ($f as $domain) {
+                // 첫행이 # 이면 주석 처리
+                if (preg_match("/^#/", $domain)) continue;
+                $domain = trim($domain);
+                if ($domain !== '') {
+                    $domains_cache[] = $domain;
+                }
             }
+            unset($f);
         }
     }
+
+    $domains = $domains_cache;
     // 글쓴이가 관리자인 경우에만 현재 사이트 도메인을 허용
-    if (isset($write['mb_id']) && $write['mb_id'] && is_admin($write['mb_id'])) {
-        array_push($domains, $_SERVER['HTTP_HOST'] . '/');
+    if ($is_admin_post) {
+        $domains[] = $_SERVER['HTTP_HOST'] . '/';
     }
     $safeiframe = implode('|', run_replace('html_purifier_safeiframes', $domains, $html));
 
@@ -682,7 +790,10 @@ function html_purifier($html)
 
     /*
      * HTMLPurifier 설정을 변경할 수 있는 Event hook
-     * 리스너에서는 첫번째 인자($config)로 `HTMLPurifier_Config` 객체를 받을 수 있다
+     * 리스너에서는 첫번째 인자($config)로 `HTMLPurifier_Config` 객체를 받을 수 있다.
+     * NB: 인스턴스 캐싱이 활성화된 경우(기본값) 이 hook은 캐시 미스 시점에만 실행됨
+     *     (요청당 최대 2회). $html 내용에 따라 동적으로 config를 변경해야 한다면
+     *     G5_HTMLPURIFIER_NO_CACHE 상수를 정의해 캐시를 비활성화하라.
      */
     run_event('html_purifier_config', $config, array(
         'html' => $html,
@@ -696,6 +807,11 @@ function html_purifier($html)
     $def->addFilter(new HTMLPurifierContinueParamFilter(), $config); // 커스텀 필터 추가
 
     $purifier = new HTMLPurifier($config);
+
+    // 인스턴스 캐싱
+    if ($cache_enabled) {
+        $purifier_cache[$cache_key] = $purifier;
+    }
 
     return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
 }
@@ -740,7 +856,9 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         $not_comment = $tmp[1];
 
     $str .= "(";
-    for ($i=0; $i<count($s); $i++) {
+    $s_cnt = count($s);
+    $field_cnt = count($field);
+    for ($i=0; $i<$s_cnt; $i++) {
         // 검색어
         $search_str = trim($s[$i]);
         if ($search_str == "") continue;
@@ -752,7 +870,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         $str .= "(";
 
         $op2 = "";
-        for ($k=0; $k<count($field); $k++) { // 필드의 수만큼 다중 필드 검색 가능 (필드1+필드2...)
+        for ($k=0; $k<$field_cnt; $k++) { // 필드의 수만큼 다중 필드 검색 가능 (필드1+필드2...)
 
             // SQL Injection 방지
             // 필드값에 a-z A-Z 0-9 _ , | 이외의 값이 있다면 검색필드를 wr_subject 로 설정한다.
@@ -997,7 +1115,8 @@ function get_category_option($bo_table='', $ca_name='')
 
     $categories = explode("|", $board['bo_category_list'].($is_admin?"|공지":"")); // 구분자가 | 로 되어 있음
     $str = "";
-    for ($i=0; $i<count($categories); $i++) {
+    $categories_cnt = count($categories);
+    for ($i=0; $i<$categories_cnt; $i++) {
         $category = trim($categories[$i]);
         if (!$category) continue;
 
@@ -1083,16 +1202,24 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     $mb_point = get_point_sum($mb_id);
 
     // 이미 등록된 내역이라면 건너뜀
+    // 레이스 컨디션 방지: MyISAM은 트랜잭션을 지원하지 않으므로 MySQL named lock(GET_LOCK)으로
+    // 검증/INSERT 구간을 직렬화한다. rel 키가 없는 일반 포인트 지급은 락 대상이 아니다.
+    $point_lock_name = '';
     if ($rel_table || $rel_id || $rel_action)
     {
+        $point_lock_name = 'g5pt_' . md5($mb_id.'|'.$rel_table.'|'.$rel_id.'|'.$rel_action);
+        sql_fetch(" select get_lock('$point_lock_name', 5) as got_lock ");
+
         $sql = " select count(*) as cnt from {$g5['point_table']}
                   where mb_id = '$mb_id'
                     and po_rel_table = '$rel_table'
                     and po_rel_id = '$rel_id'
                     and po_rel_action = '$rel_action' ";
         $row = sql_fetch($sql);
-        if ($row['cnt'])
+        if ($row['cnt']) {
+            sql_query(" select release_lock('$point_lock_name') ");
             return -1;
+        }
     }
 
     // 포인트 건별 생성
@@ -1134,6 +1261,11 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     $sql = " update {$g5['member_table']} set mb_point = '$po_mb_point' where mb_id = '$mb_id' ";
     sql_query($sql);
 
+    // named lock 해제
+    if ($point_lock_name) {
+        sql_query(" select release_lock('$point_lock_name') ");
+    }
+
     return 1;
 }
 
@@ -1141,43 +1273,71 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 function insert_use_point($mb_id, $point, $po_id='')
 {
     global $g5, $config;
-    
+
     if ($replace_insert = run_replace('insert_use_point_before', '', $mb_id, $point, $po_id)) {
         return $replace_insert;
     }
-    
+
+    // 레이스 컨디션 방지: 매 단계마다 가장 오래된 행 1개를 SELECT한 후
+    // WHERE 절에 사전 검증 조건을 포함한 원자적 UPDATE로 차감한다.
+    // affected_rows로 성공/실패를 판별하고 실패 시 재시도하므로 락 없이 무결성 보장.
+    // (MyISAM/InnoDB 모두 호환, FOR UPDATE 불필요)
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date asc, po_id asc ";
     else
         $sql_order = " order by po_id asc ";
 
-    $point1 = abs($point);
-    $sql = " select po_id, po_point, po_use_point
-                from {$g5['point_table']}
-                where mb_id = '$mb_id'
-                  and po_id <> '$po_id'
-                  and po_expired = '0'
-                  and po_point > po_use_point
-                $sql_order ";
-    $result = sql_query($sql);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $point2 = $row['po_point'];
-        $point3 = $row['po_use_point'];
+    $remaining = abs($point);
+    $max_iter = 1000; // 무한루프 안전장치 (정상 케이스는 차감 행 수만큼만 반복)
 
-        if(($point2 - $point3) > $point1) {
+    while ($remaining > 0 && $max_iter-- > 0) {
+        // 사용 가능한 가장 오래된 행 1개 조회
+        $sql = " select po_id, po_point, po_use_point
+                    from {$g5['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_id <> '$po_id'
+                      and po_expired = '0'
+                      and po_point > po_use_point
+                    $sql_order
+                    limit 1 ";
+        $row = sql_fetch($sql);
+        if (!$row || empty($row['po_id'])) {
+            break; // 더 이상 사용 가능한 포인트 없음
+        }
+
+        $available = $row['po_point'] - $row['po_use_point'];
+
+        if ($available > $remaining) {
+            // 이 행만으로 충분 (부분 차감)
+            // WHERE 절에서 "현재도 충분한 잔여가 있는가"를 원자적으로 재검증
             $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point + '$point1'
-                        where po_id = '{$row['po_id']}' ";
+                        set po_use_point = po_use_point + '$remaining'
+                        where po_id = '{$row['po_id']}'
+                          and po_expired = '0'
+                          and (po_point - po_use_point) > '$remaining' ";
             sql_query($sql);
-            break;
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining = 0;
+                break;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 차감 → 다시 SELECT로 재시도
         } else {
-            $point4 = $point2 - $point3;
+            // 이 행을 완전 소진 + expired 마킹
+            // WHERE 절에서 SELECT 시점의 po_use_point 값과 일치할 때만 UPDATE
+            $consume = $available;
             $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point + '$point4',
+                        set po_use_point = po_use_point + '$consume',
                             po_expired = '100'
-                        where po_id = '{$row['po_id']}' ";
+                        where po_id = '{$row['po_id']}'
+                          and po_use_point = '{$row['po_use_point']}'
+                          and po_expired = '0' ";
             sql_query($sql);
-            $point1 -= $point4;
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining -= $consume;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 다시 SELECT로 재시도
         }
     }
 }
@@ -1187,41 +1347,68 @@ function delete_use_point($mb_id, $point)
 {
     global $g5, $config;
 
+    // 레이스 컨디션 방지: 매 단계마다 사용된 가장 최근 행 1개를 조회한 후
+    // WHERE 절에 SELECT 시점의 상태를 검증하는 원자적 UPDATE로 환원한다.
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date desc, po_id desc ";
     else
         $sql_order = " order by po_id desc ";
 
-    $point1 = abs($point);
-    $sql = " select po_id, po_use_point, po_expired, po_expire_date
-                from {$g5['point_table']}
-                where mb_id = '$mb_id'
-                  and po_expired <> '1'
-                  and po_use_point > 0
-                $sql_order ";
-    $result = sql_query($sql);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $point2 = $row['po_use_point'];
+    $remaining = abs($point);
+    $max_iter = 1000;
 
-        $po_expired = $row['po_expired'];
-        if($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G5_TIME_YMD))
-            $po_expired = 0;
-
-        if($point2 > $point1) {
-            $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point - '$point1',
-                            po_expired = '$po_expired'
-                        where po_id = '{$row['po_id']}' ";
-            sql_query($sql);
+    while ($remaining > 0 && $max_iter-- > 0) {
+        // 사용분이 있는 가장 최근 행 1개 조회
+        $sql = " select po_id, po_use_point, po_expired, po_expire_date
+                    from {$g5['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_expired <> '1'
+                      and po_use_point > 0
+                    $sql_order
+                    limit 1 ";
+        $row = sql_fetch($sql);
+        if (!$row || empty($row['po_id'])) {
             break;
+        }
+
+        $row_used = $row['po_use_point'];
+
+        // 만료 마커(100) 복구 여부 결정
+        $po_expired_new = $row['po_expired'];
+        if ($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G5_TIME_YMD))
+            $po_expired_new = 0;
+
+        if ($row_used > $remaining) {
+            // 부분 환원
+            // WHERE에 현재 po_use_point가 차감 가능한 수준인지와 expired 상태를 함께 검증
+            $sql = " update {$g5['point_table']}
+                        set po_use_point = po_use_point - '$remaining',
+                            po_expired = '$po_expired_new'
+                        where po_id = '{$row['po_id']}'
+                          and po_use_point >= '$remaining'
+                          and po_expired = '{$row['po_expired']}' ";
+            sql_query($sql);
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining = 0;
+                break;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
         } else {
+            // 사용분 전체 환원
+            $consume = $row_used;
             $sql = " update {$g5['point_table']}
                         set po_use_point = '0',
-                            po_expired = '$po_expired'
-                        where po_id = '{$row['po_id']}' ";
+                            po_expired = '$po_expired_new'
+                        where po_id = '{$row['po_id']}'
+                          and po_use_point = '{$row['po_use_point']}'
+                          and po_expired = '{$row['po_expired']}' ";
             sql_query($sql);
 
-            $point1 -= $point2;
+            if (get_sql_affected_rows() > 0) {
+                $remaining -= $consume;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
         }
     }
 }
@@ -1231,39 +1418,63 @@ function delete_expire_point($mb_id, $point)
 {
     global $g5, $config;
 
-    $point1 = abs($point);
-    $sql = " select po_id, po_use_point, po_expired, po_expire_date
-                from {$g5['point_table']}
-                where mb_id = '$mb_id'
-                  and po_expired = '1'
-                  and po_point >= 0
-                  and po_use_point > 0
-                order by po_expire_date desc, po_id desc ";
-    $result = sql_query($sql);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $point2 = $row['po_use_point'];
-        $po_expired = '0';
+    // 레이스 컨디션 방지: 매 단계마다 소멸된 가장 최근 행 1개를 조회한 후
+    // WHERE 절에 SELECT 시점의 상태를 검증하는 원자적 UPDATE로 환원한다.
+    $remaining = abs($point);
+    $max_iter = 1000;
+
+    while ($remaining > 0 && $max_iter-- > 0) {
+        // 소멸 처리된 가장 최근 행 1개 조회
+        $sql = " select po_id, po_use_point, po_expired, po_expire_date
+                    from {$g5['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_expired = '1'
+                      and po_point >= 0
+                      and po_use_point > 0
+                    order by po_expire_date desc, po_id desc
+                    limit 1 ";
+        $row = sql_fetch($sql);
+        if (!$row || empty($row['po_id'])) {
+            break;
+        }
+
+        $row_used = $row['po_use_point'];
         $po_expire_date = '9999-12-31';
-        if($config['cf_point_term'] > 0)
+        if ($config['cf_point_term'] > 0)
             $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G5_SERVER_TIME));
 
-        if($point2 > $point1) {
+        if ($row_used > $remaining) {
+            // 부분 환원
             $sql = " update {$g5['point_table']}
-                        set po_use_point = po_use_point - '$point1',
-                            po_expired = '$po_expired',
+                        set po_use_point = po_use_point - '$remaining',
+                            po_expired = '0',
                             po_expire_date = '$po_expire_date'
-                        where po_id = '{$row['po_id']}' ";
-            sql_query($sql);
-            break;
-        } else {
-            $sql = " update {$g5['point_table']}
-                        set po_use_point = '0',
-                            po_expired = '$po_expired',
-                            po_expire_date = '$po_expire_date'
-                        where po_id = '{$row['po_id']}' ";
+                        where po_id = '{$row['po_id']}'
+                          and po_expired = '1'
+                          and po_use_point >= '$remaining' ";
             sql_query($sql);
 
-            $point1 -= $point2;
+            if (get_sql_affected_rows() > 0) {
+                $remaining = 0;
+                break;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
+        } else {
+            // 사용분 전체 환원
+            $consume = $row_used;
+            $sql = " update {$g5['point_table']}
+                        set po_use_point = '0',
+                            po_expired = '0',
+                            po_expire_date = '$po_expire_date'
+                        where po_id = '{$row['po_id']}'
+                          and po_expired = '1'
+                          and po_use_point = '{$row['po_use_point']}' ";
+            sql_query($sql);
+
+            if (get_sql_affected_rows() > 0) {
+                $remaining -= $consume;
+            }
+            // 0건 = 다른 프로세스가 이 행을 먼저 변경 → 재시도
         }
     }
 }
@@ -1612,18 +1823,27 @@ function view_link($view, $number, $attribute)
 
 function cut_str($str, $len, $suffix="…")
 {
-    $arr_str = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
-    $str_len = count($arr_str);
-
-    if ($str_len >= $len) {
-        $slice_str = array_slice($arr_str, 0, $len);
-        $str = join("", $slice_str);
-
-        return $str . ($str_len > $len ? $suffix : '');
-    } else {
-        $str = join("", $arr_str);
+    // 빠른 경로: 바이트 길이가 이미 제한 이내라면 문자 수 계산 불필요
+    // UTF-8의 모든 문자는 최소 1바이트이므로 bytes <= len이면 chars <= len이 보장됨
+    if (strlen($str) <= $len) {
         return $str;
     }
+
+    // mbstring 확장 사용 (PHP 4.0.6+ 기본 내장): 문자 배열 생성 없이 길이/슬라이스 처리
+    if (function_exists('mb_strlen')) {
+        if (mb_strlen($str, 'UTF-8') > $len) {
+            return mb_substr($str, 0, $len, 'UTF-8') . $suffix;
+        }
+        return $str;
+    }
+
+    // mbstring 미설치 환경 폴백 (기존 동작 유지)
+    $arr_str = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+    $str_len = count($arr_str);
+    if ($str_len > $len) {
+        return join("", array_slice($arr_str, 0, $len)) . $suffix;
+    }
+    return join("", $arr_str);
 }
 
 
@@ -1754,7 +1974,8 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $sql = trim($sql);
     // union의 사용을 허락하지 않습니다.
     //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
-    $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
+    //$sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
+    $sql = preg_replace("#^select.*from.*([\s\(]+union[\s\)]+|/\*.*union.*\*/).*#i", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
@@ -1764,7 +1985,24 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 
     if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
         if ($error) {
-            $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            $result = @mysqli_query($link, $sql);
+            if (!$result) {
+                $err_no   = mysqli_errno($link);
+                $err_msg  = mysqli_error($link);
+                $err_file = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
+
+                // 서버 로그에는 항상 상세 기록 (운영자가 추적 가능하도록)
+                @error_log("[g5 sql_query] {$err_no}: {$err_msg} | SQL: {$sql} | file: {$err_file}");
+
+                if ($is_debug) {
+                    // 디버그 모드: 상세 표시 (XSS 방지를 위해 escape)
+                    die("<p>" . htmlspecialchars($sql, ENT_QUOTES, 'UTF-8')
+                        . "<p>" . (int)$err_no . " : " . htmlspecialchars($err_msg, ENT_QUOTES, 'UTF-8')
+                        . "<p>error file : " . htmlspecialchars($err_file, ENT_QUOTES, 'UTF-8'));
+                }
+                // 운영 환경: 일반 메시지로만 처리하여 DB 구조/경로 정보 노출 방지
+                die('데이터베이스 처리 중 오류가 발생했습니다.');
+            }
         } else {
             try {
                 $result = @mysqli_query($link, $sql);
@@ -1774,7 +2012,21 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         }
     } else {
         if ($error) {
-            $result = @mysql_query($sql, $link) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
+            $result = @mysql_query($sql, $link);
+            if (!$result) {
+                $err_no   = mysql_errno();
+                $err_msg  = mysql_error();
+                $err_file = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
+
+                @error_log("[g5 sql_query] {$err_no}: {$err_msg} | SQL: {$sql} | file: {$err_file}");
+
+                if ($is_debug) {
+                    die("<p>" . htmlspecialchars($sql, ENT_QUOTES, 'UTF-8')
+                        . "<p>" . (int)$err_no . " : " . htmlspecialchars($err_msg, ENT_QUOTES, 'UTF-8')
+                        . "<p>error file : " . htmlspecialchars($err_file, ENT_QUOTES, 'UTF-8'));
+                }
+                die('데이터베이스 처리 중 오류가 발생했습니다.');
+            }
         } else {
             $result = @mysql_query($sql, $link);
         }
@@ -2314,24 +2566,192 @@ function _callback_normalizeString($matches){
 // 토큰 생성
 function _token()
 {
-    return md5(uniqid(rand(), true));
+    return get_random_token_string(16);
 }
 
 
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
+// HMAC 기반 — 세션 내부 비밀값 사용, 타임스탬프 포함, 다중 탭 호환
+// 토큰 형식: 타임스탬프.HMAC
 function get_token()
 {
-    $token = md5(uniqid(rand(), true));
-    set_session('ss_token', $token);
+    $key = _get_token_key();
+    $secret = _get_token_secret();
+    $time = time();
 
-    return $token;
+    $hmac = hash_hmac('sha256', $secret . '|csrf_token|' . $time, $key);
+
+    return $time . '.' . $hmac;
 }
 
 
-// POST로 넘어온 토큰과 세션에 저장된 토큰 비교
-function check_token()
+// POST로 넘어온 토큰의 HMAC 및 만료 시간 검증
+// 기본 만료: 7200초(2시간)
+function check_token($expire = 7200)
 {
-    set_session('ss_token', '');
+    $token = isset($_POST['token']) ? $_POST['token'] : '';
+
+    $dot = strpos($token, '.');
+    if (!$token || $dot === false) {
+        alert('올바른 방법으로 이용해 주십시오.');
+        return false;
+    }
+
+    $time = (int)substr($token, 0, $dot);
+    $hmac = substr($token, $dot + 1);
+
+    // 만료 검증
+    if (abs(time() - $time) > $expire) {
+        alert('토큰이 만료되었습니다. 페이지를 새로고침 해주십시오.');
+        return false;
+    }
+
+    // HMAC 검증
+    $key = _get_token_key();
+    $secret = _get_token_secret();
+    $expected = hash_hmac('sha256', $secret . '|csrf_token|' . $time, $key);
+
+    if ($hmac !== $expected) {
+        alert('올바른 방법으로 이용해 주십시오.');
+        return false;
+    }
+
+    return true;
+}
+
+
+// 토큰 암호화 키 반환 (내부용)
+function _get_token_key()
+{
+    return (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
+         ? G5_TOKEN_ENCRYPTION_KEY
+         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
+}
+
+
+// 세션 내부 비밀값 반환 (내부용, 서버측에만 존재)
+function _get_token_secret()
+{
+    $secret = get_session('ss_token_secret');
+    if (!$secret) {
+        $secret = get_random_token_string(16);
+        set_session('ss_token_secret', $secret);
+    }
+    return $secret;
+}
+
+/**
+ * 세션 기반 단순 Rate Limit. 자동화 도구의 무차별 호출을 늦추기 위한 용도.
+ *
+ * 같은 키에 대해 $window 초 동안 $max 회까지만 허용. 초과 시 false 반환.
+ * 세션 쿠키를 무시하는 정교한 봇은 우회 가능하지만, 세션 생성 비용으로 attack rate가 떨어지고
+ * 가장 흔한 form-only enumeration 시나리오는 효과적으로 차단된다.
+ *
+ * @param string $key    레이트 리밋 식별자 (예: 'ajax_mb_id_check')
+ * @param int    $max    윈도우당 최대 허용 횟수
+ * @param int    $window 윈도우 크기 (초)
+ * @return bool true = 허용, false = 차단
+ */
+function check_rate_limit($key, $max = 30, $window = 60)
+{
+    $session_key = 'ss_rate_' . $key;
+    $now = time();
+
+    $data = get_session($session_key);
+    if (!is_array($data) || !isset($data['reset']) || $data['reset'] < $now) {
+        $data = array('count' => 0, 'reset' => $now + $window);
+    }
+
+    $data['count']++;
+    set_session($session_key, $data);
+
+    return $data['count'] <= $max;
+}
+
+/**
+ * 이메일 미인증 회원의 메일주소 변경 페이지 접근 토큰을 생성한다.
+ *
+ * HMAC-SHA256 + 서버 시크릿(G5_TOKEN_ENCRYPTION_KEY)
+ * @param string $mb_id
+ * @param string $mb_datetime
+ * @return string 64자 hex
+ */
+function get_email_cert_key($mb_id, $mb_datetime)
+{
+    $key = (defined('G5_TOKEN_ENCRYPTION_KEY') && G5_TOKEN_ENCRYPTION_KEY)
+         ? G5_TOKEN_ENCRYPTION_KEY
+         : (defined('G5_TABLE_PREFIX') ? G5_TABLE_PREFIX : '');
+
+    $payload = 'email_cert|' . $mb_id . '|' . $mb_datetime;
+
+    return hash_hmac('sha256', $payload, $key);
+}
+
+/**
+ * CSRF 방지용 Origin/Referer 검증 (OWASP 권장 패턴).
+ *
+ * 브라우저가 자동으로 보내는 Origin 헤더를 우선 확인하고, 없으면 Referer를 사용해
+ * 요청이 현재 사이트에서 발생했는지 검증한다. 크로스 오리진에서 유입된 요청은
+ * 두 헤더 모두 공격자가 제어할 수 없으므로 위조가 불가능하다.
+ *
+ * 폼 파일(스킨) 수정 없이 처리 파일에만 호출을 추가하면 되므로 적용 범위가 넓고
+ * 커스텀 테마 호환성에 영향이 없다.
+ *
+ * 특수 환경(프록시 등)에서 헤더가 유실되는 경우 G5_DISABLE_ORIGIN_CHECK 상수로
+ * 비활성화할 수 있다.
+ *
+ * @param string $redirect_url 검증 실패 시 리다이렉트할 URL (기본: G5_URL)
+ * @return bool
+ */
+function check_request_origin($redirect_url = '')
+{
+    // 환경에 따라 opt-out 가능
+    if (defined('G5_DISABLE_ORIGIN_CHECK') && G5_DISABLE_ORIGIN_CHECK) {
+        return true;
+    }
+
+    // GET 요청은 검증하지 않음 (CSRF는 상태 변경 요청에만 의미 있음)
+    $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
+    if ($method === 'GET' || $method === 'HEAD') {
+        return true;
+    }
+
+    if (!$redirect_url) {
+        $redirect_url = defined('G5_URL') ? G5_URL : '/';
+    }
+
+    // Origin 우선, 없으면 Referer 사용
+    $origin  = isset($_SERVER['HTTP_ORIGIN'])  ? trim($_SERVER['HTTP_ORIGIN'])  : '';
+    $referer = isset($_SERVER['HTTP_REFERER']) ? trim($_SERVER['HTTP_REFERER']) : '';
+    $source  = $origin !== '' ? $origin : $referer;
+
+    if ($source === '') {
+        alert('올바른 경로로 접근해 주십시오.', $redirect_url);
+    }
+
+    $source_host = @parse_url($source, PHP_URL_HOST);
+    if (!$source_host) {
+        alert('올바른 경로로 접근해 주십시오.', $redirect_url);
+    }
+
+    // config.php의 G5_URL에서 호스트 추출 (HTTP_HOST보다 신뢰할 수 있음)
+    $server_host = defined('G5_URL') ? @parse_url(G5_URL, PHP_URL_HOST) : '';
+    if (!$server_host) {
+        $server_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $colon = strpos($server_host, ':');
+        if ($colon !== false) {
+            $server_host = substr($server_host, 0, $colon);
+        }
+    }
+
+    // www. 접두사 제거하여 비교 (www.example.com == example.com)
+    $source_host = preg_replace('/^www\./i', '', $source_host);
+    $server_host = preg_replace('/^www\./i', '', $server_host);
+
+    if (!$server_host || strcasecmp($source_host, $server_host) !== 0) {
+        alert('올바른 경로로 접근해 주십시오.', $redirect_url);
+    }
+
     return true;
 }
 
@@ -2654,7 +3074,8 @@ function delete_editor_thumbnail($contents)
     if(!$matchs)
         return;
 
-    for($i=0; $i<count($matchs[1]); $i++) {
+    $matchs_cnt = count($matchs[1]);
+    for($i=0; $i<$matchs_cnt; $i++) {
         // 이미지 path 구함
         $imgurl = @parse_url($matchs[1][$i]);
         // $srcfile = dirname(G5_PATH).$imgurl['path'];
@@ -2831,8 +3252,7 @@ class html_process {
         if (isset(self::$instances[self::$id])) {
             return self::$instances[self::$id];
         }
-        $calledClass = get_called_class();
-        return self::$instances[self::$id] = new $calledClass;
+        return self::$instances[self::$id] = new self;
     }
 
     public static function merge_stylesheet($stylesheet, $order)
@@ -2879,8 +3299,12 @@ class html_process {
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
         $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
-
-        if ($tmp_row['cnt']) {
+        
+        if (!isset($member['mb_id'])) {
+            $member['mb_id'] = '';
+        }
+        
+        if (!empty($tmp_row['cnt'])) {
             $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
             sql_query($tmp_sql, FALSE);
         } else {
@@ -3269,7 +3693,8 @@ function module_exec_check($exe, $type)
                             break;
                         }
 
-                        for($i=0; $i<count($out); $i++) {
+                        $out_cnt = count($out);
+                        for($i=0; $i<$out_cnt; $i++) {
                             if(strpos($out[$i], 'KCP ENC') !== false) {
                                 $search = true;
                                 break;
@@ -3284,7 +3709,8 @@ function module_exec_check($exe, $type)
                             break;
                         }
 
-                        for($i=0; $i<count($out); $i++) {
+                        $out_cnt = count($out);
+                        for($i=0; $i<$out_cnt; $i++) {
                             if(strpos($out[$i], 'CLIENT') !== false) {
                                 $search = true;
                                 break;
@@ -3299,7 +3725,8 @@ function module_exec_check($exe, $type)
                             break;
                         }
 
-                        for($i=0; $i<count($out); $i++) {
+                        $out_cnt = count($out);
+                        for($i=0; $i<$out_cnt; $i++) {
                             if(strpos(strtolower($out[$i]), 'ret code') !== false) {
                                 $search = true;
                                 break;
@@ -3316,7 +3743,9 @@ function module_exec_check($exe, $type)
     }
 
     if($error) {
-        $error = '<script>alert("'.$error.'");</script>';
+        $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+        $js_error = function_exists('get_js_safe_string') ? get_js_safe_string($error) : '"'.strtr((string)$error, $js_replace).'"';
+        $error = '<script>alert('.$js_error.');</script>';
     }
 
     return $error;
@@ -3429,6 +3858,9 @@ function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len
         $result = preg_replace('#([^\p{L}]|^)(?:javascript|jar|applescript|vbscript|vbs|wscript|jscript|behavior|mocha|livescript|view-source)\s*:(?:.*?([/\\\;()\'">]|$))#ius',
                 '$1$2', $result);
 
+        // 따옴표 + 속성으로 강제 진입 차단 (예: "style=..., 'onerror=...)
+        $result = preg_replace('/["\']\s*(?:on\w+|style)\s*=\s*/i', '', $result);
+        
         if((string)$result === (string)$str) break;
 
         $str = $result;
@@ -3738,13 +4170,16 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
         if (run_replace('check_same_url_host', (($p['host'] != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
+            $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
+            $js_return_url = function_exists('get_js_safe_string') ? get_js_safe_string($return_url) : '"'.strtr((string)$return_url, $js_replace).'"';
+            $html_return_url = htmlspecialchars($return_url, ENT_QUOTES);
             echo '<script>'.PHP_EOL;
             echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
-            echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;
+            echo 'document.location.href = '.$js_return_url.';'.PHP_EOL;
             echo '</script>'.PHP_EOL;
             echo '<noscript>'.PHP_EOL;
             echo '<p>'.$msg.'</p>'.PHP_EOL;
-            echo '<p><a href="'.$return_url.'">돌아가기</a></p>'.PHP_EOL;
+            echo '<p><a href="'.$html_return_url.'">돌아가기</a></p>'.PHP_EOL;
             echo '</noscript>'.PHP_EOL;
             exit;
         }
@@ -3956,10 +4391,16 @@ class str_encrypt
 
     function __construct($salt='')
     {
-        if(!$salt)
-            $this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr(G5_MYSQL_USER, -1), $_SERVER['SERVER_SOFTWARE'].$_SERVER['DOCUMENT_ROOT']));
-        else
+        global $config;
+        
+        if (!$salt) {
+            $config_hash = md5(serialize(array($config['cf_title'], $config['cf_theme'], $config['cf_admin_email_name'], $config['cf_login_point'], $config['cf_memo_send_point'])));
+            
+            //$this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr($config_hash, -1), $_SERVER['SERVER_SOFTWARE'].$config_hash.$_SERVER['DOCUMENT_ROOT']));
+            $this->salt = hash('sha256', preg_replace('/[^0-9A-Za-z]/', substr($config_hash, -1), $_SERVER['SERVER_SOFTWARE'].$config_hash.$_SERVER['DOCUMENT_ROOT']));
+        } else {
             $this->salt = $salt;
+        }
 
         $this->length = strlen($this->salt);
     }
@@ -3995,10 +4436,26 @@ class str_encrypt
     }
 }
 
+// 26년도에 너무 늦게 만들어서 기존의 사용자들과 충돌을 피하기 위해 get_sql_affected_rows 이라 네이밍함
+function get_sql_affected_rows($link=null)
+{
+    global $g5;
+
+    if (!$link) {
+        $link = $g5['connect_db'];
+    }
+
+    if (function_exists('mysqli_affected_rows') && G5_MYSQLI_USE) {
+        return @mysqli_affected_rows($link);
+    } else {
+        return @mysql_affected_rows($link);
+    }
+}
+
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
 function get_write_token($bo_table)
 {
-    $token = md5(uniqid(rand(), true));
+    $token = get_random_token_string(16);
     set_session('ss_write_'.$bo_table.'_token', $token);
 
     return $token;
@@ -4180,6 +4637,46 @@ function get_call_func_cache($func, $args=array()){
     return $result;
 }
 
+function g5_check_data_htaccess($data_path='')
+{
+    if ($data_path === '') {
+        if (!defined('G5_DATA_PATH')) {
+            return false;
+        }
+
+        $data_path = G5_DATA_PATH;
+    }
+
+    $htaccess_file = $data_path.'/.htaccess';
+
+    if (@is_file($htaccess_file) && @filesize($htaccess_file) > 0) {
+        return true;
+    }
+
+    if (!@is_dir($data_path) || !@is_writable($data_path)) {
+        return false;
+    }
+
+    $content = <<<EOD
+<FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp][Hh][Tt]|[Ss]?[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll]|[Pp][Hh][Aa][Rr]|[Ss][Vv][Gg][Zz]?)">
+Order allow,deny
+Deny from all
+</FilesMatch>
+RedirectMatch 403 /session/.*
+EOD;
+
+    $result = @file_put_contents($htaccess_file, $content);
+    if ($result === false) {
+        return false;
+    }
+
+    if (defined('G5_FILE_PERMISSION')) {
+        @chmod($htaccess_file, G5_FILE_PERMISSION);
+    }
+
+    return true;
+}
+
 // include 하는 경로에 data file 경로나 안전하지 않은 경로가 있는지 체크합니다.
 function is_include_path_check($path='', $is_input='')
 {
@@ -4205,7 +4702,7 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
             
-            $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(__DIR__)));
+            $dirname_doc_root = !empty($_SERVER['DOCUMENT_ROOT']) ? dirname($_SERVER['DOCUMENT_ROOT']) : dirname(dirname(dirname(dirname(__FILE__))));
             
             // 웹서버 폴더만 허용
             if ($dirname_doc_root && file_exists($path) && strpos(realpath($path), realpath($dirname_doc_root)) !== 0) {
@@ -4248,7 +4745,7 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
             
-            if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pear(cmd)?\.php/i', $replace_path)){
+            if (preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) || preg_match('/pe(?:ar|cl)(?:cmd)?\.php/i', $replace_path)){
                 return false;
             }
             if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) || (preg_match('/search\.skin\.php/i', $replace_path) ) ){
@@ -4301,10 +4798,49 @@ function get_token_encryption_key($str=''){
 
 function get_random_token_string($length=6)
 {
-    if(function_exists('random_bytes')){
-        return bin2hex(random_bytes($length));
+    // 사용 가능한 가장 안전한 CSPRNG를 우선순위대로 시도하여 $length 바이트의 무작위 값을 얻는다.
+    // PHP 5.2.17 ~ 8.x 호환. 모든 단계는 function_exists/defined로 가드되어 구버전에서도 안전.
+    $bytes = false;
+
+    // 1순위. PHP 7.0+ : random_bytes() — OS의 CSPRNG 직접 사용 (가장 안전)
+    if (function_exists('random_bytes')) {
+        $bytes = random_bytes($length);
+    }
+    // 2순위. PHP 5.3+ : openssl_random_pseudo_bytes() — OpenSSL 확장이 있으면 사용
+    elseif (function_exists('openssl_random_pseudo_bytes')) {
+        $strong = false;
+        $tmp = openssl_random_pseudo_bytes($length, $strong);
+        if ($tmp !== false && $strong === true) {
+            $bytes = $tmp;
+        }
     }
 
+    // 3순위. Linux/Unix : /dev/urandom 직접 읽기 (PHP 5.2 호환, OS 차원의 CSPRNG)
+    if ($bytes === false && DIRECTORY_SEPARATOR === '/' && @is_readable('/dev/urandom')) {
+        $fp = @fopen('/dev/urandom', 'rb');
+        if ($fp !== false) {
+            $tmp = @fread($fp, $length);
+            @fclose($fp);
+            if ($tmp !== false && strlen($tmp) === $length) {
+                $bytes = $tmp;
+            }
+        }
+    }
+
+    // 4순위. mcrypt 확장 (PHP 5.2 호환, PHP 7.2에서 제거됨) — Windows 등에서 fallback
+    if ($bytes === false && function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM')) {
+        $tmp = @mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+        if ($tmp !== false && strlen($tmp) === $length) {
+            $bytes = $tmp;
+        }
+    }
+
+    if ($bytes !== false) {
+        return bin2hex($bytes);
+    }
+
+    // 최후 수단: 약한 RNG (암호학적 안전성 없음, 기존 동작 호환을 위해 유지)
+    // 이 경로에 도달하면 시스템에 안전한 난수 소스가 전혀 없는 비정상 환경이므로 점검 필요.
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     $output = substr(str_shuffle($characters), 0, $length);
 

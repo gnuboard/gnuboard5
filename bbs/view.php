@@ -111,17 +111,17 @@ if ($is_member) {
 
 $view = get_view($write, $board, $board_skin_path);
 
-if (strstr($sfl, 'subject'))
+if (strpos($sfl, 'subject') !== false)
     $view['subject'] = search_font($stx, $view['subject']);
 
 $html = 0;
-if (strstr($view['wr_option'], 'html1'))
+if (strpos($view['wr_option'], 'html1') !== false)
     $html = 1;
-else if (strstr($view['wr_option'], 'html2'))
+else if (strpos($view['wr_option'], 'html2') !== false)
     $html = 2;
 
 $view['content'] = conv_content($view['wr_content'], $html);
-if (strstr($sfl, 'content'))
+if (strpos($sfl, 'content') !== false)
     $view['content'] = search_font($stx, $view['content']);
 
 //$view['rich_content'] = preg_replace("/{이미지\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);

@@ -415,11 +415,35 @@ if (!isset($config['cf_cert_use_seed'])) {
     sql_query($sql, false);
 }
 if (!isset($config['cf_cert_kcp_enckey'])) {
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_kcp_enckey` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`; ";
     sql_query($sql, false);
-    
+
     $config['cf_cert_kcp_enckey'] = '';
+}
+
+// 광고성 정보 수신 동의 사용 필드 추가
+if (!isset($config['cf_use_promotion'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['config_table']}`
+            ADD `cf_use_promotion` tinyint(1) NOT NULL DEFAULT '0' AFTER `cf_privacy` ",
+        true
+    );
+}
+
+// 광고성 정보 수신 동의 여부 필드 추가 + 메일 / SMS 수신 일자 추가
+if (!isset($member['mb_marketing_agree'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_marketing_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_scrap_cnt`,
+                ADD `mb_marketing_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_marketing_agree`,
+                ADD `mb_thirdparty_agree` tinyint(1) NOT NULL DEFAULT '0' AFTER  `mb_marketing_date`,
+                ADD `mb_thirdparty_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_thirdparty_agree`,
+                ADD `mb_agree_log` TEXT NOT NULL AFTER `mb_thirdparty_date`,
+                ADD `mb_mailling_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_mailling`,
+                ADD `mb_sms_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_sms` ",
+        true
+    );
 }
 
 if (!$config['cf_faq_skin']) {
@@ -963,6 +987,17 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <th scope="row"><label for="cf_privacy">개인정보처리방침</label></th>
                         <td colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?php echo html_purifier($config['cf_privacy']); ?></textarea></td>
                     </tr>
+                    <tr>
+                        <th scope="row"><label for="cf_use_promotion">회원가입 약관 동의에<br>광고성 정보 수신 동의 표시 여부</label></th>
+                        <td colspan="3">
+                            <?php echo help('<b>광고성 정보 수신 · 마케팅 목적의 개인정보 수집 및 이용 · 개인정보 제 3자 제공</b> 여부를 설정합니다. <b>SMS 또는 카카오톡</b> 사용 시 <b>개인정보 제3자 제공</b>이 활성화됩니다.'); ?>
+                            <?php echo help('동의한 회원에게 <b>카카오톡(친구톡)·문자</b>로 광고성 메시지를 발송할 수 있습니다.'); ?>
+                            <?php echo help('<b>휴대전화번호</b> 사용을 위해서는 <b>기본환경설정 > 회원가입 > 휴대전화번호 입력</b>을 <b>[보이기]</b> 또는 <b>[필수입력]</b>으로 설정해야 하며, 미설정 시 수집이 불가합니다.'); ?>
+                            <?php echo help('* 「정보통신망이용촉진및정보보호등에관한법률」에 따라 <b>광고성 정보 수신 동의</b>를 매 2년마다 반드시 확인해야 합니다.'); ?>
+                            <input type="checkbox" name="cf_use_promotion" value="1" id="cf_use_promotion" <?php echo $config['cf_use_promotion'] ? 'checked' : ''; ?>> 
+                            <label for="cf_use_promotion">사용</label>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -1033,7 +1068,24 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                                 <?php echo option_selected("", $config['cf_cert_hp'], "사용안함"); ?>
                                 <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
                                 <?php echo option_selected("kcp", $config['cf_cert_hp'], "NHN KCP 휴대폰 본인확인"); ?>
+                                <?php echo option_selected("kcp_v2", $config['cf_cert_hp'], "NHN KCP 휴대폰 본인확인(api_v2)"); ?>
                             </select>
+                            <div id="cf_cert_hp_kcp_v2_notice" style="display:<?php echo ($config['cf_cert_hp'] == 'kcp_v2') ? 'block' : 'none'; ?>; margin-top:8px; padding:10px 12px; background:#fff8e1; border:1px solid #ffd54f; border-radius:4px; color:#5d4037; line-height:1.5;">
+                                <strong>NHN KCP 휴대폰 본인확인(api_v2)</strong> 사용 시,<br>
+                                NHN KCP 상점관리자 &gt; 부가서비스 &gt; 휴대폰본인확인 &gt; 연동방식 설정 에서 <strong>신규 연동방식(V2) 사용여부를 &lsquo;사용&rsquo;</strong> 으로 변경해야 정상 동작합니다.
+                            </div>
+                            <script>
+                            jQuery(function($){
+                                function toggle_kcp_v2_notice() {
+                                    var is_kcp_v2 = $('#cf_cert_hp').val() === 'kcp_v2';
+                                    $('#cf_cert_hp_kcp_v2_notice').toggle(is_kcp_v2);
+                                    $('#cf_cert_kcp_cd_prefix').toggle(!is_kcp_v2);
+                                }
+
+                                $('#cf_cert_hp').on('change', toggle_kcp_v2_notice);
+                                toggle_kcp_v2_notice();
+                            });
+                            </script>
                         </td>
                     </tr>
                     <tr>
@@ -1069,16 +1121,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_cd">NHN KCP 사이트코드</label></th>
                         <td class="cf_cert_service">
-                            <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
-                            <span class="sitecode">SM</span>
-                            <input type="text" name="cf_cert_kcp_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcp_cd']); ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.kr/main/service/p_cert.php" target="_blank" class="btn_frmline">NHN KCP 휴대폰 본인확인 서비스 신청페이지</a>
+                            <?php echo help('기존 NHN KCP 휴대폰 본인확인은 SM으로 시작하는 5자리 사이트 코드 중 뒤의 3자리만 입력해 주십시오.<br>NHN KCP 휴대폰 본인확인(api_v2)은 KCP에서 발급받은 5자리 사이트코드를 그대로 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
+                            <span class="sitecode" id="cf_cert_kcp_cd_prefix" style="display:<?php echo ($config['cf_cert_hp'] == 'kcp_v2') ? 'none' : 'inline'; ?>;">SM</span>
+                            <input type="text" name="cf_cert_kcp_cd" value="<?php echo get_sanitize_input($config['cf_cert_kcp_cd']); ?>" id="cf_cert_kcp_cd" class="frm_input" size="10" maxlength="10"> <a href="http://sir.kr/main/service/p_cert.php" target="_blank" class="btn_frmline">NHN KCP 휴대폰 본인확인 서비스 신청페이지</a>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_enckey">NHN KCP 가맹점 인증키</label></th>
                         <td class="cf_cert_service">
-                            <?php echo help('(선택사항, 추후 NHN_KCP 상점관리자에서 인증키 발급 메뉴 오픈일정 이후부터 적용되는 내용입니다.)<br>NHN_KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키 발급 후에 인증키 정보를 입력') ?>
-                            <input type="text" name="cf_cert_kcp_enckey" value="<?php echo get_sanitize_input($config['cf_cert_kcp_enckey']); ?>" id="cf_cert_kcp_enckey" class="frm_input" maxlength="100" size="40"> <a href="https://partner.kcp.co.kr" target="_blank" class="btn_frmline">NHN KCP 상점관리자</a>
+                            <?php echo help('NHN KCP 상점관리자 > 기술관리센터 > 인증센터 > 가맹점 인증키관리 에서 인증키를 발급받아 입력해 주십시오.<br>NHN KCP 휴대폰 본인확인(api_v2)도 이 인증키 값을 사용합니다.') ?>
+                            <input type="text" name="cf_cert_kcp_enckey" value="<?php echo get_sanitize_input($config['cf_cert_kcp_enckey']); ?>" id="cf_cert_kcp_enckey" class="frm_input" maxlength="100" size="70"> <a href="https://partner.kcp.co.kr" target="_blank" class="btn_frmline">NHN KCP 상점관리자</a>
                         </td>
                     </tr>
                     <tr>
@@ -1138,6 +1190,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <input type="checkbox" name="cf_formmail_is_member" value="1" id="cf_formmail_is_member" <?php echo $config['cf_formmail_is_member'] ? 'checked' : ''; ?>> 회원만 사용
                         </td>
                     </tr>
+                </tbody>
             </table>
         </div>
     </section>
@@ -1525,7 +1578,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </table>
         </div>
     </section>
-
 
     <section id="anc_cf_extra">
         <h2 class="h2_frm">여분필드 기본 설정</h2>

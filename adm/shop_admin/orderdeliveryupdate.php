@@ -6,6 +6,8 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
+check_admin_token();
+
 define("_ORDERMAIL_", true);
 
 $sms_count = 0;

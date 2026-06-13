@@ -281,7 +281,7 @@ function auth_check($auth, $attr, $return = false)
 
     $attr = strtolower($attr);
 
-    if (!strstr($auth, $attr)) {
+    if (strpos($auth, $attr) === false) {
         if ($attr == 'r') {
             $msg = '읽을 권한이 없습니다.';
             if ($return) {
@@ -389,7 +389,7 @@ function order_select($fld, $sel = '')
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
 function get_admin_token()
 {
-    $token = md5(uniqid(rand(), true));
+    $token = get_random_token_string(16);
     set_session('ss_admin_token', $token);
 
     return $token;
@@ -608,6 +608,110 @@ function admin_menu_find_by($call, $search_key)
     }
 
     return '';
+}
+
+function admin_menu_local_path($url)
+{
+    $url = (string) $url;
+
+    if (!$url) {
+        return '';
+    }
+
+    $url = preg_replace('/[?#].*$/', '', $url);
+
+    $maps = array(
+        G5_ADMIN_URL => G5_ADMIN_PATH,
+    );
+
+    if (defined('G5_SMS5_ADMIN_URL') && defined('G5_SMS5_ADMIN_PATH')) {
+        $maps[G5_SMS5_ADMIN_URL] = G5_SMS5_ADMIN_PATH;
+    }
+
+    foreach ($maps as $base_url => $base_path) {
+        if (strpos($url, $base_url) !== 0) {
+            continue;
+        }
+
+        $path = $base_path.substr($url, strlen($base_url));
+
+        if (substr($path, -1) === '/') {
+            $path .= 'index.php';
+        }
+
+        return $path;
+    }
+
+    return '';
+}
+
+function admin_menu_is_super_only($menu_item)
+{
+    static $cache = array();
+
+    $sub_menu = isset($menu_item[0]) ? (string) $menu_item[0] : '';
+    if (!$sub_menu) {
+        return false;
+    }
+
+    if (isset($cache[$sub_menu])) {
+        return $cache[$sub_menu];
+    }
+
+    // 향후 메뉴 정의에서 명시적으로 최고관리자 전용 표시가 필요할 때 사용한다.
+    if (isset($menu_item[4]) && $menu_item[4] === 'super') {
+        return $cache[$sub_menu] = true;
+    }
+
+    $path = admin_menu_local_path(isset($menu_item[2]) ? $menu_item[2] : '');
+    if (!$path || !is_readable($path)) {
+        return $cache[$sub_menu] = false;
+    }
+
+    $content = file_get_contents($path, false, null, 0, 12000);
+    if ($content === false) {
+        return $cache[$sub_menu] = false;
+    }
+
+    $pattern = '/if\s*\([^\)]*\$is_admin\s*(?:!==|!=)\s*[\'"]super[\'"][^\)]*\)\s*\{?[\s\S]{0,250}(?:alert|alert_close|die)\s*\([^\;]*(?:최고관리자만|최고관리자로)/u';
+
+    return $cache[$sub_menu] = (bool) preg_match($pattern, $content);
+}
+
+function admin_get_assignable_auth_menu()
+{
+    global $menu;
+
+    $assignable_auth_menu = array();
+
+    if (!isset($menu) || !is_array($menu)) {
+        return $assignable_auth_menu;
+    }
+
+    foreach ($menu as $menu_group) {
+        if (!is_array($menu_group)) {
+            continue;
+        }
+
+        for ($i=1; $i<count($menu_group); $i++) {
+            if (!isset($menu_group[$i]) || !is_array($menu_group[$i])) {
+                continue;
+            }
+
+            $sub_menu = isset($menu_group[$i][0]) ? $menu_group[$i][0] : '';
+            if (!$sub_menu || $sub_menu === '-' || substr($sub_menu, -3) === '000') {
+                continue;
+            }
+
+            if (admin_menu_is_super_only($menu_group[$i])) {
+                continue;
+            }
+
+            $assignable_auth_menu[$sub_menu] = isset($menu_group[$i][1]) ? $menu_group[$i][1] : '';
+        }
+    }
+
+    return $assignable_auth_menu;
 }
 
 // 접근 권한 검사

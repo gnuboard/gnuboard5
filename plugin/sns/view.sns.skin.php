@@ -38,7 +38,7 @@ $bo_v_sns_class = $config['cf_kakao_js_apikey'] ? 'show_kakao' : '';
                 }
             }
 
-            var webUrl = location.protocol+"<?php echo '//'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>",
+            var webUrl = location.protocol+<?php echo json_encode('//'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>,
                 imageUrl = $("#bo_v_img").find("img").attr("src") || $(".view_image").find("img").attr("src") || '';
 
             Kakao.Link.sendDefault({

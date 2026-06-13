@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$mb_id = isset($_REQUEST['mb_id']) ? clean_xss_tags($_REQUEST['mb_id'], 1, 1) : '';
+$mb_id = isset($_REQUEST['mb_id']) ? addslashes(clean_xss_tags(stripslashes($_REQUEST['mb_id']), 1, 1)) : '';
 
 $sql = " select mb_id, mb_email, mb_datetime from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $row = sql_fetch($sql);

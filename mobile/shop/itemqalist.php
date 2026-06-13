@@ -7,6 +7,11 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 $sql_common = " from `{$g5['g5_shop_item_qa_table']}` a join `{$g5['g5_shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where (1) ";
 
+if( isset($sfl) && ! in_array($sfl, array('b.it_name', 'a.it_id', 'a.iq_subject', 'a.iq_question', 'a.iq_name', 'a.mb_id')) ){
+    //다른값이 들어가있다면 초기화
+    $sfl = '';
+}
+
 if(!$sfl)
     $sfl = 'b.it_name';
 
@@ -31,6 +36,9 @@ if (!$sst) {
     $sst  = "a.iq_id";
     $sod = "desc";
 }
+// 정렬 컬럼/방향 화이트리스트
+$sst = in_array($sst, array('a.iq_id', 'a.iq_datetime', 'a.it_id', 'b.it_name'), true) ? $sst : 'a.iq_id';
+$sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : 'desc';
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt

@@ -25,7 +25,7 @@ $sql = " select SUM(IF(ct_status = '주문', 1, 0)) as od_count2,
             where od_id = '$od_id' ";
 $ct = sql_fetch($sql);
 
-$uid = md5($od['od_id'].$od['od_time'].$od['od_ip']);
+$uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']) : md5($od['od_id'].$od['od_time'].$od['od_ip']);
 
 if($od['od_cancel_price'] > 0 || $ct['od_count1'] != $ct['od_count2']) {
     alert("취소할 수 있는 주문이 아닙니다.", G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
@@ -63,6 +63,10 @@ if($od['od_tno']) {
 
                 alert($msg);
             }
+            break;
+        case 'toss':
+            $cancel_msg = '주문자 본인 취소-'.$cancel_memo;
+            include_once(G5_SHOP_PATH.'/toss/toss_cancel.php');
             break;
         case 'inicis':
             include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
@@ -166,11 +170,16 @@ $sql = " update {$g5['g5_shop_order_table']}
                 od_send_coupon = '0',
                 od_status = '취소',
                 od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G5_TIME_YMDHIS." (취소이유 : {$cancel_memo})\")
-            where od_id = '$od_id' ";
+            where od_id = '$od_id' 
+              and od_cancel_price = 0";
 sql_query($sql);
 
 // 주문취소 회원의 포인트를 되돌려 줌
-if ($od['od_receipt_point'] > 0)
-    insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
+// get_sql_affected_rows 함수가 존재하지 않으면 포인트를 돌려주는것을 실행 할수 없음
+$affected = function_exists('get_sql_affected_rows') ? get_sql_affected_rows() : 0;
+
+if ($od['od_receipt_point'] > 0 && $affected) {
+    insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소", '@shop_order', $od_id, 'cancel');
+}
 
 goto_url(G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");

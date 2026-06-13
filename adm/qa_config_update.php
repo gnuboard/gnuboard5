@@ -21,6 +21,12 @@ foreach ($check_keys as $key) {
 $qa_include_head = isset($qa_include_head) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_head, 0, 255)) : '';
 $qa_include_tail = isset($qa_include_tail) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_tail, 0, 255)) : '';
 
+// 최고 관리자가 아니면 include 경로 변경 불가 (board_form_update.php 와 동일 정책)
+if ($is_admin !== 'super') {
+    $qa_include_head = isset($qaconfig['qa_include_head']) ? $qaconfig['qa_include_head'] : '';
+    $qa_include_tail = isset($qaconfig['qa_include_tail']) ? $qaconfig['qa_include_tail'] : '';
+}
+
 // 관리자가 자동등록방지를 사용해야 할 경우
 if ($board && ($qaconfig['qa_include_head'] !== $qa_include_head || $qaconfig['qa_include_tail'] !== $qa_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()) {
     include_once G5_CAPTCHA_PATH . '/captcha.lib.php';

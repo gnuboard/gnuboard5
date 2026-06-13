@@ -1,7 +1,5 @@
 <?php
 
-namespace phpbrowscap;
-
 /**
  * Browscap.ini parsing class with caching and update capabilities
  *
@@ -219,14 +217,14 @@ class Browscap
         date_default_timezone_set(date_default_timezone_get());
 
         if (!isset($cache_dir)) {
-            throw new Exception('You have to provide a path to read/store the browscap cache file');
+            throw new Browscap_Exception('You have to provide a path to read/store the browscap cache file');
         }
 
         $old_cache_dir = $cache_dir;
         $cache_dir     = realpath($cache_dir);
 
         if (false === $cache_dir) {
-            throw new Exception(
+            throw new Browscap_Exception(
                 sprintf(
                     'The cache path %s is invalid. Are you sure that it exists and that you have permission to access it?',
                     $old_cache_dir
@@ -318,7 +316,7 @@ class Browscap
 
         $cache_file = $this->cacheDir . $this->cacheFilename;
         if (!$this->_cacheLoaded && !$this->_loadCache($cache_file)) {
-            throw new Exception('Cannot load cache file - the cache format is not compatible.');
+            throw new Browscap_Exception('Cannot load cache file - the cache format is not compatible.');
         }
 
         // Automatically detect the useragent
@@ -549,10 +547,10 @@ class Browscap
 
         $lockRes = fopen($lockfile, 'w+');
         if (false === $lockRes) {
-            throw new Exception(sprintf('error opening lockfile %s', $lockfile));
+            throw new Browscap_Exception(sprintf('error opening lockfile %s', $lockfile));
         }
         if (false === flock($lockRes, LOCK_EX | LOCK_NB)) {
-            throw new Exception(sprintf('error locking lockfile %s', $lockfile));
+            throw new Browscap_Exception(sprintf('error locking lockfile %s', $lockfile));
         }
 
         $ini_path   = $this->cacheDir . $this->iniFilename;
@@ -586,12 +584,12 @@ class Browscap
         // asume that all will be ok
         if (false === ($fileRes = fopen($tmpFile, 'w+'))) {
             // opening the temparary file failed
-            throw new Exception('opening temporary file failed');
+            throw new Browscap_Exception('opening temporary file failed');
         }
 
         if (false === fwrite($fileRes, $this->_buildCache())) {
             // writing to the temparary file failed
-            throw new Exception('writing to temporary file failed');
+            throw new Browscap_Exception('writing to temporary file failed');
         }
 
         fclose($fileRes);
@@ -600,7 +598,7 @@ class Browscap
             // renaming file failed, remove temp file
             @unlink($tmpFile);
 
-            throw new Exception('could not rename temporary file to the cache file');
+            throw new Browscap_Exception('could not rename temporary file to the cache file');
         }
 
         @flock($lockRes, LOCK_UN);
@@ -612,6 +610,41 @@ class Browscap
     }
 
     /**
+     * Parse ini content on PHP versions that do not provide parse_ini_string().
+     *
+     * @param string $iniContent
+     * @param bool   $processSections
+     *
+     * @return array
+     */
+    protected function parseIniString($iniContent, $processSections = true)
+    {
+        if (function_exists('parse_ini_string')) {
+            if (defined('INI_SCANNER_RAW')) {
+                return parse_ini_string($iniContent, $processSections, INI_SCANNER_RAW);
+            }
+
+            return parse_ini_string($iniContent, $processSections);
+        }
+
+        $tmpDir = function_exists('sys_get_temp_dir') ? sys_get_temp_dir() : dirname(__FILE__);
+        $tmpFile = tempnam($tmpDir, 'browscap_ini_');
+        if ($tmpFile === false) {
+            throw new Browscap_Exception('could not create temporary ini file');
+        }
+
+        if (file_put_contents($tmpFile, $iniContent) === false) {
+            @unlink($tmpFile);
+            throw new Browscap_Exception('could not write temporary ini file');
+        }
+
+        $parsed = parse_ini_file($tmpFile, $processSections);
+        @unlink($tmpFile);
+
+        return is_array($parsed) ? $parsed : array();
+    }
+
+    /**
      * creates the cache content
      *
      * @param string $iniContent The content of the downloaded ini file
@@ -619,7 +652,7 @@ class Browscap
      */
     protected function createCacheOldWay($iniContent, $actLikeNewVersion = false)
     {
-        $browsers = parse_ini_string($iniContent, true, INI_SCANNER_RAW);
+        $browsers = $this->parseIniString($iniContent, true);
 
         if ($actLikeNewVersion) {
             $this->_source_version = (int) $browsers[self::BROWSCAP_VERSION_KEY]['Version'];
@@ -718,13 +751,13 @@ class Browscap
         preg_match_all('/(?<=\[)(?:[^\r\n]+)(?=\])/m', $iniContent, $patternPositions);
 
         if (!isset($patternPositions[0])) {
-            throw new Exception('could not extract patterns from ini file');
+            throw new Browscap_Exception('could not extract patterns from ini file');
         }
 
         $patternPositions = $patternPositions[0];
 
         if (!count($patternPositions)) {
-            throw new Exception('no patterns were found inside the ini file');
+            throw new Browscap_Exception('no patterns were found inside the ini file');
         }
 
         // split the ini file into sections and save the data in one line with a hash of the belonging
@@ -735,7 +768,7 @@ class Browscap
         $matches        = array();
 
         if (preg_match('/.*\[DefaultProperties\]([^[]*).*/', $iniContent, $matches)) {
-            $properties = parse_ini_string($matches[1], true, INI_SCANNER_RAW);
+            $properties = $this->parseIniString($matches[1], true);
 
             $this->_properties = array_keys($properties);
 
@@ -766,7 +799,7 @@ class Browscap
                 continue;
             }
 
-            $properties = parse_ini_string($iniParts[($position + 1)], true, INI_SCANNER_RAW);
+            $properties = $this->parseIniString($iniParts[($position + 1)], true);
 
             if (empty($properties['Comment'])
                 || false !== strpos($userAgent, '*')
@@ -1157,7 +1190,7 @@ class Browscap
         // Check if it's possible to write to the .ini file.
         if (is_file($path)) {
             if (!is_writable($path)) {
-                throw new Exception(
+                throw new Browscap_Exception(
                     'Could not write to "' . $path . '" (check the permissions of the current/old ini file).'
                 );
             }
@@ -1169,7 +1202,7 @@ class Browscap
                 fclose($test_file);
                 unlink($path);
             } else {
-                throw new Exception(
+                throw new Browscap_Exception(
                     'Could not write to "' . $path . '" (check the permissions of the cache directory).'
                 );
             }
@@ -1179,11 +1212,11 @@ class Browscap
         $content = $this->_getRemoteData($url);
 
         if (!is_string($content) || strlen($content) < 1) {
-            throw new Exception('Could not load .ini content from "' . $url . '"');
+            throw new Browscap_Exception('Could not load .ini content from "' . $url . '"');
         }
 
         if (false !== strpos('rate limit', $content)) {
-            throw new Exception(
+            throw new Browscap_Exception(
                 'Could not load .ini content from "' . $url . '" because the rate limit is exeeded for your IP'
             );
         }
@@ -1192,7 +1225,7 @@ class Browscap
         $content = $this->sanitizeContent($content);
 
         if (!file_put_contents($path, $content)) {
-            throw new Exception('Could not write .ini content to "' . $path . '"');
+            throw new Browscap_Exception('Could not write .ini content to "' . $path . '"');
         }
 
         return true;
@@ -1224,7 +1257,7 @@ class Browscap
         $remote_tmstp    = strtotime($remote_datetime);
 
         if (!$remote_tmstp) {
-            throw new Exception("Bad datetime format from {$this->remoteVerUrl}");
+            throw new Browscap_Exception("Bad datetime format from {$this->remoteVerUrl}");
         }
 
         return $remote_tmstp;
@@ -1239,7 +1272,7 @@ class Browscap
     protected function _getLocalMTime()
     {
         if (!is_readable($this->localFile) || !is_file($this->localFile)) {
-            throw new Exception('Local file is not readable');
+            throw new Browscap_Exception('Local file is not readable');
         }
 
         return filemtime($this->localFile);
@@ -1331,7 +1364,7 @@ class Browscap
                 if ($file !== false) {
                     return $file;
                 } else {
-                    throw new Exception('Cannot open the local file');
+                    throw new Browscap_Exception('Cannot open the local file');
                 }
             case self::UPDATE_FOPEN:
                 if (ini_get('allow_url_fopen') && function_exists('file_get_contents')) {
@@ -1419,7 +1452,7 @@ class Browscap
                     }
                 }// else try with the next possibility
             case false:
-                throw new Exception(
+                throw new Browscap_Exception(
                     'Your server can\'t connect to external resources. Please update the file manually.'
                 );
         }
@@ -1452,7 +1485,7 @@ class Browscap
  * @license    http://www.opensource.org/licenses/MIT MIT License
  * @link       https://github.com/GaretJax/phpbrowscap/
  */
-class Exception extends \Exception
+class Browscap_Exception extends Exception
 {
     // nothing to do here
 }

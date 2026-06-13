@@ -16,8 +16,9 @@ if (substr_count($wr_content, "&#") > 50) {
 }
 
 $w = isset($_POST['w']) ? clean_xss_tags($_POST['w']) : '';
-$wr_name  = isset($_POST['wr_name']) ? clean_xss_tags(trim($_POST['wr_name'])) : '';
-$wr_secret = isset($_POST['wr_secret']) ? clean_xss_tags($_POST['wr_secret']) : '';
+$wr_name  = isset($_POST['wr_name']) ? addslashes(clean_xss_tags(stripslashes(trim($_POST['wr_name'])))) : '';
+$wr_name  = preg_replace("#[\\\]+$#", "", $wr_name);
+$wr_secret = isset($_POST['wr_secret']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_secret']))) : '';
 $wr_email = $wr_subject = '';
 $reply_array = array();
 
@@ -41,9 +42,9 @@ $wr_17 = isset($_POST['wr_17']) ? $_POST['wr_17'] : '';
 $wr_18 = isset($_POST['wr_18']) ? $_POST['wr_18'] : '';
 $wr_19 = isset($_POST['wr_19']) ? $_POST['wr_19'] : '';
 $wr_20 = isset($_POST['wr_20']) ? $_POST['wr_20'] : '';
-$wr_facebook_user = isset($_POST['wr_facebook_user']) ? clean_xss_tags($_POST['wr_facebook_user'], 1, 1) : '';
-$wr_twitter_user = isset($_POST['wr_twitter_user']) ? clean_xss_tags($_POST['wr_twitter_user'], 1, 1) : '';
-$wr_homepage = isset($_POST['wr_homepage']) ? clean_xss_tags($_POST['wr_homepage'], 1, 1) : '';
+$wr_facebook_user = isset($_POST['wr_facebook_user']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_facebook_user']), 1, 1)) : '';
+$wr_twitter_user = isset($_POST['wr_twitter_user']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_twitter_user']), 1, 1)) : '';
+$wr_homepage = isset($_POST['wr_homepage']) ? addslashes(clean_xss_tags(stripslashes($_POST['wr_homepage']), 1, 1)) : '';
 
 if (!empty($_POST['wr_email']))
     $wr_email = get_email_address(trim($_POST['wr_email']));
@@ -289,7 +290,8 @@ if ($w == 'c') // 댓글 입력
         // 중복된 메일 주소는 제거
         $unique_email = array_unique($array_email);
         $unique_email = array_values($unique_email);
-        for ($i=0; $i<count($unique_email); $i++) {
+        $unique_email_cnt = count($unique_email);
+        for ($i=0; $i<$unique_email_cnt; $i++) {
             mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
         }
     }

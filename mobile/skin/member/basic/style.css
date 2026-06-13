@@ -5,6 +5,8 @@
 .mbskin h1 {font-size:1.75em;margin:40px 0 25px}
 .mbskin p {padding-bottom:20px;border-bottom:1px solid #c8c8c8}
 .mbskin p strong {color:#4162ff;padding-bottom:5px;display:block;font-size:1.083em}
+
+/* 버튼 */
 .mbskin .btn_submit {display:block;width:100%;height:40px;line-height:40px;padding:0 10px;border:0;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
@@ -68,7 +70,10 @@
 .fregister_agree input[type="checkbox"]:checked + label {color:#000}
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:15px}
-
+#fregisterform .consent-line {display: flex; align-items: baseline;}
+#fregisterform .consent-date { margin: 5px 0 0 20px !important; }
+#fregisterform .consent-group .sub-consents {padding: 10px 20px 0;}
+#fregisterform .js-open-consent {flex:1 0 auto; margin-left: 10px; text-align: right; font-size: 12px; color: #3f51b5; background: none; border: none; cursor: pointer; text-decoration: underline; }
 
 /* 회원가입 완료 */
 #reg_result {padding:20px 10px 10px}
@@ -135,8 +140,9 @@
 #flogin {background:#fff;margin:20px 0}
 
 #mb_login_notmb {background:#fff;border-bottom:1px solid #ccc;padding:20px}
+#mb_login_notmb .chk_box input[type="checkbox"] + label{padding-left:20px}
 #mb_login_notmb h2 {font-size:1.25em;padding:10px;background:#f3f3f3}
-#mb_login_notmb p {border:0;padding:0;margin:10px;color:#}
+#mb_login_notmb p {border:0;padding:0;margin:10px;}
 #guest_privacy {border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:200px;margin:10px 0;overflow-y:auto}
 #mb_login_notmb .btn_submit {width:100%;display:block;height:40px;line-height:40px}
 
@@ -153,7 +159,6 @@
 #mb_login #sns_login .sns-icon {width:49% !important;float:left !important}
 #mb_login #sns_login .sns-icon:nth-child(odd) {margin-right:2%}
 #mb_login #sns_login .txt {font-size:0.95em;padding-left:5px !important;border-left:0 !important}
-
 
 /* 쪽지 */
 .memo_list {border-top:1px solid #ececec;}
@@ -198,7 +203,7 @@
 .memo_from li.memo_view_date {display:block;color:#555;line-height:24px}
 .memo_from li.memo_op_btn {position:absolute}
 .memo_from li.list_btn {right:53px;}
-.memo_from li.del_btn {right:15px;padding}
+.memo_from li.del_btn {right:15px;}
 .memo_from:after {display:block;visibility:hidden;clear:both;content:""}
 
 .memo_btn {width:100%}
@@ -291,7 +296,6 @@
 .chk_box input[type="radio"]:checked + label {color:#3a8afd}
 .chk_box input[type="radio"]:checked + label span {border-color:#3a8afd}
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
-
 
 /* 자기소개 */
 #profile section {margin:10px}
