@@ -150,6 +150,15 @@ $hp_readonly = (($config['cf_cert_use'] && $config['cf_cert_req']) && ($config['
 $agree  = isset($_REQUEST['agree']) ? preg_replace('#[^0-9]#', '', $_REQUEST['agree']) : '';
 $agree2 = isset($_REQUEST['agree2']) ? preg_replace('#[^0-9]#', '', $_REQUEST['agree2']) : '';
 
+$member['mb_marketing_agree']  = isset($member['mb_marketing_agree']) ? $member['mb_marketing_agree'] : 0;
+$member['mb_marketing_date']   = isset($member['mb_marketing_date']) ? $member['mb_marketing_date'] : '0000-00-00 00:00:00';
+$member['mb_thirdparty_agree'] = isset($member['mb_thirdparty_agree']) ? $member['mb_thirdparty_agree'] : 0;
+$member['mb_thirdparty_date']  = isset($member['mb_thirdparty_date']) ? $member['mb_thirdparty_date'] : '0000-00-00 00:00:00';
+$member['mb_mailling']         = isset($member['mb_mailling']) ? $member['mb_mailling'] : 0;
+$member['mb_mailling_date']    = isset($member['mb_mailling_date']) ? $member['mb_mailling_date'] : '0000-00-00 00:00:00';
+$member['mb_sms']              = isset($member['mb_sms']) ? $member['mb_sms'] : 0;
+$member['mb_sms_date']         = isset($member['mb_sms_date']) ? $member['mb_sms_date'] : '0000-00-00 00:00:00';
+
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 if ($config['cf_use_addr'])
     add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
