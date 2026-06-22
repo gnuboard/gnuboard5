@@ -11,7 +11,7 @@ auth_check_menu($auth, $sub_menu, 'w');
 check_admin_token();
 
 $ma_id = isset($_POST['ma_id']) ? (int) $_POST['ma_id'] : 0;
-$ma_subject = isset($_POST['ma_subject']) ? strip_tags(clean_xss_attributes($_POST['ma_subject'])) : '';
+$ma_subject = isset($_POST['ma_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['ma_subject'])))) : '';
 $ma_content = isset($_POST['ma_content']) ? $_POST['ma_content'] : '';
 
 if ($w == '') {

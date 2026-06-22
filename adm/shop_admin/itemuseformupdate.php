@@ -18,8 +18,10 @@ foreach($check_keys as $key){
 
     if( in_array($key, array('is_content', 'is_reply_content')) ){
         $posts[$key] = isset($_POST[$key]) ? $_POST[$key] : '';
+    } else if( $key === 'is_id' ) {
+        $posts[$key] = isset($_POST[$key]) ? (int) $_POST[$key] : 0;
     } else {
-        $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+        $posts[$key] = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
 }
 

@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 check_admin_token();
 
-$pp_name = isset($_POST['pp_name']) ? strip_tags(clean_xss_attributes($_POST['pp_name'])) : '';
+$pp_name = isset($_POST['pp_name']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['pp_name'])))) : '';
 $pp_id = isset($_REQUEST['pp_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['pp_id']) : 0;
 $pp_price = isset($_POST['pp_price']) ? preg_replace('/[^0-9]/', '', $_REQUEST['pp_price']) : 0;
 
@@ -40,8 +40,8 @@ if($w == 'd') {
 
     $post_pp_content = isset($_POST['pp_content']) ? $_POST['pp_content'] : '';
     $post_pp_receipt_price = isset($_POST['pp_receipt_price']) ? (int) $_POST['pp_receipt_price'] : 0;
-    $post_pp_settle_case = isset($_POST['pp_settle_case']) ? clean_xss_tags($_POST['pp_settle_case'], 1, 1) : '';
-    $post_pp_receipt_time = isset($_POST['pp_receipt_time']) ? clean_xss_tags($_POST['pp_receipt_time'], 1, 1) : '';
+    $post_pp_settle_case = isset($_POST['pp_settle_case']) ? addslashes(clean_xss_tags(stripslashes($_POST['pp_settle_case']), 1, 1)) : '';
+    $post_pp_receipt_time = isset($_POST['pp_receipt_time']) ? safe_replace_regex($_POST['pp_receipt_time'], 'time') : '';
     $post_pp_shop_memo = isset($_POST['pp_shop_memo']) ? $_POST['pp_shop_memo'] : '';
     $post_pp_use = isset($_POST['pp_use']) ? (int) $_POST['pp_use'] : 0;
 

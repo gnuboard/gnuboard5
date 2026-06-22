@@ -42,10 +42,10 @@ $var_datas = array();
 foreach($data as $key=>$value) {
     if(is_array($value)) {
         foreach($value as $k=>$v) {
-            $_POST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
+            $_POST[$key][$k] = $params[$key][$k] = addslashes(clean_xss_tags(strip_tags(stripslashes($v))));
         }
     } else {
-        $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+        $_POST[$key] = $params[$key] = addslashes(clean_xss_tags(strip_tags(stripslashes($value))));
     }
 }
 

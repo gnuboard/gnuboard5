@@ -13,7 +13,7 @@ if ($w == 'u') // 업데이트
         // 실제 번호를 넘김
         $k = $post_chk[$i];
         $bg_no = isset($_POST['bg_no'][$k]) ? (int) $_POST['bg_no'][$k] : 0;
-        $bg_name = isset($_POST['bg_name'][$k]) ? strip_tags(clean_xss_attributes($_POST['bg_name'][$k])) : '';
+        $bg_name = isset($_POST['bg_name'][$k]) ? strip_tags(clean_xss_attributes(stripslashes($_POST['bg_name'][$k]))) : '';
 
         if (!is_numeric($bg_no))
             alert('그룹 고유번호가 없습니다.');
@@ -65,16 +65,16 @@ else if ($w == 'em') // 비우기
 }
 else // 등록
 {
-    $bg_name = isset($_REQUEST['bg_name']) ? strip_tags(clean_xss_attributes($_REQUEST['bg_name'])) : '';
+    $bg_name = isset($_REQUEST['bg_name']) ? strip_tags(clean_xss_attributes(stripslashes($_REQUEST['bg_name']))) : '';
 
     if (!strlen(trim($bg_name)))
         alert('그룹명을 입력해주세요');
 
-    $res = sql_fetch("select bg_name from {$g5['sms5_book_group_table']} where bg_name='$bg_name'");
+    $res = sql_fetch("select bg_name from {$g5['sms5_book_group_table']} where bg_name='".sql_real_escape_string($bg_name)."'");
     if ($res)
         alert('같은 그룹명이 존재합니다.');
 
-    sql_query("insert into {$g5['sms5_book_group_table']} set bg_name='$bg_name'");
+    sql_query("insert into {$g5['sms5_book_group_table']} set bg_name='".sql_real_escape_string($bg_name)."'");
 }
 
 goto_url('./num_group.php');

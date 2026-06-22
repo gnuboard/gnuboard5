@@ -39,7 +39,7 @@ for ($i = 1; $i <= 10; $i++) {
 
 foreach ($check_keys as $key => $value) {
     if ($key === 'gr_subject') {
-        $posts[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
+        $posts[$key] = isset($_POST[$key]) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST[$key])))) : '';
     } else {
         $posts[$key] = isset($_POST[$key]) ? $_POST[$key] : '';
     }

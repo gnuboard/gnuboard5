@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
 
-$upload_bg_no = isset($_REQUEST['upload_bg_no']) ? clean_xss_tags($_REQUEST['upload_bg_no'], 1, 1) : '';
+$upload_bg_no = isset($_REQUEST['upload_bg_no']) ? (int) $_REQUEST['upload_bg_no'] : 0;
 $confirm = isset($_REQUEST['confirm']) ? clean_xss_tags($_REQUEST['confirm'], 1, 1) : '';
 
 if (!$upload_bg_no)

@@ -20,7 +20,7 @@ check_admin_token();
 $fm_id = isset($_REQUEST['fm_id']) ? (int) $_REQUEST['fm_id'] : 0;
 $fm_himg_del = isset($_POST['fm_himg_del']) ? (int) $_POST['fm_himg_del'] : 0;
 $fm_timg_del = isset($_POST['fm_timg_del']) ? (int) $_POST['fm_timg_del'] : 0;
-$fm_subject = isset($_POST['fm_subject']) ? strip_tags(clean_xss_attributes($_POST['fm_subject'])) : '';
+$fm_subject = isset($_POST['fm_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['fm_subject'])))) : '';
 $fm_head_html = isset($_POST['fm_head_html']) ? $_POST['fm_head_html'] : '';
 $fm_tail_html = isset($_POST['fm_tail_html']) ? $_POST['fm_tail_html'] : '';
 $fm_mobile_head_html = isset($_POST['fm_mobile_head_html']) ? $_POST['fm_mobile_head_html'] : '';

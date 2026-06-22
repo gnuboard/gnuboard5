@@ -35,7 +35,7 @@ $check_keys = array(
 $posts = array();
 
 foreach($check_keys as $key){
-    $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+    $posts[$key] = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
 }
 
 $od_send_mail = $posts['od_send_mail'];

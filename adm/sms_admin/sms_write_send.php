@@ -25,8 +25,8 @@ if ( ! (($config['cf_icode_id'] && $config['cf_icode_pw']) || $config['cf_icode_
 }
 
 $wr_reply   = isset($_REQUEST['wr_reply']) ? preg_replace('#[^0-9\-]#', '', trim($_REQUEST['wr_reply'])) : '';
-$wr_message = isset($_REQUEST['wr_message']) ? clean_xss_tags(trim($_REQUEST['wr_message']), 1, 1, 0, 0) : '';
-$send_list = isset($_REQUEST['send_list']) ? clean_xss_tags(trim($_REQUEST['send_list']), 1, 1) : '';
+$wr_message = isset($_REQUEST['wr_message']) ? addslashes(clean_xss_tags(stripslashes(trim($_REQUEST['wr_message'])), 1, 1, 0, 0)) : '';
+$send_list = isset($_REQUEST['send_list']) ? addslashes(clean_xss_tags(stripslashes(trim($_REQUEST['send_list'])), 1, 1)) : '';
 
 $wr_by = isset($_REQUEST['wr_by']) ? clean_xss_tags(trim($_REQUEST['wr_by']), 1, 1) : '';
 $wr_bm = isset($_REQUEST['wr_bm']) ? clean_xss_tags(trim($_REQUEST['wr_bm']), 1, 1) : '';

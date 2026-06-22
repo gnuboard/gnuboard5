@@ -20,14 +20,14 @@ $bn_bimg      = isset($_FILES['bn_bimg']['tmp_name']) ? $_FILES['bn_bimg']['tmp_
 $bn_bimg_name = isset($_FILES['bn_bimg']['name']) ? $_FILES['bn_bimg']['name'] : '';
 $bn_id = isset($_REQUEST['bn_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['bn_id']) : 0;
 $bn_bimg_del = (isset($_POST['bn_bimg_del']) && $_POST['bn_bimg_del']) ? preg_replace('/[^0-9]/', '', $_POST['bn_id']) : 0;
-$bn_url = isset($_POST['bn_url']) ? strip_tags(clean_xss_attributes($bn_url)) : '';
-$bn_alt = isset($_POST['bn_alt']) ? strip_tags(clean_xss_attributes($bn_alt)) : '';
-$bn_device = isset($_POST['bn_device']) ? clean_xss_tags($_POST['bn_device'], 1, 1) : '';
-$bn_position = isset($_POST['bn_position']) ? clean_xss_tags($_POST['bn_position'], 1, 1) : '';
+$bn_url = isset($_POST['bn_url']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['bn_url'])))) : '';
+$bn_alt = isset($_POST['bn_alt']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['bn_alt'])))) : '';
+$bn_device = isset($_POST['bn_device']) ? safe_replace_regex($_POST['bn_device']) : '';
+$bn_position = isset($_POST['bn_position']) ? addslashes(clean_xss_tags(stripslashes($_POST['bn_position']), 1, 1)) : '';
 $bn_border = isset($_POST['bn_border']) ? (int) $_POST['bn_border'] : 0;
 $bn_new_win = isset($_POST['bn_new_win']) ? (int) $_POST['bn_new_win'] : 0;
-$bn_begin_time = isset($_POST['bn_begin_time']) ? clean_xss_tags($_POST['bn_begin_time'], 1, 1) : '';
-$bn_end_time = isset($_POST['bn_end_time']) ? clean_xss_tags($_POST['bn_end_time'], 1, 1) : '';
+$bn_begin_time = isset($_POST['bn_begin_time']) ? safe_replace_regex($_POST['bn_begin_time'], 'time') : '';
+$bn_end_time = isset($_POST['bn_end_time']) ? safe_replace_regex($_POST['bn_end_time'], 'time') : '';
 $bn_order = isset($_POST['bn_order']) ? (int) $_POST['bn_order'] : 0;
 
 if ($bn_bimg_del)  @unlink(G5_DATA_PATH."/banner/$bn_id");

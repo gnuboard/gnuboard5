@@ -26,7 +26,7 @@ if ($w == "" || $w == "u") {
 }
 
 $co_id = isset($_REQUEST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['co_id']) : '';
-$co_subject = isset($_POST['co_subject']) ? strip_tags(clean_xss_attributes($_POST['co_subject'])) : '';
+$co_subject = isset($_POST['co_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['co_subject'])))) : '';
 $co_include_head = isset($_POST['co_include_head']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['co_include_head'], 0, 255)) : '';
 $co_include_tail = isset($_POST['co_include_tail']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['co_include_tail'], 0, 255)) : '';
 

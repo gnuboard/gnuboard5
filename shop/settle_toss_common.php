@@ -127,7 +127,7 @@ if (!$orderResult || $order_info['secret'] !== $TOSS_SECRET) {
 $paymentKey     = isset($order_info["paymentKey"])                      ? clean_xss_tags($order_info["paymentKey"]) : ''; // 결제 키
 $customerName   = isset($order_info["virtualAccount"]["customerName"])  ? clean_xss_tags($order_info["virtualAccount"]["customerName"]) : ''; // 주문자명 (가상계좌 발급 시 고객명)
 $depositorName  = isset($order_info["virtualAccount"]["depositorName"]) ? clean_xss_tags($order_info["virtualAccount"]["depositorName"]) : ''; // 입금자명 (실제 입금자 입력 이름)
-$totalAmount    = isset($order_info["totalAmount"])                     ? clean_xss_tags($order_info["totalAmount"]) : ''; // 입금 금액 (결제 총액)
+$totalAmount    = isset($order_info["totalAmount"])                     ? (int) $order_info["totalAmount"] : 0; // 입금 금액 (결제 총액)
 $bankCode       = isset($order_info["virtualAccount"]["bankCode"])      ? clean_xss_tags($order_info["virtualAccount"]["bankCode"]) : ''; // 은행코드 (가상계좌 발급 은행, 예: 11 → 농협)
 $accountNumber  = isset($order_info["virtualAccount"]["accountNumber"]) ? clean_xss_tags($order_info["virtualAccount"]["accountNumber"]) : ''; // 가상계좌 입금계좌번호
 $approvedAt     = isset($order_info['approvedAt'])                      ? clean_xss_tags($order_info['approvedAt']) : ''; //입금일시
@@ -143,6 +143,11 @@ $RcptAuthCode = isset($order_info['cashReceipt']['issueNumber']) ? clean_xss_tag
 $RcptType = isset($order_info['cashReceipt']['type']) ? clean_xss_tags($order_info['cashReceipt']['type'] === '소득공제' ? '1' : ($order_info['cashReceipt']['type'] === '지출증빙' ? '2' : '0')) : '0';
 $RcptReceiptUrl = isset($order_info['cashReceipt']['receiptUrl']) ? clean_xss_tags($order_info['cashReceipt']['receiptUrl']) : ''; // 현금영수증 URL
 
+$paymentKey_sql = sql_real_escape_string($paymentKey);
+$depositorName_sql = sql_real_escape_string($depositorName);
+$RcptAuthCode_sql = sql_real_escape_string($RcptAuthCode);
+$cash_info_sql = sql_real_escape_string(serialize(array('TID'=>$RcptTID, 'ApplNum'=>$RcptAuthCode, 'AuthDate'=>$approvedAt, 'receiptUrl'=>$RcptReceiptUrl)));
+
 $result = false;
 
 /** 
@@ -151,7 +156,7 @@ $result = false;
 if($TOSS_STATUS == "DONE"){
     
     // 입금결과 처리
-    $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '{$TOSS_ORDERID}' and pp_tno = '{$paymentKey}'";
+    $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '{$TOSS_ORDERID}' and pp_tno = '{$paymentKey_sql}'";
     $row = sql_fetch($sql);
 
     if($row['pp_id']) {
@@ -162,15 +167,15 @@ if($TOSS_STATUS == "DONE"){
         if ($RcptType) {
             $add_update_sql = "
             , pp_cash           = '1',
-            pp_cash_no        = '".$RcptAuthCode."',
-            pp_cash_info      = '".serialize(array('TID'=>$RcptTID, 'ApplNum'=>$RcptAuthCode, 'AuthDate'=>$approvedAt, 'receiptUrl'=>$RcptReceiptUrl))."'
+            pp_cash_no        = '".$RcptAuthCode_sql."',
+            pp_cash_info      = '".$cash_info_sql."'
             ";
         }
         
         $sql = " update {$g5['g5_shop_personalpay_table']}
                     set pp_receipt_price    = '$totalAmount',
                         pp_receipt_time     = '$receipt_time',
-                        pp_deposit_name = '$depositorName'
+                        pp_deposit_name = '$depositorName_sql'
                         $add_update_sql
                     where pp_id = '$TOSS_ORDERID'";
         $result = sql_query($sql, false);
@@ -180,14 +185,14 @@ if($TOSS_STATUS == "DONE"){
             $sql = " update {$g5['g5_shop_order_table']}
                         set od_receipt_price = od_receipt_price + '$totalAmount',
                             od_receipt_time = '$receipt_time',
-                            od_deposit_name = '$depositorName',
+                            od_deposit_name = '$depositorName_sql',
                             od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
                         where od_id = '{$row['od_id']}' ";
             $result = sql_query($sql, FALSE);
         }
     } else {
         // 주문내역에 secret 검증 추가
-        $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '$TOSS_ORDERID' and od_tno = '$paymentKey'";
+        $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '$TOSS_ORDERID' and od_tno = '$paymentKey_sql'";
         $row = sql_fetch($sql);
         if(!$row['od_id']) {
             write_toss_log("주문내역 조회 실패", $TOSS_ORDERID, $TOSS_STATUS);
@@ -199,9 +204,9 @@ if($TOSS_STATUS == "DONE"){
         $sql = " update {$g5['g5_shop_order_table']}
                     set od_receipt_price = '$totalAmount',
                         od_receipt_time = '$receipt_time',
-                        od_deposit_name = '$depositorName'
+                        od_deposit_name = '$depositorName_sql'
                     where od_id = '$TOSS_ORDERID'
-                    and od_tno = '$paymentKey'";
+                    and od_tno = '$paymentKey_sql'";
         $result = sql_query($sql, FALSE);
     }
 
@@ -228,8 +233,8 @@ if($TOSS_STATUS == "DONE"){
             if ($RcptType) {
                 $add_update_sql = "
                 , od_cash           = '1',
-                od_cash_no        = '".$RcptAuthCode."',
-                od_cash_info      = '".serialize(array('TID'=>$RcptTID, 'ApplNum'=>$RcptAuthCode, 'AuthDate'=>$approvedAt, 'receiptUrl'=>$RcptReceiptUrl))."'
+                od_cash_no        = '".$RcptAuthCode_sql."',
+                od_cash_info      = '".$cash_info_sql."'
                 ";
             }
 
@@ -257,7 +262,7 @@ if($TOSS_STATUS == "DONE"){
 elseif($TOSS_STATUS == "WAITING_FOR_DEPOSIT")
 {
     // 개인결제 정보 조회
-    $sql = " select pp_id, od_id, pp_name, pp_hp, pp_tel from {$g5['g5_shop_personalpay_table']} where pp_id = '{$TOSS_ORDERID}' and pp_tno = '{$paymentKey}'";
+    $sql = " select pp_id, od_id, pp_name, pp_hp, pp_tel from {$g5['g5_shop_personalpay_table']} where pp_id = '{$TOSS_ORDERID}' and pp_tno = '{$paymentKey_sql}'";
     $row = sql_fetch($sql);
     
     if($row['pp_id']) {        
@@ -268,7 +273,7 @@ elseif($TOSS_STATUS == "WAITING_FOR_DEPOSIT")
                         pp_cash = 0,
                         pp_cash_no = '',
                         pp_cash_info = ''
-                    where pp_id = '{$TOSS_ORDERID}' and pp_tno = '{$paymentKey}'";
+                    where pp_id = '{$TOSS_ORDERID}' and pp_tno = '{$paymentKey_sql}'";
         $result = sql_query($sql, FALSE);
         
         if($row['od_id']) {
@@ -281,7 +286,7 @@ elseif($TOSS_STATUS == "WAITING_FOR_DEPOSIT")
         }
     } else {
         // 일반 주문 롤백 전에 데이터 존재 확인
-        $sql = " select od_id, od_name, od_hp, od_tel from {$g5['g5_shop_order_table']} where od_id = '{$TOSS_ORDERID}' and od_tno = '{$paymentKey}'";
+        $sql = " select od_id, od_name, od_hp, od_tel from {$g5['g5_shop_order_table']} where od_id = '{$TOSS_ORDERID}' and od_tno = '{$paymentKey_sql}'";
         $row = sql_fetch($sql);
         if(empty($row['od_id'])) {
             write_toss_log("주문 데이터가 존재하지 않음", $TOSS_ORDERID, $TOSS_STATUS);
@@ -298,7 +303,7 @@ elseif($TOSS_STATUS == "WAITING_FOR_DEPOSIT")
                         od_cash = 0,
                         od_cash_no = '',
                         od_cash_info = ''
-                    where od_id = '{$TOSS_ORDERID}' and od_tno = '{$paymentKey}' ";
+                    where od_id = '{$TOSS_ORDERID}' and od_tno = '{$paymentKey_sql}' ";
         $result = sql_query($sql, FALSE);
     }
     

@@ -30,6 +30,8 @@ if($w == 'd') {
 
 // 주문정보
 $data = unserialize(base64_decode($od['dt_data']));
+$data_od_cp_id = isset($data['od_cp_id']) ? safe_replace_regex($data['od_cp_id'], 'cp_id') : '';
+$data_sc_cp_id = isset($data['sc_cp_id']) ? safe_replace_regex($data['sc_cp_id'], 'cp_id') : '';
 
 $sql_common = " from {$g5['g5_shop_cart_table']} where od_id = '{$od['cart_id']}' and ct_status = '쇼핑' ";
 
@@ -53,8 +55,8 @@ if($od['mb_id']) {
     $it_cp_cnt = (isset($data['cp_id']) && is_array($data['cp_id'])) ? count($data['cp_id']) : 0;
     $arr_it_cp_prc = array();
     for($i=0; $i<$it_cp_cnt; $i++) {
-        $cid = $data['cp_id'][$i];
-        $it_id = $data['it_id'][$i];
+        $cid = isset($data['cp_id'][$i]) ? safe_replace_regex($data['cp_id'][$i], 'cp_id') : '';
+        $it_id = isset($data['it_id'][$i]) ? safe_replace_regex($data['it_id'][$i], 'it_id') : '';
         $sql = " select cp_id, cp_method, cp_target, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
                     where cp_id = '$cid'
@@ -113,10 +115,10 @@ if($od['mb_id']) {
     $tot_od_price -= $tot_it_cp_price;
 
     // 주문쿠폰
-    if(isset($data['od_cp_id']) && $data['od_cp_id']) {
+    if($data_od_cp_id) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
-                    where cp_id = '{$data['od_cp_id']}'
+                    where cp_id = '$data_od_cp_id'
                       and mb_id IN ( '{$od['mb_id']}', '전체회원' )
                       and cp_method = '2' ";
         $cp = sql_fetch($sql);
@@ -149,10 +151,10 @@ $od_send_cost = get_sendcost($od['cart_id']);
 $tot_sc_cp_price = 0;
 if($od['mb_id'] && $od_send_cost > 0) {
     // 배송쿠폰
-    if($data['sc_cp_id']) {
+    if($data_sc_cp_id) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
-                    where cp_id = '{$data['sc_cp_id']}'
+                    where cp_id = '$data_sc_cp_id'
                       and mb_id IN ( '{$od['mb_id']}', '전체회원' )
                       and cp_method = '3' ";
         $cp = sql_fetch($sql);
@@ -240,10 +242,10 @@ $od_receipt_point = $od_temp_point;
 $od_receipt_time  = $od['dt_time'];
 $od_misu          = 0;
 $od_status        = '입금';
-$od_bank_account  = isset($data['od_bank_account']) ? clean_xss_tags($data['od_bank_account'], 1, 1) : '';
+$od_bank_account  = isset($data['od_bank_account']) ? addslashes(clean_xss_tags(stripslashes($data['od_bank_account']), 1, 1)) : '';
 $od_tno = '';
 $od_app_no = '';
-$od_hope_date = isset($data['od_hope_date']) ? clean_xss_tags($data['od_hope_date'], 1, 1) : '';
+$od_hope_date = isset($data['od_hope_date']) ? addslashes(clean_xss_tags(stripslashes($data['od_hope_date']), 1, 1)) : '';
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
@@ -321,8 +323,8 @@ if ($od['mb_id'] && $od_receipt_point)
 if($od['mb_id']) {
     $it_cp_cnt = (isset($data['cp_id']) && is_array($data['cp_id'])) ? count($data['cp_id']) : 0;
     for($i=0; $i<$it_cp_cnt; $i++) {
-        $cid = $data['cp_id'][$i];
-        $cp_it_id = $data['it_id'][$i];
+        $cid = isset($data['cp_id'][$i]) ? safe_replace_regex($data['cp_id'][$i], 'cp_id') : '';
+        $cp_it_id = isset($data['it_id'][$i]) ? safe_replace_regex($data['it_id'][$i], 'it_id') : '';
         $cp_prc = isset($arr_it_cp_prc[$cp_it_id]) ? (int) $arr_it_cp_prc[$cp_it_id] : 0;
 
         if(trim($cid)) {
@@ -346,9 +348,9 @@ if($od['mb_id']) {
         sql_query($sql);
     }
 
-    if(isset($data['od_cp_id']) && $data['od_cp_id']) {
+    if($data_od_cp_id) {
         $sql = " insert into {$g5['g5_shop_coupon_log_table']}
-                    set cp_id       = '{$data['od_cp_id']}',
+                    set cp_id       = '$data_od_cp_id',
                         mb_id       = '{$od['mb_id']}',
                         od_id       = '$od_id',
                         cp_price    = '$tot_od_cp_price',
@@ -356,9 +358,9 @@ if($od['mb_id']) {
         sql_query($sql);
     }
 
-    if(isset($data['sc_cp_id']) && $data['sc_cp_id']) {
+    if($data_sc_cp_id) {
         $sql = " insert into {$g5['g5_shop_coupon_log_table']}
-                    set cp_id       = '{$data['sc_cp_id']}',
+                    set cp_id       = '$data_sc_cp_id',
                         mb_id       = '{$od['mb_id']}',
                         od_id       = '$od_id',
                         cp_price    = '$tot_sc_cp_price',

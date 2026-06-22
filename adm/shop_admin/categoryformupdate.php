@@ -75,7 +75,7 @@ foreach( $check_str_keys as $key=>$val ){
     if( $val === 'int' ){
         $value = isset($_POST[$key]) ? (int) $_POST[$key] : 0;
     } else {
-        $value = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+        $value = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
     $$key = $_POST[$key] = $value;
 }

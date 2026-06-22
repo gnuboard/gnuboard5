@@ -8,7 +8,7 @@ $list = $hps = array();
 
 $overlap = 0;
 
-$send_list = isset($_REQUEST['send_list']) ? clean_xss_tags($_REQUEST['send_list'], 1, 1) : '';
+$send_list = isset($_REQUEST['send_list']) ? addslashes(clean_xss_tags(stripslashes($_REQUEST['send_list']), 1, 1)) : '';
 
 if( !$send_list ){
     die("넘어온 데이터 값이 없습니다.");

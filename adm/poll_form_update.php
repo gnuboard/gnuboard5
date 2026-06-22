@@ -43,11 +43,16 @@ foreach ($_POST as $key => $value) {
     }
 
     if (in_array($key, $check_keys)) {
-        $_POST[$key] = strip_tags(clean_xss_attributes($value));
+        if (preg_match('/^po_cnt[1-9]$/', $key) || in_array($key, array('po_level', 'po_point', 'po_id'), true)) {
+            $_POST[$key] = (int) $value;
+        } else {
+            $_POST[$key] = addslashes(strip_tags(clean_xss_attributes(stripslashes($value))));
+        }
     }
 }
 
-$po_id = isset($_POST['po_id']) ? $_POST['po_id'] : '';
+$po_id = isset($_POST['po_id']) ? (int) $_POST['po_id'] : 0;
+$_POST['po_use'] = isset($_POST['po_use']) ? (int) $_POST['po_use'] : 0;
 
 if ($w == '') {
     $sql = " insert {$g5['poll_table']}

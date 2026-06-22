@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 check_admin_token();
 
-$od_shop_memo = isset($_POST['od_shop_memo']) ? strip_tags($_POST['od_shop_memo']) : '';
+$od_shop_memo = isset($_POST['od_shop_memo']) ? addslashes(strip_tags(stripslashes($_POST['od_shop_memo']))) : '';
 $od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
 
 $search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : '';
@@ -17,22 +17,22 @@ if(isset($_POST['mod_type']) && $_POST['mod_type'] === 'info') {
     $od_zip2   = isset($_POST['od_zip']) ? preg_replace('/[^0-9]/', '', substr($_POST['od_zip'], 3)) : '';
     $od_b_zip1 = isset($_POST['od_b_zip']) ? preg_replace('/[^0-9]/', '', substr($_POST['od_b_zip'], 0, 3)) : '';
     $od_b_zip2 = isset($_POST['od_b_zip']) ? preg_replace('/[^0-9]/', '', substr($_POST['od_b_zip'], 3)) : '';
-    $od_email = isset($_POST['od_email']) ? strip_tags(clean_xss_attributes($_POST['od_email'])) : '';
-    $od_name = isset($_POST['od_name']) ? clean_xss_tags($_POST['od_name'], 1, 1) : '';
-    $od_tel = isset($_POST['od_tel']) ? clean_xss_tags($_POST['od_tel'], 1, 1) : '';
-    $od_hp = isset($_POST['od_hp']) ? clean_xss_tags($_POST['od_hp'], 1, 1) : '';
-    $od_addr1 = isset($_POST['od_addr1']) ? clean_xss_tags($_POST['od_addr1'], 1, 1) : '';
-    $od_addr2 = isset($_POST['od_addr2']) ? clean_xss_tags($_POST['od_addr2'], 1, 1) : '';
-    $od_addr3 = isset($_POST['od_addr3']) ? clean_xss_tags($_POST['od_addr3'], 1, 1) : '';
-    $od_addr_jibeon = isset($_POST['od_addr_jibeon']) ? clean_xss_tags($_POST['od_addr_jibeon'], 1, 1) : '';
-    $od_b_name = isset($_POST['od_b_name']) ? clean_xss_tags($_POST['od_b_name'], 1, 1) : '';
-    $od_b_tel = isset($_POST['od_b_tel']) ? clean_xss_tags($_POST['od_b_tel'], 1, 1) : '';
-    $od_b_hp = isset($_POST['od_b_hp']) ? clean_xss_tags($_POST['od_b_hp'], 1, 1) : '';
-    $od_b_addr1 = isset($_POST['od_b_addr1']) ? clean_xss_tags($_POST['od_b_addr1'], 1, 1) : '';
-    $od_b_addr2 = isset($_POST['od_b_addr2']) ? clean_xss_tags($_POST['od_b_addr2'], 1, 1) : '';
-    $od_b_addr3 = isset($_POST['od_b_addr3']) ? clean_xss_tags($_POST['od_b_addr3'], 1, 1) : '';
-    $od_b_addr_jibeon = isset($_POST['od_b_addr_jibeon']) ? clean_xss_tags($_POST['od_b_addr_jibeon'], 1, 1) : '';
-    $od_hope_date = isset($_POST['od_hope_date']) ? clean_xss_tags($_POST['od_hope_date'], 1, 1) : '';
+    $od_email = isset($_POST['od_email']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['od_email'])))) : '';
+    $od_name = isset($_POST['od_name']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_name']), 1, 1)) : '';
+    $od_tel = isset($_POST['od_tel']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_tel']), 1, 1)) : '';
+    $od_hp = isset($_POST['od_hp']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_hp']), 1, 1)) : '';
+    $od_addr1 = isset($_POST['od_addr1']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_addr1']), 1, 1)) : '';
+    $od_addr2 = isset($_POST['od_addr2']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_addr2']), 1, 1)) : '';
+    $od_addr3 = isset($_POST['od_addr3']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_addr3']), 1, 1)) : '';
+    $od_addr_jibeon = isset($_POST['od_addr_jibeon']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_addr_jibeon']), 1, 1)) : '';
+    $od_b_name = isset($_POST['od_b_name']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_name']), 1, 1)) : '';
+    $od_b_tel = isset($_POST['od_b_tel']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_tel']), 1, 1)) : '';
+    $od_b_hp = isset($_POST['od_b_hp']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_hp']), 1, 1)) : '';
+    $od_b_addr1 = isset($_POST['od_b_addr1']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_addr1']), 1, 1)) : '';
+    $od_b_addr2 = isset($_POST['od_b_addr2']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_addr2']), 1, 1)) : '';
+    $od_b_addr3 = isset($_POST['od_b_addr3']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_addr3']), 1, 1)) : '';
+    $od_b_addr_jibeon = isset($_POST['od_b_addr_jibeon']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_b_addr_jibeon']), 1, 1)) : '';
+    $od_hope_date = isset($_POST['od_hope_date']) ? addslashes(clean_xss_tags(stripslashes($_POST['od_hope_date']), 1, 1)) : '';
 
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_name = '$od_name',

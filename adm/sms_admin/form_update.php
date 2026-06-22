@@ -6,8 +6,10 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
-$fo_name = isset($_REQUEST['fo_name']) ? strip_tags(clean_xss_attributes($_REQUEST['fo_name'])) : '';
-$fo_content = isset($_REQUEST['fo_content']) ? strip_tags(clean_xss_attributes($_REQUEST['fo_content'])) : '';
+$fo_no = isset($_REQUEST['fo_no']) ? (int) $_REQUEST['fo_no'] : 0;
+$fg_no = isset($_REQUEST['fg_no']) ? (int) $_REQUEST['fg_no'] : 0;
+$fo_name = isset($_REQUEST['fo_name']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_REQUEST['fo_name'])))) : '';
+$fo_content = isset($_REQUEST['fo_content']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_REQUEST['fo_content'])))) : '';
 $fo_receipt = isset($_REQUEST['fo_receipt']) ? clean_xss_tags($_REQUEST['fo_receipt'], 1, 1) : '';
 $get_fg_no = '';
 

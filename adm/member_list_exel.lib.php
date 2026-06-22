@@ -247,8 +247,8 @@ function member_export_build_where($params)
         
             } else {
                 // 수신동의기간 직접 입력 - custom_period
-                $date_start = isset($params['agree_date_start']) ? $params['agree_date_start'] : '';
-                $date_end   = isset($params['agree_date_end']) ? $params['agree_date_end'] : '';
+                $date_start = isset($params['agree_date_start']) ? sql_escape_string(trim($params['agree_date_start'])) : '';
+                $date_end   = isset($params['agree_date_end']) ? sql_escape_string(trim($params['agree_date_end'])) : '';
 
                 if ($date_start && $date_end) {
                     $emailDateCond = "mb_mailling_date BETWEEN '{$date_start} 00:00:00' AND '{$date_end} 23:59:59'";

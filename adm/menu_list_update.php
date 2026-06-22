@@ -30,7 +30,7 @@ for ($i = 0; $i < $count; $i++) {
 
     $code    = is_array($_POST['code']) ? strip_tags($_POST['code'][$i]) : '';
     $me_name = is_array($_POST['me_name']) ? strip_tags($_POST['me_name'][$i]) : '';
-    $me_link = (preg_match('/^javascript/i', $_POST['me_link'][$i]) || preg_match('/script:/i', $_POST['me_link'][$i])) ? G5_URL : strip_tags(clean_xss_attributes($_POST['me_link'][$i]));
+    $me_link = (preg_match('/^javascript/i', $_POST['me_link'][$i]) || preg_match('/script:/i', $_POST['me_link'][$i])) ? G5_URL : addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['me_link'][$i]))));
 
     if (!$code || !$me_name || !$me_link) {
         continue;

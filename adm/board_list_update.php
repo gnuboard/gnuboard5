@@ -46,7 +46,7 @@ if ($act_button === "선택수정") {
             }
         }
 
-        $p_bo_subject = is_array($_POST['bo_subject']) ? strip_tags(clean_xss_attributes($_POST['bo_subject'][$k])) : '';
+        $p_bo_subject = is_array($_POST['bo_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['bo_subject'][$k])))) : '';
 
         $sql = " update {$g5['board_table']}
                     set gr_id               = '" . sql_real_escape_string($post_gr_id) . "',

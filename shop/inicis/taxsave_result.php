@@ -150,7 +150,8 @@ if (isset($ini_result['resultCode']) && $ini_result['resultCode'] == '00') {
     $cash['ApplDate']  = $ini_result['authDate'];
     $cash['ApplTime']  = $ini_result['authTime'];
     $cash['CSHR_Type'] = $ini_result['authUseOpt'];
-    $cash_info = serialize($cash);
+    $cash_info = sql_real_escape_string(serialize($cash));
+    $cash_no   = sql_real_escape_string($cash_no);
 
     if($tx == 'personalpay') {
         $sql = " update {$g5['g5_shop_personalpay_table']}

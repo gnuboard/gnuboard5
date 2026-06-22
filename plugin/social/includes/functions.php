@@ -368,6 +368,7 @@ function social_escape_request($request){
 
 function social_get_request_provider(){
     $provider_name = isset($_REQUEST['provider']) ? ucfirst(social_escape_request($_REQUEST['provider'])) : '';
+    $provider_name = preg_replace('/[^a-z0-9_]/i', '', $provider_name); // 허용 문자만 유지
 
     return $provider_name;
 }

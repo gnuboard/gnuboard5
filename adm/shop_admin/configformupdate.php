@@ -247,9 +247,9 @@ $check_sanitize_keys = array(
 
 foreach( $check_sanitize_keys as $key ){
     if( in_array($key, array('de_bank_account')) ){
-        $$key = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1, 0, 0) : '';
+        $$key = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1, 0, 0)) : '';
     } else {
-        $$key = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+        $$key = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
 }
 

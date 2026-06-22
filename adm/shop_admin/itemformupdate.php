@@ -319,7 +319,7 @@ for($i=0; $i<$count_ii_article; $i++) {
 }
 $it_info_value = addslashes(serialize($value_array));
 
-$it_name = isset($_POST['it_name']) ? strip_tags(clean_xss_attributes(trim($_POST['it_name']))) : '';
+$it_name = isset($_POST['it_name']) ? addslashes(strip_tags(clean_xss_attributes(trim(stripslashes($_POST['it_name']))))) : '';
 
 // KVE-2019-0708
 $check_sanitize_keys = array(
@@ -356,7 +356,7 @@ $check_sanitize_keys = array(
 );
 
 foreach( $check_sanitize_keys as $key ){
-    $$key = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
+    $$key = isset($_POST[$key]) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST[$key])))) : '';
 }
 
 $it_basic = preg_replace('#<script(.*?)>(.*?)<\/script>#is', '', $it_basic);
@@ -366,8 +366,8 @@ if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
 
 // 스킨 경로 검증
-$it_skin = isset($_POST['it_skin']) ? strip_tags(clean_xss_attributes($_POST['it_skin'])) : '';
-$it_mobile_skin = isset($_POST['it_mobile_skin']) ? strip_tags(clean_xss_attributes($_POST['it_mobile_skin'])) : '';
+$it_skin = isset($_POST['it_skin']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['it_skin'])))) : '';
+$it_mobile_skin = isset($_POST['it_mobile_skin']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['it_mobile_skin'])))) : '';
 
 $check_files = array();
 if( !empty($it_skin) )          $check_files[] = $it_skin;
@@ -410,7 +410,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_type5            = '$it_type5',
                 it_basic            = '$it_basic',
                 it_explan           = '$it_explan',
-                it_explan2          = '".strip_tags(trim(clean_xss_attributes($it_explan)))."',
+                it_explan2          = '".addslashes(strip_tags(trim(clean_xss_attributes(stripslashes($it_explan)))))."',
                 it_mobile_explan    = '$it_mobile_explan',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',

@@ -6,6 +6,8 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$cp_id = isset($_REQUEST['cp_id']) ? safe_replace_regex($_REQUEST['cp_id'], 'cp_id') : '';
+
 $_POST = array_map('trim', $_POST);
 
 $check_sanitize_keys = array(
@@ -25,7 +27,7 @@ $check_sanitize_keys = array(
 );
 
 foreach( $check_sanitize_keys as $key ){
-    $$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
+    $$key = $_POST[$key] = isset($_POST[$key]) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST[$key])))) : '';
 }
 
 if(!$_POST['cp_subject'])

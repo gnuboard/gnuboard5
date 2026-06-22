@@ -29,7 +29,7 @@ if ($post_act_button == "선택수정") {
         $p_ca_id = (isset($_POST['ca_id']) && is_array($_POST['ca_id'])) ? strip_tags($_POST['ca_id'][$k]) : '';
         $p_ca_id2 = (isset($_POST['ca_id2']) && is_array($_POST['ca_id2'])) ? strip_tags($_POST['ca_id2'][$k]) : '';
         $p_ca_id3 = (isset($_POST['ca_id3']) && is_array($_POST['ca_id3'])) ? strip_tags($_POST['ca_id3'][$k]) : '';
-        $p_it_name = (isset($_POST['it_name']) && is_array($_POST['it_name'])) ? strip_tags(clean_xss_attributes($_POST['it_name'][$k])) : '';
+        $p_it_name = (isset($_POST['it_name']) && is_array($_POST['it_name'])) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['it_name'][$k])))) : '';
         $p_it_cust_price = (isset($_POST['it_cust_price']) && is_array($_POST['it_cust_price'])) ? strip_tags($_POST['it_cust_price'][$k]) : '';
         $p_it_price = (isset($_POST['it_price']) && is_array($_POST['it_price'])) ? strip_tags($_POST['it_price'][$k]) : '';
         $p_it_stock_qty = (isset($_POST['it_stock_qty']) && is_array($_POST['it_stock_qty'])) ? strip_tags($_POST['it_stock_qty'][$k]) : '';

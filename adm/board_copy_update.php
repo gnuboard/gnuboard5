@@ -12,7 +12,7 @@ $bo_table       = isset($_POST['bo_table']) ? substr(preg_replace('/[^a-z0-9_]/i
 $target_table   = isset($_POST['target_table']) ? trim($_POST['target_table']) : '';
 $target_subject = isset($_POST['target_subject']) ? trim($_POST['target_subject']) : '';
 
-$target_subject = strip_tags(clean_xss_attributes($target_subject));
+$target_subject = addslashes(strip_tags(clean_xss_attributes(stripslashes($target_subject))));
 
 $file_copy      = array();
 

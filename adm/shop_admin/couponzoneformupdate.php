@@ -6,6 +6,8 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$cz_id = isset($_REQUEST['cz_id']) ? (int) $_REQUEST['cz_id'] : 0;
+
 @mkdir(G5_DATA_PATH."/coupon", G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH."/coupon", G5_DIR_PERMISSION);
 
@@ -28,7 +30,7 @@ $check_sanitize_keys = array(
 );
 
 foreach( $check_sanitize_keys as $key ){
-    $$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
+    $$key = $_POST[$key] = isset($_POST[$key]) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST[$key])))) : '';
 }
 
 if(!$_POST['cz_subject'])

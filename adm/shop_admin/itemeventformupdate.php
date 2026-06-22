@@ -33,7 +33,7 @@ $ev_mobile_list_row = isset($_POST['ev_mobile_list_row']) ? (int) $_POST['ev_mob
 $ev_use = isset($_POST['ev_use']) ? (int) $_POST['ev_use'] : 0;
 $ev_subject_strong = isset($_POST['ev_subject_strong']) ? (int) $_POST['ev_subject_strong'] : 0;
 
-$ev_subject = isset($_POST['ev_subject']) ? clean_xss_tags($_POST['ev_subject'], 1, 1) : '';
+$ev_subject = isset($_POST['ev_subject']) ? addslashes(clean_xss_tags(stripslashes($_POST['ev_subject']), 1, 1)) : '';
 $ev_head_html = isset($_POST['ev_head_html']) ? $_POST['ev_head_html'] : '';
 $ev_tail_html = isset($_POST['ev_tail_html']) ? $_POST['ev_tail_html'] : '';
 

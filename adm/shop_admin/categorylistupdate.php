@@ -62,7 +62,7 @@ for ($i=0; $i<$post_ca_id_count; $i++)
         }
     }
     
-    $p_ca_name = is_array($_POST['ca_name']) ? strip_tags(clean_xss_attributes($_POST['ca_name'][$i])) : '';
+    $p_ca_name = is_array($_POST['ca_name']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['ca_name'][$i])))) : '';
     
     $posts = array();
 

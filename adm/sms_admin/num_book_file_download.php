@@ -3,6 +3,7 @@ $sub_menu = "900900";
 include_once("./_common.php");
 
 $bg_no = isset($_REQUEST['bg_no']) ? clean_xss_tags($_REQUEST['bg_no'], 1, 1) : '';
+$bg_no = ($bg_no === 'all') ? 'all' : (int) $bg_no;
 $no_hp = isset($_REQUEST['no_hp']) ? clean_xss_tags($_REQUEST['no_hp'], 1, 1) : '';
 
 auth_check_menu($auth, $sub_menu, "r");

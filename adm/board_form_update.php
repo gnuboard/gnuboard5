@@ -12,8 +12,8 @@ check_admin_token();
 
 $gr_id              = isset($_POST['gr_id']) ? preg_replace('/[^a-z0-9_]/i', '', (string)$_POST['gr_id']) : '';
 $bo_admin           = isset($_POST['bo_admin']) ? preg_replace('/[^a-z0-9_\, \|\#]/i', '', $_POST['bo_admin']) : '';
-$bo_subject         = isset($_POST['bo_subject']) ? strip_tags(clean_xss_attributes($_POST['bo_subject'])) : '';
-$bo_mobile_subject  = isset($_POST['bo_mobile_subject']) ? strip_tags(clean_xss_attributes($_POST['bo_mobile_subject'])) : '';
+$bo_subject         = isset($_POST['bo_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['bo_subject'])))) : '';
+$bo_mobile_subject  = isset($_POST['bo_mobile_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['bo_mobile_subject'])))) : '';
 
 if (!$gr_id) {
     alert('그룹 ID는 반드시 선택하세요.');

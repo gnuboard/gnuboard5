@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
-$cp_id = isset($_REQUEST['cp_id']) ? clean_xss_tags($_REQUEST['cp_id'], 1, 1) : '';
+$cp_id = isset($_REQUEST['cp_id']) ? safe_replace_regex($_REQUEST['cp_id'], 'cp_id') : '';
 $cp = array(
 'cp_method'=>'',
 'cp_subject'=>'',

@@ -13,8 +13,8 @@ if ($is_admin != 'super') {
 $sql = " select * from {$g5['config_table']} limit 1";
 $ori_config = sql_fetch($sql);
 
-$cf_title = isset($_POST['cf_title']) ? strip_tags(clean_xss_attributes($_POST['cf_title'])) : '';
-$cf_admin = isset($_POST['cf_admin']) ? clean_xss_tags($_POST['cf_admin'], 1, 1) : '';
+$cf_title = isset($_POST['cf_title']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['cf_title'])))) : '';
+$cf_admin = isset($_POST['cf_admin']) ? safe_replace_regex($_POST['cf_admin']) : '';
 
 $mb = get_member($cf_admin);
 
@@ -173,7 +173,7 @@ foreach ($check_keys as $k => $v) {
         if (in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy'))) {
             $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
         } else {
-            $_POST[$k] = isset($_POST[$k]) ? strip_tags(clean_xss_attributes($_POST[$k])) : '';
+            $_POST[$k] = isset($_POST[$k]) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST[$k])))) : '';
         }
     }
 }

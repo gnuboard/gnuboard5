@@ -21,7 +21,7 @@ if (!$chk_count) {
 for ($i = 0; $i < $chk_count; $i++) {
     $k              = isset($post_chk[$i]) ? (int) $post_chk[$i] : 0;
     $gr_id          = preg_replace('/[^a-z0-9_]/i', '', $post_group_id[$k]);
-    $gr_subject     = isset($_POST['gr_subject'][$k]) ? strip_tags(clean_xss_attributes($_POST['gr_subject'][$k])) : '';
+    $gr_subject     = isset($_POST['gr_subject'][$k]) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['gr_subject'][$k])))) : '';
     $gr_admin       = isset($_POST['gr_admin'][$k]) ? strip_tags(clean_xss_attributes($_POST['gr_admin'][$k])) : '';
     $gr_device      = isset($_POST['gr_device'][$k]) ? clean_xss_tags($_POST['gr_device'][$k], 1, 1, 10) : '';
     $gr_use_access  = isset($_POST['gr_use_access'][$k]) ? (int) $_POST['gr_use_access'][$k] : 0;
@@ -36,7 +36,7 @@ for ($i = 0; $i < $chk_count; $i++) {
                         gr_order      = '" . $gr_order . "'
                   where gr_id         = '{$gr_id}' ";
         if ($is_admin != 'super') {
-            $sql .= " and gr_admin    = '{$gr_admin}' ";
+            $sql .= " and gr_admin    = '" . sql_real_escape_string($gr_admin) . "' ";
         }
         sql_query($sql);
     } elseif ($act_button == '선택삭제') {

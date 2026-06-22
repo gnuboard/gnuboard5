@@ -22,13 +22,14 @@ else
 
 $st = clean_xss_tags($st);
 $sv = clean_xss_tags($sv);
+$sql_sv = sql_real_escape_string(stripslashes($sv));
 
 if ($st == 'all') {
-    $sql_search = "and (fo_name like '%{$sv}%' or fo_content like '%{$sv}%')";
+    $sql_search = "and (fo_name like '%{$sql_sv}%' or fo_content like '%{$sql_sv}%')";
 } else if ($st == 'name') {
-    $sql_search = "and fo_name like '%{$sv}%'";
+    $sql_search = "and fo_name like '%{$sql_sv}%'";
 } else if ($st == 'content') {
-    $sql_search = "and fo_content like '%{$sv}%'";
+    $sql_search = "and fo_content like '%{$sql_sv}%'";
 } else {
     $sql_search = '';
 }

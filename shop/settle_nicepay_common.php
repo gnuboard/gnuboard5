@@ -15,28 +15,28 @@ $pg_allow_ips = array(
 // PG 사에서 보냈는지 IP로 체크
 if (in_array($_SERVER['REMOTE_ADDR'], $pg_allow_ips)) {
 
-    $PayMethod      = isset($_POST['PayMethod']) ? clean_xss_tags($_POST['PayMethod']) : '';           //지불수단
-    $M_ID           = isset($_POST['MID']) ? clean_xss_tags($_POST['MID']) : '';                 //상점ID
-    $MallUserID     = isset($_POST['MallUserID']) ? clean_xss_tags($_POST['MallUserID']) : '';          //회원사 ID
+    $PayMethod      = isset($_POST['PayMethod']) ? addslashes(clean_xss_tags(stripslashes($_POST['PayMethod']))) : '';           //지불수단
+    $M_ID           = isset($_POST['MID']) ? addslashes(clean_xss_tags(stripslashes($_POST['MID']))) : '';                 //상점ID
+    $MallUserID     = isset($_POST['MallUserID']) ? addslashes(clean_xss_tags(stripslashes($_POST['MallUserID']))) : '';          //회원사 ID
     $Amt            = isset($_POST['Amt']) ? (int) $_POST['Amt'] : 0;                 //금액
-    $name           = isset($_POST['name']) ? clean_xss_tags($_POST['name']) : '';                //구매자명
-    $GoodsName      = isset($_POST['GoodsName']) ? clean_xss_tags($_POST['GoodsName']) : '';           //상품명
-    $TID            = isset($_POST['TID']) ? clean_xss_tags($_POST['TID']) : '';                 //거래번호
+    $name           = isset($_POST['name']) ? addslashes(clean_xss_tags(stripslashes($_POST['name']))) : '';                //구매자명
+    $GoodsName      = isset($_POST['GoodsName']) ? addslashes(clean_xss_tags(stripslashes($_POST['GoodsName']))) : '';           //상품명
+    $TID            = isset($_POST['TID']) ? addslashes(clean_xss_tags(stripslashes($_POST['TID']))) : '';                 //거래번호
     $MOID           = isset($_POST['MOID']) ? addslashes(clean_xss_tags(stripslashes($_POST['MOID']))) : '';                //주문번호
-    $AuthDate       = isset($_POST['AuthDate']) ? clean_xss_tags($_POST['AuthDate']) : '';            //입금일시 (yyMMddHHmmss) 12 자리
-    $ResultCode     = isset($_POST['ResultCode']) ? clean_xss_tags($_POST['ResultCode']) : '';          //결과코드 ('4110' 경우 입금통보)
-    $ResultMsg      = isset($_POST['ResultMsg']) ? clean_xss_tags($_POST['ResultMsg']) : '';           //결과메시지
+    $AuthDate       = isset($_POST['AuthDate']) ? addslashes(clean_xss_tags(stripslashes($_POST['AuthDate']))) : '';            //입금일시 (yyMMddHHmmss) 12 자리
+    $ResultCode     = isset($_POST['ResultCode']) ? addslashes(clean_xss_tags(stripslashes($_POST['ResultCode']))) : '';          //결과코드 ('4110' 경우 입금통보)
+    $ResultMsg      = isset($_POST['ResultMsg']) ? addslashes(clean_xss_tags(stripslashes($_POST['ResultMsg']))) : '';           //결과메시지
     $VbankNum       = isset($_POST['VbankNum']) ? addslashes(clean_xss_tags(stripslashes($_POST['VbankNum']))) : '';            //가상계좌번호
-    $FnCd           = isset($_POST['FnCd']) ? clean_xss_tags($_POST['FnCd']) : '';                //가상계좌 은행코드
-    $VbankName      = isset($_POST['VbankName']) ? clean_xss_tags($_POST['VbankName']) : '';           //가상계좌 은행명
-    $VbankInputName = isset($_POST['VbankInputName']) ? clean_xss_tags($_POST['VbankInputName']) : '';      //입금자 명
-    $CancelDate     = isset($_POST['CancelDate']) ? clean_xss_tags($_POST['CancelDate']) : '';          //취소일시
+    $FnCd           = isset($_POST['FnCd']) ? addslashes(clean_xss_tags(stripslashes($_POST['FnCd']))) : '';                //가상계좌 은행코드
+    $VbankName      = isset($_POST['VbankName']) ? addslashes(clean_xss_tags(stripslashes($_POST['VbankName']))) : '';           //가상계좌 은행명
+    $VbankInputName = isset($_POST['VbankInputName']) ? addslashes(clean_xss_tags(stripslashes($_POST['VbankInputName']))) : '';      //입금자 명
+    $CancelDate     = isset($_POST['CancelDate']) ? addslashes(clean_xss_tags(stripslashes($_POST['CancelDate']))) : '';          //취소일시
     
     //가상계좌채번시 현금영수증 자동발급신청이 되었을경우 전달되며 
     //RcptTID 에 값이 있는경우만 발급처리 됨
-    $RcptTID        = isset($_POST['RcptTID']) ? clean_xss_tags($_POST['RcptTID']) : '';             //현금영수증 거래번호
-    $RcptType       = isset($_POST['RcptType']) ? clean_xss_tags($_POST['RcptType']) : '';            //현금 영수증 구분(0:미발행, 1:소득공제용, 2:지출증빙용)
-    $RcptAuthCode   = isset($_POST['RcptAuthCode']) ? clean_xss_tags($_POST['RcptAuthCode']) : '';        //현금영수증 승인번호
+    $RcptTID        = isset($_POST['RcptTID']) ? addslashes(clean_xss_tags(stripslashes($_POST['RcptTID']))) : '';             //현금영수증 거래번호
+    $RcptType       = isset($_POST['RcptType']) ? addslashes(clean_xss_tags(stripslashes($_POST['RcptType']))) : '';            //현금 영수증 구분(0:미발행, 1:소득공제용, 2:지출증빙용)
+    $RcptAuthCode   = isset($_POST['RcptAuthCode']) ? addslashes(clean_xss_tags(stripslashes($_POST['RcptAuthCode']))) : '';        //현금영수증 승인번호
     
     // 입금통보 코드가 4110 성공이면
     if ($ResultCode === '4110') {
