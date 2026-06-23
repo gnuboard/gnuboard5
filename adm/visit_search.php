@@ -96,7 +96,7 @@ if(isset($sfl) && $sfl && !in_array($sfl, array('vi_ip','vi_date','vi_time','vi_
                 $referer = iconv('euc-kr', 'utf-8', $referer);
             }
 
-            $title = str_replace(array("<", ">"), array("&lt;", "&gt;"), $referer);
+            $title = str_replace(array("<", ">", "\"", "'"), array("&lt;", "&gt;", "&#034;", "&#039;"), $referer);
             $link = '<a href="'.get_text($row['vi_referer']).'" target="_blank" title="'.$title.'">';
         }
 
