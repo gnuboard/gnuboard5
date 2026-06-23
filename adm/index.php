@@ -35,6 +35,10 @@ if (!auth_check_menu($auth, '200100', 'r', true)) {
         $sod = "desc";
     }
 
+    $allowed_sst = array('mb_datetime');
+    if ($sst && !in_array($sst, $allowed_sst)) $sst = 'mb_datetime';
+    if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
+
     $sql_order = " order by {$sst} {$sod} ";
 
     $sql = " SELECT count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";

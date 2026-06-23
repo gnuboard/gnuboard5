@@ -42,6 +42,10 @@ if (!$sst) {
     $sod = "desc";
 }
 
+$allowed_sst = array('mb_datetime', 'mb_id', 'mb_name', 'mb_nick', 'mb_level', 'mb_point', 'mb_today_login', 'mb_open', 'mb_mailling', 'mb_sms', 'mb_adult', 'mb_certify', 'mb_email_certify', 'mb_intercept_date', 'mb_leave_date');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'mb_datetime';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
+
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";

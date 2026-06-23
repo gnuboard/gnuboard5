@@ -27,6 +27,9 @@ if (!$sst) {
     $sst  = "pp_id";
     $sod = "desc";
 }
+$allowed_sst = array('pp_id', 'od_id', 'pp_receipt_time');
+if ($sst && !in_array($sst, $allowed_sst)) $sst = 'pp_id';
+if ($sod && !in_array(strtolower($sod), array('asc', 'desc'))) $sod = '';
 $sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt
