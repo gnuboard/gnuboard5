@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// 요청 출처 검증
+if (function_exists('check_request_origin')) check_request_origin(G5_SHOP_URL);
+
 if(empty($_POST))
     die('정보가 넘어오지 않았습니다.');
 
