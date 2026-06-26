@@ -33,12 +33,17 @@ if ($post_act_button == "선택수정") {
         $p_it_cust_price = (isset($_POST['it_cust_price']) && is_array($_POST['it_cust_price'])) ? strip_tags($_POST['it_cust_price'][$k]) : '';
         $p_it_price = (isset($_POST['it_price']) && is_array($_POST['it_price'])) ? strip_tags($_POST['it_price'][$k]) : '';
         $p_it_stock_qty = (isset($_POST['it_stock_qty']) && is_array($_POST['it_stock_qty'])) ? strip_tags($_POST['it_stock_qty'][$k]) : '';
-        $p_it_skin = (isset($_POST['it_skin']) && is_array($_POST['it_skin'])) ? strip_tags($_POST['it_skin'][$k]) : '';
-        $p_it_mobile_skin = (isset($_POST['it_mobile_skin']) && is_array($_POST['it_mobile_skin'])) ? strip_tags($_POST['it_mobile_skin'][$k]) : '';
+        $p_it_skin = (isset($_POST['it_skin']) && is_array($_POST['it_skin'])) ? trim(strip_tags(clean_xss_attributes(stripslashes($_POST['it_skin'][$k])))) : '';
+        $p_it_mobile_skin = (isset($_POST['it_mobile_skin']) && is_array($_POST['it_mobile_skin'])) ? trim(strip_tags(clean_xss_attributes(stripslashes($_POST['it_mobile_skin'][$k])))) : '';
         $p_it_use       = isset($_POST['it_use'][$k])       ? clean_xss_tags($_POST['it_use'][$k], 1, 1)        : 0;
         $p_it_soldout   = isset($_POST['it_soldout'][$k])   ? clean_xss_tags($_POST['it_soldout'][$k], 1, 1)    : 0;
         $p_it_order = (isset($_POST['it_order']) && is_array($_POST['it_order'])) ? strip_tags($_POST['it_order'][$k]) : '';
         $p_it_id = isset($_POST['it_id'][$k]) ? preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k]) : '';
+
+        if (function_exists('check_shop_skin_dir')) {
+            check_shop_skin_dir($p_it_skin, 'PC용 스킨');
+            check_shop_skin_dir($p_it_mobile_skin, '모바일용 스킨', true);
+        }
 
         if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
             $sql = "select a.it_id, b.ca_mb_id from {$g5['g5_shop_item_table']} a , {$g5['g5_shop_category_table']} b where (a.ca_id = b.ca_id) and a.it_id = '$p_it_id'";

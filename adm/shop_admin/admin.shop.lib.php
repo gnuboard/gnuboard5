@@ -1,6 +1,45 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+function get_shop_skin_dirs($is_mobile=false)
+{
+    global $config;
+
+    $skin_path = $is_mobile ? G5_MOBILE_PATH.'/'.G5_SKIN_DIR : G5_SKIN_PATH;
+    $skins = get_skin_dir('shop', $skin_path);
+
+    if(defined('G5_THEME_PATH') && $config['cf_theme']) {
+        $theme_skin_path = $is_mobile ? G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR : G5_THEME_PATH.'/'.G5_SKIN_DIR;
+        $dirs = get_skin_dir('shop', $theme_skin_path);
+        if(!empty($dirs)) {
+            foreach($dirs as $dir) {
+                $skins[] = 'theme/'.$dir;
+            }
+        }
+    }
+
+    return $skins;
+}
+
+function check_shop_skin_dir($skin_dir, $label, $is_mobile=false)
+{
+    if( $skin_dir === '' ) {
+        return;
+    }
+
+    if( preg_match('#\.+(\/|\\\)#', $skin_dir) ){
+        alert($label.' 폴더명에 포함될수 없는 문자가 들어있습니다.');
+    }
+
+    if( ! is_include_path_check($skin_dir, 1) ){
+        alert('오류 : 데이터폴더가 포함된 path 또는 잘못된 path 를 포함할수 없습니다.');
+    }
+
+    if( ! in_array($skin_dir, get_shop_skin_dirs($is_mobile), true) ){
+        alert($label.'을 올바르게 선택해 주십시오.');
+    }
+}
+
 // 상품옵션별재고 또는 상품재고에 더하기
 function add_io_stock($it_id, $ct_qty, $io_id="", $io_type=0)
 {
