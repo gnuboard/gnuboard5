@@ -924,6 +924,8 @@ function get_write($write_table, $wr_id, $is_cache=false)
 {
     global $g5, $g5_object;
 
+    $wr_id = (int) $wr_id;
+
     $wr_bo_table = preg_replace('/^'.preg_quote($g5['write_prefix']).'/i', '', $write_table);
 
     $write = $g5_object->get('bbs', $wr_id, $wr_bo_table);
