@@ -58,6 +58,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     if (count($arr)) {
         foreach ($arr as $key=>$value) {
             $count = $value;
+            $last_date = date('Y-m-t', strtotime($key.'-01'));
 
             $rate = ($count / $sum_count * 100);
             $s_rate = number_format($rate, 1);
@@ -66,7 +67,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     ?>
 
     <tr class="<?php echo $bg; ?>">
-        <td class="td_category"><a href="./visit_date.php?fr_date=<?php echo $key ?>-01&amp;to_date=<?php echo $key ?>-31"><?php echo $key ?></a></td>
+        <td class="td_category"><a href="./visit_date.php?fr_date=<?php echo $key ?>-01&amp;to_date=<?php echo $last_date ?>"><?php echo $key ?></a></td>
         <td>
             <div class="visit_bar">
                 <span style="width:<?php echo $s_rate ?>%"></span>
