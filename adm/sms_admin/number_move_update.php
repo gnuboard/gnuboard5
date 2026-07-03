@@ -2,7 +2,7 @@
 $sub_menu = "900800";
 include_once('./_common.php');
 
-auth_check_menu($auth, $sub_menu, "r");
+auth_check_menu($auth, $sub_menu, "w");
 
 $post_chk_bg_no = isset($_POST['chk_bg_no']) ? $_POST['chk_bg_no'] : array();
 
