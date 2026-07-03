@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 $g5['title'] = "휴대폰번호 업데이트";
 
 $g5['sms5_demo'] = 0;

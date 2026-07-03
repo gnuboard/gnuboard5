@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 $post_cnk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
 
 if ($w == 'u') // 업데이트

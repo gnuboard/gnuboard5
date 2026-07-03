@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 $upload_bg_no = isset($_REQUEST['upload_bg_no']) ? (int) $_REQUEST['upload_bg_no'] : 0;
 $confirm = isset($_REQUEST['confirm']) ? clean_xss_tags($_REQUEST['confirm'], 1, 1) : '';
 

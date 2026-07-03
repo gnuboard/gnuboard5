@@ -6,6 +6,8 @@ check_demo();
 
 auth_check_menu($auth, $sub_menu, 'd');
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 

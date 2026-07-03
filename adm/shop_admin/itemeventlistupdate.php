@@ -6,6 +6,8 @@ check_demo();
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 $post_it_id_count = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? count($_POST['it_id']) : 0;
 
 for ($i=0; $i<$post_it_id_count; $i++)

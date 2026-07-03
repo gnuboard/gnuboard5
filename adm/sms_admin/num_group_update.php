@@ -6,6 +6,8 @@ $post_chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : 
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 if ($w == 'u') // 업데이트
 {
     for ($i=0; $i<count($post_chk); $i++)

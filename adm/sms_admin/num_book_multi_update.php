@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 $g5['title'] = "전화번호부";
 
 $post_bk_no = (isset($_POST['bk_no']) && is_array($_POST['bk_no'])) ? $_POST['bk_no'] : array();

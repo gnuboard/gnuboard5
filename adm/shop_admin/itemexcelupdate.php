@@ -8,6 +8,8 @@ ini_set('memory_limit', '50M');
 
 auth_check_menu($auth, $sub_menu, "w");
 
+if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
+
 function only_number($n)
 {
     return preg_replace('/[^0-9]/', '', (string)$n);
