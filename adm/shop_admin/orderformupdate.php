@@ -2,6 +2,8 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
+auth_check_menu($auth, $sub_menu, "w");
+
 check_admin_token();
 
 $od_shop_memo = isset($_POST['od_shop_memo']) ? addslashes(strip_tags(stripslashes($_POST['od_shop_memo']))) : '';

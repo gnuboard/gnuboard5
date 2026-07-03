@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 //print_r2($_POST); exit;
 
+auth_check_menu($auth, $sub_menu, "d");
+
 check_admin_token();
 
 $count_post_chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
