@@ -136,7 +136,7 @@ $colspan = 10;
         <td class="td_center"><?php echo get_text($data['od_tel']); ?></td>
         <td class="td_name"><?php echo get_text($data['od_b_name']); ?></td>
         <td class="td_price"><?php echo number_format($ct['price']); ?></td>
-        <td class="td_center"><?php echo $data['od_settle_case']; ?></td>
+        <td class="td_center"><?php echo get_text($data['od_settle_case']); ?></td>
         <td class="td_time"><?php echo $row['dt_time']; ?></td>
         <td class="td_mng td_mng_m">
             <a href="./inorderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>

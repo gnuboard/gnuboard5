@@ -487,7 +487,7 @@ $pg_anchor = '<ul class="anchor">
                 <tr>
                     <th scope="row"><span class="sound_only">주문하시는 분 </span>주소</th>
                     <td>
-                        <span><?php echo $data['od_zip']; ?></span>
+                        <span><?php echo get_text($data['od_zip']); ?></span>
                         <span><?php echo get_text($data['od_addr1']); ?></span>
                         <span><?php echo get_text($data['od_addr2']); ?></span>
                         <span><?php echo get_text($data['od_addr3']); ?></span>
@@ -528,7 +528,7 @@ $pg_anchor = '<ul class="anchor">
                 <tr>
                     <th scope="row"><span class="sound_only">받으시는 분 </span>주소</th>
                     <td>
-                        <span><?php echo $data['od_b_zip']; ?></span>
+                        <span><?php echo get_text($data['od_b_zip']); ?></span>
                         <span><?php echo get_text($data['od_b_addr1']); ?></span>
                         <span><?php echo get_text($data['od_b_addr2']); ?></span>
                         <span><?php echo get_text($data['od_b_addr3']); ?></span>
@@ -538,7 +538,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php if ($default['de_hope_date_use']) { ?>
                 <tr>
                     <th scope="row">희망배송일</th>
-                    <td><?php echo $data['od_hope_date']; ?> (<?php echo get_yoil($data['od_hope_date']); ?>)</td>
+                    <td><?php echo get_text($data['od_hope_date']); ?> (<?php echo get_yoil($data['od_hope_date']); ?>)</td>
                 </tr>
                 <?php } ?>
                 <tr>
