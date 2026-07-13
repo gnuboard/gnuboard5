@@ -625,7 +625,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <?php for ($i = 1; $i <= 10; $i++) { ?>
                     <tr>
                         <th scope="row"><label for="mb_<?php echo $i ?>">여분 필드 <?php echo $i ?></label></th>
-                        <td colspan="3"><input type="text" name="mb_<?php echo $i ?>" value="<?php echo $mb['mb_' . $i] ?>" id="mb_<?php echo $i ?>" class="frm_input" size="30" maxlength="255"></td>
+                        <td colspan="3"><input type="text" name="mb_<?php echo $i ?>" value="<?php echo get_sanitize_input($mb['mb_' . $i]); ?>" id="mb_<?php echo $i ?>" class="frm_input" size="30" maxlength="255"></td>
                     </tr>
                 <?php } ?>
 
