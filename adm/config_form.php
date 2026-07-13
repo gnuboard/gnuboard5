@@ -1409,7 +1409,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
                         <td>
-                            <input type="text" name="cf_twitter_key" value="<?php echo get_sanitize_input($config['cf_twitter_key']); ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://developer.twitter.com/en/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+                            <input type="text" name="cf_twitter_key" value="<?php echo get_sanitize_input($config['cf_twitter_key']); ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://console.x.com/" target="_blank" class="btn_frmline">앱 등록하기</a>
                         </td>
                         <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
                         <td>
@@ -1419,7 +1419,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_google_clientid">구글 Client ID</label></th>
                         <td>
-                            <input type="text" name="cf_google_clientid" value="<?php echo get_sanitize_input($config['cf_google_clientid']); ?>" id="cf_google_clientid" class="frm_input" size="40"> <a href="https://console.developers.google.com" target="_blank" class="btn_frmline">앱 등록하기</a>
+                            <input type="text" name="cf_google_clientid" value="<?php echo get_sanitize_input($config['cf_google_clientid']); ?>" id="cf_google_clientid" class="frm_input" size="40"> <a href="https://console.cloud.google.com/auth/clients" target="_blank" class="btn_frmline">앱 등록하기</a>
                         </td>
                         <th scope="row"><label for="cf_google_secret">구글 Client Secret</label></th>
                         <td>
@@ -1435,7 +1435,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_kakao_rest_key">카카오 REST API 키</label></th>
                         <td>
-                            <input type="text" name="cf_kakao_rest_key" value="<?php echo get_sanitize_input($config['cf_kakao_rest_key']); ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/product/kakaoLogin" target="_blank" class="btn_frmline">앱 등록하기</a>
+                            <input type="text" name="cf_kakao_rest_key" value="<?php echo get_sanitize_input($config['cf_kakao_rest_key']); ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/console/app" target="_blank" class="btn_frmline">앱 등록하기</a>
                         </td>
                         <th scope="row"><label for="cf_kakao_client_secret">카카오 Client Secret</label></th>
                         <td>
@@ -1451,7 +1451,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_payco_clientid">페이코 Client ID</label></th>
                         <td>
-                            <input type="text" name="cf_payco_clientid" value="<?php echo get_sanitize_input($config['cf_payco_clientid']); ?>" id="cf_payco_clientid" class="frm_input" size="40"> <a href="https://developers.payco.com/guide" target="_blank" class="btn_frmline">앱 등록하기</a>
+                            <input type="text" name="cf_payco_clientid" value="<?php echo get_sanitize_input($config['cf_payco_clientid']); ?>" id="cf_payco_clientid" class="frm_input" size="40"> <a href="https://developers.payco.com/application/registView" target="_blank" class="btn_frmline">앱 등록하기</a>
                         </td>
                         <th scope="row"><label for="cf_payco_secret">페이코 Secret</label></th>
                         <td>
