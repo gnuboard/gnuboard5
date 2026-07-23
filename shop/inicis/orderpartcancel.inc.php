@@ -18,6 +18,8 @@ $taxfree       = (int)$free_mny;                                                
 $args = array(
     'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
     'tid' => $od['od_tno'],
+    'audit_oid' => $od['od_id'],
+    'audit_source' => 'admin',
     'msg' => $od['od_id'].' '.$mod_memo,
     'price' => $price,
     'confirmPrice' => $confirm_price,
@@ -30,14 +32,13 @@ $result = json_decode($response, true);
 
  if(isset($result['resultCode']) && $result['resultCode'] == '00') {
      // 환불금액기록
-    $tno      = $result['prtcTid'];
-    $re_price = $result['prtcPrice'];
+    $re_price = (int) $result['prtcPrice'];
 
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_refund_price = od_refund_price + '$re_price',
                     od_shop_memo = concat(od_shop_memo, \"$mod_memo\")
                 where od_id = '{$od['od_id']}'
-                  and od_tno = '$tno' ";
+                  and od_tno = '{$od['od_tno']}' ";
     sql_query($sql);
 
     // 미수금 등의 정보 업데이트

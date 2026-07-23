@@ -660,6 +660,8 @@ if($g5_shop_install) {
     install_file_write($f, "\$g5['g5_shop_post_log_table'] = G5_SHOP_TABLE_PREFIX.'order_post_log'; // 주문요청 로그 테이블\n");
     install_file_write($f, "\$g5['g5_shop_order_data_table'] = G5_SHOP_TABLE_PREFIX.'order_data'; // 모바일 결제정보 임시저장 테이블\n");
     install_file_write($f, "\$g5['g5_shop_inicis_log_table'] = G5_SHOP_TABLE_PREFIX.'inicis_log'; // 이니시스 모바일 계좌이체 로그 테이블\n");
+    install_file_write($f, "\$g5['g5_shop_inicis_pay_table'] = G5_SHOP_TABLE_PREFIX.'inicis_pay'; // 이니시스 결제 처리 현황 테이블\n");
+    install_file_write($f, "\$g5['g5_shop_inicis_pay_event_table'] = G5_SHOP_TABLE_PREFIX.'inicis_pay_event'; // 이니시스 결제 처리 이력 테이블\n");
 }
 
 install_file_write($f, "?>");

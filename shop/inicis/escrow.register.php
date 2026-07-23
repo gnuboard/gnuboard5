@@ -111,7 +111,8 @@ curl_setopt($ch, CURLOPT_URL, $url);                                    // 전�
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                         // 요청 결과를 문자열로 반환 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);                           // connection timeout 10초 
 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));          // POST data
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);                            // (※ 로컬 테스트에서만 사용) 원격 서버의 인증서가 유효한지 검사 안함
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);                         // 원격 서버 인증서 검증
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);                            // 인증서 호스트명 검증
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=utf-8'));   // 전송헤더 설정
 curl_setopt($ch, CURLOPT_POST, 1);                                      // post 전송 
  

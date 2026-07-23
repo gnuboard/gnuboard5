@@ -1,6 +1,11 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+if (!empty($inicis_pro_use)) {
+    require(G5_SHOP_PATH.'/inicis/pro/orderform.1.php');
+    return;
+}
+
 if(!function_exists('get_inicis_app_scheme')){
     function get_inicis_app_scheme(){
         $user_agent = $_SERVER['HTTP_USER_AGENT'];

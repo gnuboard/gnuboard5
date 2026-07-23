@@ -126,6 +126,22 @@ define('G5_OD_STATUS_FINISH'    , '배송완료');
 '품절'  : 주문이나 입금후 상품의 품절된 상태를 나타냅니다.
 */
 
+// KG이니시스 PRO 경량 운영 감시
+// 서버 작업 스케줄러 없이 사이트 접속(GET) 흐름에서 주기적으로 실행한다.
+// $default 는 이미 로드되어 있어 평상시에는 추가 조회 없이 시각만 비교한다.
+// 실제 감시는 응답 종료 후 잠금 대기 없이 처리하므로 방문자 페이지에 영향을 주지 않는다.
+if (!empty($default['de_inicis_pro_use'])
+    && isset($default['de_pg_service']) && $default['de_pg_service'] === 'inicis'
+    && PHP_SAPI !== 'cli'
+    && isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'GET'
+    && array_key_exists('de_inicis_pro_monitor_at', $default)
+    && (empty($default['de_inicis_pro_monitor_at'])
+        || $default['de_inicis_pro_monitor_at'] < date('Y-m-d H:i:s', G5_SERVER_TIME - 600))) {
+    include_once(G5_ADMIN_PATH.'/shop_admin/admin.shop.lib.php');
+    if (function_exists('check_order_inicis_pro_payments_inline'))
+        register_shutdown_function('check_order_inicis_pro_payments_inline');
+}
+
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝
 //==============================================================================;

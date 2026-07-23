@@ -353,7 +353,10 @@ else if ($od_settle_case == "계좌이체")
             include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            if (!empty($_POST['inicis_pro']))
+                include G5_SHOP_PATH.'/inicis/pro/pay_result.php';
+            else
+                include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         case 'nicepay':
             include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
@@ -387,7 +390,10 @@ else if ($od_settle_case == "가상계좌")
             $od_receipt_time = '0000-00-00 00:00:00';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            if (!empty($_POST['inicis_pro']))
+                include G5_SHOP_PATH.'/inicis/pro/pay_result.php';
+            else
+                include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             $od_app_no = $app_no;
             break;
         case 'nicepay':
@@ -418,7 +424,10 @@ else if ($od_settle_case == "휴대폰")
             include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            if (!empty($_POST['inicis_pro']))
+                include G5_SHOP_PATH.'/inicis/pro/pay_result.php';
+            else
+                include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         case 'nicepay':
             include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
@@ -448,7 +457,10 @@ else if ($od_settle_case == "신용카드")
             include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            if (!empty($_POST['inicis_pro']))
+                include G5_SHOP_PATH.'/inicis/pro/pay_result.php';
+            else
+                include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         case 'nicepay':
             include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
@@ -470,7 +482,7 @@ else if ($od_settle_case == "신용카드")
     if($od_misu == 0)
         $od_status      = '입금';
 }
-else if ($od_settle_case == "간편결제" || (($od_settle_case == "lpay" || $od_settle_case == "inicis_kakaopay") && $default['de_pg_service'] === 'inicis') )
+else if ($od_settle_case == "간편결제" || (in_array($od_settle_case, array("삼성페이", "lpay", "inicis_kakaopay")) && $default['de_pg_service'] === 'inicis') )
 {
     switch($default['de_pg_service']) {
         case 'lg':
@@ -480,7 +492,10 @@ else if ($od_settle_case == "간편결제" || (($od_settle_case == "lpay" || $od
             include G5_SHOP_PATH.'/toss/toss_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            if (!empty($_POST['inicis_pro']))
+                include G5_SHOP_PATH.'/inicis/pro/pay_result.php';
+            else
+                include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         case 'nicepay':
             include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
@@ -704,6 +719,9 @@ if(!$result) {
 
     die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
+
+if (!empty($_POST['inicis_pro']) && function_exists('inicis_pro_audit_order_saved'))
+    inicis_pro_audit_order_saved($od_id, $od_tno, 'order', 'web');
 
 // 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
 // 동시 주문 race condition 방지 — 회원 단위 GET_LOCK + 잔액 재조회

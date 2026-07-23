@@ -19,6 +19,72 @@ if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'
     alert('변경할 상태가 올바르지 않습니다.');
 }
 
+// INIpay PRO 전체취소는 로컬 상품상태를 바꾸기 전에 PG 취소를 먼저 확정한다.
+// PG 취소 실패 후에도 주문만 취소되어 가상계좌 입금이 남는 상태를 방지한다.
+$inicis_pro_cancel_preprocessed = false;
+$inicis_pro_order_lock = '';
+if (in_array($_POST['ct_status'], $status_cancel)) {
+    $selected_ct_ids = array();
+    $posted_ct_count = isset($_POST['ct_id']) && is_array($_POST['ct_id']) ? count($_POST['ct_id']) : 0;
+    for ($pre_i = 0; $pre_i < $posted_ct_count; $pre_i++) {
+        $pre_k = isset($_POST['ct_chk'][$pre_i]) ? (int) $_POST['ct_chk'][$pre_i] : -1;
+        if ($pre_k < 0 || !isset($_POST['ct_id'][$pre_k]))
+            continue;
+        $pre_ct_id = (int) $_POST['ct_id'][$pre_k];
+        if ($pre_ct_id > 0)
+            $selected_ct_ids[$pre_ct_id] = $pre_ct_id;
+    }
+
+    if (count($selected_ct_ids)) {
+        $selected_ct_sql = implode(',', array_values($selected_ct_ids));
+        $future = sql_fetch(" select count(*) as total_count,
+                                    sum(if(ct_status in ('취소','반품','품절') or ct_id in ($selected_ct_sql), 1, 0)) as cancel_count
+                               from {$g5['g5_shop_cart_table']}
+                              where od_id = '".sql_escape_string($od_id)."' ");
+        if ((int) $future['total_count'] > 0 && (int) $future['total_count'] === (int) $future['cancel_count']) {
+            $pre_od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '".sql_escape_string($od_id)."' ");
+            if (!empty($pre_od['od_tno']) && $pre_od['od_pg'] === 'inicis') {
+                include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+                $pro_tables = inicis_pro_audit_tables();
+                $pro_summary = sql_fetch(" select * from `{$pro_tables['summary']}`
+                                            where ip_oid = '".sql_escape_string($pre_od['od_id'])."'
+                                              and ip_tid = '".sql_escape_string($pre_od['od_tno'])."' ", false);
+                if (!empty($pro_summary['ip_id'])) {
+                    if (!isset($_POST['pg_cancel']) || (int) $_POST['pg_cancel'] !== 1)
+                        alert('INIpay PRO 주문은 PG 승인취소를 함께 처리해야 전체취소할 수 있습니다. PG 승인취소를 선택한 후 다시 처리해 주십시오.');
+
+                    $inicis_pro_order_lock = inicis_pro_lock($pre_od['od_id']);
+                    if ($inicis_pro_order_lock === '')
+                        alert('동일 주문의 결제 또는 통보 처리가 진행 중입니다. 잠시 후 다시 취소해 주십시오.');
+
+                    $pro_environment = !empty($pro_summary['ip_environment']) ? $pro_summary['ip_environment'] : inicis_pro_environment();
+                    if ($pro_summary['ip_mid'] !== inicis_pro_get_mid(!empty($pro_summary['ip_pay_type']) ? $pro_summary['ip_pay_type'] : null) || $pro_environment !== inicis_pro_environment())
+                        alert('거래 당시 MID 또는 결제환경과 현재 설정이 달라 PG 취소를 실행할 수 없습니다. KG이니시스 상점관리자에서 원거래를 확인해 주십시오.');
+
+                    include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+                    $pre_cancel_args = array(
+                        'paymethod' => get_type_inicis_paymethod($pre_od['od_settle_case']),
+                        'tid' => $pre_od['od_tno'],
+                        'mid' => $pro_summary['ip_mid'],
+                        'audit_oid' => $pre_od['od_id'],
+                        'audit_source' => 'admin',
+                        'msg' => '쇼핑몰 운영자 승인 취소',
+                        'url' => $pro_environment === 'test' ? 'https://stginiapi.inicis.com/api/v1/refund' : 'https://iniapi.inicis.com/api/v1/refund'
+                    );
+                    $pre_cancel_response = inicis_tid_cancel($pre_cancel_args);
+                    $pre_cancel_result = json_decode($pre_cancel_response, true);
+                    if (!isset($pre_cancel_result['resultCode']) || $pre_cancel_result['resultCode'] !== '00') {
+                        $pre_cancel_code = !empty($pre_cancel_result['resultCode']) ? $pre_cancel_result['resultCode'] : 'COMMUNICATION_FAILED';
+                        $pre_cancel_message = !empty($pre_cancel_result['resultMsg']) ? $pre_cancel_result['resultMsg'] : 'KG이니시스 취소 응답을 확인하지 못했습니다.';
+                        alert($pre_cancel_message.' 코드 : '.$pre_cancel_code);
+                    }
+                    $inicis_pro_cancel_preprocessed = true;
+                }
+            }
+        }
+    }
+}
+
 $search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : '';
 $sort1 = isset($_REQUEST['sort1']) ? clean_xss_tags($_REQUEST['sort1'], 1, 1) : '';
 $sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : '';
@@ -227,15 +293,19 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                     case 'inicis':
                         include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
                         $cancel_msg = '쇼핑몰 운영자 승인 취소';
-                        
-                        $args = array(
-                            'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
-                            'tid' => $od['od_tno'],
-                            'msg' => $cancel_msg
-                        );
 
-                        $response = inicis_tid_cancel($args);
-                        $result = json_decode($response, true);
+                        if ($inicis_pro_cancel_preprocessed) {
+                            $result = array('resultCode' => '00', 'resultMsg' => 'INIpay PRO PG 취소 선처리 완료');
+                        } else {
+                            $args = array(
+                                'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
+                                'tid' => $od['od_tno'],
+                                'msg' => $cancel_msg
+                            );
+
+                            $response = inicis_tid_cancel($args);
+                            $result = json_decode($response, true);
+                        }
 
                         if (isset($result['resultCode'])) {
                             if ($result['resultCode'] != '00') {
@@ -375,6 +445,9 @@ sql_query($sql);
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 $url = "./orderform.php?od_id=$od_id&amp;$qstr";
+
+if ($inicis_pro_order_lock !== '')
+    inicis_pro_unlock($inicis_pro_order_lock);
 
 // 신용카드 취소 때 오류가 있으면 알림
 if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {

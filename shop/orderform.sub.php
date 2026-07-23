@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 require_once(G5_SHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 require_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
 
-if( $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'] ){   //이니시스 Lpay 또는 이니시스 카카오페이 사용시
+if( empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) ){   //이니시스 Lpay 또는 이니시스 카카오페이 사용시
     require_once(G5_SHOP_PATH.'/inicis/lpay_common.php');
 }
 
@@ -15,7 +15,7 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
 // 결제대행사별 코드 include (스크립트 등)
 require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 
-if( $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'] ){   //이니시스 L.pay 사용시
+if( empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) ){   //이니시스 L.pay 사용시
     require_once(G5_SHOP_PATH.'/inicis/lpay_form.1.php');
 }
 
@@ -579,7 +579,7 @@ if($is_kakaopay_use) {
                     $escrow_title = "에스크로<br>";
                 }
 
-                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) {
+                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || (empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])) || (!empty($inicis_pro_use) && is_inicis_simple_pay())) {
                     echo '<fieldset id="sod_frm_paysel">';
                     echo '<legend>결제방법 선택</legend>';
                 }
@@ -711,14 +711,23 @@ if($is_kakaopay_use) {
                     echo run_replace('shop_orderform_easypay_buttons', implode(PHP_EOL, $easypay_prints), $easypay_prints, $multi_settle);
                 }
 
+                //이니시스 PRO 삼성페이
+                if(!empty($inicis_pro_use) && $default['de_samsung_pay_use']) {
+                    $multi_settle++;
+                    echo '<input type="radio" id="od_settle_samsungpay" data-case="samsungpay" name="od_settle_case" value="삼성페이" '.$checked.'> <label for="od_settle_samsungpay" class="samsung_pay lb_icon">삼성페이</label>'.PHP_EOL;
+                    $checked = '';
+                }
+
                 //이니시스 Lpay
                 if($default['de_inicis_lpay_use']) {
+                    $multi_settle++;
                     echo '<input type="radio" id="od_settle_inicislpay" data-case="lpay" name="od_settle_case" value="lpay" '.$checked.'> <label for="od_settle_inicislpay" class="inicis_lpay lb_icon">L.pay</label>'.PHP_EOL;
                     $checked = '';
                 }
 
                 //이니시스 카카오페이 
                 if(isset($default['de_inicis_kakaopay_use']) && $default['de_inicis_kakaopay_use']) {
+                    $multi_settle++;
                     echo '<input type="radio" id="od_settle_inicis_kakaopay" data-case="inicis_kakaopay" name="od_settle_case" value="inicis_kakaopay" '.$checked.' title="KG 이니시스 카카오페이"> <label for="od_settle_inicis_kakaopay" class="inicis_kakaopay lb_icon">KG 이니시스 카카오페이<em></em></label>'.PHP_EOL;
                     $checked = '';
                 }
@@ -786,7 +795,7 @@ if($is_kakaopay_use) {
                     echo '</div>';
                 }
 
-                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'] ) {
+                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || (empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])) || (!empty($inicis_pro_use) && is_inicis_simple_pay())) {
                     echo '</fieldset>';
                 }
 
@@ -818,7 +827,7 @@ if($is_kakaopay_use) {
 </form>
 
 <?php
-if( $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'] ){   //이니시스 L.pay 또는 이니시스 카카오페이 사용시
+if( empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) ){   //이니시스 L.pay 또는 이니시스 카카오페이 사용시
     require_once(G5_SHOP_PATH.'/inicis/lpay_order.script.php');
 }
 if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // 타 PG 사용시 NHN KCP 네이버페이 사용이 설정되어 있다면
@@ -1457,7 +1466,7 @@ function forderform_check(f)
 
     var form_order_method = '';
 
-    if( settle_method == "lpay" || settle_method == "inicis_kakaopay" ){      //이니시스 L.pay 또는 이니시스 카카오페이 이면 ( 이니시스의 삼성페이는 모바일에서만 단독실행 가능함 )
+    if( (settle_method == "lpay" || settle_method == "inicis_kakaopay") && <?php echo !empty($inicis_pro_use) ? 'false' : 'true'; ?> ){      //이니시스 L.pay 또는 이니시스 카카오페이 이면 ( 이니시스의 삼성페이는 모바일에서만 단독실행 가능함 )
         form_order_method = 'samsungpay';
     } else if(settle_method == "간편결제") {
         if(jQuery("input[name='od_settle_case']:checked" ).attr("data-pay") === "naverpay"){
@@ -1590,6 +1599,10 @@ function forderform_check(f)
                 f.gopaymethod.value = "HPP";
                 break;
             case "신용카드":
+                f.gopaymethod.value = "Card";
+                f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
+                break;
+            case "삼성페이":
                 f.gopaymethod.value = "Card";
                 f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
                 break;
@@ -1802,10 +1815,14 @@ function forderform_check(f)
                 return false;
             }
 
+            <?php if (!empty($inicis_pro_use)) { ?>
+            return inicis_pro_pay("<?php echo $od_id; ?>", "WEB");
+            <?php } else { ?>
             if(!make_signature(f))
                 return false;
-            
+
             paybtn(f);
+            <?php } ?>
         } else {
             f.submit();
         }

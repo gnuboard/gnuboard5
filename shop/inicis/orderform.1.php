@@ -1,6 +1,11 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+if (!empty($inicis_pro_use)) {
+    require(G5_SHOP_PATH.'/inicis/pro/orderform.1.php');
+    return;
+}
+
 // 전자결제를 사용할 때만 실행
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
     add_javascript('<script language="javascript" type="text/javascript" src="'.$stdpay_js_url.'" charset="UTF-8"></script>', 10);

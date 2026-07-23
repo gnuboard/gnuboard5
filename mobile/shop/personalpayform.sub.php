@@ -230,6 +230,7 @@ function pay_approval()
     <?php } ?>
     f.windowTarget.value = 'self';
     <?php } else if($default['de_pg_service'] == 'inicis') { ?>
+    <?php if (empty($inicis_pro_use)) { ?>
     var paymethod = "";
     var width = 330;
     var height = 480;
@@ -261,6 +262,7 @@ function pay_approval()
     <?php } ?>
     f.P_RETURN_URL.value = "<?php echo $return_url.$pp_id; ?>";
     f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
+    <?php } ?>
     <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
 
     f.Amt.value       = f.good_mny.value;
@@ -330,6 +332,10 @@ function pay_approval()
         alert(save_result);
         return false;
     }
+
+    <?php if ($default['de_pg_service'] == 'inicis' && !empty($inicis_pro_use)) { ?>
+    return inicis_pro_pay("<?php echo $od_id; ?>", "MOBILE");
+    <?php } ?>
     
     <?php if($default['de_pg_service'] == 'nicepay') { ?>
         nicepayStart(f);

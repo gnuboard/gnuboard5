@@ -167,6 +167,12 @@ $check_sanitize_keys = array(
 'de_inicis_iniapi_key',         //KG이니시스 INIAPI KEY
 'de_inicis_iniapi_iv',          //KG이니시스 INIAPI IV
 'de_inicis_sign_key',           //KG이니시스 웹결제 사인키
+'de_inicis_pro_use',            //KG이니시스 INIpay PRO 사용
+'de_inicis_hash_key',           //KG이니시스 INIpay PRO HashKey
+'de_inicis_pro_alert_use',      //KG이니시스 INIpay PRO 이상 거래 알림
+'de_inicis_pro_reconcile_use',  //KG이니시스 INIpay PRO 자동 거래대사
+'de_inicis_pro_log_days',       //KG이니시스 INIpay PRO 상세 이력 보존기간
+'de_inicis_pro_summary_days',   //KG이니시스 INIpay PRO 결제 요약 보존기간
 'de_samsung_pay_use',           //KG이니시스 삼성페이 사용
 'de_inicis_lpay_use',           //KG이니시스 Lpay 사용
 'de_inicis_kakaopay_use',       //KG이니시스 카카오페이 사용
@@ -251,6 +257,29 @@ foreach( $check_sanitize_keys as $key ){
     } else {
         $$key = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
+}
+
+$de_inicis_pro_use = !empty($de_inicis_pro_use) ? 1 : 0;
+$de_inicis_hash_key = preg_replace('/[^A-Za-z0-9+\/=_-]/', '', $de_inicis_hash_key);
+
+$de_inicis_pro_alert_use = !empty($de_inicis_pro_alert_use) ? 1 : 0;
+$de_inicis_pro_reconcile_use = !empty($de_inicis_pro_reconcile_use) ? 1 : 0;
+$de_inicis_pro_log_days = (int) $de_inicis_pro_log_days;
+if ($de_inicis_pro_log_days !== 0 && ($de_inicis_pro_log_days < 30 || $de_inicis_pro_log_days > 3650))
+    alert('INIpay PRO 상세 이력 보존기간은 0 또는 30~3650일로 설정해 주십시오.');
+$de_inicis_pro_summary_days = (int) $de_inicis_pro_summary_days;
+if ($de_inicis_pro_summary_days !== 0 && ($de_inicis_pro_summary_days < 365 || $de_inicis_pro_summary_days > 3650))
+    alert('INIpay PRO 결제 요약 보존기간은 0 또는 365~3650일로 설정해 주십시오.');
+
+if ($de_pg_service === 'inicis' && $de_inicis_pro_use) {
+    if (empty($de_card_test) && $de_inicis_hash_key === '')
+        alert('INIpay PRO를 사용하려면 HashKey를 입력해 주십시오.');
+    if (!function_exists('curl_init'))
+        alert('INIpay PRO를 사용하려면 PHP cURL 모듈이 필요합니다.');
+    if (!function_exists('hash') || !in_array('sha512', hash_algos()))
+        alert('INIpay PRO를 사용하려면 SHA-512 해시 지원이 필요합니다.');
+    if ($de_inicis_pro_reconcile_use && empty($de_card_test) && trim($de_inicis_iniapi_key) === '')
+        alert('INIpay PRO 자동 거래대사를 사용하려면 INIAPI KEY를 입력해 주십시오.');
 }
 
 $warning_msg = '';
@@ -411,6 +440,12 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_inicis_iniapi_key          = '{$de_inicis_iniapi_key}',
                 de_inicis_iniapi_iv           = '{$de_inicis_iniapi_iv}',
                 de_inicis_sign_key            = '{$de_inicis_sign_key}',
+                de_inicis_pro_use             = '{$de_inicis_pro_use}',
+                de_inicis_hash_key            = '{$de_inicis_hash_key}',
+                de_inicis_pro_alert_use       = '{$de_inicis_pro_alert_use}',
+                de_inicis_pro_reconcile_use   = '{$de_inicis_pro_reconcile_use}',
+                de_inicis_pro_log_days        = '{$de_inicis_pro_log_days}',
+                de_inicis_pro_summary_days    = '{$de_inicis_pro_summary_days}',
                 de_iche_use                   = '{$de_iche_use}',
                 de_sms_cont1                  = '{$_POST['de_sms_cont1']}',
                 de_sms_cont2                  = '{$_POST['de_sms_cont2']}',

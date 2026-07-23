@@ -87,19 +87,97 @@ function inicis_tid_cancel($args, $is_part=false){
         );
     }
 
-    $url = "https://iniapi.inicis.com/api/v1/refund";  
+    $url = !empty($args['url']) ? $args['url'] : (!empty($default['de_card_test']) ? 'https://stginiapi.inicis.com/api/v1/refund' : 'https://iniapi.inicis.com/api/v1/refund');
+    if (!function_exists('json_encode'))
+        require_once(G5_SHOP_PATH.'/inicis/libs/json_lib.php');
+    if (!in_array($url, array('https://iniapi.inicis.com/api/v1/refund', 'https://stginiapi.inicis.com/api/v1/refund')))
+        return json_encode(array('resultCode' => 'INVALID_ENDPOINT', 'resultMsg' => 'Invalid INIAPI endpoint'));
 
-    $ch = curl_init();                                      
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);  
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);         
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=utf-8'));
-    curl_setopt($ch, CURLOPT_POST, 1);
+    $audit_row = array();
+    $audit_values = array();
+    if (!isset($args['audit']) || $args['audit']) {
+        include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+        if (function_exists('inicis_pro_audit_tables') && function_exists('inicis_pro_audit_write')) {
+            $tables = inicis_pro_audit_tables();
+            $audit_tid = inicis_pro_clean_tid($tid);
+            $audit_oid = isset($args['audit_oid']) ? inicis_pro_clean_oid($args['audit_oid']) : '';
+            $audit_where = $audit_oid !== ''
+                ? "ip_oid = '".sql_escape_string($audit_oid)."' and ip_tid = '".sql_escape_string($audit_tid)."'"
+                : "ip_tid = '".sql_escape_string($audit_tid)."'";
+            $audit_row = $audit_tid !== '' ? sql_fetch(" select * from `{$tables['summary']}` where $audit_where order by ip_id desc limit 1 ", false) : array();
+            if (!empty($audit_row['ip_oid'])) {
+                $audit_source = isset($args['audit_source']) && in_array($args['audit_source'], array('web', 'admin', 'system')) ? $args['audit_source'] : 'system';
+                $audit_actor = $audit_source === 'web' ? '주문자' : ($audit_source === 'admin' ? '관리자' : '시스템');
+                $audit_values = array(
+                    'tid' => $audit_tid,
+                    'auth_tid' => isset($audit_row['ip_auth_tid']) ? $audit_row['ip_auth_tid'] : '',
+                    'mid' => isset($audit_row['ip_mid']) ? $audit_row['ip_mid'] : '',
+                    'environment' => isset($audit_row['ip_environment']) ? $audit_row['ip_environment'] : '',
+                    'amount' => isset($audit_row['ip_amount']) ? (int) $audit_row['ip_amount'] : 0,
+                    'pay_type' => isset($audit_row['ip_pay_type']) ? $audit_row['ip_pay_type'] : '',
+                    'easy_pay' => isset($audit_row['ip_easy_pay']) ? $audit_row['ip_easy_pay'] : '',
+                    'device' => isset($audit_row['ip_device']) ? $audit_row['ip_device'] : '',
+                    'order_type' => isset($audit_row['ip_order_type']) ? $audit_row['ip_order_type'] : '',
+                    'source' => $audit_source,
+                    'message' => $is_part ? $audit_actor.' 부분취소 요청' : $audit_actor.' 전체취소 요청'
+                );
+                if ($is_part)
+                    $audit_values['event_only'] = '1';
+                inicis_pro_audit_write($audit_row['ip_oid'], 'cancel', 'cancel_requested', $audit_values);
+            }
+        }
+    }
 
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $response = '';
+    $request_environment = strpos($url, 'stginiapi.') !== false ? 'test' : 'live';
+    if (!empty($audit_row['ip_oid'])) {
+        $audit_environment = !empty($audit_row['ip_environment']) ? $audit_row['ip_environment'] : $request_environment;
+        if ((!empty($audit_row['ip_mid']) && $audit_row['ip_mid'] !== $mid) || $audit_environment !== $request_environment)
+            $response = json_encode(array('resultCode' => 'TRANSACTION_CONFIG_MISMATCH', 'resultMsg' => '거래 당시 MID 또는 결제환경과 현재 취소 설정이 다릅니다.'));
+    }
+
+    if ($response === '') {
+        $ch = curl_init();
+        if (!$ch) {
+            $response = json_encode(array('resultCode' => 'COMMUNICATION_FAILED', 'resultMsg' => 'cURL 초기화 실패'));
+        } else {
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=utf-8'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+
+            $response = curl_exec($ch);
+            $curl_error = curl_error($ch);
+            $http_status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($response === false || $http_status < 200 || $http_status >= 300) {
+                $error_message = $curl_error !== '' ? $curl_error : 'HTTP '.$http_status;
+                $response = json_encode(array('resultCode' => 'COMMUNICATION_FAILED', 'resultMsg' => substr($error_message, 0, 150)));
+            }
+        }
+    }
+
+    // INIpay PRO 거래는 관리자 취소 결과도 단계별 결제 이력에 남긴다.
+    if (!empty($audit_row['ip_oid'])) {
+        if (!function_exists('json_decode'))
+            require_once(G5_SHOP_PATH.'/inicis/libs/json_lib.php');
+        $result_data = json_decode($response, true);
+        $result_code = is_array($result_data) && isset($result_data['resultCode']) ? inicis_pro_cut($result_data['resultCode'], 30) : 'INVALID_RESPONSE';
+        $result_message = is_array($result_data) && isset($result_data['resultMsg']) ? inicis_pro_cut($result_data['resultMsg'], 180) : '';
+        $audit_success = $result_code === '00';
+        $audit_values['code'] = $result_code;
+        $audit_values['message'] = $is_part ? ($audit_success ? $audit_actor.' 부분취소 완료' : $audit_actor.' 부분취소 결과 확인 필요') : ($audit_success ? $audit_actor.' 전체취소 완료' : $audit_actor.' 전체취소 결과 확인 필요');
+        if ($result_message !== '')
+            $audit_values['message'] .= ' - '.$result_message;
+
+        inicis_pro_audit_write($audit_row['ip_oid'], 'cancel', $is_part ? ($audit_success ? 'partial_canceled' : 'partial_cancel_failed') : ($audit_success ? 'canceled' : 'cancel_failed'), $audit_values);
+    }
 
     //step3. 요청 결과
     return $response;

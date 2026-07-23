@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 $useescrow = '';
+$inicis_pro_use = isset($default['de_inicis_pro_use']) && (int) $default['de_inicis_pro_use'] === 1;
 
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
@@ -42,6 +43,8 @@ else {
 require_once(G5_SHOP_PATH.'/inicis/libs/INIStdPayUtil.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/sha256.inc.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/inicis_youngcart_fn.php');
+if ($inicis_pro_use)
+    require_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
 
 $mid = $default['de_inicis_mid'];
 $signKey = $default['de_inicis_sign_key'];

@@ -207,6 +207,44 @@ if( ! isset($default['de_inicis_iniapi_key']) ){
     sql_query($sql, false);
 }
 
+// KG이니시스 INIpay PRO 설정 추가
+if (!isset($default['de_inicis_pro_use'])) {
+    $sql = "ALTER TABLE `{$g5['g5_shop_default_table']}`
+            ADD COLUMN `de_inicis_pro_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_inicis_sign_key`,
+            ADD COLUMN `de_inicis_hash_key` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_inicis_pro_use`; ";
+    sql_query($sql, false);
+}
+
+if (!isset($default['de_inicis_pro_alert_use'])) {
+    sql_query("ALTER TABLE `{$g5['g5_shop_default_table']}` ADD COLUMN `de_inicis_pro_alert_use` TINYINT(4) NOT NULL DEFAULT '1'", false);
+    $default['de_inicis_pro_alert_use'] = 1;
+}
+if (!isset($default['de_inicis_pro_reconcile_use'])) {
+    sql_query("ALTER TABLE `{$g5['g5_shop_default_table']}` ADD COLUMN `de_inicis_pro_reconcile_use` TINYINT(4) NOT NULL DEFAULT '0'", false);
+    $default['de_inicis_pro_reconcile_use'] = 0;
+}
+if (!isset($default['de_inicis_pro_log_days'])) {
+    sql_query("ALTER TABLE `{$g5['g5_shop_default_table']}` ADD COLUMN `de_inicis_pro_log_days` INT(11) NOT NULL DEFAULT '365'", false);
+    $default['de_inicis_pro_log_days'] = 365;
+}
+if (!isset($default['de_inicis_pro_summary_days'])) {
+    sql_query("ALTER TABLE `{$g5['g5_shop_default_table']}` ADD COLUMN `de_inicis_pro_summary_days` INT(11) NOT NULL DEFAULT '1825'", false);
+    $default['de_inicis_pro_summary_days'] = 1825;
+}
+if (!array_key_exists('de_inicis_pro_monitor_at', $default)) {
+    sql_query("ALTER TABLE `{$g5['g5_shop_default_table']}` ADD COLUMN `de_inicis_pro_monitor_at` DATETIME DEFAULT NULL", false);
+    $default['de_inicis_pro_monitor_at'] = '';
+}
+if (!isset($default['de_inicis_pro_monitor_message'])) {
+    sql_query("ALTER TABLE `{$g5['g5_shop_default_table']}` ADD COLUMN `de_inicis_pro_monitor_message` VARCHAR(255) NOT NULL DEFAULT ''", false);
+    $default['de_inicis_pro_monitor_message'] = '';
+}
+
+// KG이니시스 INIpay PRO 결제 감사 테이블이 없으면 생성한다.
+include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+if (function_exists('inicis_pro_audit_ensure_tables'))
+    inicis_pro_audit_ensure_tables();
+
 // NICEPAY mid, key 추가
 if (! isset($default['de_nicepay_mid'])) {
     $sql = "ALTER TABLE `{$g5['g5_shop_default_table']}` 
@@ -880,24 +918,63 @@ if(!$default['de_kakaopay_cancelpwd']){
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_inicis_pro_use">KG이니시스 INIpay PRO</label></th>
+            <td>
+                <?php echo help("체크시 PC와 모바일에서 가장 최신 결제모듈인 KG이니시스 INIpay PRO 통합 결제창을 사용합니다. 실결제시 반드시 필수로 KG이니시스 모바일 금액위변조 Hash Key 를 입력해야 합니다."); ?>
+                <input type="checkbox" name="de_inicis_pro_use" value="1" id="de_inicis_pro_use"<?php echo !empty($default['de_inicis_pro_use']) ? ' checked' : ''; ?>> <label for="de_inicis_pro_use">사용</label>
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
             <th scope="row"><label for="de_inicis_sign_key">KG이니시스 웹결제 사인키</label></th>
             <td>
-                <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\n<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
+                <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\n<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
                 <input type="text" name="de_inicis_sign_key" value="<?php echo get_sanitize_input($default['de_inicis_sign_key']); ?>" id="de_inicis_sign_key" class="frm_input" size="40" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_inicis_hash_key">KG이니시스 모바일 금액위변조 Hash Key</label></th>
+            <td>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보의 모바일 금액위변조 HashKey를 입력합니다."); ?>
+                <input type="text" name="de_inicis_hash_key" value="<?php echo isset($default['de_inicis_hash_key']) ? get_sanitize_input($default['de_inicis_hash_key']) : ''; ?>" id="de_inicis_hash_key" class="frm_input" size="40" maxlength="255" autocomplete="off">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row"><label for="de_inicis_iniapi_key">KG이니시스 INIAPI KEY</label></th>
             <td>
-                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI key 생성 조회 하여 KEY를 여기에 입력합니다.\n이 항목은 영카트 주문에서 kg이니시스 PG 결제 취소, 부분취소, 에스크로 배송등록, 현금영수증 발급에 필요합니다."); ?>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보 > INIAPI key 생성 조회 하여 KEY를 여기에 입력합니다.\n이 항목은 영카트 주문에서 kg이니시스 PG 결제 취소, 부분취소, 에스크로 배송등록, 현금영수증 발급에 필요합니다."); ?>
                 <input type="text" name="de_inicis_iniapi_key" value="<?php echo get_sanitize_input($default['de_inicis_iniapi_key']); ?>" id="de_inicis_iniapi_key" class="frm_input" size="30" maxlength="30">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row"><label for="de_inicis_iniapi_iv">KG이니시스 INIAPI IV</label></th>
             <td>
-                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > 부가정보 > INIAPI IV 생성 조회 하여 KEY를 여기에 입력합니다.\n이 항목은 영카트 주문에서 kg이니시스 현금영수증 발급에 필요합니다."); ?>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보 > INIAPI IV 생성 조회 하여 KEY를 여기에 입력합니다.\n이 항목은 영카트 주문에서 kg이니시스 현금영수증 발급에 필요합니다."); ?>
                 <input type="text" name="de_inicis_iniapi_iv" value="<?php echo get_sanitize_input($default['de_inicis_iniapi_iv']); ?>" id="de_inicis_iniapi_iv" class="frm_input" size="30" maxlength="30">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row">KG이니시스 PRO 운영 감시</th>
+            <td>
+                <?php echo help("결제 이상 알림과 미진행 거래 정리는 서버 작업 스케줄러 없이 사이트 접속 흐름에서 자동 실행됩니다. KG이니시스 INIAPI 거래대사는 관리자 접속 시 함께 실행됩니다.\n관리자 접속이 드물거나 독립 실행이 필요하면 서버 작업 스케줄러에서 5~10분 간격으로 다음 명령을 추가로 실행할 수 있습니다(선택).\nphp ".G5_SHOP_PATH."/inicis/pro/monitor.php --host=".preg_replace('/[^A-Za-z0-9.:-]/', '', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? ' --https' : '')." --client-ip=".preg_replace('/[^0-9.]/', '', isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '')."\n거래대사는 최근 완료 거래와 확인 필요 거래를 KG이니시스 INIAPI로 조회하며 주문 생성이나 결제 취소를 자동 실행하지 않습니다."); ?>
+                <input type="checkbox" name="de_inicis_pro_alert_use" value="1" id="de_inicis_pro_alert_use"<?php echo !empty($default['de_inicis_pro_alert_use']) ? ' checked' : ''; ?>> <label for="de_inicis_pro_alert_use">이상 거래 메일 알림</label>
+                &nbsp;
+                <input type="checkbox" name="de_inicis_pro_reconcile_use" value="1" id="de_inicis_pro_reconcile_use"<?php echo !empty($default['de_inicis_pro_reconcile_use']) ? ' checked' : ''; ?>> <label for="de_inicis_pro_reconcile_use">최근 완료·확인 필요 거래 자동 대사</label>
+                <br>최근 감시: <?php echo !empty($default['de_inicis_pro_monitor_at']) ? get_text($default['de_inicis_pro_monitor_at']) : '실행 기록 없음'; ?>
+                <?php if (!empty($default['de_inicis_pro_monitor_message'])) { ?> / <?php echo get_text($default['de_inicis_pro_monitor_message']); ?><?php } ?>
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_inicis_pro_log_days">PRO 상세 이력 보존기간</label></th>
+            <td>
+                <?php echo help("단계별 상세 이력과 기존 이니시스 로그의 결제 응답 payload를 설정 기간 이후 순차 삭제합니다. 결제 요약은 아래의 별도 보존기간을 적용합니다. 0은 자동 정리 안 함이며, 보존하는 경우 30~3650일로 설정하십시오."); ?>
+                <input type="text" name="de_inicis_pro_log_days" value="<?php echo isset($default['de_inicis_pro_log_days']) ? (int) $default['de_inicis_pro_log_days'] : 365; ?>" id="de_inicis_pro_log_days" class="frm_input" size="6" maxlength="4"> 일
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_inicis_pro_summary_days">PRO 결제 요약 보존기간</label></th>
+            <td>
+                <?php echo help("주문이 이미 삭제됐고 확인 또는 환불이 필요하지 않은 최종 결제 요약을 설정 기간 이후 순차 삭제합니다. 실제 주문이 남아 있거나 환불 확인이 필요한 거래는 삭제하지 않습니다. 0은 자동 정리 안 함이며, 보존하는 경우 365~3650일로 설정하십시오."); ?>
+                <input type="text" name="de_inicis_pro_summary_days" value="<?php echo isset($default['de_inicis_pro_summary_days']) ? (int) $default['de_inicis_pro_summary_days'] : 1825; ?>" id="de_inicis_pro_summary_days" class="frm_input" size="6" maxlength="4"> 일
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
@@ -906,7 +983,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <a href="http://sir.kr/main/service/samsungpay.php" target="_blank" class="kg_btn">삼성페이 서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("KG이니시스와 별도로 <strong>삼성페이 사용 계약을 하신 경우</strong>에만 체크해주세요. (모바일 주문서 결제수단에 삼성페이가 노출됩니다.) <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 웹결제 사인키를 입력해 주세요.", 50); ?>
+                <?php echo help("KG이니시스와 별도로 <strong>삼성페이 사용 계약을 하신 경우</strong>에만 체크해주세요. INIpay PRO 사용 시 PC와 모바일 주문서에 삼성페이가 노출되며 삼성페이 결제창을 직접 호출합니다. 구버전 결제에서는 모바일 주문서에만 노출됩니다.<br>실결제 시 상점 아이디와 사용 중인 결제모듈의 인증키(PRO: HashKey, 구버전: 웹결제 사인키)를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_samsung_pay_use" value="1" id="de_samsung_pay_use"<?php echo $default['de_samsung_pay_use']?' checked':''; ?>> <label for="de_samsung_pay_use">사용</label>
             </td>
         </tr>
@@ -915,7 +992,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_inicis_lpay_use">KG이니시스 L.pay 사용</label>
             </th>
             <td>
-                <?php echo help("체크시 KG이니시스 L.pay를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
+                <?php echo help("체크 시 KG이니시스 L.pay를 사용합니다. INIpay PRO에서는 주문서에서 L.pay 선택 시 L.pay 결제창을 직접 호출합니다.<br>실결제 시 상점 아이디와 사용 중인 결제모듈의 인증키(PRO: HashKey, 구버전: 웹결제 사인키)를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_inicis_lpay_use" value="1" id="de_inicis_lpay_use"<?php echo $default['de_inicis_lpay_use']?' checked':''; ?>> <label for="de_inicis_lpay_use">사용</label>
             </td>
         </tr>
@@ -924,7 +1001,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_inicis_kakaopay_use">KG이니시스 카카오페이 사용</label>
             </th>
             <td>
-                <?php echo help("체크시 KG이니시스 결제의 카카오페이를 사용합니다. 주문서 결제수단에 카카오페이가 노출됩니다. <br>실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
+                <?php echo help("체크 시 KG이니시스 결제의 카카오페이를 사용합니다. INIpay PRO에서는 주문서에서 카카오페이 선택 시 카카오페이 결제창을 직접 호출합니다.<br>실결제 시 상점 아이디와 사용 중인 결제모듈의 인증키(PRO: HashKey, 구버전: 웹결제 사인키)를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_inicis_kakaopay_use" value="1" id="de_inicis_kakaopay_use"<?php echo $default['de_inicis_kakaopay_use']?' checked':''; ?>> <label for="de_inicis_kakaopay_use">사용</label>
             </td>
         </tr>
@@ -933,7 +1010,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_inicis_cartpoint_use">KG이니시스 신용카드 포인트 결제</label>
             </th>
             <td>
-                <?php echo help("신용카드 포인트 결제에 대해 이니시스와 계약을 맺은 상점에서만 적용하는 옵션입니다.<br>체크시 pc 결제에서는 신용카드 포인트 사용 여부에 대한 팝업창에 사용 버튼과 사용안함 버튼이 표기되어 결제하는 고객의 선택여부에 따라 신용카드 포인트 결제가 가능합니다.<br >모바일에서는 신용카드 포인트 사용이 가능합니다.", 50); ?>
+                <?php echo help("신용카드 포인트 결제에 대해 이니시스와 계약을 맺은 상점에서만 적용하는 구버전 결제 옵션입니다.<br>체크 시 PC 결제에서는 신용카드 포인트 사용 여부를 선택할 수 있고 모바일에서도 카드 포인트를 사용할 수 있습니다.<br>INIpay PRO에는 이 설정을 전달하지 않습니다. PRO 카드 포인트 사용은 KG이니시스에서 해당 MID의 지원 여부와 요청 규격을 확인한 후 적용해야 합니다.", 50); ?>
                 <input type="checkbox" name="de_inicis_cartpoint_use" value="1" id="de_inicis_cartpoint_use"<?php echo $default['de_inicis_cartpoint_use']?' checked':''; ?>> <label for="de_inicis_cartpoint_use">사용</label>
             </td>
         </tr>
@@ -1789,6 +1866,26 @@ function byte_check(el_cont, el_byte)
 </form>
 
 <script>
+function inicis_pro_retention_check(id, min, label)
+{
+    var el = document.getElementById(id);
+    if (!el) return true;
+    var raw = el.value.replace(/^\s+|\s+$/g, "");
+    if (raw === "") return true;
+    if (!/^[0-9]+$/.test(raw)) {
+        alert("INIpay PRO " + label + " 보존기간은 숫자로 입력해 주십시오.");
+        el.focus();
+        return false;
+    }
+    var days = parseInt(raw, 10);
+    if (days !== 0 && (days < min || days > 3650)) {
+        alert("INIpay PRO " + label + " 보존기간은 0 또는 " + min + "~3650일로 설정해 주십시오.");
+        el.focus();
+        return false;
+    }
+    return true;
+}
+
 function fconfig_check(f)
 {
     <?php echo get_editor_js('de_baesong_content'); ?>
@@ -1797,6 +1894,29 @@ function fconfig_check(f)
     
     var msg = "",
         pg_msg = "";
+
+    if (!inicis_pro_retention_check("de_inicis_pro_log_days", 30, "상세 이력")) return false;
+    if (!inicis_pro_retention_check("de_inicis_pro_summary_days", 365, "결제 요약")) return false;
+
+    if (f.de_pg_service.value == "inicis") {
+        var pro_use_el = document.getElementById("de_inicis_pro_use");
+        var inicis_test = parseInt(f.de_card_test.value, 10) > 0;
+        if (pro_use_el && pro_use_el.checked && !inicis_test) {
+            var hash_el = document.getElementById("de_inicis_hash_key");
+            if (hash_el && hash_el.value.replace(/[^A-Za-z0-9+\/=_-]/g, "") === "") {
+                alert("INIpay PRO를 사용하려면 HashKey를 입력해 주십시오.");
+                hash_el.focus();
+                return false;
+            }
+            var reconcile_el = document.getElementById("de_inicis_pro_reconcile_use");
+            var iniapi_el = document.getElementById("de_inicis_iniapi_key");
+            if (reconcile_el && reconcile_el.checked && iniapi_el && iniapi_el.value.replace(/^\s+|\s+$/g, "") === "") {
+                alert("INIpay PRO 자동 거래대사를 사용하려면 INIAPI KEY를 입력해 주십시오.");
+                iniapi_el.focus();
+                return false;
+            }
+        }
+    }
 
     if( f.de_pg_service.value == "kcp" ){
         if( f.de_kcp_mid.value && f.de_kcp_site_key.value && parseInt(f.de_card_test.value) > 0 ){

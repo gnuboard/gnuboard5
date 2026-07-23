@@ -200,6 +200,7 @@ function pg_setting_check($is_print=false){
 }
 
 function is_cancel_shop_pg_order($od){
+    global $default;
 
     $is_od_pg_cancel = false;
 
@@ -215,7 +216,199 @@ function is_cancel_shop_pg_order($od){
         $is_od_pg_cancel = true;
     }
 
+    if ($od['od_pg'] === 'inicis' && !empty($default['de_inicis_pro_use']) && !empty($od['od_tno'])
+        && in_array($od['od_settle_case'], array('신용카드', '간편결제', '가상계좌', '계좌이체', '휴대폰', '삼성페이', 'lpay', 'inicis_kakaopay'))) {
+        $is_od_pg_cancel = true;
+    }
+
     return $is_od_pg_cancel;
+}
+
+function check_order_inicis_pro_payments($run_external = true){
+    include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+
+    // 사이트 이용 흐름에서 실행되는 경량 감시는 잠금 대기 없이 즉시 시도하고,
+    // 획득하지 못하면 다른 요청이 이미 처리 중이므로 그대로 넘어간다.
+    $monitor_lock = inicis_pro_lock('monitor_process', $run_external ? 10 : 0);
+    if ($monitor_lock === '')
+        return false;
+
+    check_order_inicis_pro_payments_run($run_external);
+    inicis_pro_unlock($monitor_lock);
+
+    return true;
+}
+
+// 서버 스케줄러 없이 사이트 접속 흐름에서 실행되는 경량 감시.
+// 방문자 응답을 먼저 종료해 페이지 지연 없이 뒤에서 처리한다.
+function check_order_inicis_pro_payments_inline(){
+    global $default;
+
+    if (empty($default['de_pg_service']) || $default['de_pg_service'] !== 'inicis' || empty($default['de_inicis_pro_use']))
+        return;
+
+    if (function_exists('fastcgi_finish_request'))
+        @fastcgi_finish_request();
+    @ignore_user_abort(true);
+
+    check_order_inicis_pro_payments(false);
+}
+
+function check_order_inicis_pro_payments_run($run_external = true){
+    global $g5, $config, $default;
+
+    include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+    include_once(G5_ADMIN_PATH.'/shop_admin/inicislog.lib.php');
+
+    if (!inicis_pro_audit_schema_ready()) {
+        // 스키마가 준비되지 않았어도 감시 시각을 전진시켜, 사이트 접속 흐름의
+        // 인라인 감시가 매 요청마다 재등록·재실행되는 것을 막는다.
+        if (array_key_exists('de_inicis_pro_monitor_at', $default))
+            sql_query(" update {$g5['g5_shop_default_table']}
+                           set de_inicis_pro_monitor_at = '".G5_TIME_YMDHIS."' ", false);
+        return;
+    }
+
+    $log_days = isset($default['de_inicis_pro_log_days']) ? (int) $default['de_inicis_pro_log_days'] : 365;
+    if ($log_days >= 30) {
+        inicis_pro_purge_events($log_days, 500);
+        inicis_pro_purge_payloads($log_days, 200);
+    }
+    $summary_days = isset($default['de_inicis_pro_summary_days']) ? (int) $default['de_inicis_pro_summary_days'] : 1825;
+    if ($summary_days >= 365)
+        inicis_pro_purge_summaries($summary_days, 50);
+
+    $tables = inicis_pro_audit_tables();
+    $expired_count = 0;
+    $expired_result = sql_query(" select ip_oid from `{$tables['summary']}`
+                                  where ip_status = 'request_ready'
+                                    and ip_updated_at < date_sub(now(), interval 30 minute)
+                                  order by ip_updated_at asc
+                                  limit 50 ", false);
+    if ($expired_result) {
+        while ($expired = sql_fetch_array($expired_result)) {
+            if (inicis_pro_audit_write($expired['ip_oid'], 'request', 'request_expired', array(
+                'source' => 'system',
+                'message' => '결제창 요청 후 인증결과가 없어 미진행으로 정리'
+            )))
+                $expired_count++;
+        }
+    }
+
+    $order_amount_sql = "(o.od_cart_price + o.od_send_cost + o.od_send_cost2 - o.od_cart_coupon - o.od_coupon - o.od_send_coupon - o.od_receipt_point)";
+    $anomaly_sql = inicis_admin_anomaly_sql();
+    $sql_from = " from `{$tables['summary']}` p
+                   left join {$g5['g5_shop_order_table']} o on p.ip_order_type <> 'personal' and o.od_id = p.ip_oid
+                   left join {$g5['g5_shop_personalpay_table']} pp on p.ip_order_type = 'personal' and pp.pp_id = p.ip_oid ";
+    $sql_fields = " select p.*,
+                           o.od_id as order_oid, o.od_tno as order_tid, o.od_status as order_status,
+                           o.od_receipt_price as order_receipt_price, o.od_misu as order_misu, o.od_cancel_price as order_cancel_price,
+                           o.od_settle_case as order_settle_case, $order_amount_sql as order_amount,
+                           pp.pp_id as personal_oid, pp.pp_tno as personal_tid, pp.pp_price as personal_amount, pp.pp_receipt_price as personal_receipt_price ";
+
+    $recover_result = sql_query(" select ip_oid from `{$tables['summary']}`
+                                  where ip_tid = ''
+                                    and ip_status in ('authentication_received','approval_started','validation_failed','order_saving')
+                                    and ip_updated_at < date_sub(now(), interval 3 minute)
+                                  order by ip_updated_at asc
+                                  limit 5 ", false);
+    if ($recover_result) {
+        while ($recover_row = sql_fetch_array($recover_result))
+            inicis_pro_recover_approved_tid($recover_row['ip_oid'], 'system');
+    }
+
+    $reconcile_count = 0;
+    $reconcile_failed_count = 0;
+    if ($run_external && empty($default['de_card_test']) && !empty($default['de_inicis_pro_reconcile_use']) && inicis_pro_get_iniapi_key() !== '') {
+        $result = sql_query(" $sql_fields $sql_from
+                               where p.ip_tid <> ''
+                                 and p.ip_updated_at < date_sub(now(), interval 3 minute)
+                                 and (p.ip_pg_checked_at is null or p.ip_pg_checked_at < date_sub(now(), interval 1 hour))
+                                 and (p.ip_refund_required = '1'
+                                      or $anomaly_sql
+                                      or (p.ip_updated_at > date_sub(now(), interval 7 day)
+                                          and (p.ip_status in ('order_saved','paid','paid_after_cancel','vbank_issued','canceled','refund_completed')
+                                               or p.ip_cancel_status <> '')))
+                               order by p.ip_refund_required desc, p.ip_updated_at asc
+                               limit 10 ", false);
+        if ($result) {
+            while ($row = sql_fetch_array($result)) {
+                $inquiry = inicis_pro_inquiry($row['ip_tid'], $row['ip_oid'], $row);
+                if (inicis_pro_save_inquiry($row['ip_oid'], $inquiry, 'system') && !empty($inquiry['success']))
+                    $reconcile_count++;
+                else
+                    $reconcile_failed_count++;
+            }
+        }
+    }
+
+    $anomaly_count_row = sql_fetch(" select count(*) as cnt $sql_from where $anomaly_sql ");
+    $anomaly_count = isset($anomaly_count_row['cnt']) ? (int) $anomaly_count_row['cnt'] : 0;
+    if ($run_external)
+        $monitor_message = '미진행 '.$expired_count.'건 정리 / KG 대사 성공 '.$reconcile_count.'건, 실패 '.$reconcile_failed_count.'건 / 확인 필요 '.$anomaly_count.'건';
+    else
+        $monitor_message = '미진행 '.$expired_count.'건 정리 / 확인 필요 '.$anomaly_count.'건';
+    if (array_key_exists('de_inicis_pro_monitor_at', $default)) {
+        $monitor_set = "de_inicis_pro_monitor_at = '".G5_TIME_YMDHIS."'";
+        if (isset($default['de_inicis_pro_monitor_message']))
+            $monitor_set .= ", de_inicis_pro_monitor_message = '".sql_escape_string($monitor_message)."'";
+        sql_query(" update {$g5['g5_shop_default_table']} set $monitor_set ", false);
+    }
+
+    // 테스트 거래는 상세 화면에서 직접 조회하며 운영 메일에는 포함하지 않는다.
+    if (!empty($default['de_card_test']))
+        return;
+
+    if (empty($default['de_inicis_pro_alert_use']) || empty($config['cf_email_use']) || empty($config['cf_admin_email']))
+        return;
+
+    $result = sql_query(" $sql_fields $sql_from
+                           where $anomaly_sql
+                           order by p.ip_updated_at asc
+                           limit 20 ", false);
+    if (!$result)
+        return;
+
+    $alert_rows = array();
+    $mail_msg = '';
+    while ($row = sql_fetch_array($result)) {
+        if (!inicis_admin_is_anomaly($row))
+            continue;
+
+        $alert_key = inicis_admin_alert_key($row);
+        if (!empty($row['ip_alert_key']) && $row['ip_alert_key'] === $alert_key)
+            continue;
+
+        $pg_state = !empty($row['ip_pg_checked_at'])
+            ? ($row['ip_pg_result_code'] === '00' ? inicis_admin_pg_status_label($row['ip_pg_status']) : '거래조회 실패')
+            : '미조회';
+        $mail_msg .= '<tr>'
+            .'<td style="padding:6px;border:1px solid #ddd"><a href="'.G5_ADMIN_URL.'/shop_admin/inicislogview.php?oid='.urlencode($row['ip_oid']).'">'.get_text($row['ip_oid']).'</a></td>'
+            .'<td style="padding:6px;border:1px solid #ddd">'.get_text(inicis_admin_status_label(inicis_admin_primary_status($row))).'</td>'
+            .'<td style="padding:6px;border:1px solid #ddd">'.get_text($pg_state).'</td>'
+            .'<td style="padding:6px;border:1px solid #ddd;text-align:right">'.number_format((int) $row['ip_amount']).'원</td>'
+            .'</tr>';
+        $alert_rows[] = array('oid' => $row['ip_oid'], 'key' => $alert_key);
+    }
+
+    if (!count($alert_rows))
+        return;
+
+    include_once(G5_LIB_PATH.'/mailer.lib.php');
+    $content = '<p>KG이니시스 결제와 영카트 주문을 대조해야 하는 거래가 확인됐습니다.</p>'
+        .'<p>자동으로 주문을 생성하거나 결제를 취소하지 않았습니다. KG이니시스 거래조회 결과와 상점관리자 거래내역을 확인한 후 조치해 주십시오.</p>'
+        .'<table style="border-collapse:collapse"><thead><tr><th style="padding:6px;border:1px solid #ddd">주문번호</th><th style="padding:6px;border:1px solid #ddd">로컬 상태</th><th style="padding:6px;border:1px solid #ddd">KG 상태</th><th style="padding:6px;border:1px solid #ddd">금액</th></tr></thead><tbody>'
+        .$mail_msg.'</tbody></table>';
+    $sent = mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $config['cf_admin_email'], '['.$config['cf_title'].'] KG이니시스 결제 확인 필요', $content, 1);
+    if (!$sent)
+        return;
+
+    foreach ($alert_rows as $alert_row) {
+        sql_query(" update `{$tables['summary']}`
+                       set ip_alerted_at = '".G5_TIME_YMDHIS."',
+                           ip_alert_key = '".sql_escape_string($alert_row['key'])."'
+                     where ip_oid = '".sql_escape_string($alert_row['oid'])."' ", false);
+    }
 }
 
 function check_order_inicis_tmps(){
@@ -225,7 +418,9 @@ function check_order_inicis_tmps(){
 
     if( ! $admin_cookie_time ){
 
-        if( $default['de_pg_service'] === 'inicis' && empty($default['de_card_test']) ){
+        if ($default['de_pg_service'] === 'inicis' && !empty($default['de_inicis_pro_use'])) {
+            check_order_inicis_pro_payments();
+        } elseif( $default['de_pg_service'] === 'inicis' && empty($default['de_card_test']) ){
             $sql = " select * from {$g5['g5_shop_inicis_log_table']} where P_TID <> '' and P_TYPE in ('CARD', 'ISP', 'BANK') and P_MID <> '' and P_STATUS = '00' and is_mail_send = 0 and substr(P_AUTH_DT, 1, 14) < '".date('YmdHis', strtotime('-3 minutes', G5_SERVER_TIME))."' ";
 
             $result = sql_query($sql, false);
@@ -240,7 +435,7 @@ function check_order_inicis_tmps(){
                 
                 $oid = $row['oid'];
                 $p_tid = $row['P_TID'];
-                $p_mid = strtolower($tmps['P_MID']);
+                $p_mid = strtolower($row['P_MID']);
 
                 if( in_array($p_mid, array('iniescrow0', 'inipaytest')) ) continue;
 

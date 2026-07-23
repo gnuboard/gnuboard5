@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 define('G5_MOBILE_INICIS_SETTLE', true);
+$inicis_pro_use = isset($default['de_inicis_pro_use']) && (int) $default['de_inicis_pro_use'] === 1;
 
 // curl 체크
 if (!function_exists('curl_init')) {
@@ -108,6 +109,8 @@ $inicis_cardpoint = $default['de_inicis_cartpoint_use'] ? '&cp_yn=Y' : '';
 //$inicis_cardpoint .= '';        // &merc_noint=Y&noint_quota=카드사코드-개월:개월^추가카드사코드-개월:개월:개월 형식으로 설정
 
 require_once(G5_SHOP_PATH.'/inicis/libs/inicis_youngcart_fn.php');
+if ($inicis_pro_use)
+    require_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
 
 $noti_url   = G5_MSHOP_URL.'/inicis/settle_common.php';
 $next_url   = G5_MSHOP_URL.'/inicis/pay_approval.php';

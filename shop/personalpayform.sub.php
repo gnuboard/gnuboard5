@@ -421,10 +421,14 @@ function forderform_check(f)
             return false;
         }
 
+        <?php if (!empty($inicis_pro_use)) { ?>
+        return inicis_pro_pay("<?php echo $od_id; ?>", "WEB");
+        <?php } else { ?>
         if(!make_signature(f))
             return false;
 
         paybtn(f);
+        <?php } ?>
     } else {
         f.submit();
     }

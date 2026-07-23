@@ -374,6 +374,263 @@ if (!sql_query(" DESC `{$g5['member_auto_login_table']}` ", false)) {
     $is_check = true;
 }
 
+// KG이니시스 결제 처리 현황 및 단계별 이력 테이블
+if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
+    $inicis_pro_config_columns = array(
+        'de_inicis_pro_alert_use' => "ADD COLUMN `de_inicis_pro_alert_use` tinyint(4) NOT NULL DEFAULT '1'",
+        'de_inicis_pro_reconcile_use' => "ADD COLUMN `de_inicis_pro_reconcile_use` tinyint(4) NOT NULL DEFAULT '0'",
+        'de_inicis_pro_log_days' => "ADD COLUMN `de_inicis_pro_log_days` int(11) NOT NULL DEFAULT '365'",
+        'de_inicis_pro_summary_days' => "ADD COLUMN `de_inicis_pro_summary_days` int(11) NOT NULL DEFAULT '1825'",
+        'de_inicis_pro_monitor_at' => "ADD COLUMN `de_inicis_pro_monitor_at` datetime DEFAULT NULL",
+        'de_inicis_pro_monitor_message' => "ADD COLUMN `de_inicis_pro_monitor_message` varchar(255) NOT NULL DEFAULT ''"
+    );
+    $inicis_pro_config_alter = array();
+    foreach ($inicis_pro_config_columns as $column => $alter) {
+        $column_result = sql_query(" SHOW COLUMNS FROM `{$g5['g5_shop_default_table']}` LIKE '$column' ", false);
+        if (!$column_result || sql_num_rows($column_result) === 0)
+            $inicis_pro_config_alter[] = $alter;
+    }
+    if (count($inicis_pro_config_alter)) {
+        sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}` ".implode(', ', $inicis_pro_config_alter), true);
+        $is_check = true;
+    }
+
+    if (!isset($g5['g5_shop_inicis_pay_table']))
+        $g5['g5_shop_inicis_pay_table'] = G5_SHOP_TABLE_PREFIX.'inicis_pay';
+    if (!isset($g5['g5_shop_inicis_pay_event_table']))
+        $g5['g5_shop_inicis_pay_event_table'] = G5_SHOP_TABLE_PREFIX.'inicis_pay_event';
+
+    if (!sql_query(" DESC `{$g5['g5_shop_inicis_pay_table']}` ", false)) {
+        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_inicis_pay_table']}` (
+                      `ip_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `ip_oid` varchar(64) NOT NULL DEFAULT '',
+                      `ip_tid` varchar(80) NOT NULL DEFAULT '',
+                      `ip_auth_tid` varchar(80) NOT NULL DEFAULT '',
+                      `ip_mid` varchar(80) NOT NULL DEFAULT '',
+                      `ip_environment` varchar(10) NOT NULL DEFAULT '',
+                      `mb_id` varchar(20) NOT NULL DEFAULT '',
+                      `ip_amount` int(11) NOT NULL DEFAULT '0',
+                      `ip_pay_type` varchar(20) NOT NULL DEFAULT '',
+                      `ip_easy_pay` varchar(20) NOT NULL DEFAULT '',
+                      `ip_device` varchar(10) NOT NULL DEFAULT '',
+                      `ip_order_type` varchar(10) NOT NULL DEFAULT '',
+                      `ip_status` varchar(30) NOT NULL DEFAULT '',
+                      `ip_result_code` varchar(30) NOT NULL DEFAULT '',
+                      `ip_result_message` varchar(255) NOT NULL DEFAULT '',
+                      `ip_noti_status` varchar(30) NOT NULL DEFAULT '',
+                      `ip_noti_code` varchar(30) NOT NULL DEFAULT '',
+                      `ip_noti_message` varchar(255) NOT NULL DEFAULT '',
+                      `ip_noti_failed_count` int(11) NOT NULL DEFAULT '0',
+                      `ip_noti_at` datetime DEFAULT NULL,
+                      `ip_cancel_status` varchar(30) NOT NULL DEFAULT '',
+                      `ip_cancel_code` varchar(30) NOT NULL DEFAULT '',
+                      `ip_cancel_message` varchar(255) NOT NULL DEFAULT '',
+                      `ip_cancel_checked_at` datetime DEFAULT NULL,
+                      `ip_refund_required` tinyint(4) NOT NULL DEFAULT '0',
+                      `ip_vbank_due_at` datetime DEFAULT NULL,
+                      `ip_expired_at` datetime DEFAULT NULL,
+                      `ip_order_exists` tinyint(4) NOT NULL DEFAULT '0',
+                      `ip_approved_at` datetime DEFAULT NULL,
+                      `ip_ordered_at` datetime DEFAULT NULL,
+                      `ip_notified_at` datetime DEFAULT NULL,
+                      `ip_canceled_at` datetime DEFAULT NULL,
+                      `ip_created_at` datetime DEFAULT NULL,
+                      `ip_updated_at` datetime DEFAULT NULL,
+                      `ip_ip` varchar(45) NOT NULL DEFAULT '',
+                      `ip_event_count` int(11) NOT NULL DEFAULT '0',
+                      `ip_audit_error` tinyint(4) NOT NULL DEFAULT '0',
+                      `ip_alerted_at` datetime DEFAULT NULL,
+                      `ip_alert_key` varchar(64) NOT NULL DEFAULT '',
+                      `ip_pg_status` varchar(30) NOT NULL DEFAULT '',
+                      `ip_pg_amount` int(11) NOT NULL DEFAULT '0',
+                      `ip_pg_tid` varchar(80) NOT NULL DEFAULT '',
+                      `ip_pg_result_code` varchar(30) NOT NULL DEFAULT '',
+                      `ip_pg_message` varchar(255) NOT NULL DEFAULT '',
+                      `ip_pg_checked_at` datetime DEFAULT NULL,
+                      PRIMARY KEY (`ip_id`),
+                      UNIQUE KEY `ip_oid` (`ip_oid`),
+                      KEY `ip_tid` (`ip_tid`),
+                      KEY `ip_auth_tid` (`ip_auth_tid`),
+                      KEY `ip_status` (`ip_status`),
+                      KEY `ip_noti_status` (`ip_noti_status`),
+                      KEY `ip_cancel_status` (`ip_cancel_status`),
+                      KEY `ip_refund_required` (`ip_refund_required`),
+                      KEY `ip_updated_at` (`ip_updated_at`)
+                    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ", true);
+        $is_check = true;
+    }
+
+    if (sql_query(" DESC `{$g5['g5_shop_inicis_pay_table']}` ", false)) {
+        $inicis_pay_columns = array(
+            'ip_environment' => "ADD COLUMN `ip_environment` varchar(10) NOT NULL DEFAULT '' AFTER `ip_mid`",
+            'ip_easy_pay' => "ADD COLUMN `ip_easy_pay` varchar(20) NOT NULL DEFAULT '' AFTER `ip_pay_type`",
+            'ip_noti_status' => "ADD COLUMN `ip_noti_status` varchar(30) NOT NULL DEFAULT '' AFTER `ip_result_message`",
+            'ip_noti_code' => "ADD COLUMN `ip_noti_code` varchar(30) NOT NULL DEFAULT '' AFTER `ip_noti_status`",
+            'ip_noti_message' => "ADD COLUMN `ip_noti_message` varchar(255) NOT NULL DEFAULT '' AFTER `ip_noti_code`",
+            'ip_noti_failed_count' => "ADD COLUMN `ip_noti_failed_count` int(11) NOT NULL DEFAULT '0' AFTER `ip_noti_message`",
+            'ip_noti_at' => "ADD COLUMN `ip_noti_at` datetime DEFAULT NULL AFTER `ip_noti_failed_count`",
+            'ip_cancel_status' => "ADD COLUMN `ip_cancel_status` varchar(30) NOT NULL DEFAULT '' AFTER `ip_noti_at`",
+            'ip_cancel_code' => "ADD COLUMN `ip_cancel_code` varchar(30) NOT NULL DEFAULT '' AFTER `ip_cancel_status`",
+            'ip_cancel_message' => "ADD COLUMN `ip_cancel_message` varchar(255) NOT NULL DEFAULT '' AFTER `ip_cancel_code`",
+            'ip_cancel_checked_at' => "ADD COLUMN `ip_cancel_checked_at` datetime DEFAULT NULL AFTER `ip_cancel_message`",
+            'ip_refund_required' => "ADD COLUMN `ip_refund_required` tinyint(4) NOT NULL DEFAULT '0' AFTER `ip_cancel_checked_at`",
+            'ip_vbank_due_at' => "ADD COLUMN `ip_vbank_due_at` datetime DEFAULT NULL AFTER `ip_refund_required`",
+            'ip_expired_at' => "ADD COLUMN `ip_expired_at` datetime DEFAULT NULL AFTER `ip_vbank_due_at`",
+            'ip_audit_error' => "ADD COLUMN `ip_audit_error` tinyint(4) NOT NULL DEFAULT '0'",
+            'ip_alerted_at' => "ADD COLUMN `ip_alerted_at` datetime DEFAULT NULL",
+            'ip_alert_key' => "ADD COLUMN `ip_alert_key` varchar(64) NOT NULL DEFAULT ''",
+            'ip_pg_status' => "ADD COLUMN `ip_pg_status` varchar(30) NOT NULL DEFAULT ''",
+            'ip_pg_amount' => "ADD COLUMN `ip_pg_amount` int(11) NOT NULL DEFAULT '0'",
+            'ip_pg_tid' => "ADD COLUMN `ip_pg_tid` varchar(80) NOT NULL DEFAULT ''",
+            'ip_pg_result_code' => "ADD COLUMN `ip_pg_result_code` varchar(30) NOT NULL DEFAULT ''",
+            'ip_pg_message' => "ADD COLUMN `ip_pg_message` varchar(255) NOT NULL DEFAULT ''",
+            'ip_pg_checked_at' => "ADD COLUMN `ip_pg_checked_at` datetime DEFAULT NULL"
+        );
+        $inicis_pay_alter = array();
+        foreach ($inicis_pay_columns as $column => $alter) {
+            $column_result = sql_query(" SHOW COLUMNS FROM `{$g5['g5_shop_inicis_pay_table']}` LIKE '$column' ", false);
+            if (!$column_result || sql_num_rows($column_result) === 0)
+                $inicis_pay_alter[] = $alter;
+        }
+        if (count($inicis_pay_alter)) {
+            sql_query(" ALTER TABLE `{$g5['g5_shop_inicis_pay_table']}` ".implode(', ', $inicis_pay_alter), true);
+            $is_check = true;
+        }
+
+        if (count($inicis_pay_alter)) {
+            $environment = !empty($default['de_card_test']) ? 'test' : 'live';
+            sql_query(" insert ignore into `{$g5['g5_shop_inicis_pay_table']}`
+                            (ip_oid, ip_environment, ip_status, ip_noti_status, ip_noti_code, ip_noti_message,
+                             ip_noti_failed_count, ip_noti_at, ip_created_at, ip_updated_at, ip_event_count)
+                        select e.ip_oid, '$environment', e.pe_status, e.pe_status, e.pe_code, e.pe_message,
+                               sum(if(e.pe_status = 'notification_failed', 1, 0)), max(e.pe_created_at),
+                               min(e.pe_created_at), max(e.pe_created_at), count(*)
+                          from `{$g5['g5_shop_inicis_pay_event_table']}` e
+                          left join `{$g5['g5_shop_inicis_pay_table']}` p on p.ip_oid = e.ip_oid
+                         where p.ip_id is null
+                           and e.pe_stage = 'notification'
+                         group by e.ip_oid ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}`
+                           set ip_environment = case
+                                   when lower(ip_mid) in ('inipaytest','iniescrow0') then 'test'
+                                   when ip_mid <> '' then 'live'
+                                   else '$environment'
+                               end
+                         where ip_environment = '' ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}` p
+                           inner join (
+                               select ip_oid, max(pe_id) as pe_id,
+                                      sum(if(pe_status = 'notification_failed', 1, 0)) as fail_count
+                                 from `{$g5['g5_shop_inicis_pay_event_table']}`
+                                where pe_stage = 'notification'
+                                group by ip_oid
+                           ) x on x.ip_oid = p.ip_oid
+                           inner join `{$g5['g5_shop_inicis_pay_event_table']}` e on e.pe_id = x.pe_id
+                           set p.ip_noti_status = e.pe_status,
+                               p.ip_noti_code = e.pe_code,
+                               p.ip_noti_message = e.pe_message,
+                               p.ip_noti_failed_count = x.fail_count,
+                               p.ip_noti_at = e.pe_created_at ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}` p
+                           inner join (
+                               select ip_oid, max(pe_id) as pe_id
+                                 from `{$g5['g5_shop_inicis_pay_event_table']}`
+                                where pe_stage = 'cancel'
+                                group by ip_oid
+                           ) x on x.ip_oid = p.ip_oid
+                           inner join `{$g5['g5_shop_inicis_pay_event_table']}` e on e.pe_id = x.pe_id
+                           set p.ip_cancel_status = e.pe_status,
+                               p.ip_cancel_code = e.pe_code,
+                               p.ip_cancel_message = e.pe_message,
+                               p.ip_cancel_checked_at = e.pe_created_at ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}` p
+                           inner join `{$g5['g5_shop_inicis_pay_event_table']}` e on e.ip_oid = p.ip_oid and e.pe_stage = 'request'
+                           set p.ip_easy_pay = case
+                               when e.pe_message like '삼성페이%' then 'SAMSUNGPAY'
+                               when e.pe_message like 'lpay%' then 'LPAY'
+                               when e.pe_message like 'inicis_kakaopay%' then 'KAKAOPAY'
+                               when e.pe_message like '간편결제%' then 'EASYPAY'
+                               else p.ip_easy_pay
+                           end
+                         where p.ip_easy_pay = '' ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}`
+                           set ip_noti_status = case
+                                   when ip_status = 'paid' then 'paid'
+                                   when ip_status = 'vbank_issued' then 'vbank_issued'
+                                   when ip_status = 'notification_received' then 'notification_received'
+                                   else ip_noti_status
+                               end,
+                               ip_cancel_status = case
+                                   when ip_status in ('canceled','cancel_failed','partial_canceled','partial_cancel_failed') then ip_status
+                                   else ip_cancel_status
+                               end ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}` p
+                           inner join {$g5['g5_shop_order_table']} o on o.od_id = p.ip_oid
+                           set p.ip_status = 'paid_after_cancel',
+                               p.ip_refund_required = '1',
+                               p.ip_noti_status = 'paid_after_cancel',
+                               p.ip_noti_message = '취소 주문에 가상계좌 입금 확인'
+                         where p.ip_pay_type = 'VBANK'
+                           and p.ip_status = 'paid'
+                           and o.od_status = '취소'
+                           and o.od_receipt_price > 0 ", false);
+            $inicis_pro_migrated_at = G5_TIME_YMDHIS;
+            $inicis_pro_migrated_message = '기존 결제·주문 이력 대조에서 취소 후 입금 확인';
+            sql_query(" insert into `{$g5['g5_shop_inicis_pay_event_table']}`
+                            (ip_oid, ip_tid, pe_stage, pe_status, pe_code, pe_message, pe_source, pe_ip, pe_created_at)
+                        select p.ip_oid, p.ip_tid, 'reconcile', 'paid_after_cancel', '',
+                               '".sql_escape_string($inicis_pro_migrated_message)."', 'system', '', '$inicis_pro_migrated_at'
+                          from `{$g5['g5_shop_inicis_pay_table']}` p
+                          left join `{$g5['g5_shop_inicis_pay_event_table']}` e
+                            on e.ip_oid = p.ip_oid and e.pe_status = 'paid_after_cancel'
+                         where p.ip_status = 'paid_after_cancel'
+                           and p.ip_refund_required = '1'
+                           and e.pe_id is null ", false);
+            sql_query(" update `{$g5['g5_shop_inicis_pay_table']}` p
+                           inner join `{$g5['g5_shop_inicis_pay_event_table']}` e
+                             on e.ip_oid = p.ip_oid
+                            and e.pe_status = 'paid_after_cancel'
+                            and e.pe_message = '".sql_escape_string($inicis_pro_migrated_message)."'
+                            and e.pe_created_at = '$inicis_pro_migrated_at'
+                           set p.ip_event_count = p.ip_event_count + 1 ", false);
+        }
+
+        $inicis_pay_indexes = array(
+            'ip_noti_status' => "ADD KEY `ip_noti_status` (`ip_noti_status`)",
+            'ip_cancel_status' => "ADD KEY `ip_cancel_status` (`ip_cancel_status`)",
+            'ip_refund_required' => "ADD KEY `ip_refund_required` (`ip_refund_required`)"
+        );
+        foreach ($inicis_pay_indexes as $index_name => $index_sql) {
+            $index_result = sql_query(" SHOW INDEX FROM `{$g5['g5_shop_inicis_pay_table']}` WHERE Key_name = '$index_name' ", false);
+            if (!$index_result || sql_num_rows($index_result) === 0) {
+                sql_query(" ALTER TABLE `{$g5['g5_shop_inicis_pay_table']}` $index_sql ", true);
+                $is_check = true;
+            }
+        }
+    }
+
+    if (!sql_query(" DESC `{$g5['g5_shop_inicis_pay_event_table']}` ", false)) {
+        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_inicis_pay_event_table']}` (
+                      `pe_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `ip_oid` varchar(64) NOT NULL DEFAULT '',
+                      `ip_tid` varchar(80) NOT NULL DEFAULT '',
+                      `pe_stage` varchar(30) NOT NULL DEFAULT '',
+                      `pe_status` varchar(30) NOT NULL DEFAULT '',
+                      `pe_code` varchar(30) NOT NULL DEFAULT '',
+                      `pe_message` varchar(255) NOT NULL DEFAULT '',
+                      `pe_source` varchar(10) NOT NULL DEFAULT '',
+                      `pe_ip` varchar(45) NOT NULL DEFAULT '',
+                      `pe_created_at` datetime DEFAULT NULL,
+                      PRIMARY KEY (`pe_id`),
+                      KEY `ip_oid` (`ip_oid`),
+                      KEY `ip_tid` (`ip_tid`),
+                      KEY `pe_status` (`pe_status`),
+                      KEY `pe_created_at` (`pe_created_at`)
+                    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ", true);
+        $is_check = true;
+    }
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';

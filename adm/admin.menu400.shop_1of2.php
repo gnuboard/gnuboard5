@@ -3,6 +3,8 @@ if (!defined('G5_USE_SHOP') || !G5_USE_SHOP) {
     return;
 }
 
+global $default;
+
 $menu['menu400'] = array(
     array('400000', '쇼핑몰관리', G5_ADMIN_URL . '/shop_admin/', 'shop_config'),
     array('400010', '쇼핑몰현황', G5_ADMIN_URL . '/shop_admin/', 'shop_index'),
@@ -21,3 +23,8 @@ $menu['menu400'] = array(
     array('400750', '추가배송비관리', G5_ADMIN_URL . '/shop_admin/sendcostlist.php', 'scf_sendcost', 1),
     array('400410', '미완료주문', G5_ADMIN_URL . '/shop_admin/inorderlist.php', 'scf_inorder', 1),
 );
+
+// 결제방식이 KG이니시스이고 INIpay PRO를 사용할 때만 노출한다.
+if (isset($default['de_pg_service']) && $default['de_pg_service'] === 'inicis' && !empty($default['de_inicis_pro_use'])) {
+    $menu['menu400'][] = array('400420', 'KG이니시스 PRO 현황', G5_ADMIN_URL . '/shop_admin/inicisloglist.php', 'scf_inicis_log');
+}

@@ -27,8 +27,28 @@ $ct = sql_fetch($sql);
 
 $uid = function_exists('get_shop_uid') ? get_shop_uid('order', $od['od_id'], $od['od_time'], $od['od_ip']) : md5($od['od_id'].$od['od_time'].$od['od_ip']);
 
+// 비회원은 주문조회 인증을 통과한 본인 주문만 취소할 수 있다.
+if (empty($member['mb_id']) && (string) $uid !== (string) get_session('ss_orderview_uid'))
+    alert("본인 주문만 취소할 수 있습니다.", G5_SHOP_URL);
+
 if($od['od_cancel_price'] > 0 || $od['od_status'] != '주문' || $ct['od_count1'] != $ct['od_count2']) {
     alert("취소할 수 있는 주문이 아닙니다.", G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
+}
+
+// INIpay PRO 가상계좌 입금통보와 주문자 취소가 동시에 처리되지 않도록
+// PG 취소부터 로컬 주문 취소 완료까지 동일 주문 잠금을 유지한다.
+$inicis_pro_order_lock = '';
+if (!empty($od['od_tno']) && $od['od_pg'] === 'inicis') {
+    include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+    $inicis_pro_tables = inicis_pro_audit_tables();
+    $inicis_pro_order = sql_fetch(" select ip_id from `{$inicis_pro_tables['summary']}`
+                                     where ip_oid = '".sql_escape_string($od['od_id'])."'
+                                       and ip_tid = '".sql_escape_string($od['od_tno'])."' ", false);
+    if (!empty($inicis_pro_order['ip_id'])) {
+        $inicis_pro_order_lock = inicis_pro_lock($od['od_id']);
+        if ($inicis_pro_order_lock === '')
+            alert('동일 주문의 결제 또는 통보 처리가 진행 중입니다. 잠시 후 다시 취소해 주십시오.', G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
+    }
 }
 
 // PG 결제 취소
@@ -75,6 +95,8 @@ if($od['od_tno']) {
             $args = array(
                 'paymethod' => get_type_inicis_paymethod($od['od_settle_case']),
                 'tid' => $od['od_tno'],
+                'audit_oid' => $od['od_id'],
+                'audit_source' => 'web',
                 'msg' => $cancel_msg
             );
 
@@ -186,5 +208,8 @@ $affected = function_exists('get_sql_affected_rows') ? get_sql_affected_rows() :
 if ($od['od_receipt_point'] > 0 && $affected) {
     insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소", '@shop_order', $od_id, 'cancel');
 }
+
+if ($inicis_pro_order_lock !== '')
+    inicis_pro_unlock($inicis_pro_order_lock);
 
 goto_url(G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
