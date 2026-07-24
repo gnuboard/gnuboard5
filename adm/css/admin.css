@@ -1083,8 +1083,8 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .sevice_1 h4{width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
 .sevice_1 h4 a{display:inline-block;height:75px;padding:10px 0 0;width:100%}
 
-.svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;}
-.svc_card ul li{width:33%;}
+.svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;width:520px;}
+.svc_card ul li{width:25%;box-sizing:border-box;}
 .svc_phone {background:url('../img/service_img2.jpg') no-repeat top center;margin-right:13px;}
 .svc_phone ul li{width:50%;}
 .svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
