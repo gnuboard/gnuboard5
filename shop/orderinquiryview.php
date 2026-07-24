@@ -19,7 +19,8 @@ if (!$is_member) {
 $tot_point = 0;
 
 $sql = "select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
-if($is_member && !$is_admin)
+// 최고관리자가 아니면 로그인 회원 본인 주문만 조회 (게시판/그룹 관리자 문맥으로 우회 불가)
+if($is_member && $is_admin !== 'super')
     $sql .= " and mb_id = '{$member['mb_id']}' ";
 $od = sql_fetch($sql);
 

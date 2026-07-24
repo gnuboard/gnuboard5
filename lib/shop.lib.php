@@ -30,7 +30,7 @@ function get_shop_uid($type, $id, $time, $ip)
  * 현금영수증 발급 또는 조회에 대한 검증
  *
  * 다음 셋 중 하나여야 접근 허용:
- *   1. 관리자
+ *   1. 최고관리자 (게시판/그룹 관리자 권한은 제외)
  *   2. 본인 주문/개인결제 (로그인 회원이고 mb_id 일치)
  *   3. 비회원이지만 정당한 세션 uid 보유 (orderinquiry.php에서 비밀번호 검증 통과 후
  *      또는 주문 완료 직후 세션에 저장된 ss_orderview_uid / ss_personalpay_uid가
@@ -48,8 +48,9 @@ function is_shop_order_owner($od, $type = 'order')
         return false;
     }
 
-    // 관리자
-    if ($is_admin) {
+    // 최고관리자만 전체 주문/개인결제 접근 허용
+    // (요청 bo_table 로 좌우되는 게시판/그룹 관리자 문맥은 인정하지 않음)
+    if ($is_admin === 'super') {
         return true;
     }
 

@@ -42,7 +42,7 @@ if($tx == 'personalpay') {
         alert('해당 주문 정보에 접근 권한이 없습니다.', G5_SHOP_URL);
     }
 
-	if ( ! $is_admin && ! (shop_is_taxsave($od)) ){
+	if ( $is_admin !== 'super' && ! (shop_is_taxsave($od)) ){
 		die('해당 주문은 현금영수증을 발급할수 없습니다.');
 	}
 
