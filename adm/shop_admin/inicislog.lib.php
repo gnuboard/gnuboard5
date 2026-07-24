@@ -231,8 +231,13 @@ if (!function_exists('inicis_admin_is_anomaly')) {
         if ($pg_attention)
             return true;
 
+        // 부분취소 합계로 전액 환불된 주문이 취소 상태이면 PG의 부분취소 표시와 일치하는 종결 상태로 본다.
+        $part_cancel_settled = $pg_status === 'PART_CANCEL' && !$local_order_active && !$is_personal
+            && isset($row['order_refund_price'], $row['order_receipt_price'])
+            && (int) $row['order_receipt_price'] > 0
+            && (int) $row['order_refund_price'] >= (int) $row['order_receipt_price'];
         if ($pg_paid)
-            return $pg_mismatch || !$local_order_active || $mismatch;
+            return $pg_mismatch || (!$part_cancel_settled && (!$local_order_active || $mismatch));
 
         $updated = isset($row['ip_updated_at']) ? strtotime($row['ip_updated_at']) : false;
         if ($pg_pending)
@@ -292,6 +297,8 @@ if (!function_exists('inicis_admin_anomaly_sql')) {
         $pg_attention = "(p.ip_pg_result_code = '00' and p.ip_pg_status = 'WAITING_FOR_REFUND')";
         $pg_canceled = "(p.ip_pg_result_code = '00' and p.ip_pg_status in ('1','9','C','CANCEL','DEPOSIT_CANCELED','REFUND_COMPLETED'))";
         $pg_known = "($pg_paid or $pg_pending or $pg_attention or $pg_canceled)";
+        $part_cancel_settled = "(p.ip_pg_result_code = '00' and p.ip_pg_status = 'PART_CANCEL'
+                                  and $local_canceled and o.od_receipt_price > 0 and o.od_refund_price >= o.od_receipt_price)";
         $pg_mismatch = "(p.ip_pg_result_code = '00' and ((p.ip_pg_tid <> '' and p.ip_tid <> '' and p.ip_pg_tid <> p.ip_tid) or (p.ip_pg_amount > 0 and p.ip_amount > 0 and p.ip_pg_amount <> p.ip_amount)))";
         $approved_states = "'approved','order_saving','order_saved','notification_received','vbank_issued','paid'";
         $local_anomaly = "(p.ip_status = 'cancel_failed'
@@ -315,7 +322,7 @@ if (!function_exists('inicis_admin_anomaly_sql')) {
                   or $vbank_canceled_before_payment
                   or $pg_mismatch
                   or $pg_attention
-                  or ($pg_paid and (not $local_active or $mismatch))
+                  or ($pg_paid and not $part_cancel_settled and (not $local_active or $mismatch))
                   or ($pg_pending and (p.ip_status in ('canceled','cancel_failed') or $mismatch or (not $has_order and $stale)))
                   or ($pg_canceled and $local_active)
                   or (not $pg_known and $local_anomaly))";
@@ -394,6 +401,11 @@ if (!function_exists('inicis_admin_recommendation')) {
             return 'KG이니시스 거래와 영카트 주문이 모두 취소 상태로 일치합니다. 별도 조치가 필요하지 않습니다.';
         if ($pg_canceled && $has_order)
             return 'KG이니시스 거래는 취소 또는 거래 없음 상태입니다. 영카트 주문의 결제금액·상태를 확인하고 PG 상태와 일치하도록 관리자 처리하십시오.';
+        if ($pg_status === 'PART_CANCEL' && $order_canceled_match && !$recommend_is_personal
+            && isset($row['order_refund_price'], $row['order_receipt_price'])
+            && (int) $row['order_receipt_price'] > 0
+            && (int) $row['order_refund_price'] >= (int) $row['order_receipt_price'])
+            return 'KG이니시스 거래가 부분취소 합계로 전액 환불되었고 영카트 주문도 취소 상태입니다. 별도 조치가 필요하지 않습니다.';
         if (isset($row['ip_status']) && in_array($row['ip_status'], array('authentication_received', 'approval_started', 'communication_failed')) && empty($row['ip_tid']))
             return '최종 승인 TID가 영카트에 저장되기 전에 처리가 중단됐을 수 있습니다. 같은 주문을 다시 결제시키기 전에 KG이니시스 상점관리자에서 주문번호 OID로 승인 여부를 확인하십시오.';
         if (isset($row['ip_status']) && $row['ip_status'] === 'validation_failed' && !empty($row['ip_tid']))

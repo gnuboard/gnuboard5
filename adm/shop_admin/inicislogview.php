@@ -27,7 +27,7 @@ $oid_sql = sql_escape_string($oid);
 $order_amount_sql = "(o.od_cart_price + o.od_send_cost + o.od_send_cost2 - o.od_cart_coupon - o.od_coupon - o.od_send_coupon - o.od_receipt_point)";
 $sql = " select p.*,
                 o.od_id as order_oid, o.od_tno as order_tid, o.od_status as order_status, o.od_time as order_time,
-                o.od_receipt_price as order_receipt_price, o.od_misu as order_misu, o.od_cancel_price as order_cancel_price,
+                o.od_receipt_price as order_receipt_price, o.od_misu as order_misu, o.od_cancel_price as order_cancel_price, o.od_refund_price as order_refund_price,
                 o.od_settle_case as order_settle_case, $order_amount_sql as order_amount,
                 pp.pp_id as personal_oid, pp.pp_tno as personal_tid, pp.pp_price as personal_amount, pp.pp_receipt_price as personal_receipt_price, pp.pp_time as personal_time
            from `{$tables['summary']}` p
