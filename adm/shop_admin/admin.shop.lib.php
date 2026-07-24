@@ -303,7 +303,7 @@ function check_order_inicis_pro_payments_run($run_external = true){
     $sql_fields = " select p.*,
                            o.od_id as order_oid, o.od_tno as order_tid, o.od_status as order_status,
                            o.od_receipt_price as order_receipt_price, o.od_misu as order_misu, o.od_cancel_price as order_cancel_price,
-                           o.od_settle_case as order_settle_case, $order_amount_sql as order_amount,
+                           o.od_refund_price as order_refund_price, o.od_settle_case as order_settle_case, $order_amount_sql as order_amount,
                            pp.pp_id as personal_oid, pp.pp_tno as personal_tid, pp.pp_price as personal_amount, pp.pp_receipt_price as personal_receipt_price ";
 
     $recover_result = sql_query(" select ip_oid from `{$tables['summary']}`

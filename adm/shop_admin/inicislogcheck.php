@@ -24,7 +24,7 @@ if ($mode === 'batch') {
     $result = sql_query(" select p.*,
                                  o.od_id as order_oid, o.od_tno as order_tid, o.od_status as order_status,
                                  o.od_receipt_price as order_receipt_price, o.od_misu as order_misu, o.od_cancel_price as order_cancel_price,
-                                 o.od_settle_case as order_settle_case, $order_amount_sql as order_amount,
+                                 o.od_refund_price as order_refund_price, o.od_settle_case as order_settle_case, $order_amount_sql as order_amount,
                                  pp.pp_id as personal_oid, pp.pp_tno as personal_tid, pp.pp_price as personal_amount, pp.pp_receipt_price as personal_receipt_price
                             from `{$tables['summary']}` p
                             left join {$g5['g5_shop_order_table']} o on p.ip_order_type <> 'personal' and o.od_id = p.ip_oid
