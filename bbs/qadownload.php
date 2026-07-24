@@ -11,10 +11,24 @@ $no = isset($_REQUEST['no']) ? (int) $_REQUEST['no'] : 0;
 if (!get_session('ss_qa_view_'.$qa_id))
     alert('잘못된 접근입니다.');
 
-$sql = " select qa_subject, qa_file{$no}, qa_source{$no} from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
+$sql = " select qa_subject, mb_id, qa_type, qa_parent, qa_file{$no}, qa_source{$no} from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
 $file = sql_fetch($sql);
 if (!$file['qa_file'.$no])
     alert_close('파일 정보가 존재하지 않습니다.');
+
+// 세션 표식만으로는 권한을 보장하지 못하므로 문의 스레드의 실제 소유자를 다시 확인
+if ($is_admin !== 'super') {
+    if ($file['qa_type']) {
+        // 답변 첨부는 부모 질문의 소유자를 기준으로 판정
+        $parent = sql_fetch(" select mb_id from {$g5['qa_content_table']} where qa_id = '{$file['qa_parent']}' ");
+        $thread_owner = isset($parent['mb_id']) ? $parent['mb_id'] : '';
+    } else {
+        $thread_owner = $file['mb_id'];
+    }
+
+    if (! ($is_member && $thread_owner !== '' && $thread_owner === $member['mb_id']))
+        alert('다운로드 권한이 없습니다.');
+}
 
 if($is_guest) {
     alert('다운로드 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?url='.urlencode(G5_BBS_URL.'/qaview.php?qa_id='.$qa_id));

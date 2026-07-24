@@ -98,11 +98,12 @@ for ($i=1; $i<=5; $i++) {
 }
 
 if($w == 'u' || $w == 'a' || $w == 'r') {
-    if($w == 'a' && !$is_admin)
+    if($w == 'a' && $is_admin !== 'super')
         alert('답변은 관리자만 등록할 수 있습니다.');
 
     $sql = " select * from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
-    if(!$is_admin) {
+    // 최고관리자가 아니면 본인 문의만 대상으로 (게시판/그룹 관리자 문맥으로 우회 불가)
+    if($is_admin !== 'super') {
         $sql .= " and mb_id = '{$member['mb_id']}' ";
     }
 
@@ -112,7 +113,7 @@ if($w == 'u' || $w == 'a' || $w == 'r') {
         if(!$write['qa_id'])
             alert('게시글이 존재하지 않습니다.\\n삭제되었거나 자신의 글이 아닌 경우입니다.');
 
-        if(!$is_admin) {
+        if($is_admin !== 'super') {
             if($write['qa_type'] == 0 && $write['qa_status'] == 1)
                 alert('답변이 등록된 문의글은 수정할 수 없습니다.');
 

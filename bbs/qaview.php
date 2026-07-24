@@ -21,7 +21,7 @@ $skin_file = $qa_skin_path.'/view.skin.php';
 
 if(is_file($skin_file)) {
     $sql = " select * from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
-    if(!$is_admin) {
+    if($is_admin !== 'super') {
         $sql .= " and mb_id = '{$member['mb_id']}' ";
     }
 
@@ -50,7 +50,7 @@ if(is_file($skin_file)) {
     $sql = " select qa_id, qa_subject
                 from {$g5['qa_content_table']}
                 where qa_type = '0' ";
-    if(!$is_admin) {
+    if($is_admin !== 'super') {
         $sql .= " and mb_id = '{$member['mb_id']}' ";
     }
 

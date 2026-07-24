@@ -47,7 +47,8 @@ if(is_file($skin_file)) {
     $sql_common = " from {$g5['qa_content_table']} ";
     $sql_search = " where qa_type = '0' ";
 
-    if(!$is_admin)
+    // 최고관리자가 아니면 본인 문의만 조회 (게시판/그룹 관리자 문맥으로 우회 불가)
+    if($is_admin !== 'super')
         $sql_search .= " and mb_id = '{$member['mb_id']}' ";
 
     if($sca) {
