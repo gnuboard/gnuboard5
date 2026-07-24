@@ -39,7 +39,7 @@ include_once('./admin.head.php');
                 <h3>SMS 문자 서비스</h3>
                 <p>주문이나 배송시에 상점운영자 또는 고객에게 휴대폰으로 단문메세지 (최대 한글 40자, 영문 80자)를 발송합니다.</p>
             </div>
-            <div class="svc_btn2"><a href="https://sir.kr/main/service/icode.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
+            <div class="svc_btn2"><a href="https://sir.kr/services/message/icode" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
         </div>
 
     </div>
