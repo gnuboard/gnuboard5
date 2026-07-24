@@ -1110,7 +1110,13 @@ function form_submit(f)
         var cancel_pg = "PG사의 <?php echo $od['od_settle_case']; ?>";
         <?php } ?>
 
-        if(chk_cnt == chked_cnt) {
+        // 체크하지 않은 나머지 품목이 모두 취소류 상태이면 이번 처리로 주문 전체가 취소된다.
+        var remain_active_cnt = $ct_chk.not(":checked").filter(function() {
+            var row_status = $.trim($(this).closest("tr").find("td.td_mngsmall").first().text());
+            return row_status != "취소" && row_status != "반품" && row_status != "품절";
+        }).length;
+
+        if(chked_cnt > 0 && remain_active_cnt == 0) {
             if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
                 f.pg_cancel.value = 1;
                 msg = cancel_pg+" 결제 취소와 함께 ";

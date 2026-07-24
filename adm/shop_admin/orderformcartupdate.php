@@ -72,31 +72,73 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                         ));
                         $inicis_pro_cancel_preprocessed = true;
                     } else {
-                        if (!isset($_POST['pg_cancel']) || (int) $_POST['pg_cancel'] !== 1)
-                            alert('INIpay PRO 주문은 PG 승인취소를 함께 처리해야 전체취소할 수 있습니다. PG 승인취소를 선택한 후 다시 처리해 주십시오.');
+                        $pre_refunded = (int) $pre_od['od_refund_price'];
+                        $pre_remaining = (int) $pre_od['od_receipt_price'] - $pre_refunded;
 
-                        $pro_environment = !empty($pro_summary['ip_environment']) ? $pro_summary['ip_environment'] : inicis_pro_environment();
-                        if ($pro_summary['ip_mid'] !== inicis_pro_get_mid(!empty($pro_summary['ip_pay_type']) ? $pro_summary['ip_pay_type'] : null) || $pro_environment !== inicis_pro_environment())
-                            alert('거래 당시 MID 또는 결제환경과 현재 설정이 달라 PG 취소를 실행할 수 없습니다. KG이니시스 상점관리자에서 원거래를 확인해 주십시오.');
+                        if ($pre_refunded > 0 && $pre_remaining <= 0) {
+                            // 이전 부분취소로 결제금액이 모두 환불된 주문은 PG 취소 없이 주문 취소만 진행한다.
+                            inicis_pro_audit_write($pre_od['od_id'], 'cancel', 'canceled', array(
+                                'tid' => $pre_od['od_tno'],
+                                'mid' => $pro_summary['ip_mid'],
+                                'amount' => isset($pro_summary['ip_amount']) ? (int) $pro_summary['ip_amount'] : 0,
+                                'pay_type' => isset($pro_summary['ip_pay_type']) ? $pro_summary['ip_pay_type'] : '',
+                                'source' => 'admin',
+                                'message' => '이전 부분취소로 결제금액이 모두 환불되어 주문 취소만 진행합니다.'
+                            ));
+                            $inicis_pro_cancel_preprocessed = true;
+                        } elseif (!isset($_POST['pg_cancel']) || (int) $_POST['pg_cancel'] !== 1) {
+                            // PG 승인취소 없이 주문만 취소하는 선택을 이력에 남긴다. 결제는 KG이니시스에 승인 상태로 남는다.
+                            inicis_pro_audit_write($pre_od['od_id'], 'cancel', 'canceled', array(
+                                'tid' => $pre_od['od_tno'],
+                                'mid' => $pro_summary['ip_mid'],
+                                'amount' => isset($pro_summary['ip_amount']) ? (int) $pro_summary['ip_amount'] : 0,
+                                'pay_type' => isset($pro_summary['ip_pay_type']) ? $pro_summary['ip_pay_type'] : '',
+                                'source' => 'admin',
+                                'message' => 'PG 승인취소 없이 주문만 취소했습니다. 결제는 KG이니시스에 남아 있습니다.',
+                                'event_only' => '1'
+                            ));
+                        } else {
+                            $pro_environment = !empty($pro_summary['ip_environment']) ? $pro_summary['ip_environment'] : inicis_pro_environment();
+                            if ($pro_summary['ip_mid'] !== inicis_pro_get_mid(!empty($pro_summary['ip_pay_type']) ? $pro_summary['ip_pay_type'] : null) || $pro_environment !== inicis_pro_environment())
+                                alert('거래 당시 MID 또는 결제환경과 현재 설정이 달라 PG 취소를 실행할 수 없습니다. KG이니시스 상점관리자에서 원거래를 확인해 주십시오.');
 
-                        include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
-                        $pre_cancel_args = array(
-                            'paymethod' => get_type_inicis_paymethod($pre_od['od_settle_case']),
-                            'tid' => $pre_od['od_tno'],
-                            'mid' => $pro_summary['ip_mid'],
-                            'audit_oid' => $pre_od['od_id'],
-                            'audit_source' => 'admin',
-                            'msg' => '쇼핑몰 운영자 승인 취소',
-                            'url' => $pro_environment === 'test' ? 'https://stginiapi.inicis.com/api/v1/refund' : 'https://iniapi.inicis.com/api/v1/refund'
-                        );
-                        $pre_cancel_response = inicis_tid_cancel($pre_cancel_args);
-                        $pre_cancel_result = json_decode($pre_cancel_response, true);
-                        if (!isset($pre_cancel_result['resultCode']) || $pre_cancel_result['resultCode'] !== '00') {
-                            $pre_cancel_code = !empty($pre_cancel_result['resultCode']) ? $pre_cancel_result['resultCode'] : 'COMMUNICATION_FAILED';
-                            $pre_cancel_message = !empty($pre_cancel_result['resultMsg']) ? $pre_cancel_result['resultMsg'] : 'KG이니시스 취소 응답을 확인하지 못했습니다.';
-                            alert($pre_cancel_message.' 코드 : '.$pre_cancel_code);
+                            include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+                            $pre_cancel_args = array(
+                                'paymethod' => get_type_inicis_paymethod($pre_od['od_settle_case']),
+                                'tid' => $pre_od['od_tno'],
+                                'mid' => $pro_summary['ip_mid'],
+                                'audit_oid' => $pre_od['od_id'],
+                                'audit_source' => 'admin',
+                                'msg' => '쇼핑몰 운영자 승인 취소',
+                                'url' => $pro_environment === 'test' ? 'https://stginiapi.inicis.com/api/v1/refund' : 'https://iniapi.inicis.com/api/v1/refund'
+                            );
+                            // 부분취소 이력이 있는 거래는 전체취소 요청이 거부되므로 잔여 금액을 부분취소로 처리한다.
+                            $pre_cancel_is_part = $pre_refunded > 0 && $pre_remaining > 0;
+                            if ($pre_cancel_is_part) {
+                                $pre_cancel_args['msg'] = '쇼핑몰 운영자 승인 취소(잔여금액)';
+                                $pre_cancel_args['price'] = $pre_remaining;
+                                $pre_cancel_args['confirmPrice'] = 0;
+                            }
+                            $pre_cancel_response = inicis_tid_cancel($pre_cancel_args, $pre_cancel_is_part);
+                            $pre_cancel_result = json_decode($pre_cancel_response, true);
+                            if (!isset($pre_cancel_result['resultCode']) || $pre_cancel_result['resultCode'] !== '00') {
+                                $pre_cancel_code = !empty($pre_cancel_result['resultCode']) ? $pre_cancel_result['resultCode'] : 'COMMUNICATION_FAILED';
+                                $pre_cancel_message = !empty($pre_cancel_result['resultMsg']) ? $pre_cancel_result['resultMsg'] : 'KG이니시스 취소 응답을 확인하지 못했습니다.';
+                                alert($pre_cancel_message.' 코드 : '.$pre_cancel_code);
+                            }
+                            if ($pre_cancel_is_part) {
+                                inicis_pro_audit_write($pre_od['od_id'], 'cancel', 'canceled', array(
+                                    'tid' => $pre_od['od_tno'],
+                                    'mid' => $pro_summary['ip_mid'],
+                                    'amount' => isset($pro_summary['ip_amount']) ? (int) $pro_summary['ip_amount'] : 0,
+                                    'pay_type' => isset($pro_summary['ip_pay_type']) ? $pro_summary['ip_pay_type'] : '',
+                                    'source' => 'admin',
+                                    'code' => '00',
+                                    'message' => '잔여 금액 부분취소로 전체취소를 완료했습니다.'
+                                ));
+                            }
+                            $inicis_pro_cancel_preprocessed = true;
                         }
-                        $inicis_pro_cancel_preprocessed = true;
                     }
                 }
             }
