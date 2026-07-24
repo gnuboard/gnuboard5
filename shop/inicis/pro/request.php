@@ -72,9 +72,11 @@ $buyer_email = $is_personal ? (isset($order_data['pp_email']) ? $order_data['pp_
 $buyer_phone = $is_personal ? (isset($order_data['pp_hp']) ? $order_data['pp_hp'] : '') : (!empty($order_data['od_hp']) ? $order_data['od_hp'] : (isset($order_data['od_tel']) ? $order_data['od_tel'] : ''));
 
 $reserved = array(
-    'email' => inicis_pro_cut($buyer_email, 60),
     'phonenum' => preg_replace('/[^0-9]/', '', $buyer_phone)
 );
+// 이메일은 선택 항목이며, 형식이 확인되지 않으면 결제창 요청이 거부되므로 확인된 경우에만 전달한다.
+if (inicis_pro_valid_email($buyer_email))
+    $reserved['email'] = inicis_pro_cut($buyer_email, 60);
 if ($pay_type === 'CARD') {
     $reserved['quotabase'] = '01:02:03:04:05:06:07:08:09:10:11:12';
     if ($easypay_code !== '')

@@ -117,6 +117,23 @@ if (!function_exists('inicis_pro_cut')) {
     }
 }
 
+if (!function_exists('inicis_pro_valid_email')) {
+    function inicis_pro_valid_email($email)
+    {
+        $email = trim((string) $email);
+        if ($email === '' || strlen($email) > 60)
+            return false;
+        if (!preg_match('/^[0-9A-Za-z._%+-]+@([0-9A-Za-z-]+\.)+[A-Za-z]{2,}$/', $email))
+            return false;
+
+        $tld = strtolower(substr(strrchr($email, '.'), 1));
+        if (in_array($tld, array('test', 'example', 'invalid', 'localhost', 'local')))
+            return false;
+
+        return true;
+    }
+}
+
 if (!function_exists('inicis_pro_clean_oid')) {
     function inicis_pro_clean_oid($oid)
     {

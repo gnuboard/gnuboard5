@@ -12,10 +12,34 @@ if (G5_IS_MOBILE) {
 }
 ?>
 <script type="text/javascript">
+function inicis_pro_email_check()
+{
+    var field = jQuery('input[name=od_email], input[name=pp_email]').first();
+    if (!field.length)
+        return true;
+
+    var email = String(field.val() || '').replace(/^\s+|\s+$/g, '');
+    if (email === '')
+        return true;
+
+    if (email.length <= 60 && /^[0-9A-Za-z._%+-]+@([0-9A-Za-z-]+\.)+[A-Za-z]{2,}$/.test(email)) {
+        var tld = email.substring(email.lastIndexOf('.') + 1).toLowerCase();
+        if (tld !== 'test' && tld !== 'example' && tld !== 'invalid' && tld !== 'localhost' && tld !== 'local')
+            return true;
+    }
+
+    alert('이메일 주소가 올바르지 않습니다. 이메일 주소를 다시 확인해 주십시오.');
+    field.focus();
+    return false;
+}
+
 function inicis_pro_pay(oid, deviceType)
 {
     var requestData = null;
     var errorMessage = '';
+
+    if (!inicis_pro_email_check())
+        return false;
 
     jQuery.ajax({
         type: 'POST',
