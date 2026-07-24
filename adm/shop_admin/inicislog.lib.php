@@ -359,13 +359,13 @@ if (!function_exists('inicis_admin_recommendation')) {
         if (!empty($row['ip_noti_status']) && $row['ip_noti_status'] === 'notification_failed')
             return '최근 KG 서버 통보를 검증하거나 저장하지 못했습니다. 통보 실패 코드와 서버 오류 로그를 확인하고 상점관리자에서 입금통보 결과를 재전송하십시오.';
         if (!empty($row['ip_cancel_status']) && $row['ip_cancel_status'] === 'cancel_failed')
-            return 'PG 전체취소 결과를 확정하지 못했습니다. 로컬 주문상태를 변경하지 말고 KG이니시스 상점관리자의 원거래를 직접 확인하십시오.';
+            return 'PG 전체취소 결과를 확정하지 못했습니다. 영카트 주문상태를 변경하지 말고 KG이니시스 상점관리자의 원거래를 직접 확인하십시오.';
         if (!empty($row['ip_cancel_status']) && $row['ip_cancel_status'] === 'partial_cancel_failed')
             return '부분취소 결과를 확정하지 못했습니다. KG이니시스 상점관리자의 원거래와 부분취소 거래내역을 직접 대조하십시오.';
         if (!empty($row['ip_noti_status']) && $row['ip_noti_status'] === 'notification_received')
             return '가상계좌 입금 통보 수신 후 주문 반영 완료 기록이 없습니다. 주문 입금액과 미수금을 확인하고, 불일치하면 KG이니시스 상점관리자에서 입금 통보를 재전송하십시오.';
         if (!empty($row['ip_cancel_status']) && $row['ip_cancel_status'] === 'cancel_requested')
-            return 'PG 취소 요청 후 결과가 확정되지 않았습니다. 로컬 주문을 추가로 변경하지 말고 KG이니시스 상점관리자에서 원거래 취소 여부를 먼저 확인하십시오.';
+            return 'PG 취소 요청 후 결과가 확정되지 않았습니다. 영카트 주문을 추가로 변경하지 말고 KG이니시스 상점관리자에서 원거래 취소 여부를 먼저 확인하십시오.';
 
         if (!empty($row['ip_pg_checked_at']) && $row['ip_pg_result_code'] !== '00')
             return 'KG 거래조회가 실패했습니다. 해당 MID의 거래조회 계약, INIAPI KEY와 서버 IPv4를 확인한 후 다시 조회하거나 KG이니시스 상점관리자에서 직접 조회하십시오.';
@@ -379,17 +379,23 @@ if (!function_exists('inicis_admin_recommendation')) {
 
         if ($pg_status !== '' && ((!empty($row['ip_pg_tid']) && !empty($row['ip_tid']) && $row['ip_pg_tid'] !== $row['ip_tid'])
             || ((int) $row['ip_pg_amount'] > 0 && (int) $row['ip_amount'] > 0 && (int) $row['ip_pg_amount'] !== (int) $row['ip_amount'])))
-            return 'KG 거래조회 결과와 로컬 결제 이력의 TID 또는 금액이 다릅니다. 자동 조치하지 말고 KG이니시스 상점관리자 원거래 내역을 직접 확인하십시오.';
+            return 'KG 거래조회 결과와 영카트 결제 이력의 TID 또는 금액이 다릅니다. 자동 조치하지 말고 KG이니시스 상점관리자 원거래 내역을 직접 확인하십시오.';
         if ($pg_attention)
             return '가상계좌 입금 후 환불 대기 상태입니다. 환불이 완료될 때까지 KG이니시스 상점관리자에서 상태를 계속 확인하십시오.';
         if ($pg_paid && !$has_order)
             return 'KG이니시스에는 승인 또는 입금이 있으나 영카트 주문이 없습니다. 원 주문 데이터와 재고·포인트 반영 여부를 확인한 뒤 안전한 복원이 불가능하면 상점관리자에서 승인 취소하십시오.';
         if ($pg_pending && !$has_order)
             return '가상계좌가 발급됐지만 영카트 주문이 없습니다. 고객 입금 전에 주문 복원 가능 여부를 확인하고, 복원이 불가능하면 해당 가상계좌 거래를 정리하십시오.';
+        $recommend_is_personal = isset($row['ip_order_type']) && $row['ip_order_type'] === 'personal';
+        $order_canceled_match = $has_order && ($recommend_is_personal
+            ? !(isset($row['personal_receipt_price']) && (int) $row['personal_receipt_price'] > 0)
+            : (isset($row['order_status']) && $row['order_status'] === '취소'));
+        if ($pg_canceled && $order_canceled_match)
+            return 'KG이니시스 거래와 영카트 주문이 모두 취소 상태로 일치합니다. 별도 조치가 필요하지 않습니다.';
         if ($pg_canceled && $has_order)
-            return 'KG이니시스 거래는 취소 또는 거래 없음 상태입니다. 로컬 주문의 결제금액·상태를 확인하고 PG 상태와 일치하도록 관리자 처리하십시오.';
+            return 'KG이니시스 거래는 취소 또는 거래 없음 상태입니다. 영카트 주문의 결제금액·상태를 확인하고 PG 상태와 일치하도록 관리자 처리하십시오.';
         if (isset($row['ip_status']) && in_array($row['ip_status'], array('authentication_received', 'approval_started', 'communication_failed')) && empty($row['ip_tid']))
-            return '최종 승인 TID가 로컬에 저장되기 전에 처리가 중단됐을 수 있습니다. 같은 주문을 다시 결제시키기 전에 KG이니시스 상점관리자에서 주문번호 OID로 승인 여부를 확인하십시오.';
+            return '최종 승인 TID가 영카트에 저장되기 전에 처리가 중단됐을 수 있습니다. 같은 주문을 다시 결제시키기 전에 KG이니시스 상점관리자에서 주문번호 OID로 승인 여부를 확인하십시오.';
         if (isset($row['ip_status']) && $row['ip_status'] === 'validation_failed' && !empty($row['ip_tid']))
             return '승인 TID가 생성된 뒤 주문 검증이 중단됐습니다. KG 거래조회 결과를 확인하고 주문이 없다면 승인 취소 여부를 결정하십시오.';
         if ($has_order && ((!empty($row['ip_tid']) && inicis_admin_order_tid($row) !== $row['ip_tid'])
