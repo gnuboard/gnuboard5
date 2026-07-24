@@ -91,7 +91,7 @@ else if ($w == "u")
 }
 else if ($w == "d")
 {
-    if (!$is_admin)
+    if ($is_admin !== 'super')
     {
         $sql = " select count(*) as cnt from {$g5['g5_shop_item_use_table']} where mb_id = '{$member['mb_id']}' and is_id = '$is_id' ";
         $row = sql_fetch($sql);

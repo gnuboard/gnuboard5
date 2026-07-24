@@ -57,7 +57,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    if (!$is_admin)
+    if ($is_admin !== 'super')
     {
         $sql = " select count(*) as cnt from {$g5['g5_shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
         $row = sql_fetch($sql);
@@ -86,7 +86,7 @@ else if ($w == "u")
 }
 else if ($w == "d")
 {
-    if (!$is_admin)
+    if ($is_admin !== 'super')
     {
         $sql = " select iq_answer from {$g5['g5_shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
         $row = sql_fetch($sql);

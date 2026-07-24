@@ -61,7 +61,8 @@ else if ($w == 'd')
     if ($member['mb_id'] || $is_admin == 'super')
     {
         $sql = " delete from {$g5['poll_etc_table']} where pc_id = '{$pc_id}' ";
-        if (!$is_admin)
+        // 최고관리자가 아니면 본인 기타의견만 삭제 (게시판/그룹 관리자 문맥으로 우회 불가)
+        if ($is_admin !== 'super')
             $sql .= " and mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }

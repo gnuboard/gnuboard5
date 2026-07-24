@@ -18,7 +18,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     if ($row['mb_id']) {
         $list[$i]['name'] = get_sideview($row['mb_id'], cut_str($row['mb_nick'], $config['cf_cut_name']), $row['mb_email'], $row['mb_homepage']);
     } else {
-        if ($is_admin)
+        if ($is_admin === 'super')
             $list[$i]['name'] = $row['lo_ip'];
         else
             $list[$i]['name'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['lo_ip']);

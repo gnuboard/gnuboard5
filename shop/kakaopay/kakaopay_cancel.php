@@ -50,7 +50,7 @@ if($cancelFlag == "true")
     $db_check = 1;
     $cancel_msg = "DB FAIL";
 
-    if( $is_admin ){
+    if( $is_admin === 'super' ){
         $tmp = sql_fetch("select * from `{$g5['g5_shop_order_table']}` where od_tno = '".trim($_REQUEST['TID'])."' ");
 
         if( $tmp['od_pg'] === 'KAKAOPAY' ){
