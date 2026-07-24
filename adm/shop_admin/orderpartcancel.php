@@ -70,13 +70,17 @@ $od_misu = abs($od['od_misu']);
 </div>
 </form>
 
+<script src="<?php echo G5_ADMIN_URL ?>/admin.js"></script>
+
 <script>
+var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key')) ? admin_csrf_token_key() : ''; ?>";
+
 function form_check(f)
 {
     var max_mny = parseInt(<?php echo $od_misu; ?>);
     var tax_mny = parseInt(f.mod_tax_mny.value.replace("/[^0-9]/g", ""));
     var free_mny = 0;
-    if(typeof f.mod_free.mny.value != "undefined")
+    if(typeof f.mod_free_mny.value != "undefined")
         free_mny = parseInt(f.mod_free_mny.value.replace("/[^0-9]/g", ""));
 
     if(!tax_mny && !free_mny) {
