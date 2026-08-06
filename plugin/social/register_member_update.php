@@ -305,6 +305,8 @@ if($result) {
                 if($j > 20)
                     break;
             }
+
+            $j++;
         } while(1);
 
         if($create_coupon) {

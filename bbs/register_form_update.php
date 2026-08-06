@@ -646,6 +646,8 @@ if($w == '' && isset($default['de_member_reg_coupon_use']) && $default['de_membe
             if($j > 20)
                 break;
         }
+
+        $j++;
     } while(1);
 
     if($create_coupon) {
