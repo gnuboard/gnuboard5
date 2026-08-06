@@ -1632,17 +1632,32 @@ function get_coupon_id()
 {
     $len = 16;
     $chars = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
-
-    srand((double)microtime()*1000000);
-
-    $i = 0;
+    $chars_len = strlen($chars);
     $str = '';
 
-    while ($i < $len) {
-        $num = rand() % strlen($chars);
-        $tmp = substr($chars, $num, 1);
-        $str .= $tmp;
-        $i++;
+    if (function_exists('get_random_token_string')) {
+        // 문자 종류 수로 나누어 떨어지는 구간만 사용하여 특정 문자에 치우치지 않도록 한다.
+        $limit = 256 - (256 % $chars_len);
+        $round = 0;
+
+        while (strlen($str) < $len && $round < 8) {
+            $bytes = pack('H*', get_random_token_string($len + 8));
+            $bytes_len = strlen($bytes);
+
+            for ($i = 0; $i < $bytes_len && strlen($str) < $len; $i++) {
+                $num = ord($bytes[$i]);
+                if ($num >= $limit)
+                    continue;
+
+                $str .= substr($chars, $num % $chars_len, 1);
+            }
+
+            $round++;
+        }
+    }
+
+    while (strlen($str) < $len) {
+        $str .= substr($chars, mt_rand(0, $chars_len - 1), 1);
     }
 
     $str = preg_replace("/([0-9A-Z]{4})([0-9A-Z]{4})([0-9A-Z]{4})([0-9A-Z]{4})/", "\\1-\\2-\\3-\\4", $str);
