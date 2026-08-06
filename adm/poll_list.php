@@ -6,6 +6,11 @@ auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['poll_table']} ";
 
+$allowed_sfl = array('po_subject');
+if (!in_array($sfl, $allowed_sfl)) {
+    $sfl = 'po_subject';
+}
+
 $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";

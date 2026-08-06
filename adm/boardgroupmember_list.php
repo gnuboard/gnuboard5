@@ -13,6 +13,11 @@ $sql_common = " from {$g5['group_member_table']} a
                          left outer join {$g5['member_table']} b on (a.mb_id = b.mb_id) ";
 $sql_search = " where gr_id = '{$gr_id}' ";
 
+$allowed_sfl = array('a.mb_id');
+if (!in_array($sfl, $allowed_sfl)) {
+    $sfl = 'a.mb_id';
+}
+
 // 회원아이디로 검색되지 않던 오류를 수정
 if (isset($stx) && $stx) {
     $sql_search .= " and ( ";

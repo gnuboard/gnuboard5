@@ -12,6 +12,11 @@ if ($is_admin != "super") {
     $sql_search .= " and (a.gr_id = b.gr_id and b.gr_admin = '{$member['mb_id']}') ";
 }
 
+$allowed_sfl = array('bo_table', 'bo_subject', 'a.gr_id');
+if (!in_array($sfl, $allowed_sfl)) {
+    $sfl = 'bo_table';
+}
+
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {

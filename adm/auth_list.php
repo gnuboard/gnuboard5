@@ -8,6 +8,11 @@ if ($is_admin != 'super') {
 
 $sql_common = " from {$g5['auth_table']} a left join {$g5['member_table']} b on (a.mb_id=b.mb_id) ";
 
+$allowed_sfl = array('a.mb_id');
+if (!in_array($sfl, $allowed_sfl)) {
+    $sfl = 'a.mb_id';
+}
+
 $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";

@@ -16,6 +16,11 @@ if (isset($_POST['chk']) && is_array($_POST['chk'])) {
 }
 
 $sql_common = " from {$g5['popular_table']} a ";
+$allowed_sfl = array('pp_word', 'pp_date');
+if (!in_array($sfl, $allowed_sfl)) {
+    $sfl = 'pp_word';
+}
+
 $sql_search = " where (1) ";
 
 if ($stx) {
