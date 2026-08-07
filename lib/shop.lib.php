@@ -1022,7 +1022,7 @@ function session_check()
     global $g5;
 
     if (!trim(get_session('ss_uniqid')))
-        gotourl(G5_SHOP_URL);
+        goto_url(G5_SHOP_URL);
 }
 
 // 상품 선택옵션
