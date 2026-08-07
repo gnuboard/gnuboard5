@@ -435,7 +435,7 @@ if (in_array($ct_status, $status_cancel)) {
                         $partialCancelCode = 0;
 
                         if($cancelAmt <= 0) {
-                            $pg_res_cd = '';
+                            $pg_res_cd = 'NO_CANCEL_AMT';
                             $pg_res_msg = '취소 요청금액이 없습니다.';
                             break;
                         }

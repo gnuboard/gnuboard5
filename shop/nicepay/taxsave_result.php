@@ -35,62 +35,6 @@ if (($useopt == 1 && !in_array(strlen($reg_num), array(10, 11, 13))) || ($useopt
     alert('현금영수증 발급번호를 정확히 입력해 주시기 바랍니다.');
 }
 
-if (!function_exists('nicepay_cancel_cash_receipt')) {
-    function nicepay_cancel_cash_receipt($tid, $order_id, $reason)
-    {
-        global $default;
-
-        if (!$tid || !$order_id) {
-            return array('resultCode' => '', 'resultMsg' => '취소 요청 정보가 올바르지 않습니다.');
-        }
-
-        $ediDate = date('c', G5_SERVER_TIME);
-        $merchantKey = $default['de_nicepay_key'];
-        $data = array(
-            'orderId' => $order_id,
-            'reason' => $reason,
-            'ediDate' => $ediDate,
-            'signData' => bin2hex(hash('sha256', $tid.$ediDate.$merchantKey, true)),
-            'returnCharSet' => 'utf-8'
-        );
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.nicepay.co.kr/v1/receipt/'.rawurlencode($tid).'/cancel');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json;charset=utf-8',
-            'Authorization: Basic '.base64_encode($default['de_nicepay_mid'].':'.$merchantKey)
-        ));
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $result = json_decode($response, true);
-
-        if (!is_array($result)) {
-            return array('resultCode' => '', 'resultMsg' => '나이스페이 현금영수증 취소 응답을 확인할 수 없습니다.');
-        }
-
-        if (isset($result['signature']) && $result['signature']) {
-            $response_tid = isset($result['tid']) ? $result['tid'] : '';
-            $response_order_id = isset($result['orderId']) ? $result['orderId'] : '';
-            $response_edi_date = isset($result['ediDate']) ? $result['ediDate'] : '';
-            $response_signature = bin2hex(hash('sha256', $response_tid.$response_order_id.$response_edi_date.$merchantKey, true));
-
-            if ($result['signature'] != $response_signature) {
-                $result['resultCode'] = '9998';
-                $result['resultMsg'] = '현금영수증 취소 응답 유효성 검증 실패';
-            }
-        }
-
-        return $result;
-    }
-}
-
 if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ");
     if (!$od)
@@ -220,15 +164,7 @@ if ($result_code === '7001') {
     $sql_result = sql_query($sql, false);
 
     if (!$sql_result) {
-        $cancel_result = nicepay_cancel_cash_receipt($result_tid, $moid, '쇼핑몰 DB 반영 실패');
-        $cancel_code = isset($cancel_result['resultCode']) ? $cancel_result['resultCode'] : '';
-        $cancel_msg = isset($cancel_result['resultMsg']) ? $cancel_result['resultMsg'] : '';
-
-        if ($cancel_code === '0000') {
-            alert_close('현금영수증은 나이스페이에 발급 요청되었으나 쇼핑몰 DB 반영에 실패하여 자동 취소를 요청했습니다.\\n관리자에게 문의해 주세요.\\n현금영수증 거래번호 : '.$result_tid);
-        }
-
-        alert_close('현금영수증은 나이스페이에 발급 요청되었으나 쇼핑몰 DB 반영에 실패했습니다.\\n자동 취소 요청도 정상적으로 완료되지 않았습니다.\\n관리자에게 문의해 주세요.\\n현금영수증 거래번호 : '.$result_tid.'\\n취소 응답 : '.$cancel_code.' '.$cancel_msg);
+        alert_close('현금영수증은 나이스페이에 발급 요청되었으나 쇼핑몰 DB 반영에 실패했습니다.\\n나이스페이 관리자에서 현금영수증 발급 상태를 확인하고 필요 시 수동 취소해 주세요.\\n현금영수증 거래번호 : '.$result_tid);
     }
 
 } else {
