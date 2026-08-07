@@ -1616,17 +1616,24 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </div>
     </section>
     
-    <div id="config_captcha_wrap" style="display:none">
-        <h2>캡챠입력</h2>
-        <?php
-        require_once G5_CAPTCHA_PATH . '/captcha.lib.php';
-        $captcha_html = captcha_html();
-        $captcha_js   = chk_captcha_js();
-        echo $captcha_html;
-        ?>
-    </div>
-    
+    <style>
+    .btn_fixed_top.btn_confirm {display:flex;align-items:flex-start;gap:8px;z-index:1001}
+    #config_captcha_wrap {max-width:calc(100vw - 40px);padding:10px 12px;border:1px solid #c5cbd5;border-radius:3px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.15);text-align:left}
+    #config_captcha_wrap h2 {margin:0 0 6px;padding:0;font-size:1em;line-height:1.2;color:#3a3a3a}
+    #config_captcha_wrap #mp_captcha_tooltip {margin:6px 0 0;color:#e8180c}
+    </style>
+
     <div class="btn_fixed_top btn_confirm">
+        <div id="config_captcha_wrap" style="display:none">
+            <h2>캡챠입력</h2>
+            <?php
+            require_once G5_CAPTCHA_PATH . '/captcha.lib.php';
+            $captcha_html = captcha_html();
+            $captcha_js   = chk_captcha_js();
+            echo $captcha_html;
+            ?>
+        </div>
+
         <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
     </div>
 
@@ -1731,7 +1738,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         if(isChanged){
             $wrap.show();
             if(! is_invisible_recaptcha) {
-                $wrap.css("margin-top","1em");
                 if(! $("#"+tooptipid).length){ $children.after($p_text) }
             }
         } else {
@@ -1747,8 +1753,11 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         var cf_intercept_ip_val = f.cf_intercept_ip.value;
         
         if (check_config_captcha_open()){
-            jQuery("html, body").scrollTop(jQuery("#config_captcha_wrap").offset().top);
-            
+            // 캡챠는 확인 버튼 옆에 고정 노출되므로 별도 이동 없이 입력란으로 포커스만 옮긴다.
+            if (jQuery("#captcha_key").is(":visible")) {
+                jQuery("#captcha_key").focus();
+            }
+
             <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
         }
         
