@@ -4,6 +4,7 @@ include_once('./_common.php');
 
 $cz_id = isset($_REQUEST['cz_id']) ? (int) $_REQUEST['cz_id'] : 0;
 $cp = array(
+'cz_id'=>'',
 'cp_method'=>'',
 'cz_subject'=>'',
 'cp_target'=>'',
@@ -13,7 +14,6 @@ $cp = array(
 'mb_id'=>'',
 'cz_type'=>'',
 'cz_point'=>'',
-'cp_price'=>'',
 'cz_file'=>'',
 'cp_minimum'=>'',
 'cp_maximum'=>'',
