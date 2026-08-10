@@ -1354,14 +1354,16 @@ function get_list_skin_options($pattern, $dirname='./', $sval='')
 {
     $str = '<option value="">선택</option>'.PHP_EOL;
 
-    unset($arr);
-    $handle = opendir($dirname);
-    while ($file = readdir($handle)) {
-        if (preg_match("/$pattern/", $file, $matches)) {
-            $arr[] = $matches[0];
+    $arr = array();
+    $handle = @opendir($dirname);
+    if ($handle !== false) {
+        while (false !== ($file = readdir($handle))) {
+            if (preg_match("/$pattern/", $file, $matches)) {
+                $arr[] = $matches[0];
+            }
         }
+        closedir($handle);
     }
-    closedir($handle);
 
     sort($arr);
     foreach($arr as $value) {
