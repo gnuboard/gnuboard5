@@ -107,7 +107,8 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 // 분류 상단 코드가 있으면 출력하고 없으면 기본 상단 코드 출력
-if ($ca['ca_include_head'] && is_include_path_check($ca['ca_include_head']))
+if ($ca['ca_include_head'] && is_include_path_check($ca['ca_include_head'])
+    && (!function_exists('is_content_include_allowed') || is_content_include_allowed($ca['ca_include_head'])))
     @include_once($ca['ca_include_head']);
 else
     include_once(G5_SHOP_PATH.'/_head.php');
@@ -280,7 +281,8 @@ echo run_replace('shop_it_tail_html', conv_content($it['it_tail_html'], 1), $it)
 ?>
 
 <?php
-if ($ca['ca_include_tail'] && is_include_path_check($ca['ca_include_tail']))
+if ($ca['ca_include_tail'] && is_include_path_check($ca['ca_include_tail'])
+    && (!function_exists('is_content_include_allowed') || is_content_include_allowed($ca['ca_include_tail'])))
     @include_once($ca['ca_include_tail']);
 else
     include_once(G5_SHOP_PATH.'/_tail.php');

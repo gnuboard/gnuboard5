@@ -9,7 +9,8 @@ if (G5_IS_MOBILE) {
     include_once('./_head.php');
     echo run_replace('qa_mobile_content_head', conv_content($qaconfig['qa_mobile_content_head'], 1), $qaconfig);
 } else {
-    if($qaconfig['qa_include_head'] && is_include_path_check($qaconfig['qa_include_head']))
+    if($qaconfig['qa_include_head'] && is_include_path_check($qaconfig['qa_include_head'])
+        && (!function_exists('is_content_include_allowed') || is_content_include_allowed($qaconfig['qa_include_head'])))
         @include ($qaconfig['qa_include_head']);
     else
         include ('./_head.php');

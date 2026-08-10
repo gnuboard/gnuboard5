@@ -50,7 +50,8 @@ if(!$is_admin && $config['cf_cert_use']) {
 
 $g5['title'] = $ca['ca_name'].' 상품리스트';
 
-if ($ca['ca_include_head'] && is_include_path_check($ca['ca_include_head']))
+if ($ca['ca_include_head'] && is_include_path_check($ca['ca_include_head'])
+    && (!function_exists('is_content_include_allowed') || is_content_include_allowed($ca['ca_include_head'])))
     @include_once($ca['ca_include_head']);
 else
     include_once(G5_SHOP_PATH.'/_head.php');
@@ -174,7 +175,8 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
 <!-- } 상품 목록 끝 -->
 
 <?php
-if ($ca['ca_include_tail'] && is_include_path_check($ca['ca_include_tail']))
+if ($ca['ca_include_tail'] && is_include_path_check($ca['ca_include_tail'])
+    && (!function_exists('is_content_include_allowed') || is_content_include_allowed($ca['ca_include_tail'])))
     @include_once($ca['ca_include_tail']);
 else
     include_once(G5_SHOP_PATH.'/_tail.php');

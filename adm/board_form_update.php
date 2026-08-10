@@ -62,6 +62,12 @@ if ($check_captcha) {
     }
 }
 
+// 저장·검증 전에 경로를 먼저 정규화하여, 검증 이후 경로가 달라지지 않도록 한다.
+if (function_exists('filter_input_include_path')) {
+    $bo_include_head = filter_input_include_path($bo_include_head);
+    $bo_include_tail = filter_input_include_path($bo_include_tail);
+}
+
 if ($file = $bo_include_head) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
@@ -86,9 +92,12 @@ if (!is_include_path_check($bo_include_tail, 1)) {
     alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
-if (function_exists('filter_input_include_path')) {
-    $bo_include_head = filter_input_include_path($bo_include_head);
-    $bo_include_tail = filter_input_include_path($bo_include_tail);
+if ($bo_include_head && function_exists('is_content_include_allowed') && !is_content_include_allowed($bo_include_head)) {
+    alert('상단 파일 경로로 사용할 수 없는 위치입니다.');
+}
+
+if ($bo_include_tail && function_exists('is_content_include_allowed') && !is_content_include_allowed($bo_include_tail)) {
+    alert('하단 파일 경로로 사용할 수 없는 위치입니다.');
 }
 
 $board_path = G5_DATA_PATH . '/file/' . $bo_table;

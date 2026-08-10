@@ -6,6 +6,11 @@ auth_check_menu($auth, $sub_menu, "w");
 
 $ca_include_head = isset($_POST['ca_include_head']) ? trim($_POST['ca_include_head']) : '';
 $ca_include_tail = isset($_POST['ca_include_tail']) ? trim($_POST['ca_include_tail']) : '';
+// 저장·검증 전에 경로를 먼저 정규화하여, 검증 이후 경로가 달라지지 않도록 한다.
+if( function_exists('filter_input_include_path') ){
+    $ca_include_head = filter_input_include_path($ca_include_head);
+    $ca_include_tail = filter_input_include_path($ca_include_tail);
+}
 $ca_id = isset($_REQUEST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_REQUEST['ca_id']) : '';
 
 if( ! $ca_id ){
@@ -93,17 +98,20 @@ if(!is_include_path_check($ca_include_tail, 1)) {
     alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
+if($ca_include_head && function_exists('is_content_include_allowed') && !is_content_include_allowed($ca_include_head)) {
+    alert('상단 파일 경로로 사용할 수 없는 위치입니다.');
+}
+
+if($ca_include_tail && function_exists('is_content_include_allowed') && !is_content_include_allowed($ca_include_tail)) {
+    alert('하단 파일 경로로 사용할 수 없는 위치입니다.');
+}
+
 $check_keys = array('ca_skin_dir', 'ca_mobile_skin_dir', 'ca_skin', 'ca_mobile_skin'); 
 
 foreach( $check_keys as $key ){
     if( isset($$key) && preg_match('#\.+(\/|\\\)#', $$key) ){
         alert('스킨명 또는 경로에 포함시킬수 없는 문자열이 있습니다.');
     }
-}
-
-if( function_exists('filter_input_include_path') ){
-    $ca_include_head = filter_input_include_path($ca_include_head);
-    $ca_include_tail = filter_input_include_path($ca_include_tail);
 }
 
 if ($w == "u" || $w == "d")
