@@ -16,8 +16,6 @@ if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
 if($default['de_pg_service'] == 'toss' && ! $paymentKey)
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-set_session('ss_order_id', $pp_id);
-
 // 개인결제 정보
 $pp_check = false;
 $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$pp_id}' and pp_use = '1' ";
@@ -31,6 +29,9 @@ if($pp['pp_tno'])
 $hash_data = md5($pp_id.$good_mny.$pp['pp_time']);
 if($pp_id !== get_session('ss_personalpay_id') || $hash_data !== get_session('ss_personalpay_hash'))
     die('개인결제 정보가 올바르지 않습니다.');
+
+// 개인결제 정보 검증을 통과한 뒤에만 주문 세션을 설정한다.
+set_session('ss_order_id', $pp_id);
 
 // PG사의 가상계좌 또는 계좌이체의 자동 현금영수증 초기배열값
 $pg_receipt_infos = array(

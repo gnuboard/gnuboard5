@@ -31,7 +31,8 @@ if (! (isset($co['co_id']) && $co['co_id']))
 
 $g5['title'] = $co['co_subject'];
 
-if ($co['co_include_head'] && is_include_path_check($co['co_include_head']))
+if ($co['co_include_head'] && is_include_path_check($co['co_include_head'])
+    && (!function_exists('is_content_include_allowed') || is_content_include_allowed($co['co_include_head'])))
     @include_once($co['co_include_head']);
 else
     include_once('./_head.php');
@@ -99,7 +100,8 @@ if(is_file($skin_file)) {
     echo '<p>'.str_replace(G5_PATH.'/', '', $skin_file).'이 존재하지 않습니다.</p>';
 }
 
-if ($co['co_include_tail'] && is_include_path_check($co['co_include_tail']))
+if ($co['co_include_tail'] && is_include_path_check($co['co_include_tail'])
+    && (!function_exists('is_content_include_allowed') || is_content_include_allowed($co['co_include_tail'])))
     @include_once($co['co_include_tail']);
 else
     include_once('./_tail.php');

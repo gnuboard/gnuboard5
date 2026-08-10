@@ -4853,6 +4853,33 @@ function filter_input_include_path($path){
     return str_replace('//', '/', strip_tags($path));
 }
 
+// 콘텐츠 상단/하단 include 대상이 템플릿 파일인지 실행 직전 재확인한다.
+// 승인 확장자만 허용하고, 업로드가 저장되는 data 디렉터리로 귀결되는 경로는 거부한다.
+function is_content_include_allowed($path){
+    if( !is_string($path) || $path === '' ){
+        return false;
+    }
+
+    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    if( !in_array($ext, array('php', 'htm', 'html')) ){
+        return false;
+    }
+
+    $real = @realpath($path);
+    if( $real !== false && defined('G5_DATA_PATH') ){
+        $data_real = @realpath(G5_DATA_PATH);
+        if( $data_real !== false ){
+            $real_norm = str_replace('\\', '/', $real);
+            $data_norm = rtrim(str_replace('\\', '/', $data_real), '/').'/';
+            if( strpos($real_norm, $data_norm) === 0 ){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 function option_array_checked($option, $arr=array()){
     $checked = '';
 

@@ -367,7 +367,7 @@ $pg_anchor = '<ul class="anchor">
         <tbody>
         <tr>
             <td><?php echo $od['od_id']; ?></td>
-            <td class="td_paybybig"><?php echo $s_receipt_way; ?></td>
+            <td class="td_paybybig"><?php echo get_text($s_receipt_way); ?></td>
             <td class="td_numbig td_numsum"><?php echo display_price($amount['order']); ?></td>
             <td class="td_numbig"><?php echo display_price($od_send_cost + $od_send_cost2); ?></td>
             <td class="td_numbig"><?php echo display_point($od_temp_point); ?></td>

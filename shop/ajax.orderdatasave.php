@@ -15,6 +15,8 @@ sql_query($sql);
 */
 
 $od_settle_case = isset($_POST['od_settle_case']) ? clean_xss_tags($_POST['od_settle_case'], 1, 1) : '';
+// 저장되는 원본에도 정제한 값을 반영한다.
+$_POST['od_settle_case'] = $od_settle_case;
 
 if(isset($_POST['pp_id']) && $_POST['pp_id']) {
     $od_id   = get_session('ss_personalpay_id');

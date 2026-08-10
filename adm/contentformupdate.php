@@ -40,6 +40,12 @@ if ($is_admin !== 'super') {
         $co_include_tail = '';
     }
 }
+// 저장·검증 전에 경로를 먼저 정규화하여, 검증 이후 경로가 달라지지 않도록 한다.
+if (function_exists('filter_input_include_path')) {
+    $co_include_head = filter_input_include_path($co_include_head);
+    $co_include_tail = filter_input_include_path($co_include_tail);
+}
+
 $co_tag_filter_use = isset($_POST['co_tag_filter_use']) ? (int) $_POST['co_tag_filter_use'] : 1;
 $co_himg_del = (isset($_POST['co_himg_del']) && $_POST['co_himg_del']) ? 1 : 0;
 $co_timg_del = (isset($_POST['co_timg_del']) && $_POST['co_timg_del']) ? 1 : 0;
@@ -86,6 +92,14 @@ if ($co_include_tail) {
     }
 }
 
+if ($co_include_head && function_exists('is_content_include_allowed') && !is_content_include_allowed($co_include_head)) {
+    alert('상단 파일 경로로 사용할 수 없는 위치입니다.');
+}
+
+if ($co_include_tail && function_exists('is_content_include_allowed') && !is_content_include_allowed($co_include_tail)) {
+    alert('하단 파일 경로로 사용할 수 없는 위치입니다.');
+}
+
 if ($co_include_head && !is_include_path_check($co_include_head, 1)) {
     $co_include_head = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.';
@@ -94,11 +108,6 @@ if ($co_include_head && !is_include_path_check($co_include_head, 1)) {
 if ($co_include_tail && !is_include_path_check($co_include_tail, 1)) {
     $co_include_tail = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
-}
-
-if (function_exists('filter_input_include_path')) {
-    $co_include_head = filter_input_include_path($co_include_head);
-    $co_include_tail = filter_input_include_path($co_include_tail);
 }
 
 $co_seo_title = exist_seo_title_recursive('content', generate_seo_title($co_subject), $g5['content_table'], $co_id);
@@ -147,6 +156,20 @@ if (function_exists('get_admin_captcha_by')) {
 g5_delete_cache_by_prefix('content-' . $co_id . '-');
 
 if ($w == "" || $w == "u") {
+    foreach (array('co_himg', 'co_timg') as $content_img_field) {
+        if (empty($_FILES[$content_img_field]['name']) || empty($_FILES[$content_img_field]['tmp_name']))
+            continue;
+
+        // 상단/하단 이미지 슬롯에는 이미지만 허용하고, 실행 가능한 태그가 담긴 파일은 거부한다.
+        $tmp_file = $_FILES[$content_img_field]['tmp_name'];
+        $is_valid_image = @getimagesize($tmp_file);
+        $head_bytes = @file_get_contents($tmp_file, false, null, 0, 8192);
+
+        if ($is_valid_image === false || ($head_bytes !== false && preg_match('/<\?php|<\?=|<\?|<script/i', $head_bytes))) {
+            alert('상단/하단 이미지에는 이미지 파일만 등록할 수 있습니다.');
+        }
+    }
+
     if ($_FILES['co_himg']['name']) {
         $dest_path = G5_DATA_PATH . "/content/" . $co_id . "_h";
         @move_uploaded_file($_FILES['co_himg']['tmp_name'], $dest_path);
