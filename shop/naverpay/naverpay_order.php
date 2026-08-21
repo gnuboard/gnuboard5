@@ -11,6 +11,7 @@ $post_naverpay_form = isset($_POST['naverpay_form']) ? clean_xss_tags($_POST['na
 $is_collect = false;    //착불체크 변수 초기화
 $is_prepay = false;     //선불체크 변수 초기화
 $is_cart = false;       //장바구니 체크 변수 초기화
+$cart_send_cost = array();  //장바구니 배송비 구분값 (DB 기준)
 
 if($post_naverpay_form == 'cart.php') {
     if(! (isset($_POST['ct_chk']) && is_array($_POST['ct_chk']) && count($_POST['ct_chk'])))
@@ -36,7 +37,7 @@ if($post_naverpay_form == 'cart.php') {
             $_POST['io_type'][$it_id][] = $row['io_type'];
             $_POST['ct_qty'][$it_id][] = $row['ct_qty'];
             $_POST['io_value'][$it_id][] = $row['ct_option'];
-            $_POST['ct_send_cost'][$it_id][] = $row['ct_send_cost'];
+            $cart_send_cost[$it_id][] = $row['ct_send_cost'];
 
             $is_free = false;   //무료 인지 체크 변수 초기화
 
@@ -209,9 +210,9 @@ for($i=0; $i<$count; $i++) {
         
         $ct_send_cost = 0;
         if($ct_send_cost != 1) {  //
-            if( $is_cart && !empty($_POST['ct_send_cost'][$it_id][$k]) ){
+            if( $is_cart && !empty($cart_send_cost[$it_id][$k]) ){
 
-                $ct_send_cost = $_POST['ct_send_cost'][$it_id][$k];
+                $ct_send_cost = $cart_send_cost[$it_id][$k];
 
             } else {
                 // 배송비결제
