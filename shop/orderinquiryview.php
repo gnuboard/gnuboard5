@@ -278,7 +278,7 @@ if($od['od_pg'] == 'lg') {
                 </tr>
                 <tr>
                     <th scope="row">결제방식</th>
-                    <td><?php echo check_pay_name_replace($od['od_settle_case'], $od, 1); ?></td>
+                    <td><?php echo get_text(check_pay_name_replace($od['od_settle_case'], $od, 1)); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">결제금액</th>

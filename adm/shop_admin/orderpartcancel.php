@@ -21,7 +21,7 @@ if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 
 if($od['od_receipt_price'] - $od['od_refund_price'] <= 0)
     alert_close('부분취소 처리할 금액이 없습니다.');
 
-$g5['title'] = $od['od_settle_case'].' 부분취소';
+$g5['title'] = get_text($od['od_settle_case']).' 부분취소';
 include_once(G5_PATH.'/head.sub.php');
 
 // 취소가능금액
@@ -33,7 +33,7 @@ $od_misu = abs($od['od_misu']);
 <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
 
 <div class="new_win">
-    <h1><?php echo $od['od_settle_case']; ?> 부분취소</h1>
+    <h1><?php echo get_text($od['od_settle_case']); ?> 부분취소</h1>
 
     <div class="tbl_frm01 tbl_wrap">
         <table>

@@ -46,7 +46,7 @@ include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <script>
-alert("<?php echo $od['od_settle_case']; ?> 부분취소 처리됐습니다.");
+alert("<?php echo get_text($od['od_settle_case']); ?> 부분취소 처리됐습니다.");
 opener.document.location.reload();
 self.close();
 </script>

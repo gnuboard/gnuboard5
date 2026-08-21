@@ -305,7 +305,7 @@ if( function_exists('pg_setting_check') ){
         $s_receipt_way = $s_br = "";
         if ($row['od_settle_case'])
         {
-            $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $row);
+            $s_receipt_way = get_text(check_pay_name_replace($row['od_settle_case'], $row));
             $s_br = '<br />';
         }
         else
@@ -402,7 +402,7 @@ if( function_exists('pg_setting_check') ){
             <?php echo $row['od_status']; ?>
         </td>
         <td headers="odrpay" class="odrpay">
-            <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
+            <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo get_text($row['od_settle_case']) ?>">
             <?php echo $s_receipt_way; ?>
         </td>
         <td headers="delino" class="delino">

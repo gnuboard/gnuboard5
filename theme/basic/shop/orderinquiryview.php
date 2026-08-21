@@ -403,7 +403,7 @@ if($od['od_pg'] == 'lg') {
 	            </li>
 	            <li>
 	                <strong>결제방식</strong>
-	                <span><?php echo check_pay_name_replace($od['od_settle_case'], $od, 1); ?></span>
+	                <span><?php echo get_text(check_pay_name_replace($od['od_settle_case'], $od, 1)); ?></span>
 	            </li>
 	            <li>
 	                <strong>결제금액</strong>

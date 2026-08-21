@@ -246,6 +246,9 @@ $od_bank_account  = isset($data['od_bank_account']) ? addslashes(clean_xss_tags(
 $od_tno = '';
 $od_app_no = '';
 $od_hope_date = isset($data['od_hope_date']) ? addslashes(clean_xss_tags(stripslashes($data['od_hope_date']), 1, 1)) : '';
+$od_ip = (isset($data['od_ip']) && !is_array($data['od_ip']) && preg_match('/^[0-9a-fA-F:.]{1,45}$/', $data['od_ip'])) ? $data['od_ip'] : '';
+$od_settle_case = (isset($data['od_settle_case']) && !is_array($data['od_settle_case'])) ? addslashes(clean_xss_tags(stripslashes($data['od_settle_case']), 1, 1)) : '';
+$od_test = (isset($data['od_test']) && !is_array($data['od_test'])) ? (int) $data['od_test'] : 0;
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
@@ -297,9 +300,9 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_shop_memo      = '',
                 od_hope_date      = '{$od_hope_date}',
                 od_time           = '{$od['dt_time']}',
-                od_ip             = '{$data['od_ip']}',
-                od_settle_case    = '{$data['od_settle_case']}',
-                od_test           = '{$data['od_test']}'
+                od_ip             = '$od_ip',
+                od_settle_case    = '$od_settle_case',
+                od_test           = '$od_test'
                 ";
 $result = sql_query($sql, true);
 

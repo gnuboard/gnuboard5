@@ -18,6 +18,10 @@ $od_settle_case = isset($_POST['od_settle_case']) ? clean_xss_tags($_POST['od_se
 // 저장되는 원본에도 정제한 값을 반영한다.
 $_POST['od_settle_case'] = $od_settle_case;
 
+// 결제환경 정보는 요청값을 사용하지 않고 서버에서 결정한다.
+$_POST['od_test'] = $default['de_card_test'];
+$_POST['od_ip']   = function_exists('get_real_client_ip') ? get_real_client_ip() : $_SERVER['REMOTE_ADDR'];
+
 if(isset($_POST['pp_id']) && $_POST['pp_id']) {
     $od_id   = get_session('ss_personalpay_id');
     $cart_id = 0;
@@ -34,8 +38,6 @@ if(isset($_POST['pp_id']) && $_POST['pp_id']) {
 } else {
     $od_id   = get_session('ss_order_id');
     $_POST['sw_direct'] = get_session('ss_direct');
-    $_POST['od_test']   = $default['de_card_test'];
-    $_POST['od_ip']     = $_SERVER['REMOTE_ADDR'];
 
     if ($_POST['sw_direct']) {
         $cart_id = get_session('ss_cart_direct');

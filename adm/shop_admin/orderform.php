@@ -497,7 +497,7 @@ if ($is_nicepay_vbank_pg_cancel) {
     //$amount['미수'] = $amount['order'] - $amount['receipt'] - $amount['coupon'];
 
     // 결제방법
-    $s_receipt_way = check_pay_name_replace($od['od_settle_case'], $od);
+    $s_receipt_way = get_text(check_pay_name_replace($od['od_settle_case'], $od));
 
     if ($od['od_receipt_point'] > 0)
         $s_receipt_way .= "+포인트";
@@ -574,7 +574,7 @@ if ($is_nicepay_vbank_pg_cancel) {
                 </tr>
                 <?php } ?>
                 <tr>
-                    <th scope="row"><?php echo $od['od_settle_case']; ?> 입금액</th>
+                    <th scope="row"><?php echo get_text($od['od_settle_case']); ?> 입금액</th>
                     <td><?php echo display_price($od['od_receipt_price']); ?></td>
                 </tr>
                 <tr>
@@ -597,7 +597,7 @@ if ($is_nicepay_vbank_pg_cancel) {
                     <td><?php echo get_text($od['od_bank_account']); ?></td>
                     </tr>
                 <tr>
-                    <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
+                    <th scope="row"><?php echo get_text($od['od_settle_case']); ?> 결제액</th>
                     <td><?php echo display_price($od['od_receipt_price']); ?></td>
                 </tr>
                 <tr>
@@ -870,7 +870,7 @@ if ($is_nicepay_vbank_pg_cancel) {
                 <?php } ?>
 
                 <tr>
-                    <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
+                    <th scope="row"><label for="od_receipt_price"><?php echo get_text($od['od_settle_case']); ?> 입금액</label></th>
                     <td>
                         <?php echo $html_receipt_chk; ?>
                         <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
@@ -904,7 +904,7 @@ if ($is_nicepay_vbank_pg_cancel) {
                     <td><?php echo get_text($od['od_bank_account']); ?></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
+                    <th scope="row"><label for="od_receipt_price"><?php echo get_text($od['od_settle_case']); ?> 결제액</label></th>
                     <td>
                         <?php echo $html_receipt_chk; ?>
                         <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
@@ -1036,7 +1036,7 @@ if ($is_nicepay_vbank_pg_cancel) {
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add" class="btn btn_02">개인결제추가</a>
         <?php } ?>
         <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY' || ($od['od_pg'] == 'nicepay' && $od['od_settle_case'] == '간편결제'))) { ?>
-        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo $od['od_settle_case']; ?> 부분취소</a>
+        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo get_text($od['od_settle_case']); ?> 부분취소</a>
         <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
     </div>
@@ -1480,7 +1480,7 @@ function form_submit(f)
         <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
         var cancel_pg = "카카오페이";
         <?php } else { ?>
-        var cancel_pg = "PG사의 <?php echo $od['od_settle_case']; ?>";
+        var cancel_pg = "PG사의 <?php echo get_text($od['od_settle_case']); ?>";
         <?php } ?>
 
         // 체크하지 않은 나머지 품목이 모두 취소류 상태이면 이번 처리로 주문 전체가 취소된다.
