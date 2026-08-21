@@ -413,7 +413,7 @@ function member_export_delete($fileList = array())
             $name = basename($file);
         
             // log 폴더와 오늘 날짜로 시작하는 폴더는 제외
-            if ($name === 'log' || preg_match('/^' . date('Ymd') . '\d{6}$/', $name)) continue;
+            if ($name === 'log' || preg_match('/^' . date('Ymd') . '\d{6}(_[A-Za-z0-9]+)?$/', $name)) continue;
 
             if (is_file($file) && pathinfo($file, PATHINFO_EXTENSION) !== 'log' && @unlink($file)) {
                 $cnt++;

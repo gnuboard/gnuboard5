@@ -7,7 +7,9 @@
 define('MEMBER_EXPORT_PAGE_SIZE', 10000);       // 파일당 처리할 회원 수
 define('MEMBER_EXPORT_MAX_SIZE', 300000);       // 최대 처리할 회원 수
 define('MEMBER_BASE_DIR', "member_list");       // 엑셀 베이스 폴더
-define('MEMBER_BASE_DATE', date('YmdHis'));     // 폴더/파일명용 날짜
+// 폴더/파일명용 날짜 - 저장 경로가 추측되지 않도록 임의 문자열을 덧붙인다.
+define('MEMBER_BASE_SALT', function_exists('get_random_token_string') ? get_random_token_string(8) : substr(md5(uniqid(mt_rand(), true)), 0, 8));
+define('MEMBER_BASE_DATE', date('YmdHis') . '_' . MEMBER_BASE_SALT);
 define('MEMBER_EXPORT_DIR', G5_DATA_PATH . "/" . MEMBER_BASE_DIR . "/" . MEMBER_BASE_DATE); // 엑셀 파일 저장 경로
 define('MEMBER_LOG_DIR', G5_DATA_PATH . "/" . MEMBER_BASE_DIR . "/" . "log");               // 로그 파일 저장 경로
 

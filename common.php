@@ -125,6 +125,10 @@ $_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION,  $_REQUEST);
 
 // PHP 4.1.0 부터 지원됨
 // php.ini 의 register_globals=off 일 경우
+
+// 관리자 메뉴 코드는 각 스크립트가 직접 지정하므로 요청값이 개입하지 못하게 한다.
+unset($_GET['sub_menu'], $_POST['sub_menu'], $_REQUEST['sub_menu'], $_SERVER['sub_menu']);
+
 @extract($_GET);
 @extract($_POST);
 @extract($_SERVER);
