@@ -48,7 +48,9 @@ cd gnuboard5
 
 ### 압축파일을 이용하는 방법
 
-1. [SIR 그누보드5 다운로드](https://sir.kr/boards/g5_pds)에서 설치할 버전의 배포본을 내려받습니다.
+1. 다음 중 한 곳에서 설치할 버전의 압축파일을 내려받습니다.
+   - [GitHub Releases](https://github.com/gnuboard/gnuboard5/releases)에서 원하는 버전을 선택하고 `Source code (zip)`을 내려받습니다. `*.patch.zip` 파일은 기존 설치본을 업데이트하기 위한 패치이므로 신규 설치에는 사용하지 않습니다.
+   - [SIR 그누보드5 다운로드](https://sir.kr/boards/g5_pds)에서 원하는 버전의 배포본을 내려받습니다.
 2. 내려받은 압축파일을 풉니다.
 3. 압축을 푼 디렉터리의 파일과 하위 디렉터리를 FTP, SFTP 등의 방법으로 웹 서버의 서비스 경로에 업로드합니다.
 4. 업로드가 끝나면 아래의 공통 설치 절차를 진행합니다.
