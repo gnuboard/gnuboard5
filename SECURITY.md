@@ -1,3 +1,5 @@
-# Gnuboard5 Security Policy
+# 그누보드5 보안 정책
 
-Please ask [https://sir.kr/security/.](https://sir.kr/co_qa)
+그누보드5에서 보안 취약점을 발견한 경우 악용 가능한 상세 내용을 공개 GitHub 이슈에 게시하지 마십시오.
+
+취약점 정보와 재현 방법은 [SIR 보안 취약점 신고 게시판](https://sir.kr/boards/co_qa)을 통해 제보해 주십시오.
