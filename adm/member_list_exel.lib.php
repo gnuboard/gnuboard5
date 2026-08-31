@@ -59,18 +59,8 @@ function get_export_config($type = null)
  */
 function get_member_export_params() 
 {
-    // 친구톡 양식 - 엑셀 양식에 포함할 항목
-    $fieldArray = array_map('trim', explode(',',  isset($_GET['fields']) ? $_GET['fields'] : ''));
-    $vars = array();
-    foreach ($fieldArray as $index => $field) {
-        if(!empty($field)){
-            $vars['var' . ($index + 1)] = $field;
-        }
-    }
-
     $params = array(
         'page'              => 1,
-        'formatType'        => (int)(isset($_GET['formatType']) ? $_GET['formatType'] : 1),
         'use_stx'           => isset($_GET['use_stx']) ? $_GET['use_stx'] : 0,
         'stx_cond'          => clean_xss_tags(isset($_GET['stx_cond']) ? $_GET['stx_cond'] : 'like'),
         'sfl'               => clean_xss_tags(isset($_GET['sfl']) ? $_GET['sfl'] : ''),
@@ -93,7 +83,6 @@ function get_member_export_params()
         'agree_date_end'    => clean_xss_tags(isset($_GET['agree_date_end']) ? $_GET['agree_date_end'] : ''),
         'use_intercept'     => isset($_GET['use_intercept']) ? $_GET['use_intercept'] : 0,
         'intercept'         => clean_xss_tags(isset($_GET['intercept']) ? $_GET['intercept'] : 'exclude'),
-        'vars'              => $vars,
     );
     
     // 레벨 범위 검증

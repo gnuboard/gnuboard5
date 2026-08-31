@@ -354,15 +354,6 @@ border-bottom: 5px solid black;}
 .excel-download-progress .progress-download-box a:hover { border-color: #6f809a; box-shadow: 0 2px 4px rgba(111, 128, 154, 0.15); }
 .excel-download-progress .progress-download-box a:active { box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
 
-.field-select-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 15px; gap: 0px 10px; padding: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; color: #374151; }
-.field-select-form label { display: flex; align-items: center; cursor: pointer; padding: 6px 10px; border-radius: 4px;  }
-.field-select-form label:hover { background-color: #f3f4f6; }
-.field-select-form input[type="checkbox"] { margin-right: 8px; transform: scale(1.2); }
-.field-separator { grid-column: 1 / -1; border-top: 1px solid #d1d5db; margin: 8px 0; }
-.selected-fields-preview { padding: 8px; background-color: #eef2f7; border: 1px solid #d1d5db; border-radius: 6px; margin: 10px 0px; color: #1f2937; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.selected-fields-preview strong { padding: 4px 8px; }
-.selected-fields-preview .field-tag { background-color: #dbeafe; color: #1e40af; padding: 4px 8px; border-radius: 4px; }
-
 /* 페이지 내 실행 */
 .local_cmd {min-width:960px}
 .local_cmd01 {margin:0 0 10px;padding:0 }
