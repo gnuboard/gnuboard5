@@ -1,21 +1,15 @@
 <?php
 include_once('../common.php');
 
-if (isset($_REQUEST['sort']) && !preg_match("/(--|#|\/\*|\*\/)/", $_REQUEST['sort']))  {
-    $sort = trim($_REQUEST['sort']);
-    $sort = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sort);
-} else {
-    $sort = '';
-}
-
-if (isset($_REQUEST['sortodr']))  {
-    $sortodr = preg_match("/^(asc|desc)$/i", $sortodr) ? $sortodr : '';
-} else {
-    $sortodr = '';
-}
-
 if (!defined('G5_USE_SHOP') || !G5_USE_SHOP)
     die('<p>쇼핑몰 설치 후 이용해 주십시오.</p>');
+
+$is_admin = get_super_admin_type($is_admin);
+
+$request_sort = (isset($_REQUEST['sort']) && is_string($_REQUEST['sort'])) ? $_REQUEST['sort'] : '';
+$request_sortodr = (isset($_REQUEST['sortodr']) && is_string($_REQUEST['sortodr'])) ? $_REQUEST['sortodr'] : '';
+list($sort, $sortodr) = get_shop_item_sort($request_sort, $request_sortodr);
+unset($request_sort, $request_sortodr);
 
 define('_SHOP_', true);
 define('_SHOP_COMMON_', true); // 모바일 페이지의 직접 접근을 막는 경우에 사용

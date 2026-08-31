@@ -1,13 +1,15 @@
 <?php
 include_once('./_common.php');
 
+$is_admin = get_super_admin_type($is_admin);
+
 if($is_guest)
     alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qalist.php'));
 
 $qaconfig = get_qa_config();
 
 $token = '';
-if( $is_admin ){
+if($is_admin === 'super') {
     $token = _token();
     set_session('ss_qa_delete_token', $token);
 }
@@ -16,7 +18,7 @@ $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');
 
 $skin_file = $qa_skin_path.'/list.skin.php';
-$is_auth = $is_admin ? true : false;
+$is_auth = ($is_admin === 'super');
 
 $category_option = '';
 
@@ -132,7 +134,7 @@ if(is_file($skin_file)) {
 
     $is_checkbox = false;
     $admin_href = '';
-    if($is_admin) {
+    if($is_admin === 'super') {
         $is_checkbox = true;
         $admin_href = G5_ADMIN_URL.'/qa_config.php';
     }

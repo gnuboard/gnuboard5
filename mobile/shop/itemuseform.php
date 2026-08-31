@@ -29,7 +29,7 @@ if ($w == "") {
     $it_id    = $use['it_id'];
     $is_score = $use['is_score'];
 
-    if (!$is_admin && $use['mb_id'] != $member['mb_id']) {
+    if (!is_shop_resource_owner_or_super_admin($use['mb_id'], $member['mb_id'], $is_admin)) {
         alert_close("자신의 사용후기만 수정이 가능합니다.");
     }
 }

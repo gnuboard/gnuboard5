@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <section id="bo_v_ans_form">
     <?php
-    if($is_admin) // 관리자이면 답변등록
+    if($is_admin === 'super') // 최고관리자이면 답변등록
     {
     ?>
     <h2>답변등록</h2>

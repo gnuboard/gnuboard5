@@ -20,6 +20,13 @@ function get_microtime()
 }
 
 
+// 게시판/그룹 관리자 문맥을 제외하고 최고관리자 권한만 반환
+function get_super_admin_type($admin_type)
+{
+    return $admin_type === 'super' ? 'super' : '';
+}
+
+
 // 한페이지에 보여줄 행, 현재페이지, 총페이지수, URL
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {

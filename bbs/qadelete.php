@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$is_admin = get_super_admin_type($is_admin);
+
 if($is_guest)
     alert('회원이시라면 로그인 후 이용해 주십시오.', G5_URL);
 

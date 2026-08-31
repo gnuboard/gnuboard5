@@ -168,7 +168,7 @@
       {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
         {
-            // 실행 파일 경로와 인자를 분리하여 mf_exec 호출 → escapeshellarg 자동 적용 (KVE-2026-0859)
+            // 실행 파일 경로와 인자를 분리하여 mf_exec 호출 → escapeshellarg 자동 적용
             $bin_exe = $home_dir.'/bin/pp_cli_exe';
 
             $res_data = $this->mf_exec($bin_exe,
@@ -276,10 +276,8 @@
       return  $my_data;
     }
 
-    function  mf_exec()
+    function  mf_build_exec_cmd( $arg )
     {
-      $arg = func_get_args();
-
       if ( is_array( $arg[0] ) )  $arg = $arg[0];
 
       $exec_cmd = array_shift( $arg );
@@ -288,6 +286,14 @@
       {
         $exec_cmd .= " " . escapeshellarg( $i );
       }
+
+      return  $exec_cmd;
+    }
+
+    function  mf_exec()
+    {
+      $arg = func_get_args();
+      $exec_cmd = $this->mf_build_exec_cmd( $arg );
 
       $rt = exec( $exec_cmd );
 
