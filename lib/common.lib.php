@@ -3248,6 +3248,90 @@ function add_javascript($javascript, $order=0)
         get_html_process_cls()->merge_javascript($javascript, $order);
 }
 
+// 로컬 정적 자산 URL에 파일 수정시간을 버전으로 추가
+function get_versioned_asset_url($url)
+{
+    if (!is_string($url) || $url === '' || !defined('G5_PATH') || G5_PATH === '') {
+        return $url;
+    }
+
+    $asset_url = preg_replace('/[?#].*$/', '', $url);
+    $g5_url = defined('G5_URL') ? rtrim(G5_URL, '/') : '';
+    $relative_path = '';
+
+    if ($g5_url !== '' && strpos($asset_url, $g5_url.'/') === 0) {
+        $relative_path = substr($asset_url, strlen($g5_url) + 1);
+    } else {
+        if (preg_match('#^[a-z][a-z0-9+.-]*://#i', $asset_url) || strpos($asset_url, '//') === 0 || substr($asset_url, 0, 1) !== '/') {
+            return $url;
+        }
+
+        $g5_url_path = $g5_url !== '' ? parse_url($g5_url, PHP_URL_PATH) : '';
+        $g5_url_path = rtrim((string) $g5_url_path, '/');
+
+        if ($g5_url_path !== '') {
+            if (strpos($asset_url, $g5_url_path.'/') !== 0) {
+                return $url;
+            }
+
+            $relative_path = substr($asset_url, strlen($g5_url_path) + 1);
+        } else {
+            $relative_path = ltrim($asset_url, '/');
+        }
+    }
+
+    $relative_path = str_replace('\\', '/', rawurldecode($relative_path));
+    if ($relative_path === '' || strpos($relative_path, "\0") !== false) {
+        return $url;
+    }
+
+    $root_path = @realpath(G5_PATH);
+    $file_path = @realpath(G5_PATH.'/'.$relative_path);
+    if ($root_path === false || $file_path === false || !is_file($file_path)) {
+        return $url;
+    }
+
+    $root_path = rtrim(str_replace('\\', '/', $root_path), '/');
+    $file_path = str_replace('\\', '/', $file_path);
+    if (strpos($file_path, $root_path.'/') !== 0) {
+        return $url;
+    }
+
+    $filetime = @filemtime($file_path);
+    if ($filetime === false) {
+        return $url;
+    }
+
+    $fragment = '';
+    $fragment_pos = strpos($url, '#');
+    if ($fragment_pos !== false) {
+        $fragment = substr($url, $fragment_pos);
+        $url = substr($url, 0, $fragment_pos);
+    }
+
+    if (preg_match('/([?&](?:amp;)?)ver=[^&#]*/i', $url)) {
+        $url = preg_replace('/([?&](?:amp;)?)ver=[^&#]*/i', '${1}ver='.$filetime, $url, 1);
+    } else {
+        $url .= (strpos($url, '?') === false ? '?' : '&').'ver='.$filetime;
+    }
+
+    return $url.$fragment;
+}
+
+function _callback_version_asset_url($matches)
+{
+    return $matches[1].get_versioned_asset_url($matches[2]).$matches[3];
+}
+
+function add_filetime_version_to_html($html)
+{
+    return preg_replace_callback(
+        '~(<(?:script|link)\b[^>]*\b(?:src|href)\s*=\s*[\'"])([^\'"]+?\.(?:js|css)(?:[?#][^\'"]*)?)([\'"])~i',
+        '_callback_version_asset_url',
+        $html
+    );
+}
+
 class html_process {
     protected static $id = '0';
     private static $instances = array();
@@ -3307,8 +3391,6 @@ class html_process {
         // 현재접속자 처리
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
-        $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
-        
         if (!isset($member['mb_id'])) {
             $member['mb_id'] = '';
         }
@@ -3349,7 +3431,7 @@ class html_process {
                 if(!trim($link[1]))
                     continue;
 
-                $link[1] = preg_replace('#\.css([\'\"]?>)$#i', '.css?ver='.G5_CSS_VER.'$1', $link[1]);
+                $link[1] = add_filetime_version_to_html($link[1]);
 
                 $stylesheet .= PHP_EOL.$link[1];
             }
@@ -3376,9 +3458,8 @@ class html_process {
             foreach($scripts as $js) {
                 if(!trim($js[1]))
                     continue;
-                
-                $add_version_str = (stripos($js[1], $http_host) !== false) ? '?ver='.G5_JS_VER : '';
-                $js[1] = preg_replace('#\.js([\'\"]?>)<\/script>$#i', '.js'.$add_version_str.'$1</script>', $js[1]);
+
+                $js[1] = add_filetime_version_to_html($js[1]);
 
                 $javascript .= $php_eol.$js[1];
                 $php_eol = PHP_EOL;

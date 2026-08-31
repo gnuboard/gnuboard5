@@ -11,7 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 <script>
 var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
 </script>
-<script src="<?php echo G5_JS_URL; ?>/kakaolink.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo get_versioned_asset_url(G5_JS_URL.'/kakaolink.js'); ?>"></script>
 <?php } ?>
 
 <!-- 상품진열 10 시작 { -->
