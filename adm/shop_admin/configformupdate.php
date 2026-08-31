@@ -15,6 +15,16 @@ if(! (isset($_POST['de_admin_company_tel']) && check_vaild_callback($_POST['de_a
 // 로그인을 바로 이 주소로 하는 경우 쇼핑몰설정값이 사라지는 현상을 방지
 if (!$_POST['de_admin_company_owner']) goto_url("./configform.php");
 
+$logo_img_fields = array('logo_img', 'logo_img2', 'mobile_logo_img', 'mobile_logo_img2');
+foreach ($logo_img_fields as $logo_img_field) {
+    if (isset($_FILES[$logo_img_field]['name']) && $_FILES[$logo_img_field]['name']) {
+        $filename = get_safe_filename($_FILES[$logo_img_field]['name']);
+        if (is_disallowed_svg_filename($filename)) {
+            alert('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        }
+    }
+}
+
 if (! empty($_POST['logo_img_del']))  @unlink(G5_DATA_PATH."/common/logo_img");
 if (! empty($_POST['logo_img_del2']))  @unlink(G5_DATA_PATH."/common/logo_img2");
 if (! empty($_POST['mobile_logo_img_del']))  @unlink(G5_DATA_PATH."/common/mobile_logo_img");

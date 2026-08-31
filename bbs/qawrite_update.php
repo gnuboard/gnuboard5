@@ -133,6 +133,15 @@ if($w == 'u' || $w == 'a' || $w == 'r') {
     }
 }
 
+if (isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
+    foreach ($_FILES['bf_file']['name'] as $filename) {
+        $filename = get_safe_filename($filename);
+        if (is_disallowed_svg_filename($filename)) {
+            alert('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        }
+    }
+}
+
 // 파일개수 체크
 $file_count   = 0;
 $upload_count = isset($_FILES['bf_file']['name']) ? count($_FILES['bf_file']['name']) : 0;

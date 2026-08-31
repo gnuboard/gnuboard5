@@ -4011,6 +4011,26 @@ function get_safe_filename($name)
     return $name;
 }
 
+// 업로드 파일명이 SVG 또는 SVGZ 확장자인지 확인
+function is_disallowed_svg_filename($filename)
+{
+    if (!is_string($filename) || $filename === '') {
+        return false;
+    }
+
+    $filename = str_replace(array("\0", '\\'), array('', '/'), $filename);
+    $filename = basename($filename);
+    $filename = rtrim($filename, " .\t\n\r\0\x0B");
+
+    if ($filename === '') {
+        return false;
+    }
+
+    $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+    return in_array($extension, array('svg', 'svgz'), true);
+}
+
 // 파일명 치환
 function replace_filename($name)
 {
