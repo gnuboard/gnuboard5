@@ -14,7 +14,7 @@ if (empty($bo_table)) {
 <script>
     var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key')) ? admin_csrf_token_key() : ''; ?>";
 </script>
-<script src="<?php echo G5_ADMIN_URL ?>/admin.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo get_versioned_asset_url(G5_ADMIN_URL.'/admin.js'); ?>"></script>
 
 <div class="new_win">
     <h1><?php echo $g5['title']; ?></h1>

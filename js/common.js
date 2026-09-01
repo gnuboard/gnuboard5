@@ -59,6 +59,72 @@ function trim(s)
     return t;
 }
 
+// SVG/SVGZ 업로드 파일 차단
+function is_disallowed_svg_filename(filename)
+{
+    // 서버의 파일명 정규화와 동일하게 특수문자를 제거
+    filename = (filename || "").replace(/[\0"'<>=#&!%\\()*+?]/g, "");
+    filename = filename.substring(filename.lastIndexOf("/") + 1);
+    filename = filename.replace(/[ .\t\n\r\v]+$/, "");
+
+    return /\.(svg|svgz)$/i.test(filename);
+}
+
+function is_svg_upload_target(input)
+{
+    var name = input.name || "";
+
+    if (name.indexOf("bf_file[") === 0) {
+        return true;
+    }
+
+    if (input.form && input.form.name == "fformmail" && (name == "file1" || name == "file2")) {
+        return true;
+    }
+
+    return input.form && input.form.name == "fconfig" &&
+        (name == "logo_img" || name == "logo_img2" || name == "mobile_logo_img" || name == "mobile_logo_img2");
+}
+
+function has_disallowed_svg_file(input)
+{
+    var i;
+
+    if (input.files && input.files.length) {
+        for (i=0; i<input.files.length; i++) {
+            if (is_disallowed_svg_filename(input.files[i].name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    return is_disallowed_svg_filename(input.value);
+}
+
+function check_disallowed_svg_upload(form)
+{
+    var invalid_file = null;
+
+    $(form).find("input[type=file]").each(function() {
+        if (is_svg_upload_target(this) && has_disallowed_svg_file(this)) {
+            invalid_file = this;
+            return false;
+        }
+    });
+
+    if (!invalid_file) {
+        return true;
+    }
+
+    alert("허용되지 않는 파일 확장자입니다. (svg, svgz)");
+    $(form).find("input:submit, button:submit, input:image").prop("disabled", false);
+    invalid_file.focus();
+
+    return false;
+}
+
 // 자바스크립트로 PHP의 number_format 흉내를 냄
 // 숫자에 , 를 출력
 function number_format(data)
@@ -728,6 +794,30 @@ function get_write_token(bo_table)
 }
 
 $(function() {
+    $(document).on("change", "input[type=file]", function() {
+        if (!is_svg_upload_target(this) || !has_disallowed_svg_file(this)) {
+            return true;
+        }
+
+        alert("허용되지 않는 파일 확장자입니다. (svg, svgz)");
+        this.value = "";
+
+        return false;
+    });
+
+    if (document.addEventListener) {
+        document.addEventListener("submit", function(event) {
+            if (!check_disallowed_svg_upload(event.target)) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }, true);
+    } else {
+        $(document).on("submit", "form", function() {
+            return check_disallowed_svg_upload(this);
+        });
+    }
+
     $(document).on("click", "form[name=fwrite] input:submit, form[name=fwrite] button:submit, form[name=fwrite] input:image", function() {
         var f = this.form;
 

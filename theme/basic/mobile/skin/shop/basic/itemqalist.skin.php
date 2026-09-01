@@ -46,7 +46,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         if($row['iq_secret']) {
             $iq_subject .= ' <i class="fa fa-lock" aria-hidden="true"></i>';
 
-            if($is_admin || $member['mb_id' ] == $row['mb_id']) {
+            if(is_shop_resource_owner_or_super_admin($row['mb_id'], $member['mb_id'], $is_admin)) {
                 $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
             } else {
                 $iq_question = '비밀글로 보호된 문의입니다.';

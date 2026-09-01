@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$is_admin = get_super_admin_type($is_admin);
+
 // clean the output buffer
 ob_end_clean();
 

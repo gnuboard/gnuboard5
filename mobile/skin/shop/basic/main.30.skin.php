@@ -14,7 +14,7 @@ add_javascript('<script src="'.G5_JS_URL.'/shop.list.action.js"></script>', 10);
 <script>
 var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
 </script>
-<script src="<?php echo G5_JS_URL; ?>/kakaolink.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo get_versioned_asset_url(G5_JS_URL.'/kakaolink.js'); ?>"></script>
 <?php } ?>
 <div class="st_30_wr">
 <!-- 메인상품진열 30 시작 { -->

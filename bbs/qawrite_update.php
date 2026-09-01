@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$is_admin = get_super_admin_type($is_admin);
+
 /*==========================
 $w == a : 답변
 $w == r : 추가질문
@@ -131,6 +133,15 @@ if($w == 'u' || $w == 'a' || $w == 'r') {
     }
 }
 
+if (isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
+    foreach ($_FILES['bf_file']['name'] as $filename) {
+        $filename = get_safe_filename($filename);
+        if (is_disallowed_svg_filename($filename)) {
+            alert('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        }
+    }
+}
+
 // 파일개수 체크
 $file_count   = 0;
 $upload_count = isset($_FILES['bf_file']['name']) ? count($_FILES['bf_file']['name']) : 0;
@@ -185,8 +196,8 @@ for ($i=1; $i<=$upload_count; $i++) {
     }
 
     if (is_uploaded_file($tmp_file)) {
-        // 관리자가 아니면서 설정한 업로드 사이즈보다 크다면 건너뜀
-        if (!$is_admin && $filesize > $qaconfig['qa_upload_size']) {
+        // 최고관리자가 아니면서 설정한 업로드 사이즈보다 크다면 건너뜀
+        if ($is_admin !== 'super' && $filesize > $qaconfig['qa_upload_size']) {
             $file_upload_msg .= '"'.$filename.'" 파일의 용량('.number_format($filesize).' 바이트)이 게시판에 설정('.number_format($qaconfig['qa_upload_size']).' 바이트)된 값보다 크므로 업로드 하지 않습니다.\\n';
             continue;
         }

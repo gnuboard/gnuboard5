@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_KAKAO5_PATH.'/kakao5.lib.php'); // 카카오톡 알림톡 설정
 require_once(G5_SHOP_PATH.'/toss/toss.inc.php'); // 토스페이먼츠 v2 공통 설정
 
 /*************************************************************************

@@ -271,7 +271,7 @@ function closePreviousEventSource() {
 }
 
 // 2. FormData QueryString 변환
-function buildDownloadParams(selectedFields = []) {
+function buildDownloadParams() {
     const formData = new FormData(document.getElementById('fsearch'));
     const params = new URLSearchParams(formData);
 
@@ -281,10 +281,10 @@ function buildDownloadParams(selectedFields = []) {
 }
 
 // 3. 메인 함수
-function startExcelDownload(selectedFields = []) {
+function startExcelDownload() {
     closePreviousEventSource();
 
-    const query = buildDownloadParams(selectedFields);
+    const query = buildDownloadParams();
     showDownloadPopup();
 
     eventSource = new EventSource(`member_list_exel_export.php?${query}`);
@@ -338,32 +338,6 @@ function handlePopupCloseWithConfirm(e) {
         alert("엑셀 다운로드가 중단되었습니다.");
     }
     PopupManager.close('popupOverlay');
-}
-
-// 체크박스 선택 시 최대 3개 제한 및 선택된 항목 미리보기 표시
-function bindFieldSelectEvents() {
-    const fieldSelectForm = document.getElementById('fieldSelectForm');
-    if (!fieldSelectForm) return;
-
-    fieldSelectForm.addEventListener('change', function (e) {
-        if (e.target.name === 'fields') {
-            const selected = fieldSelectForm.querySelectorAll('input[name="fields"]:checked');
-            if (selected.length > 3) {
-                alert("최대 3개까지 선택 가능합니다.");
-                e.target.checked = false;
-                return;
-            }
-
-            // 선택된 항목 표시
-            const previewContainer = document.getElementById('selectedFieldsPreview');
-            let spans = '<strong>선택된 항목:</strong>';
-            selected.forEach(field => {
-                const label = field.parentElement.textContent.trim();
-                spans += `<span class="field-tag">${label}</span>`;
-            });
-            previewContainer.innerHTML = spans;
-        }
-    });
 }
 
 // 엑셀 생성 및 다운로드 실행

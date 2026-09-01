@@ -52,7 +52,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
                     <?php echo $is_content; // 사용후기 내용 ?>
                 </div>
 
-                <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
+                <?php if (is_shop_resource_owner_or_super_admin($row['mb_id'], $member['mb_id'], $is_admin)) { ?>
                 <div class="sit_use_cmd">
                     <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">수정</a>
                     <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>

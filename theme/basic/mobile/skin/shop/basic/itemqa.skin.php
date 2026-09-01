@@ -27,7 +27,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         if($row['iq_secret']) {
             $iq_subject .= ' <img src="'.G5_MSHOP_SKIN_URL.'/img/icon_secret.gif" alt="비밀글">';
 
-            if($is_admin || $member['mb_id' ] == $row['mb_id']) {
+            if(is_shop_resource_owner_or_super_admin($row['mb_id'], $member['mb_id'], $is_admin)) {
                 $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
             } else {
                 $iq_question = '비밀글로 보호된 문의입니다.';
@@ -87,7 +87,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
                     <?php } ?>
                 </div>
 
-                <?php if ($is_admin || ($row['mb_id'] == $member['mb_id'] && !$is_answer)) { ?>
+                <?php if ($is_admin === 'super' || ($row['mb_id'] == $member['mb_id'] && !$is_answer)) { ?>
                 <div class="sit_qa_cmd">
                     <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemqa_form btn01" onclick="return false;">수정</a>
                     <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemqa_delete btn01">삭제</a>

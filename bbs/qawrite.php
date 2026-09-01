@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
+$is_admin = get_super_admin_type($is_admin);
+
 if($w != '' && $w != 'u' && $w != 'r') {
     alert('올바른 방법으로 이용해 주십시오.');
 }
@@ -30,7 +32,7 @@ if(is_file($skin_file)) {
 
     if($w == 'u' || $w == 'r') {
         $sql = " select * from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
-        if(!$is_admin) {
+        if($is_admin !== 'super') {
             $sql .= " and mb_id = '{$member['mb_id']}' ";
         }
 
@@ -40,7 +42,7 @@ if(is_file($skin_file)) {
             if(!$write['qa_id'])
                 alert('게시글이 존재하지 않습니다.\\n삭제되었거나 자신의 글이 아닌 경우입니다.');
 
-            if(!$is_admin) {
+            if($is_admin !== 'super') {
                 if($write['qa_type'] == 0 && $write['qa_status'] == 1)
                     alert('답변이 등록된 문의글은 수정할 수 없습니다.');
 
@@ -117,7 +119,7 @@ if(is_file($skin_file)) {
         if($w == '' || $w == 'r')
             $write['qa_email'] = $member['mb_email'];
 
-        if($w == 'u' && $is_admin && $write['qa_type'])
+        if($w == 'u' && $is_admin === 'super' && $write['qa_type'])
             $is_email = false;
     }
 
@@ -132,7 +134,7 @@ if(is_file($skin_file)) {
         if($w == '' || $w == 'r')
             $write['qa_hp'] = $member['mb_hp'];
 
-        if($w == 'u' && $is_admin && $write['qa_type'])
+        if($w == 'u' && $is_admin === 'super' && $write['qa_type'])
             $is_hp = false;
     }
 

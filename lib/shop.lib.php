@@ -27,6 +27,46 @@ function get_shop_uid($type, $id, $time, $ip)
 }
 
 /**
+ * 상품 목록 정렬 요청을 허용된 DB 컬럼과 방향으로 변환한다.
+ *
+ * @param mixed $sort    외부 정렬 키
+ * @param mixed $sortodr 외부 정렬 방향
+ * @return array 검증된 정렬 컬럼과 방향. 잘못된 입력이면 모두 빈 문자열
+ */
+function get_shop_item_sort($sort, $sortodr)
+{
+    $sort_columns = array(
+        'it_name'        => 'it_name',
+        'it_sum_qty'     => 'it_sum_qty',
+        'it_price'       => 'it_price',
+        'it_use_avg'     => 'it_use_avg',
+        'it_use_cnt'     => 'it_use_cnt',
+        'it_update_time' => 'it_update_time',
+    );
+
+    if (!is_string($sort) || !isset($sort_columns[$sort])) {
+        return array('', '');
+    }
+
+    if (!is_string($sortodr)) {
+        return array('', '');
+    }
+
+    $sortodr = strtolower($sortodr);
+    if (!in_array($sortodr, array('asc', 'desc'), true)) {
+        return array('', '');
+    }
+
+    return array($sort_columns[$sort], $sortodr);
+}
+
+// 쇼핑몰 리소스 소유자 또는 최고관리자인지 확인
+function is_shop_resource_owner_or_super_admin($owner_id, $member_id, $admin_type)
+{
+    return $admin_type === 'super' || ($member_id !== '' && $owner_id === $member_id);
+}
+
+/**
  * 현금영수증 발급 또는 조회에 대한 검증
  *
  * 다음 셋 중 하나여야 접근 허용:
@@ -2094,7 +2134,7 @@ function check_itemuse_write($it_id, $mb_id, $close=true)
 {
     global $g5, $default, $is_admin;
 
-    if(!$is_admin && $default['de_item_use_write'])
+    if($is_admin !== 'super' && $default['de_item_use_write'])
     {
         $sql = " select count(*) as cnt
                     from {$g5['g5_shop_cart_table']}

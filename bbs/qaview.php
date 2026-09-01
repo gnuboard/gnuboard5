@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
+$is_admin = get_super_admin_type($is_admin);
+
 $qa_id = isset($_REQUEST['qa_id']) ? (int) $_REQUEST['qa_id'] : 0;
 
 if($is_guest)
@@ -115,7 +117,7 @@ if(is_file($skin_file)) {
     }
     */
 
-    if(($view['qa_type'] && $is_admin) || (!$view['qa_type'] && $view['qa_status'] == 0)) {
+    if(($view['qa_type'] && $is_admin === 'super') || (!$view['qa_type'] && $view['qa_status'] == 0)) {
         $update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$view['qa_id'].$qstr;
         $delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$view['qa_id'].'&amp;token='.$token.$qstr;
     }
@@ -131,7 +133,7 @@ if(is_file($skin_file)) {
                       and qa_parent = '{$view['qa_id']}' ";
         $answer = sql_fetch($sql);
 
-        if($is_admin) {
+        if($is_admin === 'super') {
             $answer_update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$answer['qa_id'].$qstr;
             $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].'&amp;token='.$token.$qstr;
         }
