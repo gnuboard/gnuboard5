@@ -170,7 +170,7 @@ function pg_setting_check($is_print=false){
 		if( $default['de_pg_service'] === 'kcp' && $default['de_kcp_mid'] && $default['de_kcp_site_key'] ){
 			$pg_msg = 'NHN KCP';
 		} else if ( $default['de_pg_service'] === 'lg' && $config['cf_lg_mid'] && $config['cf_lg_mert_key'] ){
-			$pg_msg = 'LG유플러스';
+			$msg .= '<div class="admin_pg_notice od_test_caution">(주의!) 토스페이먼츠(구버전) 결제의 결제 설정이 현재 테스트결제로 되어 있습니다.<br>반드시 <a href="#lg_info_anchor">MERT KEY</a>를 <u>[테스트]키</u>로 설정한 후 테스트결제를 진행해야합니다.<br>쇼핑몰 운영 시에는 실결제로 전환하여 <u>[라이브]키</u>로 설정해 주시기 바랍니다.<br>아래 링크를 클릭하여 실결제로 설정하여 운영해 주세요.<br><a href="'.$pg_test_conf_link.'" class="pg_test_conf_link">'.$pg_test_conf_link.'</a></div>';
 		} else if ( $default['de_pg_service'] === 'toss' && $config['cf_lg_mid'] && $config['cf_toss_client_key'] && $config['cf_toss_secret_key'] ){
             $msg .= '<div class="admin_pg_notice od_test_caution">(주의!) 토스페이먼츠 결제의 결제 설정이 현재 테스트결제로 되어 있습니다.<br>반드시 <a href="#lg_info_anchor">상점 API키</a>를 <u>[테스트]키</u>로 설정한 후 테스트결제를 진행해야합니다.<br>쇼핑몰 운영 시에는 실결제로 전환하여 <u>[라이브]키</u>로 설정해 주시기 바랍니다.<br>아래 링크를 클릭하여 실결제로 설정하여 운영해 주세요.<br><a href="'.$pg_test_conf_link.'" class="pg_test_conf_link">'.$pg_test_conf_link.'</a></div>';
 		} else if ( $default['de_pg_service'] === 'inicis' && $default['de_inicis_mid'] && $default['de_inicis_sign_key'] ){

@@ -889,7 +889,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row"><label for="cf_lg_mert_key">토스페이먼츠(구버전) MERT KEY</label></th>
             <td>
-                <?php echo help("토스페이먼츠(구버전) 상점 MertKey는 상점관리자 -> 개발자센터 -> API키 -> 머트 키에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
+                <?php echo help("토스페이먼츠(구버전) 상점 MertKey는 상점관리자 -> 개발자센터 -> API키 -> 머트 키에서 확인하실 수 있습니다. 예) 95160cce09854ef44d2edb2bfb05f9f3\n실결제용 [라이브] 키와 테스트용 [테스트] 키는 서로 다르므로, <b>테스트로 결제시에는 [테스트] 키</b>로 변경하여 사용해주시기 바랍니다."); ?>
                 <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
             </td>
         </tr>
@@ -1924,7 +1924,7 @@ function fconfig_check(f)
         }
     } else if ( f.de_pg_service.value == "lg" ) {
         if( f.cf_lg_mid.value && f.cf_lg_mert_key.value && parseInt(f.de_card_test.value) > 0 ){
-            pg_msg = "토스페이먼츠(구버전)";
+            msg += "(주의!) 토스페이먼츠(구버전) 결제의 결제 설정이 현재 테스트결제로 되어 있습니다.\nMERT KEY를 [테스트]키로 설정한 후 테스트결제를 진행해주세요.\n쇼핑몰 운영중이면 반드시 실결제 전환 및 [라이브]키로 설정하여 운영하셔야 합니다.\n실결제로 변경하려면 결제설정 탭 -> 결제 테스트에서 실결제를 선택해 주세요.\n정말로 테스트결제로 설정하시겠습니까?";
         }
     } else if ( f.de_pg_service.value == "toss" ) {
         if( f.cf_lg_mid.value && f.cf_toss_client_key.value && f.cf_toss_secret_key.value && parseInt(f.de_card_test.value) > 0 ){
