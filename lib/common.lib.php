@@ -2697,6 +2697,54 @@ function get_email_cert_key($mb_id, $mb_datetime)
 }
 
 /**
+ * 발급 시각을 포함한 메일 인증용 일회용 토큰을 생성한다.
+ *
+ * @return string
+ */
+function get_email_certify_token()
+{
+    return get_random_token_string(16) . '.' . G5_SERVER_TIME;
+}
+
+/**
+ * 메일 인증 토큰의 일치 여부와 유효시간을 확인한다.
+ *
+ * 발급 시각이 없는 기존 토큰은 회원가입 시각을 기준으로 만료 여부를 확인한다.
+ *
+ * @param string $token
+ * @param string $stored_token
+ * @param string $mb_datetime
+ * @param int $valid_minutes
+ * @param int|null $now
+ * @return bool
+ */
+function is_valid_email_certify_token($token, $stored_token, $mb_datetime, $valid_minutes, $now = null)
+{
+    if (!$token || !$stored_token || !hash_equals((string) $stored_token, (string) $token)) {
+        return false;
+    }
+
+    $valid_minutes = (int) $valid_minutes;
+    if ($valid_minutes < 1) {
+        return true;
+    }
+
+    if (preg_match('/\.([0-9]{10})$/', $stored_token, $matches)) {
+        $issued_at = (int) $matches[1];
+    } else {
+        $issued_at = strtotime($mb_datetime);
+    }
+
+    if (!$issued_at) {
+        return false;
+    }
+
+    $now = $now === null ? G5_SERVER_TIME : (int) $now;
+
+    return $issued_at + ($valid_minutes * 60) >= $now;
+}
+
+/**
  * CSRF 방지용 Origin/Referer 검증 (OWASP 권장 패턴).
  *
  * 브라우저가 자동으로 보내는 Origin 헤더를 우선 확인하고, 없으면 Referer를 사용해

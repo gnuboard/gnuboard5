@@ -26,6 +26,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <?php } ?>
 
             아래의 주소를 클릭하시면 인증이 완료됩니다.<br>
+            <?php if (!empty($config['cf_email_certify_minutes'])) { ?>인증 링크는 발송 후 <?php echo (int) $config['cf_email_certify_minutes']; ?>분 동안 유효합니다.<br><?php } ?>
             <a href="<?php echo $certify_href ?>" target="_blank"><b><?php echo $certify_href ?></b></a><br><br>
 
             회원님의 성원에 보답하고자 더욱 더 열심히 하겠습니다.<br>

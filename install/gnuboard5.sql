@@ -200,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_point_term` int(11) NOT NULL DEFAULT '0',
   `cf_use_copy_log` tinyint(4) NOT NULL DEFAULT '0',
   `cf_use_email_certify` tinyint(4) NOT NULL DEFAULT '0',
+  `cf_email_certify_minutes` int(11) NOT NULL DEFAULT '60',
   `cf_login_point` int(11) NOT NULL DEFAULT '0',
   `cf_cut_name` tinyint(4) NOT NULL DEFAULT '0',
   `cf_nick_modify` int(11) NOT NULL DEFAULT '0',

@@ -23,7 +23,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <p style="margin:20px 0 0;padding:30px 30px 50px;min-height:200px;height:auto !important;height:200px;border-bottom:1px solid #eee">
             <b><?php echo $mb_name ?></b> 님의 회원가입을 진심으로 축하합니다.<br>
             회원님의 성원에 보답하고자 더욱 더 열심히 하겠습니다.<br>
-            <?php if ($config['cf_use_email_certify']) { ?>아래의 <strong>메일인증</strong>을 클릭하시면 회원가입이 완료됩니다.<br><?php } ?>
+            <?php if ($config['cf_use_email_certify']) { ?>아래의 <strong>메일인증</strong>을 클릭하시면 회원가입이 완료됩니다.<br>
+            <?php if (!empty($config['cf_email_certify_minutes'])) { ?>인증 링크는 발송 후 <?php echo (int) $config['cf_email_certify_minutes']; ?>분 동안 유효합니다.<br><?php } ?><?php } ?>
             감사합니다.
         </p>
 

@@ -12,6 +12,15 @@ if ($is_admin != 'super') {
 $sql = " select * from {$g5['config_table']} limit 1";
 $config = sql_fetch($sql);
 
+if (!isset($config['cf_email_certify_minutes'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_email_certify_minutes` INT(11) NOT NULL DEFAULT '60' AFTER `cf_use_email_certify` ",
+        true
+    );
+    $config['cf_email_certify_minutes'] = 60;
+}
+
 if (!isset($config['cf_add_script'])) {
     sql_query(
         " ALTER TABLE `{$g5['config_table']}`
@@ -1187,6 +1196,13 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                             <?php $tmp = !(defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL) ? '<br>( SNS를 이용한 소셜로그인 한 회원은 회원메일인증을 하지 않습니다. 일반회원에게만 해당됩니다. )' : ''; ?>
                             <?php echo help('메일에 배달된 인증 주소를 클릭하여야 회원으로 인정합니다.' . $tmp); ?>
                             <input type="checkbox" name="cf_use_email_certify" value="1" id="cf_use_email_certify" <?php echo $config['cf_use_email_certify'] ? 'checked' : ''; ?>> 사용
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="cf_email_certify_minutes">메일인증 유효시간</label></th>
+                        <td>
+                            <?php echo help('인증메일 발송 후 링크를 사용할 수 있는 시간을 분 단위로 설정합니다. 0은 만료시간을 적용하지 않습니다.') ?>
+                            <input type="number" name="cf_email_certify_minutes" value="<?php echo isset($config['cf_email_certify_minutes']) ? (int) $config['cf_email_certify_minutes'] : 60; ?>" id="cf_email_certify_minutes" class="frm_input" min="0"> 분
                         </td>
                     </tr>
                     <tr>

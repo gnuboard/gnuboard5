@@ -9,6 +9,15 @@ include_once('./admin.head.php');
 
 $is_check = false;
 
+// 메일 인증 링크 유효시간 설정 추가
+if (!isset($config['cf_email_certify_minutes'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_email_certify_minutes` int(11) NOT NULL DEFAULT '60' AFTER `cf_use_email_certify`
+    ", true);
+
+    $is_check = true;
+}
+
 //소셜 로그인 관련 필드 및 구글 리챕챠 필드 추가
 if(!isset($config['cf_social_login_use'])) {
     sql_query("ALTER TABLE `{$g5['config_table']}`

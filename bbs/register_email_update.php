@@ -46,7 +46,7 @@ $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 $mb_name = $mb['mb_name'];
 
 // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용 (CSPRNG 사용)
-$mb_md5 = get_random_token_string(16);
+$mb_md5 = get_email_certify_token();
 
 sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '{$esc_mb_id}' ");
 
