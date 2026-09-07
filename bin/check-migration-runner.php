@@ -96,7 +96,7 @@ if (!sql_query("CREATE TABLE `{$test_content_table}` (
     g5_migration_test_fail(sql_error_info());
 }
 if (!sql_query("CREATE TABLE `{$test_board_table}` (`bo_table` varchar(20) NOT NULL DEFAULT '') ENGINE=MyISAM DEFAULT CHARSET=utf8", false) ||
-    !sql_query("CREATE TABLE `{$test_write_table}` (`wr_id` int(11) NOT NULL AUTO_INCREMENT, `wr_seo_title` varchar(200) NOT NULL DEFAULT '', PRIMARY KEY (`wr_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8", false) ||
+    !sql_query("CREATE TABLE `{$test_write_table}` (`wr_id` int(11) NOT NULL AUTO_INCREMENT, `wr_content` text NOT NULL, `wr_seo_title` varchar(200) NOT NULL DEFAULT '', PRIMARY KEY (`wr_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8", false) ||
     !sql_query("INSERT INTO `{$test_board_table}` SET bo_table = 'sample'", false)) {
     g5_migration_test_fail(sql_error_info());
 }
@@ -147,9 +147,38 @@ foreach ($isolated_keys as $index => $key) {
 }
 
 // 복합 ALTER의 첫 컬럼만 없는 역방향 부분 적용 상태에서도 과거 마이그레이션이 중단되지 않아야 한다.
+$inspection_cache = array();
+$social_migration = g5_migration_parse_file(G5_PATH . '/migrations/20180330_001_social_login.sql');
+if (g5_migration_needs_no_execution($social_migration, $inspection_cache)) {
+    g5_migration_test_fail('부분 적용된 소셜 스키마를 실행 불필요로 판단했습니다.');
+}
 g5_migration_test_execute(g5_migration_parse_file(G5_PATH . '/migrations/20140331_001_shop_cart_shipping.sql'));
 g5_migration_test_execute(g5_migration_parse_file(G5_PATH . '/migrations/20180330_001_social_login.sql'));
 g5_migration_test_execute(g5_migration_parse_file(G5_PATH . '/migrations/20260723_001_inicis_pro.sql'));
+$inspection_cache = array();
+if (!g5_migration_needs_no_execution($social_migration, $inspection_cache)) {
+    g5_migration_test_fail('이미 적용된 소셜 스키마를 실행 불필요로 판단하지 못했습니다.');
+}
+$write_migration = g5_migration_parse_file(G5_PATH . '/migrations/20191202_002_board_write_seo.sql');
+if (!g5_migration_needs_no_execution($write_migration, $inspection_cache)) {
+    g5_migration_test_fail('기존 게시판 SEO 컬럼을 확인하지 못했습니다.');
+}
+sql_query("ALTER TABLE `{$test_write_table}` DROP COLUMN wr_seo_title", false);
+$inspection_cache = array();
+if (g5_migration_needs_no_execution($write_migration, $inspection_cache)) {
+    g5_migration_test_fail('게시판 SEO 컬럼 누락을 실행 불필요로 판단했습니다.');
+}
+g5_migration_test_execute($write_migration);
+$inspection_cache = array();
+$unconditional_migration = g5_migration_parse_file(G5_PATH . '/migrations/20260904_002_reconcile_partial_schema.sql');
+$backfill_migration = g5_migration_parse_file(G5_PATH . '/migrations/20260904_003_backfill_legacy_data.sql');
+if (g5_migration_needs_no_execution($unconditional_migration, $inspection_cache) || g5_migration_needs_no_execution($backfill_migration, $inspection_cache)) {
+    g5_migration_test_fail('조건 없는 스키마 변경 또는 데이터 보정을 완료로 추정했습니다.');
+}
+$absent_table = $test_absent_prefix . 'inspection';
+if (g5_migration_inspect_object('column', $absent_table, 'missing', $inspection_cache) !== null) {
+    g5_migration_test_fail('조회 오류를 객체 없음과 구분하지 못했습니다.');
+}
 if (!g5_migration_column_exists($test_cart_table, 'it_sc_type') ||
     !g5_migration_column_exists($test_config_table, 'cf_social_login_use') ||
     !g5_migration_column_exists($test_config_table, 'cf_member_img_size') ||
@@ -217,4 +246,4 @@ if (g5_migration_validate_target_dependencies($migrations, $dependency_records, 
     g5_migration_test_fail('누락된 선행 마이그레이션을 차단하지 못했습니다.');
 }
 
-echo "실행 순서·선행 조건·부분 적용 스키마·기존 데이터 보정 검사가 통과했습니다.\n";
+echo "기존 상태 읽기 전용 검사·실행 순서·선행 조건·부분 적용 스키마·기존 데이터 보정 검사가 통과했습니다.\n";

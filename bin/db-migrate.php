@@ -34,13 +34,13 @@ if ($command === 'status') {
     exit(0);
 }
 
-if ($command !== 'migrate') {
-    fwrite(STDERR, "사용법: php bin/db-migrate.php status | migrate [마이그레이션_ID]\n");
+if ($command !== 'migrate' && $command !== 'record-existing') {
+    fwrite(STDERR, "사용법: php bin/db-migrate.php status | migrate [마이그레이션_ID] | record-existing\n");
     exit(2);
 }
 
-$target_id = isset($argv[2]) && $argv[2] !== '--all' ? $argv[2] : '';
-$result = g5_migration_run($target_id);
+$target_id = $command === 'migrate' && isset($argv[2]) && $argv[2] !== '--all' ? $argv[2] : '';
+$result = g5_migration_run($target_id, $command === 'record-existing');
 if (!$result['success']) {
     foreach ($result['errors'] as $error) {
         fwrite(STDERR, '[실패] ' . $error . "\n");

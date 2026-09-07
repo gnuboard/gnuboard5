@@ -322,11 +322,84 @@ function g5_migration_get_records()
     return $records;
 }
 
+// 검사 실패는 객체 없음과 구분한다. 잘못된 건너뛰기 이력을 만들지 않는다.
+function g5_migration_inspect_object($object, $table, $name, &$cache)
+{
+    $key = $object . ':' . $table;
+    if (!array_key_exists($key, $cache)) {
+        $quoted = '`' . str_replace('`', '``', $table) . '`';
+        if ($object === 'table') {
+            $sql = "SHOW TABLES LIKE '" . sql_real_escape_string($table) . "'";
+        } elseif ($object === 'column') {
+            $sql = 'SHOW COLUMNS FROM ' . $quoted;
+        } else {
+            $sql = 'SHOW INDEX FROM ' . $quoted;
+        }
+        $result = sql_query($sql, false);
+        $cache[$key] = $result ? array() : null;
+        if ($result) {
+            while ($row = sql_fetch_array($result)) {
+                $value = $object === 'table' ? reset($row) : $row[$object === 'column' ? 'Field' : 'Key_name'];
+                $cache[$key][$value] = true;
+            }
+        }
+    }
+    return $cache[$key] === null ? null : isset($cache[$key][$object === 'table' ? $table : $name]);
+}
+
+// SQL을 실행하지 않고, 실행기의 모든 문이 건너뛰어질 때만 true를 반환한다.
+function g5_migration_needs_no_execution($migration, &$cache)
+{
+    global $g5;
+
+    if (isset($migration['error'])) {
+        return false;
+    }
+    if ($migration['skip_table'] && $migration['skip_column'] &&
+        g5_migration_inspect_object('column', $migration['skip_table'], $migration['skip_column'], $cache) === true) {
+        return true;
+    }
+    foreach ($migration['statements'] as $statement) {
+        $skip = false;
+        foreach ($statement['conditions'] as $condition) {
+            $exists = g5_migration_inspect_object($condition['object'], $condition['table'], $condition['name'], $cache);
+            if ($exists === null) {
+                return false;
+            }
+            if (($condition['state'] === 'exists') !== $exists) {
+                $skip = true;
+                break;
+            }
+        }
+        if ($skip) {
+            continue;
+        }
+        if (!$statement['foreach_write_table']) {
+            // 데이터 보정 및 조건 없는 DDL은 완료로 추정하지 않는다.
+            return false;
+        }
+        $result = sql_query("SELECT bo_table FROM `" . str_replace('`', '``', $g5['board_table']) . "`", false);
+        if (!$result) {
+            return false;
+        }
+        while ($board = sql_fetch_array($result)) {
+            $table = $g5['write_prefix'] . $board['bo_table'];
+            if (g5_migration_inspect_object('table', $table, '', $cache) !== true ||
+                $statement['foreach_write_column'] === '' ||
+                g5_migration_inspect_object('column', $table, $statement['foreach_write_column'], $cache) !== true) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 function g5_migration_status()
 {
     $migrations = g5_migration_discover();
     $records = g5_migration_get_records();
     $status = array();
+    $inspection_cache = array();
 
     foreach ($migrations as $migration) {
         if (isset($migration['error'])) {
@@ -336,6 +409,9 @@ function g5_migration_status()
 
         $record = isset($records[$migration['id']]) ? $records[$migration['id']] : null;
         $migration['status'] = $record ? $record['status'] : 'pending';
+        if (!$record && g5_migration_needs_no_execution($migration, $inspection_cache)) {
+            $migration['status'] = 'unrecorded';
+        }
         $migration['checksum_changed'] = $record && $record['status'] === 'success' && $record['checksum'] !== $migration['checksum'];
         $migration['error_message'] = $record ? $record['error_message'] : '';
         $migration['applied_at'] = $record ? $record['applied_at'] : '';
@@ -353,6 +429,7 @@ function g5_migration_status_label($status, $checksum_changed = false)
 
     $labels = array(
         'pending' => '대기',
+        'unrecorded' => '실행 불필요 (미기록)',
         'success' => '성공',
         'failed' => '실패'
     );
@@ -429,7 +506,7 @@ function g5_migration_save_record($migration, $status, $error_message, $executio
     return (bool) sql_query($sql, false);
 }
 
-function g5_migration_run($target_id = '')
+function g5_migration_run($target_id = '', $record_existing = false)
 {
     $result = array('success' => false, 'applied' => 0, 'skipped' => 0, 'errors' => array());
 
@@ -448,6 +525,15 @@ function g5_migration_run($target_id = '')
     $migrations = g5_migration_discover();
     $records = g5_migration_get_records();
     $target_found = $target_id === '';
+
+    if ($record_existing) {
+        $history = sql_fetch('SELECT COUNT(*) AS total FROM `' . g5_migration_table_name() . '`', false);
+        if (!$history || !isset($history['total']) || (int) $history['total'] !== count($records)) {
+            $result['errors'][] = '기존 마이그레이션 이력을 확인하지 못했습니다.';
+            sql_query("SELECT RELEASE_LOCK('{$lock_name}')", false);
+            return $result;
+        }
+    }
 
     if ($target_id !== '') {
         $dependency_error = g5_migration_validate_target_dependencies($migrations, $records, $target_id);
@@ -479,6 +565,19 @@ function g5_migration_run($target_id = '')
         }
 
         $started_at = get_microtime();
+        if ($record_existing) {
+            $inspection_cache = array();
+            // 앞선 변경이 후속 실행 조건을 바꿀 수 있으므로 연속된 항목만 등록한다.
+            if ($record || !g5_migration_needs_no_execution($migration, $inspection_cache)) {
+                break;
+            }
+            if (!g5_migration_save_record($migration, 'success', '', 0)) {
+                $result['errors'][] = $migration['id'] . ' 기존 상태 확인 이력을 저장하지 못했습니다: ' . sql_error_info();
+                break;
+            }
+            $result['skipped']++;
+            continue;
+        }
         $skip = $migration['skip_table'] && $migration['skip_column'] && g5_migration_column_exists($migration['skip_table'], $migration['skip_column']);
         $migration_error = '';
         $executed = false;
