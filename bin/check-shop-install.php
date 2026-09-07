@@ -99,8 +99,64 @@ function g5_shop_install_test_fail($message)
     exit(1);
 }
 
+// 모든 마이그레이션의 쇼핑몰 SQL만 격리 접두어로 실행한다.
+// 공통 스키마가 섞인 파일에서도 쇼핑몰 문장의 조건을 빠짐없이 검사한다.
+function g5_shop_install_test_migrations($prefix, $installed)
+{
+    $checked = 0;
+    foreach (g5_migration_discover() as $migration) {
+        if (isset($migration['error'])) {
+            g5_shop_install_test_fail($migration['error']);
+        }
+        foreach ($migration['statements'] as $statement) {
+            if (strpos($statement['sql'], '`' . $prefix) === false) {
+                continue;
+            }
+            $checked++;
+            if (!preg_match('/^(?:CREATE TABLE(?: IF NOT EXISTS)?|ALTER TABLE|UPDATE)\s+`' . preg_quote($prefix, '/') . '/i', $statement['sql'])) {
+                g5_shop_install_test_fail('격리된 쇼핑몰 테이블을 대상으로 하지 않는 SQL입니다: ' . $migration['id']);
+            }
+            $should_run = g5_migration_should_run_statement($statement['conditions']);
+            if (!$installed && $should_run) {
+                g5_shop_install_test_fail('쇼핑몰 미설치 상태에서 실행되는 SQL이 있습니다: ' . $migration['id']);
+            }
+            if ($should_run) {
+                $result = g5_migration_execute_statement($statement);
+                if ($result['error'] !== '') {
+                    g5_shop_install_test_fail($migration['id'] . ': ' . $result['error']);
+                }
+            }
+        }
+    }
+    if (!$checked) {
+        g5_shop_install_test_fail('쇼핑몰 마이그레이션 검사 대상이 없습니다.');
+    }
+    return $checked;
+}
+
 register_shutdown_function('g5_shop_install_test_cleanup');
 g5_shop_install_test_cleanup();
+
+// SQL과 조건에서 사용되는 쇼핑몰 자리표시자를 모두 임시 테이블에 연결한다.
+$shop_keys = array();
+foreach (glob(G5_PATH . '/migrations/*.sql') as $migration_file) {
+    preg_match_all('/\{\{(g5_shop_[a-z0-9_]+_table)\}\}/', file_get_contents($migration_file), $matches);
+    foreach ($matches[1] as $key) {
+        $shop_keys[$key] = true;
+    }
+}
+$source_shop_prefix = defined('G5_SHOP_TABLE_PREFIX') ? G5_SHOP_TABLE_PREFIX : G5_TABLE_PREFIX . 'shop_';
+foreach ($shop_keys as $key => $unused) {
+    $original = g5_migration_replace_placeholders('{{' . $key . '}}');
+    if (strpos($original, $source_shop_prefix) !== 0) {
+        g5_shop_install_test_fail('쇼핑몰 테이블 접두어를 격리하지 못했습니다: ' . $key);
+    }
+    $g5[$key] = $prefix . substr($original, strlen($source_shop_prefix));
+}
+$checked_statements = g5_shop_install_test_migrations($prefix, false);
+if (g5_shop_install_existing_tables($prefix) !== array()) {
+    g5_shop_install_test_fail('쇼핑몰 미설치 검사 후 테이블이 생성되었습니다.');
+}
 if (!@mkdir($data_path, G5_DIR_PERMISSION) || @file_put_contents($config_file, "<?php\n// 기존 설정 보존 표식\n?>") === false) {
     g5_shop_install_test_fail('격리 테스트 설정 파일을 준비하지 못했습니다.');
 }
@@ -120,6 +176,9 @@ foreach ($tables as $name) {
         g5_shop_install_test_fail('쇼핑몰 테이블이 누락되었습니다: ' . $prefix . $name);
     }
 }
+// 미설치 업그레이드 뒤 후설치는 과거 이력과 관계없이 최신 설치 SQL을 사용한다.
+// 쇼핑몰을 먼저 설치한 경우의 업그레이드 SQL도 최신 스키마에서 정상 처리돼야 한다.
+g5_shop_install_test_migrations($prefix, true);
 $default = sql_fetch("SELECT de_shop_skin, de_shop_mobile_skin, de_sms_cont1, de_sms_cont2, de_sms_cont3, de_sms_cont4, de_sms_cont5 FROM `{$prefix}default` LIMIT 1", false);
 if (!isset($default['de_shop_skin']) || $default['de_shop_skin'] !== 'basic' || $default['de_shop_mobile_skin'] !== 'basic') {
     g5_shop_install_test_fail('쇼핑몰 기본 설정이 올바르게 생성되지 않았습니다.');
@@ -148,4 +207,4 @@ if ($retry['success']) {
     g5_shop_install_test_fail('이미 설치된 쇼핑몰의 중복 설치를 차단하지 못했습니다.');
 }
 
-echo "쇼핑몰 후설치·설정 보존·중복 실행 차단 검사가 통과했습니다.\n";
+echo '쇼핑몰 SQL ' . $checked_statements . "개 미설치 건너뛰기·후설치 후 업그레이드·설정 보존·중복 실행 차단 검사가 통과했습니다.\n";
