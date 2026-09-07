@@ -11,18 +11,6 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 if(!isset($g5['g5_shop_item_stocksms_table']))
     die('<meta charset="utf-8">dbconfig.php 파일에 <strong>$g5[\'g5_shop_item_stocksms_table\'] = G5_SHOP_TABLE_PREFIX.\'item_stocksms\';</strong> 를 추가해 주세요.');
 
-if(!sql_query(" select ss_id from {$g5['g5_shop_item_stocksms_table']} limit 1", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_item_stocksms_table']}` (
-                  `ss_id` int(11) NOT NULL AUTO_INCREMENT,
-                  `it_id` varchar(20) NOT NULL DEFAULT '',
-                  `ss_hp` varchar(255) NOT NULL DEFAULT '',
-                  `ss_send` tinyint(4) NOT NULL DEFAULT '0',
-                  `ss_send_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  `ss_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  `ss_ip` varchar(25) NOT NULL DEFAULT '',
-                  PRIMARY KEY (`ss_id`)
-                ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ", true);
-}
 
 $doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
 $sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('it_id', 'ss_hp', 'ss_send', 'ss_send_time', 'ss_datetime'))) ? $_GET['sort1'] : 'ss_send';

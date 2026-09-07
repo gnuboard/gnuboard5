@@ -26,14 +26,6 @@ if ($w == "u") {
 $g5['title'] = $html_title . ' 관리';
 
 // 모바일 상하단 내용 필드추가
-if (!sql_query(" select fm_mobile_head_html from {$g5['faq_master_table']} limit 1 ", false)) {
-    sql_query(
-        " ALTER TABLE `{$g5['faq_master_table']}`
-                    ADD `fm_mobile_head_html` text NOT NULL AFTER `fm_tail_html`,
-                    ADD `fm_mobile_tail_html` text NOT NULL AFTER `fm_mobile_head_html` ",
-        true
-    );
-}
 
 require_once G5_ADMIN_PATH . '/admin.head.php';
 ?>

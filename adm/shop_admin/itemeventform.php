@@ -73,10 +73,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 // 모바일 1줄당 이미지수 필드 추가
-if(!sql_query(" select ev_mobile_list_row from {$g5['g5_shop_event_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_event_table']}`
-                    ADD `ev_mobile_list_row` int(11) NOT NULL DEFAULT '0' AFTER `ev_mobile_list_mod` ", true);
-}
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>

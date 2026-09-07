@@ -42,9 +42,6 @@ $sql_common = " set fm_subject = '$fm_subject',
                     fm_order = '$fm_order' ";
 
 if ($w == "") {
-    $sql = " alter table {$g5['faq_master_table']} auto_increment=1 ";
-    sql_query($sql);
-
     $sql = " insert {$g5['faq_master_table']} $sql_common ";
     sql_query($sql);
 

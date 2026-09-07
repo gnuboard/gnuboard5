@@ -23,10 +23,6 @@ if ($w == '') {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-if (!isset($po['po_use'])) {
-    sql_query(" alter table `{$g5['poll_table']}` add `po_use` tinyint not null default '0' after `mb_ids` ", false);
-}
-
 $g5['title'] = $html_title;
 require_once './admin.head.php';
 ?>

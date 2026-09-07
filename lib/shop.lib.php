@@ -2814,18 +2814,6 @@ function add_order_post_log($msg='', $code='error'){
         return;
     }
 
-    if ( $code === 'error' ) {
-        $result = sql_query("describe `{$g5['g5_shop_post_log_table']}`");
-        while ($row = sql_fetch_array($result)){
-            if( $row['Field'] === 'ol_msg' && $row['Type'] === 'varchar(255)' ){
-                sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` MODIFY ol_msg TEXT NOT NULL;", false);
-                sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` DROP PRIMARY KEY;", false);
-                sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` ADD `log_id` int(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (`log_id`);", false);
-                break;
-            }
-        }
-    }
-
     $sql = "insert into `{$g5['g5_shop_post_log_table']}`
             set oid = '$od_id',
             mb_id = '{$member['mb_id']}',
@@ -2837,20 +2825,6 @@ function add_order_post_log($msg='', $code='error'){
 
     if( $result = sql_query($sql, false) ){
         sql_query(" delete from {$g5['g5_shop_post_log_table']} where ol_datetime < '".date('Y-m-d H:i:s', strtotime('-15 day', G5_SERVER_TIME))."' ", false);
-    } else {
-        if(!sql_query(" DESC {$g5['g5_shop_post_log_table']} ", false)) {
-            sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_post_log_table']}` (
-                          `log_id` int(11) NOT NULL AUTO_INCREMENT,
-                          `oid` bigint(20) unsigned NOT NULL,
-                          `mb_id` varchar(255) NOT NULL DEFAULT '',
-                          `post_data` text NOT NULL,
-                          `ol_code` varchar(255) NOT NULL DEFAULT '',
-                          `ol_msg` text NOT NULL,
-                          `ol_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                          `ol_ip` varchar(25) NOT NULL DEFAULT '',
-                          PRIMARY KEY (`log_id`)
-                        ) ENGINE=MyISAM DEFAULT CHARSET=utf8; ", false);
-        }
     }
 }
 

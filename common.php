@@ -831,7 +831,9 @@ if (G5_IS_MOBILE) {
 
 
 // 방문자수의 접속을 남김
-include_once(G5_BBS_PATH.'/visit_insert.inc.php');
+if (!defined('G5_IS_CLI') || !G5_IS_CLI) {
+    include_once(G5_BBS_PATH.'/visit_insert.inc.php');
+}
 
 
 // 일정 기간이 지난 DB 데이터 삭제 및 최적화

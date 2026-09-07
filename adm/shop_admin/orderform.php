@@ -76,27 +76,10 @@ $sql = " select it_id,
 $result = sql_query($sql);
 
 // 주소 참고항목 필드추가
-if(!isset($od['od_addr3'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
-                    ADD `od_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `od_addr2`,
-                    ADD `od_b_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `od_b_addr2` ", true);
-}
 
 // 배송목록에 참고항목 필드추가
-if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_address_table']}`
-                    ADD `ad_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `ad_addr2` ", true);
-}
 
 // 결제 PG 필드 추가
-if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
-                    ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile`,
-                    ADD `od_casseqno` varchar(255) NOT NULL DEFAULT '' AFTER `od_escrow` ", true);
-
-    // 주문 결제 PG kcp로 설정
-    sql_query(" update {$g5['g5_shop_order_table']} set od_pg = 'kcp' ");
-}
 
 // LG 현금영수증 JS
 if($od['od_pg'] == 'lg') {

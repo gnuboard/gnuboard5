@@ -2720,7 +2720,7 @@ function get_email_certify_token()
  */
 function is_valid_email_certify_token($token, $stored_token, $mb_datetime, $valid_minutes, $now = null)
 {
-    if (!$token || !$stored_token || !hash_equals((string) $stored_token, (string) $token)) {
+    if (!$token || !$stored_token || !slow_equals((string) $stored_token, (string) $token)) {
         return false;
     }
 
@@ -3663,21 +3663,6 @@ function insert_member_cert_history($mb_id, $name, $hp, $birth, $type)
         $g5['member_cert_history_table'] = G5_TABLE_PREFIX.'member_cert_history';
     }
     
-    // 멤버 본인인증 정보 변경 내역 테이블 없을 경우 생성
-    if(isset($g5['member_cert_history_table']) && !sql_query(" DESC {$g5['member_cert_history_table']} ", false)) {
-        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['member_cert_history_table']}` (
-                        `ch_id` int(11) NOT NULL auto_increment,
-                        `mb_id` varchar(20) NOT NULL DEFAULT '',
-                        `ch_name` varchar(255) NOT NULL DEFAULT '',
-                        `ch_hp` varchar(255) NOT NULL DEFAULT '',
-                        `ch_birth` varchar(255) NOT NULL DEFAULT '',
-                        `ch_type` varchar(20) NOT NULL DEFAULT '',
-                        `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-                        PRIMARY KEY (`ch_id`),
-                        KEY `mb_id` (`mb_id`)
-                    ) ", true);
-    }
-
     $sql = " insert into {$g5['member_cert_history_table']}
                 set mb_id = '{$mb_id}',
                     ch_name = '{$name}',
@@ -4234,21 +4219,6 @@ function login_password_check($mb, $pass, $hash)
 
     if(!$mb_id)
         return false;
-
-    if(G5_STRING_ENCRYPT_FUNCTION === 'create_hash' && (strlen($hash) === G5_MYSQL_PASSWORD_LENGTH || strlen($hash) === 16)) {
-        if( sql_password($pass) === $hash ){
-
-            if( ! isset($mb['mb_password2']) ){
-                $sql = "ALTER TABLE `{$g5['member_table']}` ADD `mb_password2` varchar(255) NOT NULL default '' AFTER `mb_password`";
-                sql_query($sql);
-            }
-            
-            $new_password = create_hash($pass);
-            $sql = " update {$g5['member_table']} set mb_password = '$new_password', mb_password2 = '$hash' where mb_id = '$mb_id' ";
-            sql_query($sql);
-            return true;
-        }
-    }
 
     return check_password($pass, $hash);
 }

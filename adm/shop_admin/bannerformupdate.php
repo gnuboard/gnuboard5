@@ -49,8 +49,6 @@ if ($w=="")
 {
     if (!$bn_bimg_name) alert('배너 이미지를 업로드 하세요.');
 
-    sql_query(" alter table {$g5['g5_shop_banner_table']} auto_increment=1 ");
-
     $sql = " insert into {$g5['g5_shop_banner_table']}
                 set bn_alt        = '$bn_alt',
                     bn_url        = '$bn_url',
