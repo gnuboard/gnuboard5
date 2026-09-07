@@ -12,6 +12,10 @@ $od = sql_fetch($sql);
 if(! (isset($od['od_id']) && $od['od_id']))
     alert_close('주문정보가 존재하지 않습니다.');
 
+if ($od['od_pg'] === 'KAKAOPAY') {
+    alert_close('SIRK 전용 카카오페이의 자동 취소 지원이 종료되었습니다. 이니시스 상점관리자에서 실제 취소 후 주문 상태와 환불금액을 확인해 주십시오.');
+}
+
 if($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '계좌이체')
     alert_close('KG이니시스는 신용카드만 부분취소가 가능합니다.');
 

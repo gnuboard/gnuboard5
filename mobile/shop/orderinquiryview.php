@@ -626,7 +626,9 @@ if($od['od_pg'] == 'lg') {
         <?php
         // 취소한 내역이 없다면
         if ($cancel_price == 0) {
-            if ($custom_cancel) {
+            if ($od['od_pg'] === 'KAKAOPAY') {
+                    echo '<p>이 주문의 취소·환불은 쇼핑몰 고객센터에 문의해 주십시오.</p>';
+                } elseif ($custom_cancel) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 

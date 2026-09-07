@@ -79,6 +79,7 @@ php bin/check-runtime-ddl.php
 
 ## 문서 및 지원
 
+- [5.6.37 SIRK 전용 카카오페이 연동 종료 및 기존 거래 지원](docs/sirk-kakaopay-retirement.md)
 - [그누보드5 공식 페이지](https://sir.kr/main/g5/)
 - [그누보드5 공식 매뉴얼](https://sir.kr/manuals/g5/1)
 - [그누보드5 Q&A](https://sir.kr/questions?s_tag=%EA%B7%B8%EB%88%84%EB%B3%B4%EB%93%9C5)

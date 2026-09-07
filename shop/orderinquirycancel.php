@@ -35,6 +35,10 @@ if($od['od_cancel_price'] > 0 || $od['od_status'] != '주문' || $ct['od_count1'
     alert("취소할 수 있는 주문이 아닙니다.", G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
 }
 
+if ($od['od_pg'] === 'KAKAOPAY') {
+    alert('이 주문의 취소·환불은 쇼핑몰 고객센터에 문의해 주십시오.');
+}
+
 // INIpay PRO 가상계좌 입금통보와 주문자 취소가 동시에 처리되지 않도록
 // PG 취소부터 로컬 주문 취소 완료까지 동일 주문 잠금을 유지한다.
 $inicis_pro_order_lock = '';

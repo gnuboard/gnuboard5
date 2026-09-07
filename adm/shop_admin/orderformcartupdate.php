@@ -29,6 +29,16 @@ if (in_array($ct_status, $status_normal) || in_array($ct_status, $status_cancel)
     alert('변경할 상태가 올바르지 않습니다.');
 }
 
+// SIRK 주문은 PG 취소를 호출하지 않고, 실제 취소를 확인한 운영자만 로컬 상태를 정리한다.
+if (in_array($ct_status, $status_cancel, true)) {
+    $sirk_order = sql_fetch(" select od_pg from {$g5['g5_shop_order_table']} where od_id = '" . sql_escape_string($od_id) . "' ");
+    if (isset($sirk_order['od_pg']) && $sirk_order['od_pg'] === 'KAKAOPAY') {
+        if ($pg_cancel || empty($_POST['sirk_cancel_confirmed'])) {
+            alert('SIRK 전용 카카오페이는 이니시스 상점관리자에서 실제 취소 여부를 확인한 뒤 주문 상태만 변경해 주십시오.');
+        }
+    }
+}
+
 // INIpay PRO 전체취소는 로컬 상품상태를 바꾸기 전에 PG 취소를 먼저 확정한다.
 // PG 취소 실패 후에도 주문만 취소되어 가상계좌 입금이 남는 상태를 방지한다.
 $inicis_pro_cancel_preprocessed = false;
@@ -455,12 +465,8 @@ if (in_array($ct_status, $status_cancel)) {
 
                         break;
                     case 'KAKAOPAY':
-                        include_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
-                        $_REQUEST['TID']               = $od['od_tno'];
-                        $_REQUEST['Amt']               = $od['od_receipt_price'];
-                        $_REQUEST['CancelMsg']         = '쇼핑몰 운영자 승인 취소';
-                        $_REQUEST['PartialCancelCode'] = 0;
-                        include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
+                        $pg_res_cd = 'SIRK_RETIRED';
+                        $pg_res_msg = 'SIRK 전용 카카오페이는 이니시스 상점관리자에서 취소해 주십시오.';
                         break;
                     default:
                         include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');

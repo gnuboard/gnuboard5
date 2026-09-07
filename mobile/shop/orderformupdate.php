@@ -1,5 +1,11 @@
 <?php
 include_once('./_common.php');
+
+// 구 주문서나 직접 POST로도 SIRK 전용 결제를 다시 시작하지 않는다.
+if (isset($od_settle_case) && $od_settle_case === 'KAKAOPAY') {
+    alert('이 결제 방식은 더 이상 지원하지 않습니다. 다른 결제수단을 선택해 주십시오.');
+}
+
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 // CSRF 방지: 무통장입금만 Origin/Referer 검증 (PG 결제는 PG사에서 검증하므로 제외)
@@ -40,7 +46,7 @@ if(get_session('ss_direct'))
     $page_return_url .= '?sw_direct=1';
 
 // 결제등록 완료 체크
-if($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') {
+if($od_settle_case != '무통장') {
     if($default['de_pg_service'] == 'kcp' && ($post_tran_cd === '' || $post_enc_info === '' || $post_enc_data === ''))
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
@@ -557,29 +563,12 @@ else if ( is_inicis_order_pay($od_settle_case) )    //이니시스의 삼성페�
     if($od_misu == 0)
         $od_status      = '입금';
 }
-else if ($od_settle_case == "KAKAOPAY")
-{
-    include G5_SHOP_PATH.'/kakaopay/kakaopay_result.php';
-
-    $od_tno             = $tno;
-    $od_app_no          = $app_no;
-    $od_receipt_price   = $amount;
-    $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
-    $od_bank_account    = $card_name;
-    $pg_price           = $amount;
-    $od_misu            = $i_price - $od_receipt_price;
-    if($od_misu == 0)
-        $od_status      = '입금';
-}
 else
 {
     die("od_settle_case Error!!!");
 }
 
 $od_pg = $default['de_pg_service'];
-if($od_settle_case == 'KAKAOPAY')
-    $od_pg = 'KAKAOPAY';
 
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {

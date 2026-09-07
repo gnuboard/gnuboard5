@@ -2,7 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 require_once(G5_SHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
-require_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
 
 if( empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) ){   //이니시스 Lpay 또는 이니시스 카카오페이 사용시
     require_once(G5_SHOP_PATH.'/inicis/lpay_common.php');
@@ -23,9 +22,6 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
     require_once(G5_SHOP_PATH.'/kcp/global_nhn_kcp_form.1.php');
 }
 
-if($is_kakaopay_use) {
-    require_once(G5_SHOP_PATH.'/kakaopay/orderform.1.php');
-}
 ?>
 
 <form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
@@ -263,9 +259,6 @@ if($is_kakaopay_use) {
         // 결제대행사별 코드 include (결제대행사 정보 필드)
         require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.2.php');
 
-        if($is_kakaopay_use) {
-            require_once(G5_SHOP_PATH.'/kakaopay/orderform.2.php');
-        }
         ?>
 
         <!-- 주문하시는 분 입력 시작 { -->
@@ -579,17 +572,11 @@ if($is_kakaopay_use) {
                     $escrow_title = "에스크로<br>";
                 }
 
-                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || (empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])) || (!empty($inicis_pro_use) && is_inicis_simple_pay())) {
+                if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || (empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])) || (!empty($inicis_pro_use) && is_inicis_simple_pay())) {
                     echo '<fieldset id="sod_frm_paysel">';
                     echo '<legend>결제방법 선택</legend>';
                 }
 
-                // 카카오페이
-                if($is_kakaopay_use) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_kakaopay" name="od_settle_case" value="KAKAOPAY" '.$checked.'> <label for="od_settle_kakaopay" class="kakaopay_icon lb_icon">KAKAOPAY</label>'.PHP_EOL;
-                    $checked = '';
-                }
 
                 // 무통장입금 사용
                 if ($default['de_bank_use']) {
@@ -795,7 +782,7 @@ if($is_kakaopay_use) {
                     echo '</div>';
                 }
 
-                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || (empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])) || (!empty($inicis_pro_use) && is_inicis_simple_pay())) {
+                if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || (empty($inicis_pro_use) && ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])) || (!empty($inicis_pro_use) && is_inicis_simple_pay())) {
                     echo '</fieldset>';
                 }
 
@@ -810,9 +797,6 @@ if($is_kakaopay_use) {
         // 결제대행사별 코드 include (주문버튼)
         require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.3.php');
 
-        if($is_kakaopay_use) {
-            require_once(G5_SHOP_PATH.'/kakaopay/orderform.3.php');
-        }
         ?>
 
         <?php
@@ -1087,7 +1071,7 @@ $(function() {
         $("#settle_bank").show();
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay,#od_settle_kakaopay,#od_settle_nhnkcp_payco,#od_settle_nhnkcp_naverpay,#od_settle_nhnkcp_naverpay_money,#od_settle_nhnkcp_kakaopay,#od_settle_inicislpay,#od_settle_inicis_kakaopay").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay,#od_settle_nhnkcp_payco,#od_settle_nhnkcp_naverpay,#od_settle_nhnkcp_naverpay_money,#od_settle_nhnkcp_kakaopay,#od_settle_inicislpay,#od_settle_inicis_kakaopay").bind("click", function() {
         $("#settle_bank").hide();
     });
 
@@ -1454,15 +1438,6 @@ function forderform_check(f)
     }
     <?php } ?>
 
-    // 카카오페이 지불
-    if(settle_method == "KAKAOPAY") {
-        <?php if($default['de_tax_flag_use']) { ?>
-        f.SupplyAmt.value = parseInt(f.comm_tax_mny.value) + parseInt(f.comm_free_mny.value);
-        f.GoodsVat.value  = parseInt(f.comm_vat_mny.value);
-        <?php } ?>
-        getTxnId(f);
-        return false;
-    }
 
     var form_order_method = '';
 

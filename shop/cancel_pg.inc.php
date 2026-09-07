@@ -22,11 +22,8 @@ switch($od_pg) {
         include G5_SHOP_PATH.'/nicepay/cancel_process.php';
         break;
     case 'KAKAOPAY':
-        $_REQUEST['TID']               = $tno;
-        $_REQUEST['Amt']               = $amount;
-        $_REQUEST['CancelMsg']         = $cancel_msg;
-        $_REQUEST['PartialCancelCode'] = 0;
-        include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
+        $pg_res_cd = 'SIRK_RETIRED';
+        $pg_res_msg = 'SIRK 전용 카카오페이는 이니시스 상점관리자에서 취소해 주십시오.';
         break;
     default:
         include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';

@@ -31,10 +31,14 @@ if( function_exists('pg_setting_check') ){
     pg_setting_check(true);
 }
 
-if(!$default['de_kakaopay_cancelpwd']){
-    $default['de_kakaopay_cancelpwd'] = '1111';
-}
 ?>
+
+<?php if (!empty($default['de_kakaopay_mid']) || !empty($default['de_kakaopay_enckey'])) { ?>
+<div class="local_desc01 local_desc">
+    <p>5.6.37부터 SIRK 전용 카카오페이 연동을 지원하지 않습니다. 기존 거래는 이니시스 상점관리자에서 승인·취소 내역을 확인해 주십시오.</p>
+    <p>기존 이용 고객 지원: 김민섭 <a href="mailto:minsup@sir.kr">minsup@sir.kr</a></p>
+</div>
+<?php } ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
 <input type="hidden" name="token" value="">
@@ -778,46 +782,6 @@ if(!$default['de_kakaopay_cancelpwd']){
             <td>
                 <?php echo help("신용카드 포인트 결제에 대해 이니시스와 계약을 맺은 상점에서만 적용하는 구버전 결제 옵션입니다.<br>체크 시 PC 결제에서는 신용카드 포인트 사용 여부를 선택할 수 있고 모바일에서도 카드 포인트를 사용할 수 있습니다.<br>INIpay PRO에는 이 설정을 전달하지 않습니다. PRO 카드 포인트 사용은 KG이니시스에서 해당 MID의 지원 여부와 요청 규격을 확인한 후 적용해야 합니다.", 50); ?>
                 <input type="checkbox" name="de_inicis_cartpoint_use" value="1" id="de_inicis_cartpoint_use"<?php echo $default['de_inicis_cartpoint_use']?' checked':''; ?>> <label for="de_inicis_cartpoint_use">사용</label>
-            </td>
-        </tr>
-        <tr class="kakao_info_fld">
-            <th scope="row">
-                <label for="de_kakaopay_mid">카카오페이 상점아이디<br>( KG이니시스 )</label>
-                <a href="http://sir.kr/main/service/kakaopay.php?kk=yc5" target="_blank" class="kakao_btn">카카오페이 서비스신청하기</a>
-            </th>
-            <td>
-                <?php echo help("KG이니시스로 부터 카카오페이 간편결제만 사용용도로 발급 받으신 상점아이디(MID) 10자리 중 SIRK 을 제외한 나머지 6자리를 입력 합니다."); ?>
-                <span class="sitecode">SIRK</span> <input type="text" name="de_kakaopay_mid" value="<?php echo get_sanitize_input($default['de_kakaopay_mid']); ?>" id="de_kakaopay_mid" class="frm_input code_input" size="10" maxlength="7">
-            </td>
-        </tr>
-        <tr class="kakao_info_fld">
-            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키<br>( KG이니시스 )</label></th>
-            <td>
-                <?php echo help("SIRK****** 아이디로 KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\nKG이니시스 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
-                <input type="text" name="de_kakaopay_key" value="<?php echo get_sanitize_input($default['de_kakaopay_key']); ?>" id="de_kakaopay_key" class="frm_input" size="100">
-            </td>
-        </tr>
-        <tr class="kakao_info_fld">
-            <th scope="row"><label for="de_kakaopay_cancelpwd">카카오페이 키패스워드<br>( KG이니시스 )</label></th>
-            <td>
-                <?php echo help("SIRK****** 아이디로 KG이니시스에서 발급받은 4자리 상점 키패스워드를 입력합니다.\nKG이니시스 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
-                <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo get_sanitize_input($default['de_kakaopay_cancelpwd']); ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
-            </td>
-        </tr>
-        <tr class="kakao_info_fld">
-            <th scope="row">
-                <label for="de_kakaopay_enckey">KG이니시스<br>카카오페이 사용</label>
-            </th>
-            <td>
-                <?php echo help("체크시 카카오페이 (KG 이니시스)를 사용합니다. <br >KG 이니시스의 SIRK****** 아이디를 받은 상점만 해당됩니다.", 50); ?>
-                <input type="checkbox" name="de_kakaopay_enckey" value="1" id="de_kakaopay_enckey"<?php echo $default['de_kakaopay_enckey']?' checked':''; ?>> <label for="de_kakaopay_enckey">사용</label>
-            </td>
-        </tr>
-        <tr class="kakao_info_fld" style="display:none">
-            <th scope="row"><label for="de_kakaopay_hashkey">카카오페이 상점 HashKey</label></th>
-            <td>
-                <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 HashKey를 입력합니다."); ?>
-                <input type="text" name="de_kakaopay_hashkey" value="<?php echo get_sanitize_input($default['de_kakaopay_hashkey']); ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
             </td>
         </tr>
 
@@ -2005,26 +1969,7 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         }
     }
 
-    // 카카오페이의 경우 log 디렉토리 체크
-    if($default['de_kakaopay_mid'] && $default['de_kakaopay_key'] && $default['de_kakaopay_enckey'] && $default['de_kakaopay_hashkey'] && $default['de_kakaopay_cancelpwd']) {
-        $log_path = G5_SHOP_PATH.'/kakaopay/log';
 
-        if(!is_dir($log_path)) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_SHOP_PATH).'/kakaopay 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        } else {
-            if(!is_writable($log_path)) {
-                echo '<script>'.PHP_EOL;
-                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
-                echo '</script>'.PHP_EOL;
-            } else {
-                if( function_exists('check_log_folder') && is_writable($log_path) ){
-                    check_log_folder($log_path);
-                }
-            }
-        }
-    }
 }
 
 

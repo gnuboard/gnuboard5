@@ -189,11 +189,6 @@ $check_sanitize_keys = array(
 'de_inicis_cartpoint_use',      //KG이니시스 신용카드 포인트 결제
 'de_nicepay_mid',               //NICEPAY 상점아이디
 'de_nicepay_key',               //NICEPAY 상점키
-'de_kakaopay_mid',              //카카오페이 상점MID
-'de_kakaopay_key',              //카카오페이 상점키
-'de_kakaopay_enckey',           //카카오페이 상점 EncKey
-'de_kakaopay_hashkey',          //카카오페이 상점 HashKey
-'de_kakaopay_cancelpwd',        //카카오페이 결제취소 비밀번호
 'de_naverpay_mid',              //네이버페이 가맹점 아이디
 'de_naverpay_cert_key',         //네이버페이 가맹점 인증키
 'de_naverpay_button_key',       //네이버페이 버튼 인증키
@@ -300,11 +295,6 @@ if($de_pg_service == 'kcp' && ! $de_card_test && ($de_iche_use || $de_vbank_use 
         alert('NHN KCP SITE KEY를 입력해 주십시오.');
 }
 
-if( $de_kakaopay_enckey && ($de_pg_service === 'inicis' || $de_inicis_lpay_use || $de_inicis_kakaopay_use) ){
-    
-    $warning_msg = 'KG 이니시스 결제 또는 L.pay 또는 KG이니시스 카카오페이를 사용시 결제모듈 중복문제로 카카오페이를 활성화 할수 없습니다. \\n\\n카카오페이 사용을 비활성화 합니다.';
-    $de_kakaopay_enckey = '';
-}
 
 //
 // 영카트 default
@@ -481,11 +471,6 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_hp_use                     = '{$de_hp_use}',
                 de_escrow_use                 = '{$de_escrow_use}',
                 de_tax_flag_use               = '{$de_tax_flag_use}',
-                de_kakaopay_mid               = '{$de_kakaopay_mid}',
-                de_kakaopay_key               = '{$de_kakaopay_key}',
-                de_kakaopay_enckey            = '{$de_kakaopay_enckey}',
-                de_kakaopay_hashkey           = '{$de_kakaopay_hashkey}',
-                de_kakaopay_cancelpwd         = '{$de_kakaopay_cancelpwd}',
                 de_member_reg_coupon_use      = '{$de_member_reg_coupon_use}',
                 de_member_reg_coupon_term     = '{$de_member_reg_coupon_term}',
                 de_member_reg_coupon_price    = '{$de_member_reg_coupon_price}',

@@ -15,6 +15,10 @@ sql_query($sql);
 */
 
 $od_settle_case = isset($_POST['od_settle_case']) ? clean_xss_tags($_POST['od_settle_case'], 1, 1) : '';
+if ($od_settle_case === 'KAKAOPAY') {
+    die('이 결제 방식은 더 이상 지원하지 않습니다. 다른 결제수단을 선택해 주십시오.');
+}
+
 // 저장되는 원본에도 정제한 값을 반영한다.
 $_POST['od_settle_case'] = $od_settle_case;
 
