@@ -68,6 +68,7 @@ ob_start();
         {
             // 합계금액 계산
             $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                            SUM(io_price * ct_qty) as option_price,
                             SUM(ct_point * ct_qty) as point,
                             SUM(ct_qty) as qty
                         from {$g5['g5_shop_cart_table']}
@@ -200,6 +201,7 @@ ob_start();
 
             <div class="li_prqty">
                 <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
+                <span class="prqty_option li_prqty_sp"><span>옵션가 </span><?php echo number_format($sum['option_price']); ?></span>
                 <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
                 <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
                  <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>

@@ -34,6 +34,7 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
             <th scope="col">상품명</th>
             <th scope="col">총수량</th>
             <th scope="col">판매가</th>
+            <th scope="col">옵션가</th>
             <th scope="col">소계</th>
             <th scope="col">포인트</th>
             <th scope="col">배송비</th>
@@ -84,6 +85,7 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
         {
             // 합계금액 계산
             $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                            SUM(io_price * ct_qty) as option_price,
                             SUM(ct_point * ct_qty) as point,
                             SUM(ct_qty) as qty
                         from {$g5['g5_shop_cart_table']}
@@ -214,6 +216,7 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
             </td>
             <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
             <td class="td_numbig  text_right"><?php echo number_format($row['ct_price']); ?></td>
+            <td class="td_numbig  text_right"><?php echo number_format($sum['option_price']); ?></td>
             <td class="td_numbig  text_right"><span class="total_price"><?php echo number_format($sell_price); ?></span></td>
             <td class="td_numbig  text_right"><?php echo number_format($point); ?></td>
             <td class="td_dvr"><?php echo $ct_send_cost; ?></td>
