@@ -2,6 +2,8 @@
 /.htaccess
 data/
 test/
+/tests/
+/bin/
 sirgle/
 test.php
 *.key
