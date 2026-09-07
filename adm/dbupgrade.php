@@ -2,6 +2,7 @@
 $sub_menu = '100410';
 include_once('./_common.php');
 include_once(G5_LIB_PATH . '/migration.lib.php');
+include_once(G5_LIB_PATH . '/shop_install.lib.php');
 
 auth_check_menu($auth, $sub_menu, 'r');
 
@@ -11,13 +12,19 @@ if ($is_admin != 'super') {
 
 $is_execute = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST';
 $migration_result = array('success' => true, 'applied' => 0, 'skipped' => 0, 'errors' => array());
+$shop_install_result = null;
 
 if ($is_execute) {
     check_demo();
     check_admin_token();
-    $migration_id = isset($_POST['migration_id']) ? trim($_POST['migration_id']) : '';
-    $migration_result = g5_migration_run($migration_id);
-    $migration_result = run_replace('admin_dbupgrade_result', $migration_result);
+    $action = isset($_POST['action']) ? trim($_POST['action']) : 'migrate';
+    if ($action === 'install_shop') {
+        $shop_install_result = g5_shop_install_run();
+    } else {
+        $migration_id = isset($_POST['migration_id']) ? trim($_POST['migration_id']) : '';
+        $migration_result = g5_migration_run($migration_id);
+        $migration_result = run_replace('admin_dbupgrade_result', $migration_result);
+    }
 }
 
 $migration_statuses = g5_migration_status();
@@ -28,7 +35,11 @@ foreach ($migration_statuses as $migration_status) {
     }
 }
 
-if (!$is_execute) {
+if ($shop_install_result !== null && $shop_install_result['success']) {
+    alert('쇼핑몰 설치가 완료되었습니다.', G5_ADMIN_URL . '/dbupgrade.php');
+} elseif ($shop_install_result !== null) {
+    $db_upgrade_msg = '쇼핑몰 설치에 실패했습니다. 오류 내용을 확인해 주십시오.';
+} elseif (!$is_execute) {
     $db_upgrade_msg = $pending_count ? '적용하지 않은 DB 마이그레이션이 있습니다. 아래 내용을 확인한 뒤 실행해 주십시오.' : 'DB 마이그레이션이 모두 적용되어 있습니다.';
 } elseif (!$migration_result['success']) {
     $db_upgrade_msg = 'DB 마이그레이션에 실패했습니다. 오류 내용을 확인해 주십시오.';
@@ -40,13 +51,18 @@ if (!$is_execute) {
 
 $g5['title'] = 'DB 업그레이드';
 include_once('./admin.head.php');
+$dbupgrade_token = get_admin_token();
 ?>
 
 <div class="local_desc01 local_desc">
     <p><?php echo $db_upgrade_msg; ?></p>
 </div>
 
-<?php if ($migration_result['errors']) { ?>
+<?php if ($shop_install_result !== null && !$shop_install_result['success']) { ?>
+<div class="local_desc01 local_desc" style="color:#d00">
+    <p><?php echo htmlspecialchars($shop_install_result['error'], ENT_QUOTES, 'UTF-8'); ?></p>
+</div>
+<?php } elseif ($migration_result['errors']) { ?>
 <div class="local_desc01 local_desc" style="color:#d00">
     <?php foreach ($migration_result['errors'] as $migration_error) { ?>
     <p><?php echo htmlspecialchars($migration_error, ENT_QUOTES, 'UTF-8'); ?></p>
@@ -54,11 +70,23 @@ include_once('./admin.head.php');
 </div>
 <?php } ?>
 
-<form method="post" action="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php" onsubmit="return confirm('선택한 DB 마이그레이션을 실행하시겠습니까? 실행 전 데이터베이스 백업을 권장합니다.');">
-    <input type="hidden" name="token" value="<?php echo get_admin_token(); ?>">
-    <div class="dbupgrade_all_actions">
+<div class="dbupgrade_all_actions">
+    <?php if (!defined('G5_USE_SHOP') || !G5_USE_SHOP) { ?>
+    <form method="post" action="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php" onsubmit="return confirm('쇼핑몰을 설치하시겠습니까? 설치 전 데이터베이스와 data/dbconfig.php 백업을 권장합니다.');">
+        <input type="hidden" name="token" value="<?php echo $dbupgrade_token; ?>">
+        <input type="hidden" name="action" value="install_shop">
+        <button type="submit" class="btn_submit">쇼핑몰 설치</button>
+    </form>
+    <?php } ?>
+    <form method="post" action="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php" onsubmit="return confirm('선택한 DB 마이그레이션을 실행하시겠습니까? 실행 전 데이터베이스 백업을 권장합니다.');">
+        <input type="hidden" name="token" value="<?php echo $dbupgrade_token; ?>">
+        <input type="hidden" name="action" value="migrate">
         <button type="submit" name="migration_id" value="" class="btn_submit">전체 마이그레이션 실행</button>
-    </div>
+    </form>
+</div>
+<form method="post" action="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php" onsubmit="return confirm('선택한 DB 마이그레이션을 실행하시겠습니까? 실행 전 데이터베이스 백업을 권장합니다.');">
+    <input type="hidden" name="token" value="<?php echo $dbupgrade_token; ?>">
+    <input type="hidden" name="action" value="migrate">
 <div class="tbl_head01 tbl_wrap">
     <table id="dbupgrade_migration_table">
         <caption>버전형 DB 마이그레이션 목록</caption>
@@ -101,7 +129,8 @@ include_once('./admin.head.php');
 </form>
 
 <style>
-.dbupgrade_all_actions {display:block;width:100%;margin:0 0 20px;overflow:hidden;text-align:right}
+.dbupgrade_all_actions {display:flex;width:100%;margin:0 0 20px;justify-content:flex-end;gap:5px}
+.dbupgrade_all_actions form {margin:0}
 .dbupgrade_all_actions .btn_submit {display:inline-block;float:none;position:static;width:auto;height:30px;margin:0;padding:0 15px;border:0}
 .dbupgrade_sort {width:100%; border:0; background:transparent; color:inherit; font:inherit; cursor:pointer}
 #dbupgrade_migration_table td.dbupgrade_description {text-align:left}

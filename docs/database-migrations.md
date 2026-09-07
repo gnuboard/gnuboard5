@@ -24,6 +24,7 @@ php bin/db-migrate.php migrate
 php bin/db-migrate.php migrate 20260416_001_member_auto_login
 php bin/check-migration-schema.php
 php bin/check-migration-runner.php
+php bin/check-shop-install.php
 php bin/check-runtime-ddl.php
 ```
 
@@ -36,6 +37,8 @@ php bin/check-runtime-ddl.php
 현재 마이그레이션은 공통 실행 취소를 제공하지 않는다. 컬럼·테이블 삭제에 따른 데이터 손실과 후속 마이그레이션 의존성을 자동으로 안전하게 해결할 수 없기 때문이다. `g5_migrations`의 성공 이력만 삭제하는 것도 실제 스키마를 되돌리지 않으므로 취소로 취급하지 않는다. 롤백이 필요하면 데이터베이스 백업을 복원하거나, 해당 변경에 맞춘 별도 복구 절차를 검토한다.
 
 `check-migration-schema.php`는 마이그레이션의 테이블·컬럼·인덱스가 신규 설치 SQL에 포함되는지와 최종 컬럼 정의가 일치하는지 검사한다. `check-migration-runner.php`는 격리된 임시 테이블로 부분 적용 스키마, 쇼핑몰 미설치 건너뛰기, 기존 데이터 보정을 검사한다. 마이그레이션을 추가하거나 설치 SQL을 변경한 뒤 두 검사를 반드시 실행한다.
+
+쇼핑몰을 설치하지 않은 사이트에서는 DB 업그레이드 화면의 `쇼핑몰 설치` 버튼으로 최신 쇼핑몰 스키마를 추가할 수 있다. 같은 접두어의 쇼핑몰 테이블이 하나라도 있으면 기존 데이터 훼손을 막기 위해 설치를 중단하며, 기존 `data/dbconfig.php`의 DB 접속 정보와 토큰 키는 유지하고 쇼핑몰 설정만 추가한다. `php bin/check-shop-install.php`로 격리된 접두어에서 후설치, 설정 보존과 중복 실행 차단을 검사할 수 있다.
 
 `check-runtime-ddl.php`는 관리자·게시판·라이브러리·쇼핑몰 등 일반 실행 경로에 DDL 문이 다시 추가되지 않았는지 검사한다. 테이블이나 컬럼 변경은 이 검사를 우회하지 말고 버전형 마이그레이션으로 작성한다.
 

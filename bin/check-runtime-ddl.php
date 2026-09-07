@@ -12,10 +12,12 @@ $excluded = array(
     'data/',
     'install/',
     'migrations/',
-    'bin/check-migration-runner.php'
+    'bin/check-migration-runner.php',
+    'bin/check-shop-install.php'
 );
 $lifecycle_ddl_files = array(
-    'adm/board_delete.inc.php'
+    'adm/board_delete.inc.php',
+    'lib/shop_install.lib.php'
 );
 $errors = array();
 
