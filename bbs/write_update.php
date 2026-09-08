@@ -29,7 +29,7 @@ if($board['bo_use_category']) {
 
 $wr_subject = '';
 if (isset($_POST['wr_subject'])) {
-    $wr_subject = substr(trim($_POST['wr_subject']),0,255);
+    $wr_subject = cut_str(trim($_POST['wr_subject']), 255, '');
     $wr_subject = preg_replace("#[\\\]+$#", "", $wr_subject);
     if (function_exists('normalize_utf8_string')) {
         $wr_subject = normalize_utf8_string($wr_subject);
