@@ -36,7 +36,8 @@ if ($mb_md5)
     else
     {
         if ($mb_md5 === $row['mb_email_certify2']) {
-            sql_query(" update {$g5['member_table']} set mb_email_certify2 = '' where mb_id = '{$esc_mb_id}' ");
+            $esc_mb_md5 = sql_real_escape_string($mb_md5);
+            sql_query(" update {$g5['member_table']} set mb_email_certify2 = '' where mb_id = '{$esc_mb_id}' and mb_email_certify2 = '{$esc_mb_md5}' ");
             alert('메일인증 유효시간이 만료되었습니다. 인증메일을 다시 요청해 주십시오.', G5_URL);
         }
 

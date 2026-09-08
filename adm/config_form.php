@@ -761,7 +761,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_email_certify_minutes">메일인증 유효시간</label></th>
                         <td>
-                            <?php echo help('인증메일 발송 후 링크를 사용할 수 있는 시간을 분 단위로 설정합니다. 0은 만료시간을 적용하지 않습니다.') ?>
+                            <?php echo help('인증메일 발송 후 링크를 사용할 수 있는 시간을 분 단위로 설정합니다. 0은 만료시간과 미인증 만료 정리를 적용하지 않습니다.<br>만료된 미인증 회원은 최고관리자 접속 시 하루 한 번 실행되는 정리에서 탈퇴 처리하며, 본인확인 정보와 소셜 연결을 해제합니다. 나머지 회원자료는 회원탈퇴후 삭제일 설정에 따라 정리합니다.') ?>
                             <input type="number" name="cf_email_certify_minutes" value="<?php echo isset($config['cf_email_certify_minutes']) ? (int) $config['cf_email_certify_minutes'] : 60; ?>" id="cf_email_certify_minutes" class="frm_input" min="0"> 분
                         </td>
                     </tr>

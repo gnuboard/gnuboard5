@@ -2706,6 +2706,16 @@ function get_email_certify_token()
     return get_random_token_string(16) . '.' . G5_SERVER_TIME;
 }
 
+// 기존 형식 또는 폐기된 토큰은 회원가입 시각을 기준으로 한다.
+function get_email_certify_issued_at($stored_token, $mb_datetime)
+{
+    if (preg_match('/\.([0-9]{10})$/', $stored_token, $matches)) {
+        return (int) $matches[1];
+    }
+
+    return strtotime($mb_datetime);
+}
+
 /**
  * 메일 인증 토큰의 일치 여부와 유효시간을 확인한다.
  *
@@ -2729,11 +2739,7 @@ function is_valid_email_certify_token($token, $stored_token, $mb_datetime, $vali
         return true;
     }
 
-    if (preg_match('/\.([0-9]{10})$/', $stored_token, $matches)) {
-        $issued_at = (int) $matches[1];
-    } else {
-        $issued_at = strtotime($mb_datetime);
-    }
+    $issued_at = get_email_certify_issued_at($stored_token, $mb_datetime);
 
     if (!$issued_at) {
         return false;
@@ -2742,6 +2748,25 @@ function is_valid_email_certify_token($token, $stored_token, $mb_datetime, $vali
     $now = $now === null ? G5_SERVER_TIME : (int) $now;
 
     return $issued_at + ($valid_minutes * 60) >= $now;
+}
+
+// 인증 완료·탈퇴·삭제 회원과 만료시간을 사용하지 않는 사이트는 제외한다.
+function is_expired_email_certify_member($mb, $now = null)
+{
+    global $config;
+
+    $valid_minutes = isset($config['cf_email_certify_minutes']) ? (int) $config['cf_email_certify_minutes'] : 60;
+    if (!$config['cf_use_email_certify'] || $valid_minutes < 1 || empty($mb['mb_id'])
+        || $mb['mb_id'] === $config['cf_admin'] || !empty($mb['mb_leave_date'])
+        || preg_match('/[1-9]/', $mb['mb_email_certify'])
+        || preg_match('#^[0-9]{8}.*삭제함#', $mb['mb_memo'])) {
+        return false;
+    }
+
+    $issued_at = get_email_certify_issued_at($mb['mb_email_certify2'], $mb['mb_datetime']);
+    $now = $now === null ? G5_SERVER_TIME : (int) $now;
+
+    return $issued_at > 0 && $issued_at + ($valid_minutes * 60) < $now;
 }
 
 /**
@@ -4047,6 +4072,50 @@ function conv_unescape_nl($str)
     $replace = array('', '', "\n", "\n");
 
     return str_replace($search, $replace, $str);
+}
+
+// 자진 탈퇴와 메일 미인증 만료 정리에서 동일한 탈퇴 처리를 사용한다.
+function g5_leave_member($mb_id, $expired_email_only = false)
+{
+    global $config, $g5;
+
+    $mb = get_member($mb_id);
+    if (empty($mb['mb_id']) || $mb['mb_id'] === $config['cf_admin'] || !empty($mb['mb_leave_date'])
+        || preg_match('#^[0-9]{8}.*삭제함#', $mb['mb_memo'])) {
+        return false;
+    }
+
+    $condition = '';
+    if ($expired_email_only) {
+        if (!is_expired_email_certify_member($mb)) {
+            return false;
+        }
+
+        // 조회 이후 인증 완료·재발송·회원정보 변경이 있었다면 탈퇴시키지 않는다.
+        foreach (array('mb_email_certify', 'mb_email_certify2', 'mb_datetime', 'mb_email') as $field) {
+            $condition .= " and {$field} = '".sql_real_escape_string($mb[$field])."'";
+        }
+    }
+
+    $date = date('Ymd', G5_SERVER_TIME);
+    $memo = $date . ($expired_email_only ? ' 메일 미인증 만료로 탈퇴함' : ' 탈퇴함') . "\n";
+    $esc_mb_id = sql_real_escape_string($mb['mb_id']);
+    $sql = " update {$g5['member_table']}
+                set mb_leave_date = '{$date}',
+                    mb_memo = CONCAT('".sql_real_escape_string($memo)."', IFNULL(mb_memo, '')),
+                    mb_certify = '', mb_adult = 0, mb_dupinfo = '',
+                    mb_email_certify2 = '', mb_lost_certify = ''
+              where mb_id = '{$esc_mb_id}' and mb_leave_date = '' {$condition} ";
+    if (!sql_query($sql) || get_sql_affected_rows() < 1) {
+        return false;
+    }
+
+    run_event('member_leave', $mb);
+    if (function_exists('social_member_link_delete')) {
+        social_member_link_delete($mb['mb_id']);
+    }
+
+    return true;
 }
 
 // 회원 삭제
