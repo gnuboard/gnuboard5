@@ -438,6 +438,20 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <?php if ($cnt == 0) { ?>
                             본인인증 내역이 없습니다.
                         <?php } ?>
+                        <?php
+                        $has_certification_data = $cnt > 0 || !empty($mb['mb_dupinfo']) || !empty($mb['mb_certify'])
+                            || !empty($mb['mb_adult']) || !empty($mb['mb_birth']) || !empty($mb['mb_sex']);
+                        if ($w === 'u' && !$has_certification_data) {
+                            $cert_request = sql_fetch("select count(*) as cnt from {$g5['cert_history_table']} where mb_id = '".sql_real_escape_string($mb['mb_id'])."'");
+                            $has_certification_data = !empty($cert_request['cnt']);
+                        }
+                        $can_cleanup_certification = $w === 'u' && $has_certification_data
+                            && ($is_admin === 'super' || (isset($auth[$sub_menu]) && strpos($auth[$sub_menu], 'd') !== false));
+                        ?>
+                        <?php if ($can_cleanup_certification) { ?>
+                            <p>본인확인 ‘아니오’는 인증 상태만 변경합니다. 정보 삭제는 CI/DI 관련 식별값, 본인확인·성인인증 상태, 생년월일·성별 및 본인인증 내역을 삭제합니다. 회원 이름과 연락처는 유지합니다.</p>
+                            <button type="submit" form="fmembercertcleanup" class="btn btn_02">본인확인 정보 삭제</button>
+                        <?php } ?>
                     </td>
                 </tr>
 
@@ -597,6 +611,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <input type="submit" value="확인" class="btn_submit btn" accesskey='s'>
     </div>
 </form>
+
+<?php if ($can_cleanup_certification) { ?>
+<form id="fmembercertcleanup" method="post" action="./member_cert_cleanup.php" onsubmit="return confirm('본인확인 정보와 인증 내역을 삭제하시겠습니까? 삭제 후 복구할 수 없으며, 회원정보의 다른 수정사항은 저장하지 않습니다.');">
+    <input type="hidden" name="mb_id" value="<?php echo get_text($mb['mb_id']); ?>">
+    <input type="hidden" name="token" value="">
+</form>
+<?php } ?>
 
 <script>
     function fmember_submit(f) {
