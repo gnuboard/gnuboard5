@@ -173,8 +173,8 @@ for ($i=1; $i<=10; $i++) {
 if (isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
     foreach ($_FILES['bf_file']['name'] as $filename) {
         $filename = get_safe_filename($filename);
-        if (is_disallowed_svg_filename($filename)) {
-            alert('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        if (is_disallowed_active_filename($filename)) {
+            alert('허용되지 않는 파일 확장자입니다.');
         }
     }
 }

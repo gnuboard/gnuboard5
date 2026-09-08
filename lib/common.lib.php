@@ -4236,7 +4236,18 @@ function get_safe_filename($name)
     return $name;
 }
 
-// 업로드 파일명이 SVG 또는 SVGZ 확장자인지 확인
+// 브라우저에서 실행될 수 있는 첨부 확장자를 저장 전에 거부한다.
+function is_disallowed_active_filename($filename)
+{
+    if (!is_string($filename)) return true;
+    if (preg_match('/[\x00-\x1f\x7f]/', $filename)) return true;
+    $filename = basename(str_replace('\\', '/', $filename));
+    $filename = rtrim($filename, ' .');
+    // 다중 확장자 및 Windows 대체 데이터 스트림 표기도 차단한다.
+    return (bool) preg_match('/\.(?:svgz?|xhtml|xht|xml|xsl|xslt|mht|mhtml|htc)(?:[. :]|$)/i', $filename);
+}
+
+// 기존 스킨 및 플러그인과의 호환을 위한 SVG 검사 함수
 function is_disallowed_svg_filename($filename)
 {
     if (!is_string($filename) || $filename === '') {

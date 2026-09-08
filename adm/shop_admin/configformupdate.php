@@ -19,8 +19,8 @@ $logo_img_fields = array('logo_img', 'logo_img2', 'mobile_logo_img', 'mobile_log
 foreach ($logo_img_fields as $logo_img_field) {
     if (isset($_FILES[$logo_img_field]['name']) && $_FILES[$logo_img_field]['name']) {
         $filename = get_safe_filename($_FILES[$logo_img_field]['name']);
-        if (is_disallowed_svg_filename($filename)) {
-            alert('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        if (is_disallowed_active_filename($filename)) {
+            alert('허용되지 않는 파일 확장자입니다.');
         }
     }
 }
