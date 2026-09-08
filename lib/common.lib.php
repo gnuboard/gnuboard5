@@ -2696,11 +2696,53 @@ function get_email_cert_key($mb_id, $mb_datetime)
     return hash_hmac('sha256', $payload, $key);
 }
 
-/**
- * 발급 시각을 포함한 메일 인증용 일회용 토큰을 생성한다.
- *
- * @return string
- */
+// 보안 메일은 요청 헤더가 아닌 운영자가 지정한 공개 URL만 사용한다.
+function g5_security_mail_base_url($domain = null)
+{
+    if ($domain === null) {
+        $domain = defined('G5_DOMAIN') ? G5_DOMAIN : '';
+    }
+    if (!is_string($domain) || $domain === '' || preg_match('/[\x00-\x20\x7f\\\\<>"\']/', $domain)) {
+        return false;
+    }
+    $parts = @parse_url($domain);
+    if (!$parts || empty($parts['scheme']) || !in_array(strtolower($parts['scheme']), array('http', 'https'), true)
+        || empty($parts['host']) || isset($parts['user']) || isset($parts['pass'])
+        || isset($parts['query']) || isset($parts['fragment'])) {
+        return false;
+    }
+    // 호스트에는 포트 구분용 IPv6 대괄호 외의 URL 구문을 허용하지 않는다.
+    $host = $parts['host'];
+    if ($host[0] === '[') {
+        if (substr($host, -1) !== ']' || !filter_var(substr($host, 1, -1), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) return false;
+    } elseif (!preg_match('/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9.])?$/i', $host)) {
+        return false;
+    }
+    if ($host[0] !== '[') {
+        if (strlen($host) > 254) return false;
+        $hostname = substr($host, -1) === '.' ? substr($host, 0, -1) : $host;
+        foreach (explode('.', $hostname) as $label) {
+            if (!preg_match('/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i', $label)) return false;
+        }
+    }
+    if (isset($parts['port']) && ($parts['port'] < 1 || $parts['port'] > 65535)) return false;
+    if (isset($parts['path']) && (preg_match('/%(?:0[0-9a-f]|1[0-9a-f]|7f|2f|5c)/i', $parts['path'])
+        || preg_match('~(?:^|/)(?:\.|%2e){1,2}(?:/|$)~i', $parts['path']))) return false;
+
+    return rtrim($domain, '/');
+}
+
+function g5_require_security_mail_url()
+{
+    $url = g5_security_mail_base_url();
+    if ($url === false) {
+        error_log('[g5 security mail] Valid G5_DOMAIN is required.');
+        alert('메일 인증을 위한 사이트 주소가 설정되지 않았습니다. 사이트 관리자에게 문의해 주십시오.');
+    }
+    return $url;
+}
+
+// 발급 시각을 포함한 메일 인증용 일회용 토큰을 생성한다.
 function get_email_certify_token()
 {
     return get_random_token_string(16) . '.' . G5_SERVER_TIME;

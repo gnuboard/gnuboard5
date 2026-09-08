@@ -86,10 +86,12 @@ $data = array(
 'mb_name'   =>  $mb_name,
 );
 
+$security_mail_url = g5_security_mail_base_url();
 $mb_email_certify = G5_TIME_YMDHIS;
 
 //메일인증을 사용한다면
 if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_use_email_certify'] ){
+    $security_mail_url = g5_require_security_mail_url();
     $mb_email_certify = '';
 }
 
@@ -277,7 +279,7 @@ if($result) {
 
         sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
 
-        $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $certify_href = $security_mail_url.'/'.G5_BBS_DIR.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
         include_once (G5_BBS_PATH.'/register_form_update_mail3.php');

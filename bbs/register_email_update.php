@@ -40,6 +40,8 @@ if ($row['cnt']) {
     alert("{$mb_email} 메일은 이미 존재하는 메일주소 입니다.\\n\\n다른 메일주소를 입력해 주십시오.");
 }
 
+$security_mail_url = g5_require_security_mail_url();
+
 // 인증메일 발송
 $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
@@ -50,7 +52,7 @@ $mb_md5 = get_email_certify_token();
 
 sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '{$esc_mb_id}' ");
 
-$certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+$certify_href = $security_mail_url.'/'.G5_BBS_DIR.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
 ob_start();
 include_once ('./register_form_update_mail3.php');

@@ -1,6 +1,7 @@
 <?php
 // 회원가입 메일 (관리자 메일로 발송)
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+$mail_site_url = g5_security_mail_base_url();
 ?>
 
 <!doctype html>
@@ -18,7 +19,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             회원가입 알림 메일
         </h1>
         <span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">
-            <a href="<?php echo G5_URL ?>" target="_blank"><?php echo $config['cf_title'] ?></a>
+            <?php if ($mail_site_url) { ?>
+            <a href="<?php echo htmlspecialchars($mail_site_url, ENT_QUOTES, 'UTF-8') ?>" target="_blank"><?php echo $config['cf_title'] ?></a>
+            <?php } else { echo $config['cf_title']; } ?>
         </span>
         <p style="margin:20px 0 0;padding:30px 30px 50px;min-height:200px;height:auto !important;height:200px;border-bottom:1px solid #eee">
             <b><?php echo $mb_name ?></b> 님께서 회원가입 하셨습니다.<br>
