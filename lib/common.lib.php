@@ -4691,7 +4691,29 @@ function get_sql_affected_rows($link=null)
     }
 }
 
-// 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
+// 비회원의 기존 비밀번호 확인 이력을 게시판과 게시물에 결합한다.
+function g5_write_edit_auth_key($bo_table, $wr_id)
+{
+    return 'ss_write_edit_'.hash('sha256', $bo_table.':'.(int)$wr_id);
+}
+
+function g5_grant_write_edit_auth($bo_table, $write)
+{
+    set_session(g5_write_edit_auth_key($bo_table, $write['wr_id']), array(
+        'expires' => G5_SERVER_TIME + 1800,
+        'password' => hash('sha256', $write['wr_password'])
+    ));
+}
+
+function g5_has_write_edit_auth($bo_table, $write)
+{
+    $auth = get_session(g5_write_edit_auth_key($bo_table, $write['wr_id']));
+    return empty($write['mb_id']) && is_array($auth) && isset($auth['expires'], $auth['password'])
+        && $auth['expires'] >= G5_SERVER_TIME
+        && slow_equals(hash('sha256', $write['wr_password']), $auth['password']);
+}
+
+// 글쓰기 요청의 CSRF 토큰을 발급한다. 수정 권한은 별도로 확인한다.
 function get_write_token($bo_table)
 {
     $token = get_random_token_string(16);
@@ -4710,7 +4732,8 @@ function check_write_token($bo_table)
     $token = get_session('ss_write_'.$bo_table.'_token');
     set_session('ss_write_'.$bo_table.'_token', '');
 
-    if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
+    if (!is_string($token) || !$token || !isset($_POST['token']) || !is_string($_POST['token'])
+        || !slow_equals($token, $_POST['token']))
         alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
     return true;

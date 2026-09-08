@@ -96,6 +96,39 @@ if ($w == 'u' || $w == 'r') {
     }
 }
 
+// 수정 권한은 스킨 및 저장 처리 전에 검증한다.
+if ($w == 'u') {
+    if (($is_member || $is_admin) && (get_session('ss_bo_table') != $bo_table || get_session('ss_wr_id') != $wr_id)) {
+        alert('올바른 방법으로 수정하여 주십시오.', get_pretty_url($bo_table));
+    }
+
+    $return_url = get_pretty_url($bo_table, $wr_id);
+
+    if ($is_admin == 'super') // 최고관리자 통과
+        ;
+    else if ($is_admin == 'group') { // 그룹관리자
+        $mb = get_member($wr['mb_id']);
+        if ($member['mb_id'] != $group['gr_admin']) // 자신이 관리하는 그룹인가?
+            alert('자신이 관리하는 그룹의 게시판이 아니므로 수정할 수 없습니다.', $return_url);
+        else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
+            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
+    } else if ($is_admin == 'board') { // 게시판관리자이면
+        $mb = get_member($wr['mb_id']);
+        if ($member['mb_id'] != $board['bo_admin']) // 자신이 관리하는 게시판인가?
+            alert('자신이 관리하는 게시판이 아니므로 수정할 수 없습니다.', $return_url);
+        else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
+            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
+    } else if ($member['mb_id']) {
+        if ($member['mb_id'] != $wr['mb_id'])
+            alert('자신의 글이 아니므로 수정할 수 없습니다.', $return_url);
+    } else {
+        if (!g5_has_write_edit_auth($bo_table, $wr))
+            alert('비밀번호 확인 후 다시 수정하여 주십시오.', $return_url);
+        if ($wr['mb_id'])
+            alert('로그인 후 수정하세요.', G5_BBS_URL.'/login.php?url='.urlencode($return_url));
+    }
+}
+
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
 if (!$is_admin && !$board['bo_use_secret'] && (stripos($_POST['html'], 'secret') !== false || stripos($_POST['secret'], 'secret') !== false || stripos($_POST['mail'], 'secret') !== false)) {
 	alert('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
@@ -335,34 +368,6 @@ if ($w == '' || $w == 'r') {
         insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id} 글답변", $bo_table, $wr_id, '쓰기');
     }
 }  else if ($w == 'u') {
-    if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
-        alert('올바른 방법으로 수정하여 주십시오.', get_pretty_url($bo_table));
-    }
-
-    $return_url = get_pretty_url($bo_table, $wr_id);
-
-    if ($is_admin == 'super') // 최고관리자 통과
-        ;
-    else if ($is_admin == 'group') { // 그룹관리자
-        $mb = get_member($write['mb_id']);
-        if ($member['mb_id'] != $group['gr_admin']) // 자신이 관리하는 그룹인가?
-            alert('자신이 관리하는 그룹의 게시판이 아니므로 수정할 수 없습니다.', $return_url);
-        else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
-            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
-    } else if ($is_admin == 'board') { // 게시판관리자이면
-        $mb = get_member($write['mb_id']);
-        if ($member['mb_id'] != $board['bo_admin']) // 자신이 관리하는 게시판인가?
-            alert('자신이 관리하는 게시판이 아니므로 수정할 수 없습니다.', $return_url);
-        else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
-            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
-    } else if ($member['mb_id']) {
-        if ($member['mb_id'] != $write['mb_id'])
-            alert('자신의 글이 아니므로 수정할 수 없습니다.', $return_url);
-    } else {
-        if ($write['mb_id'])
-            alert('로그인 후 수정하세요.', G5_BBS_URL.'/login.php?url='.urlencode($return_url));
-    }
-
     if ($member['mb_id']) {
         // 자신의 글이라면
         if ($member['mb_id'] === $wr['mb_id']) {
@@ -427,6 +432,8 @@ if ($w == '' || $w == 'r') {
                      {$sql_password}
               where wr_id = '{$wr['wr_id']}' ";
     sql_query($sql);
+
+    set_session(g5_write_edit_auth_key($bo_table, $wr_id), '');
 
     // 분류가 수정되는 경우 해당되는 코멘트의 분류명도 모두 수정함
     // 코멘트의 분류를 수정하지 않으면 검색이 제대로 되지 않음

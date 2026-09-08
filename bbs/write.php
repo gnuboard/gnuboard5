@@ -309,12 +309,15 @@ if ($w == '') {
     $password_required = 'required';
 } else if ($w == 'u') {
     $password_required = '';
+    set_session(g5_write_edit_auth_key($bo_table, $wr_id), '');
 
     if (!$is_admin) {
         if (!($is_member && $member['mb_id'] === $write['mb_id'])) {
             if (!check_password($wr_password, $write['wr_password'])) {
                 $is_wrong = run_replace('invalid_password', false, 'write', $write);
                 if(!$is_wrong) alert('비밀번호가 틀립니다.');
+            } else if (empty($write['mb_id'])) {
+                g5_grant_write_edit_auth($bo_table, $write);
             }
         }
     }
