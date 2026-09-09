@@ -26,7 +26,7 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
       parent::initialize();
 
 		// Provider API end-points
-      $this->api->api_base_url  = "https://apis.naver.com/nidlogin/";
+      $this->api->api_base_url  = "https://openapi.naver.com/v1/";
       $this->api->authorize_url = "https://nid.naver.com/oauth2.0/authorize";
       $this->api->token_url     = "https://nid.naver.com/oauth2.0/token";
 
@@ -102,17 +102,17 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
     //https://developers.naver.com/docs/login/profile/
 	function getUserProfile()
 	{
-        $response = $this->profile("nid/getUserProfile.xml");
+        $response = $this->profile("nid/me");
+        $profile = json_decode($response, true);
 
-        $xml = @ new SimpleXMLElement($response);
-        $data = array();
-        if ( $xml->result[0]->resultcode == '00' ) {
-            foreach ($xml->response->children() as $response => $k) {
-                $data[(string)$response] = (string) $k;
-            }
-        } else {
+        if (!is_array($profile) || !isset($profile['resultcode']) || $profile['resultcode'] !== '00'
+            || !isset($profile['response']) || !is_array($profile['response'])
+            || !isset($profile['response']['id']) || !is_string($profile['response']['id'])
+            || $profile['response']['id'] === '') {
             throw new Exception("User profile request failed! {$this->providerId} returned an invalid response.", 6);
         }
+
+        $data = $profile['response'];
 
         # store the user profile.
         //$this->user->profile->identifier    = (array_key_exists('enc_id',$data))?$data['enc_id']:"";
@@ -139,6 +139,7 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
         }
         $this->user->profile->email         = (array_key_exists('email',$data))?$data['email']:"";
         $this->user->profile->emailVerified = (array_key_exists('email',$data))?$data['email']:"";
+        $this->user->profile->phone         = (array_key_exists('mobile', $data)) ? $data['mobile'] : '';
         $this->user->profile->gender        = (array_key_exists('gender',$data))?(($data['gender'] == "M")?"male":"female"):"";
         $this->user->profile->photoURL      = (array_key_exists('profile_image',$data))?$data['profile_image']:"";
 

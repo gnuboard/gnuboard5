@@ -83,13 +83,6 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         <?php if ($config["cf_cert_use"]) { ?>
             <input type="hidden" id="reg_mb_name" name="mb_name" value="<?php echo $user_name ? $user_name : $user_nick ?>">
         <?php } ?>
-        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_simple']))) {  ?>
-            <input type="hidden" name="mb_hp" value="<?php echo get_text($user_phone); ?>" id="reg_mb_hp">
-            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple'])) { ?>
-                <input type="hidden" name="old_mb_hp" value="<?php echo get_text($user_phone); ?>">
-            <?php } ?>
-        <?php }  ?>
-
         <div id="register_form" class="form_01">
             <div class="tbl_frm01 tbl_wrap register_form_inner">
                 <h2>개인정보 입력</h2>
@@ -142,6 +135,15 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                         <input type="text" name="mb_email" value="<?php echo isset($user_email) ? $user_email : ''; ?>" id="reg_mb_email" required <?php echo (isset($user_email) && $user_email != '' && !$is_exists_email)? "readonly":''; ?> class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
                         <div class="check"><?php echo $email_msg; ?></div>
                     </li>
+                    <?php if ($config['cf_use_hp'] || $config['cf_req_hp'] || ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple']))) { ?>
+                        <li>
+                            <label for="reg_mb_hp">휴대폰번호<?php echo $config['cf_req_hp'] ? ' (필수)' : ''; ?></label>
+                            <input type="tel" name="mb_hp" value="<?php echo get_text($user_phone); ?>" id="reg_mb_hp" <?php echo $config['cf_req_hp'] ? 'required' : ''; ?> class="frm_input full_input <?php echo $config['cf_req_hp'] ? 'required' : ''; ?>" maxlength="20" placeholder="휴대폰번호">
+                            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple'])) { ?>
+                                <input type="hidden" name="old_mb_hp" value="<?php echo get_text($user_phone); ?>">
+                            <?php } ?>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
 
