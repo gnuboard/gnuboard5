@@ -1056,4 +1056,7 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 
 /* PG별 간편결제 공통 버튼 */
 #sod_frm_paysel .samsungpay_icon{background:url('../../../img/samsungpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .tosspay_icon,#sod_frm_paysel .pinpay_icon{font-weight:bold}
+#sod_frm_paysel .tosspay_icon{background:url('../../../img/tosspay-logo.svg') no-repeat 50% 50% #fff;background-size:90px auto;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .pinpay_icon{background:url('../../../img/pinpay-logo.png') no-repeat 50% 50% #fff;background-size:90px 60px;overflow:hidden;text-indent:-999px}
+#m_sod_frm_paysel .tosspay_icon{display:inline-block;width:72px;height:24px;vertical-align:middle;background:url('../../../img/tosspay-logo.svg') no-repeat 50% 50%;background-size:72px auto;overflow:hidden;text-indent:-999px}
+#m_sod_frm_paysel .pinpay_icon{display:inline-block;width:68px;height:24px;vertical-align:middle;background:url('../../../img/pinpay-logo.png') no-repeat 50% 50%;background-size:68px auto;overflow:hidden;text-indent:-999px}

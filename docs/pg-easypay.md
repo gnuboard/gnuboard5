@@ -41,3 +41,10 @@ node tests/pg_easypay.js
 실제 PG 네트워크 요청과 운영 DB 마이그레이션은 이 테스트에서 실행하지 않는다. 배포 검수 시 계약된 MID에서 각 수단의 성공·실패·사용자 취소·재시도, 주문내역·관리자·영수증 표시, 전액 취소·부분 취소를 확인한다. 머니/포인트 및 카드 복합결제는 실제 총액·현금영수증·부분 취소 가능 여부도 확인한다. 커스텀 스킨이 주문서를 자체 구현했다면 공통 버튼 함수와 결제수단 변경 이벤트를 반영해야 한다.
 
 토스 자체창 요청은 [SDK v2 결제창 문서](https://docs.tosspayments.com/sdk/v2/js/payment)의 `method=CARD`, `card.flowMode=DIRECT`, `card.easyPay` 규격을 사용한다. provider 코드는 [토스 ENUM 문서](https://docs.tosspayments.com/codes/enum-codes)를 따른다. 일반 카드로 변경하면 `DEFAULT`로 되돌리고 SDK 요청에서 `easyPay`를 제외한다.
+
+## 결제 로고 출처
+
+- `img/tosspay-logo.svg`: [토스페이 공식 연동 가이드](https://docs-pay.toss.im/)에서 제공하는 로고 ZIP의 `logo-toss-pay-blue.svg` 원본.
+- `img/pinpay-logo.png`: [스마트로페이 간편결제 안내](https://pg.smartro.co.kr/service/pg-service/payment/easypayment/)에서 제공하는 핀페이 로고 원본.
+
+로고의 비율과 색상을 유지하고 저장소의 로컬 파일을 사용한다. 무통장입금·가상계좌 등 일반 결제수단 아이콘은 자체 SVG이다.
