@@ -6,15 +6,23 @@ $exists = false;
 
 $ca_id_len = strlen($ca_id);
 $len2 = $ca_id_len + 2;
-$len4 = $ca_id_len + 4;
 
 $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '$ca_id%' and length(ca_id) = $len2 and ca_use = '1' order by ca_order, ca_id ";
 $result = sql_query($sql);
+
+// 하위 분류가 없으면 현재 분류를 포함한 같은 단계의 사용 중인 분류를 표시한다.
+if (!sql_num_rows($result)) {
+    $parent_ca_id = substr($ca_id, 0, -2);
+    $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '$parent_ca_id%' and length(ca_id) = $ca_id_len and ca_use = '1' order by ca_order, ca_id ";
+    $result = sql_query($sql);
+}
+
 while ($row=sql_fetch_array($result)) {
 
     $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1'  ");
 
-    $str .= '<li><a href="'.shop_category_url($row['ca_id']).'">'.$row['ca_name'].' ('.$row2['cnt'].')</a></li>';
+    $current_attr = ($row['ca_id'] === $ca_id) ? ' class="sct_ct_here" aria-current="page"' : '';
+    $str .= '<li><a'.$current_attr.' href="'.shop_category_url($row['ca_id']).'">'.$row['ca_name'].' ('.$row2['cnt'].')</a></li>';
     $exists = true;
 }
 
