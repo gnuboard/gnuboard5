@@ -67,13 +67,7 @@ cd gnuboard5
 
 ### 기존 설치 업데이트
 
-소스 코드를 업데이트한 뒤 데이터베이스 변경이 포함된 버전은 관리자 메뉴의 **환경설정 → DB업그레이드**에서 변경 내용을 확인하고 명시적으로 실행합니다. 배포 자동화에서는 CLI 실행을 권장합니다.
-
-```bash
-php bin/db-migrate.php status
-php bin/db-migrate.php migrate
-php bin/check-runtime-ddl.php
-```
+소스 코드를 업데이트한 뒤 데이터베이스 변경이 포함된 버전은 관리자 메뉴의 **환경설정 → DB업그레이드**에서 변경 내용을 확인하고 명시적으로 실행합니다.
 
 운영 절차와 마이그레이션 작성 규칙은 [데이터베이스 마이그레이션 문서](docs/database-migrations.md)를 확인하십시오.
 
