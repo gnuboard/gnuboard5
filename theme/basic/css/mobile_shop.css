@@ -924,11 +924,11 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #sod_frm_paysel .iche_icon{background-image:url('../../../img/payment-transfer.svg')}
 #sod_frm_paysel .hp_icon{background-image:url('../../../img/payment-phone.svg')}
 #sod_frm_paysel .card_icon{background-image:url('../../../img/payment-card.svg')}
-#sod_frm_paysel .bank_icon,
-#sod_frm_paysel .vbank_icon,
-#sod_frm_paysel .iche_icon,
-#sod_frm_paysel .hp_icon,
-#sod_frm_paysel .card_icon{background-repeat:no-repeat;background-position:18px 50%;background-size:28px 28px;padding:0 12px 0 58px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:18px}
+#sod_frm_paysel .lb_icon.bank_icon,
+#sod_frm_paysel .lb_icon.vbank_icon,
+#sod_frm_paysel .lb_icon.iche_icon,
+#sod_frm_paysel .lb_icon.hp_icon,
+#sod_frm_paysel .lb_icon.card_icon{background-repeat:no-repeat;background-position:18px 50%;background-size:28px 28px;padding:0 12px 0 58px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:18px}
 #m_sod_frm_paysel .bank_icon{background-image:url('../../../img/payment-bank.svg')}
 #m_sod_frm_paysel .vbank_icon{background-image:url('../../../img/payment-virtual-account.svg')}
 #m_sod_frm_paysel .iche_icon{background-image:url('../../../img/payment-transfer.svg')}
