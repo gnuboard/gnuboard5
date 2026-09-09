@@ -918,27 +918,17 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #sod_frm_paysel .samsungpay_icon{background:url('../../../img/samsungpay.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .ssgpay_icon{background:url('../../../img/ssgpay_icon.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .skpay_icon{background:url('../../../img/skpay11_icon.png') no-repeat 50% 50% #fff; background-size: 70px;display:inline-block;overflow:hidden;text-indent:-999px}
-/* 기본 결제수단: 같은 굵기의 SVG 라인 아이콘 */
-#sod_frm_paysel .bank_icon{background-image:url('../../../img/payment-bank.svg')}
-#sod_frm_paysel .vbank_icon{background-image:url('../../../img/payment-virtual-account.svg')}
-#sod_frm_paysel .iche_icon{background-image:url('../../../img/payment-transfer.svg')}
-#sod_frm_paysel .hp_icon{background-image:url('../../../img/payment-phone.svg')}
-#sod_frm_paysel .card_icon{background-image:url('../../../img/payment-card.svg')}
+/* 일반 결제수단은 아이콘 없이 텍스트를 표시한다. */
 #sod_frm_paysel .lb_icon.bank_icon,
 #sod_frm_paysel .lb_icon.vbank_icon,
 #sod_frm_paysel .lb_icon.iche_icon,
 #sod_frm_paysel .lb_icon.hp_icon,
-#sod_frm_paysel .lb_icon.card_icon{background-repeat:no-repeat;background-position:18px 50%;background-size:28px 28px;padding:0 12px 0 58px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:18px}
-#m_sod_frm_paysel .bank_icon{background-image:url('../../../img/payment-bank.svg')}
-#m_sod_frm_paysel .vbank_icon{background-image:url('../../../img/payment-virtual-account.svg')}
-#m_sod_frm_paysel .iche_icon{background-image:url('../../../img/payment-transfer.svg')}
-#m_sod_frm_paysel .hp_icon{background-image:url('../../../img/payment-phone.svg')}
-#m_sod_frm_paysel .card_icon{background-image:url('../../../img/payment-card.svg')}
-#m_sod_frm_paysel .bank_icon,
-#m_sod_frm_paysel .vbank_icon,
-#m_sod_frm_paysel .iche_icon,
-#m_sod_frm_paysel .hp_icon,
-#m_sod_frm_paysel .card_icon{display:inline-block;min-height:24px;padding-left:30px;line-height:24px;vertical-align:middle;background-repeat:no-repeat;background-position:0 50%;background-size:24px 24px}
+#sod_frm_paysel .lb_icon.card_icon{background-image:none;padding:0 12px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:18px}
+#m_sod_frm_paysel .lb_icon.bank_icon,
+#m_sod_frm_paysel .lb_icon.vbank_icon,
+#m_sod_frm_paysel .lb_icon.iche_icon,
+#m_sod_frm_paysel .lb_icon.hp_icon,
+#m_sod_frm_paysel .lb_icon.card_icon{background-image:none;display:inline-block;padding:0;min-height:24px;line-height:24px;vertical-align:middle}
 #forderform .sod_right #sod_bsk_tot {border:1px solid #e3e5e8}
 #forderform .od_pay_buttons_el{margin-top:20px;border:1px solid #e3e5e8;background:#fff;padding:10px}
 #forderform .od_pay_buttons_el h3{font-size:1.167em;margin:0px 0 5px}
@@ -1054,9 +1044,50 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#305af9;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
 
 
-/* PG별 간편결제 공통 버튼 */
-#sod_frm_paysel .samsungpay_icon{background:url('../../../img/samsungpay.png') no-repeat 50% 50% #fff;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .tosspay_icon{background:url('../../../img/tosspay-logo.svg') no-repeat 50% 50% #fff;background-size:90px auto;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .pinpay_icon{background:url('../../../img/pinpay-logo.png') no-repeat 50% 50% #fff;background-size:90px 60px;overflow:hidden;text-indent:-999px}
-#m_sod_frm_paysel .tosspay_icon{display:inline-block;width:72px;height:24px;vertical-align:middle;background:url('../../../img/tosspay-logo.svg') no-repeat 50% 50%;background-size:72px auto;overflow:hidden;text-indent:-999px}
-#m_sod_frm_paysel .pinpay_icon{display:inline-block;width:68px;height:24px;vertical-align:middle;background:url('../../../img/pinpay-logo.png') no-repeat 50% 50%;background-size:68px auto;overflow:hidden;text-indent:-999px}
+/* 간편결제 로고: 비율을 유지하고 표시 크기와 중심을 통일한다. */
+#sod_frm_paysel .lb_icon.PAYCO:not(.nhnkcp_icon),
+#sod_frm_paysel .lb_icon.paycopay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.PAYCO:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.paycopay_icon:not(.nhnkcp_icon){background-image:url('../../../img/payco.png');background-size:76px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.PAYNOW:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.PAYNOW:not(.nhnkcp_icon){background-image:url('../../../img/paynow.png');background-size:76px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.lpay_icon:not(.nhnkcp_icon),
+#sod_frm_paysel .lb_icon.inicis_lpay:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.lpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.inicis_lpay:not(.nhnkcp_icon){background-image:url('../../../img/lpay_logo.png');background-size:58px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.kakaopay_icon:not(.nhnkcp_icon),
+#sod_frm_paysel .lb_icon.inicis_kakaopay:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.kakaopay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.inicis_kakaopay:not(.nhnkcp_icon){background-image:url('../../../img/kakao.png');background-size:63px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.naverpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.naverpay_icon:not(.nhnkcp_icon){background-image:url('../../../img/ico-default-naverpay.png');background-size:61px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.samsungpay_icon:not(.nhnkcp_icon),
+#sod_frm_paysel .lb_icon.samsung_pay:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.samsungpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.samsung_pay:not(.nhnkcp_icon){background-image:url('../../../img/samsungpay.png');background-size:88px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.ssgpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.ssgpay_icon:not(.nhnkcp_icon){background-image:url('../../../img/ssgpay_icon.png');background-size:80px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.skpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.skpay_icon:not(.nhnkcp_icon){background-image:url('../../../img/skpay11_icon.png');background-size:68px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.applepay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.applepay_icon:not(.nhnkcp_icon){background-image:url('../../../img/ico-mobile-applepay.png');background-size:44px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.tosspay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.tosspay_icon:not(.nhnkcp_icon){background-image:url('../../../img/tosspay-logo.svg');background-size:88px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#sod_frm_paysel .lb_icon.pinpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.pinpay_icon:not(.nhnkcp_icon){background-image:url('../../../img/pinpay-logo.png');background-size:80px auto;background-repeat:no-repeat;background-position:50% 50%;background-color:#fff;overflow:hidden;text-indent:-999px}
+#m_sod_frm_paysel .lb_icon.PAYCO:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.paycopay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.PAYNOW:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.lpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.inicis_lpay:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.kakaopay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.inicis_kakaopay:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.naverpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.samsungpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.samsung_pay:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.ssgpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.skpay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.applepay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.tosspay_icon:not(.nhnkcp_icon),
+#m_sod_frm_paysel .lb_icon.pinpay_icon:not(.nhnkcp_icon){width:96px;height:28px;min-height:28px;margin:0;padding:0;border-radius:0;display:inline-block;vertical-align:middle}
+#sod_frm_paysel .lb_icon.inicis_kakaopay em{display:none}
