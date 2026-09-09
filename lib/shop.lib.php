@@ -2500,17 +2500,33 @@ function exists_inicis_shop_order($oid, $pp=array(), $od_time='', $od_ip='')
     return '';
 }
 
+// 상태 변경 UPDATE에서 ct_status를 대입하기 전에 사용한다.
+// 완료 상태에서 다시 저장하면 최초 완료 시각을 유지하고, 완료 해제 시 초기화한다.
+function get_cart_complete_time_sql($ct_status)
+{
+    if ($ct_status != '완료') {
+        return 'NULL';
+    }
+
+    return "CASE WHEN ct_status = '완료' THEN ct_complete_time ELSE '".G5_TIME_YMDHIS."' END";
+}
+
 //------------------------------------------------------------------------------
 // 주문포인트를 적립한다.
-// 설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여
-// 설정일이 0 이면 주문서 완료 설정 시점에서 포인트를 바로 부여합니다.
+// 배송완료 시각(ct_complete_time)부터 설정일이 지난 미적립 상품에 포인트 부여
+// 설정일이 0 이면 배송완료 처리 시 포인트를 바로 부여합니다.
 //------------------------------------------------------------------------------
 function save_order_point($ct_status="완료")
 {
     global $g5, $default;
 
+    // 완료 시각이 없는 기존 상품에만 종전의 장바구니 생성 시각 기준을 유지한다.
     $beforedays = date("Y-m-d H:i:s", ( time() - (86400 * (int)$default['de_point_days']) ) ); // 86400초는 하루
-    $sql = " select * from {$g5['g5_shop_cart_table']} where ct_status = '$ct_status' and ct_point_use = '0' and ct_time <= '$beforedays' ";
+    $sql = " select * from {$g5['g5_shop_cart_table']}
+              where ct_status = '$ct_status'
+                and ct_point_use = '0'
+                and ((ct_complete_time is not null and ct_complete_time <= '$beforedays')
+                     or (ct_complete_time is null and ct_time <= '$beforedays')) ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 회원 ID 를 얻는다.

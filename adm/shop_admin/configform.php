@@ -587,8 +587,8 @@ if( function_exists('pg_setting_check') ){
         <tr>
             <th scope="row"><label for="de_point_days">주문완료 포인트</label></th>
             <td>
-                <?php echo help("주문자가 회원일 경우에만 주문완료시 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 포인트를 지급할 적당한 기간을 입력하십시오. (기본값은 7일)\n0일로 설정하는 경우에는 주문완료와 동시에 포인트를 지급합니다."); ?>
-                주문 완료 <input type="text" name="de_point_days" value="<?php echo get_sanitize_input($default['de_point_days']); ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 지급
+                <?php echo help("주문자가 회원일 경우에만 상품별 배송완료 시각부터 설정한 기간이 지난 후 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 포인트를 지급할 적당한 기간을 입력하십시오. (기본값은 7일)\n0일로 설정하면 배송완료 처리 시 지급합니다. 그 외에는 기간 경과 후 관리자 주문 상세 조회 또는 완료 처리 시 지급합니다."); ?>
+                배송 완료 <input type="text" name="de_point_days" value="<?php echo get_sanitize_input($default['de_point_days']); ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 지급
             </td>
         </tr>
         <tr>

@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_cart` (
   `ct_direct` tinyint(4) NOT NULL DEFAULT '0',
   `ct_select` tinyint(4) NOT NULL DEFAULT '0',
   `ct_select_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ct_complete_time` datetime DEFAULT NULL,
   PRIMARY KEY (`ct_id`),
   KEY `od_id` (`od_id`),
   KEY `it_id` (`it_id`),

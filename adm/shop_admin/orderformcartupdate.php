@@ -322,8 +322,10 @@ for ($i=0; $i<$cnt; $i++)
     $now = G5_TIME_YMDHIS;
     $ct_history="\n$ct_status|{$member['mb_id']}|$now|$REMOTE_ADDR";
 
+    $complete_time_sql = get_cart_complete_time_sql($ct_status);
     $sql = " update {$g5['g5_shop_cart_table']}
-                set ct_point_use  = '$point_use',
+                set ct_complete_time = $complete_time_sql,
+                    ct_point_use  = '$point_use',
                     ct_stock_use  = '$stock_use',
                     ct_status     = '$ct_status',
                     ct_history    = CONCAT(ct_history,'$ct_history')
@@ -334,6 +336,11 @@ for ($i=0; $i<$cnt; $i++)
     // it_id를 배열에 저장
     if($ct_status == '주문' || $ct_status == '취소' || $ct_status == '반품' || $ct_status == '품절' || $ct_status == '완료')
         $arr_it_id[] = $ct['it_id'];
+}
+
+// 완료 처리 직후 실행하여 0일 설정도 즉시 적용한다.
+if ($ct_status == '완료') {
+    save_order_point();
 }
 
 // 상품 판매수량 반영

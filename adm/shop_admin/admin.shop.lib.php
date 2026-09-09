@@ -88,7 +88,8 @@ function change_status($od_id, $current_status, $change_status)
     $sql = " update {$g5['g5_shop_order_table']} set od_status = '{$change_status}' where od_id = '{$od_id}' and od_status = '{$current_status}' ";
     sql_query($sql, true);
 
-    $sql = " update {$g5['g5_shop_cart_table']} set ct_status = '{$change_status}' where od_id = '{$od_id}' and ct_status = '{$current_status}' ";
+    $complete_time_sql = get_cart_complete_time_sql($change_status);
+    $sql = " update {$g5['g5_shop_cart_table']} set ct_complete_time = $complete_time_sql, ct_status = '{$change_status}' where od_id = '{$od_id}' and ct_status = '{$current_status}' ";
     sql_query($sql, true);
 }
 

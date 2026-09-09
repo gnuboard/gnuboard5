@@ -161,6 +161,11 @@ for ($i=0; $i<$count_post_chk; $i++)
 
 }
 
+// 일괄 완료 처리도 0일 설정이면 즉시 적립한다.
+if ($od_status == '완료') {
+    save_order_point();
+}
+
 // SMS
 $sms_count = count($sms_messages);
 if($sms_count > 0) {
