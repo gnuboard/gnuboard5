@@ -47,4 +47,4 @@ node tests/pg_easypay.js
 - `img/tosspay-logo.svg`: [토스페이 공식 연동 가이드](https://docs-pay.toss.im/)에서 제공하는 로고 ZIP의 `logo-toss-pay-blue.svg` 원본.
 - `img/pinpay-logo.png`: [스마트로페이 간편결제 안내](https://pg.smartro.co.kr/service/pg-service/payment/easypayment/)에서 제공하는 핀페이 로고 원본.
 
-로고의 비율과 색상을 유지하고 저장소의 로컬 파일을 사용한다. 무통장입금·가상계좌 등 일반 결제수단은 아이콘 없이 텍스트로 표시한다. 간편결제 로고는 원본의 여백과 종횡비를 고려해 폭 58~88px 중심으로 크기를 맞춘다.
+로고의 비율과 색상을 유지하고 저장소의 로컬 파일을 사용한다. 무통장입금·가상계좌 등 일반 결제수단은 아이콘 없이 텍스트로 표시한다. 간편결제 로고는 작은 원본을 확대하지 않는다. 원본의 여백과 종횡비를 고려하여 큰 로고만 축소하고, 원본이 작은 L.pay·카카오페이·PAYCO는 원래 크기를 유지한다.
