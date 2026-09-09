@@ -502,7 +502,7 @@ if( function_exists('pg_setting_check') ){
         <tr>
             <th scope="row"><label for="de_easy_pay_use">PG사 간편결제 버튼 사용</label></th>
             <td>
-                <?php echo help("주문서 작성 페이지에 PG사 간편결제(PAYCO, 토스, KPAY...) 버튼의 별도 사용 여부를 설정합니다.", 50); ?>
+                <?php echo help("주문서에 선택한 PG사의 사용 설정된 간편결제 수단을 개별 표시합니다. 아래 PG별 항목에서 계약된 수단을 선택하세요.", 50); ?>
                 <select id="de_easy_pay_use" name="de_easy_pay_use">
                     <option value="0" <?php echo get_selected($default['de_easy_pay_use'], 0); ?>>노출안함</option>
                     <option value="1" <?php echo get_selected($default['de_easy_pay_use'], 1); ?>>노출함</option>
@@ -626,16 +626,16 @@ if( function_exists('pg_setting_check') ){
             <th scope="row"><label for="de_kcp_easy_pays">NHN KCP 간편결제</label></th>
             <td>
                 <?php echo help("체크시 NHN KCP 간편결제들을 활성화 합니다.\nNHN_KCP > 네이버페이, 카카오페이는 테스트결제가 되지 않습니다.\n애플페이는 IOS 기기에 모바일결제만 가능합니다."); ?>
-                <input type="checkbox" id="de_easy_nhnkcp_payco" name="de_easy_pays[]" value="nhnkcp_payco" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_payco') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_payco" disabled>PAYCO (페이코)</label><br>
-                <input type="checkbox" id="de_easy_nhnkcp_naverpay" name="de_easy_pays[]" value="nhnkcp_naverpay" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_naverpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_naverpay">NAVERPAY (네이버페이)</label><br>
-                <input type="checkbox" id="de_easy_nhnkcp_kakaopay" name="de_easy_pays[]" value="nhnkcp_kakaopay" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_kakaopay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_kakaopay">KAKAOPAY (카카오페이)</label><br>
-                <input type="checkbox" id="de_easy_nhnkcp_applepay" name="de_easy_pays[]" value="nhnkcp_applepay" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_applepay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_applepay">APPLEPAY (애플페이)</label>
+                <?php foreach (shop_easypay_catalog('kcp') as $easy_key => $easy_provider) { ?>
+                <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
+                <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
+                <?php } ?>
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
             <th scope="row"><label for="de_global_nhnkcp_naverpay">NHN KCP 네이버페이 사용</label></th>
             <td>
-                <?php echo help("체크시 타 PG (토스페이먼츠, KG 이니시스) 사용중일때도 NHN_KCP 를 통한 네이버페이 간편결제를 사용할수 있습니다.\n실결제시 반드시 결제대행사 NHN_KCP 항목에 KCP SITE CODE와 NHN KCP SITE KEY를 입력해야 합니다."); ?>
+                <?php echo help("선택한 PG에서 네이버페이를 지원하지 않거나 사용 설정하지 않은 경우에만 NHN KCP 네이버페이를 보조 결제로 제공합니다. 기본 PG의 네이버페이가 활성화되어 있으면 병용 버튼과 요청 경로를 사용하지 않습니다. 기존 KCP 주문의 조회·취소는 유지됩니다.\n실결제시 반드시 결제대행사 NHN_KCP 항목에 KCP SITE CODE와 NHN KCP SITE KEY를 입력해야 합니다."); ?>
                 <input type="checkbox" id="de_global_nhnkcp_naverpay" name="de_easy_pays[]" value="global_nhnkcp_naverpay" <?php if(stripos($default['de_easy_pay_services'], 'global_nhnkcp_naverpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_global_nhnkcp_naverpay">NAVERPAY (네이버페이)</label><br>
             </td>
         </tr>
@@ -747,34 +747,18 @@ if( function_exists('pg_setting_check') ){
                 <input type="text" name="de_inicis_pro_summary_days" value="<?php echo isset($default['de_inicis_pro_summary_days']) ? (int) $default['de_inicis_pro_summary_days'] : 1825; ?>" id="de_inicis_pro_summary_days" class="frm_input" size="6" maxlength="4"> 일
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row">
-                <label for="de_samsung_pay_use">KG이니시스 삼성페이 사용</label>
-                <a href="http://sir.kr/main/service/samsungpay.php" target="_blank" class="kg_btn">삼성페이 서비스신청하기</a>
-            </th>
+        <?php foreach (array('inicis' => 'KG이니시스', 'toss' => '토스페이먼츠 API') as $easy_pg => $easy_title) { ?>
+        <tr class="pg_info_fld <?php echo $easy_pg; ?>_info_fld">
+            <th scope="row"><?php echo $easy_title; ?> 간편결제</th>
             <td>
-                <?php echo help("KG이니시스와 별도로 <strong>삼성페이 사용 계약을 하신 경우</strong>에만 체크해주세요. INIpay PRO 사용 시 PC와 모바일 주문서에 삼성페이가 노출되며 삼성페이 결제창을 직접 호출합니다. 구버전 결제에서는 모바일 주문서에만 노출됩니다.<br>실결제 시 상점 아이디와 사용 중인 결제모듈의 인증키(PRO: HashKey, 구버전: 웹결제 사인키)를 입력해 주세요.", 50); ?>
-                <input type="checkbox" name="de_samsung_pay_use" value="1" id="de_samsung_pay_use"<?php echo $default['de_samsung_pay_use']?' checked':''; ?>> <label for="de_samsung_pay_use">사용</label>
+                <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 해당 PG와 계약하여 사용할 수 있는 수단만 선택하세요. 계약 상태는 PG사에 확인해야 하며 이 화면에서 자동 조회하지 않습니다. 자체창 호출에 별도 계약이 필요할 수 있고 일부 수단은 테스트 결제를 지원하지 않습니다. 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결하며 구 INIpay에서는 모바일에서만 표시합니다.\nKG이니시스는 삼성페이·L.pay·카카오페이를 지원하며 INIpay PRO는 HashKey, 구버전은 웹결제 사인키가 필요합니다."); ?>
+                <?php foreach (shop_easypay_catalog($easy_pg) as $easy_key => $easy_provider) { ?>
+                <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
+                <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
+                <?php } ?>
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row">
-                <label for="de_inicis_lpay_use">KG이니시스 L.pay 사용</label>
-            </th>
-            <td>
-                <?php echo help("체크 시 KG이니시스 L.pay를 사용합니다. INIpay PRO에서는 주문서에서 L.pay 선택 시 L.pay 결제창을 직접 호출합니다.<br>실결제 시 상점 아이디와 사용 중인 결제모듈의 인증키(PRO: HashKey, 구버전: 웹결제 사인키)를 입력해 주세요.", 50); ?>
-                <input type="checkbox" name="de_inicis_lpay_use" value="1" id="de_inicis_lpay_use"<?php echo $default['de_inicis_lpay_use']?' checked':''; ?>> <label for="de_inicis_lpay_use">사용</label>
-            </td>
-        </tr>
-        <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row">
-                <label for="de_inicis_kakaopay_use">KG이니시스 카카오페이 사용</label>
-            </th>
-            <td>
-                <?php echo help("체크 시 KG이니시스 결제의 카카오페이를 사용합니다. INIpay PRO에서는 주문서에서 카카오페이 선택 시 카카오페이 결제창을 직접 호출합니다.<br>실결제 시 상점 아이디와 사용 중인 결제모듈의 인증키(PRO: HashKey, 구버전: 웹결제 사인키)를 입력해 주세요.", 50); ?>
-                <input type="checkbox" name="de_inicis_kakaopay_use" value="1" id="de_inicis_kakaopay_use"<?php echo $default['de_inicis_kakaopay_use']?' checked':''; ?>> <label for="de_inicis_kakaopay_use">사용</label>
-            </td>
-        </tr>
+        <?php } ?>
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row">
                 <label for="de_inicis_cartpoint_use">KG이니시스 신용카드 포인트 결제</label>
@@ -805,14 +789,10 @@ if( function_exists('pg_setting_check') ){
             <th scope="row"><label for="de_nicepay_easy_pays">NICEPAY 간편결제</label></th>
             <td>
                 <?php echo help("체크시 NICEPAY 간편결제들을 활성화 합니다.\nNICEPAY > 간편결제는 테스트결제가 되지 않습니다. 실결제에만 정상작동 합니다.\n애플페이는 IOS 기기에 모바일결제만 가능합니다."); ?>
-                <input type="checkbox" id="de_easy_nicepay_samsungpay" name="de_easy_pays[]" value="nicepay_samsungpay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_samsungpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_samsungpay" disabled>삼성페이</label><br>
-                <input type="checkbox" id="de_easy_nicepay_naverpay" name="de_easy_pays[]" value="nicepay_naverpay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_naverpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_naverpay">NAVERPAY (네이버페이)</label><br>
-                <input type="checkbox" id="de_easy_nicepay_kakaopay" name="de_easy_pays[]" value="nicepay_kakaopay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_kakaopay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_kakaopay">KAKAOPAY (카카오페이)</label><br>
-                <input type="checkbox" id="de_easy_nicepay_applepay" name="de_easy_pays[]" value="nicepay_applepay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_applepay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_applepay">APPLEPAY (애플페이)</label><br>
-                <input type="checkbox" id="de_easy_nicepay_paycopay" name="de_easy_pays[]" value="nicepay_paycopay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_paycopay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_paycopay">페이코</label><br>
-                <input type="checkbox" id="de_easy_nicepay_skpay" name="de_easy_pays[]" value="nicepay_skpay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_skpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_skpay">SK페이</label><br>
-                <input type="checkbox" id="de_easy_nicepay_ssgpay" name="de_easy_pays[]" value="nicepay_ssgpay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_ssgpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_ssgpay">SSG페이</label><br>
-                <input type="checkbox" id="de_easy_nicepay_lpay" name="de_easy_pays[]" value="nicepay_lpay" <?php if(stripos($default['de_easy_pay_services'], 'nicepay_lpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nicepay_lpay">LPAY</label>
+                <?php foreach (shop_easypay_catalog('nicepay') as $easy_key => $easy_provider) { ?>
+                <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
+                <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
+                <?php } ?>
             </td>
         </tr>
 

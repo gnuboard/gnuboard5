@@ -364,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_inicis_pro_monitor_message` varchar(255) NOT NULL DEFAULT '',
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_easy_pay_use` tinyint(4) NOT NULL DEFAULT '0',
-  `de_easy_pay_services` varchar(255) NOT NULL DEFAULT '',
+  `de_easy_pay_services` varchar(1024) NOT NULL DEFAULT '',
   `de_samsung_pay_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_inicis_lpay_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_inicis_kakaopay_use` tinyint(4) NOT NULL DEFAULT '0',

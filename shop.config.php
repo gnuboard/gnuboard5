@@ -37,6 +37,8 @@ if (G5_HTTPS_DOMAIN) {
 
 // 쇼핑몰 설정값 배열변수
 $default = sql_fetch(" select * from {$g5['g5_shop_default_table']} ");
+include_once(G5_LIB_PATH.'/shop.easypay.lib.php');
+$default = shop_easypay_normalize($default);
 
 if(!defined('_THEME_PREVIEW_')) {
     // 테마 경로 설정

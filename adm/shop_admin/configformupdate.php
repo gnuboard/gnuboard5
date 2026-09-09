@@ -88,15 +88,16 @@ if(isset($_POST['de_taxsave_types_transfer']) && $_POST['de_taxsave_types_transf
 	$de_taxsave_types .= ',transfer';
 }
 
-// NHN_KCP 간편결제 체크
-$de_easy_pay_services = '';
-if(isset($_POST['de_easy_pays'])){
-    $tmps = array();
-    foreach( (array) $_POST['de_easy_pays'] as $v ){
-        $tmps[] = preg_replace('/[^0-9a-z_\-]/i', '', $v);
-    }
-    $de_easy_pay_services = implode(",", $tmps);
+// 알려진 PG별 간편결제 설정만 저장한다. 선택 해제도 명시적으로 보존한다.
+$easy_allowed = array('global_nhnkcp_naverpay', 'used_nhnkcp_naverpay_point');
+foreach (array('kcp', 'inicis', 'toss', 'nicepay') as $easy_pg) {
+    $easy_allowed = array_merge($easy_allowed, array_keys(shop_easypay_catalog($easy_pg)));
 }
+$easy_selected = array();
+foreach (isset($_POST['de_easy_pays']) ? (array) $_POST['de_easy_pays'] : array() as $easy_key) {
+    if (is_string($easy_key) && in_array($easy_key, $easy_allowed, true)) $easy_selected[] = $easy_key;
+}
+$de_easy_pay_services = implode(',', array_unique(array_merge($easy_selected, array('inicis_configured', 'toss_configured'))));
 
 //KVE-2019-0689, KVE-2019-0691, KVE-2019-0694
 $check_sanitize_keys = array(
@@ -262,6 +263,11 @@ foreach( $check_sanitize_keys as $key ){
     } else {
         $$key = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
+}
+
+// 구버전 결제 코드 및 기존 스킨과의 호환을 위해 개별 컬럼도 동기화한다.
+foreach (shop_easypay_legacy_keys() as $easy_key => $legacy_key) {
+    $$legacy_key = (int) in_array($easy_key, $easy_selected, true);
 }
 
 $de_inicis_pro_use = !empty($de_inicis_pro_use) ? 1 : 0;

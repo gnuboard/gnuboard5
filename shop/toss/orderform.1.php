@@ -66,12 +66,14 @@ async function launchCrossPlatform(frm) {
         // 신용카드
         paymentOptions.card = {
             flowMode: frm.cardflowMode.value, // 통합결제창 여는 옵션
-            easyPay: frm.cardeasyPay.value,
             useCardPoint: frm.cardUseCardPoint.value == "true" ? true : false,
             useAppCardOnly: frm.cardUseAppCardOnly.value == "true" ? true : false,            
             useEscrow: frm.cardUseEscrow.value == "true" ? true : false,
         };
 
+        if (frm.cardflowMode.value === 'DIRECT' && frm.cardeasyPay.value) {
+            paymentOptions.card.easyPay = frm.cardeasyPay.value;
+        }
         // escrowProducts 추가
         addEscrowProducts(paymentOptions.card);
     } else if (frm.method.value == 'VIRTUAL_ACCOUNT') {

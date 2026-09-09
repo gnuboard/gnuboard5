@@ -2448,6 +2448,12 @@ function is_use_easypay($payname=''){
 
     $de_easy_pay_service_array = (isset($default['de_easy_pay_services']) && $default['de_easy_pay_services']) ? explode(',', $default['de_easy_pay_services']) : array();
 
+    // 기본 PG에서 계약·사용 설정한 네이버페이를 우선한다.
+    $pg_easypay_catalog = shop_easypay_catalog($default['de_pg_service']);
+    if ($payname === 'global_nhnkcp' && isset($pg_easypay_catalog[$default['de_pg_service'].'_naverpay']) && shop_easypay_enabled($default['de_pg_service'].'_naverpay')) {
+        return false;
+    }
+
     if($payname === 'global_nhnkcp' && $de_easy_pay_service_array && ('kcp' !== $default['de_pg_service'])){      // NHN_KCP 외 타PG 사용시
         if( in_array('global_nhnkcp_naverpay', $de_easy_pay_service_array) && ($default['de_card_test'] || (!$default['de_card_test'] && $default['de_kcp_mid'] && $default['de_kcp_site_key']) ) ){
             return true;

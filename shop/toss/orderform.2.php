@@ -11,7 +11,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="cardUseEscrow"    value="false">
 <input type="hidden" name="escrowProducts"    value=''>
 <input type="hidden" name="cardflowMode"    value="DEFAULT">
-<input type="hidden" name="cardeasyPay"    value="PAYCO">
+<input type="hidden" name="cardeasyPay"    value="">
 <input type="hidden" name="cardUseCardPoint"    value="false">
 <input type="hidden" name="cardUseAppCardOnly"    value="false">
 <input type="hidden" name="amountCurrency"    value="KRW">
