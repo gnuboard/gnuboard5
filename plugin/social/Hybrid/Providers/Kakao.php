@@ -73,7 +73,7 @@ class Hybrid_Providers_Kakao extends Hybrid_Provider_Model_OAuth2
     function getUserProfile()
     {
         //$params = array('property_keys'=>'kaccount_email');	// v1 parameter
-        $params = array('property_keys'=>array('kakao_account.email'));		// v2 parameter
+        $params = array('property_keys'=>json_encode(array('kakao_account.profile', 'kakao_account.email', 'kakao_account.phone_number')));		// v2 parameter
 
         $this->api->decode_json = false;
         $this->api->curl_header = array( 'Authorization: Bearer ' . $this->api->access_token );
@@ -85,8 +85,11 @@ class Hybrid_Providers_Kakao extends Hybrid_Provider_Model_OAuth2
         }
         # store the user profile.
         $this->user->profile->identifier  = @ $data->id;
-        $this->user->profile->displayName = @ $data->properties->nickname;
-        $this->user->profile->photoURL    = @ $data->properties->thumbnail_image;
+        $this->user->profile->displayName = isset($data->kakao_account->profile->nickname) ? $data->kakao_account->profile->nickname : '';
+        $this->user->profile->photoURL    = isset($data->kakao_account->profile->thumbnail_image_url) ? $data->kakao_account->profile->thumbnail_image_url : '';
+        $phone = isset($data->kakao_account->phone_number) ? $data->kakao_account->phone_number : '';
+        // 국내 국가번호를 제거하고 생략된 맨 앞의 0을 복원한다.
+        $this->user->profile->phone = preg_replace('/^\+82[\s-]*0?/', '0', trim($phone));
         //$email = @ $data->properties->kaccount_email;	// v1 version
         
         $email = @ $data->kakao_account->email;   // v2 version

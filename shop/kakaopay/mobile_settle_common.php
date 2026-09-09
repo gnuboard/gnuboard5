@@ -1,4 +1,3 @@
 <?php
-include_once('./_common.php');
-
-// 카카오페이 (KG 이니시스) 의 경우 NOTI 과정이 없으므로 이 페이지를 사용하지 않습니다.
+// 이전 결제창의 요청을 성공 처리하지 않고 종료 안내를 반환한다.
+require dirname(__FILE__) . '/retired.php';

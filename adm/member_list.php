@@ -275,6 +275,8 @@ $colspan = 16;
                             <?php
                             if ($leave_msg || $intercept_msg) {
                                 echo $leave_msg . ' ' . $intercept_msg;
+                            } else if ($config['cf_use_email_certify'] && !preg_match('/[1-9]/', $row['mb_email_certify'])) {
+                                echo '<span class="txt_false">메일 미인증</span>';
                             } else {
                                 echo "정상";
                             }

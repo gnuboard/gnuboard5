@@ -140,12 +140,6 @@ $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
 // 주문삭제 히스토리 테이블 필드 추가
-if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_delete_table']}`
-                    ADD `mb_id` varchar(20) NOT NULL DEFAULT '' AFTER `de_data`,
-                    ADD `de_ip` varchar(255) NOT NULL DEFAULT '' AFTER `mb_id`,
-                    ADD `de_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `de_ip` ", true);
-}
 
 if( function_exists('pg_setting_check') ){
 	pg_setting_check(true);

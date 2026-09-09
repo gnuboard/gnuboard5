@@ -334,7 +334,6 @@ if( !function_exists('shop_check_is_pay_page') ){
             $mobile_dir.'/'.$shop_dir.'/lg/returnurl.php',
             $mobile_dir.'/'.$shop_dir.'/lg/xpay_approval.php',
             $mobile_dir.'/'.$shop_dir.'/kcp/order_approval_form.php',
-            $shop_dir.'/kakaopay/inicis_kk_return.php',     // 이니시스 카카오페이 (SIRK 로 시작하는 아이디 전용)
             $plugin_dir."/inicert/ini_result.php", // 이니시스 간편인증 모듈 2021-09-10 http <-> https 간 세션 공유 문제로 인해 추가
             $plugin_dir."/inicert/ini_find_result.php", // 이니시스 간편인증 모듈 2021-09-10 http <-> https 간 세션 공유 문제로 인해 추가
         );
@@ -831,7 +830,9 @@ if (G5_IS_MOBILE) {
 
 
 // 방문자수의 접속을 남김
-include_once(G5_BBS_PATH.'/visit_insert.inc.php');
+if (!defined('G5_IS_CLI') || !G5_IS_CLI) {
+    include_once(G5_BBS_PATH.'/visit_insert.inc.php');
+}
 
 
 // 일정 기간이 지난 DB 데이터 삭제 및 최적화

@@ -1,5 +1,11 @@
 <?php
 include_once('./_common.php');
+
+// 구 주문서나 직접 POST로도 SIRK 전용 결제를 다시 시작하지 않는다.
+if (isset($od_settle_case) && $od_settle_case === 'KAKAOPAY') {
+    alert('이 결제 방식은 더 이상 지원하지 않습니다. 다른 결제수단을 선택해 주십시오.');
+}
+
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 // CSRF 방지: 무통장입금만 Origin/Referer 검증 (PG 결제는 PG사에서 검증하므로 제외)
@@ -19,13 +25,13 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') && isset
 
 if(function_exists('add_order_post_log')) add_order_post_log('init', 'init');
 
-if(($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') && $default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY']){
+if(($od_settle_case != '무통장') && $default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY']){
     if(function_exists('add_order_post_log')) add_order_post_log('결제등록 요청 후 주문해 주십시오.');
     alert('결제등록 요청 후 주문해 주십시오.');
 }
 
 // 토스 v2 대응
-if(($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') && $default['de_pg_service'] == 'toss' && !$_POST['paymentKey']){
+if(($od_settle_case != '무통장') && $default['de_pg_service'] == 'toss' && !$_POST['paymentKey']){
     if(function_exists('add_order_post_log')) add_order_post_log('결제등록 요청 후 주문해 주십시오.');
     alert('결제등록 요청 후 주문해 주십시오.');
 }
@@ -39,15 +45,6 @@ else
 if (get_cart_count($tmp_cart_id) == 0) {    // 장바구니에 담기
     if(function_exists('add_order_post_log')) add_order_post_log('장바구니가 비어 있습니다.');
     alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
-}
-
-$sql = "select * from {$g5['g5_shop_order_table']} limit 1";
-$check_tmp = sql_fetch($sql);
-
-if(!isset($check_tmp['od_other_pay_type'])){
-    $sql = "ALTER TABLE `{$g5['g5_shop_order_table']}` 
-            ADD COLUMN `od_other_pay_type` VARCHAR(100) NOT NULL DEFAULT '' AFTER `od_settle_case`; ";
-    sql_query($sql, false);
 }
 
 // 변수 초기화
@@ -522,29 +519,12 @@ else if ($od_settle_case == "간편결제" || (in_array($od_settle_case, array("
     if($od_misu == 0)
         $od_status      = '입금';
 }
-else if ($od_settle_case == "KAKAOPAY")
-{
-    include G5_SHOP_PATH.'/kakaopay/kakaopay_result.php';
-
-    $od_tno             = $tno;
-    $od_app_no          = $app_no;
-    $od_receipt_price   = $amount;
-    $od_receipt_point   = $i_temp_point;
-    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
-    $od_bank_account    = $card_name;
-    $pg_price           = $amount;
-    $od_misu            = $i_price - $od_receipt_price;
-    if($od_misu == 0)
-        $od_status      = '입금';
-}
 else
 {
     die("od_settle_case Error!!!");
 }
 
 $od_pg = $default['de_pg_service'];
-if($od_settle_case == 'KAKAOPAY')
-    $od_pg = 'KAKAOPAY';
 
 $tno = isset($tno) ? $tno : '';
 $od_receipt_time = isset($od_receipt_time) ? $od_receipt_time : '';

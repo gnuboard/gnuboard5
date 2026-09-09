@@ -2696,6 +2696,121 @@ function get_email_cert_key($mb_id, $mb_datetime)
     return hash_hmac('sha256', $payload, $key);
 }
 
+// 보안 메일은 요청 헤더가 아닌 운영자가 지정한 공개 URL만 사용한다.
+function g5_security_mail_base_url($domain = null)
+{
+    if ($domain === null) {
+        $domain = defined('G5_DOMAIN') ? G5_DOMAIN : '';
+    }
+    if (!is_string($domain) || $domain === '' || preg_match('/[\x00-\x20\x7f\\\\<>"\']/', $domain)) {
+        return false;
+    }
+    $parts = @parse_url($domain);
+    if (!$parts || empty($parts['scheme']) || !in_array(strtolower($parts['scheme']), array('http', 'https'), true)
+        || empty($parts['host']) || isset($parts['user']) || isset($parts['pass'])
+        || isset($parts['query']) || isset($parts['fragment'])) {
+        return false;
+    }
+    // 호스트에는 포트 구분용 IPv6 대괄호 외의 URL 구문을 허용하지 않는다.
+    $host = $parts['host'];
+    if ($host[0] === '[') {
+        if (substr($host, -1) !== ']' || !filter_var(substr($host, 1, -1), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) return false;
+    } elseif (!preg_match('/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9.])?$/i', $host)) {
+        return false;
+    }
+    if ($host[0] !== '[') {
+        if (strlen($host) > 254) return false;
+        $hostname = substr($host, -1) === '.' ? substr($host, 0, -1) : $host;
+        foreach (explode('.', $hostname) as $label) {
+            if (!preg_match('/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i', $label)) return false;
+        }
+    }
+    if (isset($parts['port']) && ($parts['port'] < 1 || $parts['port'] > 65535)) return false;
+    if (isset($parts['path']) && (preg_match('/%(?:0[0-9a-f]|1[0-9a-f]|7f|2f|5c)/i', $parts['path'])
+        || preg_match('~(?:^|/)(?:\.|%2e){1,2}(?:/|$)~i', $parts['path']))) return false;
+
+    return rtrim($domain, '/');
+}
+
+function g5_require_security_mail_url()
+{
+    $url = g5_security_mail_base_url();
+    if ($url === false) {
+        error_log('[g5 security mail] Valid G5_DOMAIN is required.');
+        alert('메일 인증을 위한 사이트 주소가 설정되지 않았습니다. 사이트 관리자에게 문의해 주십시오.');
+    }
+    return $url;
+}
+
+// 발급 시각을 포함한 메일 인증용 일회용 토큰을 생성한다.
+function get_email_certify_token()
+{
+    return get_random_token_string(16) . '.' . G5_SERVER_TIME;
+}
+
+// 기존 형식 또는 폐기된 토큰은 회원가입 시각을 기준으로 한다.
+function get_email_certify_issued_at($stored_token, $mb_datetime)
+{
+    if (preg_match('/\.([0-9]{10})$/', $stored_token, $matches)) {
+        return (int) $matches[1];
+    }
+
+    return strtotime($mb_datetime);
+}
+
+/**
+ * 메일 인증 토큰의 일치 여부와 유효시간을 확인한다.
+ *
+ * 발급 시각이 없는 기존 토큰은 회원가입 시각을 기준으로 만료 여부를 확인한다.
+ *
+ * @param string $token
+ * @param string $stored_token
+ * @param string $mb_datetime
+ * @param int $valid_minutes
+ * @param int|null $now
+ * @return bool
+ */
+function is_valid_email_certify_token($token, $stored_token, $mb_datetime, $valid_minutes, $now = null)
+{
+    if (!$token || !$stored_token || !slow_equals((string) $stored_token, (string) $token)) {
+        return false;
+    }
+
+    $valid_minutes = (int) $valid_minutes;
+    if ($valid_minutes < 1) {
+        return true;
+    }
+
+    $issued_at = get_email_certify_issued_at($stored_token, $mb_datetime);
+
+    if (!$issued_at) {
+        return false;
+    }
+
+    $now = $now === null ? G5_SERVER_TIME : (int) $now;
+
+    return $issued_at + ($valid_minutes * 60) >= $now;
+}
+
+// 인증 완료·탈퇴·삭제 회원과 만료시간을 사용하지 않는 사이트는 제외한다.
+function is_expired_email_certify_member($mb, $now = null)
+{
+    global $config;
+
+    $valid_minutes = isset($config['cf_email_certify_minutes']) ? (int) $config['cf_email_certify_minutes'] : 60;
+    if (!$config['cf_use_email_certify'] || $valid_minutes < 1 || empty($mb['mb_id'])
+        || $mb['mb_id'] === $config['cf_admin'] || !empty($mb['mb_leave_date'])
+        || preg_match('/[1-9]/', $mb['mb_email_certify'])
+        || preg_match('#^[0-9]{8}.*삭제함#', $mb['mb_memo'])) {
+        return false;
+    }
+
+    $issued_at = get_email_certify_issued_at($mb['mb_email_certify2'], $mb['mb_datetime']);
+    $now = $now === null ? G5_SERVER_TIME : (int) $now;
+
+    return $issued_at > 0 && $issued_at + ($valid_minutes * 60) < $now;
+}
+
 /**
  * CSRF 방지용 Origin/Referer 검증 (OWASP 권장 패턴).
  *
@@ -3615,21 +3730,6 @@ function insert_member_cert_history($mb_id, $name, $hp, $birth, $type)
         $g5['member_cert_history_table'] = G5_TABLE_PREFIX.'member_cert_history';
     }
     
-    // 멤버 본인인증 정보 변경 내역 테이블 없을 경우 생성
-    if(isset($g5['member_cert_history_table']) && !sql_query(" DESC {$g5['member_cert_history_table']} ", false)) {
-        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['member_cert_history_table']}` (
-                        `ch_id` int(11) NOT NULL auto_increment,
-                        `mb_id` varchar(20) NOT NULL DEFAULT '',
-                        `ch_name` varchar(255) NOT NULL DEFAULT '',
-                        `ch_hp` varchar(255) NOT NULL DEFAULT '',
-                        `ch_birth` varchar(255) NOT NULL DEFAULT '',
-                        `ch_type` varchar(20) NOT NULL DEFAULT '',
-                        `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-                        PRIMARY KEY (`ch_id`),
-                        KEY `mb_id` (`mb_id`)
-                    ) ", true);
-    }
-
     $sql = " insert into {$g5['member_cert_history_table']}
                 set mb_id = '{$mb_id}',
                     ch_name = '{$name}',
@@ -4016,6 +4116,50 @@ function conv_unescape_nl($str)
     return str_replace($search, $replace, $str);
 }
 
+// 자진 탈퇴와 메일 미인증 만료 정리에서 동일한 탈퇴 처리를 사용한다.
+function g5_leave_member($mb_id, $expired_email_only = false)
+{
+    global $config, $g5;
+
+    $mb = get_member($mb_id);
+    if (empty($mb['mb_id']) || $mb['mb_id'] === $config['cf_admin'] || !empty($mb['mb_leave_date'])
+        || preg_match('#^[0-9]{8}.*삭제함#', $mb['mb_memo'])) {
+        return false;
+    }
+
+    $condition = '';
+    if ($expired_email_only) {
+        if (!is_expired_email_certify_member($mb)) {
+            return false;
+        }
+
+        // 조회 이후 인증 완료·재발송·회원정보 변경이 있었다면 탈퇴시키지 않는다.
+        foreach (array('mb_email_certify', 'mb_email_certify2', 'mb_datetime', 'mb_email') as $field) {
+            $condition .= " and {$field} = '".sql_real_escape_string($mb[$field])."'";
+        }
+    }
+
+    $date = date('Ymd', G5_SERVER_TIME);
+    $memo = $date . ($expired_email_only ? ' 메일 미인증 만료로 탈퇴함' : ' 탈퇴함') . "\n";
+    $esc_mb_id = sql_real_escape_string($mb['mb_id']);
+    $sql = " update {$g5['member_table']}
+                set mb_leave_date = '{$date}',
+                    mb_memo = CONCAT('".sql_real_escape_string($memo)."', IFNULL(mb_memo, '')),
+                    mb_certify = '', mb_adult = 0, mb_dupinfo = '',
+                    mb_email_certify2 = '', mb_lost_certify = ''
+              where mb_id = '{$esc_mb_id}' and mb_leave_date = '' {$condition} ";
+    if (!sql_query($sql) || get_sql_affected_rows() < 1) {
+        return false;
+    }
+
+    run_event('member_leave', $mb);
+    if (function_exists('social_member_link_delete')) {
+        social_member_link_delete($mb['mb_id']);
+    }
+
+    return true;
+}
+
 // 회원 삭제
 function member_delete($mb_id)
 {
@@ -4092,7 +4236,18 @@ function get_safe_filename($name)
     return $name;
 }
 
-// 업로드 파일명이 SVG 또는 SVGZ 확장자인지 확인
+// 브라우저에서 실행될 수 있는 첨부 확장자를 저장 전에 거부한다.
+function is_disallowed_active_filename($filename)
+{
+    if (!is_string($filename)) return true;
+    if (preg_match('/[\x00-\x1f\x7f]/', $filename)) return true;
+    $filename = basename(str_replace('\\', '/', $filename));
+    $filename = rtrim($filename, ' .');
+    // 다중 확장자 및 Windows 대체 데이터 스트림 표기도 차단한다.
+    return (bool) preg_match('/\.(?:svgz?|xhtml|xht|xml|xsl|xslt|mht|mhtml|htc)(?:[. :]|$)/i', $filename);
+}
+
+// 기존 스킨 및 플러그인과의 호환을 위한 SVG 검사 함수
 function is_disallowed_svg_filename($filename)
 {
     if (!is_string($filename) || $filename === '') {
@@ -4186,21 +4341,6 @@ function login_password_check($mb, $pass, $hash)
 
     if(!$mb_id)
         return false;
-
-    if(G5_STRING_ENCRYPT_FUNCTION === 'create_hash' && (strlen($hash) === G5_MYSQL_PASSWORD_LENGTH || strlen($hash) === 16)) {
-        if( sql_password($pass) === $hash ){
-
-            if( ! isset($mb['mb_password2']) ){
-                $sql = "ALTER TABLE `{$g5['member_table']}` ADD `mb_password2` varchar(255) NOT NULL default '' AFTER `mb_password`";
-                sql_query($sql);
-            }
-            
-            $new_password = create_hash($pass);
-            $sql = " update {$g5['member_table']} set mb_password = '$new_password', mb_password2 = '$hash' where mb_id = '$mb_id' ";
-            sql_query($sql);
-            return true;
-        }
-    }
 
     return check_password($pass, $hash);
 }
@@ -4562,7 +4702,29 @@ function get_sql_affected_rows($link=null)
     }
 }
 
-// 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
+// 비회원의 기존 비밀번호 확인 이력을 게시판과 게시물에 결합한다.
+function g5_write_edit_auth_key($bo_table, $wr_id)
+{
+    return 'ss_write_edit_'.hash('sha256', $bo_table.':'.(int)$wr_id);
+}
+
+function g5_grant_write_edit_auth($bo_table, $write)
+{
+    set_session(g5_write_edit_auth_key($bo_table, $write['wr_id']), array(
+        'expires' => G5_SERVER_TIME + 1800,
+        'password' => hash('sha256', $write['wr_password'])
+    ));
+}
+
+function g5_has_write_edit_auth($bo_table, $write)
+{
+    $auth = get_session(g5_write_edit_auth_key($bo_table, $write['wr_id']));
+    return empty($write['mb_id']) && is_array($auth) && isset($auth['expires'], $auth['password'])
+        && $auth['expires'] >= G5_SERVER_TIME
+        && slow_equals(hash('sha256', $write['wr_password']), $auth['password']);
+}
+
+// 글쓰기 요청의 CSRF 토큰을 발급한다. 수정 권한은 별도로 확인한다.
 function get_write_token($bo_table)
 {
     $token = get_random_token_string(16);
@@ -4581,7 +4743,8 @@ function check_write_token($bo_table)
     $token = get_session('ss_write_'.$bo_table.'_token');
     set_session('ss_write_'.$bo_table.'_token', '');
 
-    if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
+    if (!is_string($token) || !$token || !isset($_POST['token']) || !is_string($_POST['token'])
+        || !slow_equals($token, $_POST['token']))
         alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
     return true;

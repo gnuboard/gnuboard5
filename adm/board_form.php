@@ -13,81 +13,20 @@ if (!$row['cnt']) {
 
 $html_title = '게시판';
 
-if (!isset($board['bo_device'])) {
-    // 게시판 사용 필드 추가
-    // both : pc, mobile 둘다 사용
-    // pc : pc 전용 사용
-    // mobile : mobile 전용 사용
-    // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g5['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
-}
 
-if (!isset($board['bo_mobile_skin'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
-}
 
-if (!isset($board['bo_gallery_width'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
-}
 
-if (!isset($board['bo_mobile_subject_len'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_subject_len` INT(11) NOT NULL DEFAULT '0' AFTER `bo_subject_len` ", false);
-}
 
-if (!isset($board['bo_mobile_page_rows'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_page_rows` INT(11) NOT NULL DEFAULT '0' AFTER `bo_page_rows` ", false);
-}
 
-if (!isset($board['bo_mobile_content_head'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_content_head` TEXT NOT NULL AFTER `bo_content_head`, ADD `bo_mobile_content_tail` TEXT NOT NULL AFTER `bo_content_tail`", false);
-}
 
-if (!isset($board['bo_use_cert'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' AFTER `bo_use_email` ", false);
-}
 
-if (!isset($board['bo_use_sns'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_sns` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_cert` ", false);
-
-    $result = sql_query(" select bo_table from `{$g5['board_table']}` ");
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(
-            " ALTER TABLE `{$g5['write_prefix']}{$row['bo_table']}`
-                    ADD `wr_facebook_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_ip`,
-                    ADD `wr_twitter_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_facebook_user` ", false
-        );
-    }
-}
 
 $sql = " SHOW COLUMNS FROM `{$g5['board_table']}` LIKE 'bo_use_cert' ";
 $row = sql_fetch($sql);
-if (strpos($row['Type'], 'hp-') === false) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '' ", false);
-}
 
-if (!isset($board['bo_use_list_file'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_list_file` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_list_view` ", false);
 
-    $result = sql_query(" select bo_table from `{$g5['board_table']}` ");
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(
-            " ALTER TABLE `{$g5['write_prefix']}{$row['bo_table']}`
-                    ADD `wr_file` TINYINT NOT NULL DEFAULT '0' AFTER `wr_datetime` ", false
-        );
-    }
-}
 
-if (!isset($board['bo_mobile_subject'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_subject` ", false);
-}
 
-if (!isset($board['bo_use_captcha'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ", false);
-}
-
-if (!isset($board['bo_select_editor'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_select_editor` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_dhtml_editor` ", false);
-}
 
 $board_default = array(
 'bo_mobile_subject'=>'',

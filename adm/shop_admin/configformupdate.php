@@ -19,8 +19,8 @@ $logo_img_fields = array('logo_img', 'logo_img2', 'mobile_logo_img', 'mobile_log
 foreach ($logo_img_fields as $logo_img_field) {
     if (isset($_FILES[$logo_img_field]['name']) && $_FILES[$logo_img_field]['name']) {
         $filename = get_safe_filename($_FILES[$logo_img_field]['name']);
-        if (is_disallowed_svg_filename($filename)) {
-            alert('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        if (is_disallowed_active_filename($filename)) {
+            alert('허용되지 않는 파일 확장자입니다.');
         }
     }
 }
@@ -88,15 +88,16 @@ if(isset($_POST['de_taxsave_types_transfer']) && $_POST['de_taxsave_types_transf
 	$de_taxsave_types .= ',transfer';
 }
 
-// NHN_KCP 간편결제 체크
-$de_easy_pay_services = '';
-if(isset($_POST['de_easy_pays'])){
-    $tmps = array();
-    foreach( (array) $_POST['de_easy_pays'] as $v ){
-        $tmps[] = preg_replace('/[^0-9a-z_\-]/i', '', $v);
-    }
-    $de_easy_pay_services = implode(",", $tmps);
+// 알려진 PG별 간편결제 설정만 저장한다. 선택 해제도 명시적으로 보존한다.
+$easy_allowed = array('global_nhnkcp_naverpay', 'used_nhnkcp_naverpay_point');
+foreach (array('kcp', 'inicis', 'toss', 'nicepay') as $easy_pg) {
+    $easy_allowed = array_merge($easy_allowed, array_keys(shop_easypay_catalog($easy_pg)));
 }
+$easy_selected = array();
+foreach (isset($_POST['de_easy_pays']) ? (array) $_POST['de_easy_pays'] : array() as $easy_key) {
+    if (is_string($easy_key) && in_array($easy_key, $easy_allowed, true)) $easy_selected[] = $easy_key;
+}
+$de_easy_pay_services = implode(',', array_unique(array_merge($easy_selected, array('inicis_configured', 'toss_configured'))));
 
 //KVE-2019-0689, KVE-2019-0691, KVE-2019-0694
 $check_sanitize_keys = array(
@@ -189,11 +190,6 @@ $check_sanitize_keys = array(
 'de_inicis_cartpoint_use',      //KG이니시스 신용카드 포인트 결제
 'de_nicepay_mid',               //NICEPAY 상점아이디
 'de_nicepay_key',               //NICEPAY 상점키
-'de_kakaopay_mid',              //카카오페이 상점MID
-'de_kakaopay_key',              //카카오페이 상점키
-'de_kakaopay_enckey',           //카카오페이 상점 EncKey
-'de_kakaopay_hashkey',          //카카오페이 상점 HashKey
-'de_kakaopay_cancelpwd',        //카카오페이 결제취소 비밀번호
 'de_naverpay_mid',              //네이버페이 가맹점 아이디
 'de_naverpay_cert_key',         //네이버페이 가맹점 인증키
 'de_naverpay_button_key',       //네이버페이 버튼 인증키
@@ -269,6 +265,11 @@ foreach( $check_sanitize_keys as $key ){
     }
 }
 
+// 구버전 결제 코드 및 기존 스킨과의 호환을 위해 개별 컬럼도 동기화한다.
+foreach (shop_easypay_legacy_keys() as $easy_key => $legacy_key) {
+    $$legacy_key = (int) in_array($easy_key, $easy_selected, true);
+}
+
 $de_inicis_pro_use = !empty($de_inicis_pro_use) ? 1 : 0;
 $de_inicis_hash_key = preg_replace('/[^A-Za-z0-9+\/=_-]/', '', $de_inicis_hash_key);
 
@@ -300,11 +301,6 @@ if($de_pg_service == 'kcp' && ! $de_card_test && ($de_iche_use || $de_vbank_use 
         alert('NHN KCP SITE KEY를 입력해 주십시오.');
 }
 
-if( $de_kakaopay_enckey && ($de_pg_service === 'inicis' || $de_inicis_lpay_use || $de_inicis_kakaopay_use) ){
-    
-    $warning_msg = 'KG 이니시스 결제 또는 L.pay 또는 KG이니시스 카카오페이를 사용시 결제모듈 중복문제로 카카오페이를 활성화 할수 없습니다. \\n\\n카카오페이 사용을 비활성화 합니다.';
-    $de_kakaopay_enckey = '';
-}
 
 //
 // 영카트 default
@@ -481,11 +477,6 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_hp_use                     = '{$de_hp_use}',
                 de_escrow_use                 = '{$de_escrow_use}',
                 de_tax_flag_use               = '{$de_tax_flag_use}',
-                de_kakaopay_mid               = '{$de_kakaopay_mid}',
-                de_kakaopay_key               = '{$de_kakaopay_key}',
-                de_kakaopay_enckey            = '{$de_kakaopay_enckey}',
-                de_kakaopay_hashkey           = '{$de_kakaopay_hashkey}',
-                de_kakaopay_cancelpwd         = '{$de_kakaopay_cancelpwd}',
                 de_member_reg_coupon_use      = '{$de_member_reg_coupon_use}',
                 de_member_reg_coupon_term     = '{$de_member_reg_coupon_term}',
                 de_member_reg_coupon_price    = '{$de_member_reg_coupon_price}',

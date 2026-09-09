@@ -27,6 +27,10 @@ if(! (isset($od['od_id']) && $od['od_id']))
 if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
     alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 
+if ($od['od_pg'] === 'KAKAOPAY') {
+    alert_close('SIRK 전용 카카오페이의 자동 취소 지원이 종료되었습니다. 이니시스 상점관리자에서 실제 취소 후 주문 상태와 환불금액을 확인해 주십시오.');
+}
+
 // 금액비교
 $od_misu = abs($od['od_misu']);
 

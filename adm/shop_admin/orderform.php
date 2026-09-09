@@ -76,27 +76,10 @@ $sql = " select it_id,
 $result = sql_query($sql);
 
 // 주소 참고항목 필드추가
-if(!isset($od['od_addr3'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
-                    ADD `od_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `od_addr2`,
-                    ADD `od_b_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `od_b_addr2` ", true);
-}
 
 // 배송목록에 참고항목 필드추가
-if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_address_table']}`
-                    ADD `ad_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `ad_addr2` ", true);
-}
 
 // 결제 PG 필드 추가
-if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
-                    ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile`,
-                    ADD `od_casseqno` varchar(255) NOT NULL DEFAULT '' AFTER `od_escrow` ", true);
-
-    // 주문 결제 PG kcp로 설정
-    sql_query(" update {$g5['g5_shop_order_table']} set od_pg = 'kcp' ");
-}
 
 // LG 현금영수증 JS
 if($od['od_pg'] == 'lg') {
@@ -256,6 +239,13 @@ if ($is_nicepay_vbank_pg_cancel) {
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page;?>">
     <input type="hidden" name="pg_cancel" value="0">
+    <?php if ($od['od_pg'] === 'KAKAOPAY') { ?>
+    <div class="local_desc01 local_desc">
+        <p>SIRK 전용 카카오페이의 자동 취소 지원이 종료되었습니다. <a href="https://iniweb.inicis.com/" target="_blank" rel="noopener noreferrer">이니시스 상점관리자</a>에서 전체·부분취소를 처리한 뒤 주문 상태와 환불금액을 정리해 주십시오. 이 화면의 상태 변경은 PG 취소를 수행하지 않습니다.</p>
+        <p>기존 이용 고객 지원: 김민섭 <a href="mailto:minsup@sir.kr">minsup@sir.kr</a></p>
+        <label><input type="checkbox" name="sirk_cancel_confirmed" value="1"> 이니시스에서 실제 취소 여부와 금액을 확인했습니다. 선택한 상품의 주문 상태만 변경합니다.</label>
+    </div>
+    <?php } ?>
     <input type="hidden" name="submit_ct_status" value="">
     <?php if ($is_nicepay_vbank_pg_cancel) { ?>
     <input type="hidden" name="RefundAcctNo" value="">
@@ -1035,7 +1025,7 @@ if ($is_nicepay_vbank_pg_cancel) {
         <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add" class="btn btn_02">개인결제추가</a>
         <?php } ?>
-        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY' || ($od['od_pg'] == 'nicepay' && $od['od_settle_case'] == '간편결제'))) { ?>
+        <?php if($od['od_pg'] !== 'KAKAOPAY' && $od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY' || ($od['od_pg'] == 'nicepay' && $od['od_settle_case'] == '간편결제'))) { ?>
         <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo get_text($od['od_settle_case']); ?> 부분취소</a>
         <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
@@ -1472,16 +1462,13 @@ function form_submit(f)
 
     var msg = "";
 
-    <?php if (is_cancel_shop_pg_order($od)) { ?>
+    <?php if ($od['od_pg'] !== 'KAKAOPAY' && is_cancel_shop_pg_order($od)) { ?>
     if(status == "취소" || status == "반품" || status == "품절") {
         var $ct_chk = $("input[name^=ct_chk]");
         var chk_cnt = $ct_chk.length;
         var chked_cnt = $ct_chk.filter(":checked").length;
-        <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
-        var cancel_pg = "카카오페이";
-        <?php } else { ?>
         var cancel_pg = "PG사의 <?php echo get_text($od['od_settle_case']); ?>";
-        <?php } ?>
+
 
         // 체크하지 않은 나머지 품목이 모두 취소류 상태이면 이번 처리로 주문 전체가 취소된다.
         var remain_active_cnt = $ct_chk.not(":checked").filter(function() {

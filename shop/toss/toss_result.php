@@ -56,7 +56,7 @@ if ($result) {
         if ($method === '카드') {
             // 카드
             $app_no = $od_app_no = isset($toss->responseData['card']['approveNo']) ? $toss->responseData['card']['approveNo'] : '00000000';
-            $card_name = isset($toss->cardCode[$toss->responseData['card']['issuerCode']]) ? $toss->cardCode[$toss->responseData['card']['issuerCode']] : '';            
+            $card_name = isset($toss->cardCode[$toss->responseData['card']['issuerCode']]) ? $toss->cardCode[$toss->responseData['card']['issuerCode']] : '';
         } else if ($method === '가상계좌') {
             // 가상계좌
             $bank_name = $bankname = isset($toss->bankCode[$toss->responseData['virtualAccount']['bankCode']]) ? $toss->bankCode[$toss->responseData['virtualAccount']['bankCode']] : '';
@@ -66,6 +66,16 @@ if ($result) {
             // 계좌이체
             $bank_name = isset($toss->bankCode[$toss->responseData['transfer']['bankCode']]) ? $toss->bankCode[$toss->responseData['transfer']['bankCode']] : '';
 
+        } else if ($method === '휴대폰') {
+            // 휴대폰
+            $mobile_no = isset($toss->responseData['mobilePhone']['customerMobilePhone']) ? $toss->responseData['mobilePhone']['customerMobilePhone'] : '';
+        } else if ($method === '간편결제') {
+            // 카드가 없는 전액 머니·포인트 결제도 승인번호 없이 정상 처리한다.
+            $app_no = $od_app_no = isset($toss->responseData['card']['approveNo']) ? $toss->responseData['card']['approveNo'] : '';
+            $provider = isset($toss->responseData['easyPay']['provider']) ? $toss->responseData['easyPay']['provider'] : '';
+            $card_name = isset($toss->easyPayCode[$provider]) ? $toss->easyPayCode[$provider] : $provider;
+        }
+        if (!empty($toss->responseData['cashReceipt'])) {
             // 현금영수증 데이터 처리
             $cashReceiptType = isset($toss->responseData['cashReceipt']['type']) ? $toss->responseData['cashReceipt']['type'] : '';
             $RcptType = $cashReceiptType === '소득공제' ? '1' : ($cashReceiptType === '지출증빙' ? '2' : '0');
@@ -79,14 +89,8 @@ if ($result) {
                 $pg_receipt_infos['od_cash_no'] = $RcptAuthCode;    // 현금영수증 승인번호
                 $pg_receipt_infos['od_cash_info'] = serialize(array('TID'=>$RcptTID, 'ApplNum'=>$RcptAuthCode, 'receiptUrl'=>$RcptReceiptUrl));
             }
-        } else if ($method === '휴대폰') {
-            // 휴대폰
-            $mobile_no = isset($toss->responseData['mobilePhone']['customerMobilePhone']) ? $toss->responseData['mobilePhone']['customerMobilePhone'] : '';            
-        } else if ($method === '간편결제') {
-            // 간편결제
-            $provider = isset($toss->responseData['easyPay']['provider']) ? $toss->responseData['easyPay']['provider'] : '';
-            $card_name = isset($toss->easyPayCode[$provider]) ? $toss->easyPayCode[$provider] : $provider;
         }
+
     } else {
 
         if(G5_IS_MOBILE) {

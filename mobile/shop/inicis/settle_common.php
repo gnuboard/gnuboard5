@@ -64,12 +64,6 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
     // 결과 incis log 테이블 기록
     if($P_TYPE == 'BANK' || $P_SRC_CODE == 'A') {
 
-        if(!sql_query(" select post_data from {$g5['g5_shop_inicis_log_table']} limit 1 ", false)) {
-            sql_query(" ALTER TABLE `{$g5['g5_shop_inicis_log_table']}`
-                            ADD `post_data` text NOT NULL AFTER `P_RMESG1`,
-                            ADD `is_mail_send` tinyint(4) NOT NULL DEFAULT '1' AFTER `post_data` ", false);
-        }
-
         $sql = " insert into {$g5['g5_shop_inicis_log_table']}
                     set oid       = '$P_OID',
                         P_TID     = '$P_TID',

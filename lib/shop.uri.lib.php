@@ -177,26 +177,6 @@ function add_shop_mod_rewrite_rules($rules, $get_path_url, $base_path, $return_s
 
 }
 
-function add_shop_admin_dbupgrade($is_check){
-    global $g5;
-
-    // 내용 관리 짧은 주소
-    $sql = " SHOW COLUMNS FROM `{$g5['g5_shop_item_table']}` LIKE 'it_seo_title' ";
-    $row = sql_fetch($sql);
-
-    if( !$row ){
-        sql_query("ALTER TABLE `{$g5['g5_shop_item_table']}`
-                    ADD `it_seo_title` varchar(200) NOT NULL DEFAULT '' AFTER `it_name`,
-                    ADD INDEX `it_seo_title` (`it_seo_title`);
-        ", false);
-
-        $is_check = true;
-    }
-
-    return $is_check;
-
-}
-
 function shop_exist_check_seo_title($seo_title, $type, $shop_item_table, $it_id){
     
     $sql = "select it_seo_title FROM {$shop_item_table} WHERE it_seo_title = '".sql_real_escape_string($seo_title)."' AND it_id <> '$it_id' limit 1";

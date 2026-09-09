@@ -25,7 +25,8 @@ $is_exists_social_account = social_before_join_check($url);
 $user_nick = social_relace_nick($user_profile->displayName);
 $user_email = isset($user_profile->emailVerified) ? $user_profile->emailVerified : $user_profile->email;
 $user_id = $user_profile->sid ? preg_replace("/[^0-9a-z_]+/i", "", $user_profile->sid) : get_social_convert_id($user_profile->identifier, $provider_name);
-$user_phone = $user_profile->phone;
+$user_phone = isset($user_profile->phone) ? $user_profile->phone : '';
+$user_phone = valid_mb_hp($user_phone) ? '' : hyphen_hp_number($user_phone);
 
 if(! $user_nick) {
     $tmp = explode('_', $user_id);

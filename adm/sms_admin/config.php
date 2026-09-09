@@ -10,12 +10,6 @@ if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.2
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
 // 아이코드 토큰키 추가
-if( ! isset($config['cf_icode_token_key']) ){
-    $sql = "ALTER TABLE `{$g5['config_table']}` 
-            ADD COLUMN `cf_icode_token_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_server_port`; ";
-    sql_query($sql, false);
-    $config['cf_icode_token_key'] = '';
-}
 
 // 배열코드 초기화
 $userinfo = array('payment'=>'', 'coin'=>'');

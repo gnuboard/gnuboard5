@@ -4,12 +4,17 @@ include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
 
+include_once('./date_filter.lib.php');
+$date_range = shop_admin_date_range($_GET);
+if ($date_range === false) {
+    http_response_code(400);
+    alert('조회 기간은 올바른 시작일과 종료일을 YYYYMMDD 형식으로 입력해 주십시오. 시작일은 종료일보다 늦을 수 없습니다.');
+}
+list($fr_date, $to_date) = $date_range;
+
 $g5['title'] = '보관함현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
-
-$fr_date = (isset($_GET['fr_date']) && preg_match("/[0-9]/", $_GET['fr_date'])) ? $_GET['fr_date'] : '';
-$to_date = (isset($_GET['to_date']) && preg_match("/[0-9]/", $_GET['to_date'])) ? $_GET['to_date'] : '';
 
 $doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
 $sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('mb_id', 'it_id', 'wi_time', 'wi_ip'))) ? $_GET['sort1'] : 'it_id_cnt';
@@ -47,7 +52,14 @@ $rank = ($page - 1) * $rows;
 $sql = $sql . " limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$qstr1 = $qstr.'&amp;fr_date='.$fr_date.'&amp;to_date='.$to_date.'&amp;sel_ca_id='.$sel_ca_id;
+// 검증된 날짜만 URL에 전달한다. 최초 조회의 빈 날짜는 링크에서 생략한다.
+$filter_query = array('sel_ca_id' => $sel_ca_id);
+if ($fr_date !== '' && $to_date !== '') {
+    $filter_query['fr_date'] = $fr_date;
+    $filter_query['to_date'] = $to_date;
+}
+$qstr1 = htmlspecialchars(http_build_query($filter_query, '', '&'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$paging_query = htmlspecialchars(http_build_query(array_merge($filter_query, array('sort1' => $sort1, 'sort2' => $sort2)), '', '&'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 ?>
@@ -79,10 +91,10 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 </select>
 
 <label for="fr_date" class="sound_only">시작일</label>
-<input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" required class="required frm_input" size="8" maxlength="8">
+<input type="text" name="fr_date" value="<?php echo htmlspecialchars($fr_date, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?>" id="fr_date" required class="required frm_input" size="8" maxlength="8">
 ~
 <label for="to_date" class="sound_only">종료일</label>
-<input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" required class="required frm_input" size="8" maxlength="8">
+<input type="text" name="to_date" value="<?php echo htmlspecialchars($to_date, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?>" id="to_date" required class="required frm_input" size="8" maxlength="8">
 <input type="submit" value="검색" class="btn_submit">
 
 </form>
@@ -127,7 +139,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </table>
 </div>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr1&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$paging_query&amp;page="); ?>
 
 <div class="local_desc01 local_desc">
     <p>고객님들이 보관함에 가장 많이 넣은 순으로 순위를 출력합니다.</p>

@@ -34,8 +34,8 @@ for ($i=1; $i<=$attach; $i++) {
     $file_key = 'file'.$i;
     if (isset($_FILES[$file_key]['name']) && $_FILES[$file_key]['name']) {
         $filename = get_safe_filename($_FILES[$file_key]['name']);
-        if (is_disallowed_svg_filename($filename)) {
-            alert_close('허용되지 않는 파일 확장자입니다. (svg, svgz)');
+        if (is_disallowed_active_filename($filename)) {
+            alert_close('허용되지 않는 파일 확장자입니다.');
         }
     }
 }

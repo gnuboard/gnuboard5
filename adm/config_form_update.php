@@ -56,6 +56,7 @@ if (isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']) {
 
 $check_keys = array(
     'cf_use_email_certify' => 'int',
+    'cf_email_certify_minutes' => 'int',
     'cf_use_homepage' => 'int',
     'cf_req_homepage' => 'int',
     'cf_use_tel' => 'int',
@@ -178,6 +179,8 @@ foreach ($check_keys as $k => $v) {
     }
 }
 
+$_POST['cf_email_certify_minutes'] = max(0, $_POST['cf_email_certify_minutes']);
+
 // 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
 if ($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] && !$_POST['cf_cert_simple']) {
     alert('본인확인을 위해 아이핀, 휴대폰 본인확인, KG이니시스 간편인증 서비스 중 하나 이상 선택해 주십시오.');
@@ -226,6 +229,7 @@ $sql = " update {$g5['config_table']}
                 cf_point_term = '{$_POST['cf_point_term']}',
                 cf_use_copy_log = '{$_POST['cf_use_copy_log']}',
                 cf_use_email_certify = '{$_POST['cf_use_email_certify']}',
+                cf_email_certify_minutes = '{$_POST['cf_email_certify_minutes']}',
                 cf_login_point = '{$_POST['cf_login_point']}',
                 cf_cut_name = '{$_POST['cf_cut_name']}',
                 cf_nick_modify = '{$_POST['cf_nick_modify']}',

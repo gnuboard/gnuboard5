@@ -478,6 +478,30 @@ function check_log_folder($log_path, $is_delete = true)
     }
 }
 
+// 회원 본인확인 식별값과 인증 이력만 정리한다. 호출부에서 관리자 권한을 검증한다.
+function admin_clear_member_certification($mb_id)
+{
+    global $g5;
+
+    $esc_mb_id = sql_real_escape_string($mb_id);
+    $history_table = isset($g5['member_cert_history_table']) ? $g5['member_cert_history_table'] : G5_TABLE_PREFIX.'member_cert_history';
+
+    // 일반 회원정보(이름·연락처)와 이메일 인증 상태는 유지한다.
+    if (!sql_query(" update {$g5['member_table']}
+                        set mb_certify = '', mb_adult = 0, mb_dupinfo = '', mb_birth = '', mb_sex = ''
+                      where mb_id = '{$esc_mb_id}' ", false)) {
+        return false;
+    }
+    if (!sql_query(" delete from {$history_table} where mb_id = '{$esc_mb_id}' ", false)) {
+        return false;
+    }
+    if (!sql_query(" delete from {$g5['cert_history_table']} where mb_id = '{$esc_mb_id}' ", false)) {
+        return false;
+    }
+
+    return true;
+}
+
 // POST로 넘어온 토큰과 세션에 저장된 토큰 비교
 function check_admin_token()
 {

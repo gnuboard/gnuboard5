@@ -6,10 +6,6 @@ if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
 // 테마 필드 추가
-if(!isset($config['cf_theme'])) {
-    sql_query(" ALTER TABLE `{$g5['config_table']}`
-                    ADD `cf_theme` varchar(255) NOT NULL DEFAULT '' AFTER `cf_title` ", true);
-}
 
 $theme = get_theme_dir();
 if($config['cf_theme'] && in_array($config['cf_theme'], $theme))

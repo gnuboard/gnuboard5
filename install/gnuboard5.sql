@@ -200,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_point_term` int(11) NOT NULL DEFAULT '0',
   `cf_use_copy_log` tinyint(4) NOT NULL DEFAULT '0',
   `cf_use_email_certify` tinyint(4) NOT NULL DEFAULT '0',
+  `cf_email_certify_minutes` int(11) NOT NULL DEFAULT '60',
   `cf_login_point` int(11) NOT NULL DEFAULT '0',
   `cf_cut_name` tinyint(4) NOT NULL DEFAULT '0',
   `cf_nick_modify` int(11) NOT NULL DEFAULT '0',
@@ -222,6 +223,8 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_intercept_ip` text NOT NULL,
   `cf_analytics` text NOT NULL,
   `cf_add_meta` text NOT NULL,
+  `cf_syndi_token` varchar(255) NOT NULL DEFAULT '',
+  `cf_syndi_except` text NOT NULL,
   `cf_member_skin` varchar(50) NOT NULL DEFAULT '',
   `cf_use_homepage` tinyint(4) NOT NULL DEFAULT '0',
   `cf_req_homepage` tinyint(4) NOT NULL DEFAULT '0',
@@ -988,3 +991,21 @@ CREATE TABLE IF NOT EXISTS `g5_menu` (
   `me_mobile_use` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`me_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_migrations`
+--
+
+DROP TABLE IF EXISTS `g5_migrations`;
+CREATE TABLE IF NOT EXISTS `g5_migrations` (
+  `migration_id` varchar(100) NOT NULL,
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `checksum` char(64) NOT NULL DEFAULT '',
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `error_message` text NOT NULL,
+  `execution_ms` int(11) NOT NULL DEFAULT '0',
+  `applied_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`migration_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

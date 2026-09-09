@@ -1,8 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-// 무통장 입금만 사용할 때는 아래 코드 실행되지 않음 ( 카카오페이 또는 삼성페이도 사용 안하면 )
-if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_samsung_pay_use'] || $is_kakaopay_use ))
+// 무통장 입금만 사용할 때는 아래 코드 실행되지 않음 ( 삼성페이도 사용 안하면 )
+if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_samsung_pay_use'] ))
     return;
 
 $param_opt_1 = isset($_REQUEST['param_opt_1']) ? clean_xss_tags($_REQUEST['param_opt_1'], 1, 1) : '';

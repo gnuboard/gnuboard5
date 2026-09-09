@@ -30,6 +30,9 @@ if($w == 'd') {
 
 // 주문정보
 $data = unserialize(base64_decode($od['dt_data']));
+if (isset($data['od_settle_case']) && $data['od_settle_case'] === 'KAKAOPAY') {
+    alert('SIRK 전용 카카오페이 미완료 주문은 결제 상태를 이니시스에서 확인한 뒤 사후지원 담당자에게 문의해 주십시오.');
+}
 $data_od_cp_id = isset($data['od_cp_id']) ? safe_replace_regex($data['od_cp_id'], 'cp_id') : '';
 $data_sc_cp_id = isset($data['sc_cp_id']) ? safe_replace_regex($data['sc_cp_id'], 'cp_id') : '';
 
@@ -210,8 +213,6 @@ if($default['de_tax_flag_use']) {
 }
 
 $od_pg = $default['de_pg_service'];
-if($data['od_settle_case'] == 'KAKAOPAY')
-    $od_pg = 'KAKAOPAY';
 
 $od_email         = get_email_address($data['od_email']);
 $od_name          = addslashes(clean_xss_tags($data['od_name']));

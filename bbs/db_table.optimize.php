@@ -49,6 +49,23 @@ if($config['cf_memo_del'] > 0) {
     }
 }
 
+// 메일 인증 기한이 지난 회원도 본인확인 정보를 해제하고 탈퇴 처리한다.
+// 재발송된 토큰의 발급 시각을 사용하며 실제 변경 직전에 회원 상태를 다시 확인한다.
+$email_certify_minutes = isset($config['cf_email_certify_minutes']) ? (int) $config['cf_email_certify_minutes'] : 60;
+if ($config['cf_use_email_certify'] && $email_certify_minutes > 0) {
+    $sql = " select mb_id, mb_email_certify, mb_email_certify2, mb_datetime, mb_leave_date, mb_memo
+               from {$g5['member_table']}
+              where mb_leave_date = ''
+                and mb_email_certify not regexp '[1-9]'
+                and mb_memo not regexp '^[0-9]{8}.*삭제함' ";
+    $result = sql_query($sql);
+    while ($row = sql_fetch_array($result)) {
+        if (is_expired_email_certify_member($row)) {
+            g5_leave_member($row['mb_id'], true);
+        }
+    }
+}
+
 // 탈퇴회원 자동 삭제
 if($config['cf_leave_day'] > 0) {
     $sql = " select mb_id from {$g5['member_table']}

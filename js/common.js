@@ -70,6 +70,15 @@ function is_disallowed_svg_filename(filename)
     return /\.(svg|svgz)$/i.test(filename);
 }
 
+function is_disallowed_active_filename(filename)
+{
+    filename = filename || "";
+    if (/[\x00-\x1f\x7f]/.test(filename)) return true;
+    filename = filename.replace(/["'<>=#&!%\\()*+?]/g, "");
+    filename = filename.substring(filename.lastIndexOf("/") + 1).replace(/[ .]+$/, "");
+    return /\.(svgz?|xhtml|xht|xml|xsl|xslt|mht|mhtml|htc)([. :]|$)/i.test(filename);
+}
+
 function is_svg_upload_target(input)
 {
     var name = input.name || "";
@@ -92,7 +101,7 @@ function has_disallowed_svg_file(input)
 
     if (input.files && input.files.length) {
         for (i=0; i<input.files.length; i++) {
-            if (is_disallowed_svg_filename(input.files[i].name)) {
+            if (is_disallowed_active_filename(input.files[i].name)) {
                 return true;
             }
         }
@@ -100,7 +109,7 @@ function has_disallowed_svg_file(input)
         return false;
     }
 
-    return is_disallowed_svg_filename(input.value);
+    return is_disallowed_active_filename(input.value);
 }
 
 function check_disallowed_svg_upload(form)
@@ -118,7 +127,7 @@ function check_disallowed_svg_upload(form)
         return true;
     }
 
-    alert("허용되지 않는 파일 확장자입니다. (svg, svgz)");
+    alert("허용되지 않는 파일 확장자입니다.");
     $(form).find("input:submit, button:submit, input:image").prop("disabled", false);
     invalid_file.focus();
 
@@ -799,7 +808,7 @@ $(function() {
             return true;
         }
 
-        alert("허용되지 않는 파일 확장자입니다. (svg, svgz)");
+        alert("허용되지 않는 파일 확장자입니다.");
         this.value = "";
 
         return false;

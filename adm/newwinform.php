@@ -17,8 +17,6 @@ $nw = array(
 $html_title = "팝업레이어";
 
 // 팝업레이어 테이블에 쇼핑몰, 커뮤니티 인지 구분하는 여부 필드 추가
-$sql = " ALTER TABLE `{$g5['new_win_table']}` ADD `nw_division` VARCHAR(10) NOT NULL DEFAULT 'both' ";
-sql_query($sql, false);
 
 if ($w == "u") {
     $html_title .= " 수정";

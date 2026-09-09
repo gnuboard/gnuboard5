@@ -2,98 +2,67 @@
 if (!defined('_GNUBOARD_')) exit;
 
 Class G5_object_cache {
+    /** @deprecated 직접 접근 대신 get/set/exists/delete 메서드를 사용한다. */
     public $writes = array();
+    /** @deprecated 직접 접근 대신 get/set/exists/delete 메서드를 사용한다. */
     public $contents = array();
+    /** @deprecated 타입별 $etcs[$type][$group][$key] 구조. 메서드 사용 권장. */
     public $etcs = array();
 
-    function get($type, $key, $group ='default') {
-
-        switch ($type) {
-            case 'bbs':
-                $datas = $this->writes;
-                break;
-            case 'content' :
-                $datas = $this->contents;
-                break;
-            default :
-                $datas = $this->etcs;
-                break;
+    // 각 타입의 유일한 저장소를 참조로 반환한다. 빈 타입 버킷은 요청 종료까지 유지한다.
+    private function &get_type_cache($type) {
+        if ($type === 'bbs') {
+            return $this->writes;
         }
-
-        if( $this->exists($type, $key, $group) ){
-            if ( is_object($datas[$group][$key]) )
-                return clone $datas[$group][$key];
-            else
-                return $datas[$group][$key];
+        if ($type === 'content') {
+            return $this->contents;
         }
-
-        return false;
+        if (!isset($this->etcs[$type])) {
+            $this->etcs[$type] = array();
+        }
+        return $this->etcs[$type];
     }
 
-    function exists($type, $key, $group = 'default' ) {
-
-        $return_data = '';
-
-        switch ($type) {
-            case 'bbs':
-                $datas = $this->writes;
-                break;
-            case 'content':
-                $datas = $this->contents;
-                break;
-            default :
-                $datas = $this->etcs;
-                break;
+    function get($type, $key, $group = 'default') {
+        if (!$this->exists($type, $key, $group)) {
+            return false;
         }
 
-        return isset($datas[$group]) && ( isset($datas[$group][$key]) || array_key_exists($key, $datas[$group]) );
+        $datas = &$this->get_type_cache($type);
+        if (is_object($datas[$group][$key])) {
+            return clone $datas[$group][$key];
+        }
+        return $datas[$group][$key];
     }
 
-    function set($type, $key, $data=array(), $group='default') {
-        if ( is_object( $data ) )
+    function exists($type, $key, $group = 'default') {
+        $datas = &$this->get_type_cache($type);
+        return isset($datas[$group]) && (isset($datas[$group][$key]) || array_key_exists($key, $datas[$group]));
+    }
+
+    function set($type, $key, $data = array(), $group = 'default') {
+        if (is_object($data)) {
             $data = clone $data;
-
-        switch ($type) {
-            case 'bbs':
-                $this->writes[$group][$key] = $data;
-                break;
-            case 'content':
-                $this->contents[$group][$key] = $data;
-                break;
-            default :
-                $this->etcs[$group][$key] = $data;
-                break;
         }
 
+        $datas = &$this->get_type_cache($type);
+        $datas[$group][$key] = $data;
     }
+
     /**
-     * cache 데이터 제거
+     * 지정한 타입, 그룹, 키의 캐시 데이터만 제거한다.
      * @param string $type
      * @param string $key
      * @param string $group
      * @return bool
      */
-    function delete($type, $key, $group = 'default')
-    {
+    function delete($type, $key, $group = 'default') {
         if (!$this->exists($type, $key, $group)) {
             return false;
         }
 
-        switch ($type) {
-            case 'bbs':
-                $datas = &$this->writes;
-                break;
-            case 'content':
-                $datas = &$this->contents;
-                break;
-            default:
-                $datas = &$this->etcs;
-                break;
-        }
-
+        $datas = &$this->get_type_cache($type);
         unset($datas[$group][$key]);
-
         return true;
     }
-
-}   //end Class;
+}

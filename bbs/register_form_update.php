@@ -65,6 +65,10 @@ $mb_9           = isset($_POST['mb_9'])             ? trim($_POST['mb_9'])      
 $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])          : "";
 $mb_name        = addslashes(clean_xss_tags(stripslashes($mb_name), 1, 1));
 $mb_email       = get_email_address($mb_email);
+$security_mail_url = g5_security_mail_base_url();
+if ($config['cf_use_email_certify'] && ($w == '' || $member['mb_email'] != $mb_email)) {
+    $security_mail_url = g5_require_security_mail_url();
+}
 $mb_homepage    = addslashes(clean_xss_tags(stripslashes($mb_homepage), 1, 1));
 $mb_tel         = addslashes(clean_xss_tags(stripslashes($mb_tel), 1, 1));
 $mb_zip1        = preg_replace('/[^0-9]/', '', $mb_zip1);
@@ -325,9 +329,9 @@ if ($w == '') {
 
         // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용 (CSPRNG 사용)
         if ($config['cf_use_email_certify']) {
-            $mb_md5 = get_random_token_string(16);
+            $mb_md5 = get_email_certify_token();
             sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
-            $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+            $certify_href = $security_mail_url.'/'.G5_BBS_DIR.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
         }
 
         ob_start();
@@ -609,11 +613,11 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
     // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용 (CSPRNG 사용)
-    $mb_md5 = get_random_token_string(16);
+    $mb_md5 = get_email_certify_token();
 
     sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
 
-    $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+    $certify_href = $security_mail_url.'/'.G5_BBS_DIR.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
     ob_start();
     include_once ('./register_form_update_mail3.php');

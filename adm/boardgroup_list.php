@@ -4,14 +4,6 @@ require_once './_common.php';
 
 auth_check_menu($auth, $sub_menu, 'r');
 
-if (!isset($group['gr_device'])) {
-    // 게시판 그룹 사용 필드 추가
-    // both : pc, mobile 둘다 사용
-    // pc : pc 전용 사용
-    // mobile : mobile 전용 사용
-    // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g5['group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
-}
 
 $sql_common = " from {$g5['group_table']} ";
 

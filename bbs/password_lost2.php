@@ -20,6 +20,12 @@ if (!$email)
 // (이메일 열거 공격 방지)
 $generic_message = $email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.';
 
+$security_mail_url = g5_security_mail_base_url();
+if ($security_mail_url === false) {
+    error_log('[g5 security mail] Valid G5_DOMAIN is required.');
+    alert_close($generic_message);
+}
+
 $sql = " select count(*) as cnt from {$g5['member_table']} where mb_email = '$email' ";
 $row = sql_fetch($sql);
 if ($row['cnt'] > 1) {
@@ -48,7 +54,7 @@ $sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_
 sql_query($sql);
 
 // 인증 링크 생성
-$href = G5_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_nonce='.$mb_nonce;
+$href = $security_mail_url.'/'.G5_BBS_DIR.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_nonce='.$mb_nonce;
 
 $subject = "[".$config['cf_title']."] 요청하신 회원정보 찾기 안내 메일입니다.";
 
@@ -60,7 +66,7 @@ $content .= '<h1 style="padding:30px 30px 0;background:#f7f7f7;color:#555;font-s
 $content .= '회원정보 찾기 안내';
 $content .= '</h1>';
 $content .= '<span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">';
-$content .= '<a href="'.G5_URL.'" target="_blank">'.$config['cf_title'].'</a>';
+$content .= '<a href="'.htmlspecialchars($security_mail_url, ENT_QUOTES, 'UTF-8').'" target="_blank">'.$config['cf_title'].'</a>';
 $content .= '</span>';
 $content .= '<p style="margin:20px 0 0;padding:30px 30px 30px;border-bottom:1px solid #eee;line-height:1.7em">';
 $content .= addslashes($mb['mb_name'])." (".addslashes($mb['mb_nick']).")"." 회원님은 ".G5_TIME_YMDHIS." 에 회원정보 찾기 요청을 하셨습니다.<br>";

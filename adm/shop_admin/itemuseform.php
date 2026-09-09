@@ -18,13 +18,6 @@ if (!$is['is_id'])
     alert('등록된 자료가 없습니다.');
 
 // 사용후기 의 답변 필드 추가
-if (!isset($is['is_reply_subject'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_item_use_table']}`
-                ADD COLUMN `is_reply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `is_confirm`,
-                ADD COLUMN `is_reply_content` TEXT NOT NULL AFTER `is_reply_subject`,
-                ADD COLUMN `is_reply_name` VARCHAR(25) NOT NULL DEFAULT '' AFTER `is_reply_content`
-                ", true);
-}
 
 $name = get_sideview($is['mb_id'], get_text($is['is_name']), $is['mb_email'], $is['mb_homepage']);
 
