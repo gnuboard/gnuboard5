@@ -919,11 +919,27 @@ box-shadow:0 0 8px rgba(65,98,255,0.8)}
 #sod_frm_paysel .samsungpay_icon{background:url('../img/samsungpay.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .ssgpay_icon{background:url('../img/ssgpay_icon.png') no-repeat 50% 50% #fff;display:inline-block;overflow:hidden;text-indent:-999px}
 #sod_frm_paysel .skpay_icon{background:url('../img/skpay11_icon.png') no-repeat 50% 50% #fff; background-size: 70px;display:inline-block;overflow:hidden;text-indent:-999px}
-#sod_frm_paysel .bank_icon{background:url('../img/pay_icon1.png') no-repeat 15px 50% #fff}
-#sod_frm_paysel .vbank_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
-#sod_frm_paysel .iche_icon{background:url('../img/pay_icon2.png') no-repeat 15px 50% #fff;padding-top:13px}
-#sod_frm_paysel .hp_icon{background:url('../img/pay_icon3.png') no-repeat 24px 50% #fff}
-#sod_frm_paysel .card_icon{background:url('../img/pay_icon4.png') no-repeat 17px 50% #fff}
+/* 기본 결제수단: 같은 굵기의 SVG 라인 아이콘 */
+#sod_frm_paysel .bank_icon{background-image:url('../img/payment-bank.svg')}
+#sod_frm_paysel .vbank_icon{background-image:url('../img/payment-virtual-account.svg')}
+#sod_frm_paysel .iche_icon{background-image:url('../img/payment-transfer.svg')}
+#sod_frm_paysel .hp_icon{background-image:url('../img/payment-phone.svg')}
+#sod_frm_paysel .card_icon{background-image:url('../img/payment-card.svg')}
+#sod_frm_paysel .bank_icon,
+#sod_frm_paysel .vbank_icon,
+#sod_frm_paysel .iche_icon,
+#sod_frm_paysel .hp_icon,
+#sod_frm_paysel .card_icon{background-repeat:no-repeat;background-position:18px 50%;background-size:28px 28px;padding:0 12px 0 58px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:18px}
+#m_sod_frm_paysel .bank_icon{background-image:url('../img/payment-bank.svg')}
+#m_sod_frm_paysel .vbank_icon{background-image:url('../img/payment-virtual-account.svg')}
+#m_sod_frm_paysel .iche_icon{background-image:url('../img/payment-transfer.svg')}
+#m_sod_frm_paysel .hp_icon{background-image:url('../img/payment-phone.svg')}
+#m_sod_frm_paysel .card_icon{background-image:url('../img/payment-card.svg')}
+#m_sod_frm_paysel .bank_icon,
+#m_sod_frm_paysel .vbank_icon,
+#m_sod_frm_paysel .iche_icon,
+#m_sod_frm_paysel .hp_icon,
+#m_sod_frm_paysel .card_icon{display:inline-block;min-height:24px;padding-left:30px;line-height:24px;vertical-align:middle;background-repeat:no-repeat;background-position:0 50%;background-size:24px 24px}
 #forderform .sod_right #sod_bsk_tot {border:1px solid #e3e5e8}
 #forderform .od_pay_buttons_el{margin-top:20px;border:1px solid #e3e5e8;background:#fff;padding:10px}
 #forderform .od_pay_buttons_el h3{font-size:1.167em;margin:0px 0 5px}
