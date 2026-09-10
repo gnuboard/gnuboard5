@@ -71,6 +71,12 @@ if (get_cart_count($tmp_cart_id) == 0) {    // 장바구니에 담기
     alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
 }
 
+// KVE-2026-2345: 과거 장바구니의 옵션 종류와 가격도 주문 전에 다시 검증한다.
+$cart_validation_error = shop_validate_order_cart($tmp_cart_id);
+if ($cart_validation_error !== '') {
+    alert($cart_validation_error, G5_SHOP_URL.'/cart.php');
+}
+
 // 변수 초기화
 $od_other_pay_type = '';
 
