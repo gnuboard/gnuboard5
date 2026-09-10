@@ -135,6 +135,47 @@ function shop_validate_cart_request($post, $multi = false)
     return array('error' => $products ? '' : $error, 'products' => $products);
 }
 
+// 기존 행과 합친 결과도 삭제/UPDATE 전에 모든 상품에 대해 확인한다.
+// 동시 요청과 SQL 실패의 원자성까지 보장하는 잠금/트랜잭션은 아니다.
+function shop_validate_cart_merge($cart_id, $products, $direct = false, $replace = false)
+{
+    global $g5;
+    $cart_id = sql_escape_string($cart_id);
+    foreach ($products as $it_id => $product) {
+        $id = sql_escape_string($it_id);
+        $rows = array();
+        if (!$replace) {
+            $exclude = $direct ? ' and ct_direct <> 1 ' : '';
+            $result = sql_query(" select * from {$g5['g5_shop_cart_table']} where od_id = '$cart_id' and it_id = '$id' and ct_status = '쇼핑' $exclude order by ct_id asc ");
+            while ($row = sql_fetch_array($result))
+                $rows[] = $row;
+        }
+        $rows = array_merge($rows, $product['rows']);
+        list($item, $options) = shop_cart_option_data($it_id);
+        $validated = shop_validate_cart_rows($item, $options, $rows, true);
+        if ($validated['error'] !== '')
+            return $validated['error'];
+
+        // 바로구매에서는 다른 장바구니가 선택해 둔 수량도 선삭제 전에 검사한다.
+        if ($direct) {
+            $quantities = array();
+            foreach ($rows as $row) {
+                $key = $row['io_type'].':'.$row['io_id'];
+                $quantities[$key] = isset($quantities[$key]) ? $quantities[$key] + $row['ct_qty'] : $row['ct_qty'];
+            }
+            foreach ($product['rows'] as $row) {
+                $io_id = sql_escape_string($row['io_id']);
+                $type = (int) $row['io_type'];
+                $reserved = sql_fetch(" select SUM(ct_qty) as cnt from {$g5['g5_shop_cart_table']} where od_id <> '$cart_id' and it_id = '$id' and io_id = '$io_id' and io_type = '$type' and ct_stock_use = 0 and ct_status = '쇼핑' and ct_select = '1' ");
+                $stock = $row['io_id'] === '' ? get_it_stock_qty($it_id) : get_option_stock_qty($it_id, $row['io_id'], $type);
+                if ($quantities[$type.':'.$row['io_id']] + (int) $reserved['cnt'] > $stock)
+                    return '상품 또는 옵션의 재고수량이 부족합니다.';
+            }
+        }
+    }
+    return '';
+}
+
 // 주문 준비/확정 시에는 선택된 행만 검증하여 보조옵션 단독 선택과 과거 조작 행도 차단한다.
 function shop_validate_order_cart($cart_id)
 {

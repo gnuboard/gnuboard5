@@ -82,6 +82,10 @@ switch ($action) {
         if ($cart_validation['error'] !== '')
             die(json_encode(array('error' => $cart_validation['error'])));
 
+        $cart_merge_error = shop_validate_cart_merge($tmp_cart_id, $cart_validation['products'], !empty($sw_direct));
+        if ($cart_merge_error !== '')
+            die(json_encode(array('error' => $cart_merge_error)));
+
         $ct_count = 0;
         for($i=0; $i<$count; $i++) {
             $it_id = isset($_POST['it_id'][$i]) ? safe_replace_regex($_POST['it_id'][$i], 'it_id') : '';

@@ -150,6 +150,18 @@ else // 장바구니에 담기
     if ($cart_validation['error'] !== '')
         alert($cart_validation['error']);
 
+    $cart_merge_error = shop_validate_cart_merge($tmp_cart_id, $cart_validation['products'], !empty($sw_direct), $act === 'optionmod');
+    if ($cart_merge_error !== '')
+        alert($cart_merge_error);
+
+    // 구매 자격 오류도 바로구매 삭제와 다중 상품 변경 전에 확인한다.
+    if (!$is_admin) {
+        foreach ($cart_validation['products'] as $cart_it_id => $cart_product) {
+            $msg = shop_member_cert_check($cart_it_id, 'item');
+            if ($msg) alert($msg, G5_SHOP_URL);
+        }
+    }
+
     $ct_count = 0;
     $post_chk_it_id = (isset($_POST['chk_it_id']) && is_array($_POST['chk_it_id'])) ? $_POST['chk_it_id'] : array();
     $post_io_ids = (isset($_POST['io_id']) && is_array($_POST['io_id'])) ? $_POST['io_id'] : array();
@@ -178,13 +190,6 @@ else // 장바구니에 담기
         for($k=0; $k<$opt_count; $k++) {
             if (isset($post_ct_qtys[$it_id][$k]) && $post_ct_qtys[$it_id][$k] < 1)
                 alert('수량은 1 이상 입력해 주십시오.');
-        }
-
-        // 본인인증, 성인인증체크
-        if(!$is_admin) {
-            $msg = shop_member_cert_check($it_id, 'item');
-            if($msg)
-                alert($msg, G5_SHOP_URL);
         }
 
         // 상품정보
