@@ -1,0 +1,374 @@
+{
+  "MyISAM": [
+    {
+      "engine": "MyISAM",
+      "member": false,
+      "mobile": false,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": false,
+      "mobile": false,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": false,
+      "mobile": false,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": false,
+      "mobile": true,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": false,
+      "mobile": true,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": false,
+      "mobile": true,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": true,
+      "mobile": false,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": true,
+      "mobile": false,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": true,
+      "mobile": false,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": true,
+      "mobile": true,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": true,
+      "mobile": true,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "MyISAM",
+      "member": true,
+      "mobile": true,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    }
+  ],
+  "InnoDB": [
+    {
+      "engine": "InnoDB",
+      "member": false,
+      "mobile": false,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": false,
+      "mobile": false,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": false,
+      "mobile": false,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": false,
+      "mobile": true,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": false,
+      "mobile": true,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": false,
+      "mobile": true,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": true,
+      "mobile": false,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": true,
+      "mobile": false,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": true,
+      "mobile": false,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": true,
+      "mobile": true,
+      "route": "shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": true,
+      "mobile": true,
+      "route": "theme/basic/shop/ajax.action.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    },
+    {
+      "engine": "InnoDB",
+      "member": true,
+      "mobile": true,
+      "route": "shop/cartupdate.php",
+      "attack": "blocked",
+      "normal_order": "saved",
+      "amount": 50000
+    }
+  ],
+  "before": [
+    {
+      "engine": "MyISAM",
+      "mobile": false,
+      "route": "shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "MyISAM",
+      "mobile": false,
+      "route": "theme/basic/shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "MyISAM",
+      "mobile": true,
+      "route": "shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "MyISAM",
+      "mobile": true,
+      "route": "theme/basic/shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": false,
+      "route": "shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": false,
+      "route": "theme/basic/shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": true,
+      "route": "shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": true,
+      "route": "theme/basic/shop/ajax.action.php",
+      "status": "입금",
+      "cart_price": 0,
+      "paid": 0
+    }
+  ],
+  "extra": [
+    {
+      "engine": "MyISAM",
+      "mobile": false,
+      "case": "legitimate_free_order",
+      "result": "saved"
+    },
+    {
+      "engine": "MyISAM",
+      "mobile": false,
+      "case": "prepatch_corrupt_cart",
+      "result": "preparation_and_submission_blocked"
+    },
+    {
+      "engine": "MyISAM",
+      "mobile": true,
+      "case": "legitimate_free_order",
+      "result": "saved"
+    },
+    {
+      "engine": "MyISAM",
+      "mobile": true,
+      "case": "prepatch_corrupt_cart",
+      "result": "preparation_and_submission_blocked"
+    },
+    {
+      "engine": "MyISAM",
+      "route": "shop/ajax.action.php",
+      "case": "stale_addon_merge",
+      "result": "all_rows_unchanged"
+    },
+    {
+      "engine": "MyISAM",
+      "route": "theme/basic/shop/ajax.action.php",
+      "case": "stale_addon_merge",
+      "result": "all_rows_unchanged"
+    },
+    {
+      "engine": "MyISAM",
+      "route": "shop/cartupdate.php",
+      "case": "stale_addon_merge",
+      "result": "all_rows_unchanged"
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": false,
+      "case": "legitimate_free_order",
+      "result": "saved"
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": false,
+      "case": "prepatch_corrupt_cart",
+      "result": "preparation_and_submission_blocked"
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": true,
+      "case": "legitimate_free_order",
+      "result": "saved"
+    },
+    {
+      "engine": "InnoDB",
+      "mobile": true,
+      "case": "prepatch_corrupt_cart",
+      "result": "preparation_and_submission_blocked"
+    },
+    {
+      "engine": "InnoDB",
+      "route": "shop/ajax.action.php",
+      "case": "stale_addon_merge",
+      "result": "all_rows_unchanged"
+    },
+    {
+      "engine": "InnoDB",
+      "route": "theme/basic/shop/ajax.action.php",
+      "case": "stale_addon_merge",
+      "result": "all_rows_unchanged"
+    },
+    {
+      "engine": "InnoDB",
+      "route": "shop/cartupdate.php",
+      "case": "stale_addon_merge",
+      "result": "all_rows_unchanged"
+    }
+  ]
+}
