@@ -73,6 +73,8 @@ cd gnuboard5
 
 ## 문서 및 지원
 
+- [5.6.38 보안 업데이트 및 필수 DB업그레이드 안내](docs/release-5.6.38.md)
+
 - [5.6.37 SIRK 전용 카카오페이 연동 종료 및 기존 거래 지원](docs/sirk-kakaopay-retirement.md)
 - [그누보드5 공식 페이지](https://sir.kr/main/g5/)
 - [그누보드5 공식 매뉴얼](https://sir.kr/manuals/g5/1)
