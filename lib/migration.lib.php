@@ -110,7 +110,7 @@ function g5_migration_parse_file($file)
         $migration['description'] = trim($matches[1]);
     }
 
-    if (preg_match('/^--\s*@skip-if-column\s+(\S+)\s+(\S+)$/mi', $contents, $matches)) {
+    if (preg_match('/^--[\t ]*@skip-if-column[\t ]+(\S+)[\t ]+(\S+)[\t ]*\r?$/mi', $contents, $matches)) {
         $migration['skip_table'] = g5_migration_replace_placeholders(trim($matches[1], '`'));
         $migration['skip_column'] = trim($matches[2], '`');
     }
