@@ -683,6 +683,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_pg` varchar(255) NOT NULL DEFAULT '',
+  `od_kcp_site_cd` varchar(5) NOT NULL DEFAULT '',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
   `od_app_no` varchar(20) NOT NULL DEFAULT '',
   `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
@@ -781,6 +782,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_personalpay` (
   `pp_use` TINYINT(4) NOT NULL DEFAULT '0',
   `pp_price` INT(11) NOT NULL DEFAULT '0',
   `pp_pg` varchar(255) NOT NULL DEFAULT '',
+  `pp_kcp_site_cd` varchar(5) NOT NULL DEFAULT '',
   `pp_tno` VARCHAR(255) NOT NULL DEFAULT '',
   `pp_app_no` VARCHAR(20) NOT NULL DEFAULT '',
   `pp_casseqno` VARCHAR(255) NOT NULL DEFAULT '',
@@ -1036,4 +1038,20 @@ CREATE TABLE IF NOT EXISTS `g5_shop_inicis_pay_event` (
   KEY `ip_tid` (`ip_tid`),
   KEY `pe_status` (`pe_status`),
   KEY `pe_created_at` (`pe_created_at`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- KCP 통보 처리 및 중간 실패 복구 이력
+CREATE TABLE `g5_shop_kcp_noti` (
+  `kn_key` char(64) NOT NULL,
+  `kn_trade` char(64) NOT NULL,
+  `kn_noti_id` varchar(20) NOT NULL,
+  `kn_op_cd` char(2) NOT NULL,
+  `kn_payload` char(64) NOT NULL,
+  `od_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `kn_plan` mediumtext NOT NULL,
+  `kn_done` tinyint(4) NOT NULL DEFAULT '0',
+  `kn_created_at` datetime NOT NULL,
+  PRIMARY KEY (`kn_key`),
+  KEY `kn_trade` (`kn_trade`),
+  KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
