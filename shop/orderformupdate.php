@@ -47,6 +47,12 @@ if (get_cart_count($tmp_cart_id) == 0) {    // 장바구니에 담기
     alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
 }
 
+// KVE-2026-2345: 과거 장바구니의 옵션 종류와 가격도 주문 전에 다시 검증한다.
+$cart_validation_error = shop_validate_order_cart($tmp_cart_id);
+if ($cart_validation_error !== '') {
+    alert($cart_validation_error, G5_SHOP_URL.'/cart.php');
+}
+
 // 변수 초기화
 $od_other_pay_type = '';
 
@@ -525,6 +531,9 @@ else
 }
 
 $od_pg = $default['de_pg_service'];
+// KCP 통보는 결제 당시 사용한 상점코드와 대조한다.
+$od_kcp_site_cd = ($od_pg === 'kcp' && isset($g_conf_site_cd))
+    ? sql_escape_string($g_conf_site_cd) : '';
 
 $tno = isset($tno) ? $tno : '';
 $od_receipt_time = isset($od_receipt_time) ? $od_receipt_time : '';
@@ -624,6 +633,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_receipt_time   = '$od_receipt_time',
                 od_misu           = '$od_misu',
                 od_pg             = '$od_pg',
+                od_kcp_site_cd    = '$od_kcp_site_cd',
                 od_tno            = '$od_tno',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',

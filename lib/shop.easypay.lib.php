@@ -88,12 +88,22 @@ function shop_easypay_available($key, $mobile)
 
 function shop_easypay_button($key, $provider, $mobile, $money = false)
 {
+    $label = $provider[0];
+    $pay_code = $provider[1];
+    $css_class = $provider[2];
     $value = isset($provider[3]) ? $provider[3] : '간편결제';
     $legacy_ids = array('inicis_samsungpay' => 'samsungpay', 'inicis_lpay' => 'inicislpay');
     $id = 'od_settle_'.(isset($legacy_ids[$key]) ? $legacy_ids[$key] : $key);
-    $attrs = isset($provider[3]) ? ' data-case="'.$provider[1].'"' : '';
-    if ($money) $attrs .= ' data-money="1"';
-    $html = '<input type="radio" id="'.$id.'" name="od_settle_case" data-pay="'.$provider[1].'" value="'.$value.'"'.$attrs.'> <label for="'.$id.'" class="'.$provider[2].' '.$key.' lb_icon" title="'.$provider[0].'">'.$provider[0].'</label>';
+    $attrs = isset($provider[3]) ? ' data-case="'.$pay_code.'"' : '';
+    if ($money) {
+        $attrs .= ' data-money="1"';
+    }
+
+    $html = '<input type="radio" id="'.$id.'" name="od_settle_case"'
+        .' data-pay="'.$pay_code.'" value="'.$value.'"'.$attrs.'> '
+        .'<label for="'.$id.'" class="'.$css_class.' '.$key.' lb_icon"'
+        .' title="'.$label.'">'.$label.'</label>';
+
     return $mobile ? '<li>'.$html.'</li>' : $html;
 }
 

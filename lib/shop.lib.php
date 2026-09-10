@@ -1,4 +1,5 @@
 <?php
+include_once(dirname(__FILE__).'/shop.cartvalidate.lib.php');
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 시작
 //==============================================================================
@@ -2694,7 +2695,7 @@ function before_check_cart_price($s_cart_id, $is_ct_select_condition=false, $is_
         }
 
         if( $row['io_id'] ){
-            $io_sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_id = '{$row['io_id']}' ";
+            $io_sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_id = '{$row['io_id']}' and io_type = '{$row['io_type']}' and io_use = '1' ";
             $io_infos = sql_fetch( $io_sql );
 
             if( $io_infos['io_type'] ){

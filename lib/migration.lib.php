@@ -34,6 +34,8 @@ function g5_migration_replace_placeholders($sql)
         'g5_shop_cart_table' => $shop_prefix . 'cart',
         'g5_shop_item_table' => $shop_prefix . 'item',
         'g5_shop_order_table' => $shop_prefix . 'order',
+        'g5_shop_personalpay_table' => $shop_prefix . 'personalpay',
+        'g5_shop_kcp_noti_table' => $shop_prefix . 'kcp_noti',
         'g5_shop_default_table' => $shop_prefix . 'default',
         'g5_shop_coupon_table' => $shop_prefix . 'coupon',
         'g5_shop_coupon_log_table' => $shop_prefix . 'coupon_log',
@@ -108,7 +110,7 @@ function g5_migration_parse_file($file)
         $migration['description'] = trim($matches[1]);
     }
 
-    if (preg_match('/^--\s*@skip-if-column\s+(\S+)\s+(\S+)$/mi', $contents, $matches)) {
+    if (preg_match('/^--[\t ]*@skip-if-column[\t ]+(\S+)[\t ]+(\S+)[\t ]*\r?$/mi', $contents, $matches)) {
         $migration['skip_table'] = g5_migration_replace_placeholders(trim($matches[1], '`'));
         $migration['skip_column'] = trim($matches[2], '`');
     }

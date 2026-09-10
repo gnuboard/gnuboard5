@@ -1,0 +1,10 @@
+{
+  "upgrade": "passed_with_original_CRLF_SQL",
+  "rerun": "passed",
+  "real_http_orders_preserved": 2,
+  "admin_login": "real",
+  "csrf_token": "real",
+  "historical_site_codes": "empty",
+  "notification_schema": "matches_fresh_install",
+  "sql_files_modified": false
+}

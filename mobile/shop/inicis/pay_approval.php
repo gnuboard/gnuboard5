@@ -40,6 +40,11 @@ if(isset($data['pp_id']) && $data['pp_id']) {
     if (get_cart_count($tmp_cart_id) == 0)// 장바구니에 담기
         alert('세션을 잃거나 다른 브라우저에서 데이터가 변경된 경우입니다. 장바구니 상태를 확인후에 다시 시도해 주세요.', G5_SHOP_URL.'/cart.php');
 
+    // KVE-2026-2345: PG 승인 요청 전에 상품·옵션 구성과 금액을 확인한다.
+    $cart_validation_error = shop_validate_order_cart($tmp_cart_id);
+    if ($cart_validation_error !== '')
+        alert($cart_validation_error, G5_SHOP_URL.'/cart.php');
+
     $error = "";
     // 장바구니 상품 재고 검사
     $sql = " select it_id,

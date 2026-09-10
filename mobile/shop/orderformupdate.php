@@ -66,9 +66,14 @@ if (get_session('ss_direct'))
 else
     $tmp_cart_id = get_session('ss_cart_id');
 
-if (get_cart_count($tmp_cart_id) == 0) {    // 장바구니에 담기
-    if(function_exists('add_order_post_log')) add_order_post_log('장바구니가 비어 있습니다.');
-    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
+// KVE-2026-2345: 승인 이후 장바구니가 삭제된 경우도 취소 처리로 연결한다.
+$cart_validation_error = get_cart_count($tmp_cart_id) == 0
+    ? '장바구니가 비어 있습니다.'
+    : shop_validate_order_cart($tmp_cart_id);
+if ($cart_validation_error !== '') {
+    if ($default['de_pg_service'] === 'inicis')
+        include G5_MSHOP_PATH.'/inicis/cart_validation_cancel.php';
+    alert($cart_validation_error, G5_SHOP_URL.'/cart.php');
 }
 
 // 변수 초기화
@@ -569,6 +574,9 @@ else
 }
 
 $od_pg = $default['de_pg_service'];
+// KCP 통보는 결제 당시 사용한 상점코드와 대조한다.
+$od_kcp_site_cd = ($od_pg === 'kcp' && isset($g_conf_site_cd))
+    ? sql_escape_string($g_conf_site_cd) : '';
 
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {
@@ -671,6 +679,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_receipt_time   = '$od_receipt_time',
                 od_misu           = '$od_misu',
                 od_pg             = '$od_pg',
+                od_kcp_site_cd    = '$od_kcp_site_cd',
                 od_tno            = '$od_tno',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',
