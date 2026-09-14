@@ -7,20 +7,14 @@ require_once(G5_SHOP_PATH.'/toss/toss.inc.php');
 $orderId = isset($_REQUEST['orderId']) ? $_REQUEST['orderId'] : '';
 $paymentKey = isset($_POST['paymentKey']) ? $_POST['paymentKey'] : '';
 
-if (empty($orderId) || empty($paymentKey)) {
-    alert('주문정보가 올바르지 않습니다.', G5_SHOP_URL);
-}
-
-$sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$orderId' limit 1 ";
-$row = sql_fetch($sql);
-
-$data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
-
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+$data = shop_order_access_payment($orderId, $paymentKey);
+$is_personal = !empty($data['pp_id']);
+if ($is_personal !== !empty($_POST['pp_id']) ||
+    ($is_personal && (string)$_POST['pp_id'] !== $orderId)) shop_order_access_fail();
 $amount = isset($data['amountValue']) ? (int)$data['amountValue'] : 0;
-
-if ($amount <= 0 || $amount !== (int)$order_price) {
-    alert('결제금액이 올바르지 않습니다.', G5_SHOP_URL);
-}
+$expected_amount = $is_personal ? (int)$pp['pp_price'] : (int)$order_price;
+if ($amount <= 0 || $amount !== $expected_amount) shop_order_access_fail();
 
 $toss = new TossPayments(
     $config['cf_toss_client_key'],
@@ -37,9 +31,12 @@ $toss->setPaymentData(array(
 $toss->setPaymentHeader();
 
 // 결제승인 요청
-$result = $toss->approvePayment();
+$result = shop_order_toss_approve($toss, $orderId, $paymentKey, $expected_amount);
 
 if ($result) {
+    if (!isset($toss->responseData['orderId'], $toss->responseData['paymentKey'], $toss->responseData['totalAmount']) ||
+        $toss->responseData['orderId'] !== $orderId || $toss->responseData['paymentKey'] !== $paymentKey ||
+        (int)$toss->responseData['totalAmount'] !== $expected_amount) shop_order_access_fail();
     // 결제승인 성공시 처리
     $status = isset($toss->responseData['status']) ? $toss->responseData['status'] : '';
     $method = isset($toss->responseData['method']) ? $toss->responseData['method'] : '';

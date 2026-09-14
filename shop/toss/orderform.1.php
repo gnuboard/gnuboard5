@@ -45,8 +45,8 @@ async function launchCrossPlatform(frm) {
         taxFreeAmount: parseInt(frm.taxFreeAmount.value),
         orderId: frm.orderId.value, // 고유 주문번호
         orderName: frm.orderName.value,
-        successUrl: "<?php echo G5_SHOP_URL;?>/toss/returnurl.php", // 결제 요청이 성공하면 리다이렉트되는 URL
-        failUrl: "<?php echo G5_SHOP_URL;?>/toss/returnurl.php?mode=fail", // 결제 요청이 실패하면 리다이렉트되는 URL
+        successUrl: g5_order_state_url("<?php echo G5_SHOP_URL;?>/toss/returnurl.php", frm), // 결제 요청이 성공하면 리다이렉트되는 URL
+        failUrl: g5_order_state_url("<?php echo G5_SHOP_URL;?>/toss/returnurl.php?mode=fail", frm), // 결제 요청이 실패하면 리다이렉트되는 URL
         customerEmail: frm.customerEmail.value,
         customerName: frm.customerName.value,
         customerMobilePhone: frm.customerMobilePhone.value,

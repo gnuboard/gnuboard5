@@ -2829,7 +2829,9 @@ function add_order_post_log($msg='', $code='error'){
     
     if( empty($_POST) ) return;
 
-    $post_data = base64_encode(serialize($_POST));
+    $log_data = $_POST;
+    unset($log_data['od_pwd'], $log_data['g5_order_state'], $log_data['g5_checkout_nonce']);
+    $post_data = base64_encode(serialize($log_data));
     $od_id = get_session('ss_order_id');
 
     if( $code === 'delete' ){

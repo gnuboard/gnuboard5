@@ -2,24 +2,24 @@
 class TossPayments {
 
     // 클라이언트, 시크릿 키, 상점아이디
-    public string $clientKey;
-    public string $secretKey;
-    public string $mId;
-    public string $headerSecretKey = "";
+    public $clientKey;
+    public $secretKey;
+    public $mId;
+    public $headerSecretKey = "";
 
-    public string $paymentUrl = "https://api.tosspayments.com/v1/payments/orders/{orderId}";
-    public string $acceptUrl = "https://api.tosspayments.com/v1/payments/confirm";
-    public string $cancelUrl = "https://api.tosspayments.com/v1/payments/{paymentKey}/cancel";
-    public string $cashReceiptsUrl = "https://api.tosspayments.com/v1/cash-receipts";
+    public $paymentUrl = "https://api.tosspayments.com/v1/payments/orders/{orderId}";
+    public $acceptUrl = "https://api.tosspayments.com/v1/payments/confirm";
+    public $cancelUrl = "https://api.tosspayments.com/v1/payments/{paymentKey}/cancel";
+    public $cashReceiptsUrl = "https://api.tosspayments.com/v1/cash-receipts";
 
     // 결제데이터
-    public array $headers = array();
-    public array $paymentData = array();
-    public array $cancelData = array();
-    public array $cashReceiptsData = array();
-    public array $responseData = array();
+    public $headers = array();
+    public $paymentData = array();
+    public $cancelData = array();
+    public $cashReceiptsData = array();
+    public $responseData = array();
 
-    public array $bankCode = array(
+    public $bankCode = array(
         // 은행
         '02' => '한국산업은행',
         '03' => 'IBK기업은행',
@@ -75,7 +75,7 @@ class TossPayments {
         'ST' => '토스증권'
     );
 
-    public array $cardCode = array(
+    public $cardCode = array(
         '3K' => '기업 BC',
         '46' => '광주은행',
         '71' => '롯데카드',
@@ -105,7 +105,7 @@ class TossPayments {
     );
 
     // 간편결제 제공업체 코드
-    public array $easyPayCode = array(
+    public $easyPayCode = array(
         'TOSSPAY' => '토스페이',
         'NAVERPAY' => '네이버페이',
         'SAMSUNGPAY' => '삼성페이',
@@ -117,7 +117,7 @@ class TossPayments {
         'SSG' => 'SSG페이'
     );
 
-    public function __construct(string $clientKey, string $secretKey, string $mId) {
+    public function __construct($clientKey, $secretKey, $mId) {
         $this->clientKey = $clientKey;
         $this->secretKey = $secretKey;
         $this->mId = $mId;
@@ -127,7 +127,7 @@ class TossPayments {
      * 헤더 시크릿 키 설정
      * @return void
      */
-    private function setHeaderSecretKey(): void
+    private function setHeaderSecretKey()
     {
         $this->headerSecretKey = base64_encode($this->secretKey . ':');
     }
@@ -136,7 +136,7 @@ class TossPayments {
      * 헤더 설정
      * @return void
      */
-    public function setPaymentHeader(): void
+    public function setPaymentHeader()
     {
         $this->setHeaderSecretKey();
 
@@ -152,7 +152,7 @@ class TossPayments {
      * @param array $request
      * @return void
      */
-    public function setPaymentData(array $request): void
+    public function setPaymentData(array $request)
     {
         $this->paymentData = array(
             'amount' => $request['amount'],
@@ -164,10 +164,10 @@ class TossPayments {
     /**
      * 주문번호로 결제정보 조회
      *
-     * @param string $orderId
+     * @param $orderId
      * @return bool
      */
-    public function getPaymentByOrderId(string $orderId): bool
+    public function getPaymentByOrderId($orderId)
     {
         if (empty($orderId)) {
             return false;
@@ -183,7 +183,7 @@ class TossPayments {
         $response = curl_exec($curl);
 
         $return_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $this->responseData = json_decode($response, true);
+        $this->responseData = (array) json_decode((string)$response, true);
 
         curl_close($curl);
 
@@ -200,7 +200,7 @@ class TossPayments {
      *
      * @return bool
      */
-    public function approvePayment(): bool {
+    public function approvePayment() {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->acceptUrl);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
@@ -213,12 +213,12 @@ class TossPayments {
         $response = curl_exec($curl);
 
         $return_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $this->responseData = json_decode($response, true);
+        $this->responseData = (array) json_decode((string)$response, true);
 
         curl_close($curl);
 
         // 결제 실패 상황인 경우
-        if ($return_status != 200 || ($this->responseData['status'] != 'DONE' && $this->responseData['status'] != 'WAITING_FOR_DEPOSIT')) {
+        if ($return_status != 200 || !isset($this->responseData['status']) || ($this->responseData['status'] != 'DONE' && $this->responseData['status'] != 'WAITING_FOR_DEPOSIT')) {
             return false;
         }
 
@@ -231,7 +231,7 @@ class TossPayments {
      * @param array $request
      * @return void
      */
-    public function setCancelData(array $request): void
+    public function setCancelData(array $request)
     {
         $this->cancelData = array(
             'paymentKey' => $request['paymentKey'],
@@ -263,7 +263,7 @@ class TossPayments {
      *
      * @return bool
      */
-    public function cancelPayment(): bool
+    public function cancelPayment()
     {
         // 취소에 필요한 결제 키가 있는지 여부
         if (empty($this->cancelData['paymentKey'])) {
@@ -282,7 +282,7 @@ class TossPayments {
         $response = curl_exec($curl);
 
         $return_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $this->responseData = json_decode($response, true);
+        $this->responseData = (array) json_decode((string)$response, true);
 
         curl_close($curl);
 
@@ -297,7 +297,7 @@ class TossPayments {
     /**
      * 현금영수증 발급 데이터 설정
      */
-    public function setCashReceiptsData(array $request): void
+    public function setCashReceiptsData(array $request)
     {
         $this->cashReceiptsData = array(
             'amount' => $request['amount'],
@@ -311,7 +311,7 @@ class TossPayments {
     /**
      * 현금영수증 발급
      */
-    public function issueCashReceipt(): bool
+    public function issueCashReceipt()
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->cashReceiptsUrl);
@@ -328,7 +328,7 @@ class TossPayments {
         $response = curl_exec($curl);
 
         $return_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $this->responseData = json_decode($response, true);
+        $this->responseData = (array) json_decode((string)$response, true);
 
         curl_close($curl);
 
@@ -343,7 +343,7 @@ class TossPayments {
     /**
      * 현금영수증 발급 취소
      */
-    public function cancelCashReceipt($receiptKey): bool
+    public function cancelCashReceipt($receiptKey)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->cashReceiptsUrl."/".$receiptKey."/cancel");
@@ -359,7 +359,7 @@ class TossPayments {
         $response = curl_exec($curl);
 
         $return_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $this->responseData = json_decode($response, true);
+        $this->responseData = (array) json_decode((string)$response, true);
 
         curl_close($curl);
 

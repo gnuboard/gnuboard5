@@ -451,3 +451,26 @@ if( ! function_exists('install_file_write') ){
         return true;
     }
 }
+
+// 최신 설치 SQL을 새로 생성한 경우에만 호출한다. 과거 SQL은 실행하지 않는다.
+function install_record_migrations($table_prefix)
+{
+    $files = glob(g5_migration_path() . '/*.sql');
+    if (!$files) return '마이그레이션 파일을 찾을 수 없습니다. 배포본의 migrations 디렉터리를 확인해 주십시오.';
+    sort($files, SORT_STRING);
+    $migrations = array();
+    foreach ($files as $file) {
+        $migration = g5_migration_read_file($file);
+        if (isset($migration['error'])) return $migration['error'];
+        $migrations[] = $migration;
+    }
+    $table = $table_prefix . 'migrations';
+    $error = g5_migration_validate_table($table);
+    if ($error !== '') return $error;
+    foreach ($migrations as $migration) {
+        if (!g5_migration_save_record($migration, 'success', '', 0, $table)) {
+            return $migration['id'] . ' 설치 이력을 저장하지 못했습니다: ' . sql_error_info();
+        }
+    }
+    return '';
+}

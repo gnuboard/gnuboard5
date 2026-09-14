@@ -1,5 +1,8 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+$access_order_id = isset($_POST['ordr_idxx']) ? $_POST['ordr_idxx'] : '';
+$data = shop_order_access_load($access_order_id, 'kcp');
 
 @header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 @header('Pragma: no-cache'); // HTTP 1.0.
@@ -235,12 +238,7 @@ include_once('./_common.php');
 <?php
 if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
     // 제외할 필드
-    $exclude = array('req_tx', 'res_cd', 'tran_cd', 'ordr_idxx', 'good_mny', 'good_name', 'buyr_name', 'buyr_tel1', 'buyr_tel2', 'buyr_mail', 'enc_info', 'enc_data', 'use_pay_method', 'rcvr_name', 'rcvr_tel1', 'rcvr_tel2', 'rcvr_mail', 'rcvr_zipx', 'rcvr_add1', 'rcvr_add2', 'param_opt_1', 'param_opt_2', 'param_opt_3');
-
-    $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$ordr_idxx' ";
-    $row = sql_fetch($sql);
-
-    $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
+    $exclude = array('req_tx', 'res_cd', 'tran_cd', 'ordr_idxx', 'good_mny', 'good_name', 'buyr_name', 'buyr_tel1', 'buyr_tel2', 'buyr_mail', 'enc_info', 'enc_data', 'use_pay_method', 'rcvr_name', 'rcvr_tel1', 'rcvr_tel2', 'rcvr_mail', 'rcvr_zipx', 'rcvr_add1', 'rcvr_add2', 'param_opt_1', 'param_opt_2', 'param_opt_3', 'site_cd');
 
     if(isset($data['pp_id']) && $data['pp_id']) {
         $order_action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';
@@ -253,6 +251,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
     echo make_order_field($data, $exclude);
 
     foreach($_POST as $key=>$value) {
+        if (!in_array($key, $exclude, true) || !is_string($value)) continue;
         echo '<input type="hidden" name="'.get_text($key).'" value="'.get_text($value).'">'.PHP_EOL;
     }
 
@@ -309,7 +308,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <input type="hidden" name="approval_key" id="approval">
 <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
 <!-- 반드시 가맹점 주문페이지의 URL을 입력 해주시기 바랍니다. -->
-<input type="hidden" name="Ret_URL"      value="<?php echo G5_MSHOP_URL; ?>/kcp/order_approval_form.php">
+<input type="hidden" name="Ret_URL"      value="<?php echo G5_MSHOP_URL; ?>/kcp/order_approval_form.php?g5_order_state=<?php echo get_text($data['g5_order_state']); ?>">
 <!-- 인증시 필요한 파라미터(변경불가)-->
 <input type="hidden" name="ActionResult" value="<?php echo get_text($ActionResult); ?>">
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->

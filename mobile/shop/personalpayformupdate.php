@@ -1,5 +1,7 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+shop_order_state_prepare(true);
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
@@ -233,6 +235,7 @@ $sql = " update {$g5['g5_shop_personalpay_table']}
                 pp_cash_no          = '{$pg_receipt_infos['od_cash_no']}',
                 pp_cash_info        = '{$pg_receipt_infos['od_cash_info']}'
             where pp_id = '{$pp['pp_id']}' ";
+shop_order_state_finalizing();
 $result = sql_query($sql, false);
 
 // 결제정보 입력 오류시 결제 취소
@@ -343,6 +346,8 @@ $sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '{$pp['pp_i
 sql_query($sql);
 
 // 개인결제번호제거
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+shop_order_access_forget((string)$pp['pp_id']);
 set_session('ss_personalpay_id', '');
 set_session('ss_personalpay_hash', '');
 

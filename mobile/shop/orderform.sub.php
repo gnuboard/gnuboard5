@@ -1,5 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
 
 require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 
@@ -277,7 +278,9 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
 </div>
 
 <div id="sod_frm" class="sod_frm_mobile">
+<script src="<?php echo G5_JS_URL; ?>/shop.order-state.js"></script>
     <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
+<?php echo shop_order_checkout_fields((string)$od_id, false); ?>
     <input type="hidden" name="od_price"    value="<?php echo $tot_sell_price; ?>">
     <input type="hidden" name="org_od_price"    value="<?php echo $tot_sell_price; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
@@ -1333,14 +1336,14 @@ function pay_approval()
 
         <?php if($default['de_escrow_use']) { ?>
         f.cardUseEscrow.value = 'true';
-        f.escrowProducts.value = JSON.stringify(<?php echo json_encode($escrow_products, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>);
+        f.escrowProducts.value = JSON.stringify(<?php echo json_encode($escrow_products); ?>);
         <?php } ?>
         
         f.cardflowMode.value = 'DEFAULT';
         f.cardeasyPay.value = '';
         if(settle_method == "간편결제") {
             var provider = $("input[name=od_settle_case]:checked").attr("data-pay");
-            var providers = <?php echo json_encode(array_values(array_map(function ($provider) { return $provider[1]; }, shop_easypay_catalog('toss')))); ?>;
+            var providers = <?php echo json_encode(shop_order_toss_providers()); ?>;
             if (providers.indexOf(provider) === -1) {
                 alert('간편결제 수단을 다시 선택해 주세요.');
                 return false;
@@ -1500,16 +1503,22 @@ function pay_approval()
         <?php } ?>
 
         // 주문 정보 임시저장
-        var order_data = $(pf).serialize();
-        var save_result = "";
+        <?php if ($default['de_pg_service'] == 'toss') { ?>
+            // 복귀 페이지에서 요청값으로 덮어쓰지 않도록 PG 필드를 임시 저장 전에 동기화한다.
+            $(f).serializeArray().forEach(function(field) {
+                if (pf.elements[field.name]) pf.elements[field.name].value = field.value;
+            });
+            <?php } ?>
+            var order_data = $(pf).serialize();
+        var save_result = "결제 요청을 저장하지 못했습니다.";
         $.ajax({
             type: "POST",
             data: order_data,
             url: g5_url+"/shop/ajax.orderdatasave.php",
             cache: false,
             async: false,
-            success: function(data) {
-                save_result = data;
+            success: function(data, textStatus, xhr) {
+                save_result = data || g5_order_state_accept(xhr);
             }
         });
 
