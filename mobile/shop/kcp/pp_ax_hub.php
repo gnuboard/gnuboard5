@@ -1,5 +1,32 @@
 <?php
     if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+    include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+    $access_order_id = isset($_POST['ordr_idxx']) ? $_POST['ordr_idxx'] : '';
+    $access_data = shop_order_access_load($access_order_id, 'kcp');
+    $access_personal = !empty($access_data['pp_id']);
+    if ($access_personal !== !empty($_POST['pp_id']) ||
+        ($access_personal && (string)$_POST['pp_id'] !== $access_order_id)) shop_order_access_fail();
+
+    // 최종 계산 금액을 검증한 뒤 승인 기록을 원자적으로 확보한다.
+    $kcp_expected = $access_personal ? (int)$pp['pp_price'] : (int)$order_price;
+    if ($kcp_expected <= 0 || !isset($_POST['req_tx'], $_POST['good_mny'], $_POST['enc_data'], $_POST['enc_info']) ||
+        $_POST['req_tx'] !== 'pay' || !is_string($_POST['good_mny']) || !ctype_digit($_POST['good_mny']) ||
+        (int)$_POST['good_mny'] !== $kcp_expected || !is_string($_POST['enc_data']) || !is_string($_POST['enc_info']) ||
+        $_POST['enc_data'] === '' || $_POST['enc_info'] === '') shop_order_access_fail();
+    $kcp_request_key = 'kcp:'.hash('sha256', $_POST['enc_data']."\0".$_POST['enc_info']);
+    $kcp_state = shop_order_state_begin($access_order_id, $kcp_request_key, $kcp_expected);
+    if ($kcp_state['status'] === 'approved') {
+        $kcp_cached = json_decode($kcp_state['response_json'], true);
+        $kcp_cached = isset($kcp_cached['payload']) ? shop_order_decode_data($kcp_cached['payload']) : false;
+        if (!is_array($kcp_cached) || (int)$kcp_cached['amount'] !== $kcp_expected) shop_order_access_fail();
+        foreach (shop_order_kcp_result_fields() as $kcp_field) {
+            if (isset($kcp_cached[$kcp_field])) $$kcp_field = $kcp_cached[$kcp_field];
+        }
+        return;
+    }
+    // KCP 통신 도중 프로세스가 끊긴 거래는 운영 대조 전 재승인하지 않는다.
+    if ($kcp_state['status'] !== 'pending') shop_order_access_fail();
+
     /* ============================================================================== */
     /* =   PAGE : 지불 요청 및 결과 처리 PAGE                                       = */
     /* = -------------------------------------------------------------------------- = */
@@ -305,3 +332,9 @@
 	/* = -------------------------------------------------------------------------- = */
     /* =   05. 승인 결과 처리 END                                                   = */
     /* ============================================================================== */;
+    if (empty($tno) || (int)$amount !== $kcp_expected) shop_order_access_fail();
+    $kcp_snapshot = array();
+    foreach (shop_order_kcp_result_fields() as $kcp_field) {
+        if (isset($$kcp_field)) $kcp_snapshot[$kcp_field] = $$kcp_field;
+    }
+    shop_order_state_approved($access_order_id, array('payload'=>base64_encode(serialize($kcp_snapshot))));

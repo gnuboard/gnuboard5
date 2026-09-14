@@ -63,7 +63,7 @@
 				   + "&pay_method=" + form.pay_method.value
 				   + "&escw_used=" + form.escw_used.value
 				   + "&good_name=" + form.good_name.value
-				   + "&Ret_URL=" + form.Ret_URL.value;
+				   + "&Ret_URL=" + encodeURIComponent(form.Ret_URL.value);
 		sendRequest( url + params );
 	}
 

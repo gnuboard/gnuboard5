@@ -1,6 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+if (function_exists('shop_order_state_cancel')) shop_order_state_cancel('cancel_pending');
+
 // locale ko_KR.euc-kr 로 설정
 setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
@@ -76,3 +78,4 @@ if ( $req_tx == "pay" )
 
 // locale 설정 초기화
 setlocale(LC_CTYPE, '');
+if (isset($res_cd) && $res_cd === '0000' && function_exists('shop_order_state_cancel')) shop_order_state_cancel('cancelled');

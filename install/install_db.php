@@ -108,6 +108,18 @@ if ($table_check_error) {
     install_fail_page('기존 테이블 존재 여부를 확인하지 못했습니다. DB 계정 권한을 확인해 주십시오.', $dblink, $install_table_prefixes);
 }
 
+// 기존 테이블을 보존하거나 재사용하는 설치는 DB 업그레이드에서 실제 상태를 검사한다.
+$install_record_baseline = $is_install === false;
+$existing_tables = install_query_or_fail('SHOW TABLES', $dblink, '신규 설치 여부를 확인하지 못했습니다.', $install_table_prefixes);
+while ($existing_table = sql_fetch_array($existing_tables)) {
+    $existing_table_name = reset($existing_table);
+    foreach (array($table_prefix, $g5_shop_prefix, $table_prefix . 'shop_') as $existing_prefix) {
+        if (strpos($existing_table_name, $existing_prefix) === 0) {
+            $install_record_baseline = false;
+        }
+    }
+}
+
 // 그누보드5 재설치에 체크하였거나 그누보드5가 설치되어 있지 않다면
 if ($g5_install || $is_install === false) {
     // 테이블 생성 ------------------------------------
@@ -580,6 +592,16 @@ if($g5_shop_install) {
 <?php
 //-------------------------------------------------------------------------------------------------
 
+// 최신 기본 스키마를 생성한 설치에서만 배포 시점의 이력을 등록한다.
+// 실패하면 dbconfig.php를 만들지 않아 설치 완료로 취급하지 않는다.
+if ($install_record_baseline) {
+    include_once('../lib/migration.lib.php');
+    $migration_error = install_record_migrations($table_prefix);
+    if ($migration_error !== '') {
+        install_fail_page($migration_error, $dblink, $install_table_prefixes);
+    }
+}
+
 // DB 설정 파일 생성
 $file = '../'.G5_DATA_DIR.'/'.G5_DBCONFIG_FILE;
 $install_file_write_error = false;
@@ -660,6 +682,7 @@ if($g5_shop_install) {
     install_file_write($f, "\$g5['g5_shop_item_stocksms_table'] = G5_SHOP_TABLE_PREFIX.'item_stocksms'; // 재입고SMS 알림 정보 테이블\n");
     install_file_write($f, "\$g5['g5_shop_post_log_table'] = G5_SHOP_TABLE_PREFIX.'order_post_log'; // 주문요청 로그 테이블\n");
     install_file_write($f, "\$g5['g5_shop_order_data_table'] = G5_SHOP_TABLE_PREFIX.'order_data'; // 모바일 결제정보 임시저장 테이블\n");
+    install_file_write($f, "\$g5['g5_shop_order_access_table'] = G5_SHOP_TABLE_PREFIX.'order_access'; // 주문 복귀 인증 및 승인 상태 테이블\n");
     install_file_write($f, "\$g5['g5_shop_inicis_log_table'] = G5_SHOP_TABLE_PREFIX.'inicis_log'; // 이니시스 모바일 계좌이체 로그 테이블\n");
     install_file_write($f, "\$g5['g5_shop_inicis_pay_table'] = G5_SHOP_TABLE_PREFIX.'inicis_pay'; // 이니시스 결제 처리 현황 테이블\n");
     install_file_write($f, "\$g5['g5_shop_inicis_pay_event_table'] = G5_SHOP_TABLE_PREFIX.'inicis_pay_event'; // 이니시스 결제 처리 이력 테이블\n");

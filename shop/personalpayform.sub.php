@@ -1,5 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
 
 require_once(G5_SHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 
@@ -7,7 +8,9 @@ require_once(G5_SHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 ?>
 
+<script src="<?php echo G5_JS_URL; ?>/shop.order-state.js"></script>
 <form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
+<?php echo shop_order_checkout_fields((string)$pp['pp_id'], true); ?>
 <input type="hidden" name="pp_id" value="<?php echo $pp['pp_id']; ?>">
 
     <?php
@@ -373,15 +376,15 @@ function forderform_check(f)
     if(f.method.value != "무통장") {
         // 주문정보 임시저장
         var order_data = $(f).serialize();
-        var save_result = "";
+        var save_result = "결제 요청을 저장하지 못했습니다.";
         $.ajax({
             type: "POST",
             data: order_data,
             url: g5_url+"/shop/ajax.orderdatasave.php",
             cache: false,
             async: false,
-            success: function(data) {
-                save_result = data;
+            success: function(data, textStatus, xhr) {
+                save_result = data || g5_order_state_accept(xhr);
             }
         });
 
@@ -404,15 +407,15 @@ function forderform_check(f)
     if(f.gopaymethod.value != "무통장") {
         // 주문정보 임시저장
         var order_data = $(f).serialize();
-        var save_result = "";
+        var save_result = "결제 요청을 저장하지 못했습니다.";
         $.ajax({
             type: "POST",
             data: order_data,
             url: g5_url+"/shop/ajax.orderdatasave.php",
             cache: false,
             async: false,
-            success: function(data) {
-                save_result = data;
+            success: function(data, textStatus, xhr) {
+                save_result = data || g5_order_state_accept(xhr);
             }
         });
 
@@ -447,15 +450,15 @@ function forderform_check(f)
     if(f.PayMethod.value != "무통장") {
         // 주문정보 임시저장
         var order_data = $(f).serialize();
-        var save_result = "";
+        var save_result = "결제 요청을 저장하지 못했습니다.";
         $.ajax({
             type: "POST",
             data: order_data,
             url: g5_url+"/shop/ajax.orderdatasave.php",
             cache: false,
             async: false,
-            success: function(data) {
-                save_result = data;
+            success: function(data, textStatus, xhr) {
+                save_result = data || g5_order_state_accept(xhr);
             }
         });
 

@@ -1,45 +1,19 @@
 <?php
 include_once('./_common.php');
 
-// 결제 실패 처리인 경우
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] === 'fail') {
-    $code = isset($_REQUEST['code']) ? trim($_REQUEST['code']) : '';
-    $message = isset($_REQUEST['message']) ? trim($_REQUEST['message']) : '';
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+header('Cache-Control: no-store, private');
+header('Referrer-Policy: no-referrer');
 
-    alert('결제에 실패하였습니다.\\n\\n[' . $code . '] ' . $message, G5_SHOP_URL . '/orderform.php');
-    exit;
-}
-
-if(!isset($_SESSION['PAYREQ_MAP'])){
-    alert('세션이 만료 되었거나 유효하지 않은 요청 입니다.', G5_MSHOP_URL);
-}
-
-$payReqMap = $_SESSION['PAYREQ_MAP']; //결제 요청시, Session에 저장했던 파라미터 MAP
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] === 'fail') shop_order_state_abort_pending();
+$orderId = isset($_REQUEST['orderId']) ? $_REQUEST['orderId'] : '';
+$paymentKey = isset($_REQUEST['paymentKey']) ? $_REQUEST['paymentKey'] : '';
+$amount = isset($_REQUEST['amount']) ? $_REQUEST['amount'] : '';
+$data = shop_order_access_payment($orderId, $paymentKey, $amount);
 
 $g5['title'] = '토스페이먼츠 결제인증 완료처리';
 $g5['body_script'] = ' onload="setTossResult();"';
 include_once(G5_PATH.'/head.sub.php');
-
-// 토스페이먼츠 결제인증 성공시 인증키 주문 임시데이터에 업데이트
-$paymentKey = isset($_REQUEST['paymentKey']) ? trim($_REQUEST['paymentKey']) : '';
-$orderId = isset($_REQUEST['orderId']) ? trim($_REQUEST['orderId']) : '';
-$amount = isset($_REQUEST['amount']) ? trim($_REQUEST['amount']) : '';
-
-if (empty($paymentKey) || empty($orderId)) {
-    alert('결제정보가 올바르지 않습니다.', G5_MSHOP_URL);
-    exit;
-}
-
-$sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$orderId' ";
-$row = sql_fetch($sql);
-
-$data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
-
-// 주문 임시데이터에 paymentKey 업데이트
-$data['paymentKey'] = $paymentKey;
-$data_new = base64_encode(serialize($data));
-$sql = " update {$g5['g5_shop_order_data_table']} set dt_data = '$data_new' where od_id = '$orderId' limit 1 ";
-sql_query($sql);
 
 if(isset($data['pp_id']) && $data['pp_id']) {
     $order_action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';

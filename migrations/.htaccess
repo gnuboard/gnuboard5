@@ -1,0 +1,3 @@
+# Apache 2.4: 마이그레이션 파일의 HTTP 접근을 차단한다.
+# 서버 내부에서 PHP가 SQL 파일을 읽는 동작에는 영향을 주지 않는다.
+Require all denied

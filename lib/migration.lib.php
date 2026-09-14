@@ -42,6 +42,7 @@ function g5_migration_replace_placeholders($sql)
         'g5_shop_coupon_zone_table' => $shop_prefix . 'coupon_zone',
         'g5_shop_inicis_log_table' => $shop_prefix . 'inicis_log',
         'g5_shop_order_data_table' => $shop_prefix . 'order_data',
+        'g5_shop_order_access_table' => $shop_prefix . 'order_access',
         'g5_shop_post_log_table' => $shop_prefix . 'order_post_log',
         'g5_shop_order_cancel_log_table' => $shop_prefix . 'order_cancel_log',
         'g5_shop_inicis_pay_table' => $shop_prefix . 'inicis_pay',
@@ -85,7 +86,7 @@ function g5_migration_parse_condition($directive, $file)
     return $condition;
 }
 
-function g5_migration_parse_file($file)
+function g5_migration_read_file($file)
 {
     $contents = @file_get_contents($file);
     if ($contents === false) {
@@ -109,6 +110,17 @@ function g5_migration_parse_file($file)
     if (preg_match('/^--\s*@description\s+(.+)$/mi', $contents, $matches)) {
         $migration['description'] = trim($matches[1]);
     }
+
+    $migration['contents'] = $contents;
+    return $migration;
+}
+
+function g5_migration_parse_file($file)
+{
+    $migration = g5_migration_read_file($file);
+    if (isset($migration['error'])) return $migration;
+    $contents = $migration['contents'];
+    unset($migration['contents']);
 
     if (preg_match('/^--[\t ]*@skip-if-column[\t ]+(\S+)[\t ]+(\S+)[\t ]*\r?$/mi', $contents, $matches)) {
         $migration['skip_table'] = g5_migration_replace_placeholders(trim($matches[1], '`'));
@@ -303,17 +315,31 @@ function g5_migration_execute_statement($statement)
     return array('error' => '', 'executed' => $executed);
 }
 
-function g5_migration_get_records()
+function g5_migration_get_records(&$error = null)
 {
     $table = g5_migration_table_name();
     $records = array();
+    $error = '';
 
-    if (!g5_migration_table_exists($table)) {
+    $tables = sql_query("SHOW TABLES LIKE '" . sql_real_escape_string($table) . "'", false);
+    if (!$tables) {
+        $error = '마이그레이션 이력 테이블을 조회하지 못했습니다: ' . sql_error_info();
+        return $records;
+    }
+    $exists = false;
+    while ($row = sql_fetch_array($tables)) {
+        if (reset($row) === $table) $exists = true;
+    }
+    if (!$exists) {
         return $records;
     }
 
+    $error = g5_migration_validate_table();
+    if ($error !== '') return $records;
+
     $result = sql_query("SELECT migration_id, checksum, status, error_message, applied_at FROM `{$table}` ORDER BY migration_id", false);
     if (!$result) {
+        $error = '마이그레이션 이력을 읽지 못했습니다: ' . sql_error_info();
         return $records;
     }
 
@@ -399,7 +425,8 @@ function g5_migration_needs_no_execution($migration, &$cache)
 function g5_migration_status()
 {
     $migrations = g5_migration_discover();
-    $records = g5_migration_get_records();
+    $records = g5_migration_get_records($history_error);
+    if ($history_error !== '') return array(array('error' => $history_error));
     $status = array();
     $inspection_cache = array();
 
@@ -470,6 +497,25 @@ function g5_migration_validate_target_dependencies($migrations, $records, $targe
     return '';
 }
 
+// 조회에서는 구조만 검사하고, 복구를 위한 DDL은 자동 실행하지 않는다.
+function g5_migration_validate_table($table = null)
+{
+    if ($table === null) $table = g5_migration_table_name();
+    $columns = 'migration_id, description, checksum, status, error_message, execution_ms, applied_at';
+    if (!sql_query("SELECT {$columns} FROM `{$table}` LIMIT 0", false)) {
+        return "마이그레이션 이력 테이블 `{$table}`의 구조를 확인하지 못했습니다: " . sql_error_info()
+            . ' (docs/database-migrations.md의 이력 테이블 복구 절차를 확인해 주십시오.)';
+    }
+    $indexes = sql_query("SHOW INDEX FROM `{$table}` WHERE Key_name = 'PRIMARY'", false);
+    if (!$indexes) return '마이그레이션 이력 기본키를 확인하지 못했습니다: ' . sql_error_info();
+    $primary = array();
+    while ($row = sql_fetch_array($indexes)) $primary[] = $row['Column_name'];
+    if ($primary !== array('migration_id')) {
+        return "마이그레이션 이력 테이블 `{$table}`의 기본키가 migration_id 단일 컬럼이 아닙니다. docs/database-migrations.md의 이력 테이블 복구 절차를 확인해 주십시오.";
+    }
+    return '';
+}
+
 function g5_migration_ensure_table()
 {
     $table = g5_migration_table_name();
@@ -487,9 +533,9 @@ function g5_migration_ensure_table()
     return (bool) sql_query($sql, false);
 }
 
-function g5_migration_save_record($migration, $status, $error_message, $execution_ms)
+function g5_migration_save_record($migration, $status, $error_message, $execution_ms, $table = null)
 {
-    $table = g5_migration_table_name();
+    if ($table === null) $table = g5_migration_table_name();
     $id = sql_real_escape_string($migration['id']);
     $description = sql_real_escape_string($migration['description']);
     $checksum = sql_real_escape_string($migration['checksum']);
@@ -525,7 +571,12 @@ function g5_migration_run($target_id = '', $record_existing = false)
     }
 
     $migrations = g5_migration_discover();
-    $records = g5_migration_get_records();
+    $records = g5_migration_get_records($history_error);
+    if ($history_error !== '') {
+        $result['errors'][] = $history_error;
+        sql_query("SELECT RELEASE_LOCK('{$lock_name}')", false);
+        return $result;
+    }
     $target_found = $target_id === '';
 
     if ($record_existing) {

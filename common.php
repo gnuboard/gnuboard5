@@ -354,7 +354,11 @@ if( !function_exists('shop_check_is_pay_page') ){
 // PG 결제시에 세션이 없으면 내 호출페이지를 다시 호출하여 쿠키 PHPSESSID를 살려내어 세션값을 정상적으로 불러오게 합니다.
 // 위와 같이 코드를 전부 한페이지에 넣은 이유는 이전 버전 사용자들이 패치시 어려울수 있으므로 한페이지에 코드를 다 넣었습니다.
 if(XenoPostToForm::check()) {
-    if ( shop_check_is_pay_page() ){	// PG 결제 리턴페이지에서만 사용
+    // 토큰 복귀는 실제 엔드포인트에서 DB 해시를 검증한다. 여기서는 쿠키 재전송만 생략한다.
+    $g5_order_token_return = isset($_REQUEST['g5_order_state']) && is_string($_REQUEST['g5_order_state']) &&
+        preg_match('/\A[0-9]{1,20}\.[a-f0-9]{64}\z/D', $_REQUEST['g5_order_state']) &&
+        preg_match('~/mobile/shop/kcp/order_approval_form\.php$~', str_replace('\\', '/', $_SERVER['SCRIPT_NAME']));
+    if ( shop_check_is_pay_page() && !$g5_order_token_return ){	// PG 결제 리턴페이지에서만 사용
         XenoPostToForm::submit($_POST); // session_start(); 하기 전에
     }
 }

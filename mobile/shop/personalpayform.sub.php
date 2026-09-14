@@ -1,5 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
 
 require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 
@@ -14,7 +15,9 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 </div>
 
 <div id="m_pv_sod_frm">
+<script src="<?php echo G5_JS_URL; ?>/shop.order-state.js"></script>
     <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
+<?php echo shop_order_checkout_fields((string)$pp['pp_id'], true); ?>
     <input type="hidden" name="pp_id" value="<?php echo $pp['pp_id']; ?>">
     <section id="m_sod_frm_orderer">
         <h2>개인결제정보</h2>
@@ -311,16 +314,22 @@ function pay_approval()
     //f.target = "tar_opener";
 
     // 주문 정보 임시저장
-    var order_data = $(pf).serialize();
-    var save_result = "";
+    <?php if ($default['de_pg_service'] == 'toss') { ?>
+            // 복귀 페이지에서 요청값으로 덮어쓰지 않도록 PG 필드를 임시 저장 전에 동기화한다.
+            $(f).serializeArray().forEach(function(field) {
+                if (pf.elements[field.name]) pf.elements[field.name].value = field.value;
+            });
+            <?php } ?>
+            var order_data = $(pf).serialize();
+    var save_result = "결제 요청을 저장하지 못했습니다.";
     $.ajax({
         type: "POST",
         data: order_data,
         url: g5_url+"/shop/ajax.orderdatasave.php",
         cache: false,
         async: false,
-        success: function(data) {
-            save_result = data;
+        success: function(data, textStatus, xhr) {
+            save_result = data || g5_order_state_accept(xhr);
         }
     });
 

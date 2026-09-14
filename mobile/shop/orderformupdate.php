@@ -1,5 +1,10 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+shop_order_state_prepare(false);
+// PG 호출 전에 저장된 비회원 비밀번호 해시의 주문 소유권을 확인한다.
+$saved_order_password = ($is_member || $od_settle_case === '무통장') ? null : shop_order_access_password((string)get_session('ss_order_id'));
+
 
 // 구 주문서나 직접 POST로도 SIRK 전용 결제를 다시 시작하지 않는다.
 if (isset($od_settle_case) && $od_settle_case === 'KAKAOPAY') {
@@ -592,8 +597,8 @@ if($tno) {
 if ($is_member) {
     $od_pwd = $member['mb_password'];
 } else {
-    $post_od_pwd = isset($_POST['od_pwd']) ? $_POST['od_pwd'] : sha1(rand());
-    $od_pwd = get_encrypt_string($_POST['od_pwd']);
+    $od_pwd = $saved_order_password !== null ? $saved_order_password :
+        get_encrypt_string(isset($_POST['od_pwd']) ? $_POST['od_pwd'] : bin2hex(random_bytes(16)));
 }
 
 // 주문번호를 얻는다.
@@ -700,6 +705,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_cash_info      = '{$pg_receipt_infos['od_cash_info']}',
                 od_test           = '{$default['de_card_test']}'
                 ";
+shop_order_state_finalizing();
 $result = sql_query($sql, false);
 
 // 정말로 insert 가 되었는지 한번더 체크한다.
@@ -1053,6 +1059,7 @@ if( $od_pg == 'inicis' && $od_tno && empty($_POST['inicis_pro']) ){
 if(function_exists('add_order_post_log')) add_order_post_log('', 'delete');
 
 // 주문번호제거
+shop_order_access_forget((string)$od_id);
 set_session('ss_order_id', '');
 
 // 기존자료 세션에서 제거
