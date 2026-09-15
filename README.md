@@ -73,6 +73,7 @@ cd gnuboard5
 
 ## 문서 및 지원
 
+- [5.6.391 쇼핑몰 분류 표시 수정 안내](docs/release-5.6.391.md)
 - [5.6.39 보안 업데이트 및 필수 DB업그레이드 안내](docs/release-5.6.39.md)
 
 - [5.6.37 SIRK 전용 카카오페이 연동 종료 및 기존 거래 지원](docs/sirk-kakaopay-retirement.md)
