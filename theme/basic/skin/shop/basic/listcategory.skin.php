@@ -1,44 +1,25 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit;
 
-$str = '';
-$exists = false;
-
-$ca_id_len = strlen($ca_id);
-$len2 = $ca_id_len + 2;
-
-$sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '$ca_id%' and length(ca_id) = $len2 and ca_use = '1' order by ca_order, ca_id ";
-$result = sql_query($sql);
-
-// 하위 분류가 없으면 현재 분류를 포함한 같은 단계의 사용 중인 분류를 표시한다.
-if (!sql_num_rows($result)) {
-    $parent_ca_id = substr($ca_id, 0, -2);
-    $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '$parent_ca_id%' and length(ca_id) = $ca_id_len and ca_use = '1' order by ca_order, ca_id ";
-    $result = sql_query($sql);
-}
-
-while ($row=sql_fetch_array($result)) {
-
-    $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1'  ");
-
-    $current_attr = ($row['ca_id'] === $ca_id) ? ' class="sct_ct_here" aria-current="page"' : '';
-    $str .= '<li><a'.$current_attr.' href="'.shop_category_url($row['ca_id']).'">'.$row['ca_name'].' ('.$row2['cnt'].')</a></li>';
-    $exists = true;
-}
-
-if ($exists) {
-
-    // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+$category_groups = get_shop_category_menu_groups($ca_id);
+if ($category_groups) {
     add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
-
-<!-- 상품분류 1 시작 { -->
 <aside id="sct_ct_1" class="sct_ct">
     <h2>현재 상품 분류와 관련된 분류</h2>
-    <ul>
-        <?php echo $str; ?>
+    <?php foreach ($category_groups as $category_group) { ?>
+    <ul aria-label="<?php echo $category_group['label']; ?>">
+        <?php foreach ($category_group['categories'] as $row) {
+            $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1' ");
+            $current_attr = '';
+            if ($row['ca_id'] === $ca_id) {
+                $current_attr = ' class="sct_ct_here" aria-current="page"';
+            } elseif (strpos($ca_id, $row['ca_id']) === 0) {
+                $current_attr = ' class="sct_ct_here sct_ct_parent"';
+            }
+            echo '<li><a'.$current_attr.' href="'.shop_category_url($row['ca_id']).'">'.get_text($row['ca_name']).' ('.$row2['cnt'].')</a></li>';
+        } ?>
     </ul>
+    <?php } ?>
 </aside>
-<!-- } 상품분류 1 끝 -->
-
 <?php }
