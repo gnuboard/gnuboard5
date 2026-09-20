@@ -684,6 +684,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_pg` varchar(255) NOT NULL DEFAULT '',
   `od_kcp_site_cd` varchar(5) NOT NULL DEFAULT '',
+  `od_lg_mid` varchar(104) NOT NULL DEFAULT '',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
   `od_app_no` varchar(20) NOT NULL DEFAULT '',
   `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
@@ -783,6 +784,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_personalpay` (
   `pp_price` INT(11) NOT NULL DEFAULT '0',
   `pp_pg` varchar(255) NOT NULL DEFAULT '',
   `pp_kcp_site_cd` varchar(5) NOT NULL DEFAULT '',
+  `pp_lg_mid` varchar(104) NOT NULL DEFAULT '',
   `pp_tno` VARCHAR(255) NOT NULL DEFAULT '',
   `pp_app_no` VARCHAR(20) NOT NULL DEFAULT '',
   `pp_casseqno` VARCHAR(255) NOT NULL DEFAULT '',
@@ -1071,3 +1073,19 @@ CREATE TABLE `g5_shop_order_access` (
   KEY cart_status (cart_id,status),
   KEY state_expiry (status,expires)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- LG 입금 통보 및 중간 실패 복구 이력
+CREATE TABLE `g5_shop_lg_noti` (
+  `ln_key` char(64) NOT NULL,
+  `ln_trade` char(64) NOT NULL,
+  `ln_seq` int(11) NOT NULL,
+  `ln_flag` char(1) NOT NULL,
+  `ln_payload` char(64) NOT NULL,
+  `od_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `ln_plan` mediumtext NOT NULL,
+  `ln_done` tinyint(4) NOT NULL DEFAULT '0',
+  `ln_created_at` datetime NOT NULL,
+  PRIMARY KEY (`ln_key`),
+  KEY `ln_trade` (`ln_trade`),
+  KEY `od_id` (`od_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

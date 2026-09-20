@@ -582,6 +582,9 @@ $od_pg = $default['de_pg_service'];
 // KCP 통보는 결제 당시 사용한 상점코드와 대조한다.
 $od_kcp_site_cd = ($od_pg === 'kcp' && isset($g_conf_site_cd))
     ? sql_escape_string($g_conf_site_cd) : '';
+// LG 통보는 결제 당시 서버에서 구성한 운영/테스트 MID와 대조한다.
+$od_lg_mid = ($od_pg === 'lg' && isset($LGD_MID))
+    ? sql_escape_string($LGD_MID) : '';
 
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {
@@ -685,6 +688,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_misu           = '$od_misu',
                 od_pg             = '$od_pg',
                 od_kcp_site_cd    = '$od_kcp_site_cd',
+                od_lg_mid         = '$od_lg_mid',
                 od_tno            = '$od_tno',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',
