@@ -218,11 +218,15 @@ $pp_pg = $default['de_pg_service'];
 // KCP 통보는 결제 당시 사용한 상점코드와 대조한다.
 $pp_kcp_site_cd = ($pp_pg === 'kcp' && isset($g_conf_site_cd))
     ? sql_escape_string($g_conf_site_cd) : '';
+// LG 통보는 결제 당시 서버에서 구성한 운영/테스트 MID와 대조한다.
+$pp_lg_mid = ($pp_pg === 'lg' && isset($LGD_MID))
+    ? sql_escape_string($LGD_MID) : '';
 
 // 결제정보 입력
 $sql = " update {$g5['g5_shop_personalpay_table']}
             set pp_pg               = '$pp_pg',
                 pp_kcp_site_cd    = '$pp_kcp_site_cd',
+                pp_lg_mid         = '$pp_lg_mid',
                 pp_tno              = '$pp_tno',
                 pp_app_no           = '$app_no',
                 pp_receipt_price    = '$pp_receipt_price',
