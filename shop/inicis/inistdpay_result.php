@@ -44,10 +44,10 @@ try {
         // 승인요청 API url (authUrl) 리스트 는 properties 에 세팅하여 사용합니다.
         // idc_name 으로 수신 받은 센터 네임을 properties 에서 include 하여 승인요청하시면 됩니다.
         //##########################################################################
-        $idc_name 	= $_REQUEST["idc_name"];
+        $idc_name = isset($_REQUEST["idc_name"]) && is_string($_REQUEST["idc_name"]) ? $_REQUEST["idc_name"] : "";
         $authUrl    = $prop->getAuthUrl($idc_name);
         
-        if (strcmp($authUrl, $_REQUEST["authUrl"]) != 0) {
+        if ($authUrl === "" || !isset($_REQUEST["authUrl"]) || $authUrl !== $_REQUEST["authUrl"]) {
             
             die("authUrl check Fail\n");
         }
@@ -67,6 +67,7 @@ try {
         $authMap['mid'] = $mid;   // 필수
         $authMap['authToken'] = $authToken; // 필수
         $authMap['signature'] = $signature; // 필수
+        $authMap['verification'] = hash('sha256', 'authToken='.$authToken.'&signKey='.$signKey.'&timestamp='.$timestamp);
         $authMap['timestamp'] = $timestamp; // 필수
         $authMap['charset'] = $charset;  // default=UTF-8
         $authMap['format'] = $format;  // default=XML
@@ -189,7 +190,7 @@ try {
             $netcancelResultString = ""; // 망취소 요청 API url(고정, 임의 세팅 금지)
             $netCancel    = $prop->getNetCancel($idc_name);
             
-            if (strcmp($netCancel, $_REQUEST["netCancelUrl"]) == 0) {
+            if ($netCancel !== "" && isset($_REQUEST["netCancelUrl"]) && $netCancel === $_REQUEST["netCancelUrl"]) {
                 
                 if ($httpUtil->processHTTP($netCancel, $authMap)) {
                     $netcancelResultString = $httpUtil->body;

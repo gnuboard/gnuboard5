@@ -8,12 +8,15 @@ set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
 $oid  = isset($_REQUEST['P_NOTI']) ? trim($_REQUEST['P_NOTI']) : '';
-$p_req_url = isset($_REQUEST['P_REQ_URL']) ? is_inicis_url_return(trim($_REQUEST['P_REQ_URL'])) : '';
+require_once(G5_SHOP_PATH.'/inicis/libs/properties.php');
+$prop = new properties();
+$idc_name = isset($_REQUEST['idc_name']) && is_string($_REQUEST['idc_name']) ? $_REQUEST['idc_name'] : '';
+$p_req_url = $prop->getMobileAuthUrl($idc_name);
 $p_status = isset($_REQUEST['P_STATUS']) ? trim($_REQUEST['P_STATUS']) : '';
 $p_tid = isset($_REQUEST['P_TID']) ? trim($_REQUEST['P_TID']) : '';
 $p_rmesg1 = isset($_REQUEST['P_RMESG1']) ? trim($_REQUEST['P_RMESG1']) : '';
 
-if( ! $p_req_url || !preg_match('/^https\:\/\//i', $p_req_url)){
+if ($p_req_url === '' || !isset($_REQUEST['P_REQ_URL']) || $p_req_url !== $_REQUEST['P_REQ_URL']) {
     alert("잘못된 요청 URL 입니다.");
 }
 

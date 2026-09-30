@@ -74,6 +74,8 @@ no_receipt : 은행계좌이체시 현금영수증 발행여부 체크박스 비
 -->
 <input type="hidden" name="timestamp"   value="">
 <input type="hidden" name="signature"   value="">
+<input type="hidden" name="verification" value="">
+<input type="hidden" name="use_chkfake" value="Y">
 <input type="hidden" name="returnUrl"   value="<?php echo $returnUrl; ?>">
 <input type="hidden" name="mKey"        value="">
 <input type="hidden" name="charset"     value="UTF-8">
@@ -92,23 +94,29 @@ no_receipt : 은행계좌이체시 현금영수증 발행여부 체크박스 비
 function make_signature(frm)
 {
     // 데이터 암호화 처리
-    var result = true;
+    var result = false;
     $.ajax({
         url: g5_url+"/shop/inicis/makesignature.php",
         type: "POST",
         data: {
+            oid : frm.oid.value,
             price : frm.good_mny.value
         },
         dataType: "json",
         async: false,
         cache: false,
+        error: function() {
+            alert("결제 서명을 생성하지 못했습니다. 다시 시도해 주십시오.");
+        },
         success: function(data) {
-            if(data.error == "") {
+            if(data && data.error === "" && data.sign && data.verification && data.timestamp && data.mKey) {
                 frm.timestamp.value = data.timestamp;
                 frm.signature.value = data.sign;
+                frm.verification.value = data.verification;
+                result = true;
                 frm.mKey.value = data.mKey;
             } else {
-                alert(data.error);
+                alert((data && data.error) || "결제 서명을 생성하지 못했습니다.");
                 result = false;
             }
         }

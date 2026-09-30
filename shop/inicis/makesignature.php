@@ -1,15 +1,35 @@
 <?php
 include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+include_once(G5_SHOP_PATH.'/inicis/pro/inicis_pro.lib.php');
+include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store, private');
 
 if($default['de_pg_service'] != 'inicis' && ! ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) )
     die(json_encode(array('error'=>'올바른 방법으로 이용해 주십시오.')));
 
-$orderNumber = get_session('ss_order_inicis_id');
-$price = preg_replace('#[^0-9]#', '', $_POST['price']);
+$orderNumber = isset($_POST['oid']) && is_string($_POST['oid']) ? $_POST['oid'] : '';
+$price = isset($_POST['price']) && is_string($_POST['price']) ? $_POST['price'] : '';
 
-if(strlen($price) < 1)
-    die(json_encode(array('error'=>'가격이 올바르지 않습니다.')));
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !shop_order_access_id($orderNumber) || $signKey === ''
+    || !preg_match('/\A[0-9]{1,12}\z/', $price) || (int) $price <= 0)
+    die(json_encode(array('error'=>'결제 서명 요청을 확인할 수 없습니다.')));
+if (function_exists('check_request_origin')) check_request_origin(G5_SHOP_URL);
+
+// 현재 폼의 주문번호를 저장된 주문 상태와 대조한다. 다른 탭의 주문을 서명하지 않는다.
+$states = get_session('ss_order_data_access');
+if (!is_array($states) || !isset($states[$orderNumber]['pg']))
+    die(json_encode(array('error'=>'임시 주문정보를 확인할 수 없습니다.')));
+$data = shop_order_access_load($orderNumber, $states[$orderNumber]['pg']);
+$settle_case = !empty($data['pp_id']) ? $data['pp_settle_case'] : $data['od_settle_case'];
+if (!inicis_pro_easypay_is_enabled($settle_case)
+    || ($default['de_pg_service'] !== 'inicis' && !is_inicis_order_pay($settle_case)))
+    die(json_encode(array('error'=>'사용할 수 없는 결제수단입니다.')));
+$amount = inicis_pro_expected_amount($data, array());
+if ($amount <= 0 || (string) $amount !== $price)
+    die(json_encode(array('error'=>'결제금액이 일치하지 않습니다. 다시 확인해 주십시오.')));
 
 //
 //###################################
@@ -27,5 +47,6 @@ $mKey = hash("sha256", $signKey);
  */
 $params = "oid=" . $orderNumber . "&price=" . $price . "&timestamp=" . $timestamp;
 $sign = hash("sha256", $params);
+$verification = hash('sha256', 'oid='.$orderNumber.'&price='.$price.'&signKey='.$signKey.'&timestamp='.$timestamp);
 
-die(json_encode(array('error'=>'', 'mKey'=>$mKey, 'timestamp'=>$timestamp, 'sign'=>$sign)));
+die(json_encode(array('error'=>'', 'mKey'=>$mKey, 'timestamp'=>$timestamp, 'sign'=>$sign, 'verification'=>$verification)));

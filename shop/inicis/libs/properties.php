@@ -1,6 +1,15 @@
 <?php
 
 	class properties {
+        function getMobileAuthUrl($idc_name) {
+            $urls = array(
+                'fc' => 'https://fcmobile.inicis.com/smart/payReq.ini',
+                'ks' => 'https://ksmobile.inicis.com/smart/payReq.ini',
+                'stg' => 'https://stgmobile.inicis.com/smart/payReq.ini'
+            );
+            return is_string($idc_name) && isset($urls[$idc_name]) ? $urls[$idc_name] : '';
+        }
+
 
 		function getAuthUrl($idc_name)	{
             $url = "stdpay.inicis.com/api/payAuth";
@@ -15,7 +24,7 @@
 					$authUrl = "https://stg".$url;
 					break;
 				default:
-					break;
+                    return '';
 			}			
 			return $authUrl;
 		}
@@ -33,7 +42,7 @@
 					$netCancel = "https://stg".$url;
 					break;
 				default:
-					break;
+                    return '';
 			}			
 			return $netCancel;
 		}
