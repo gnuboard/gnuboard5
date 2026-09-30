@@ -59,23 +59,24 @@ jQuery(function($){
 
             // 주문 정보 임시저장
             var order_data = $(pf).serialize();
-            var save_result = "";
+            var save_result = "결제 요청을 저장하지 못했습니다.";
             $.ajax({
                 type: "POST",
                 data: order_data,
                 url: g5_url+"/shop/ajax.orderdatasave.php",
                 cache: false,
                 async: false,
-                success: function(data) {
-                    save_result = data;
+                success: function(data, textStatus, xhr) {
+                    save_result = data || g5_order_state_accept(xhr);
                 }
             });
 
             if(save_result) {
                 alert(save_result);
-                return;
+                return false;
             }
 
+            if (!inicis_mobile_signature(samsungpayform)) return false;
             samsungpayform.submit();
 
             return false;

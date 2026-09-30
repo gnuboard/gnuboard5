@@ -15,23 +15,29 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 function make_signature(frm)
 {
     // 데이터 암호화 처리
-    var result = true;
+    var result = false;
     $.ajax({
         url: g5_url+"/shop/inicis/makesignature.php",
         type: "POST",
         data: {
+            oid : frm.oid.value,
             price : frm.good_mny.value
         },
         dataType: "json",
         async: false,
         cache: false,
+        error: function() {
+            alert("결제 서명을 생성하지 못했습니다. 다시 시도해 주십시오.");
+        },
         success: function(data) {
-            if(data.error == "") {
+            if(data && data.error === "" && data.sign && data.verification && data.timestamp && data.mKey) {
                 frm.timestamp.value = data.timestamp;
                 frm.signature.value = data.sign;
+                frm.verification.value = data.verification;
+                result = true;
                 frm.mKey.value = data.mKey;
             } else {
-                alert(data.error);
+                alert((data && data.error) || "결제 서명을 생성하지 못했습니다.");
                 result = false;
             }
         }

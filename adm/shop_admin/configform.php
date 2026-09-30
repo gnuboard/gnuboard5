@@ -704,7 +704,7 @@ if( function_exists('pg_setting_check') ){
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row"><label for="de_inicis_hash_key">KG이니시스 모바일 금액위변조 Hash Key</label></th>
             <td>
-                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보의 모바일 금액위변조 HashKey를 입력합니다."); ?>
+                <?php echo help("<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보의 모바일 금액위변조 HashKey를 입력합니다. INIpay PRO와 구버전 모바일 결제(간편결제 포함)에 필수이며, 미설정 시 결제를 요청할 수 없습니다."); ?>
                 <input type="text" name="de_inicis_hash_key" value="<?php echo isset($default['de_inicis_hash_key']) ? get_sanitize_input($default['de_inicis_hash_key']) : ''; ?>" id="de_inicis_hash_key" class="frm_input" size="40" maxlength="255" autocomplete="off">
             </td>
         </tr>
@@ -751,7 +751,7 @@ if( function_exists('pg_setting_check') ){
         <tr class="pg_info_fld <?php echo $easy_pg; ?>_info_fld">
             <th scope="row"><?php echo $easy_title; ?> 간편결제</th>
             <td>
-                <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 해당 PG와 계약하여 사용할 수 있는 수단만 선택하세요. 계약 상태는 PG사에 확인해야 하며 이 화면에서 자동 조회하지 않습니다. 자체창 호출에 별도 계약이 필요할 수 있고 일부 수단은 테스트 결제를 지원하지 않습니다. 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결하며 구 INIpay에서는 모바일에서만 표시합니다.\nKG이니시스는 삼성페이·L.pay·카카오페이를 지원하며 INIpay PRO는 HashKey, 구버전은 웹결제 사인키가 필요합니다."); ?>
+                <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 해당 PG와 계약하여 사용할 수 있는 수단만 선택하세요. 계약 상태는 PG사에 확인해야 하며 이 화면에서 자동 조회하지 않습니다. 자체창 호출에 별도 계약이 필요할 수 있고 일부 수단은 테스트 결제를 지원하지 않습니다. 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결하며 구 INIpay에서는 모바일에서만 표시합니다.\nKG이니시스는 삼성페이·L.pay·카카오페이를 지원하며 INIpay PRO는 HashKey, 구버전은 웹결제 사인키와 모바일 금액위변조 HashKey가 필요합니다."); ?>
                 <?php foreach (shop_easypay_catalog($easy_pg) as $easy_key => $easy_provider) { ?>
                 <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
                 <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>

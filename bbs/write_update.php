@@ -493,8 +493,6 @@ if($w == 'u') {
 @mkdir(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
 
-$chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
-
 // 가변 파일 업로드
 $file_upload_msg = '';
 $upload = array();
@@ -519,7 +517,8 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
         $upload[$i]['storage'] = '';
 
         // 삭제에 체크가 되어있다면 파일을 삭제합니다.
-        if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
+        if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]
+            && !is_uploaded_file($_FILES['bf_file']['tmp_name'][$i])) {
             $upload[$i]['del_check'] = true;
 
             $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
@@ -576,6 +575,17 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 
             $upload[$i]['image'] = $timg;
 
+            // 새 파일 저장이 성공한 뒤에만 기존 첨부파일을 삭제합니다.
+            $stored_file = g5_store_attachment($tmp_file, $filename, G5_DATA_PATH.'/file/'.$bo_table);
+            if ($stored_file === false) {
+                $file_upload_msg .= '"'.$filename.'" 파일을 안전하게 저장할 수 없습니다. 서버의 난수 소스와 저장 경로를 확인해 주십시오.\n';
+                continue;
+            }
+            $upload[$i]['source'] = $filename;
+            $upload[$i]['filesize'] = $filesize;
+            $upload[$i]['file'] = $stored_file;
+            $dest_file = G5_DATA_PATH.'/file/'.$bo_table.'/'.$stored_file;
+
             // 4.00.11 - 글답변에서 파일 업로드시 원글의 파일이 삭제되는 오류를 수정
             if ($w == 'u') {
                 // 존재하는 파일이 있다면 삭제합니다.
@@ -592,24 +602,6 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
                     }
                 }
             }
-
-            // 프로그램 원래 파일명
-            $upload[$i]['source'] = $filename;
-            $upload[$i]['filesize'] = $filesize;
-
-            // 아래의 문자열이 들어간 파일은 -x 를 붙여서 웹경로를 알더라도 실행을 하지 못하도록 함
-            $filename = preg_replace("/\.(php|pht|phtm|htm|shtml|shtm|cgi|pl|exe|jsp|asp|inc|phar|svg|svgz)/i", "$0-x", $filename);
-
-            shuffle($chars_array);
-            $shuffle = implode('', $chars_array);
-
-            // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
-            $upload[$i]['file'] = md5(sha1($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.replace_filename($filename);
-
-            $dest_file = G5_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
-
-            // 업로드가 안된다면 에러메세지 출력하고 죽어버립니다.
-            $error_code = move_uploaded_file($tmp_file, $dest_file) or die($_FILES['bf_file']['error'][$i]);
 
             // 올라간 파일의 퍼미션을 변경합니다.
             chmod($dest_file, G5_FILE_PERMISSION);

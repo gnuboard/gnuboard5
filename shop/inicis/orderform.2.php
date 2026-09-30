@@ -65,6 +65,8 @@ no_receipt : 은행계좌이체시 현금영수증 발행여부 체크박스 비
 -->
 <input type="hidden" name="timestamp"   value="">
 <input type="hidden" name="signature"   value="">
+<input type="hidden" name="verification" value="">
+<input type="hidden" name="use_chkfake" value="Y">
 <input type="hidden" name="returnUrl"   value="<?php echo $returnUrl; ?>">
 <input type="hidden" name="mKey"        value="">
 <input type="hidden" name="charset"     value="UTF-8">

@@ -20,7 +20,7 @@ jQuery(function($){
                 inicis_settle_case = jQuery("input[name='od_settle_case']:checked").val();
 
             inicis_pay_form.gopaymethod.value = (inicis_settle_case === "inicis_kakaopay") ? "onlykakaopay" : "onlylpay";
-            inicis_pay_form.acceptmethod.value = "cardonly";
+            inicis_pay_form.acceptmethod.value = "cardonly:centerCd(Y)";
             
             inicis_pay_form.price.value = inicis_pay_form.good_mny.value = pf.good_mny.value;
             inicis_pay_form.goodname.value = pf.od_goods_name.value;
@@ -43,15 +43,15 @@ jQuery(function($){
 
             // 주문 정보 임시저장
             var order_data = $(pf).serialize();
-            var save_result = "";
+            var save_result = "결제 요청을 저장하지 못했습니다.";
             $.ajax({
                 type: "POST",
                 data: order_data,
                 url: g5_url+"/shop/ajax.orderdatasave.php",
                 cache: false,
                 async: false,
-                success: function(data) {
-                    save_result = data;
+                success: function(data, textStatus, xhr) {
+                    save_result = data || g5_order_state_accept(xhr);
                 }
             });
 

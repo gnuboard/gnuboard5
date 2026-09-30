@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit;
 
 include_once(dirname(__FILE__) .'/pbkdf2.compat.php');
+include_once(dirname(__FILE__) .'/attachment.lib.php');
 
 /*************************************************************************
 **
