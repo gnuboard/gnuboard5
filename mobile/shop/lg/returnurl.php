@@ -52,7 +52,7 @@ $exclude = array('res_cd', 'LGD_PAYKEY');
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-echo make_order_field($data, $exclude);
+echo make_order_field($data, $exclude, true);
 
 echo '<input type="hidden" name="res_cd" value="'.get_text($LGD_RESPCODE).'">'.PHP_EOL;
 echo '<input type="hidden" name="LGD_PAYKEY" value="'.get_text($LGD_PAYKEY).'">'.PHP_EOL;

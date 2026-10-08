@@ -66,7 +66,7 @@ $exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK', 'P_AU
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-echo make_order_field($data, $exclude);
+echo make_order_field($data, $exclude, true);
 
 echo '<input type="hidden" name="res_cd"      value="'.$PAY['P_STATUS'].'">'.PHP_EOL;
 echo '<input type="hidden" name="P_HASH"      value="'.$hash.'">'.PHP_EOL;

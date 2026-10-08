@@ -27,7 +27,7 @@ $exclude = array();
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-echo make_order_field($data, $exclude);
+echo make_order_field($data, $exclude, true);
 
 echo '</form>'.PHP_EOL;
 ?>

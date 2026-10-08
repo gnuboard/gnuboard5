@@ -348,7 +348,7 @@ function forderform_check(f)
     <?php if($default['de_pg_service'] == 'toss') { ?>
 
     f.orderId.value = '<?=$od_id?>';
-    f.orderName.value = '<?=$goods?>';
+    f.orderName.value = <?php echo json_encode($goods, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
 
     f.customerName.value = f.pp_name.value;
     f.customerEmail.value = f.pp_email.value;

@@ -248,7 +248,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 
     echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-    echo make_order_field($data, $exclude);
+    echo make_order_field($data, $exclude, true);
 
     foreach($_POST as $key=>$value) {
         if (!in_array($key, $exclude, true) || !is_string($value)) continue;
