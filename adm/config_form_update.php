@@ -24,6 +24,21 @@ if (!(isset($mb['mb_id']) && $mb['mb_id'])) {
 
 check_admin_token();
 
+// 정책 전용 컬럼은 DB업그레이드로만 추가한다. 구형 관리자 폼의 저장은 기존 정책을 보존한다.
+$password_lost_policy_sql = '';
+if (isset($ori_config['cf_password_lost_policy']) && (isset($_POST['password_lost_policy']) || !empty($_POST['password_lost_policy_reset']))) {
+    require_once G5_LIB_PATH.'/abuse_rate.lib.php';
+    $policy = !empty($_POST['password_lost_policy_reset']) ? g5_password_lost_rate_defaults() : $_POST['password_lost_policy'];
+    if (!g5_password_lost_policy_valid($policy) || (int)$policy['recipient']['burst'] !== 1) {
+        alert('비밀번호 찾기 회복 간격은 1~86400초, 연속 허용량은 1~10000회로 입력해 주세요. 수신자 연속 허용량은 1회입니다.');
+    }
+    $normalized_policy = array();
+    foreach (g5_password_lost_rate_defaults() as $kind=>$defaults) {
+        $normalized_policy[$kind] = array('interval'=>(int)$policy[$kind]['interval'], 'burst'=>(int)$policy[$kind]['burst']);
+    }
+    $password_lost_policy_sql = ", cf_password_lost_policy = '".sql_real_escape_string(json_encode($normalized_policy))."'";
+}
+
 $cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
 
 $check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_cert_kcp_enckey', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret', 'cf_cert_kg_cd', 'cf_cert_kg_mid');
@@ -220,7 +235,7 @@ if ($check_captcha) {
 }
 
 $sql = " update {$g5['config_table']}
-            set cf_title = '{$cf_title}',
+            set cf_title = '{$cf_title}' {$password_lost_policy_sql},
                 cf_admin = '{$cf_admin}',
                 cf_admin_email = '{$_POST['cf_admin_email']}',
                 cf_admin_email_name = '{$_POST['cf_admin_email_name']}',

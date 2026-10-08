@@ -30,6 +30,7 @@ function g5_migration_replace_placeholders($sql)
     }
     $shop_prefix = defined('G5_SHOP_TABLE_PREFIX') ? G5_SHOP_TABLE_PREFIX : G5_TABLE_PREFIX . 'shop_';
     $fallbacks = array(
+        'abuse_rate_table' => G5_TABLE_PREFIX . 'abuse_rate',
         'member_auto_login_table' => G5_TABLE_PREFIX . 'member_auto_login',
         'g5_shop_cart_table' => $shop_prefix . 'cart',
         'g5_shop_item_table' => $shop_prefix . 'item',

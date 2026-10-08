@@ -11,6 +11,9 @@ if ($is_admin != 'super') {
 // https://github.com/gnuboard/gnuboard5/issues/296 이슈처리
 $sql = " select * from {$g5['config_table']} limit 1";
 $config = sql_fetch($sql);
+require_once G5_LIB_PATH.'/abuse_rate.lib.php';
+$password_lost_policy = g5_password_lost_rate_policy();
+if ($password_lost_policy === false) $password_lost_policy = g5_password_lost_rate_defaults();
 
 if (!isset($config['cf_email_certify_minutes'])) {
     alert('DB 업그레이드가 필요합니다.', G5_ADMIN_URL . '/dbupgrade.php');
@@ -245,6 +248,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                                 <option value="recaptcha" <?php echo get_selected($config['cf_captcha'], 'recaptcha'); ?>>reCAPTCHA V2</option>
                                 <option value="recaptcha_inv" <?php echo get_selected($config['cf_captcha'], 'recaptcha_inv'); ?>>Invisible reCAPTCHA</option>
                             </select>
+                            <?php echo help('기본 Kcaptcha는 음성 정답이 자동 복원될 수 있습니다. reCAPTCHA V2 또는 Invisible reCAPTCHA 사용을 권장하며, 운영 도메인과 유형에 맞는 키를 설정한 뒤 PC·모바일에서 확인해 주세요.') ?>
                         </td>
                     </tr>
                     <tr class="kcaptcha_mp3">
@@ -748,6 +752,31 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                         <td>
                             <?php echo help('체크하지 않으면 메일발송을 아예 사용하지 않습니다. 메일 테스트도 불가합니다.') ?>
                             <input type="checkbox" name="cf_email_use" value="1" id="cf_email_use" <?php echo $config['cf_email_use'] ? 'checked' : ''; ?>> 사용
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">비밀번호 찾기 요청 제한</th>
+                        <td>
+                            <?php if (!isset($config['cf_password_lost_policy'])) { ?>
+                            정책을 변경하려면 <a href="./dbupgrade.php">DB업그레이드</a>를 실행해 주세요. 업그레이드 전에는 기본값을 사용합니다.
+                            <?php } else { ?>
+                            <?php echo help('기본값으로 바로 사용할 수 있으며 외부 서비스나 이용 통계 수집이 필요하지 않습니다. IP 제한은 오답을 포함한 요청에, 수신자·전체 제한은 비밀번호 찾기 메일 발송 시도에 적용됩니다.<br>연속 허용량을 사용한 뒤에는 회복 간격마다 1회분이 회복됩니다. 공유 IP 사용자는 IP 한도를 함께 사용합니다. 다른 기능의 메일에는 적용되지 않습니다.') ?>
+                            <?php foreach (array('ip'=>'IP별 요청', 'recipient'=>'수신자별 발송', 'global'=>'전체 발송') as $kind=>$label) { ?>
+                            <div style="margin-bottom:8px">
+                                <strong><?php echo $label; ?></strong>
+                                <label for="password_lost_<?php echo $kind; ?>_interval">회복 간격</label>
+                                <input type="number" class="frm_input" id="password_lost_<?php echo $kind; ?>_interval" name="password_lost_policy[<?php echo $kind; ?>][interval]" min="1" max="86400" required value="<?php echo (int)$password_lost_policy[$kind]['interval']; ?>"> 초
+                                <?php if ($kind === 'recipient') { ?>
+                                <input type="hidden" name="password_lost_policy[recipient][burst]" value="1"> 연속 허용량 1회
+                                <?php } else { ?>
+                                <label for="password_lost_<?php echo $kind; ?>_burst">연속 허용량</label>
+                                <input type="number" class="frm_input" id="password_lost_<?php echo $kind; ?>_burst" name="password_lost_policy[<?php echo $kind; ?>][burst]" min="1" max="10000" required value="<?php echo (int)$password_lost_policy[$kind]['burst']; ?>"> 회
+                                <?php } ?>
+                            </div>
+                            <?php } ?>
+                            <label><input type="checkbox" name="password_lost_policy_reset" value="1"> 저장 시 기본값 복원 (IP 6초·10회 / 수신자 300초·1회 / 전체 1초·30회)</label>
+                            <?php echo help('값은 0으로 끌 수 없습니다. 메일 전송 실패가 확인되면 기존 링크를 복원하고, 해당 수신자의 재시도 대기를 최대 60초로 줄입니다. IP·전체 시도 한도는 유지합니다.<br>정책 변경 직후에는 이전 사용량의 대기가 남을 수 있습니다. 확장 파일의 password_lost_rate_policy 훅이 있으면 설정을 재정의할 수 있습니다.') ?>
+                            <?php } ?>
                         </td>
                     </tr>
                     <tr>

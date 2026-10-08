@@ -201,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_use_copy_log` tinyint(4) NOT NULL DEFAULT '0',
   `cf_use_email_certify` tinyint(4) NOT NULL DEFAULT '0',
   `cf_email_certify_minutes` int(11) NOT NULL DEFAULT '60',
+  `cf_password_lost_policy` varchar(255) NOT NULL DEFAULT '',
   `cf_login_point` int(11) NOT NULL DEFAULT '0',
   `cf_cut_name` tinyint(4) NOT NULL DEFAULT '0',
   `cf_nick_modify` int(11) NOT NULL DEFAULT '0',
@@ -1009,3 +1010,11 @@ CREATE TABLE IF NOT EXISTS `g5_migrations` (
   `applied_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`migration_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 자동화 요청 제한: 세션과 독립적인 원자적 카운터
+CREATE TABLE IF NOT EXISTS `g5_abuse_rate` (
+  `ar_key` char(64) NOT NULL,
+  `ar_next` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ar_key`),
+  KEY `ar_next` (`ar_next`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

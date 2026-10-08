@@ -213,3 +213,13 @@ if (!empty($_COOKIE['g5_admin_btn_gnb'])) {
 
         <h1 id="container_title"><?php echo $g5['title'] ?></h1>
         <div class="container_wr">
+<?php if ($is_admin === 'super') {
+    include_once G5_LIB_PATH.'/abuse_rate.lib.php';
+    if (!g5_abuse_rate_storage_ready()) { ?>
+        <div class="local_desc01 local_desc" role="alert">
+            <p><strong>비밀번호 찾기 요청 제한 저장소를 확인할 수 없습니다.</strong>
+            <a href="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php">DB 업그레이드</a>에서 대기 중인 변경을 적용해 주세요.
+            이미 적용했다면 테이블 구조와 DB 권한을 확인해 주세요. 준비 전에는 비밀번호 찾기가 제한됩니다.</p>
+        </div>
+<?php }
+} ?>
