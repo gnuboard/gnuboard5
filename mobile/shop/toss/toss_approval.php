@@ -21,10 +21,8 @@ include_once(G5_PATH.'/head.sub.php');
 
 <form name="forderform">
 <?php
-if (isset($payReqMap['escrowProducts']) && is_string($payReqMap['escrowProducts'])) {
-    $payReqMap['escrowProducts'] = stripslashes($payReqMap['escrowProducts']);
-}
-echo make_order_field($payReqMap, array());
+// 에스크로 JSON도 다른 저장 필드와 함께 정확히 한 번만 복원한다.
+echo make_order_field($payReqMap, array(), true);
 ?>
 </form>
 

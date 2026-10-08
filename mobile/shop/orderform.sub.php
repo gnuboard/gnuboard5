@@ -81,7 +81,8 @@ ob_start();
             {
                 //$goods = addslashes($row[it_name]);
                 //$goods = get_text($row[it_name]);
-                $goods = preg_replace("/\?|\'|\"|\||\,|\&|\;/", "", $row['it_name']);
+                // 토스 v2 상품명은 원문을 보존하고 출력 위치에서 이스케이프한다.
+                $goods = $default['de_pg_service'] === 'toss' ? $row['it_name'] : preg_replace("/\?|\'|\"|\||\,|\&|\;/", "", $row['it_name']);
                 $goods_it_id = $row['it_id'];
             }
             $goods_count++;
@@ -1322,7 +1323,7 @@ function pay_approval()
         }
         f.method.value = pay_method;
         f.orderId.value = "<?php echo $od_id; ?>";
-        f.orderName.value = "<?php echo $goods; ?>";
+        f.orderName.value = <?php echo json_encode($goods, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
 
         f.customerName.value = pf.od_name.value;
         f.customerEmail.value = pf.od_email.value;

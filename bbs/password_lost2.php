@@ -2,23 +2,34 @@
 include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
+include_once(G5_LIB_PATH.'/abuse_rate.lib.php');
 
 if ($is_member) {
     alert_close('이미 로그인중입니다.', G5_URL);
+}
+
+// CAPTCHA 오답 여부와 무관하게 직접 POST 및 새 세션의 반복 요청을 제한한다.
+$rate_allowed = g5_password_lost_rate_allow('ip', $_SERVER['REMOTE_ADDR']);
+if ($rate_allowed === null) {
+    alert_close('현재 비밀번호 찾기를 이용할 수 없습니다. 관리자에게 문의해 주십시오.');
+}
+if (!$rate_allowed) {
+    alert_close('요청이 많습니다. 잠시 후 다시 이용해 주십시오.');
 }
 
 if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$email = get_email_address(trim($_POST['mb_email']));
+$email_input = isset($_POST['mb_email']) && is_string($_POST['mb_email']) ? $_POST['mb_email'] : '';
+$email = get_email_address(trim($email_input));
 
 if (!$email)
     alert_close('메일주소 오류입니다.');
 
 // OWASP 권장: 이메일 존재 여부와 무관하게 동일한 응답 메시지 사용
 // (이메일 열거 공격 방지)
-$generic_message = $email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.';
+$generic_message = '입력하신 정보와 일치하는 회원이 있으면 비밀번호 찾기 안내 메일이 발송됩니다.\\n최근 요청이 있거나 발송이 제한된 경우 추가 발송되지 않을 수 있습니다.\\n메일함과 스팸함을 확인하고, 메일이 없으면 잠시 후 다시 요청해 주십시오.';
 
 $security_mail_url = g5_security_mail_base_url();
 if ($security_mail_url === false) {
@@ -34,11 +45,25 @@ if ($row['cnt'] > 1) {
     alert_close($generic_message);
 }
 
-$sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime, mb_leave_date from {$g5['member_table']} where mb_email = '$email' ";
+$sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime, mb_leave_date, mb_lost_certify from {$g5['member_table']} where mb_email = '$email' ";
 $mb = sql_fetch($sql);
 
 // 회원이 없거나 탈퇴했거나 관리자이면 메일 발송 없이 동일한 메시지로 응답
 if (empty($mb['mb_id']) || $mb['mb_leave_date'] || is_admin($mb['mb_id'])) {
+    alert_close($generic_message);
+}
+
+// 실제 발송 대상의 수신자·전체 한도를 함께 확보한다.
+// 어느 한도가 부족해도 다른 한도의 사용량을 남기지 않는다.
+if (empty($config['cf_email_use'])) {
+    alert_close($generic_message);
+}
+$mail_reservation = array();
+$rate_allowed = g5_password_lost_mail_allow($email, $mail_reservation);
+if ($rate_allowed === null) {
+    alert_close('현재 비밀번호 찾기를 이용할 수 없습니다. 관리자에게 문의해 주십시오.');
+}
+if (!$rate_allowed) {
     alert_close($generic_message);
 }
 
@@ -50,8 +75,12 @@ $mb_lost_certify = get_encrypt_string($change_password);
 $mb_nonce = get_random_token_string(16);
 
 // 임시비밀번호와 난수를 mb_lost_certify 필드에 저장
-$sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_certify' where mb_id = '{$mb['mb_id']}' ";
-sql_query($sql);
+$previous_certify = $mb['mb_lost_certify'];
+$pending_certify = $mb_nonce.' '.$mb_lost_certify;
+if (!g5_password_lost_compare_update($mb['mb_no'], $previous_certify, $pending_certify)) {
+    g5_password_lost_mail_failed($mail_reservation);
+    alert_close($generic_message);
+}
 
 // 인증 링크 생성
 $href = $security_mail_url.'/'.G5_BBS_DIR.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_nonce='.$mb_nonce;
@@ -83,7 +112,13 @@ $content .= '<a href="'.$href.'" target="_blank" style="display:block;padding:30
 $content .= '</div>';
 $content .= '</div>';
 
-mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb['mb_email'], $subject, $content, 1);
+$mail_sent = mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb['mb_email'], $subject, $content, 1);
+if (!$mail_sent) {
+    // 다른 요청에서 사용하거나 갱신한 인증값은 덮어쓰지 않는다.
+    g5_password_lost_compare_update($mb['mb_no'], $pending_certify, $previous_certify);
+    g5_password_lost_mail_failed($mail_reservation);
+    alert_close($generic_message);
+}
 
 run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
 

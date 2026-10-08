@@ -2794,7 +2794,9 @@ function cart_item_clean()
 }
 
 // 임시주문 데이터로 주문 필드 생성
-function make_order_field($data, $exclude)
+// 저장된 주문 데이터는 common.php에서 SQL 이스케이프된 값이다.
+// HTML로 출력할 때만 한 번 복원하고, 원본 데이터와 SQL 처리 경로는 유지한다.
+function make_order_field($data, $exclude, $strip_slashes = false)
 {
     $field = '';
 
@@ -2804,10 +2806,15 @@ function make_order_field($data, $exclude)
 
         if(is_array($value)) {
             foreach($value as $k=>$v) {
-                $field .= '<input type="hidden" name="'.get_text($key.'['.$k.']').'" value="'.get_text($v).'">'.PHP_EOL;
+                // get_text()는 0을 빈 문자열로 변환하므로 주문 필드에서는 보존한다.
+                if ($strip_slashes && is_string($v)) $v = stripslashes($v);
+                $text = (string)$v === '0' ? '0' : get_text($v);
+                $field .= '<input type="hidden" name="'.get_text($key.'['.$k.']').'" value="'.$text.'">'.PHP_EOL;
             }
         } else {
-            $field .= '<input type="hidden" name="'.get_text($key).'" value="'.get_text($value).'">'.PHP_EOL;
+            if ($strip_slashes && is_string($value)) $value = stripslashes($value);
+            $text = (string)$value === '0' ? '0' : get_text($value);
+            $field .= '<input type="hidden" name="'.get_text($key).'" value="'.$text.'">'.PHP_EOL;
         }
     }
 
