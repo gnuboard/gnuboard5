@@ -1322,7 +1322,7 @@ if( function_exists('pg_setting_check') ){
         </tr>
         <tr>
             <th scope="row">서버 IP</th>
-            <td><?php echo ($_SERVER['SERVER_ADDR']?$_SERVER['SERVER_ADDR']:$_SERVER['LOCAL_ADDR']); ?></td>
+            <td><?php echo (!empty($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : (isset($_SERVER['LOCAL_ADDR']) ? $_SERVER['LOCAL_ADDR'] : '')); ?></td>
         </tr>
         </tbody>
         </table>

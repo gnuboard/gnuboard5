@@ -44,6 +44,9 @@ $od['mb_id'] = $od['mb_id'] ? $od['mb_id'] : "비회원";
 //------------------------------------------------------------------------------
 
 
+require_once G5_LIB_PATH.'/kcp_cash.lib.php';
+$cash_review_notice = kcp_cash_pending_notice($od['od_cash_info'] ?? '');
+if ($cash_review_notice !== '') echo '<div class="local_desc01 local_desc"><p>'.$cash_review_notice.'</p></div>';
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>
 <li><a href="#anc_sodr_pay">주문결제 내역</a></li>
@@ -767,7 +770,9 @@ if ($is_nicepay_vbank_pg_cancel) {
                     <th scope="row">현금영수증</th>
                     <td>
                     <?php
-                    if ($od['od_cash']) {
+                    if ($cash_review_notice !== '') {
+                        echo '처리 확인 필요 (상단 안내 참고)';
+                    } else if ($od['od_cash']) {
                         if($od['od_pg'] == 'lg') {
                             require G5_SHOP_PATH.'/settle_lg.inc.php';
 
