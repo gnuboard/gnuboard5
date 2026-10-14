@@ -1,0 +1,27 @@
+const fs = require('fs');
+const vm = require('vm');
+const assert = require('assert');
+const path = require('path');
+function form() { return {elements: {}, appendChild(input) { this.elements[input.name] = input; }}; }
+const forms = {forderform: form(), sm_form: form()};
+const context = {document: {forms, createElement: () => ({})}, console, encodeURIComponent, Error};
+vm.createContext(context);
+vm.runInContext(fs.readFileSync(path.join(__dirname, '../js/shop.order-state.js'), 'utf8'), context);
+const token = '123456.' + 'a'.repeat(64);
+assert.equal(context.g5_order_state_accept({getResponseHeader: () => token}), '');
+assert.equal(forms.forderform.elements.g5_order_state.value, token);
+assert.equal(forms.sm_form.elements.g5_order_state.value, token);
+assert.equal(context.g5_order_state_url('/return?mode=fail', forms.sm_form), '/return?mode=fail&g5_order_state=' + token);
+assert.notEqual(context.g5_order_state_accept({getResponseHeader: () => null}), '');
+assert.notEqual(context.g5_order_state_accept({getResponseHeader: () => '<script>'}), '');
+assert.throws(() => context.g5_order_state_url('/return', form()));
+const kcp = {};
+for (const key of ['site_cd','ordr_idxx','good_mny','pay_method','escw_used','good_name']) kcp[key] = {value: 'test'};
+kcp.Ret_URL = {value: 'https://example.invalid/return?g5_order_state=' + token};
+context.document.sm_form = kcp;
+vm.runInContext(fs.readFileSync(path.join(__dirname, '../mobile/shop/kcp/approval_key.js'), 'utf8'), context);
+let captured;
+context.sendRequest = url => { captured = url; };
+context.kcp_AJAX();
+assert.equal(new URL('https://example.invalid/' + captured).searchParams.get('Ret_URL'), kcp.Ret_URL.value);
+console.log('PASS 8 browser token/return URL assertions (DOM fixture; no PG SDK)');

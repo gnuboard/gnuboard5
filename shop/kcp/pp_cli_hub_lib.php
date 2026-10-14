@@ -11,6 +11,8 @@
 class   C_PAYPLUS_CLI_T
 {
     public $m_payx_data;
+    public $m_payx_common;
+    public $m_payx_card;
     public $m_ordr_data;
     public $m_rcvr_data;
     public $m_escw_data;
