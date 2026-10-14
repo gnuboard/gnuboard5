@@ -56,7 +56,7 @@ else { // 현재페이지일 때
 }
 
 require_once G5_LIB_PATH.'/kcp_cash.lib.php';
-$cash_review_notice = kcp_cash_pending_notice($pp['pp_cash_info'] ?? '');
+$cash_review_notice = kcp_cash_pending_notice(isset($pp['pp_cash_info']) ? $pp['pp_cash_info'] : '');
 if ($cash_review_notice !== '') echo '<div class="local_desc01 local_desc"><p>'.$cash_review_notice.'</p></div>';
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_spp_info">주문 정보</a></li>

@@ -8,6 +8,10 @@ try {
 } catch (KcpCashRequestException $e) {
     alert($e->getMessage());
     exit;
+} catch (Exception $e) {
+    error_log('KCP cash request internal failure');
+    alert('현금영수증 처리 상태를 확인할 수 없습니다. 관리자에게 문의해 주십시오.');
+    exit;
 } catch (Throwable $e) {
     error_log('KCP cash request internal failure');
     alert('현금영수증 처리 상태를 확인할 수 없습니다. 관리자에게 문의해 주십시오.');

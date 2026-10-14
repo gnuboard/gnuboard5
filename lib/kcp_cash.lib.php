@@ -1,5 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
+require_once(dirname(__FILE__).'/shop_order_access.lib.php');
 
 class KcpCashRequestException extends RuntimeException {}
 
@@ -16,7 +17,7 @@ function kcp_cash_key($type, $id)
 
 function kcp_cash_token($type, $id)
 {
-    $token = bin2hex(random_bytes(32));
+    $token = shop_order_random_hex(32);
     set_session(kcp_cash_key($type, $id), array('token'=>$token, 'expires'=>time()+600));
     return $token;
 }
@@ -102,6 +103,8 @@ function kcp_cash_update($table, $set, $where)
     try {
         $ok = sql_query("UPDATE {$table} SET {$set} WHERE {$where}", false);
         return $ok && (int)get_sql_affected_rows() === 1;
+    } catch (Exception $e) {
+        return false;
     } catch (Throwable $e) {
         return false;
     }
@@ -118,6 +121,8 @@ function kcp_cash_matches($table, $where)
     try {
         $row = sql_fetch("SELECT 1 AS matched FROM {$table} WHERE {$where}", false);
         return $row && (int)$row['matched'] === 1;
+    } catch (Exception $e) {
+        return false;
     } catch (Throwable $e) {
         return false;
     }
@@ -131,10 +136,10 @@ function kcp_cash_process($request, $gateway)
     $data = kcp_cash_data($row, $type);
     $key = kcp_cash_key($type, $id);
     $session = get_session($key);
-    if (!is_array($session) || !isset($session['expires'], $session['token']) || $session['expires'] < time() || !hash_equals($session['token'], $request['cash_token'])) kcp_cash_fail('요청이 만료되었습니다. 발급 화면을 다시 열어 주십시오.');
+    if (!is_array($session) || !isset($session['expires'], $session['token']) || $session['expires'] < time() || !shop_order_equals($session['token'], $request['cash_token'])) kcp_cash_fail('요청이 만료되었습니다. 발급 화면을 다시 열어 주십시오.');
     set_session($key, '');
     list($table, $p) = kcp_cash_source($type);
-    $attempt = bin2hex(random_bytes(16));
+    $attempt = shop_order_random_hex(16);
     $pending = serialize(array('kcp_cash_state'=>'pending', 'attempt'=>$attempt, 'requested_at'=>date('c'), 'amount'=>$data['amt_tot']));
     $pending_sql = sql_escape_string($pending);
     $snapshot = kcp_cash_snapshot_where($row, $p);
@@ -144,13 +149,14 @@ function kcp_cash_process($request, $gateway)
     $data['tr_code'] = $request['tr_code'];
     $data['id_info'] = $request['id_info'];
     try { $response = call_user_func($gateway, 'pay', $data); }
+    catch (Exception $e) { $response = array(); }
     catch (Throwable $e) { $response = array(); }
     if (!is_array($response) || !isset($response['res_cd']) || $response['res_cd'] !== '0000' || empty($response['cash_no']) || !preg_match('/\A[0-9]{1,40}\z/D', (string)$response['cash_no'])) {
         kcp_cash_audit($attempt, 'reconcile_required');
         return array('state'=>'pending', 'message'=>'발급 결과 확인이 필요합니다. 재발급하지 말고 관리자에게 문의해 주십시오.', 'attempt'=>$attempt);
     }
-    $cash = array('receipt_no'=>(string)($response['receipt_no'] ?? ''), 'app_time'=>(string)($response['app_time'] ?? ''),
-        'reg_stat'=>(string)($response['reg_stat'] ?? ''), 'reg_desc'=>(string)($response['reg_desc'] ?? ''),
+    $cash = array('receipt_no'=>(string)(isset($response['receipt_no']) ? $response['receipt_no'] : ''), 'app_time'=>(string)(isset($response['app_time']) ? $response['app_time'] : ''),
+        'reg_stat'=>(string)(isset($response['reg_stat']) ? $response['reg_stat'] : ''), 'reg_desc'=>(string)(isset($response['reg_desc']) ? $response['reg_desc'] : ''),
         'tr_code'=>$request['tr_code'], 'id_info'=>$request['id_info'], 'attempt'=>$attempt);
     $cash_no = sql_escape_string((string)$response['cash_no']);
     $cash_info = sql_escape_string(serialize($cash));
@@ -174,6 +180,7 @@ function kcp_cash_process($request, $gateway)
     // 이 요청에서 받은 승인번호로만 보상 취소한다. 요청자가 지정한 거래번호는 사용하지 않는다.
     $data['cash_no'] = (string)$response['cash_no'];
     try { $cancel = call_user_func($gateway, 'cancel', $data); }
+    catch (Exception $e) { $cancel = array(); }
     catch (Throwable $e) { $cancel = array(); }
     if (is_array($cancel) && isset($cancel['res_cd']) && $cancel['res_cd'] === '0000') {
         $cleared = kcp_cash_update($table, "{$p}_cash_info=''", $cancelling);
@@ -186,13 +193,13 @@ function kcp_cash_process($request, $gateway)
 
 function kcp_cash_html($value)
 {
-    return htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return htmlspecialchars((string)$value, ENT_QUOTES | (defined('ENT_SUBSTITUTE') ? ENT_SUBSTITUTE : 0), 'UTF-8');
 }
 
 function kcp_cash_pending_notice($info)
 {
     if (!is_string($info) || $info === '') return '';
-    $state = @unserialize($info, array('allowed_classes'=>false));
+    $state = shop_order_decode_data(base64_encode($info));
     if (!is_array($state) || !isset($state['kcp_cash_state'], $state['attempt']) || !in_array($state['kcp_cash_state'], array('pending','reconcile'), true)) return '';
     return 'KCP 현금영수증 처리 확인 필요 (확인번호: '.kcp_cash_html($state['attempt']).'). KCP 거래 내역과 주문을 대조하기 전에는 재발급하지 마십시오.';
 }

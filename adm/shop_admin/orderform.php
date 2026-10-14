@@ -45,7 +45,7 @@ $od['mb_id'] = $od['mb_id'] ? $od['mb_id'] : "비회원";
 
 
 require_once G5_LIB_PATH.'/kcp_cash.lib.php';
-$cash_review_notice = kcp_cash_pending_notice($od['od_cash_info'] ?? '');
+$cash_review_notice = kcp_cash_pending_notice(isset($od['od_cash_info']) ? $od['od_cash_info'] : '');
 if ($cash_review_notice !== '') echo '<div class="local_desc01 local_desc"><p>'.$cash_review_notice.'</p></div>';
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>

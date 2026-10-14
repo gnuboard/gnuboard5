@@ -10,6 +10,9 @@ try {
 } catch (KcpCashRequestException $e) {
     alert($e->getMessage());
     exit;
+} catch (Exception $e) {
+    alert('주문 정보를 확인할 수 없습니다. 관리자에게 문의해 주십시오.');
+    exit;
 } catch (Throwable $e) {
     alert('주문 정보를 확인할 수 없습니다. 관리자에게 문의해 주십시오.');
     exit;
