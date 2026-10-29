@@ -7,6 +7,7 @@ define('_GNUBOARD_', true);
 $root = dirname(__DIR__);
 require $root.'/shop/inicis/pro/inicis_pro.lib.php';
 require $root.'/shop/inicis/libs/properties.php';
+require $root.'/shop/inicis/libs/response.lib.php';
 
 function check($ok, $message) {
     if (!$ok) throw new Exception($message);
@@ -76,7 +77,7 @@ if (isset($argv[1])) {
         exit;
     }
     if (isset($case['callback'])) {
-        $_REQUEST = $case['callback'];
+        $_REQUEST = array_merge(array('P_STATUS'=>'00', 'P_TID'=>'test', 'P_NOTI'=>'202609300001'), $case['callback']);
         function set_session($key, $value) {}
         function alert($message) { die(json_encode(array('error'=>$message))); }
         $source = file_get_contents($root.'/mobile/shop/inicis/pay_approval.php');
@@ -155,7 +156,7 @@ foreach (array(
     '', array('https://fcstdpay.inicis.com/api/netCancel')
 ) as $url) {
     $calls = request(array('pc_transport'=>array('netCancelUrl'=>$url)))['calls'];
-    check(count($calls) === 1, '불일치 망취소 URL로 전송하지 않음');
+    check(count($calls) === ((!is_string($url) || $url === '') ? 0 : 1), '잘못된 필수 필드는 승인 전 차단하고 불일치 망취소 URL로 전송하지 않음');
 }
 foreach (array(
     array('authUrl'=>'https://evil.example/api/payAuth'),
