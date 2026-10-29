@@ -175,7 +175,22 @@ if($od['od_tno']) {
             // 취소내역 한글깨짐방지
             setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
-            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            if (kcp_rest_enabled()) {
+                // 위에서 소유자/취소 가능 상태를 확인한 DB 거래만 취소한다.
+                // 승인용 임시 주문 토큰 검증과 고객 취소 경로를 분리한다.
+                try {
+                    $rest_client = new G5_KCP_REST_Client(kcp_rest_config());
+                    $rest_result = $rest_client->cancel($g_conf_site_cd, array(
+                        'tno'=>$od['od_tno'], 'mod_type'=>$_POST['mod_type'],
+                        'mod_desc'=>'주문자 본인 취소-'.$cancel_memo,
+                        'mod_ip'=>$_SERVER['REMOTE_ADDR']));
+                } catch (Exception $e) {
+                    $rest_result = array('res_cd'=>'R999', 'res_msg'=>'취소 결과를 확인할 수 없습니다. 관리자에게 KCP 내역 확인을 요청해 주십시오.');
+                }
+                if ($rest_result['res_cd'] !== '0000') alert('KCP 취소 실패: '.$rest_result['res_cd']);
+            } else {
+                include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            }
 
             // locale 설정 초기화
             setlocale(LC_CTYPE, '');

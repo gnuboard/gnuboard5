@@ -1,4 +1,5 @@
 <?php
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if (function_exists('shop_order_state_cancel')) shop_order_state_cancel('cancel_pending');
@@ -25,7 +26,7 @@ $bSucc = "false"; // DB 작업 실패 또는 금액 불일치의 경우 "false" 
 /* = -------------------------------------------------------------------------- = */
 if ( $req_tx == "pay" )
 {
-    if( $res_cd == "0000" )
+    if( $res_cd == "0000" || (kcp_rest_enabled() && $res_cd === 'V000') )
     {
         if ( $bSucc == "false" )
         {

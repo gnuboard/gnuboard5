@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400100';
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
 include_once(G5_EDITOR_LIB);
 
 auth_check_menu($auth, $sub_menu, "r");
@@ -605,6 +606,16 @@ if( function_exists('pg_setting_check') ){
                 </ul>
             </td>
         </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="de_kcp_payment_api">KCP 결제 연동 방식</label></th>
+            <td>
+                <?php echo help("KCP 결제 모듈: 서버 결제 모듈(pp_cli)과 모바일 SOAP 방식으로 연동합니다.\nKCP REST API: 서비스 인증서와 개인키를 사용하여 거래등록, 결제 승인·취소, 에스크로 처리, 현금영수증 발급·취소를 HTTPS API로 처리합니다."); ?>
+                <select name="de_kcp_payment_api" id="de_kcp_payment_api">
+                    <option value="legacy"<?php echo !kcp_rest_enabled() ? ' selected' : ''; ?>>KCP 결제 모듈 (기본)</option>
+                    <option value="rest"<?php echo kcp_rest_enabled() ? ' selected' : ''; ?>>KCP REST API</option>
+                </select>
+            </td>
+        </tr>
         <tr class="pg_info_fld kcp_info_fld" id="kcp_info_anchor">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
@@ -677,6 +688,16 @@ if( function_exists('pg_setting_check') ){
                 <input type="text" name="cf_toss_secret_key" value="<?php echo get_sanitize_input($config['cf_toss_secret_key']); ?>" id="cf_toss_secret_key" class="frm_input " size="40" maxlength="50">
             </td>
         </tr>
+        <tr class="pg_info_fld lg_info_fld_v2 toss_info_fld">
+            <th scope="row">토스페이먼츠 API 간편결제</th>
+            <td>
+                <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 토스페이먼츠와 계약된 수단을 선택하세요. 위 API 키와 동일한 상점의 계약 상태를 확인해야 합니다. 계약 상태는 이 화면에서 자동 조회하지 않습니다. 일부 수단은 테스트 결제를 지원하지 않으므로 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결합니다."); ?>
+                <?php foreach (shop_easypay_catalog('toss') as $easy_key => $easy_provider) { ?>
+                <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
+                <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
+                <?php } ?>
+            </td>
+        </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
             <th scope="row">
                 <label for="de_inicis_mid">KG이니시스 상점아이디</label><br>
@@ -747,18 +768,16 @@ if( function_exists('pg_setting_check') ){
                 <input type="text" name="de_inicis_pro_summary_days" value="<?php echo isset($default['de_inicis_pro_summary_days']) ? (int) $default['de_inicis_pro_summary_days'] : 1825; ?>" id="de_inicis_pro_summary_days" class="frm_input" size="6" maxlength="4"> 일
             </td>
         </tr>
-        <?php foreach (array('inicis' => 'KG이니시스', 'toss' => '토스페이먼츠 API') as $easy_pg => $easy_title) { ?>
-        <tr class="pg_info_fld <?php echo $easy_pg; ?>_info_fld">
-            <th scope="row"><?php echo $easy_title; ?> 간편결제</th>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row">KG이니시스 간편결제</th>
             <td>
                 <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 해당 PG와 계약하여 사용할 수 있는 수단만 선택하세요. 계약 상태는 PG사에 확인해야 하며 이 화면에서 자동 조회하지 않습니다. 자체창 호출에 별도 계약이 필요할 수 있고 일부 수단은 테스트 결제를 지원하지 않습니다. 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결하며 구 INIpay에서는 모바일에서만 표시합니다.\nKG이니시스는 삼성페이·L.pay·카카오페이를 지원하며 INIpay PRO는 HashKey, 구버전은 웹결제 사인키와 모바일 금액위변조 HashKey가 필요합니다."); ?>
-                <?php foreach (shop_easypay_catalog($easy_pg) as $easy_key => $easy_provider) { ?>
+                <?php foreach (shop_easypay_catalog('inicis') as $easy_key => $easy_provider) { ?>
                 <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
                 <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
                 <?php } ?>
             </td>
         </tr>
-        <?php } ?>
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row">
                 <label for="de_inicis_cartpoint_use">KG이니시스 신용카드 포인트 결제</label>
@@ -1839,7 +1858,10 @@ $(function() {
 // 결제모듈 실행권한 체크
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
     // kcp의 경우 pp_cli 체크
-    if($default['de_pg_service'] == 'kcp') {
+    if($default['de_pg_service'] == 'kcp' && kcp_rest_enabled() && (!extension_loaded('curl') || !extension_loaded('openssl'))) {
+        echo '<script>alert("KCP REST API는 PHP cURL 및 OpenSSL 확장모듈이 필요합니다.");</script>';
+    }
+    if($default['de_pg_service'] == 'kcp' && !kcp_rest_enabled()) {
         if(!extension_loaded('openssl')) {
             echo '<script>'.PHP_EOL;
             echo 'alert("PHP openssl 확장모듈이 설치되어 있지 않습니다.\n모바일 쇼핑몰 결제 때 사용되오니 openssl 확장 모듈을 설치하여 주십시오.");'.PHP_EOL;

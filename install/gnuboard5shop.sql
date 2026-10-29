@@ -349,6 +349,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_sms_use5` tinyint(4) NOT NULL DEFAULT '0',
   `de_sms_hp` varchar(255) NOT NULL DEFAULT '',
   `de_pg_service` varchar(255) NOT NULL DEFAULT '',
+  `de_kcp_payment_api` varchar(10) NOT NULL DEFAULT 'legacy',
   `de_kcp_mid` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_site_key` varchar(255) NOT NULL DEFAULT '',
   `de_inicis_mid` varchar(255) NOT NULL DEFAULT '',

@@ -2,6 +2,10 @@
     include_once('./_common.php');
 
     include_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');
+    if (kcp_rest_enabled()) {
+        include(G5_MSHOP_PATH.'/kcp/rest_register.php');
+        exit;
+    }
     require_once(G5_MSHOP_PATH.'/kcp/KCPComLibrary.php');              // library [수정불가]
 
 ?>

@@ -382,7 +382,7 @@ function shop_order_toss_approve($toss, $id, $key, $expected)
 
 function shop_order_kcp_result_fields()
 {
-    return explode(' ', 'tno amount pnt_issue card_cd card_name app_time app_no noinf quota partcanc_yn bankname bank_name bank_code depositor account pt_idno pnt_amount pnt_app_time pnt_app_no add_pnt use_pnt rsv_pnt commid mobile_no tk_van_code tk_app_no cash_authno cash_tr_code escw_yn res_cd res_msg app_kakaomny_time kakaomny_mny kcp_pay_method od_other_pay_type');
+    return explode(' ', 'tno amount total_amount coupon_mny card_mny card_bin_type_01 card_bin_type_02 pnt_issue card_cd card_name app_time app_no noinf quota partcanc_yn bankname bank_name bank_code depositor account pt_idno pnt_amount pnt_app_time pnt_app_no add_pnt use_pnt rsv_pnt commid mobile_no tk_van_code tk_app_no cash_authno cash_tr_code escw_yn res_cd res_msg app_kakaomny_time kakaomny_mny kcp_pay_method od_other_pay_type');
 }
 
 function shop_order_state_abort_pending()

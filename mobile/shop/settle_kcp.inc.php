@@ -1,5 +1,10 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
+if (kcp_rest_enabled()) {
+    include(G5_SHOP_PATH.'/kcp/rest_config.php');
+    return;
+}
 
 $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';       // BIN 절대경로 입력 (bin전까지)
 $g_conf_site_name = $default['de_admin_company_name'];

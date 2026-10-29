@@ -63,7 +63,8 @@
 				   + "&pay_method=" + form.pay_method.value
 				   + "&escw_used=" + form.escw_used.value
 				   + "&good_name=" + form.good_name.value
-				   + "&Ret_URL=" + encodeURIComponent(form.Ret_URL.value);
+				   + "&Ret_URL=" + encodeURIComponent(form.Ret_URL.value)
+                   + "&g5_order_state=" + encodeURIComponent(form.g5_order_state ? form.g5_order_state.value : "");
 		sendRequest( url + params );
 	}
 
