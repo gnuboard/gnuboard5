@@ -359,3 +359,12 @@ include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
         if (isset($$kcp_field)) $kcp_snapshot[$kcp_field] = $$kcp_field;
     }
     shop_order_state_approved($access_order_id, array('payload'=>base64_encode(serialize($kcp_snapshot))));
+
+if (isset($tno, $amount, $res_cd) && $tno !== '' && in_array($res_cd, array('0000','V000'), true)) {
+    require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+    $approval_card = array();
+    foreach (shop_pg_approval_card_fields('kcp') as $field) {
+        if (isset($$field)) $approval_card[$field] = $$field;
+    }
+    shop_pg_approval_log(kcp_rest_enabled() ? 'kcp_rest' : 'kcp', $ordr_idxx, $tno, $amount, $res_cd, $approval_card);
+}

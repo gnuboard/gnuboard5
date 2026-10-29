@@ -118,6 +118,8 @@ if ($inicis_pro_ctx) {
             inicis_pro_return_error('승인 결과가 결제요청 정보와 일치하지 않아 주문을 중단했습니다. 취소 여부는 관리자에게 문의해 주십시오.', $page_return_url, $lock_name, $oid, 'validation', !empty($mismatch_cancel['success']) ? 'canceled' : 'cancel_failed', 'APPROVAL_RESULT_MISMATCH', $audit_values);
         }
 
+        require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+        shop_pg_approval_log('inicis_pro', $oid, $approved_tid, $expected_amount, $approval['P_STATUS'], $approval);
         $approval['P_NOTI'] = $noti;
         $approval['P_IDCNAME'] = $idc;
         $approval['__pro'] = '1';

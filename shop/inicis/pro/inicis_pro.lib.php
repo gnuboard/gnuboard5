@@ -456,7 +456,7 @@ if (!function_exists('inicis_pro_log_payload')) {
             'P_STATUS', 'P_RMESG', 'P_MID', 'P_OID', 'P_AUTH_TID', 'P_APPL_TID',
             'P_APPL_DT', 'P_APPL_TM', 'P_AMT', 'P_TYPE', 'P_UNAME', 'P_NOTI',
             'P_APPL_NO', 'P_FN_CD1', 'P_FN_NM', 'P_CARD_ISSUER_CODE',
-            'P_CARD_ISSUER_NAME', 'P_SRC_CODE', 'P_VACT_NUM', 'P_VACT_DATE',
+            'P_CARD_ISSUER_NAME', 'P_CARD_QUOTA', 'P_CARD_INTEREST', 'P_SRC_CODE', 'P_VACT_NUM', 'P_VACT_DATE',
             'P_VACT_TIME', 'P_VACT_NAME', 'P_CSHR_CODE', 'P_CSHR_AUTH_NO',
             'P_CSHR_DT', 'P_HPP_CORP', 'P_HPP_NUM', 'P_APPL_NUM',
             'P_IN_TID', 'P_IDCNAME', '__pro', '__device', '__noti_status',

@@ -376,6 +376,8 @@ function shop_order_toss_approve($toss, $id, $key, $expected)
     if (!isset($response['orderId'],$response['paymentKey'],$response['totalAmount'],$response['status'],$response['method']) ||
         $response['orderId'] !== $id || $response['paymentKey'] !== $key || (int)$response['totalAmount'] !== (int)$expected ||
         !($response['status'] === 'DONE' || ($response['status'] === 'WAITING_FOR_DEPOSIT' && $response['method'] === '가상계좌'))) shop_order_access_fail();
+    require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+    shop_pg_approval_log('toss', $id, $key, $expected, $response['status'], $response);
     shop_order_state_approved($id, $response);
     return true;
 }

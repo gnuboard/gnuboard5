@@ -111,6 +111,8 @@ if($p_status !== '00') {
     if($PAY['P_STATUS'] != '00')
         alert('오류 : '.iconv_utf8($PAY['P_RMESG1']).' 코드 : '.$PAY['P_STATUS'], $page_return_url);
 
+    require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+    shop_pg_approval_log('inicis_mobile', $oid, $PAY['P_TID'], $PAY['P_AMT'], $PAY['P_STATUS'], $PAY);
     // TID, AMT 를 세션으로 주문완료 페이지 전달
     $hash = md5($PAY['P_TID'].$PAY['P_MID'].$PAY['P_AMT']);
     set_session('P_TID',  $PAY['P_TID']);

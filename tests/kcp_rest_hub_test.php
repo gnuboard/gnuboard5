@@ -20,6 +20,12 @@ openssl_x509_export_to_file($cert, G5_KCP_REST_CERT_PATH);
 openssl_pkey_export_to_file($key, G5_KCP_REST_PRIVATE_KEY_PATH);
 file_put_contents($dir.'/kcp_rest.lib.php', '<?php require_once '.var_export($root.'/lib/kcp_rest.lib.php', true).';');
 file_put_contents($dir.'/shop_order_access.lib.php', '<?php // Isolated order-state fixture');
+file_put_contents($dir.'/shop_pg_approval.lib.php', '<?php require_once '.var_export($root.'/lib/shop_pg_approval.lib.php', true).';');
+define('G5_SHOP_TABLE_PREFIX', 'g5_shop_');
+define('G5_TIME_YMDHIS', '2026-10-29 12:00:00');
+$approval_queries = array();
+function sql_escape_string($value) { return addslashes($value); }
+function sql_query($sql, $error = true) { $GLOBALS['approval_queries'][] = $sql; return true; }
 foreach (array('CURLOPT_POST','CURLOPT_POSTFIELDS','CURLOPT_HTTPHEADER','CURLOPT_RETURNTRANSFER','CURLOPT_CONNECTTIMEOUT','CURLOPT_TIMEOUT','CURLOPT_SSL_VERIFYPEER','CURLOPT_SSL_VERIFYHOST','CURLOPT_SSLVERSION','CURL_SSLVERSION_TLSv1_2','CURLOPT_FOLLOWLOCATION','CURLINFO_HTTP_CODE') as $n=>$name) define($name,$n+1);
 $calls = 0; $http = array(); $status = 'pending'; $snapshot = '';
 function curl_init($url) { return true; }
@@ -64,6 +70,7 @@ if ($calls !== 2 || $http['mod_type'] !== 'STSC' || $status !== 'cancelled' || e
 $res_cd='V000'; $escw_yn='Y'; $use_pay_method='001000000000';
 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
 if ($calls !== 3 || $http['mod_type'] !== 'STE5' || $status !== 'cancelled') throw new Exception('virtual account rollback');
-foreach (array('cert.pem','key.pem','kcp_rest.lib.php','shop_order_access.lib.php') as $file) unlink($dir.'/'.$file);
+if (count($approval_queries) !== 1 || strpos($approval_queries[0], "'kcp_rest'") === false) throw new Exception('approval log missing or duplicated on replay');
+foreach (array('cert.pem','key.pem','kcp_rest.lib.php','shop_order_access.lib.php','shop_pg_approval.lib.php') as $file) unlink($dir.'/'.$file);
 rmdir($dir);
 echo 'OK hub approval/cache/uncertainty/tampering '.(in_array('mobile',$argv,true)?'mobile':'desktop').($pp?' personal':' order')."\n";

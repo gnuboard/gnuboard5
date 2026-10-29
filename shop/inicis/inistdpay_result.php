@@ -135,6 +135,8 @@ try {
                  * **************************************************************************** */
 
                 //최종결제요청 결과 성공 DB처리
+                require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+                shop_pg_approval_log('inicis_pc', $oid, $resultMap['tid'], $resultMap['TotPrice'], $resultMap['resultCode'], $resultMap);
                 $tno        = $resultMap['tid'];
                 $amount     = $resultMap['TotPrice'];
                 $app_time   = $resultMap['applDate'].$resultMap['applTime'];
