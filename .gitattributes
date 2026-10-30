@@ -4,3 +4,4 @@
 
 /tests export-ignore
 /bin export-ignore
+/extend/demo_pg.extend.php export-ignore

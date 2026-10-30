@@ -1,5 +1,23 @@
 # PG별 간편결제 설정과 검증
 
+## 승인 결과 기록
+
+관리자 DB 업그레이드 `20261029_003_pg_approval_log` 적용 후 일반 주문 상세의 **PG 승인 카드정보**에서 확인한다. 승인 기록은 주문번호·거래번호·금액·연동 방식·기기와 카드 응답 허용 항목만 저장한다. 토큰, API 키, 카드번호와 구매자 개인정보는 이 기록에 포함하지 않는다. 기록 저장 실패는 서버 오류 로그에 남기며 PG 승인 결과 자체를 실패로 바꾸지 않는다.
+
+| 연동 방식 | 할부 개월 응답 | 무이자 응답 |
+| --- | --- | --- |
+| KCP 실행파일·REST | `quota` | `noinf` |
+| 토스페이먼츠 XPay | `LGD_CARDINSTALLMONTH` | `LGD_CARDNOINTYN` |
+| 토스페이먼츠 API | `card.installmentPlanMonths` | `card.isInterestFree`, `card.interestPayer` |
+| 이니시스 구버전 PC | `CARD_Quota` | `CARD_Interest` |
+| 이니시스 구버전 모바일 | `P_RMESG2` | `P_CARD_INTEREST` |
+| 이니시스 PRO | `P_CARD_QUOTA` | `P_CARD_INTEREST` |
+| NICEPAY PC·모바일 | `CardQuota` | `CardInterest` |
+
+응답 누락·빈 값은 미수신으로 표시하고 `0` 또는 `false`와 구분한다. PG별 코드 의미가 다르므로 응답값을 원형으로 표시한다. 특히 이니시스 PRO의 `P_CARD_INTEREST=1`과 NICEPAY의 `CardInterest=1`은 가맹점 부담 무이자를 뜻하며, 카드사 행사 무이자 표시와 혼동하지 않는다. 기존에 버려진 응답값을 소급해서 생성하지 않는다. 이니시스 PRO 기존 승인 로그에도 두 필드를 보존한다. 일반 주문 삭제·취소와 별개로 승인 당시 기록은 유지한다.
+
+검사: `php tests/shop_pg_approval_test.php`는 PG별 허용 항목, 0/false 보존, 민감 정보 제외, PRO 직렬화 보존을 검증한다. 실제 결제 승인을 대신하지 않는다.
+
 관리자 **쇼핑몰 설정 → 결제설정**에서 **PG사 간편결제 버튼 사용**을 `노출함`으로 설정한 뒤, 선택한 PG와 계약한 수단만 체크한다. 계약 상태는 PG사에 직접 확인해야 하며 관리자 화면에서 자동 조회하지 않는다.
 
 | PG | 개별 수단 | 제한 |

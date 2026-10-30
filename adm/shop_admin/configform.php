@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400100';
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
 include_once(G5_EDITOR_LIB);
 
 auth_check_menu($auth, $sub_menu, "r");
@@ -490,16 +491,6 @@ if( function_exists('pg_setting_check') ){
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_card_noint_use">신용카드 무이자할부사용<br>( KCP 만 해당 )</label></th>
-            <td>
-                <?php echo help("주문시 신용카드 무이자할부를 가능하게 할것인지를 설정합니다.<br>사용으로 설정하시면 KCP PG사 가맹점 관리자 페이지에서 설정하신 무이자할부 설정이 적용됩니다.<br>사용안함으로 설정하시면 KCP PG사 무이자 이벤트 카드를 제외한 모든 카드의 무이자 설정이 적용되지 않습니다.", 50); ?>
-                <select id="de_card_noint_use" name="de_card_noint_use">
-                    <option value="0" <?php echo get_selected($default['de_card_noint_use'], 0); ?>>사용안함</option>
-                    <option value="1" <?php echo get_selected($default['de_card_noint_use'], 1); ?>>사용</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
             <th scope="row"><label for="de_easy_pay_use">PG사 간편결제 버튼 사용</label></th>
             <td>
                 <?php echo help("주문서에 선택한 PG사의 사용 설정된 간편결제 수단을 개별 표시합니다. 아래 PG별 항목에서 계약된 수단을 선택하세요.", 50); ?>
@@ -595,7 +586,7 @@ if( function_exists('pg_setting_check') ){
             <th scope="row"><label for="de_pg_service">결제대행사</label></th>
             <td>
                 <input type="hidden" name="de_pg_service" id="de_pg_service" value="<?php echo $default['de_pg_service']; ?>" >
-                <?php echo help('쇼핑몰에서 사용할 결제대행사를 선택합니다.'); ?>
+                <?php echo help('결제대행사를 선택하면 해당 설정이 표시됩니다. 선택한 결제대행사는 확인 버튼을 눌러 저장한 뒤 적용됩니다.'); ?>
                 <ul class="de_pg_tab">
                     <li class="<?php if($default['de_pg_service'] == 'kcp') echo 'tab-current'; ?>"><a href="#kcp_info_anchor" data-value="kcp" title="NHN KCP 선택하기" >NHN KCP</a></li>
                     <li class="<?php if($default['de_pg_service'] == 'lg') echo 'tab-current'; ?>"><a href="#lg_info_anchor" data-value="lg" title="토스페이먼츠(구버전) 선택하기">토스페이먼츠(구버전)</a></li>
@@ -603,6 +594,16 @@ if( function_exists('pg_setting_check') ){
                     <li class="<?php if($default['de_pg_service'] == 'inicis') echo 'tab-current'; ?>"><a href="#inicis_info_anchor" data-value="inicis" title="KG이니시스 선택하기">KG이니시스</a></li>
                     <li class="<?php if($default['de_pg_service'] == 'nicepay') echo 'tab-current'; ?>"><a href="#nicepay_info_anchor" data-value="nicepay" title="NICEPAY 선택하기">NICEPAY</a></li>
                 </ul>
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="de_kcp_payment_api">KCP 결제 연동 방식</label></th>
+            <td>
+                <?php echo help("KCP 결제 모듈: 서버 결제 모듈(pp_cli)과 모바일 SOAP 방식으로 연동합니다.\nKCP REST API: 서비스 인증서와 개인키를 사용하여 거래등록, 결제 승인·취소, 에스크로 처리, 현금영수증 발급·취소를 HTTPS API로 처리합니다."); ?>
+                <select name="de_kcp_payment_api" id="de_kcp_payment_api">
+                    <option value="legacy"<?php echo !kcp_rest_enabled() ? ' selected' : ''; ?>>KCP 결제 모듈 (기본)</option>
+                    <option value="rest"<?php echo kcp_rest_enabled() ? ' selected' : ''; ?>>KCP REST API</option>
+                </select>
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld" id="kcp_info_anchor">
@@ -620,6 +621,16 @@ if( function_exists('pg_setting_check') ){
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo get_sanitize_input($default['de_kcp_site_key']); ?>" id="de_kcp_site_key" class="frm_input" size="36" maxlength="25">
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="de_card_noint_use">신용카드 무이자할부사용<br>( KCP 만 해당 )</label></th>
+            <td>
+                <?php echo help("주문시 신용카드 무이자할부를 가능하게 할것인지를 설정합니다.<br>사용으로 설정하시면 KCP PG사 가맹점 관리자 페이지에서 설정하신 무이자할부 설정이 적용됩니다.<br>사용안함으로 설정하시면 KCP PG사 무이자 이벤트 카드를 제외한 모든 카드의 무이자 설정이 적용되지 않습니다.", 50); ?>
+                <select id="de_card_noint_use" name="de_card_noint_use">
+                    <option value="0" <?php echo get_selected($default['de_card_noint_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_card_noint_use'], 1); ?>>사용</option>
+                </select>
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
@@ -646,7 +657,7 @@ if( function_exists('pg_setting_check') ){
                 <input type="checkbox" id="used_nhnkcp_naverpay_point" name="de_easy_pays[]" value="used_nhnkcp_naverpay_point" <?php if(stripos($default['de_easy_pay_services'], 'used_nhnkcp_naverpay_point') !== false){ echo 'checked="checked"'; } ?> > <label for="used_nhnkcp_naverpay_point">NAVERPAY POINT (네이버페이 포인트 사용)</label><br>
             </td>
         </tr>
-        <tr class="pg_info_fld lg_info_fld" id="lg_info_anchor">
+        <tr class="pg_info_fld lg_info_fld toss_info_fld" id="lg_info_anchor">
             <th scope="row">
                 <label for="cf_lg_mid">토스페이먼츠 상점아이디</label><br>
                 <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="lg_btn">토스페이먼츠 신청하기</a>
@@ -663,18 +674,28 @@ if( function_exists('pg_setting_check') ){
                 <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
             </td>
         </tr>
-        <tr class="pg_info_fld lg_info_fld_v2">
+        <tr class="pg_info_fld lg_info_fld_v2 toss_info_fld">
             <th scope="row"><label for="cf_toss_client_key">토스페이먼츠 API Client Key</label></th>
             <td>
                 <?php echo help("토스페이먼츠 API 클라이언트 키는 상점관리자 -> 개발자센터 -> API키 -> 클라이언트 키에서 확인하실 수 있습니다. 예) live_ck_tosspayment\n실결제용 [라이브] 키와 테스트용 [테스트] 키는 서로 다르므로, <b>테스트로 결제시에는 [테스트] 키</b>로 변경하여 사용해주시기 바랍니다. 예) 테스트 키: test_ck_tosspayment"); ?>
                 <input type="text" name="cf_toss_client_key" value="<?php echo get_sanitize_input($config['cf_toss_client_key']); ?>" id="cf_toss_client_key" class="frm_input " size="40" maxlength="50">
             </td>
         </tr>
-        <tr class="pg_info_fld lg_info_fld_v2">
+        <tr class="pg_info_fld lg_info_fld_v2 toss_info_fld">
             <th scope="row"><label for="cf_toss_secret_key">토스페이먼츠 API Secret Key</label></th>
             <td>
                 <?php echo help("토스페이먼츠 API 시크릿 키는 상점관리자 -> 개발자센터 -> API키 -> 시크릿 키에서 확인하실 수 있습니다. 예) live_sk_tosspayment\n실결제용 [라이브] 키와 테스트용 [테스트] 키는 서로 다르므로, <b>테스트로 결제시에는 [테스트] 키</b>로 변경하여 사용해주시기 바랍니다. 예) 테스트 키: test_sk_tosspayment"); ?>
                 <input type="text" name="cf_toss_secret_key" value="<?php echo get_sanitize_input($config['cf_toss_secret_key']); ?>" id="cf_toss_secret_key" class="frm_input " size="40" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld lg_info_fld_v2 toss_info_fld">
+            <th scope="row">토스페이먼츠 API 간편결제</th>
+            <td>
+                <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 토스페이먼츠와 계약된 수단을 선택하세요. 위 API 키와 동일한 상점의 계약 상태를 확인해야 합니다. 계약 상태는 이 화면에서 자동 조회하지 않습니다. 일부 수단은 테스트 결제를 지원하지 않으므로 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결합니다."); ?>
+                <?php foreach (shop_easypay_catalog('toss') as $easy_key => $easy_provider) { ?>
+                <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
+                <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
+                <?php } ?>
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
@@ -688,13 +709,16 @@ if( function_exists('pg_setting_check') ){
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row"><label for="de_inicis_pro_use">KG이니시스 INIpay PRO</label></th>
+            <th scope="row"><label for="de_inicis_pro_use">KG이니시스 연동 방식</label></th>
             <td>
-                <?php echo help("체크시 PC와 모바일에서 가장 최신 결제모듈인 KG이니시스 INIpay PRO 통합 결제창을 사용합니다. 실결제시 반드시 필수로 KG이니시스 모바일 금액위변조 Hash Key 를 입력해야 합니다."); ?>
-                <input type="checkbox" name="de_inicis_pro_use" value="1" id="de_inicis_pro_use"<?php echo !empty($default['de_inicis_pro_use']) ? ' checked' : ''; ?>> <label for="de_inicis_pro_use">사용</label>
+                <?php echo help("구버전은 PC 웹표준 결제창과 모바일 결제창을 사용합니다. INIpay PRO는 PC·모바일 통합 결제창을 사용합니다."); ?>
+                <select name="de_inicis_pro_use" id="de_inicis_pro_use">
+                    <option value="0"<?php echo empty($default['de_inicis_pro_use']) ? ' selected' : ''; ?>>구버전</option>
+                    <option value="1"<?php echo !empty($default['de_inicis_pro_use']) ? ' selected' : ''; ?>>INIpay PRO</option>
+                </select>
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
+        <tr class="pg_info_fld inicis_info_fld inicis_legacy_fld">
             <th scope="row"><label for="de_inicis_sign_key">KG이니시스 웹결제 사인키</label></th>
             <td>
                 <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\n<a href='https://iniweb.inicis.com/' target='_blank'>KG이니시스 가맹점관리자</a> > 상점정보 > 계약정보 > KEY 정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
@@ -722,7 +746,7 @@ if( function_exists('pg_setting_check') ){
                 <input type="text" name="de_inicis_iniapi_iv" value="<?php echo get_sanitize_input($default['de_inicis_iniapi_iv']); ?>" id="de_inicis_iniapi_iv" class="frm_input" size="30" maxlength="30">
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
+        <tr class="pg_info_fld inicis_info_fld inicis_pro_fld">
             <th scope="row">KG이니시스 PRO 운영 감시</th>
             <td>
                 <?php echo help("결제 이상 알림과 미진행 거래 정리는 서버 작업 스케줄러 없이 사이트 접속 흐름에서 자동 실행됩니다. KG이니시스 INIAPI 거래대사는 관리자 접속 시 함께 실행됩니다.\n관리자 접속이 드물거나 독립 실행이 필요하면 서버 작업 스케줄러에서 5~10분 간격으로 다음 명령을 추가로 실행할 수 있습니다(선택).\nphp ".G5_SHOP_PATH."/inicis/pro/monitor.php --host=".preg_replace('/[^A-Za-z0-9.:-]/', '', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost').((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? ' --https' : '')." --client-ip=".preg_replace('/[^0-9.]/', '', isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '')."\n거래대사는 최근 완료 거래와 확인 필요 거래를 KG이니시스 INIAPI로 조회하며 주문 생성이나 결제 취소를 자동 실행하지 않습니다."); ?>
@@ -733,33 +757,31 @@ if( function_exists('pg_setting_check') ){
                 <?php if (!empty($default['de_inicis_pro_monitor_message'])) { ?> / <?php echo get_text($default['de_inicis_pro_monitor_message']); ?><?php } ?>
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
+        <tr class="pg_info_fld inicis_info_fld inicis_pro_fld">
             <th scope="row"><label for="de_inicis_pro_log_days">PRO 상세 이력 보존기간</label></th>
             <td>
                 <?php echo help("단계별 상세 이력과 기존 이니시스 로그의 결제 응답 payload를 설정 기간 이후 순차 삭제합니다. 결제 요약은 아래의 별도 보존기간을 적용합니다. 0은 자동 정리 안 함이며, 보존하는 경우 30~3650일로 설정하십시오."); ?>
                 <input type="text" name="de_inicis_pro_log_days" value="<?php echo isset($default['de_inicis_pro_log_days']) ? (int) $default['de_inicis_pro_log_days'] : 365; ?>" id="de_inicis_pro_log_days" class="frm_input" size="6" maxlength="4"> 일
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
+        <tr class="pg_info_fld inicis_info_fld inicis_pro_fld">
             <th scope="row"><label for="de_inicis_pro_summary_days">PRO 결제 요약 보존기간</label></th>
             <td>
                 <?php echo help("주문이 이미 삭제됐고 확인 또는 환불이 필요하지 않은 최종 결제 요약을 설정 기간 이후 순차 삭제합니다. 실제 주문이 남아 있거나 환불 확인이 필요한 거래는 삭제하지 않습니다. 0은 자동 정리 안 함이며, 보존하는 경우 365~3650일로 설정하십시오."); ?>
                 <input type="text" name="de_inicis_pro_summary_days" value="<?php echo isset($default['de_inicis_pro_summary_days']) ? (int) $default['de_inicis_pro_summary_days'] : 1825; ?>" id="de_inicis_pro_summary_days" class="frm_input" size="6" maxlength="4"> 일
             </td>
         </tr>
-        <?php foreach (array('inicis' => 'KG이니시스', 'toss' => '토스페이먼츠 API') as $easy_pg => $easy_title) { ?>
-        <tr class="pg_info_fld <?php echo $easy_pg; ?>_info_fld">
-            <th scope="row"><?php echo $easy_title; ?> 간편결제</th>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row">KG이니시스 간편결제</th>
             <td>
                 <?php echo help("PG사 간편결제 버튼 사용을 '노출함'으로 설정하고, 해당 PG와 계약하여 사용할 수 있는 수단만 선택하세요. 계약 상태는 PG사에 확인해야 하며 이 화면에서 자동 조회하지 않습니다. 자체창 호출에 별도 계약이 필요할 수 있고 일부 수단은 테스트 결제를 지원하지 않습니다. 실제 MID에서 승인·취소를 확인한 후 제공하세요.\n애플페이는 iOS 모바일에서만 표시합니다. 삼성페이는 PC에서 휴대폰으로 연결하며 구 INIpay에서는 모바일에서만 표시합니다.\nKG이니시스는 삼성페이·L.pay·카카오페이를 지원하며 INIpay PRO는 HashKey, 구버전은 웹결제 사인키와 모바일 금액위변조 HashKey가 필요합니다."); ?>
-                <?php foreach (shop_easypay_catalog($easy_pg) as $easy_key => $easy_provider) { ?>
+                <?php foreach (shop_easypay_catalog('inicis') as $easy_key => $easy_provider) { ?>
                 <input type="checkbox" name="de_easy_pays[]" id="de_easy_<?php echo $easy_key; ?>" value="<?php echo $easy_key; ?>"<?php echo in_array($easy_key, explode(',', $default['de_easy_pay_services']), true) ? ' checked' : ''; ?>>
                 <label for="de_easy_<?php echo $easy_key; ?>"><?php echo $easy_provider[0]; ?></label><br>
                 <?php } ?>
             </td>
         </tr>
-        <?php } ?>
-        <tr class="pg_info_fld inicis_info_fld">
+        <tr class="pg_info_fld inicis_info_fld inicis_legacy_fld">
             <th scope="row">
                 <label for="de_inicis_cartpoint_use">KG이니시스 신용카드 포인트 결제</label>
             </th>
@@ -1611,7 +1633,7 @@ function fconfig_check(f)
     if (f.de_pg_service.value == "inicis") {
         var pro_use_el = document.getElementById("de_inicis_pro_use");
         var inicis_test = parseInt(f.de_card_test.value, 10) > 0;
-        if (pro_use_el && pro_use_el.checked && !inicis_test) {
+        if (pro_use_el && pro_use_el.value === "1" && !inicis_test) {
             var hash_el = document.getElementById("de_inicis_hash_key");
             if (hash_el && hash_el.value.replace(/[^A-Za-z0-9+\/=_-]/g, "") === "") {
                 alert("INIpay PRO를 사용하려면 HashKey를 입력해 주십시오.");
@@ -1700,44 +1722,45 @@ $(function() {
         });
     });
 
-    //$(".pg_info_fld").hide();
-    $(".pg_vbank_url").hide();
-    <?php if($default['de_pg_service']) { ?>
-    //$(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
-    $("#<?php echo $default['de_pg_service']; ?>_vbank_url").show();
-    <?php } else { ?>
-    $(".kcp_info_fld").show();
-    $("#kcp_vbank_url").show();
-    <?php } ?>
-    $(document).on("click", ".de_pg_tab a", function(e){
+    function show_inicis_settings() {
+        var active = $("#de_pg_service").val() === 'inicis';
+        var pro = $("#de_inicis_pro_use").val() === '1';
+        $(".inicis_legacy_fld").toggle(active && !pro);
+        $(".inicis_pro_fld").toggle(active && pro);
+    }
+    $("#de_inicis_pro_use").on("change", show_inicis_settings);
 
-        var pg = $(this).attr("data-value"),
-            class_name = "tab-current";
+    function show_pg_settings(pg) {
+        if ($.inArray(pg, ['kcp', 'lg', 'toss', 'inicis', 'nicepay']) === -1)
+            pg = 'kcp';
 
         $("#de_pg_service").val(pg);
-        $(this).parent("li").addClass(class_name).siblings().removeClass(class_name);
-
-        //$(".pg_info_fld:visible").hide();
-        $(".pg_vbank_url:visible").hide();
-        //$("."+pg+"_info_fld").show();
-        $("#"+pg+"_vbank_url").show();
+        // 숨긴 PG의 입력값도 저장되도록 disabled 처리하지 않는다.
+        $(".pg_info_fld").hide();
+        $("." + pg + "_info_fld").show();
+        show_inicis_settings();
+        $(".pg_vbank_url").hide();
+        $("#" + pg + "_vbank_url").show();
+        $(".de_pg_tab a").each(function() {
+            var selected = $(this).attr('data-value') === pg;
+            $(this).parent().toggleClass('tab-current', selected);
+            if (selected) $(this).attr('aria-current', 'true');
+            else $(this).removeAttr('aria-current');
+        });
         $(".scf_cardtest").addClass("scf_cardtest_hide");
-        $("."+pg+"_cardtest").removeClass("scf_cardtest_hide");
+        $("." + pg + "_cardtest").removeClass("scf_cardtest_hide");
         $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
-        $("#"+pg+"_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
-    });
+        $("#" + pg + "_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
+    }
 
+    $(document).on("click", ".de_pg_tab a", function(e) {
+        e.preventDefault();
+        show_pg_settings($(this).attr("data-value"));
+    });
     $("#de_pg_service").on("change", function() {
-        var pg = $(this).val();
-        $(".pg_info_fld:visible").hide();
-        $(".pg_vbank_url:visible").hide();
-        $("."+pg+"_info_fld").show();
-        $("#"+pg+"_vbank_url").show();
-        $(".scf_cardtest").addClass("scf_cardtest_hide");
-        $("."+pg+"_cardtest").removeClass("scf_cardtest_hide");
-        $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
-        $("#"+pg+"_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
+        show_pg_settings($(this).val());
     });
+    show_pg_settings($("#de_pg_service").val());
 
     $(".scf_cardtest_btn").bind("click", function() {
         var $cf_cardtest_tip = $("#scf_cardtest_tip");
@@ -1839,7 +1862,10 @@ $(function() {
 // 결제모듈 실행권한 체크
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
     // kcp의 경우 pp_cli 체크
-    if($default['de_pg_service'] == 'kcp') {
+    if($default['de_pg_service'] == 'kcp' && kcp_rest_enabled() && (!extension_loaded('curl') || !extension_loaded('openssl'))) {
+        echo '<script>alert("KCP REST API는 PHP cURL 및 OpenSSL 확장모듈이 필요합니다.");</script>';
+    }
+    if($default['de_pg_service'] == 'kcp' && !kcp_rest_enabled()) {
         if(!extension_loaded('openssl')) {
             echo '<script>'.PHP_EOL;
             echo 'alert("PHP openssl 확장모듈이 설치되어 있지 않습니다.\n모바일 쇼핑몰 결제 때 사용되오니 openssl 확장 모듈을 설치하여 주십시오.");'.PHP_EOL;

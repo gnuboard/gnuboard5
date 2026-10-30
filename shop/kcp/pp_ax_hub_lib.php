@@ -1,4 +1,5 @@
 <?php
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
   /* ============================================================================== */
   /* =   PAGE : 라이브버리 PAGE                                                   = */
   /* = -------------------------------------------------------------------------- = */
@@ -145,6 +146,12 @@
                         $log_level, $opt, $mode,
                         $key_dir,   $log_dir)
     {
+        if (kcp_rest_enabled()) {
+            include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
+            kcp_rest_bridge($this, $site_cd, $tx_cd, $ordr_idxx);
+            return;
+        }
+
       $payx_data = $this->mf_get_payx_data();
 
       $ordr_data = $this->mf_get_data( "ordr_data", $this->m_ordr_data );

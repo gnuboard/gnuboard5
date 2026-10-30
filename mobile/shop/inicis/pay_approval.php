@@ -1,6 +1,14 @@
 <?php
 include_once('./_common.php');
 include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
+require_once(G5_SHOP_PATH.'/inicis/libs/response.lib.php');
+try {
+    $_REQUEST = inicis_response_fields($_REQUEST, array('P_STATUS'));
+    if ($_REQUEST['P_STATUS'] === '00')
+        inicis_response_fields($_REQUEST, array('P_NOTI', 'P_TID', 'P_REQ_URL', 'idc_name'));
+} catch (Exception $e) {
+    alert($e->getMessage(), G5_SHOP_URL);
+}
 
 // 세션 초기화
 set_session('P_TID',  '');
@@ -104,13 +112,25 @@ if($p_status !== '00') {
 
     // 결과를 배열로 변환
     parse_str($return, $ret);
+    try {
+        $ret = inicis_response_fields($ret, array('P_STATUS'));
+        if ($ret['P_STATUS'] === '00') {
+            inicis_response_fields($ret, array('P_TID', 'P_MID', 'P_AMT', 'P_OID'));
+            if (!ctype_digit($ret['P_AMT']))
+                throw new Exception('KG이니시스 승인 금액이 올바르지 않습니다.');
+        }
+    } catch (Exception $e) {
+        alert($e->getMessage(), $page_return_url);
+    }
     $PAY = array_map('trim', $ret);
     $PAY = array_map('strip_tags', $PAY);
     $PAY = array_map('get_search_string', $PAY);
 
     if($PAY['P_STATUS'] != '00')
-        alert('오류 : '.iconv_utf8($PAY['P_RMESG1']).' 코드 : '.$PAY['P_STATUS'], $page_return_url);
+        alert('오류 : '.iconv_utf8(isset($PAY['P_RMESG1']) ? $PAY['P_RMESG1'] : '승인 실패').' 코드 : '.$PAY['P_STATUS'], $page_return_url);
 
+    require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+    shop_pg_approval_log('inicis_mobile', $oid, $PAY['P_TID'], $PAY['P_AMT'], $PAY['P_STATUS'], $PAY);
     // TID, AMT 를 세션으로 주문완료 페이지 전달
     $hash = md5($PAY['P_TID'].$PAY['P_MID'].$PAY['P_AMT']);
     set_session('P_TID',  $PAY['P_TID']);

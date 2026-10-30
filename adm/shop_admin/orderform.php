@@ -529,6 +529,8 @@ if ($is_nicepay_vbank_pg_cancel) {
     </div>
 </section>
 
+<?php include_once('./pgapproval.inc.php'); ?>
+
 <section class="">
     <h2 class="h2_frm">결제상세정보</h2>
     <?php echo $pg_anchor; ?>

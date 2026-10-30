@@ -376,13 +376,15 @@ function shop_order_toss_approve($toss, $id, $key, $expected)
     if (!isset($response['orderId'],$response['paymentKey'],$response['totalAmount'],$response['status'],$response['method']) ||
         $response['orderId'] !== $id || $response['paymentKey'] !== $key || (int)$response['totalAmount'] !== (int)$expected ||
         !($response['status'] === 'DONE' || ($response['status'] === 'WAITING_FOR_DEPOSIT' && $response['method'] === '가상계좌'))) shop_order_access_fail();
+    require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+    shop_pg_approval_log('toss', $id, $key, $expected, $response['status'], $response);
     shop_order_state_approved($id, $response);
     return true;
 }
 
 function shop_order_kcp_result_fields()
 {
-    return explode(' ', 'tno amount pnt_issue card_cd card_name app_time app_no noinf quota partcanc_yn bankname bank_name bank_code depositor account pt_idno pnt_amount pnt_app_time pnt_app_no add_pnt use_pnt rsv_pnt commid mobile_no tk_van_code tk_app_no cash_authno cash_tr_code escw_yn res_cd res_msg app_kakaomny_time kakaomny_mny kcp_pay_method od_other_pay_type');
+    return explode(' ', 'tno amount total_amount coupon_mny card_mny card_bin_type_01 card_bin_type_02 pnt_issue card_cd card_name app_time app_no noinf quota partcanc_yn bankname bank_name bank_code depositor account pt_idno pnt_amount pnt_app_time pnt_app_no add_pnt use_pnt rsv_pnt commid mobile_no tk_van_code tk_app_no cash_authno cash_tr_code escw_yn res_cd res_msg app_kakaomny_time kakaomny_mny kcp_pay_method od_other_pay_type');
 }
 
 function shop_order_state_abort_pending()

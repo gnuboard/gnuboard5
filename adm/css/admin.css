@@ -1207,3 +1207,11 @@ input[type="text"]{max-width:200px}
 /* Styles */
 input[type="text"]{max-width:200px}
 }
+
+/* PG approval disclosure */
+.pg_approval_details > summary {display:inline-block;margin:0;padding:0;border:0;background:none;color:#666;cursor:pointer;font-size:11px;font-weight:normal;line-height:normal;list-style:none}
+.pg_approval_details > summary::-webkit-details-marker {display:none}
+.pg_approval_details .pg_approval_collapse {display:none}
+.pg_approval_details[open] .pg_approval_expand {display:none}
+.pg_approval_details[open] .pg_approval_collapse {display:inline}
+.pg_approval_details > summary:focus-visible {outline:2px solid #3f51b5;outline-offset:2px}

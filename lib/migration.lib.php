@@ -47,6 +47,7 @@ function g5_migration_replace_placeholders($sql)
         'g5_shop_order_access_table' => $shop_prefix . 'order_access',
         'g5_shop_post_log_table' => $shop_prefix . 'order_post_log',
         'g5_shop_order_cancel_log_table' => $shop_prefix . 'order_cancel_log',
+        'g5_shop_pg_approval_log_table' => $shop_prefix . 'pg_approval_log',
         'g5_shop_inicis_pay_table' => $shop_prefix . 'inicis_pay',
         'g5_shop_inicis_pay_event_table' => $shop_prefix . 'inicis_pay_event',
         'sms5_config_table' => G5_TABLE_PREFIX . 'sms5_config',

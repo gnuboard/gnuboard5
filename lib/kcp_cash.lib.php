@@ -208,6 +208,13 @@ function kcp_cash_pending_notice($info)
 function kcp_cash_gateway($operation, $data)
 {
     global $default;
+    require_once dirname(__FILE__).'/kcp_rest.lib.php';
+    if (!in_array($operation, array('pay', 'cancel'), true)) throw new RuntimeException('KCP cash operation');
+    if (kcp_rest_enabled()) {
+        $client = new G5_KCP_REST_Client(kcp_rest_config());
+        return $operation === 'pay' ? $client->cash_issue(kcp_rest_site_code(), $data) :
+            $client->cash_cancel(kcp_rest_site_code(), $data['cash_no']);
+    }
     // 설정 로더의 요청값 기반 간편결제 분기를 이 경로에서 사용하지 않는다.
     $site_id = $default['de_card_test'] ? ($default['de_escrow_use'] == 1 ? 'T0007' : 'T0000') : $default['de_kcp_mid'];
     $site_key = $default['de_card_test'] ? ($default['de_escrow_use'] == 1 ? '4Ho4YsuOZlLXUZUdOxM1Q7X__' : '3grptw1.zW0GSo4PQdaGvsF__') : $default['de_kcp_site_key'];

@@ -1,5 +1,7 @@
 <?php
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G5_SHOP_PATH.'/kcp/rest_order.script.php');
 
 // kcp 전자결제를 사용할 때만 실행
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
@@ -54,6 +56,9 @@ function jsf__pay( form )
 {
     try
     {
+        <?php if (kcp_rest_enabled()) { ?>
+        if (!g5_kcp_rest_save(form)) return false;
+        <?php } ?>
         KCP_Pay_Execute( form );
         $("body").css({
             "position": "fixed",

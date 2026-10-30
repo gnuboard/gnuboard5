@@ -1,4 +1,5 @@
 <?php
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
 
@@ -1399,7 +1400,7 @@ function forderform_check(f)
                     if(typeof f.kakaopay_direct !== "undefined") f.kakaopay_direct.value = "Y";
                 } else {
                     if(typeof f.payco_direct !== "undefined") f.payco_direct.value = "Y";
-                    <?php if($default['de_card_test']) { ?>
+                    <?php if($default['de_card_test'] && !(kcp_rest_enabled())) { ?>
                     f.site_cd.value      = "S6729";
                     <?php } ?>
                 }

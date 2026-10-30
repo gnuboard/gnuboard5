@@ -1,5 +1,7 @@
 <?php
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G5_SHOP_PATH.'/kcp/rest_order.script.php');
 
 // 타 PG 사용시 NHN KCP 네이버페이 사용이 설정되어 있는지 체크, 그렇지 않다면 return;
 if( !(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')) ){
@@ -60,6 +62,9 @@ function jsf__pay( form )
 {
     try
     {
+        <?php if (kcp_rest_enabled()) { ?>
+        if (!g5_kcp_rest_save(form)) return false;
+        <?php } ?>
         KCP_Pay_Execute( form );
     }
     catch (e)

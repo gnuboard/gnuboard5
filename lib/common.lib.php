@@ -3865,12 +3865,12 @@ function module_exec_check($exe, $type)
                 $error = $exe.'\n파일의 실행권한이 없습니다.\n\n'.basename($exe).' 파일에 실행권한을 부여해 주십시오.';
         } else {
             // 바이너리 파일인지
-            if($is_linux) {
-
-                if ( !function_exists('exec') ) {
-                    alert('exec 함수실행이 불가능하므로 사용할수 없습니다.');
-                }
-
+            if($is_linux && !function_exists('exec')) {
+                // 설정 화면을 종료하거나 이전 페이지로 이동시키지 않고 경고를 반환한다.
+                $error = $type === 'pp_cli'
+                    ? "서버에서 PHP exec 함수가 차단되어 NHN KCP 결제 모듈 (기본)을 사용할 수 없습니다.\n서버 관리자에게 exec 함수 허용을 요청하거나, 서비스 인증서와 개인키를 설정한 뒤 KCP REST API를 선택해 주세요."
+                    : '서버에서 PHP exec 함수가 차단되어 인증 모듈을 사용할 수 없습니다. 서버 관리자에게 exec 함수 허용을 요청해 주세요.';
+            } else if($is_linux) {
                 $search = false;
                 $isbinary = true;
                 $executable = true;

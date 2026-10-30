@@ -25,7 +25,7 @@ if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
 }
 else {
     $g_conf_gw_url  = "paygw.kcp.co.kr";
-    if (!preg_match("/^SR/", $g_conf_site_cd)) {
+    if (!kcp_rest_enabled() && !preg_match("/^SR/", $g_conf_site_cd)) {
         alert("SR 로 시작하지 않는 KCP SITE CODE 는 지원하지 않습니다.");
     }
 }
@@ -33,6 +33,7 @@ else {
 include_once(G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php');
 
 $tno            = $od['od_tno'];
+$ordr_idxx      = $od['od_id'];
 $req_tx         = 'mod';
 $mod_desc       = iconv_euckr($mod_memo);
 $cust_ip        = getenv('REMOTE_ADDR');

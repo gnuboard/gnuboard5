@@ -349,6 +349,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_sms_use5` tinyint(4) NOT NULL DEFAULT '0',
   `de_sms_hp` varchar(255) NOT NULL DEFAULT '',
   `de_pg_service` varchar(255) NOT NULL DEFAULT '',
+  `de_kcp_payment_api` varchar(10) NOT NULL DEFAULT 'legacy',
   `de_kcp_mid` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_site_key` varchar(255) NOT NULL DEFAULT '',
   `de_inicis_mid` varchar(255) NOT NULL DEFAULT '',
@@ -1089,3 +1090,17 @@ CREATE TABLE `g5_shop_lg_noti` (
   KEY `ln_trade` (`ln_trade`),
   KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `g5_shop_pg_approval_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `pg` varchar(20) NOT NULL DEFAULT '',
+  `oid` varchar(64) NOT NULL DEFAULT '',
+  `tid` varchar(200) NOT NULL DEFAULT '',
+  `device` varchar(10) NOT NULL DEFAULT '',
+  `amount` bigint(20) NOT NULL DEFAULT '0',
+  `result_code` varchar(20) NOT NULL DEFAULT '',
+  `card_info` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oid` (`oid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

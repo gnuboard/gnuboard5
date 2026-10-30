@@ -1,5 +1,54 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
+if (kcp_rest_enabled()) {
+    include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+    $access_order_id = isset($_POST['ordr_idxx']) ? $_POST['ordr_idxx'] : '';
+    $access_data = shop_order_access_load($access_order_id, 'kcp');
+    $access_personal = !empty($access_data['pp_id']);
+    if ($access_personal !== !empty($_POST['pp_id']) ||
+        ($access_personal && (string)$_POST['pp_id'] !== $access_order_id)) shop_order_access_fail();
+
+    // 최종 계산 금액을 검증한 뒤 승인 기록을 원자적으로 확보한다.
+    $kcp_expected = $access_personal ? (int)$pp['pp_price'] : (int)$order_price;
+    if ($kcp_expected <= 0 || !isset($_POST['req_tx'], $_POST['good_mny'], $_POST['enc_data'], $_POST['enc_info']) ||
+        $_POST['req_tx'] !== 'pay' || !is_string($_POST['good_mny']) || !ctype_digit($_POST['good_mny']) ||
+        (int)$_POST['good_mny'] !== $kcp_expected || !is_string($_POST['enc_data']) || !is_string($_POST['enc_info']) ||
+        $_POST['enc_data'] === '' || $_POST['enc_info'] === '') shop_order_access_fail();
+    if (kcp_rest_enabled()) {
+        $rest_settle = $access_personal ? $pp_settle_case : $od_settle_case;
+        $rest_masks = array('신용카드'=>'100000000000','간편결제'=>'100000000000',
+            '계좌이체'=>'010000000000','가상계좌'=>'001000000000','휴대폰'=>'000010000000');
+        if (!isset($rest_masks[$rest_settle], $_POST['use_pay_method']) ||
+            $_POST['use_pay_method'] !== $rest_masks[$rest_settle]) shop_order_access_fail();
+    }
+    $kcp_request_key = 'kcp:'.hash('sha256', $_POST['enc_data']."\0".$_POST['enc_info']);
+    $kcp_state = shop_order_state_begin($access_order_id, $kcp_request_key, $kcp_expected);
+    if ($kcp_state['status'] === 'approved') {
+        // 복구된 승인도 이후 DB 저장 실패 시 같은 API로 자동취소할 수 있어야 한다.
+        if (kcp_rest_enabled()) {
+            include_once(G5_SHOP_PATH . '/settle_kcp.inc.php');
+            require_once(G5_SHOP_PATH . '/kcp/pp_ax_hub_lib.php');
+            $c_PayPlus = new C_PP_CLI_T;
+            $c_PayPlus->mf_clear();
+            $req_tx = 'pay';
+            $ordr_idxx = $access_order_id;
+            $use_pay_method = $_POST['use_pay_method'];
+            $cust_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+        }
+        $kcp_cached = json_decode($kcp_state['response_json'], true);
+        $kcp_cached = isset($kcp_cached['payload']) ? shop_order_decode_data($kcp_cached['payload']) : false;
+        if (!is_array($kcp_cached) || (int)$kcp_cached['amount'] !== $kcp_expected) shop_order_access_fail();
+        foreach (shop_order_kcp_result_fields() as $kcp_field) {
+            if (isset($kcp_cached[$kcp_field])) $$kcp_field = $kcp_cached[$kcp_field];
+        }
+        return;
+    }
+    // KCP 통신 도중 프로세스가 끊긴 거래는 운영 대조 전 재승인하지 않는다.
+    if ($kcp_state['status'] !== 'pending') shop_order_access_fail();
+
+}
+
 
     /* ============================================================================== */
     /* =   PAGE : 지불 요청 및 결과 처리 PAGE                                       = */
@@ -147,15 +196,16 @@ if ( $req_tx == "pay" )
         /* 1004원은 실제로 업체에서 결제하셔야 될 원 금액을 넣어주셔야 합니다. 결제금액 유효성 검증 */
         $c_PayPlus->mf_set_ordr_data( "ordr_mony",  $good_mny );
 
+        $kcp_settle_case = isset($pp['pp_price']) ? (isset($pp_settle_case) ? $pp_settle_case : '') : (isset($od_settle_case) ? $od_settle_case : '');
         $kcp_pay_type = '';   // 결제수단 검증 파라미터 pay_type (신용카드 : PACA, 계좌이체 : PABK, 가상계좌 : PAVC, 휴대폰 : PAMC)
 
-        if ($use_pay_method == "100000000000" && (in_array($od_settle_case, array('신용카드', '간편결제')))) {  // 신용카드
+        if ($use_pay_method == "100000000000" && (in_array($kcp_settle_case, array('신용카드', '간편결제')))) {  // 신용카드
             $kcp_pay_type = 'PACA';
-        } else if ($use_pay_method == "010000000000" && $od_settle_case === '계좌이체') {   // 계좌이체
+        } else if ($use_pay_method == "010000000000" && $kcp_settle_case === '계좌이체') {   // 계좌이체
             $kcp_pay_type = 'PABK';
-        } else if ($use_pay_method == "001000000000" && $od_settle_case === '가상계좌') {   // 가상계좌
+        } else if ($use_pay_method == "001000000000" && $kcp_settle_case === '가상계좌') {   // 가상계좌
             $kcp_pay_type = 'PAVC';
-        } else if ($use_pay_method == "000010000000" && $od_settle_case === '휴대폰') {   // 휴대폰
+        } else if ($use_pay_method == "000010000000" && $kcp_settle_case === '휴대폰') {   // 휴대폰
             $kcp_pay_type = 'PAMC';
         }
 
@@ -393,3 +443,20 @@ if ( $req_tx == "pay" )
 /* = -------------------------------------------------------------------------- = */
 /* =   05. 승인 결과 처리 END                                                   = */
 /* ============================================================================== */;
+if (kcp_rest_enabled()) {
+    if (empty($tno) || (int)$amount !== $kcp_expected) shop_order_access_fail();
+    $kcp_snapshot = array();
+    foreach (shop_order_kcp_result_fields() as $kcp_field) {
+        if (isset($$kcp_field)) $kcp_snapshot[$kcp_field] = $$kcp_field;
+    }
+    shop_order_state_approved($access_order_id, array('payload'=>base64_encode(serialize($kcp_snapshot))));
+}
+
+if (isset($tno, $amount, $res_cd) && $tno !== '' && in_array($res_cd, array('0000','V000'), true)) {
+    require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+    $approval_card = array();
+    foreach (shop_pg_approval_card_fields('kcp') as $field) {
+        if (isset($$field)) $approval_card[$field] = $$field;
+    }
+    shop_pg_approval_log(kcp_rest_enabled() ? 'kcp_rest' : 'kcp', $ordr_idxx, $tno, $amount, $res_cd, $approval_card);
+}

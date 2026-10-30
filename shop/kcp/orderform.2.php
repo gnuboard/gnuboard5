@@ -119,10 +119,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="deli_term" value="03">
 
     <!-- 장바구니 상품 개수 : 장바구니에 담겨있는 상품의 개수를 입력 -->
-    <input type="hidden" name="bask_cntx" value="<?php echo (int)$goods_count + 1; ?>">
+    <input type="hidden" name="bask_cntx" value="<?php echo isset($goods_count) ? (int)$goods_count + 1 : 1; ?>">
 
     <!-- 장바구니 상품 상세 정보 (자바 스크립트 샘플(create_goodInfo()) 참고) -->
-    <input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
+    <input type="hidden" name="good_info" value="<?php echo isset($good_info) ? $good_info : ''; ?>">
 
 <?php
     /* = -------------------------------------------------------------------------- = */

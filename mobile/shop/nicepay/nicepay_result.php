@@ -224,6 +224,8 @@ if($authResultCode === "0000"){
 	        if ($ResultCode == '3001') {    // 신용카드
 
 	            $card_cd   = nicepay_res('CardCode', $respArr); // 카드사 코드
+        require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+        shop_pg_approval_log('nicepay', $moid, $tno, $amount, $ResultCode, $respArr);
             $card_name = nicepay_res('CardName', $respArr); // 카드 종류
 
         } else if ($ResultCode == '4100') {    // 가상계좌

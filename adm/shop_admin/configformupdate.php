@@ -8,6 +8,9 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+if (!array_key_exists('de_kcp_payment_api', $default))
+    alert('KCP 연동 방식 설정을 저장하려면 먼저 관리자 DB 업그레이드를 실행해 주십시오.');
+
 // 대표전화번호 유효성 체크
 if(! (isset($_POST['de_admin_company_tel']) && check_vaild_callback($_POST['de_admin_company_tel'])) )
     alert('대표전화번호를 올바르게 입력해 주세요.');
@@ -295,8 +298,14 @@ if ($de_pg_service === 'inicis' && $de_inicis_pro_use) {
 
 $warning_msg = '';
 
+// 누락된 이전 관리자 폼은 현재 설정을 보존하고, 허용된 방식만 저장한다.
+$de_kcp_payment_api = isset($_POST['de_kcp_payment_api']) ? $_POST['de_kcp_payment_api'] :
+    (isset($default['de_kcp_payment_api']) ? $default['de_kcp_payment_api'] : 'legacy');
+if (!is_string($de_kcp_payment_api) || !in_array($de_kcp_payment_api, array('legacy', 'rest'), true))
+    alert('KCP 연동 방식을 올바르게 선택해 주십시오.');
+
 // kcp 전자결제를 사용할 때 site key 입력체크
-if($de_pg_service == 'kcp' && ! $de_card_test && ($de_iche_use || $de_vbank_use || $de_hp_use || $de_card_use)) {
+if($de_pg_service == 'kcp' && $de_kcp_payment_api !== 'rest' && ! $de_card_test && ($de_iche_use || $de_vbank_use || $de_hp_use || $de_card_use)) {
     if(! trim($de_kcp_site_key))
         alert('NHN KCP SITE KEY를 입력해 주십시오.');
 }
@@ -440,6 +449,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_mimg_width                 = '{$de_mimg_width}',
                 de_mimg_height                = '{$de_mimg_height}',
                 de_pg_service                 = '{$de_pg_service}',
+                de_kcp_payment_api            = '{$de_kcp_payment_api}',
                 de_kcp_mid                    = '{$de_kcp_mid}',
                 de_kcp_site_key               = '{$de_kcp_site_key}',
                 de_inicis_mid                 = '{$de_inicis_mid}',

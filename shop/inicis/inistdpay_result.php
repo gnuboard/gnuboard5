@@ -4,12 +4,14 @@ include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/HttpClient.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/json_lib.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/properties.php');
+require_once(G5_SHOP_PATH.'/inicis/libs/response.lib.php');
 
 $inicis_pay_result = false;
 
 $prop = new properties();
 
 try {
+    $_REQUEST = inicis_response_fields($_REQUEST, array('resultCode'));
 
     //#############################
     // 인증결과 파라미터 일괄 수신
@@ -20,6 +22,7 @@ try {
     // 인증이 성공일 경우만
     //#####################
     if (isset($_REQUEST['resultCode']) && strcmp('0000', $_REQUEST['resultCode']) == 0) {
+        inicis_response_fields($_REQUEST, array('authToken', 'authUrl', 'netCancelUrl', 'idc_name'));
 
         //############################################
         // 1.전문 필드 값 설정(***가맹점 개발수정***)
@@ -98,7 +101,16 @@ try {
             //5.API 통신결과 처리(***가맹점 개발수정***)
             //############################################################
 
-            $resultMap = json_decode($authResultString, true);
+            $resultMap = inicis_response_fields(json_decode($authResultString, true), array('resultCode'));
+            if ($resultMap['resultCode'] !== '0000')
+                throw new Exception('KG이니시스 결제 승인이 실패했습니다.');
+            $resultMap = inicis_response_fields($resultMap, array('tid', 'MOID', 'TotPrice', 'authSignature', 'applDate', 'applTime', 'payMethod'));
+            if (!ctype_digit($resultMap['TotPrice']) || !isset($PAY_METHOD[$resultMap['payMethod']]))
+                throw new Exception('KG이니시스 승인 금액 또는 결제수단이 올바르지 않습니다.');
+            if ($PAY_METHOD[$resultMap['payMethod']] === '가상계좌')
+                inicis_response_fields($resultMap, array('VACT_BankCode', 'VACT_Num', 'VACT_Name'));
+            if ($PAY_METHOD[$resultMap['payMethod']] === '계좌이체')
+                inicis_response_fields($resultMap, array('ACCT_BankCode'));
 
             $tid = $resultMap['tid'];
             $oid = preg_replace('/[^A-Za-z0-9\-_]/', '', $resultMap['MOID']);
@@ -135,6 +147,8 @@ try {
                  * **************************************************************************** */
 
                 //최종결제요청 결과 성공 DB처리
+                require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
+                shop_pg_approval_log('inicis_pc', $oid, $resultMap['tid'], $resultMap['TotPrice'], $resultMap['resultCode'], $resultMap);
                 $tno        = $resultMap['tid'];
                 $amount     = $resultMap['TotPrice'];
                 $app_time   = $resultMap['applDate'].$resultMap['applTime'];
@@ -165,7 +179,7 @@ try {
                 $inicis_pay_result = true;
 
             } else {
-                $s = '(오류코드:'.$resultMap['resultCode'].') '.$resultMap['resultMsg'];
+                $s = '(오류코드:'.$resultMap['resultCode'].') '.(isset($resultMap['resultMsg']) ? $resultMap['resultMsg'] : '승인 결과 검증에 실패했습니다.');
                 alert($s, $page_return_url);
             }
 

@@ -1,5 +1,10 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G5_LIB_PATH.'/kcp_rest.lib.php');
+if (kcp_rest_enabled()) {
+    include(G5_SHOP_PATH.'/kcp/rest_config.php');
+    return;
+}
 
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
