@@ -4,7 +4,8 @@ require_once(G5_LIB_PATH.'/shop_pg_approval.lib.php');
 $approval_rows = shop_pg_approval_admin_rows(isset($pg_approval_oid) ? $pg_approval_oid : $od_id);
 ?>
 <section>
-    <h2 class="h2_frm">PG 승인 카드정보</h2>
+    <details class="pg_approval_details">
+    <summary>PG 승인 카드정보 <span class="pg_approval_expand">(펼치기)</span><span class="pg_approval_collapse">(접기)</span></summary>
     <div class="local_desc01 local_desc"><p>승인 당시 PG가 반환한 값입니다. 미수신은 일시불 또는 일반할부를 의미하지 않습니다. 무이자 표시만으로 가맹점 부담 여부를 단정하지 말고 PG별 응답 항목과 계약 조건을 확인하세요. 취소 상태는 주문 결제 내역에서 확인하세요.</p></div>
     <div class="tbl_head01 tbl_wrap"><table>
         <caption>PG 승인 카드정보</caption>
@@ -28,7 +29,8 @@ $approval_rows = shop_pg_approval_admin_rows(isset($pg_approval_oid) ? $pg_appro
             </td>
         </tr>
         <?php } ?>
-        <?php if (!$approval_rows) { ?><tr><td colspan="4" class="empty_table">저장된 승인 카드정보가 없습니다.</td></tr><?php } ?>
+        <?php if (!$approval_rows) { ?><tr><td colspan="4" class="empty_table">이 주문에 별도로 기록된 PG 승인 카드정보가 없습니다.<br>승인 카드정보 저장 기능 적용 전 주문은 이 정보가 표시되지 않을 수 있습니다.<br>이 정보의 유무는 결제 성공·실패를 의미하지 않습니다. 결제 상태는 주문결제 내역과 결제상세정보에서 확인하세요.</td></tr><?php } ?>
         </tbody>
     </table></div>
+    </details>
 </section>
