@@ -5,6 +5,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 // 토큰체크
 check_write_token($bo_table);
+g5_require_board_access($board);
 
 $g5['title'] = '게시글 저장';
 
@@ -91,9 +92,14 @@ $_POST['mail'] = isset($_POST['mail']) ? clean_xss_tags($_POST['mail'], 1, 1) : 
 
 if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
-    if (!$wr['wr_id']) {
+    if (empty($wr['wr_id']) || !empty($wr['wr_is_comment'])) {
         alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다.");
     }
+}
+
+// 답글 권한도 스킨 및 저장 처리 전에 확인한다.
+if ($w == 'r') {
+    g5_require_board_reply($board, $wr);
 }
 
 // 수정 권한은 스킨 및 저장 처리 전에 검증한다.
@@ -702,14 +708,9 @@ sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{
 sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
-// 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 비밀번호를 묻지 않기 위함
+// 저장한 게시물만 인증한다. 답글 작성으로 원글 인증을 부여하지 않는다.
 if ($secret) {
-    if (!(isset($wr_num) && $wr_num)) {
-        $write = get_write($write_table, $wr_id, true);
-        $wr_num = $write['wr_num'];
-    }
-
-    set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
+    g5_grant_secret_auth($bo_table, get_write($write_table, $wr_id));
 }
 
 // 메일발송 사용 (수정글은 발송하지 않음)

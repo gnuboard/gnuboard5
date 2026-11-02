@@ -12,6 +12,7 @@ if (!$bo_table) {
 }
 
 check_device($board['bo_device']);
+g5_require_board_access($board);
 
 $notice_array = explode(',', trim($board['bo_notice']));
 
@@ -113,25 +114,7 @@ if ($w == '') {
     if (in_array((int)$wr_id, $notice_array))
         alert('공지에는 답변 할 수 없습니다.');
 
-    //----------
-    // 4.06.13 : 비밀글을 타인이 열람할 수 있는 오류 수정 (헐랭이, 플록님께서 알려주셨습니다.)
-    // 코멘트에는 원글의 답변이 불가하므로
-    if ($write['wr_is_comment'])
-        alert('정상적인 접근이 아닙니다.');
-
-    // 비밀글인지를 검사
-    if (strstr($write['wr_option'], 'secret')) {
-        if ($write['mb_id']) {
-            // 회원의 경우는 해당 글쓴 회원 및 관리자
-            if (!($write['mb_id'] === $member['mb_id'] || $is_admin))
-                alert('비밀글에는 자신 또는 관리자만 답변이 가능합니다.');
-        } else {
-            // 비회원의 경우는 비밀글에 답변이 불가함
-            if (!$is_admin)
-                alert('비회원의 비밀글에는 답변이 불가합니다.');
-        }
-    }
-    //----------
+    g5_require_board_reply($board, $write);
 
     // 게시글 배열 참조
     $reply_array = &$write;
@@ -167,43 +150,6 @@ if ($w == '') {
     $title_msg = '글답변';
 
     $write['wr_subject'] = 'Re: '.$write['wr_subject'];
-}
-
-// 그룹접근 가능
-if (!empty($group['gr_use_access'])) {
-    if ($is_guest) {
-        alert("접근 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
-    }
-
-    if ($is_admin == 'super' || $group['gr_admin'] === $member['mb_id'] || $board['bo_admin'] === $member['mb_id']) {
-        ; // 통과
-    } else {
-        // 그룹접근
-        $sql = " select gr_id from {$g5['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
-        $row = sql_fetch($sql);
-        if (!$row['gr_id'])
-            alert('접근 권한이 없으므로 글쓰기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.');
-    }
-}
-
-// 본인확인을 사용한다면
-if ($board['bo_use_cert'] != '' && $config['cf_cert_use'] && !$is_admin) {
-    // 인증된 회원만 가능
-    if ($is_guest) {
-        alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
-    }
-
-    if (strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
-        goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
-    }
-
-    if ($board['bo_use_cert'] == 'cert' && !$member['mb_certify']) {            
-        alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원정보 수정에서 본인확인을 해주시기 바랍니다.', G5_URL);
-    }
-
-    if ($board['bo_use_cert'] == 'adult' && !$member['mb_adult']) {
-        alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G5_URL);
-    }
 }
 
 // 글자수 제한 설정값

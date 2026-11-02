@@ -1,50 +1,31 @@
 <?php
 include_once('./_common.php');
 
-if ($w == 's') {
-    $qstr = 'bo_table='.$bo_table.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;sop='.$sop.'&amp;wr_id='.$wr_id.'&amp;page='.$page;
+g5_require_board_access($board, true);
+if ($w !== 's' && $w !== 'sc') alert('w 값이 제대로 넘어오지 않았습니다.');
+$wr = get_write($write_table, $wr_id);
+if (empty($wr['wr_id']) || !g5_is_secret_write($wr) ||
+    ($w === 's' && !empty($wr['wr_is_comment'])) ||
+    ($w === 'sc' && empty($wr['wr_is_comment']))) {
+    alert('비밀글 인증 대상이 올바르지 않습니다.');
+}
+if ($w === 'sc') {
+    g5_require_board_read($board, get_write($write_table, $wr['wr_parent']));
+}
 
-    $wr = get_write($write_table, $wr_id);
+// 회원 비밀번호 대체 검증은 원본 게시물의 인증 서명을 변경하지 않는다.
+$password_hash = $wr['wr_password'];
+if (!$password_hash && $wr['mb_id']) {
+    $mb = get_member($wr['mb_id']);
+    $password_hash = $mb['mb_password'] ?? '';
+}
+if (!$password_hash || !check_password($wr_password, $password_hash)) {
+    $password_write = $wr;
+    $password_write['wr_password'] = $password_hash;
+    run_event('password_is_wrong', 'bbs', $password_write, $qstr);
+    alert('비밀번호가 틀립니다.');
+}
 
-    if( !$wr['wr_password'] && $wr['mb_id'] ){
-        if ( $mb = get_member($wr['mb_id']) ){
-            $wr['wr_password'] = $mb['mb_password'];
-        }
-    }
-
-    if (!check_password($wr_password, $wr['wr_password'])) {
-        run_event('password_is_wrong', 'bbs', $wr, $qstr);
-        alert('비밀번호가 틀립니다.');
-    }
-
-    // 세션에 아래 정보를 저장. 하위번호는 비밀번호없이 보아야 하기 때문임.
-    //$ss_name = 'ss_secret.'_'.$bo_table.'_'.$wr_id';
-    $ss_name = 'ss_secret_'.$bo_table.'_'.$wr['wr_num'];
-    //set_session("ss_secret", "$bo_table|$wr[wr_num]");
-    set_session($ss_name, TRUE);
-
-} else if ($w == 'sc') {
-    $qstr = 'bo_table='.$bo_table.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;sop='.$sop.'&amp;wr_id='.$wr_id.'&amp;page='.$page;
-
-    $wr = get_write($write_table, $wr_id);
-
-    if( !$wr['wr_password'] && $wr['mb_id'] ){
-        if ( $mb = get_member($wr['mb_id']) ){
-            $wr['wr_password'] = $mb['mb_password'];
-        }
-    }
-
-    if (!check_password($wr_password, $wr['wr_password'])){
-        run_event('password_is_wrong', 'bbs', $wr, $qstr);
-        alert('비밀번호가 틀립니다.');
-    }
-
-    // 세션에 아래 정보를 저장. 하위번호는 비밀번호없이 보아야 하기 때문임.
-    $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$wr['wr_id'];
-    //set_session("ss_secret", "$bo_table|$wr[wr_num]");
-    set_session($ss_name, TRUE);
-
-} else
-    alert('w 값이 제대로 넘어오지 않았습니다.');
-
-goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?'.$qstr));
+g5_grant_secret_auth($bo_table, $wr);
+$return_id = $w === 'sc' ? (int)$wr['wr_parent'] : (int)$wr['wr_id'];
+goto_url(get_pretty_url($bo_table, $return_id));

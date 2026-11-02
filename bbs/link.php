@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+g5_require_board_read($board, $write);
 
 $html_title = '링크';
 

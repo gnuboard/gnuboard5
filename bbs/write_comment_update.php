@@ -3,6 +3,9 @@ define('G5_CAPTCHA', true);
 include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+$comment_parent = get_write($write_table, $wr_id);
+g5_require_board_read($board, $comment_parent);
+
 // 토큰체크
 $comment_token = trim(get_session('ss_comment_token'));
 set_session('ss_comment_token', '');
@@ -104,7 +107,7 @@ if ($w == 'c') // 댓글 입력
     if ($comment_id)
     {
         $reply_array = get_write($write_table, $comment_id, true);
-        if (!$reply_array['wr_id'])
+        if (empty($reply_array['wr_id']) || empty($reply_array['wr_is_comment']))
             alert('답변할 댓글이 없습니다.\\n\\n답변하는 동안 댓글이 삭제되었을 수 있습니다.');
 
         if($wr['wr_parent'] != $reply_array['wr_parent'])
@@ -274,9 +277,12 @@ if ($w == 'c') // 댓글 입력
 }
 else if ($w == 'cu') // 댓글 수정
 {
-    $sql = " select mb_id, wr_password, wr_comment, wr_comment_reply from $write_table
+    $sql = " select mb_id, wr_password, wr_comment, wr_comment_reply, wr_is_comment, wr_parent from $write_table
                 where wr_id = '$comment_id' ";
     $comment = $reply_array = sql_fetch($sql);
+    if (empty($comment['wr_is_comment']) || (int)$comment['wr_parent'] !== (int)$wr_id) {
+        alert('댓글 대상이 올바르지 않습니다.');
+    }
     $tmp_comment = $reply_array['wr_comment'];
 
     $len = strlen($reply_array['wr_comment_reply']);
