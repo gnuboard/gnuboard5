@@ -170,6 +170,7 @@ function g5_migration_parse_file($file)
             if ($statement === '') {
                 continue;
             }
+            $shop_statement = preg_match('/\{\{g5_shop_[a-z0-9_]+_table\}\}/i', $statement) === 1;
             if (!$foreach_write_table && !$foreach_content_seo) {
                 $statement = g5_migration_replace_placeholders($statement);
             }
@@ -177,7 +178,7 @@ function g5_migration_parse_file($file)
             if ((strpos($statement, '{{') !== false || strpos($statement, '}}') !== false) && !$allowed_dynamic_placeholder) {
                 return array('error' => '지원하지 않는 테이블 자리표시자가 있습니다: ' . basename($file));
             }
-            $migration['statements'][] = array('sql' => $statement, 'conditions' => $conditions, 'foreach_write_column' => $foreach_write_column, 'foreach_write_table' => $foreach_write_table, 'foreach_content_seo' => $foreach_content_seo);
+            $migration['statements'][] = array('sql' => $statement, 'shop_statement' => $shop_statement, 'conditions' => $conditions, 'foreach_write_column' => $foreach_write_column, 'foreach_write_table' => $foreach_write_table, 'foreach_content_seo' => $foreach_content_seo);
             $conditions = array();
             $foreach_write_column = '';
             $foreach_write_table = false;
@@ -378,10 +379,106 @@ function g5_migration_inspect_object($object, $table, $name, &$cache)
     return $cache[$key] === null ? null : isset($cache[$key][$object === 'table' ? $table : $name]);
 }
 
+// 조회와 실행에 같은 판정을 사용한다. null은 검사 실패이며 건너뛰기가 아니다.
+function g5_migration_statement_ready($statement, &$cache, &$error)
+{
+    $error = '';
+    $shop = !empty($statement['shop_statement']);
+    if ($shop && (!defined('G5_USE_SHOP') || !G5_USE_SHOP)) {
+        return false;
+    }
+    $required_shop_tables = array();
+    foreach (array('default', 'cart', 'item', 'order') as $name) {
+        $required_shop_tables[] = g5_migration_replace_placeholders('{{g5_shop_' . $name . '_table}}');
+    }
+    foreach ($statement['conditions'] as $condition) {
+        $exists = g5_migration_inspect_object($condition['object'], $condition['table'], $condition['name'], $cache);
+        if ($exists === null) {
+            $error = $condition['table'] . ': DB 구조를 확인하지 못했습니다. DB 조회 권한을 확인해 주세요.';
+            return null;
+        }
+        if ($shop && $condition['object'] === 'table' && $condition['state'] === 'exists' && !$exists
+            && in_array($condition['table'], $required_shop_tables, true)) {
+            $error = $condition['table'] . ': 쇼핑몰 사용 설정이 있지만 필요한 테이블이 없습니다. DB 설정과 쇼핑몰 테이블 구조를 확인해 주세요.';
+            return null;
+        }
+        if (($condition['state'] === 'exists') !== $exists) {
+            return false;
+        }
+    }
+    // 과거 간편결제 VARCHAR 확장 누락을 검사하되 사용자화한 넓은 컬럼은 축소하지 않는다.
+    if ($shop && preg_match('/^ALTER\s+TABLE\s+`([^`]+)`\s+MODIFY\s+`de_easy_pay_services`\s+varchar\(1024\)\s+NOT\s+NULL\s+DEFAULT\s+\'\'\s*$/i', $statement['sql'], $match)) {
+        $columns = sql_query('SHOW COLUMNS FROM `' . str_replace('`', '``', $match[1]) . '`', false);
+        if (!$columns) {
+            $error = $match[1] . ': DB 구조를 확인하지 못했습니다. DB 조회 권한을 확인해 주세요.';
+            return null;
+        }
+        while ($column = sql_fetch_array($columns)) {
+            if ($column['Field'] !== 'de_easy_pay_services') continue;
+            // VARCHAR 이외의 사용자 정의 형식은 자동 변환하지 않는다.
+            return preg_match('/^varchar\((\d+)\)$/i', $column['Type'], $length) && (int) $length[1] < 1024;
+        }
+        $error = $match[1] . ': 쇼핑몰 테이블 구조가 불완전합니다. 필요한 컬럼이 없습니다: de_easy_pay_services';
+        return null;
+    }
+    // 기존 SQL 파일과 체크섬은 유지하면서 ADD ... AFTER의 선행 컬럼을 검사한다.
+    if ($shop && preg_match('/^ALTER\s+TABLE\s+`([^`]+)`/i', $statement['sql'], $table_match)
+        && preg_match_all('/\bAFTER\s+`([^`]+)`/i', $statement['sql'], $column_matches)) {
+        foreach ($column_matches[1] as $column) {
+            $exists = g5_migration_inspect_object('column', $table_match[1], $column, $cache);
+            if ($exists !== true) {
+                $error = $table_match[1] . ': ' . ($exists === null ? 'DB 구조를 확인하지 못했습니다.' : '쇼핑몰 테이블 구조가 불완전합니다. 필요한 컬럼이 없습니다: ' . $column)
+                    . ' DB 설정과 테이블 구조·조회 권한을 확인해 주세요.';
+                return null;
+            }
+        }
+    }
+    return true;
+}
+
+function g5_migration_shop_enabled()
+{
+    return defined('G5_USE_SHOP') && G5_USE_SHOP;
+}
+
+function g5_migration_has_shop($migration)
+{
+    foreach ($migration['statements'] as $statement) {
+        if (!empty($statement['shop_statement'])) return true;
+    }
+    return false;
+}
+
+function g5_migration_status_complete($status)
+{
+    return $status === 'success' || (!g5_migration_shop_enabled() && in_array($status, array('shop_pending', 'shop_failed'), true));
+}
+
+// 과거 success는 미사용 건너뛰기와 실제 적용을 구분하지 못했다.
+// 과거 이력은 임의로 재분류하지 않고, 사용 중 누락 스키마가 확인된 쇼핑몰 부분만 재검사한다.
+function g5_migration_effective_status($migration, $record)
+{
+    if (!$record) return 'pending';
+    if ($record['status'] !== 'success' || $record['checksum'] !== $migration['checksum'] || !g5_migration_has_shop($migration)) return $record['status'];
+    if (!g5_migration_shop_enabled()) return 'success';
+    foreach ($migration['statements'] as $statement) {
+        if (empty($statement['shop_statement']) || !preg_match('/^(ALTER|CREATE)\s/i', $statement['sql'])) continue;
+        $has_missing_condition = false;
+        foreach ($statement['conditions'] as $condition) {
+            if ($condition['state'] === 'missing') $has_missing_condition = true;
+        }
+        if (!$has_missing_condition && $migration['id'] !== '20260909_001_pg_easypay_services') continue;
+        $cache = array();
+        if (g5_migration_statement_ready($statement, $cache, $error) !== false) return 'shop_pending';
+    }
+    return 'success';
+}
+
 // SQL을 실행하지 않고, 실행기의 모든 문이 건너뛰어질 때만 true를 반환한다.
-function g5_migration_needs_no_execution($migration, &$cache)
+function g5_migration_needs_no_execution($migration, &$cache, &$error = null)
 {
     global $g5;
+    $error = '';
 
     if (isset($migration['error'])) {
         return false;
@@ -391,18 +488,11 @@ function g5_migration_needs_no_execution($migration, &$cache)
         return true;
     }
     foreach ($migration['statements'] as $statement) {
-        $skip = false;
-        foreach ($statement['conditions'] as $condition) {
-            $exists = g5_migration_inspect_object($condition['object'], $condition['table'], $condition['name'], $cache);
-            if ($exists === null) {
-                return false;
-            }
-            if (($condition['state'] === 'exists') !== $exists) {
-                $skip = true;
-                break;
-            }
+        $ready = g5_migration_statement_ready($statement, $cache, $error);
+        if ($ready === null) {
+            return false;
         }
-        if ($skip) {
+        if (!$ready) {
             continue;
         }
         if (!$statement['foreach_write_table']) {
@@ -440,12 +530,13 @@ function g5_migration_status()
         }
 
         $record = isset($records[$migration['id']]) ? $records[$migration['id']] : null;
-        $migration['status'] = $record ? $record['status'] : 'pending';
-        if (!$record && g5_migration_needs_no_execution($migration, $inspection_cache)) {
+        $migration['status'] = g5_migration_effective_status($migration, $record);
+        $inspection_error = '';
+        if (!$record && g5_migration_needs_no_execution($migration, $inspection_cache, $inspection_error)) {
             $migration['status'] = 'unrecorded';
         }
-        $migration['checksum_changed'] = $record && $record['status'] === 'success' && $record['checksum'] !== $migration['checksum'];
-        $migration['error_message'] = $record ? $record['error_message'] : '';
+        $migration['checksum_changed'] = $record && in_array($record['status'], array('success', 'shop_pending', 'shop_failed'), true) && $record['checksum'] !== $migration['checksum'];
+        $migration['error_message'] = $record ? $record['error_message'] : $inspection_error;
         $migration['applied_at'] = $record ? $record['applied_at'] : '';
         $status[] = $migration;
     }
@@ -463,6 +554,8 @@ function g5_migration_status_label($status, $checksum_changed = false)
         'pending' => '대기',
         'unrecorded' => '실행 불필요 (미기록)',
         'success' => '성공',
+        'shop_pending' => '쇼핑몰 적용 보류 (공통 완료)',
+        'shop_failed' => '쇼핑몰 적용 실패 (공통 완료)',
         'failed' => '실패'
     );
 
@@ -489,7 +582,7 @@ function g5_migration_validate_target_dependencies($migrations, $records, $targe
     for ($index = 0; $index < $target_index; $index++) {
         $migration = $migrations[$index];
         $record = isset($records[$migration['id']]) ? $records[$migration['id']] : null;
-        if (!$record || $record['status'] !== 'success') {
+        if (!$record || !g5_migration_status_complete(g5_migration_effective_status($migration, $record))) {
             return $target_id . ' 실행 전에 선행 마이그레이션을 먼저 실행해야 합니다: ' . $migration['id'];
         }
         if ($record['checksum'] !== $migration['checksum']) {
@@ -612,22 +705,32 @@ function g5_migration_run($target_id = '', $record_existing = false)
         $target_found = true;
 
         $record = isset($records[$migration['id']]) ? $records[$migration['id']] : null;
-        if ($record && $record['status'] === 'success') {
+        $effective_status = g5_migration_effective_status($migration, $record);
+        $shop_only = in_array($effective_status, array('shop_pending', 'shop_failed'), true);
+        if ($record && in_array($record['status'], array('success', 'shop_pending', 'shop_failed'), true)) {
             if ($record['checksum'] !== $migration['checksum']) {
                 $result['errors'][] = $migration['id'] . ' 파일이 적용 후 변경되었습니다.';
                 break;
             }
-            continue;
+            if ($effective_status === 'success') continue;
+            if ($shop_only && !g5_migration_shop_enabled()) {
+                continue;
+            }
         }
 
         $started_at = get_microtime();
         if ($record_existing) {
             $inspection_cache = array();
             // 앞선 변경이 후속 실행 조건을 바꿀 수 있으므로 연속된 항목만 등록한다.
-            if ($record || !g5_migration_needs_no_execution($migration, $inspection_cache)) {
+            $inspection_error = '';
+            if ($record || !g5_migration_needs_no_execution($migration, $inspection_cache, $inspection_error)) {
+                if ($inspection_error !== '') {
+                    $result['errors'][] = $migration['id'] . ': ' . $inspection_error;
+                }
                 break;
             }
-            if (!g5_migration_save_record($migration, 'success', '', 0)) {
+            $saved_status = !g5_migration_shop_enabled() && g5_migration_has_shop($migration) ? 'shop_pending' : 'success';
+            if (!g5_migration_save_record($migration, $saved_status, '', 0)) {
                 $result['errors'][] = $migration['id'] . ' 기존 상태 확인 이력을 저장하지 못했습니다: ' . sql_error_info();
                 break;
             }
@@ -640,7 +743,14 @@ function g5_migration_run($target_id = '', $record_existing = false)
 
         if (!$skip) {
             foreach ($migration['statements'] as $statement) {
-                if (!g5_migration_should_run_statement($statement['conditions'])) {
+                if ($shop_only && empty($statement['shop_statement'])) continue;
+                // 직전 DDL로 실행 조건이 바뀔 수 있으므로 문마다 다시 검사한다.
+                $statement_cache = array();
+                $ready = g5_migration_statement_ready($statement, $statement_cache, $migration_error);
+                if ($ready === null) {
+                    break;
+                }
+                if (!$ready) {
                     continue;
                 }
                 $statement_result = g5_migration_execute_statement($statement);
@@ -654,12 +764,13 @@ function g5_migration_run($target_id = '', $record_existing = false)
 
         $execution_ms = (int) round((get_microtime() - $started_at) * 1000);
         if ($migration_error !== '') {
-            g5_migration_save_record($migration, 'failed', $migration_error, $execution_ms);
+            g5_migration_save_record($migration, $shop_only ? 'shop_failed' : 'failed', $migration_error, $execution_ms);
             $result['errors'][] = $migration['id'] . ': ' . $migration_error;
             break;
         }
 
-        if (!g5_migration_save_record($migration, 'success', '', $execution_ms)) {
+        $saved_status = !g5_migration_shop_enabled() && g5_migration_has_shop($migration) ? 'shop_pending' : 'success';
+        if (!g5_migration_save_record($migration, $saved_status, '', $execution_ms)) {
             $result['errors'][] = $migration['id'] . ' 실행 이력을 저장하지 못했습니다: ' . sql_error_info();
             break;
         }
