@@ -20,18 +20,19 @@ function g54_return_invalid_password($bool, $type, $wr){
 function g54_check_bbs_password($type, $wr, $qstr=''){
     if($type === 'bbs' && (isset($wr['wr_password']) && $wr['wr_password']) && isset($_POST['wr_password'])) {
 
-        global $bo_table, $w;
+        global $bo_table, $w, $g5;
 
         if(G5_STRING_ENCRYPT_FUNCTION === 'create_hash' && (strlen($wr['wr_password']) === G5_MYSQL_PASSWORD_LENGTH || strlen($wr['wr_password']) === 16)) {
             if( sql_password($_POST['wr_password']) === $wr['wr_password'] ){
-                if ($w == 's') {
-                    $ss_name = 'ss_secret_'.$bo_table.'_'.$wr['wr_num'];
-                    set_session($ss_name, TRUE);
-                } else if ($w == 'sc'){
-                    $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$wr['wr_id'];
-                    set_session($ss_name, TRUE);
+                // password_check.php에서 대상 유형과 부모 접근권한을 확인한 뒤 호출한다.
+                // 구 비밀번호 형식도 게시물별 인증만 부여한다.
+                if (($w === 's' && empty($wr['wr_is_comment'])) ||
+                    ($w === 'sc' && !empty($wr['wr_is_comment']))) {
+                    $auth_write = get_write($g5['write_prefix'].$bo_table, $wr['wr_id']);
+                    g5_grant_secret_auth($bo_table, $auth_write);
+                    $return_id = $w === 'sc' ? (int)$wr['wr_parent'] : (int)$wr['wr_id'];
+                    goto_url(get_pretty_url($bo_table, $return_id));
                 }
-                goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?'.$qstr));
             }
         }
     }
