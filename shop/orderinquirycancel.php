@@ -56,7 +56,7 @@ if (!empty($od['od_tno']) && $od['od_pg'] === 'inicis') {
 }
 
 // PG 결제 취소
-if($od['od_tno']) {
+if((string)$od['od_tno'] !== '') {
     switch($od['od_pg']) {
         case 'lg':
             require_once('./settle_lg.inc.php');

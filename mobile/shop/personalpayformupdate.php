@@ -25,7 +25,7 @@ if($default['de_pg_service'] == 'kcp' && ($post_tran_cd === '' || $post_enc_info
 if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-if($default['de_pg_service'] == 'toss' && ! $paymentKey)
+if($default['de_pg_service'] == 'toss' && $paymentKey === '')
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
 if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
@@ -227,7 +227,7 @@ $sql = " update {$g5['g5_shop_personalpay_table']}
             set pp_pg               = '$pp_pg',
                 pp_kcp_site_cd    = '$pp_kcp_site_cd',
                 pp_lg_mid         = '$pp_lg_mid',
-                pp_tno              = '$pp_tno',
+                pp_tno              = '".sql_real_escape_string($pp_tno)."',
                 pp_app_no           = '$app_no',
                 pp_receipt_price    = '$pp_receipt_price',
                 pp_settle_case      = '$pp_settle_case',
@@ -281,7 +281,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 set od_receipt_price    = od_receipt_price + '$pp_receipt_price',
                     od_receipt_time     = '$pp_receipt_time',
                     od_pg               = '$pp_pg',
-                    od_tno              = '$pp_tno',
+                    od_tno              = '".sql_real_escape_string($pp_tno)."',
                     od_app_no           = '$app_no',
                     od_escrow           = '$od_escrow',
                     od_settle_case      = '$pp_settle_case',

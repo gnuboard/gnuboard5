@@ -116,7 +116,7 @@ function shop_order_state_write($id, $fields)
     $set = array();
     foreach ($fields as $key=>$value) {
         if (!in_array($key, $allowed, true)) shop_order_access_fail();
-        $set[] = "$key='".sql_escape_string((string)$value)."'";
+        $set[] = "$key='".sql_real_escape_string((string)$value)."'";
     }
     $set[] = 'updated_at='.G5_SERVER_TIME;
     if (!sql_query("update ".shop_order_state_table()." set ".implode(',', $set)." where od_id='$id'", false)) shop_order_access_fail();

@@ -119,7 +119,7 @@ if ($xpay->TX()) {
 
     echo "결과코드 : " . $xpay->Response("LGD_RESPCODE",0) . "<br>";
     echo "결과메세지 : " . $xpay->Response("LGD_RESPMSG",0) . "<br>";
-    echo "거래번호 : " . $xpay->Response("LGD_TID",0) . "<p>";
+    echo "거래번호 : " . htmlspecialchars($xpay->Response("LGD_TID",0), ENT_QUOTES, 'UTF-8') . "<p>";
 
     $keys = $xpay->Response_Names();
     foreach($keys as $name) {
@@ -171,7 +171,7 @@ if ($xpay->TX()) {
 
                 echo "결과코드 : " . $xpay->Response("LGD_RESPCODE",0) . "<br>";
                 echo "결과메세지 : " . $xpay->Response("LGD_RESPMSG",0) . "<br>";
-                echo "거래번호 : " . $xpay->Response("LGD_TID",0) . "<p>";
+                echo "거래번호 : " . htmlspecialchars($xpay->Response("LGD_TID",0), ENT_QUOTES, 'UTF-8') . "<p>";
                 */
             } else {
                 $msg = '현금영수증 취소 요청처리가 정상적으로 완료되지 않았습니다.';
@@ -240,7 +240,7 @@ switch($LGD_PAYTYPE) {
         </tr>
         <tr>
             <th scope="row">현금영수증 거래번호</th>
-            <td><?php echo $xpay->Response("LGD_TID",0); ?></td>
+            <td><?php echo htmlspecialchars($xpay->Response("LGD_TID",0), ENT_QUOTES, 'UTF-8'); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 승인번호</th>

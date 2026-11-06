@@ -377,7 +377,7 @@ if (in_array($ct_status, $status_cancel)) {
             $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
             $od = sql_fetch($sql);
 
-            if ($od['od_tno'] && is_cancel_shop_pg_order($od)) {
+            if ((string)$od['od_tno'] !== '' && is_cancel_shop_pg_order($od)) {
                 switch($od['od_pg']) {
                     case 'lg':
                         include_once(G5_SHOP_PATH.'/settle_lg.inc.php');

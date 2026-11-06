@@ -58,7 +58,7 @@ if($od_settle_case != '무통장') {
     if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-    if($default['de_pg_service'] == 'toss' && ! $paymentKey)
+    if($default['de_pg_service'] == 'toss' && $paymentKey === '')
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
     if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
@@ -689,7 +689,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_pg             = '$od_pg',
                 od_kcp_site_cd    = '$od_kcp_site_cd',
                 od_lg_mid         = '$od_lg_mid',
-                od_tno            = '$od_tno',
+                od_tno            = '".sql_real_escape_string($od_tno)."',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',
                 od_tax_flag       = '$od_tax_flag',

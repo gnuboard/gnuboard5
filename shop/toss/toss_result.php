@@ -5,9 +5,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 require_once(G5_SHOP_PATH.'/toss/toss.inc.php');
 
 $orderId = isset($_REQUEST['orderId']) ? $_REQUEST['orderId'] : '';
-$paymentKey = isset($_POST['paymentKey']) ? $_POST['paymentKey'] : '';
 
 include_once(G5_LIB_PATH.'/shop_order_access.lib.php');
+$paymentKey = shop_toss_request_payment_key(true);
 $data = shop_order_access_payment($orderId, $paymentKey);
 $is_personal = !empty($data['pp_id']);
 if ($is_personal !== !empty($_POST['pp_id']) ||

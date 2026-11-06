@@ -68,9 +68,15 @@ function shop_order_access_load($order_id, $pg)
     return shop_order_state_load($order_id, $pg);
 }
 
+// common.php가 SQL용으로 이스케이프한 값 대신 PG가 보낸 HTTP 원문을 사용한다.
+function shop_toss_request_payment_key($post_only = false)
+{
+    return filter_input($post_only || isset($_POST['paymentKey']) ? INPUT_POST : INPUT_GET, 'paymentKey', FILTER_UNSAFE_RAW);
+}
+
 function shop_order_access_payment($order_id, $payment_key, $amount = null)
 {
-    if (!is_string($payment_key) || !preg_match('/\A[A-Za-z0-9_-]{1,200}\z/D', $payment_key)) shop_order_access_fail();
+    if (!shop_pg_valid_identifier($payment_key, 200)) shop_order_access_fail();
     if ($amount !== null && (!is_string($amount) || !preg_match('/\A[0-9]{1,12}\z/D', $amount))) shop_order_access_fail();
     $data = shop_order_access_load($order_id, 'toss');
     if ($amount !== null && (!is_string($amount) || !preg_match('/\A[0-9]{1,12}\z/D', $amount) ||

@@ -1,4 +1,5 @@
 """실제 PHP/SQL/HTTP와 결제 전송 대역을 이용한다. G5_ORDER_TEST_CONFIG는 로컬 설치 설정 JSON."""
+from html import unescape
 from pathlib import Path
 import concurrent.futures, hashlib, json, os, secrets, subprocess, time, urllib.request, urllib.parse, re
 from http.cookiejar import CookieJar
@@ -49,7 +50,16 @@ def main():
     for mobile in [False,True]:
         oid,sid,token,cart=make()
         label='mobile' if mobile else 'pc'
-        b=return_page(oid,token=token,mobile=mobile)
+        opaque = 'Az./+#%?&<>"\'\\'.ljust(200, 'k')
+        assert len(opaque) == 200
+        for invalid in [opaque+'x', 'has space', 'bad\nkey', '']:
+            check(label+' invalid paymentKey denied','STATE_FAKE_BUYER' not in return_page(oid,token=token,mobile=mobile,paymentKey=invalid))
+        b=return_page(oid,token=token,mobile=mobile,paymentKey=opaque)
+        field=re.search(r'name="paymentKey" value="([^"]*)"',b)
+        check(label+' opaque paymentKey HTML round trip', bool(field) and unescape(field.group(1)) == opaque)
+        check(label+' opaque paymentKey DB round trip', sql("SELECT payment_key FROM g5_shop_order_access WHERE od_id='%s'"%oid)[0]['payment_key']==opaque)
+        check(label+' DB distinguishes key case', not sql("SELECT od_id FROM g5_shop_order_access WHERE od_id='%s' AND payment_key=UNHEX('%s')"%(oid,opaque.swapcase().encode().hex())))
+        check(label+' changed case denied','STATE_FAKE_BUYER' not in return_page(oid,token=token,mobile=mobile,paymentKey=opaque.swapcase()))
         check(label+' cookieless token return','STATE_FAKE_BUYER' in b and 'name="g5_order_state"' in b and 'StateFakePassword!' not in b)
         check(label+' no token denied','STATE_FAKE_BUYER' not in return_page(oid,mobile=mobile))
         bad=token[:-1]+('a' if token[-1]!='a' else 'b')

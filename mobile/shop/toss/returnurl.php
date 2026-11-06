@@ -7,7 +7,7 @@ header('Referrer-Policy: no-referrer');
 
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] === 'fail') shop_order_state_abort_pending();
 $orderId = isset($_REQUEST['orderId']) ? $_REQUEST['orderId'] : '';
-$paymentKey = isset($_REQUEST['paymentKey']) ? $_REQUEST['paymentKey'] : '';
+$paymentKey = shop_toss_request_payment_key();
 $amount = isset($_REQUEST['amount']) ? $_REQUEST['amount'] : '';
 $data = shop_order_access_payment($orderId, $paymentKey, $amount);
 
@@ -23,11 +23,12 @@ if(isset($data['pp_id']) && $data['pp_id']) {
 ?>
 
 <?php
-$exclude = array();
+$exclude = array('paymentKey');
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
 echo make_order_field($data, $exclude, true);
+echo '<input type="hidden" name="paymentKey" value="'.htmlspecialchars($paymentKey, ENT_QUOTES, 'UTF-8').'">'.PHP_EOL;
 
 echo '</form>'.PHP_EOL;
 ?>
