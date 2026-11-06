@@ -145,9 +145,9 @@ if($pp['pp_pg'] == 'lg') {
                                 $LGD_MERTKEY  = $config['cf_lg_mert_key'];
                                 $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
 
-                                $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                                $hp_receipt_script = shop_lg_receipt_onclick($LGD_MID, $LGD_TID, $LGD_HASHDATA);
                             } else if($pp['pp_pg'] == 'toss') {
-	                            $hp_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/phone?transactionId='.$pp['pp_tno'].'&ref=PX\',\'receipt\',\'width=430,height=700\');';
+	                            $hp_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/phone?transactionId='.rawurlencode($pp['pp_tno']).'&ref=PX\',\'receipt\',\'width=430,height=700\');';
                             } else if($pp['pp_pg'] == 'inicis') {
                                 $hp_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid='.$pp['pp_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                             } else if($pp['pp_pg'] == 'nicepay') {
@@ -168,9 +168,9 @@ if($pp['pp_pg'] == 'lg') {
                                 $LGD_MERTKEY  = $config['cf_lg_mert_key'];
                                 $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
 
-                                $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                                $card_receipt_script = shop_lg_receipt_onclick($LGD_MID, $LGD_TID, $LGD_HASHDATA);
                             } else if($pp['pp_pg'] == 'toss') {
-	                            $card_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/redirection?transactionId='.$pp['pp_tno'].'&ref=PX\',\'receipt\',\'width=430,height=700\');';
+	                            $card_receipt_script = 'window.open(\'https://dashboard.tosspayments.com/receipt/redirection?transactionId='.rawurlencode($pp['pp_tno']).'&ref=PX\',\'receipt\',\'width=430,height=700\');';
                             } else if($pp['pp_pg'] == 'nicepay') {
                                 $card_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&TID='.$pp['pp_tno'].'&noMethod=1\',\'receipt\',\'width=430,height=700\');';
                             } else if($pp['pp_pg'] == 'inicis') {
@@ -303,7 +303,7 @@ if($pp['pp_pg'] == 'lg') {
         <tbody>
         <tr>
             <th scope="col"><label for="e_trade_no">KCP 거래번호</label></th>
-            <td><input type="text" name="e_trade_no" value="<?php echo $pp['pp_tno']; ?>"></td>
+            <td><input type="text" name="e_trade_no" value="<?php echo htmlspecialchars($pp['pp_tno'], ENT_QUOTES, 'UTF-8'); ?>"></td>
         </tr>
         <tr>
             <th scope="col"><label for="deposit_no">입금계좌</label></th>

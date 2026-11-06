@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+require_once(G5_LIB_PATH.'/shop_order_compat.lib.php');
 require_once(G5_SHOP_PATH.'/toss/toss.inc.php'); // 토스페이먼츠 v2 공통 설정
 
 /*************************************************************************
@@ -123,7 +124,11 @@ if (!$orderResult || $order_info['secret'] !== $TOSS_SECRET) {
 }
 
 // 결제 정보
-$paymentKey     = isset($order_info["paymentKey"])                      ? clean_xss_tags($order_info["paymentKey"]) : ''; // 결제 키
+$paymentKey = isset($order_info['paymentKey']) ? $order_info['paymentKey'] : '';
+if (!shop_pg_valid_identifier($paymentKey, 200)) {
+    g5_toss_http_response_code(400);
+    exit;
+}
 $customerName   = isset($order_info["virtualAccount"]["customerName"])  ? clean_xss_tags($order_info["virtualAccount"]["customerName"]) : ''; // 주문자명 (가상계좌 발급 시 고객명)
 $depositorName  = isset($order_info["virtualAccount"]["depositorName"]) ? clean_xss_tags($order_info["virtualAccount"]["depositorName"]) : ''; // 입금자명 (실제 입금자 입력 이름)
 $totalAmount    = isset($order_info["totalAmount"])                     ? (int) $order_info["totalAmount"] : 0; // 입금 금액 (결제 총액)

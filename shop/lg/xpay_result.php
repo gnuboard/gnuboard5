@@ -58,7 +58,7 @@ if ($xpay->TX()) {
     echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
     echo "TX Response_msg = " . $xpay->Response_Msg() . "<p>";
 
-    echo "거래번호 : " . $xpay->Response("LGD_TID",0) . "<br>";
+    echo "거래번호 : " . htmlspecialchars($xpay->Response("LGD_TID",0), ENT_QUOTES, 'UTF-8') . "<br>";
     echo "상점아이디 : " . $xpay->Response("LGD_MID",0) . "<br>";
     echo "상점주문번호 : " . $xpay->Response("LGD_OID",0) . "<br>";
     echo "결제금액 : " . $xpay->Response("LGD_AMOUNT",0) . "<br>";

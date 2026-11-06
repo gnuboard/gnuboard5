@@ -1709,6 +1709,14 @@ function get_coupon_id()
 }
 
 
+// 부분취소는 초과 수납액과 아직 PG에서 환불할 수 있는 금액 양쪽을 넘을 수 없다.
+function shop_order_partial_refund_limit($order)
+{
+    $overpaid = -(int)$order['od_misu'];
+    $balance = (int)$order['od_receipt_price'] - (int)$order['od_refund_price'];
+    return max(0, min($overpaid, $balance));
+}
+
 // 주문의 금액, 배송비 과세금액 등의 정보를 가져옴
 function get_order_info($od_id)
 {
@@ -2796,6 +2804,13 @@ function cart_item_clean()
 // 임시주문 데이터로 주문 필드 생성
 // 저장된 주문 데이터는 common.php에서 SQL 이스케이프된 값이다.
 // HTML로 출력할 때만 한 번 복원하고, 원본 데이터와 SQL 처리 경로는 유지한다.
+// onclick 속성 안에서 실행되는 XPay 영수증 호출: JS 인자와 HTML 속성을 각각 인코딩한다.
+function shop_lg_receipt_onclick($mid, $tid, $hash)
+{
+    $args = array_map('json_encode', array($mid, $tid, $hash));
+    return htmlspecialchars('showReceiptByTID('.implode(',', $args).');', ENT_QUOTES, 'UTF-8');
+}
+
 function make_order_field($data, $exclude, $strip_slashes = false)
 {
     $field = '';

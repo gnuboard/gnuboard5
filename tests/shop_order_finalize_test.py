@@ -10,6 +10,8 @@ class Form(HTMLParser):
         a=dict(attrs)
         if tag=='input' and 'name' in a:self.fields[a['name']]=a.get('value','')
 
+OPAQUE_KEY = "Qa+/#%'\"\\&<>?._"
+
 def run():
     T.sql('CREATE TABLE IF NOT EXISTS g5_order_test_pg (od_id varchar(20) PRIMARY KEY, approvals int, queries int, data mediumtext) ENGINE=InnoDB')
     T.sql("UPDATE g5_shop_default SET de_pg_service='toss',de_card_use=1,de_send_cost_list='0',de_send_cost_limit='0',de_sms_use1=0,de_sms_use2=0,de_sms_use3=0,de_sms_use4=0")
@@ -22,10 +24,10 @@ def run():
         T.call('session',sid=sid,data=dict(ss_order_id=oid,ss_cart_id=cart,ss_direct=''),member=is_member)
         fields=dict(od_name='FINAL_FAKE_BUYER',od_pwd='FinalGuestPassword!',od_email='fake@example.invalid',od_tel='000',od_hp='000',od_zip='00000',od_addr1='FAKE',od_addr2='',od_addr3='',od_addr_jibeon='R',od_b_name='FINAL_FAKE_BUYER',od_b_tel='000',od_b_hp='000',od_b_zip='00000',od_b_addr1='FAKE',od_b_addr2='',od_b_addr3='',od_b_addr_jibeon='R',od_memo='',od_deposit_name='',od_price='1000',od_send_cost='0',od_send_cost2='0',od_send_coupon='0',od_temp_point='0',amountValue='1000',good_mny='1000',od_settle_case='신용카드',orderId=oid)
         body,h=T.http('/shop/ajax.orderdatasave.php',sid,fields);token=h['X-G5-Order-State']
-        if pg=='toss':body=T.return_page(oid,token=token,mobile=mobile)
+        if pg=='toss':body=T.return_page(oid,token=token,mobile=mobile,paymentKey=OPAQUE_KEY)
         else:body,_=T.http('/mobile/shop/kcp/order_approval_form.php?'+T.urllib.parse.urlencode(dict(g5_order_state=token)),data=dict(ordr_idxx=oid,enc_data='fixture',enc_info='fixture',tran_cd='fixture',req_tx='pay',res_cd='0000',good_mny='1000',use_pay_method='100000000000'))
         parser=Form();parser.feed(body)
-        expected_tno='test_key' if pg=='toss' else 'KCPTEST'+oid
+        expected_tno=OPAQUE_KEY if pg=='toss' else 'KCPTEST'+oid
         T.check(('mobile' if mobile else 'pc')+' restored order has no plain password','od_pwd' not in parser.fields and parser.fields.get('g5_order_state')==token)
         response,headers=T.http(('/mobile' if mobile else '')+'/shop/orderformupdate.php',data=parser.fields)
         order=T.sql("SELECT od_id,mb_id,od_tno,od_pwd,od_receipt_price,od_status FROM g5_shop_order WHERE od_id='%s'"%oid)
@@ -51,11 +53,11 @@ def run():
         T.sql("INSERT INTO g5_shop_personalpay SET pp_id='%s',pp_use=1,pp_price=1000,pp_time='%s',pp_content='',pp_shop_memo='',pp_cash_info=''"%(oid,dt))
         T.call('session',sid=sid,data=dict(ss_personalpay_id=oid,ss_personalpay_hash=hashlib.md5((oid+'1000'+dt).encode()).hexdigest()))
         body,h=T.http('/shop/ajax.orderdatasave.php',sid,dict(pp_id=oid,pp_name='PERSONAL_FAKE',pp_email='fake@example.invalid',pp_hp='000',pp_settle_case='신용카드',amountValue='1000',good_mny='1000',orderId=oid))
-        token=h['X-G5-Order-State'];body=T.return_page(oid,token=token,mobile=mobile);parser=Form();parser.feed(body)
+        token=h['X-G5-Order-State'];body=T.return_page(oid,token=token,mobile=mobile,paymentKey=OPAQUE_KEY);parser=Form();parser.feed(body)
         response,_=T.http(('/mobile' if mobile else '')+'/shop/personalpayformupdate.php',data=parser.fields)
         pp=T.sql("SELECT pp_tno,pp_receipt_price FROM g5_shop_personalpay WHERE pp_id='%s'"%oid)[0]
         if not pp['pp_tno']:print(response[-1000:])
-        T.check(('mobile' if mobile else 'pc')+' personal payment completes without session cookie',pp['pp_tno']=='test_key' and int(pp['pp_receipt_price'])==1000)
+        T.check(('mobile' if mobile else 'pc')+' personal payment completes without session cookie',pp['pp_tno']==OPAQUE_KEY and int(pp['pp_receipt_price'])==1000)
         T.check(('mobile' if mobile else 'pc')+' personal state consumed',T.sql("SELECT status FROM g5_shop_order_access WHERE od_id='%s'"%oid)[0]['status']=='completed')
     oid,sid,token,cart=T.make()
     T.call('approve',id=oid,request={'g5_order_state':token})

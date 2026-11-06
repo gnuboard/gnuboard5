@@ -23,7 +23,7 @@ function lg_noti_rows($sql)
 
 function lg_noti_quote($value)
 {
-    return "'".sql_escape_string((string) $value)."'";
+    return "'".sql_real_escape_string((string) $value)."'";
 }
 
 function lg_noti_tables()
@@ -140,14 +140,15 @@ function lg_noti_request($post, $server, $config)
         || !is_string($config['cf_lg_mert_key']) || trim($config['cf_lg_mert_key']) === '') return false;
     $patterns = array(
         'LGD_MID' => '/\A[A-Za-z0-9_-]{1,104}\z/', 'LGD_OID' => '/\A[1-9][0-9]{0,19}\z/',
-        'LGD_TID' => '/\A[A-Za-z0-9_-]{1,64}\z/', 'LGD_RESPCODE' => '/\A0000\z/',
+        'LGD_RESPCODE' => '/\A0000\z/',
         'LGD_PAYTYPE' => '/\ASC0040\z/', 'LGD_HASHDATA' => '/\A[a-fA-F0-9]{32}\z/',
         'LGD_TIMESTAMP' => '/\A[0-9]{14}\z/', 'LGD_PAYDATE' => '/\A[0-9]{14}\z/',
         'LGD_AMOUNT' => '/\A[0-9]{1,12}\z/', 'LGD_CASTAMOUNT' => '/\A[0-9]{1,12}\z/',
         'LGD_CASCAMOUNT' => '/\A[0-9]{1,12}\z/', 'LGD_CASFLAG' => '/\A[RIC]\z/',
         'LGD_CASSEQNO' => '/\A[0-9]{1,6}\z/', 'LGD_ACCOUNTNUM' => '/\A[A-Za-z0-9-]{1,30}\z/'
     );
-    $data = array();
+    if (!isset($post['LGD_TID']) || !shop_pg_valid_identifier($post['LGD_TID'], 255)) return false;
+    $data = array('LGD_TID' => $post['LGD_TID']);
     foreach ($patterns as $field => $pattern) {
         if (!isset($post[$field]) || !is_string($post[$field]) || !preg_match($pattern, $post[$field])) return false;
         $data[$field] = $post[$field];

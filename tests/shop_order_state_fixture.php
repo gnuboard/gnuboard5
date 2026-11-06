@@ -90,6 +90,10 @@ elseif ($action==='migration' || $action==='migration-sandbox') {
         else $result[]=array('skipped'=>true);
     }
     if ($action==='migration-sandbox') {
+        $collation=g5_migration_parse_file(G5_PATH.'/migrations/20261106_001_toss_identifier_collation.sql');
+        foreach ($collation['statements'] as $stmt) {
+            if (strpos($stmt['sql'], 'g5_oa_test_state') !== false && g5_migration_should_run_statement($stmt['conditions'])) g5_migration_execute_statement($stmt);
+        }
         $installed=sql_fetch('SHOW CREATE TABLE g5_shop_order_access');
         $upgraded=sql_fetch('SHOW CREATE TABLE g5_oa_test_state');
         $result['same_schema']=str_replace('g5_shop_order_access','TABLE',$installed['Create Table'])===str_replace('g5_oa_test_state','TABLE',$upgraded['Create Table']);

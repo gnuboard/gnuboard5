@@ -195,6 +195,13 @@ function sql_error_info() { global $db; return $db->error; }
                 mysql("UPDATE g5_shop_order SET " + field + "='" + value + "'")
                 before = state()
                 check(not request() and state() == before, field + ' 바인딩/금액/상태 거부')
+            seed()
+            opaque = "aZ.+/?#%&<>\"'\\"
+            opaque = opaque.ljust(255, 'X')
+            mysql("UPDATE g5_shop_order SET od_tno=UNHEX('"+opaque.encode().hex()+"')")
+            check(not request({'LGD_TID':opaque.swapcase()}), 'TID 대소문자 불일치 거부')
+            check(request({'LGD_TID':opaque}), '특수문자 TID 입금 통보')
+            check(request({'LGD_TID':opaque}), '특수문자 TID 재통보')
             for mobile in [0,1]:
                 seed(mobile=mobile)
                 check(request({'LGD_CASFLAG':'R','LGD_CASSEQNO':'000','LGD_CASTAMOUNT':'0','LGD_CASCAMOUNT':'0'}), '정상 발급 통보 수신')

@@ -544,7 +544,7 @@ if ($is_nicepay_vbank_pg_cancel) {
     <input type="hidden" name="page" value="<?php echo $page; ?>">
     <input type="hidden" name="od_name" value="<?php echo get_text($od['od_name']); ?>">
     <input type="hidden" name="od_hp" value="<?php echo get_text($od['od_hp']); ?>">
-    <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
+    <input type="hidden" name="od_tno" value="<?php echo htmlspecialchars($od['od_tno'], ENT_QUOTES, 'UTF-8'); ?>">
     <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
     <input type="hidden" name="od_pg" value="<?php echo $od['od_pg']; ?>">
 
@@ -1032,7 +1032,7 @@ if ($is_nicepay_vbank_pg_cancel) {
         <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add" class="btn btn_02">개인결제추가</a>
         <?php } ?>
-        <?php if($od['od_pg'] !== 'KAKAOPAY' && $od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY' || ($od['od_pg'] == 'nicepay' && $od['od_settle_case'] == '간편결제'))) { ?>
+        <?php if($od['od_pg'] !== 'KAKAOPAY' && shop_order_partial_refund_limit($od) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY' || ($od['od_pg'] == 'nicepay' && $od['od_settle_case'] == '간편결제'))) { ?>
         <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo get_text($od['od_settle_case']); ?> 부분취소</a>
         <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>

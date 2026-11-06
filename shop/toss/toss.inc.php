@@ -266,12 +266,16 @@ class TossPayments {
     public function cancelPayment()
     {
         // 취소에 필요한 결제 키가 있는지 여부
-        if (empty($this->cancelData['paymentKey'])) {
+        if (!isset($this->cancelData['paymentKey']) || $this->cancelData['paymentKey'] === '') {
             return false;
         }
 
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, str_replace('{paymentKey}', $this->cancelData['paymentKey'], $this->cancelUrl));
+        $segment = rawurlencode($this->cancelData['paymentKey']);
+        if ($segment === '.' || $segment === '..') $segment = str_replace('.', '%2E', $segment);
+        curl_setopt($curl, CURLOPT_URL, str_replace('{paymentKey}', $segment, $this->cancelUrl));
+        // 일부 libcurl 버전은 인코딩된 점 경로까지 정규화한다.
+        if (defined('CURLOPT_PATH_AS_IS')) curl_setopt($curl, CURLOPT_PATH_AS_IS, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->cancelData));

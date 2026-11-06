@@ -22,19 +22,20 @@ if($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '계좌이체')
 if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
         alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 
-if($od['od_receipt_price'] - $od['od_refund_price'] <= 0)
+$od_misu = shop_order_partial_refund_limit($od);
+if ($od_misu <= 0)
     alert_close('부분취소 처리할 금액이 없습니다.');
 
 $g5['title'] = get_text($od['od_settle_case']).' 부분취소';
 include_once(G5_PATH.'/head.sub.php');
 
-// 취소가능금액
-$od_misu = abs($od['od_misu']);
 ?>
 
 <form name="forderpartcancel" method="post" action="./orderpartcancelupdate.php" onsubmit="return form_check(this);">
 <input type="hidden" name="token" value="<?php echo get_admin_token(); ?>">
 <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+
+<input type="hidden" name="refund_before" value="<?php echo (int)$od['od_refund_price']; ?>">
 
 <div class="new_win">
     <h1><?php echo get_text($od['od_settle_case']); ?> 부분취소</h1>
@@ -58,7 +59,13 @@ $od_misu = abs($od['od_misu']);
         </tr>
         <tr>
             <th scope="row"><label for="mod_free_mny">비과세 취소금액</label></th>
-            <td><input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원</td>
+            <td>
+                <?php if ($od['od_pg'] === 'lg') { ?>
+                XPay 면세 부분취소는 토스페이먼츠 상점관리자에서 처리해 주십시오.
+                <?php } else { ?>
+                <input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원
+                <?php } ?>
+            </td>
         </tr>
         <tr>
             <th scope="row"><label for="mod_memo">요청사유</label></th>

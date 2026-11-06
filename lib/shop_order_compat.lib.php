@@ -103,3 +103,9 @@ function shop_order_decode_value($data, &$offset, &$nodes, &$valid, $depth)
     $valid = false;
     return null;
 }
+
+// PG 식별자는 공백과 제어문자가 없는 ASCII 원문으로만 취급한다.
+function shop_pg_valid_identifier($value, $max_length)
+{
+    return is_string($value) && strlen($value) <= $max_length && preg_match('/\A[!-~]+\z/', $value) === 1;
+}
