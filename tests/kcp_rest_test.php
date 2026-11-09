@@ -98,11 +98,39 @@ $c->response = array('res_cd'=>'0000','tno'=>$cancel['tno']);
 $c->cancel('T0000', array_merge($cancel, array('mod_type'=>'STE1','deli_numb'=>'123','deli_corp'=>'한글택배')));
 $last = end($c->requests);
 check($last[1]['deli_corp'] === '한글택배', 'escrow delivery fields');
-$c->response = array('Code'=>'0000','approvalKey'=>'key+base64=','PayUrl'=>'https://testsmpay.kcp.co.kr/pay/mobileGW.kcp');
-check($c->register(array('ordr_idxx'=>'202610290001'))['Code'] === '0000', 'mobile registration');
-foreach (array('http://testsmpay.kcp.co.kr/pay', 'https://testsmpay.kcp.co.kr.evil.invalid/pay', 'https://smpay.kcp.co.kr/pay') as $url) {
-    $c->response['PayUrl'] = $url;
-    rejects(function () use ($c) { $c->register(array()); }, 'registration redirect allowlist');
+foreach (array(true, false) as $test_mode) {
+    $registration = new RestFixture(array('test'=>$test_mode));
+    $allowed_hosts = $test_mode ? array('testsmpay.kcp.co.kr') : array('smpay.kcp.co.kr', 'rsmpay.kcp.co.kr');
+    foreach ($allowed_hosts as $host) {
+        $registration->response = array('Code'=>'0000','approvalKey'=>'key+base64=',
+            'PayUrl'=>'https://'.$host.'/pay/mobileGW.kcp?order=test%2Bvalue');
+        check($registration->register(array()) === $registration->response, 'registration preserves response: '.$host);
+    }
+    $bad_urls = array(
+        'http://rsmpay.kcp.co.kr/pay',
+        'https://rsmpay.kcp.co.kr.evil.invalid/pay',
+        'https://smpay.kcp.co.kr.evil.invalid/pay',
+        'https://testsmpay.kcp.co.kr.evil.invalid/pay',
+        'https://rsmpay.kcp.co.kr@evil.invalid/pay',
+        'https://evil.invalid/https://rsmpay.kcp.co.kr/pay',
+        'https://rsmpay.kcp.co.kr:444/pay',
+        'https://rsmpay.kcp.co.kr/pay,extra',
+        "https://rsmpay.kcp.co.kr/pay
+extra",
+        'https://evil.invalid/pay'
+    );
+    $wrong_hosts = $test_mode ? array('smpay.kcp.co.kr','rsmpay.kcp.co.kr') : array('testsmpay.kcp.co.kr');
+    foreach ($wrong_hosts as $host) $bad_urls[] = 'https://'.$host.'/pay';
+    foreach ($bad_urls as $url) {
+        $registration->response = array('Code'=>'0000','approvalKey'=>'key','PayUrl'=>$url);
+        rejects(function () use ($registration) { $registration->register(array()); }, 'registration redirect allowlist');
+    }
+    foreach (array('', "key
+injected", 'key,injected') as $key_value) {
+        $registration->response = array('Code'=>'0000','approvalKey'=>$key_value,
+            'PayUrl'=>'https://'.$allowed_hosts[0].'/pay/mobileGW.kcp');
+        rejects(function () use ($registration) { $registration->register(array()); }, 'registration invalid key');
+    }
 }
 $converted = kcp_rest_legacy_result($good + array('easypoint_mny'=>'1004','app_easypoint_time'=>'20261029120000'));
 check(iconv('CP949','UTF-8',$converted['card_name']) === '국민카드', 'legacy output encoding');

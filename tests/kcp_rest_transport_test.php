@@ -37,4 +37,43 @@ foreach (array(array(false,200), array('',200), array('bad json',200), array('{"
     try { $client->post('payment', array()); } catch (Exception $e) { $failed = true; }
     verify($failed && $calls === $before+1); // 통신 불확실 시 재전송하지 않는다.
 }
+
+// 모바일 등록 처리기까지 실행하여 정상 응답이 R999로 바뀌지 않는지 검사한다.
+$fixture_lib = sys_get_temp_dir().'/g5-kcp-register-'.uniqid('', true);
+mkdir($fixture_lib, 0700);
+file_put_contents($fixture_lib.'/shop_order_access.lib.php', '<?php // 주문 인증 대역');
+define('G5_LIB_PATH', $fixture_lib);
+define('G5_MSHOP_URL', 'https://shop.example.invalid/mobile/shop');
+function shop_order_access_load($id, $pg) {
+    if ($id !== '202611090001' || $pg !== 'kcp') throw new Exception('registration order lookup');
+    return array('od_settle_case'=>'신용카드', 'good_mny'=>'1004',
+        'good_name'=>'등록 검증', 'g5_order_state'=>'fixture-state');
+}
+$g_conf_site_cd = 'A1234';
+$_GET['ordr_idxx'] = '202611090001';
+$status = 200;
+foreach (array(
+    array(false, 'https://rsmpay.kcp.co.kr/pay/mobileGW.kcp', true),
+    array(false, 'https://smpay.kcp.co.kr/pay/mobileGW.kcp', true),
+    array(true, 'https://testsmpay.kcp.co.kr/pay/mobileGW.kcp', true),
+    array(false, 'https://testsmpay.kcp.co.kr/pay/mobileGW.kcp', false),
+    array(true, 'https://rsmpay.kcp.co.kr/pay/mobileGW.kcp', false),
+    array(false, 'https://rsmpay.kcp.co.kr.evil.invalid/pay', false)
+) as $case) {
+    list($test_mode, $pay_url, $accepted) = $case;
+    $default = array('de_card_test'=>$test_mode, 'de_escrow_use'=>0);
+    $raw = json_encode(array('Code'=>'0000','Message'=>'Success',
+        'approvalKey'=>'key+base64=','PayUrl'=>$pay_url));
+    $before = $calls;
+    ob_start();
+    include dirname(dirname(__FILE__)).'/mobile/shop/kcp/rest_register.php';
+    $body = ob_get_clean();
+    verify($body === ($accepted ? '0000,key+base64=,'.$pay_url.',Success' :
+        'R999,,,KCP REST 거래등록을 완료하지 못했습니다. 설정 및 주문 정보를 확인해 주십시오.'));
+    verify($calls === $before + 1);
+    verify($url === ($test_mode ? 'https://testsmpay.kcp.co.kr/trade/register.do' :
+        'https://smpay.kcp.co.kr/trade/register.do'));
+}
+unlink($fixture_lib.'/shop_order_access.lib.php');
+rmdir($fixture_lib);
 echo 'OK '.$count." transport checks\n";
