@@ -541,12 +541,14 @@ if (isset($_REQUEST['gr_id'])) {
 if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
-    // 차단된 회원이면 ss_mb_id 초기화, 또는 세션에 저장된 회원 토큰값을 비교하여 틀리면 초기화
-    if( ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) 
+    // 회원 조회 실패, 차단·탈퇴 또는 인증 토큰 불일치 시 로그인 세션을 해제한다.
+    if( empty($member['mb_id'])
+        || ($member['mb_intercept_date'] && $member['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME))
         || ($member['mb_leave_date'] && $member['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
         || (function_exists('check_auth_session_token') && !check_auth_session_token($member['mb_datetime'])) 
         ) {
         set_session('ss_mb_id', '');
+        set_session('ss_mb_token_key', '');
         $member = array();
     } else {
         // 오늘 처음 로그인 이라면

@@ -231,9 +231,10 @@ class G5_KCP_REST_Client
     {
         $result = $this->post('register', $data);
         if ($result['Code'] === '0000') {
-            $host = $this->config['test'] ? 'testsmpay.kcp.co.kr' : 'smpay.kcp.co.kr';
+            // 운영 거래등록 서버(smpay)와 응답 결제창 서버(rsmpay)는 다를 수 있다.
+            $host_pattern = $this->config['test'] ? 'testsmpay\.kcp\.co\.kr' : '(?:smpay|rsmpay)\.kcp\.co\.kr';
             if (empty($result['approvalKey']) || empty($result['PayUrl']) ||
-                !preg_match('~\Ahttps://'.preg_quote($host, '~').'/[^\s,]*\z~D', $result['PayUrl']) ||
+                !preg_match('~\Ahttps://'.$host_pattern.'/[^\s,]*\z~D', $result['PayUrl']) ||
                 preg_match('/[\r\n,]/', $result['approvalKey'])) throw new Exception('KCP registration response');
         }
         return $result;
