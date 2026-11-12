@@ -16,6 +16,7 @@ include_once('./_head.php');
 
 $sql_common = " from `{$g5['g5_shop_item_qa_table']}` a join `{$g5['g5_shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where (1) ";
+$sql_search .= ' and '.shop_item_visibility_sql('b');
 
 if(!$sfl)
     $sfl = 'b.it_name';

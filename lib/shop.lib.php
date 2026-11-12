@@ -1,5 +1,6 @@
 <?php
 include_once(dirname(__FILE__).'/shop.cartvalidate.lib.php');
+include_once(dirname(__FILE__).'/shop.visibility.lib.php');
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 시작
 //==============================================================================
@@ -374,9 +375,9 @@ class item_list
 
         if ($this->query) {
 
-            $sql = $this->query;
-            $result = sql_query($sql);
-            $this->total_count = @sql_num_rows($result);
+            // 외부 쿼리는 한 번만 실행하여 원래 행과 순서를 보존한다.
+            $result = shop_visible_item_result(sql_query($this->query));
+            $this->total_count = sql_num_rows($result);
 
         } else {
 
@@ -415,6 +416,7 @@ class item_list
                 $sql_select = " select {$this->fields} ";
                 $sql_common = " from `{$g5['g5_shop_item_table']}` ";
             }
+            $where[] = shop_item_visibility_sql($this->event ? 'b' : '');
             $sql_where = " where " . implode(" and ", $where);
             $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
 
@@ -2169,15 +2171,15 @@ function shop_member_cert_check($id, $type)
     global $g5, $member;
 
     $msg = '';
+    $return_url = G5_SHOP_URL.($type === 'item' ? '/item.php?it_id=' : '/list.php?ca_id=').urlencode($id);
 
     switch($type)
     {
         case 'item':
             $it = get_shop_item($id, true);
 
-            $seq = '';
-            for($i=0; $i<3; $i++) {
-                $ca_id = $it['ca_id'.$seq];
+            foreach (array('ca_id', 'ca_id2', 'ca_id3') as $category_field) {
+                $ca_id = $it[$category_field];
 
                 if(!$ca_id)
                     continue;
@@ -2185,12 +2187,12 @@ function shop_member_cert_check($id, $type)
                 $sql = " select ca_cert_use, ca_adult_use from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
                 $row = sql_fetch($sql);
 
-                if (($row['ca_cert_use'] || $row['ca_adult_use']) && strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
-                    goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
+                if (($row['ca_cert_use'] || $row['ca_adult_use']) && strlen((string)($member['mb_dupinfo'] ?? '')) == 64 && !empty($member['mb_certify'])) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
+                    goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode($return_url));
                 }
 
                 // 본인확인체크
-                if($row['ca_cert_use'] && !$member['mb_certify']) {
+                if($row['ca_cert_use'] && empty($member['mb_certify'])) {
                     if($member['mb_id'])
                         $msg = '회원정보 수정에서 본인확인 후 이용해 주십시오.';
                     else
@@ -2200,7 +2202,7 @@ function shop_member_cert_check($id, $type)
                 }
 
                 // 성인인증체크
-                if($row['ca_adult_use'] && !$member['mb_adult']) {
+                if($row['ca_adult_use'] && empty($member['mb_adult'])) {
                     if($member['mb_id'])
                         $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.';
                     else
@@ -2209,9 +2211,6 @@ function shop_member_cert_check($id, $type)
                     break;
                 }
 
-                if($i == 0)
-                    $seq = 1;
-                $seq++;
             }
 
             break;
@@ -2219,13 +2218,13 @@ function shop_member_cert_check($id, $type)
             $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$id' ";
             $ca = sql_fetch($sql);
 
-            if (($ca['ca_cert_use'] || $ca['ca_adult_use']) && strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
-                goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
+            if (($ca['ca_cert_use'] || $ca['ca_adult_use']) && strlen((string)($member['mb_dupinfo'] ?? '')) == 64 && !empty($member['mb_certify'])) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
+                goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode($return_url));
             
             }
 
             // 본인확인체크
-            if($ca['ca_cert_use'] && !$member['mb_certify']) {
+            if($ca['ca_cert_use'] && empty($member['mb_certify'])) {
                 if($member['mb_id'])
                     $msg = '회원정보 수정에서 본인확인 후 이용해 주십시오.';
                 else
@@ -2233,7 +2232,7 @@ function shop_member_cert_check($id, $type)
             }
 
             // 성인인증체크
-            if($ca['ca_adult_use'] && !$member['mb_adult']) {
+            if($ca['ca_adult_use'] && empty($member['mb_adult'])) {
                 if($member['mb_id'])
                     $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.';
                 else
@@ -2310,9 +2309,8 @@ function get_view_today_items($is_cache=false)
 
     static $cache = array();
 
-    if( $is_cache && !empty($cache) ){
-        return $cache;
-    }
+    // 같은 요청에서도 인증 상태 변경 후 과거 상품을 재사용하지 않는다.
+    $cache = array();
 
     for ($i=1;$i<=$tv_idx;$i++){
 
@@ -2320,7 +2318,7 @@ function get_view_today_items($is_cache=false)
         $tv_it_id = get_session("ss_tv[$tv_it_idx]");
 
         $rowx = get_shop_item($tv_it_id, true);
-        if(!$rowx['it_id'])
+        if(empty($rowx['it_id']) || !shop_item_visible($rowx['it_id']))
             continue;
         
         $key = $rowx['it_id'];
@@ -2352,15 +2350,14 @@ function get_boxcart_datas($is_cache=false)
 
     static $cache = array();
 
-    if( $is_cache && !empty($cache) ){
-        return $cache;
-    }
+    $cache = array();
 
     $sql  = " select * from {$g5['g5_shop_cart_table']} ";
     $sql .= " where od_id = '".$cart_id."' group by it_id ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
+        if (!shop_item_visible($row['it_id'])) continue;
         $key = $row['it_id'];
         $cache[$key] = $row;
     }
@@ -2389,13 +2386,10 @@ function get_wishlist_datas($mb_id, $is_cache=false)
 
     static $cache = array();
 
-    if( $is_cache && isset($cache[$mb_id]) ){
-        return $cache[$mb_id];
-    }
-
     $cache[$mb_id] = array();
+    $visibility_sql = shop_item_visibility_sql('b');
     $sql  = " select a.it_id, b.it_name from {$g5['g5_shop_wish_table']} a, {$g5['g5_shop_item_table']} b ";
-    $sql .= " where a.mb_id = '".$mb_id."' and a.it_id  = b.it_id order by a.wi_id desc ";
+    $sql .= " where a.mb_id = '".$mb_id."' and a.it_id  = b.it_id and {$visibility_sql} order by a.wi_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {

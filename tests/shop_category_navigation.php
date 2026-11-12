@@ -29,6 +29,7 @@ function sql_fetch_array($result) { return isset($result->rows[$result->index]) 
 function sql_fetch($sql) { return array('cnt'=>3); }
 function expect_category($condition, $message) { if (!$condition) throw new RuntimeException($message); }
 require dirname(__DIR__).'/lib/shop.data.lib.php';
+require dirname(__DIR__).'/lib/shop.visibility.lib.php';
 $artifacts = array();
 $cases = array(
     '10'=>array(array('1010','1020')),

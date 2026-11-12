@@ -23,9 +23,10 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     <input type="hidden" name="prog"      value="wish">
     <ul id="wish_li">
     <?php
+        $visibility_sql = shop_item_visibility_sql('b');
         $sql = " select a.wi_id, a.wi_time, b.*
                    from {$g5['g5_shop_wish_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-                  where a.mb_id = '{$member['mb_id']}'
+                  where a.mb_id = '{$member['mb_id']}' and {$visibility_sql}
                   order by a.wi_id desc ";
         $result = sql_query($sql);
         for ($i=0; $row = sql_fetch_array($result); $i++) {

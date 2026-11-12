@@ -23,7 +23,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
             $tv_it_id = get_session("ss_tv[$tv_it_idx]");
 
             $rowx = get_shop_item($tv_it_id, true);
-            if(!$rowx['it_id'])
+            if(empty($rowx['it_id']) || !shop_item_visible($rowx['it_id']))
                 continue;
 
             if ($tv_tot_count % $tv_div['img_length'] == 0) $k++;

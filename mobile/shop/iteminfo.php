@@ -27,6 +27,10 @@ $sql = " select ca_mobile_skin_dir, ca_include_head, ca_include_tail, ca_cert_us
 $ca = sql_fetch($sql);
 
 
+if (!$is_admin) {
+    $msg = shop_member_cert_check($it_id, 'item');
+    if ($msg) alert($msg, G5_SHOP_URL);
+}
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 include_once(G5_PATH.'/head.sub.php');
 

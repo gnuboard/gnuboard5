@@ -4,6 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 include_once(dirname(__FILE__) .'/pbkdf2.compat.php');
 include_once(dirname(__FILE__) .'/attachment.lib.php');
 include_once(dirname(__FILE__) .'/board_access.lib.php');
+include_once(dirname(__FILE__) .'/sql_rows.lib.php');
 
 /*************************************************************************
 **
@@ -1964,6 +1965,7 @@ function sql_set_charset($charset, $link=null)
 
 function sql_data_seek($result, $offset=0)
 {
+    if ($result instanceof G5_sql_rows) return $result->seek($offset);
     if ( ! $result ) return;
 
     if(function_exists('mysqli_set_charset') && G5_MYSQLI_USE)
@@ -2128,6 +2130,7 @@ function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 // 결과값에서 한행 연관배열(이름으로)로 얻는다.
 function sql_fetch_array($result)
 {
+    if ($result instanceof G5_sql_rows) return $result->fetch();
     if( ! $result) return array();
 
     if(function_exists('mysqli_fetch_assoc') && G5_MYSQLI_USE)
@@ -2148,6 +2151,7 @@ function sql_fetch_array($result)
 // 단, 결과 값은 스크립트(script) 실행부가 종료되면서 메모리에서 자동적으로 지워진다.
 function sql_free_result($result)
 {
+    if ($result instanceof G5_sql_rows) return $result->free();
     if(!is_resource($result)) return;
 
     if(function_exists('mysqli_free_result') && G5_MYSQLI_USE)
@@ -2194,6 +2198,7 @@ function sql_insert_id($link=null)
 
 function sql_num_rows($result)
 {
+    if ($result instanceof G5_sql_rows) return $result->count();
     if(function_exists('mysqli_num_rows') && G5_MYSQLI_USE)
         return mysqli_num_rows($result);
     else

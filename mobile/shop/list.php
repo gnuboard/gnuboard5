@@ -91,11 +91,12 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
     $limit = $list_mod * $list_row;
     $best_skin = G5_MSHOP_SKIN_PATH.'/list.best.10.skin.php';
 
+    $visibility_sql = shop_item_visibility_sql();
     $sql = " select *
                 from {$g5['g5_shop_item_table']}
                 where ( ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%' )
                   and it_use = '1'
-                  and it_type4 = '1'
+                  and it_type4 = '1' and {$visibility_sql}
                 order by it_order, it_id desc
                 limit 0, $limit ";
 

@@ -33,10 +33,14 @@ function latest($skin_dir='', $bo_table='', $rows=10, $subject_len=40, $cache_ti
         }
     }
 
+    // 본문/이미지를 출력하는 스킨과 캐시 적중에도 같은 권한을 적용한다.
+    $board = get_board_db($bo_table, true);
+    if (!$board || !g5_board_visible($board, true)) return '';
+    $use_cache = G5_USE_CACHE && g5_board_public($board);
     $caches = false;
 
-    if(G5_USE_CACHE) {
-        $cache_file_name = "latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}-".g5_cache_secret_key();
+    if($use_cache) {
+        $cache_file_name = "latest-{$bo_table}-access-v2-{$skin_dir}-{$rows}-{$subject_len}-".g5_cache_secret_key();
         $caches = g5_get_cache($cache_file_name, (int) $time_unit * (int) $cache_time);
         $cache_list = isset($caches['list']) ? $caches['list'] : array();
         g5_latest_cache_data($bo_table, $cache_list);
@@ -91,7 +95,7 @@ function latest($skin_dir='', $bo_table='', $rows=10, $subject_len=40, $cache_ti
         }
         g5_latest_cache_data($bo_table, $list);
 
-        if(G5_USE_CACHE) {
+        if($use_cache) {
 
             $caches = array(
                 'list' => $list,

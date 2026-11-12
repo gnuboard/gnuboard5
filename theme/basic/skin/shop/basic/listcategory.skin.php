@@ -1,6 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+$visibility_sql = shop_item_visibility_sql();
 $category_groups = get_shop_category_menu_groups($ca_id);
 if ($category_groups) {
     add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
@@ -10,7 +11,7 @@ if ($category_groups) {
     <?php foreach ($category_groups as $category_group) { ?>
     <ul aria-label="<?php echo $category_group['label']; ?>">
         <?php foreach ($category_group['categories'] as $row) {
-            $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1' ");
+            $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1' and {$visibility_sql} ");
             $current_attr = '';
             if ($row['ca_id'] === $ca_id) {
                 $current_attr = ' class="sct_ct_here" aria-current="page"';
