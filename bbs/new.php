@@ -26,6 +26,7 @@ $mb_id = substr(preg_replace('#[^a-z0-9_]#i', '', $mb_id), 0, 20);
 if ($mb_id) {
     $sql_common .= " and a.mb_id = '{$mb_id}' ";
 }
+$sql_common .= " and b.bo_table in (".g5_visible_board_ids().") ";
 $sql_order = " order by a.bn_id desc ";
 
 $sql = " select count(*) as cnt {$sql_common} ";
@@ -38,7 +39,7 @@ if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $group_select = '<label for="gr_id" class="sound_only">그룹</label><select name="gr_id" id="gr_id"><option value="">전체그룹';
-$sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_id ";
+$sql = " select distinct c.gr_id, c.gr_subject from {$g5['group_table']} c join {$g5['board_table']} b on b.gr_id = c.gr_id where b.bo_table in (".g5_visible_board_ids().") order by c.gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $group_select .= "<option value=\"".$row['gr_id']."\">".$row['gr_subject'];

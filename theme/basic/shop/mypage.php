@@ -104,11 +104,12 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             <input type="hidden" name="prog" value="wish">
                 <ul>
                 <?php
+                $visibility_sql = shop_item_visibility_sql('b');
                 $sql = " select *
                            from {$g5['g5_shop_wish_table']} a,
                                 {$g5['g5_shop_item_table']} b
                           where a.mb_id = '{$member['mb_id']}'
-                            and a.it_id  = b.it_id
+                            and a.it_id  = b.it_id and {$visibility_sql}
                           order by a.wi_id desc
                           limit 0, 8 ";
                 $result = sql_query($sql);

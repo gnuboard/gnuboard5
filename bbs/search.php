@@ -22,7 +22,7 @@ if ($stx) {
 
     $g5_search['tables'] = Array();
     $g5_search['read_level'] = Array();
-    $sql = " select gr_id, bo_table, bo_read_level from {$g5['board_table']} where bo_use_search = 1 and bo_list_level <= '{$member['mb_level']}' ";
+    $sql = " select * from {$g5['board_table']} where bo_use_search = 1 and bo_list_level <= '{$member['mb_level']}' ";
     if ($gr_id)
         $sql .= " and gr_id = '{$gr_id}' ";
     $onetable = isset($onetable) ? preg_replace('/[^a-z0-9_]/i', '', $onetable) : '';
@@ -32,6 +32,7 @@ if ($stx) {
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
+        if (!g5_board_visible($row, true)) continue;
         if ($is_admin != 'super')
         {
             // 그룹접근 사용에 대한 검색 차단

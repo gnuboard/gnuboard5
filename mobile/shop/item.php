@@ -6,6 +6,8 @@ $it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
 $it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
 $it = get_shop_item_with_category($it_id, $it_seo_title);
+$item_visibility_sql = shop_item_visibility_sql();
+$item_relation_visibility_sql = shop_item_visibility_sql('b');
 $it_id = $_REQUEST['it_id'] = $it['it_id'];
 
 if (! (isset($it['it_id']) && $it['it_id'])) {
@@ -66,7 +68,7 @@ if (get_cookie('ck_it_id') != $it_id) {
 $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
           where it_id > '$it_id'
             and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
-            and it_use = '1'
+            and it_use = '1' and {$item_visibility_sql}
           order by it_id asc
           limit 1 ";
 $row = sql_fetch($sql);
@@ -84,7 +86,7 @@ if (isset($row['it_id']) && $row['it_id']) {
 $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
           where it_id < '$it_id'
             and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
-            and it_use = '1'
+            and it_use = '1' and {$item_visibility_sql}
           order by it_id desc
           limit 1 ";
 $row = sql_fetch($sql);
@@ -113,7 +115,7 @@ if ($default['de_mobile_rel_list_use']) {
     $sql = " select count(*) as cnt
                from {$g5['g5_shop_item_relation_table']} a
                left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id)
-              where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
+              where a.it_id = '{$it['it_id']}' and b.it_use='1' and {$item_relation_visibility_sql} ";
     $row = sql_fetch($sql);
     $item_relation_count = $row['cnt'];
 }

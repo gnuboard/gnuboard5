@@ -56,6 +56,7 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
 
     $g5['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".$g5['board_title'];
 } else {
+    if (!g5_board_visible($board)) alert('목록을 볼 권한이 없습니다.');
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', G5_URL);

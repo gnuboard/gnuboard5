@@ -9,6 +9,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 $sql_common = " from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b ";
 
 $where = array();
+$where[] = shop_item_visibility_sql('a');
 $where[] = " (a.ca_id = b.ca_id and a.it_use = 1 and b.ca_use = 1) ";
 
 $search_all = true;
@@ -135,7 +136,7 @@ $list_file = G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_search_list_skin'];
 if (file_exists($list_file) && is_include_path_check($list_file)) {
     define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
     $list = new item_list($list_file, $default['de_mobile_search_list_mod'], $default['de_mobile_search_list_row'], $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
-    $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
+    $list->set_query(" select a.* $sql_common $sql_where {$order_by} limit $from_record, $items ");
 }
 
 if(!file_exists($search_skin)) {

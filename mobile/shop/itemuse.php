@@ -3,6 +3,8 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 $it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+if (!shop_item_visible($it_id)) { http_response_code(403); return; }
+
 
 $itemuse_list = G5_SHOP_URL."/itemuselist.php";
 $itemuse_form = G5_SHOP_URL."/itemuseform.php?it_id=".$it_id;

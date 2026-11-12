@@ -25,11 +25,16 @@ if (!isset($bo_table) || !$bo_table) {
     exit;
 }
 
-$sql = " select gr_id, bo_subject, bo_page_rows, bo_read_level, bo_use_rss_view from {$g5['board_table']} where bo_table = '$bo_table' ";
+$sql = " select * from {$g5['board_table']} where bo_table = '$bo_table' ";
 $rss_board = sql_fetch($sql);
 if (!isset($rss_board['gr_id']) || !$rss_board['gr_id']) {
     echo '존재하지 않는 게시판입니다.';
     exit;
+}
+
+if (!g5_board_public($rss_board)) {
+    http_response_code(403);
+    exit('RSS 보기가 허용되지 않는 게시판입니다.');
 }
 
 $subj2 = specialchars_replace($rss_board['bo_subject'], 255);
