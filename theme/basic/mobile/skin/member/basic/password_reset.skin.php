@@ -9,6 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 <div id="pw_reset" class="new_win">
     <div class="new_win_con">
         <form name="fpasswordreset" action="<?php echo $action_url; ?>" onsubmit="return fpasswordreset_submit(this);" method="post" autocomplete="off">
+            <input type="hidden" name="token" value="<?php echo isset($password_reset_token) ? $password_reset_token : ''; ?>">
             <fieldset id="info_fs">
                 <p>새로운 비밀번호를 입력해주세요.</p>
                 <label for="mb_id" class="sound_only">아이디</label>

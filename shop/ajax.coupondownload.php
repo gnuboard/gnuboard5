@@ -4,7 +4,15 @@ include_once('./_common.php');
 if(!$member['mb_id'])
     die(json_encode(array('error' => '회원 로그인 후 이용해 주십시오.')));
 
-$cz_id = isset($_GET['cz_id']) ? preg_replace('#[^0-9]#', '', $_GET['cz_id']) : 0;
+// 포인트를 차감하는 상태 변경이므로 POST와 세션 결합 토큰을 요구한다. (KVE-2026-3198)
+if (!isset($_SERVER['REQUEST_METHOD']) || strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
+    die(json_encode(array('error' => '올바른 방법으로 이용해 주십시오.')));
+
+$token_error = get_token_error(isset($_POST['token']) ? $_POST['token'] : '');
+if ($token_error !== '')
+    die(json_encode(array('error' => $token_error)));
+
+$cz_id = isset($_POST['cz_id']) && is_scalar($_POST['cz_id']) ? preg_replace('#[^0-9]#', '', (string)$_POST['cz_id']) : 0;
 
 if(!$cz_id)
     die(json_encode(array('error' => '올바른 방법으로 이용해 주십시오.')));

@@ -7,6 +7,7 @@ $sql_common = " from {$g5['g5_shop_coupon_zone_table']}
 
 $sql_order  = " order by cz_id desc ";
 
+add_javascript('<script>var g5_couponzone_token = "'.get_token().'";</script>', 99);
 add_javascript('<script src="'.G5_JS_URL.'/shop.couponzone.js"></script>', 100);
 
 $g5['title'] = '쿠폰존';

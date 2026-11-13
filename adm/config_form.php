@@ -155,7 +155,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <tr>
                         <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
                         <td>
-                            <?php echo help('설정값 이내의 접속자를 현재 접속자로 인정') ?>
+                            <?php echo help('설정값 이내의 접속자를 접속자 수에 포함') ?>
                             <input type="text" name="cf_login_minutes" value="<?php echo (int) $config['cf_login_minutes'] ?>" id="cf_login_minutes" class="frm_input" size="3"> 분
                         </td>
                         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>

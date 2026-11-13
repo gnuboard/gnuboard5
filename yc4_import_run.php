@@ -144,7 +144,7 @@ document.onkeydown = noRefresh ;
             <li><a href="<?php echo G5_BBS_URL ?>/login.php"><b>로그인</b></a></li>
             <?php }  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
+            <li><a>접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
         </ul>
 
