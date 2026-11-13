@@ -16,13 +16,9 @@ else {
 $g5['title'] = strip_tags($g5['title']);
 $g5_head_title = strip_tags($g5_head_title);
 
-// 현재 접속자
-// 게시판 제목에 ' 포함되면 오류 발생
-$g5['lo_location'] = addslashes($g5['title']);
-if (!$g5['lo_location'])
-    $g5['lo_location'] = addslashes(clean_xss_tags($_SERVER['REQUEST_URI']));
-$g5['lo_url'] = addslashes(clean_xss_tags($_SERVER['REQUEST_URI']));
-if (strstr($g5['lo_url'], '/'.G5_ADMIN_DIR.'/') || $is_admin == 'super') $g5['lo_url'] = '';
+// 현재 접속자: 접속자 수만 집계하며 위치와 주소는 기록하지 않는다. (KVE-2026-3200)
+$g5['lo_location'] = '';
+$g5['lo_url'] = '';
 
 /*
 // 만료된 페이지로 사용하시는 경우

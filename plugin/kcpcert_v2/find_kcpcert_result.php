@@ -81,7 +81,7 @@ set_session('ss_cert_adult',   $adult);
 set_session('ss_cert_birth',   $birth_day);
 set_session('ss_cert_sex',     ($sex_code == '01' ? 'M' : 'F'));
 set_session('ss_cert_dupinfo', $mb_dupinfo);
-set_session('ss_cert_mb_id',   $row['mb_id']);
+g5_set_cert_find_member($row['mb_id']);
 ?>
 <form name="mbFindForm" method="POST">
     <input type="hidden" name="mb_id" value="<?php echo $row['mb_id']; ?>">

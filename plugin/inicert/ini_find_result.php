@@ -82,7 +82,7 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
         set_session("ss_cert_birth",   $birth_day);
         //set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 간편인증은 성별정보 리턴 없음
         set_session('ss_cert_dupinfo', $mb_dupinfo);
-        set_session('ss_cert_mb_id', $row['mb_id']);
+        g5_set_cert_find_member($row['mb_id']);
     } else {
         // 인증실패 curl의 인증실패 체크
         alert_close('코드 : '.$res_data['resultCode'].'  '.urldecode($res_data['resultMsg']));

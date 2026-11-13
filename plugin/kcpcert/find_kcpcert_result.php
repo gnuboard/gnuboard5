@@ -190,7 +190,7 @@ if( $cert_enc_use == "Y" )
         set_session("ss_cert_birth",   $birth_day);
         set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 간편인증은 성별정보 리턴 없음
         set_session('ss_cert_dupinfo', $mb_dupinfo);
-        set_session('ss_cert_mb_id', $row['mb_id']);
+        g5_set_cert_find_member($row['mb_id']);
     }
     else if( $res_cd != "0000" )
     {

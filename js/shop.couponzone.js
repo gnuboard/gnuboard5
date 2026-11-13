@@ -16,8 +16,8 @@ $(function() {
         $this.addClass("disabled").attr("disabled", true);
 
         $.ajax({
-            type: "GET",
-            data: { cz_id: cz_id },
+            type: "POST",
+            data: { cz_id: cz_id, token: (typeof g5_couponzone_token !== "undefined") ? g5_couponzone_token : "" },
             url: g5_url+"/shop/ajax.coupondownload.php",
             cache: false,
             async: true,

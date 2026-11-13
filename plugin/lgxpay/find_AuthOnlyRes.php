@@ -154,7 +154,7 @@ if ($xpay->TX()) {
         set_session("ss_cert_birth",   $birth_day);
         set_session("ss_cert_sex",     $mb_sex); // 이니시스 간편인증은 성별정보 리턴 없음
         set_session('ss_cert_dupinfo', $mb_dupinfo);
-        set_session('ss_cert_mb_id', $row['mb_id']);
+        g5_set_cert_find_member($row['mb_id']);
     } else {
         //인증요청 결과 실패 DB처리
         //echo "인증요청 결과 실패 DB처리하시기 바랍니다.<br>";

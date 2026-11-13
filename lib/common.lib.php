@@ -2601,16 +2601,15 @@ function get_token()
 }
 
 
-// POST로 넘어온 토큰의 HMAC 및 만료 시간 검증
-// 기본 만료: 7200초(2시간)
-function check_token($expire = 7200)
+// get_token() 값의 HMAC 및 만료 시간을 검증하고 오류 메시지를 반환한다. 통과하면 빈 문자열.
+// alert()를 쓸 수 없는 JSON 응답 엔드포인트에서 사용한다.
+function get_token_error($token, $expire = 7200)
 {
-    $token = isset($_POST['token']) ? $_POST['token'] : '';
+    $token = is_string($token) ? $token : '';
 
     $dot = strpos($token, '.');
-    if (!$token || $dot === false) {
-        alert('올바른 방법으로 이용해 주십시오.');
-        return false;
+    if ($token === '' || $dot === false) {
+        return '올바른 방법으로 이용해 주십시오.';
     }
 
     $time = (int)substr($token, 0, $dot);
@@ -2618,8 +2617,7 @@ function check_token($expire = 7200)
 
     // 만료 검증
     if (abs(time() - $time) > $expire) {
-        alert('토큰이 만료되었습니다. 페이지를 새로고침 해주십시오.');
-        return false;
+        return '토큰이 만료되었습니다. 페이지를 새로고침 해주십시오.';
     }
 
     // HMAC 검증
@@ -2627,8 +2625,21 @@ function check_token($expire = 7200)
     $secret = _get_token_secret();
     $expected = hash_hmac('sha256', $secret . '|csrf_token|' . $time, $key);
 
-    if ($hmac !== $expected) {
-        alert('올바른 방법으로 이용해 주십시오.');
+    if (!slow_equals($expected, $hmac)) {
+        return '올바른 방법으로 이용해 주십시오.';
+    }
+
+    return '';
+}
+
+
+// POST로 넘어온 토큰의 HMAC 및 만료 시간 검증
+// 기본 만료: 7200초(2시간)
+function check_token($expire = 7200)
+{
+    $error = get_token_error(isset($_POST['token']) ? $_POST['token'] : '', $expire);
+    if ($error !== '') {
+        alert($error);
         return false;
     }
 
@@ -2682,6 +2693,66 @@ function check_rate_limit($key, $max = 30, $window = 60)
     set_session($session_key, $data);
 
     return $data['count'] <= $max;
+}
+
+// 본인인증 비밀번호 찾기 완료 상태의 유효 시간(초). (KVE-2026-3199)
+if (!defined('G5_CERT_FIND_TTL')) define('G5_CERT_FIND_TTL', 600);
+
+// 본인인증 비밀번호 찾기 결과로 찾은 회원을 세션에 기록한다. 인증 시각을 함께 남겨 만료를 판정한다.
+function g5_set_cert_find_member($mb_id)
+{
+    set_session('ss_cert_mb_id', $mb_id);
+    set_session('ss_cert_find_time', G5_SERVER_TIME);
+}
+
+// 본인인증 비밀번호 찾기 완료 상태와 재설정 토큰을 비운다.
+function g5_clear_cert_find()
+{
+    set_session('ss_cert_mb_id', '');
+    set_session('ss_cert_dupinfo', '');
+    set_session('ss_cert_find_time', '');
+    set_session('ss_password_reset_token', '');
+}
+
+// 최고관리자 계정은 본인인증 비밀번호 재설정 대상에서 제외한다.
+function g5_is_cert_find_excluded($mb_id)
+{
+    global $config;
+    $admin = isset($config['cf_admin']) ? (string)$config['cf_admin'] : '';
+    return $admin !== '' && strtolower(trim((string)$mb_id)) === strtolower(trim($admin));
+}
+
+// 유효한 본인인증 비밀번호 찾기 완료 세션의 회원 ID. 없거나 만료되었거나 제외 대상이면 상태를 비우고 빈 문자열을 반환한다.
+function g5_cert_find_member_id()
+{
+    $mb_id = get_session('ss_cert_mb_id');
+    $mb_id = is_string($mb_id) ? trim($mb_id) : '';
+    $time = (int)get_session('ss_cert_find_time');
+    if ($mb_id === '' || $time <= 0 || abs(G5_SERVER_TIME - $time) > G5_CERT_FIND_TTL || g5_is_cert_find_excluded($mb_id)) {
+        if ($mb_id !== '') g5_clear_cert_find();
+        return '';
+    }
+    return $mb_id;
+}
+
+// 비밀번호 재설정 폼에 넣을 1회용 토큰을 발급한다. 회원 ID와 발급 시각을 세션에 함께 저장한다.
+function g5_get_password_reset_token($mb_id)
+{
+    $token = bin2hex(get_random_token_string(32));
+    set_session('ss_password_reset_token', array('token' => $token, 'mb_id' => (string)$mb_id, 'time' => G5_SERVER_TIME));
+    return $token;
+}
+
+// 제출된 재설정 토큰을 검증한다. 결과와 관계없이 토큰은 한 번 쓰면 폐기한다.
+function g5_check_password_reset_token($mb_id, $token)
+{
+    $saved = get_session('ss_password_reset_token');
+    set_session('ss_password_reset_token', '');
+    if (!is_array($saved) || !isset($saved['token'], $saved['mb_id'], $saved['time'])) return false;
+    if (!is_string($token) || $token === '' || !is_string($saved['token']) || $saved['token'] === '') return false;
+    if ((string)$mb_id === '' || $saved['mb_id'] !== (string)$mb_id) return false;
+    if (abs(G5_SERVER_TIME - (int)$saved['time']) > G5_CERT_FIND_TTL) return false;
+    return slow_equals($saved['token'], $token);
 }
 
 /**
@@ -3511,6 +3582,10 @@ class html_process {
         self::$is_end = 1;
 
         // 현재접속자 처리
+        // 접속자 수 집계만 하며 위치(lo_location)와 주소(lo_url)는 기록하지 않는다. (KVE-2026-3200)
+        // 테마의 head.sub.php가 값을 채워도 저장하지 않도록 여기서 비운다.
+        $g5['lo_location'] = '';
+        $g5['lo_url'] = '';
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
         if (!isset($member['mb_id'])) {
