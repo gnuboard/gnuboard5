@@ -2755,6 +2755,43 @@ function g5_check_password_reset_token($mb_id, $token)
     return slow_equals($saved['token'], $token);
 }
 
+// 화면에서 발급해 같은 회원의 처리 요청에서 한 번만 쓰는 용도별 토큰.
+// $bind에 회원 ID 등 대상 값을 묶어 다른 대상의 요청에 쓰지 못하게 한다. (KVE-2026-3201, KVE-2026-3202, KVE-2026-3203)
+function g5_get_form_token($name, $bind)
+{
+    $token = get_random_token_string(32);
+    set_session('ss_form_token_'.$name, array('token' => $token, 'bind' => (string)$bind, 'time' => G5_SERVER_TIME));
+    return $token;
+}
+
+// 제출된 용도별 토큰을 검증한다. 결과와 관계없이 한 번 쓰면 폐기한다.
+function g5_check_form_token($name, $bind, $token, $ttl = 1800)
+{
+    $key = 'ss_form_token_'.$name;
+    $saved = get_session($key);
+    set_session($key, '');
+    if (!is_array($saved) || !isset($saved['token'], $saved['bind'], $saved['time'])) return false;
+    if (!is_string($token) || $token === '' || !is_string($saved['token']) || $saved['token'] === '') return false;
+    if ((string)$bind === '' || $saved['bind'] !== (string)$bind) return false;
+    if (abs(G5_SERVER_TIME - (int)$saved['time']) > $ttl) return false;
+    return slow_equals($saved['token'], $token);
+}
+
+// MySQL 이름 잠금(GET_LOCK). MySQL 5.7 미만은 연결당 잠금을 하나만 유지하므로,
+// 다른 잠금을 얻는 함수(insert_point 등)를 부르기 전에 풀어야 한다.
+function g5_get_named_lock($name, $timeout = 5)
+{
+    $name = sql_escape_string(substr((string)$name, 0, 64));
+    $row = sql_fetch(" select get_lock('{$name}', ".(int)$timeout.") as got_lock ");
+    return !empty($row['got_lock']);
+}
+
+function g5_release_named_lock($name)
+{
+    $name = sql_escape_string(substr((string)$name, 0, 64));
+    sql_query(" do release_lock('{$name}') ", false);
+}
+
 /**
  * 이메일 미인증 회원의 메일주소 변경 페이지 접근 토큰을 생성한다.
  *

@@ -4,7 +4,7 @@ include_once('./_common.php');
 if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');
 
-set_session('ss_memo_delete_token', $token = uniqid(time()));
+$token = g5_get_form_token('memo_delete', $member['mb_id']);
 
 $g5['title'] = '내 쪽지함';
 include_once(G5_PATH.'/head.sub.php');

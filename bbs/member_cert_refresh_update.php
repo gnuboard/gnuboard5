@@ -8,6 +8,24 @@ if (!$is_member) {
     alert('로그인 후 이용해 주십시오.', G5_BBS_URL.'/login.php');
 }
 
+// 본인인증 갱신은 갱신 화면에서 발급한 1회용 토큰을 가진 같은 출처의 POST만 허용한다. (KVE-2026-3201)
+if (!isset($_SERVER['REQUEST_METHOD']) || strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
+    alert('올바른 방법으로 이용해 주십시오.', G5_URL);
+}
+check_request_origin();
+$cert_refresh_token = isset($_POST['token']) && is_string($_POST['token']) ? $_POST['token'] : '';
+if (!g5_check_form_token('cert_refresh', $member['mb_id'], $cert_refresh_token)) {
+    alert('올바른 방법으로 이용해 주십시오. 본인인증 화면을 다시 열어 주십시오.', G5_BBS_URL.'/member_cert_refresh.php');
+}
+
+// 갱신 화면과 같은 진입 조건을 다시 확인한다.
+if (!$config['cf_cert_use']) {
+    alert('본인인증을 이용 할 수 없습니다. 관리자에게 문의 하십시오.', G5_URL);
+}
+if (!empty($member['mb_certify']) && strlen($member['mb_dupinfo']) != 64) {
+    alert('잘못된 접근입니다.', G5_URL);
+}
+
 if (!($w == '' || $w == 'u')) {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
@@ -63,13 +81,8 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
         alert('본인인증된 정보와 입력된 회원정보가 일치하지않습니다. 다시시도 해주세요');
     }
 } else {
-    if (get_session("ss_reg_mb_name") != $mb_name || get_session("ss_reg_mb_hp") != $mb_hp) {
-        $sql_certify .= " mb_hp = '{$mb_hp}' ";
-        $sql_certify .= " , mb_certify = '' ";
-        $sql_certify .= " , mb_adult = 0 ";
-        $sql_certify .= " , mb_birth = '' ";
-        $sql_certify .= " , mb_sex = '' ";
-    }
+    // 유효한 본인인증 결과가 없으면 회원정보를 바꾸지 않는다. (KVE-2026-3201)
+    alert('본인인증을 완료한 뒤 다시 시도해 주십시오.', G5_BBS_URL.'/member_cert_refresh.php');
 }
 
 $sql = "update {$g5['member_table']} set {$sql_certify} where mb_id = '{$mb_id}'";
@@ -84,6 +97,11 @@ if($result){
 }
 
 run_event('cert_refresh_update_after', $mb_id);
+
+// 사용한 본인인증 결과는 다시 쓰지 못하게 비운다. (KVE-2026-3201)
+foreach (array('ss_cert_type', 'ss_cert_no', 'ss_cert_hash', 'ss_cert_adult', 'ss_cert_birth', 'ss_cert_sex', 'ss_cert_dupinfo') as $ss_cert_name) {
+    set_session($ss_cert_name, '');
+}
 
 //===============================================================
 

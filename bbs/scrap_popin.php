@@ -58,6 +58,7 @@ HEREDOC;
     exit;
 }
 
+$scrap_token = g5_get_form_token('scrap_'.$bo_table.'_'.(int)$wr_id, $member['mb_id']);
 include_once($member_skin_path.'/scrap_popin.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
