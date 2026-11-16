@@ -10,6 +10,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 <div class="member_cert_refresh">
     <form name="fcertrefreshform" id="member_cert_refresh" action="<?php echo $action_url ?>" onsubmit="return fcertrefreshform_submit(this);" method="POST" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>">
+    <input type="hidden" name="token" value="<?php echo isset($cert_refresh_token) ? $cert_refresh_token : ''; ?>">
 	<input type="hidden" name="url" value="<?php echo $urlencode ?>">
 	<input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
     <input type="hidden" name="mb_id" value="<?php echo $member['mb_id']; ?>">

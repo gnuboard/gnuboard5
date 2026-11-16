@@ -36,7 +36,7 @@ $sql = " select * from {$g5['memo_table']}
             and me_{$kind}_mb_id = '{$member['mb_id']}' ";
 $memo = sql_fetch($sql);
 
-set_session('ss_memo_delete_token', $token = uniqid(time()));
+$token = g5_get_form_token('memo_delete', $member['mb_id']);
 $del_link = 'memo_delete.php?me_id='.$memo['me_id'].'&amp;token='.$token.'&amp;kind='.$kind;
 
 $g5['title'] = $t.' 쪽지 보기';
