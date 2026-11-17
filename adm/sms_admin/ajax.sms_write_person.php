@@ -30,12 +30,9 @@ if ($st == 'all') {
     $sql_search = '';
 }
 
-if ($ap > 0)
-    $sql_korean = korean_index('bk_name', $ap-1);
-else {
-    $sql_korean = '';
-    $ap = 0;
-}
+// 초성 검색(ap)은 화면에서 제공하지 않고 처리 함수도 없어 요청하면 오류로 멈췄다. 받은 값은 무시한다.
+$sql_korean = '';
+$ap = 0;
 
 if ($no_hp == 'yes') {
     set_cookie('cookie_no_hp', 'yes', 60*60*24*365);
