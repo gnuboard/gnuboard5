@@ -497,21 +497,25 @@ function byte_check(wr_message, sms_bytes)
 <?php
 if ($bk_no) {
 $row = sql_fetch("select * from {$g5['sms5_book_table']} where bk_no='$bk_no'");
+if (isset($row['bk_no']) && $row['bk_no']) {
 ?>
 
 var hp_list = document.getElementById('hp_list');
-var item    = "<?php echo $row['bk_name']?> (<?php echo $row['bk_hp']?>)";
-var value   = "p,<?php echo $row['bk_no']?>";
+var item    = <?php echo get_js_safe_string($row['bk_name'].' ('.$row['bk_hp'].')'); ?>;
+var value   = <?php echo get_js_safe_string('p,'.(int)$row['bk_no']); ?>;
 
 hp_list.options[hp_list.length] = new Option(item, value);
 
-<?php } ?>
+<?php }
+} ?>
 
 <?php
 if ($fo_no) {
     $row = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");
-    $fo_content = str_replace(array("\r\n","\n"), "\\n", $row['fo_content']);
-    echo "add(\"$fo_content\");";
+    if (isset($row['fo_content'])) {
+        $fo_content = str_replace("\r\n", "\n", $row['fo_content']);
+        echo "add(".get_js_safe_string($fo_content).");";
+    }
 }
 ?>
 
@@ -528,11 +532,9 @@ if ($wr_no)
 
     echo "<script>\n";
     echo "var hp_list = document.getElementById('hp_list');\n";
-    //echo "add(\"$row[wr_message]\");\n";
-    $wr_message = str_replace('"', '\"', $row['wr_message']);
-    $wr_message = str_replace(array("\r\n","\n"), "\\n", $wr_message);
-    echo "add(\"$wr_message\");\n";
-    echo "document.getElementById('wr_reply').value = '{$row['wr_reply']}';\n";
+    $wr_message = str_replace("\r\n", "\n", isset($row['wr_message']) ? $row['wr_message'] : '');
+    echo "add(".get_js_safe_string($wr_message).");\n";
+    echo "document.getElementById('wr_reply').value = ".get_js_safe_string(isset($row['wr_reply']) ? $row['wr_reply'] : '').";\n";
 
     // 회원목록
     $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no > 0 ";
@@ -549,7 +551,7 @@ if ($wr_no)
             $val .= $row['bk_no'].',';
         }
 
-        echo "hp_list.options[hp_list.length] = new Option('$str', '$val');\n";
+        echo "hp_list.options[hp_list.length] = new Option(".get_js_safe_string($str).", ".get_js_safe_string($val).");\n";
     }
 
     // 비회원 목록
@@ -563,7 +565,7 @@ if ($wr_no)
         {
             $str = "{$row['hs_name']} ({$row['hs_hp']})";
             $val = "h,{$row['hs_name']}:{$row['hs_hp']}";
-            echo "hp_list.options[hp_list.length] = new Option('$str', '$val');\n";
+            echo "hp_list.options[hp_list.length] = new Option(".get_js_safe_string($str).", ".get_js_safe_string($val).");\n";
         }
     }
     echo "</script>\n";

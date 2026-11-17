@@ -10,9 +10,21 @@ check_admin_token();
 
 $post_ca_id_count = (isset($_POST['ca_id']) && is_array($_POST['ca_id'])) ? count($_POST['ca_id']) : 0;
 
+// 최고관리자가 아니면 제출된 분류가 모두 본인 관리 분류일 때만 처리한다(일부만 처리하지 않는다).
+if ($is_admin != 'super') {
+    for ($i=0; $i<$post_ca_id_count; $i++) {
+        $chk_ca_id = isset($_POST['ca_id'][$i]) && is_string($_POST['ca_id'][$i]) ? $_POST['ca_id'][$i] : '';
+        if (!shop_admin_category_owner_check($chk_ca_id))
+            alert('분류를 관리할 권한이 없습니다.', "./categorylist.php?$qstr");
+    }
+}
+
 for ($i=0; $i<$post_ca_id_count; $i++)
 {
     $str_ca_mb_id = isset($_POST['ca_mb_id'][$i]) ? strip_tags(clean_xss_attributes($_POST['ca_mb_id'][$i])) : '';
+    // 관리 회원 지정은 최고관리자만 한다.
+    if ($is_admin != 'super')
+        $str_ca_mb_id = $_POST['ca_mb_id'][$i] = $member['mb_id'];
 
     if ($str_ca_mb_id)
     {
@@ -89,6 +101,8 @@ for ($i=0; $i<$post_ca_id_count; $i++)
                     ca_mobile_list_mod  = '".sql_real_escape_string(strip_tags($posts['ca_mobile_list_mod']))."',
                     ca_mobile_list_row  = '".sql_real_escape_string(strip_tags($posts['ca_mobile_list_row']))."'
               where ca_id = '".sql_real_escape_string($posts['ca_id'])."' ";
+    if ($is_admin != 'super')
+        $sql .= " and ca_mb_id = '".sql_real_escape_string($member['mb_id'])."' ";
 
     sql_query($sql);
 
