@@ -2,7 +2,6 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if (!empty($inicis_pro_use)) {
-    $inicis_pro_mobile_form = false;
     require(G5_SHOP_PATH.'/inicis/pro/orderform.1.php');
     return;
 }

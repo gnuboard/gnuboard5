@@ -90,16 +90,19 @@ if ($result) {
 
     } else {
 
-        // 화면 모드와 관계없이 결제를 시작한 화면으로 돌려보낸다(주문서·개인결제는 같은 주소에서 기기별 폼을 고른다).
-        if ($is_personal) {
-            $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.urlencode((string)get_session('ss_personalpay_id'));
-        } else {
-            $page_return_url = G5_SHOP_URL.'/orderform.php';
-            if(get_session('ss_direct'))
-                $page_return_url .= '?sw_direct=1';
-        }
+        if(G5_IS_MOBILE) {
+            if(isset($_POST['pp_id']) && $_POST['pp_id']) {
+                $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
+            } else {
+                $page_return_url = G5_SHOP_URL.'/orderform.php';
+                if(get_session('ss_direct'))
+                    $page_return_url .= '?sw_direct=1';
+            }
 
-        alert($toss->responseData['message'].' 코드 : '.$toss->responseData['code'], $page_return_url);
+            alert($toss->responseData['message'].' 코드 : '.$toss->responseData['code'], $page_return_url);
+        } else {
+            alert($toss->responseData['message'].' 코드 : '.$toss->responseData['code'], G5_SHOP_URL.'/orderform.php');
+        }
     }
 } else {
     alert($toss->responseData['message'].' 코드 : '.$toss->responseData['code'], G5_SHOP_URL);

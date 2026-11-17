@@ -3,9 +3,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 add_javascript('<script src="https://paypro.inicis.com/std/payment/js/INIPayPro_v2.js" charset="UTF-8"></script>', 10);
 
-// 모바일 주문서는 User-Agent(is_mobile())로 선택되므로, 화면 모드(G5_IS_MOBILE)가 아니라
-// 모바일 주문서에서 불러왔는지로 보조 폼 생성 여부를 정한다.
-if (!empty($inicis_pro_mobile_form)) {
+if (G5_IS_MOBILE) {
 ?>
 <form name="sm_form" method="post" action="">
 <input type="hidden" name="good_mny" value="<?php echo isset($tot_price) ? (int) $tot_price : 0; ?>">

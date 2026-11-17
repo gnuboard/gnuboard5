@@ -2,8 +2,6 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if (!empty($inicis_pro_use)) {
-    // 모바일 주문서·개인결제 폼의 pay_approval()은 sm_form을 사용한다(화면 모드와 무관).
-    $inicis_pro_mobile_form = true;
     require(G5_SHOP_PATH.'/inicis/pro/orderform.1.php');
     return;
 }

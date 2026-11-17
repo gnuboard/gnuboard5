@@ -202,8 +202,15 @@ if( $cert_enc_use == "Y" )
 }
 else if( $cert_enc_use != "Y" )
 {
-    // 암호화 인증 안함. 인증창은 화면 모드와 관계없이 팝업으로 열리므로(js/certify.js) 안내 후 창을 닫는다.
-    alert_close("휴대폰 본인확인을 취소 하셨습니다.");
+    // 암호화 인증 안함
+    if( G5_IS_MOBILE ){
+        echo '<script>'.PHP_EOL;
+        echo 'window.parent.$("#cert_info").css("display", "");'.PHP_EOL;
+        echo 'window.parent.$("#kcp_cert" ).css("display", "none");'.PHP_EOL;
+        echo '</script>'.PHP_EOL;
+    } else {
+        alert_close("휴대폰 본인확인을 취소 하셨습니다.");
+    }
     exit;
 }
 
