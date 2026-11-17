@@ -189,11 +189,14 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                         }
                     }
                     
-                    if( !empty($params['sw_direct']) && !empty($params['post_cart_id'])  ){
+                    // 장바구니는 임시주문 저장 때 서버 세션에서 기록한 cart_id 컬럼으로 복원한다.
+                    // dt_data의 post_cart_id는 요청값이 저장되었을 수 있으므로 복원 기준으로 쓰지 않는다.
+                    $restore_cart_id = isset($od['cart_id']) ? preg_replace('/[^0-9]/', '', (string)$od['cart_id']) : '';
+                    if( !empty($params['sw_direct']) && $restore_cart_id ){
                         set_session('ss_direct', $params['sw_direct']);
-                        set_session('ss_cart_direct', $params['post_cart_id']);
-                    } else if ( $params['post_cart_id'] ){
-                        set_session('ss_cart_id', $params['post_cart_id']);
+                        set_session('ss_cart_direct', $restore_cart_id);
+                    } else if ( $restore_cart_id ){
+                        set_session('ss_cart_id', $restore_cart_id);
                     }
                     
                     try {
