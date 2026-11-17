@@ -17,6 +17,17 @@ if( ! $ca_id ){
     alert('', G5_SHOP_URL);
 }
 
+// 최고관리자가 아니면 수정은 대상 분류, 하위 분류 추가는 부모 분류를 본인이 관리할 때만 허용한다.
+if ($is_admin != 'super') {
+    if ($w == 'u') {
+        if (!shop_admin_category_owner_check($ca_id))
+            alert('분류를 관리할 권한이 없습니다.');
+    } else if ($w == '') {
+        if (strlen($ca_id) <= 2 || !shop_admin_category_owner_check(substr($ca_id, 0, -2)))
+            alert('분류를 관리할 권한이 없습니다.');
+    }
+}
+
 if ($file = $ca_include_head) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
@@ -83,6 +94,11 @@ foreach( $check_str_keys as $key=>$val ){
         $value = isset($_POST[$key]) ? addslashes(clean_xss_tags(stripslashes($_POST[$key]), 1, 1)) : '';
     }
     $$key = $_POST[$key] = $value;
+}
+
+// 관리 회원 지정은 최고관리자만 한다. 위임 관리자의 요청 값은 무시하고 본인으로 둔다(소유자는 위에서 확인).
+if ($is_admin != 'super') {
+    $ca_mb_id = $_POST['ca_mb_id'] = addslashes($member['mb_id']);
 }
 
 $ca_head_html = isset($_POST['ca_head_html']) ? $_POST['ca_head_html'] : '';
@@ -209,6 +225,8 @@ else if ($w == "u")
                 set ca_name = '$ca_name',
                     $sql_common
               where ca_id = '$ca_id' ";
+    if ($is_admin != 'super')
+        $sql .= " and ca_mb_id = '".sql_real_escape_string($member['mb_id'])."' ";
     sql_query($sql);
 
     // 하위분류를 똑같은 설정으로 반영

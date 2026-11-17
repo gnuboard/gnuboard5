@@ -1,6 +1,31 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+// 분류 관리 권한 확인: 최고관리자가 아니면 DB에 저장된 분류의 관리 회원(ca_mb_id)이 현재 회원일 때만 허용한다.
+// 요청 값(POST ca_mb_id 등)이 아니라 DB 값을 기준으로 판단한다.
+function shop_admin_category_owner_check($ca_id)
+{
+    global $g5, $is_admin, $member;
+
+    if ($is_admin === 'super') {
+        return true;
+    }
+
+    if (!is_string($ca_id) && !is_int($ca_id)) {
+        return false;
+    }
+
+    $ca_id = preg_replace('/[^0-9a-z]/i', '', (string)$ca_id);
+    $mb_id = isset($member['mb_id']) ? (string)$member['mb_id'] : '';
+    if ($ca_id === '' || $mb_id === '') {
+        return false;
+    }
+
+    $row = sql_fetch(" select ca_mb_id from {$g5['g5_shop_category_table']} where ca_id = '".sql_real_escape_string($ca_id)."' ");
+
+    return isset($row['ca_mb_id']) && (string)$row['ca_mb_id'] !== '' && (string)$row['ca_mb_id'] === $mb_id;
+}
+
 function get_shop_skin_dirs($is_mobile=false)
 {
     global $config;

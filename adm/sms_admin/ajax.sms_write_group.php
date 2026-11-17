@@ -23,9 +23,9 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
     </thead>
     <tbody>
     <tr>
-        <td><a href="javascript:sms_obj.person(1)"><?php echo $no_group['bg_name']?></a></td>
+        <td><a href="javascript:sms_obj.person(1)"><?php echo get_text($no_group['bg_name']); ?></a></td>
         <td class="td_num"><?php echo number_format($no_group['bg_receipt'])?></td>
-        <td class="td_mngsmall"><button type="button" class="btn_frmline" onclick="sms_obj.group_add(1, '<?php echo $no_group['bg_name']?>', '<?php echo number_format($no_group['bg_receipt'])?>')">추가</button></td>
+        <td class="td_mngsmall"><button type="button" class="btn_frmline" onclick="sms_obj.group_add(1, <?php echo htmlspecialchars(get_js_safe_string($no_group['bg_name']), ENT_QUOTES); ?>, <?php echo htmlspecialchars(get_js_safe_string(number_format($no_group['bg_receipt'])), ENT_QUOTES); ?>)">추가</button></td>
     </tr>
     <?php
     $line = 1;
@@ -33,9 +33,9 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
         $bg = 'bg'.($line++%2);
     ?>
     <tr class="<?php echo $bg; ?>">
-        <td><a href="javascript:sms_obj.person(<?php echo $group[$i]['bg_no']?>)"><?php echo $group[$i]['bg_name']?></a></td>
+        <td><a href="javascript:sms_obj.person(<?php echo (int)$group[$i]['bg_no']; ?>)"><?php echo get_text($group[$i]['bg_name']); ?></a></td>
         <td class="td_num"><?php echo number_format($group[$i]['bg_receipt'])?></td>
-        <td class="td_mngsmall"><button type="button" class="btn_frmline" onclick="sms_obj.group_add(<?php echo $group[$i]['bg_no']?>, '<?php echo $group[$i]['bg_name']?>', '<?php echo number_format($group[$i]['bg_receipt'])?>')">추가</button></td>
+        <td class="td_mngsmall"><button type="button" class="btn_frmline" onclick="sms_obj.group_add(<?php echo (int)$group[$i]['bg_no']; ?>, <?php echo htmlspecialchars(get_js_safe_string($group[$i]['bg_name']), ENT_QUOTES); ?>, <?php echo htmlspecialchars(get_js_safe_string(number_format($group[$i]['bg_receipt'])), ENT_QUOTES); ?>)">추가</button></td>
     </tr>
     <?php } ?>
     </tbody>

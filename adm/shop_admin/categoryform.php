@@ -38,6 +38,9 @@ if ($w == "")
     if ($is_admin != 'super' && !$ca_id)
         alert("최고관리자만 1단계 분류를 추가할 수 있습니다.");
 
+    if ($ca_id && !shop_admin_category_owner_check($ca_id))
+        alert("분류를 관리할 권한이 없습니다.");
+
     $len = strlen($ca_id);
     if ($len == 10)
         alert("분류를 더 이상 추가할 수 없습니다.\\n\\n5단계 분류까지만 가능합니다.");
@@ -93,6 +96,9 @@ else if ($w == "u")
     $ca = sql_fetch($sql);
     if (! (isset($ca['ca_id']) && $ca['ca_id']))
         alert("자료가 없습니다.");
+
+    if (!shop_admin_category_owner_check($ca_id))
+        alert("분류를 관리할 권한이 없습니다.");
 
     $html_title = $ca['ca_name'] . " 수정";
     $ca['ca_name'] = get_text($ca['ca_name']);
