@@ -28,14 +28,14 @@ location ^~ /migrations/ {
 }
 ```
 
-하위 경로에 설치했다면 실제 공개 URL에 맞춰 두 경로를 모두 바꾼다. 예를 들어 `/gnuboard5-dev/`에 설치한 경우 다음과 같다.
+하위 경로에 설치했다면 실제 공개 URL에 맞춰 두 경로를 모두 바꾼다. 예를 들어 `/gnuboard5/`에 설치한 경우 다음과 같다.
 
 ```nginx
-location = /gnuboard5-dev/migrations {
+location = /gnuboard5/migrations {
     return 404;
 }
 
-location ^~ /gnuboard5-dev/migrations/ {
+location ^~ /gnuboard5/migrations/ {
     return 404;
 }
 ```
