@@ -150,7 +150,7 @@ if($od['mb_id'] && $od_send_cost > 0) {
         $dc = 0;
         if(!$cp_used && $cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
             if($cp['cp_type']) {
-                $dc = floor(($send_cost * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                $dc = floor(($od_send_cost * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
             } else {
                 $dc = $cp['cp_price'];
             }
@@ -158,8 +158,8 @@ if($od['mb_id'] && $od_send_cost > 0) {
             if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
                 $dc = $cp['cp_maximum'];
 
-            if($dc > $send_cost)
-                $dc = $send_cost;
+            if($dc > $od_send_cost)
+                $dc = $od_send_cost;
 
             $tot_sc_cp_price = $dc;
         }
