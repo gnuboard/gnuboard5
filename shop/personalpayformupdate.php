@@ -231,6 +231,9 @@ if(!$result) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
             break;
+        case 'toss':
+            include G5_SHOP_PATH.'/toss/toss_cancel.php';
+            break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
             break;

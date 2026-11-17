@@ -5,7 +5,8 @@
  * 이 파일을 include 하기 전에 $cancel_msg 변수를 설정해야 합니다.
  * 필요 변수: $tno, $od_pg, $pg_price, $amount, $cancel_msg
  */
-if (!defined('G5_IS_SHOP')) exit;
+// 직접 호출만 막는다. 이전의 G5_IS_SHOP은 어디에서도 정의되지 않아 include하면 항상 종료되었다.
+if (!defined('_GNUBOARD_')) exit;
 
 switch($od_pg) {
     case 'lg':
