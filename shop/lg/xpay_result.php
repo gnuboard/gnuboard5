@@ -51,6 +51,16 @@ $xpay->Set('LGD_PAYKEY', $LGD_PAYKEY);
  *
  * 최종 결제요청 결과 리턴 파라미터는 연동메뉴얼을 참고하시기 바랍니다.
  */
+// 실패 시 돌아갈 주소. 화면 모드와 관계없이 결제를 시작한 화면으로 돌려보낸다(주문서·개인결제는 같은 주소에서
+// 기기별 폼을 고른다). 모바일 결제는 PG 화면을 거쳐 돌아오므로 뒤로 가기(history.back)로는 주문서로 돌아오지 못한다.
+if(isset($_POST['pp_id']) && $_POST['pp_id']) {
+    $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.urlencode((string)get_session('ss_personalpay_id'));
+} else {
+    $page_return_url = G5_SHOP_URL.'/orderform.php';
+    if(get_session('ss_direct'))
+        $page_return_url .= '?sw_direct=1';
+}
+
 if ($xpay->TX()) {
     //1)결제결과 화면처리(성공,실패 결과 처리를 하시기 바랍니다.)
     /*
@@ -96,19 +106,7 @@ if ($xpay->TX()) {
         //최종결제요청 결과 실패 DB처리
         //echo "최종결제요청 결과 실패 DB처리하시기 바랍니다.<br>";
 
-        if(G5_IS_MOBILE) {
-            if(isset($_POST['pp_id']) && $_POST['pp_id']) {
-                $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
-            } else {
-                $page_return_url = G5_SHOP_URL.'/orderform.php';
-                if(get_session('ss_direct'))
-                    $page_return_url .= '?sw_direct=1';
-            }
-
-            alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code(), $page_return_url);
-        } else {
-            alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code());
-        }
+        alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code(), $page_return_url);
     }
 } else {
     //2)API 요청실패 화면처리
@@ -121,5 +119,5 @@ if ($xpay->TX()) {
     echo "최종결제요청 결과 실패 DB처리하시기 바랍니다.<br>";
     */
 
-    alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code());
+    alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code(), $page_return_url);
 }

@@ -39,6 +39,9 @@ if(isset($_POST['pp_id']) && $_POST['pp_id']) {
         die('해당 개인결제는 사용이 금지되어 있습니다.');
     }
 
+    // 개인결제에는 장바구니가 없다. 요청값으로 장바구니 ID를 저장하지 않는다.
+    unset($_POST['post_cart_id']);
+
 } else {
     $od_id   = get_session('ss_order_id');
     $_POST['sw_direct'] = get_session('ss_direct');
@@ -50,9 +53,9 @@ if(isset($_POST['pp_id']) && $_POST['pp_id']) {
         $cart_id = get_session('ss_cart_id');
     }
 
-    if( G5_IS_MOBILE && $default['de_pg_service'] == 'inicis' ){
-        $_POST['post_cart_id'] = $cart_id;
-    }
+    // 모바일 이니시스(삼성페이·L.pay 등 포함) 결과 통보는 사용자 세션 없이 들어와 이 값으로 장바구니를 복원한다.
+    // 모바일 주문서는 User-Agent로 고르므로 화면 모드(G5_IS_MOBILE)나 기본 PG와 관계없이 서버 세션 값으로 저장한다.
+    $_POST['post_cart_id'] = $cart_id;
 }
 
 if (!shop_order_access_id((string)$od_id) || (empty($_POST['pp_id']) && !$cart_id)) shop_order_access_fail();
