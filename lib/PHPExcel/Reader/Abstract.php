@@ -273,6 +273,68 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
         if (preg_match($pattern, $xml)) {
             throw new PHPExcel_Reader_Exception('Detected use of ENTITY in XML, spreadsheet file load() aborted to prevent XXE/XEE attacks');
         }
+        // gnuboard KVE-2026-3262: the pattern above only tolerates NUL bytes between the letters,
+        // while libxml decodes the declared or detected encoding (ISO-2022 escape sequences,
+        // UTF-32, EBCDIC ...) before it sees the DOCTYPE. Normalise to UTF-8 first and refuse
+        // any encoding that cannot be inspected reliably.
+        $normalised = str_replace("\0", '', self::securityScanNormalise($xml));
+        if (preg_match('/<!\s*(DOCTYPE|ENTITY)/i', $normalised)) {
+            throw new PHPExcel_Reader_Exception('Detected use of ENTITY in XML, spreadsheet file load() aborted to prevent XXE/XEE attacks');
+        }
+        return $xml;
+    }
+
+    /**
+     * gnuboard KVE-2026-3262: return the XML as UTF-8 text for scanning.
+     * Only UTF-8 (or ASCII) and UTF-16 documents are accepted.
+     *
+     * @param     string         $xml
+     * @return    string
+     * @throws PHPExcel_Reader_Exception
+     */
+    protected static function securityScanNormalise($xml)
+    {
+        $xml = (string) $xml;
+        // ESC is not a valid XML character; it only appears in ISO-2022 style shift sequences.
+        if (strpos($xml, "\x1b") !== false) {
+            throw new PHPExcel_Reader_Exception('Detected escape sequence in XML, spreadsheet file load() aborted');
+        }
+        $head4 = substr($xml, 0, 4);
+        $unsupported = array("\x00\x00\xFE\xFF", "\xFF\xFE\x00\x00", "\x00\x00\x00\x3C", "\x3C\x00\x00\x00",
+            "\x00\x00\x3C\x00", "\x00\x3C\x00\x00", "\x4C\x6F\xA7\x94", "\x2B\x2F\x76");
+        if (in_array($head4, $unsupported, true) || in_array(substr($xml, 0, 3), $unsupported, true)) {
+            throw new PHPExcel_Reader_Exception('Unsupported XML encoding, spreadsheet file load() aborted');
+        }
+        $head2 = substr($xml, 0, 2);
+        $from = '';
+        if ($head2 === "\xFF\xFE" || $head2 === "\x3C\x00") {
+            $from = 'UTF-16LE';
+        } elseif ($head2 === "\xFE\xFF" || $head2 === "\x00\x3C") {
+            $from = 'UTF-16BE';
+        }
+        if ($from !== '') {
+            if (function_exists('mb_convert_encoding')) {
+                $xml = mb_convert_encoding($xml, 'UTF-8', $from);
+            } elseif (function_exists('iconv')) {
+                $xml = @iconv($from, 'UTF-8//IGNORE', $xml);
+            } else {
+                throw new PHPExcel_Reader_Exception('Cannot inspect UTF-16 XML, spreadsheet file load() aborted');
+            }
+            if (!is_string($xml)) {
+                throw new PHPExcel_Reader_Exception('Invalid UTF-16 XML, spreadsheet file load() aborted');
+            }
+        }
+        if (substr($xml, 0, 3) === "\xEF\xBB\xBF") {
+            $xml = substr($xml, 3);
+        }
+        if (preg_match('/^\s*<\?xml\s([^>]*)>/', $xml, $declaration)
+            && preg_match('/encoding\s*=\s*["\']\s*([^"\']*)["\']/i', $declaration[1], $encoding)) {
+            $encoding = strtoupper(trim($encoding[1]));
+            $allowed = ($from === '') ? array('UTF-8', 'UTF8', 'US-ASCII', 'ASCII') : array('UTF-16', 'UTF-16LE', 'UTF-16BE');
+            if (!in_array($encoding, $allowed, true)) {
+                throw new PHPExcel_Reader_Exception('Unsupported XML encoding, spreadsheet file load() aborted');
+            }
+        }
         return $xml;
     }
 

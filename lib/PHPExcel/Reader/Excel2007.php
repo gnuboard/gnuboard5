@@ -36,6 +36,10 @@ if (!defined('PHPEXCEL_ROOT')) {
  */
 class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
 {
+    // gnuboard KVE-2026-3266, KVE-2026-3267: worksheet size limits of the file format
+    const MAX_ROW = 1048576;
+    const MAX_COLUMN = 16384;
+
     /**
      * PHPExcel_ReferenceHelper instance
      *
@@ -748,7 +752,13 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
                             if (isset($xmlSheet->cols) && !$this->readDataOnly) {
                                 foreach ($xmlSheet->cols->col as $col) {
-                                    for ($i = intval($col["min"]) - 1; $i < intval($col["max"]); ++$i) {
+                                    // gnuboard KVE-2026-3267: column ranges must satisfy 1 <= min <= max <= 16384
+                                    $colMin = intval($col["min"]);
+                                    $colMax = intval($col["max"]);
+                                    if ($colMin < 1 || $colMax < $colMin || $colMax > self::MAX_COLUMN) {
+                                        throw new PHPExcel_Reader_Exception('Invalid column range in worksheet');
+                                    }
+                                    for ($i = $colMin - 1; $i < $colMax; ++$i) {
                                         if ($col["style"] && !$this->readDataOnly) {
                                             $docSheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($i))->setXfIndex(intval($col["style"]));
                                         }
@@ -791,6 +801,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
                             if ($xmlSheet && $xmlSheet->sheetData && $xmlSheet->sheetData->row) {
                                 foreach ($xmlSheet->sheetData->row as $row) {
+                                    // gnuboard KVE-2026-3266: row numbers must satisfy 1 <= r <= 1048576
+                                    if (isset($row["r"]) && (intval($row["r"]) < 1 || intval($row["r"]) > self::MAX_ROW)) {
+                                        throw new PHPExcel_Reader_Exception('Invalid row number in worksheet');
+                                    }
                                     if ($row["ht"] && !$this->readDataOnly) {
                                         $docSheet->getRowDimension(intval($row["r"]))->setRowHeight(floatval($row["ht"]));
                                     }
@@ -816,6 +830,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                         // Read cell?
                                         if ($this->getReadFilter() !== null) {
                                             $coordinates = PHPExcel_Cell::coordinateFromString($r);
+                                            // gnuboard KVE-2026-3266, KVE-2026-3267: cells must lie inside A1:XFD1048576
+                                            if ($coordinates[1] < 1 || $coordinates[1] > self::MAX_ROW
+                                                || PHPExcel_Cell::columnIndexFromString($coordinates[0]) > self::MAX_COLUMN) {
+                                                throw new PHPExcel_Reader_Exception('Invalid cell coordinate in worksheet');
+                                            }
 
                                             if (!$this->getReadFilter()->readCell($coordinates[0], $coordinates[1], $docSheet->getTitle())) {
                                                 continue;

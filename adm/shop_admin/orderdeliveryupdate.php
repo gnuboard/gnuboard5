@@ -3,6 +3,7 @@ $sub_menu = '400400';
 include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
+include_once(G5_LIB_PATH.'/spreadsheet_upload.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -13,16 +14,17 @@ define("_ORDERMAIL_", true);
 $sms_count = 0;
 $sms_messages = array();
 
-if(isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) {
-    $file = $_FILES['excelfile']['tmp_name'];
+// 파일을 골랐지만 업로드에 실패한 경우(크기 초과 등)도 공통 검사가 원인을 알려 준다.
+if(isset($_FILES['excelfile']['name']) && is_string($_FILES['excelfile']['name']) && $_FILES['excelfile']['name'] !== '') {
+    // 확장자와 시그니처가 맞는 xls·xlsx만 형식별 리더로 읽는다. 주문번호~운송장번호(A~J)열만 읽는다.
+    $spreadsheet = g5_spreadsheet_upload_open($_FILES['excelfile'], array('max_column' => 'J'));
+    if ($spreadsheet['error'] !== '') {
+        alert($spreadsheet['error']);
+    }
+    $sheet = $spreadsheet['sheet'];
 
-    include_once(G5_LIB_PATH.'/PHPExcel/IOFactory.php');
-
-    $objPHPExcel = PHPExcel_IOFactory::load($file);
-    $sheet = $objPHPExcel->getSheet(0);
-
-    $num_rows = $sheet->getHighestRow();
-    $highestColumn = $sheet->getHighestColumn();
+    $num_rows = $spreadsheet['num_rows'];
+    $highestColumn = $spreadsheet['max_column'];
 
     $fail_od_id = array();
     $total_count = 0;

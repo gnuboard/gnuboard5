@@ -1,6 +1,7 @@
 <?php
 $sub_menu = "900900";
 include_once("./_common.php");
+include_once(G5_LIB_PATH.'/spreadsheet_upload.lib.php');
 
 auth_check_menu($auth, $sub_menu, "r");
 
@@ -27,7 +28,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </p>
 
     <p>
-        엑셀파일은 XLS( Excel 97 - 2003 통합 문서 ) 또는 CSV형식만 업로드 할수 있습니다. (xlsx 불가)<br>
+        엑셀파일은 XLS( Excel 97 - 2003 통합 문서 ), XLSX( Excel 통합 문서 ) 또는 CSV형식으로 업로드할 수 있습니다.<br>
+        파일은 최대 <?php echo g5_spreadsheet_size_text(G5_SPREADSHEET_UPLOAD_MAX_SIZE); ?>까지, XLS·XLSX는 <?php echo number_format(G5_SPREADSHEET_UPLOAD_MAX_ROWS); ?>행까지 올릴 수 있습니다.<br>
         <strong>CSV 저장방법 : 파일 > 다른 이름으로 저장 > 파일형식 : CSV (쉼표로 분리) (*.CSV)</strong>
     </p>
 

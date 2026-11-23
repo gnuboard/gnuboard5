@@ -1,9 +1,10 @@
 <?php
 $sub_menu = '400300';
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/spreadsheet_upload.lib.php');
 
-// 상품이 많을 경우 대비 설정변경
-set_time_limit ( 0 );
+// 상품이 많을 경우 대비 설정변경. 처리 시간은 무제한으로 두지 않는다.
+@set_time_limit(G5_SPREADSHEET_UPLOAD_TIME_LIMIT);
 ini_set('memory_limit', '50M');
 
 auth_check_menu($auth, $sub_menu, "w");
@@ -15,22 +16,23 @@ function only_number($n)
     return preg_replace('/[^0-9]/', '', (string)$n);
 }
 
-$is_upload_file = (isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) ? 1 : 0;
+// 파일을 골랐지만 업로드에 실패한 경우(크기 초과 등)도 공통 검사가 원인을 알려 준다.
+$is_upload_file = (isset($_FILES['excelfile']['name']) && is_string($_FILES['excelfile']['name']) && $_FILES['excelfile']['name'] !== '') ? 1 : 0;
 
 if( ! $is_upload_file){
     alert("엑셀 파일을 업로드해 주세요.");
 }
 
 if($is_upload_file) {
-    $file = $_FILES['excelfile']['tmp_name'];
+    // 확장자와 시그니처가 맞는 xls·xlsx만 형식별 리더로 읽는다. 상품코드~이미지10(A~AN)열만 읽는다.
+    $spreadsheet = g5_spreadsheet_upload_open($_FILES['excelfile'], array('max_column' => 'AN'));
+    if ($spreadsheet['error'] !== '') {
+        alert($spreadsheet['error']);
+    }
+    $sheet = $spreadsheet['sheet'];
 
-    include_once(G5_LIB_PATH.'/PHPExcel/IOFactory.php');
-
-    $objPHPExcel = PHPExcel_IOFactory::load($file);
-    $sheet = $objPHPExcel->getSheet(0);
-
-    $num_rows = $sheet->getHighestRow();
-    $highestColumn = $sheet->getHighestColumn();
+    $num_rows = $spreadsheet['num_rows'];
+    $highestColumn = $spreadsheet['max_column'];
 
     $dup_it_id = array();
     $fail_it_id = array();

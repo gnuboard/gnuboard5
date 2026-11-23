@@ -1,6 +1,7 @@
 <?php
 $sub_menu = "900900";
 include_once("./_common.php");
+include_once(G5_LIB_PATH.'/spreadsheet_upload.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -14,14 +15,13 @@ if (!$upload_bg_no)
 
 $bg_no = $upload_bg_no;
 
-if (! (isset($_FILES['csv']['size']) && $_FILES['csv']['size'])) 
-    alert_after('파일을 선택해주세요.');
+// 업로드 오류·크기·확장자를 확인한다. xls·xlsx는 파일 시그니처까지 맞아야 하고, CSV는 PHPExcel을 쓰지 않는다.
+$upload = g5_spreadsheet_upload_check(isset($_FILES['csv']) ? $_FILES['csv'] : null, array('xls', 'xlsx', 'csv'));
+if ($upload['error'] !== '')
+    alert_after($upload['error']);
 
-$file = $_FILES['csv']['tmp_name'];
-$filename = $_FILES['csv']['name'];
-
-$pos = strrpos($filename, '.');
-$ext = strtolower(substr($filename, $pos, strlen($filename)));
+$file = $upload['path'];
+$ext = '.'.$upload['type'];
 
 if(! function_exists('column_char')) {
     function column_char($i) {
@@ -48,12 +48,14 @@ switch ($ext) {
         break;
     case '.xls' :
     case '.xlsx' :
-        include_once(G5_LIB_PATH.'/PHPExcel/IOFactory.php');
-        $objPHPExcel = PHPExcel_IOFactory::load($file);
-        $sheet = $objPHPExcel->getSheet(0);
+        // 형식별 리더로 이름·휴대폰번호(A~B)열만 읽는다.
+        $spreadsheet = g5_spreadsheet_load($file, $upload['type'], array('max_column' => 'B'));
+        if ($spreadsheet['error'] !== '')
+            alert_after($spreadsheet['error']);
+        $sheet = $spreadsheet['sheet'];
 
-        $num_rows = $sheet->getHighestRow();
-        $highestColumn = $sheet->getHighestColumn();
+        $num_rows = $spreadsheet['num_rows'];
+        $highestColumn = $spreadsheet['max_column'];
 
         break;
     default :

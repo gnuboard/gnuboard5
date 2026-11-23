@@ -32,6 +32,10 @@ class PHPExcel_Shared_OLERead
 {
     private $data = '';
 
+    // gnuboard KVE-2026-3265: number of 512 byte sectors in the file, and of sectors covered by the SAT
+    private $numSectors = 0;
+    private $numChainSectors = 0;
+
     // OLE identifier
     const IDENTIFIER_OLE                    = IDENTIFIER_OLE;
 
@@ -93,6 +97,12 @@ class PHPExcel_Shared_OLERead
         // Get the file data
         $this->data = file_get_contents($sFileName);
 
+        // gnuboard KVE-2026-3265: every count and sector id below is bounded by the file size
+        if (strlen($this->data) < self::BIG_BLOCK_SIZE) {
+            throw new PHPExcel_Reader_Exception('The OLE header is truncated');
+        }
+        $this->numSectors = (int) ceil((strlen($this->data) - self::BIG_BLOCK_SIZE) / self::BIG_BLOCK_SIZE);
+
         // Total number of sectors used for the SAT
         $this->numBigBlockDepotBlocks = self::getInt4d($this->data, self::NUM_BIG_BLOCK_DEPOT_BLOCKS_POS);
 
@@ -108,6 +118,13 @@ class PHPExcel_Shared_OLERead
         // Total number of sectors used by MSAT
         $this->numExtensionBlocks = self::getInt4d($this->data, self::NUM_EXTENSION_BLOCK_POS);
 
+        // gnuboard KVE-2026-3265: header counts may not exceed the number of sectors in the file
+        if ($this->numBigBlockDepotBlocks < 0 || $this->numBigBlockDepotBlocks > $this->numSectors
+            || $this->numExtensionBlocks < 0 || $this->numExtensionBlocks > $this->numSectors
+            || ($this->numExtensionBlocks == 0 && $this->numBigBlockDepotBlocks > (self::BIG_BLOCK_SIZE - self::BIG_BLOCK_DEPOT_BLOCKS_POS) / 4)) {
+            throw new PHPExcel_Reader_Exception('Invalid OLE header: sector counts exceed the file size');
+        }
+
         $bigBlockDepotBlocks = array();
         $pos = self::BIG_BLOCK_DEPOT_BLOCKS_POS;
 
@@ -122,7 +139,9 @@ class PHPExcel_Shared_OLERead
               $pos += 4;
         }
 
+        $visitedExtensionBlocks = array();
         for ($j = 0; $j < $this->numExtensionBlocks; ++$j) {
+            self::checkChainBlock($this->extensionBlock, $this->numSectors, $visitedExtensionBlocks);
             $pos = ($this->extensionBlock + 1) * self::BIG_BLOCK_SIZE;
             $blocksToRead = min($this->numBigBlockDepotBlocks - $bbdBlocks, self::BIG_BLOCK_SIZE / 4 - 1);
 
@@ -141,16 +160,23 @@ class PHPExcel_Shared_OLERead
         $this->bigBlockChain = '';
         $bbs = self::BIG_BLOCK_SIZE / 4;
         for ($i = 0; $i < $this->numBigBlockDepotBlocks; ++$i) {
+            if (!isset($bigBlockDepotBlocks[$i]) || $bigBlockDepotBlocks[$i] < 0 || $bigBlockDepotBlocks[$i] >= $this->numSectors) {
+                throw new PHPExcel_Reader_Exception('Invalid OLE sector allocation table');
+            }
             $pos = ($bigBlockDepotBlocks[$i] + 1) * self::BIG_BLOCK_SIZE;
 
             $this->bigBlockChain .= substr($this->data, $pos, 4*$bbs);
             $pos += 4*$bbs;
         }
 
+        $this->numChainSectors = min($this->numSectors, (int) floor(strlen($this->bigBlockChain) / 4));
+
         $pos = 0;
         $sbdBlock = $this->sbdStartBlock;
         $this->smallBlockChain = '';
+        $visited = array();
         while ($sbdBlock != -2) {
+            self::checkChainBlock($sbdBlock, $this->numChainSectors, $visited);
             $pos = ($sbdBlock + 1) * self::BIG_BLOCK_SIZE;
 
             $this->smallBlockChain .= substr($this->data, $pos, 4*$bbs);
@@ -183,8 +209,11 @@ class PHPExcel_Shared_OLERead
             $rootdata = $this->_readData($this->props[$this->rootentry]['startBlock']);
 
             $block = $this->props[$stream]['startBlock'];
+            $limit = min((int) floor(strlen($this->smallBlockChain) / 4), (int) ceil(strlen($rootdata) / self::SMALL_BLOCK_SIZE));
+            $visited = array();
 
             while ($block != -2) {
+                self::checkChainBlock($block, $limit, $visited);
                   $pos = $block * self::SMALL_BLOCK_SIZE;
                 $streamData .= substr($rootdata, $pos, self::SMALL_BLOCK_SIZE);
 
@@ -203,8 +232,10 @@ class PHPExcel_Shared_OLERead
             }
 
             $block = $this->props[$stream]['startBlock'];
+            $visited = array();
 
             while ($block != -2) {
+                self::checkChainBlock($block, $this->numChainSectors, $visited);
                 $pos = ($block + 1) * self::BIG_BLOCK_SIZE;
                 $streamData .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
                 $block = self::getInt4d($this->bigBlockChain, $block*4);
@@ -224,13 +255,34 @@ class PHPExcel_Shared_OLERead
     {
         $block = $bl;
         $data = '';
+        $visited = array();
 
         while ($block != -2) {
+            self::checkChainBlock($block, $this->numChainSectors, $visited);
             $pos = ($block + 1) * self::BIG_BLOCK_SIZE;
             $data .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
             $block = self::getInt4d($this->bigBlockChain, $block*4);
         }
         return $data;
+    }
+
+    /**
+     * gnuboard KVE-2026-3265: a chain may only visit existing sectors, each at most once.
+     *
+     * @param int $block Sector ID about to be read
+     * @param int $limit Number of valid sector IDs
+     * @param array $visited Sector IDs already read in this chain
+     * @throws PHPExcel_Reader_Exception
+     */
+    private static function checkChainBlock($block, $limit, &$visited)
+    {
+        if ($block < 0 || $block >= $limit) {
+            throw new PHPExcel_Reader_Exception('Invalid OLE sector chain');
+        }
+        if (isset($visited[$block])) {
+            throw new PHPExcel_Reader_Exception('OLE sector chain loop detected');
+        }
+        $visited[$block] = true;
     }
 
     /**
@@ -245,6 +297,9 @@ class PHPExcel_Shared_OLERead
         while ($offset < $entryLen) {
             // entry data (128 bytes)
             $d = substr($this->entry, $offset, self::PROPERTY_STORAGE_BLOCK_SIZE);
+            if (strlen($d) < self::PROPERTY_STORAGE_BLOCK_SIZE) {
+                break;
+            }
 
             // size in bytes of name
             $nameSize = ord($d[self::SIZE_OF_NAME_POS]) | (ord($d[self::SIZE_OF_NAME_POS+1]) << 8);

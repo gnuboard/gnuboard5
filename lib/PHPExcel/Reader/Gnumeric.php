@@ -173,13 +173,26 @@ class PHPExcel_Reader_Gnumeric extends PHPExcel_Reader_Abstract implements PHPEx
         return $worksheetInfo;
     }
 
+    /**
+     * gnuboard KVE-2026-3263: upper bound of the decompressed document (bytes)
+     */
+    const MAX_UNCOMPRESSED_SIZE = 33554432;
+
     private function gzfileGetContents($filename)
     {
+        $data = '';
         $file = @gzopen($filename, 'rb');
         if ($file !== false) {
-            $data = '';
             while (!gzeof($file)) {
-                $data .= gzread($file, 1024);
+                $chunk = gzread($file, 8192);
+                if ($chunk === false || $chunk === '') {
+                    break;
+                }
+                $data .= $chunk;
+                if (strlen($data) > self::MAX_UNCOMPRESSED_SIZE) {
+                    gzclose($file);
+                    throw new PHPExcel_Reader_Exception('Gnumeric file is too large after decompression');
+                }
             }
             gzclose($file);
         }

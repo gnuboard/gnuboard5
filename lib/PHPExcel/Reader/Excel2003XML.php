@@ -570,12 +570,20 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
                     if (isset($row_ss['Index'])) {
                         $rowID = (integer) $row_ss['Index'];
                     }
+                    // gnuboard KVE-2026-3266: row numbers must satisfy 1 <= Index <= 1048576
+                    if ($rowID < 1 || $rowID > 1048576) {
+                        throw new PHPExcel_Reader_Exception('Invalid row index in worksheet');
+                    }
 //                    echo '<b>Row '.$rowID.'</b><br />';
 
                     $columnID = 'A';
                     foreach ($rowData->Cell as $cell) {
                         $cell_ss = $cell->attributes($namespaces['ss']);
                         if (isset($cell_ss['Index'])) {
+                            // gnuboard KVE-2026-3267: column numbers must satisfy 1 <= Index <= 16384
+                            if ((int) $cell_ss['Index'] < 1 || (int) $cell_ss['Index'] > 16384) {
+                                throw new PHPExcel_Reader_Exception('Invalid column index in worksheet');
+                            }
                             $columnID = PHPExcel_Cell::stringFromColumnIndex($cell_ss['Index']-1);
                         }
                         $cellRange = $columnID.$rowID;

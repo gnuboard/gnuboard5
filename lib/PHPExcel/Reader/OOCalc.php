@@ -36,6 +36,11 @@ if (!defined('PHPEXCEL_ROOT')) {
  */
 class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
 {
+    // gnuboard KVE-2026-3264: worksheet size limits and cells materialised by repetition
+    const MAX_ROW = 1048576;
+    const MAX_COLUMN = 16384;
+    const MAX_REPEATED_CELLS = 100000;
+
     /**
      * Formats
      *
@@ -456,6 +461,7 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
                 }
 
                 $rowID = 1;
+                $repeatedCells = 0;
                 foreach ($worksheetData as $key => $rowData) {
 //                    echo '<b>'.$key.'</b><br />';
                     switch ($key) {
@@ -466,7 +472,11 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
                             }
                         case 'table-row':
                             $rowDataTableAttributes = $rowData->attributes($namespacesContent['table']);
-                            $rowRepeats = (isset($rowDataTableAttributes['number-rows-repeated'])) ? $rowDataTableAttributes['number-rows-repeated'] : 1;
+                            $rowRepeats = (isset($rowDataTableAttributes['number-rows-repeated'])) ? (int) $rowDataTableAttributes['number-rows-repeated'] : 1;
+                            // gnuboard KVE-2026-3264: keep repeated rows inside the sheet
+                            if ($rowRepeats < 1 || $rowID + $rowRepeats - 1 > self::MAX_ROW) {
+                                throw new PHPExcel_Reader_Exception('Invalid number-rows-repeated in worksheet');
+                            }
                             $columnID = 'A';
                             foreach ($rowData as $key => $cellData) {
                                 if ($this->getReadFilter() !== null) {
@@ -628,7 +638,18 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
 //                                    echo 'Adjusted Formula: ', $cellDataFormula, PHP_EOL;
                                 }
 
-                                $colRepeats = (isset($cellDataTableAttributes['number-columns-repeated'])) ? $cellDataTableAttributes['number-columns-repeated'] : 1;
+                                $colRepeats = (isset($cellDataTableAttributes['number-columns-repeated'])) ? (int) $cellDataTableAttributes['number-columns-repeated'] : 1;
+                                // gnuboard KVE-2026-3264: keep repeated columns inside the sheet and
+                                // bound the number of cells materialised by row/column repetition
+                                if ($colRepeats < 1 || PHPExcel_Cell::columnIndexFromString($columnID) + $colRepeats - 1 > self::MAX_COLUMN) {
+                                    throw new PHPExcel_Reader_Exception('Invalid number-columns-repeated in worksheet');
+                                }
+                                if ($type !== null && $type !== PHPExcel_Cell_DataType::TYPE_NULL) {
+                                    $repeatedCells += $colRepeats * $rowRepeats - 1;
+                                    if ($repeatedCells > self::MAX_REPEATED_CELLS) {
+                                        throw new PHPExcel_Reader_Exception('Too many repeated cells in worksheet');
+                                    }
+                                }
                                 if ($type !== null) {
                                     for ($i = 0; $i < $colRepeats; ++$i) {
                                         if ($i > 0) {

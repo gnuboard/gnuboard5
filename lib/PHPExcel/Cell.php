@@ -838,16 +838,22 @@ class PHPExcel_Cell
         static $_indexCache = array();
 
         if (!isset($_indexCache[$pColumnIndex])) {
+            // gnuboard KVE-2026-3267: integer arithmetic only (no float to chr() conversion),
+            // and no index beyond the three letter column ZZZ
+            $index = (int) $pColumnIndex;
+            if ($index > 18277) {
+                throw new PHPExcel_Exception('Column index can not be greater than 18277');
+            }
             // Determine column string
-            if ($pColumnIndex < 26) {
-                $_indexCache[$pColumnIndex] = chr(65 + $pColumnIndex);
-            } elseif ($pColumnIndex < 702) {
-                $_indexCache[$pColumnIndex] = chr(64 + (int)($pColumnIndex / 26)) .
-                                              chr(65 + $pColumnIndex % 26);
+            if ($index < 26) {
+                $_indexCache[$pColumnIndex] = chr(65 + $index);
+            } elseif ($index < 702) {
+                $_indexCache[$pColumnIndex] = chr(64 + (int)($index / 26)) .
+                                              chr(65 + $index % 26);
             } else {
-                $_indexCache[$pColumnIndex] = chr(64 + (($pColumnIndex - 26) / 676)) .
-                                              chr(65 + ((($pColumnIndex - 26) % 676) / 26)) .
-                                              chr(65 + $pColumnIndex % 26);
+                $_indexCache[$pColumnIndex] = chr(64 + (int)(($index - 26) / 676)) .
+                                              chr(65 + (int)((($index - 26) % 676) / 26)) .
+                                              chr(65 + $index % 26);
             }
         }
         return $_indexCache[$pColumnIndex];
