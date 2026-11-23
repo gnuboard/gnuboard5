@@ -648,14 +648,20 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                                 NHN KCP 상점관리자 &gt; 부가서비스 &gt; 휴대폰본인확인 &gt; 연동방식 설정 에서 <strong>신규 연동방식(V2) 사용여부를 &lsquo;사용&rsquo;</strong> 으로 변경해야 정상 동작합니다.<br>
                                 PHP 7.0 이상 환경에서만 동작하며, PHP 7.0 미만에서는 사용할 수 없습니다.
                             </div>
+                            <div id="cf_cert_hp_kcp_v1_notice" style="display:<?php echo ($config['cf_cert_hp'] == 'kcp') ? 'block' : 'none'; ?>; margin-top:8px; padding:10px 12px; background:#fdecea; border:1px solid #f5a6a0; border-radius:4px; color:#611a15; line-height:1.5;">
+                                <strong>기존 NHN KCP 휴대폰 본인확인</strong>은 결과를 브라우저가 전달한 값으로만 확인하는 구형 방식입니다. 서버 간 결과 조회를 하는 <strong>NHN KCP 휴대폰 본인확인(api_v2)</strong>으로 전환할 것을 권장합니다.
+                                <span id="cf_cert_hp_kcp_test_notice" style="display:<?php echo ((int)$config['cf_cert_use'] === 1) ? 'inline' : 'none'; ?>;"><br><strong>테스트 모드</strong>는 모든 설치가 같은 사이트코드·키를 쓰므로 다른 테스트 사이트의 인증 결과도 통과할 수 있습니다. 운영 중인 사이트에서는 테스트 모드를 쓰지 마십시오.</span>
+                            </div>
                             <script>
                             jQuery(function($){
                                 function toggle_kcp_v2_notice() {
                                     var is_kcp_v2 = $('#cf_cert_hp').val() === 'kcp_v2';
                                     $('#cf_cert_hp_kcp_v2_notice').toggle(is_kcp_v2);
+                                    $('#cf_cert_hp_kcp_v1_notice').toggle($('#cf_cert_hp').val() === 'kcp');
+                                    $('#cf_cert_hp_kcp_test_notice').toggle($('#cf_cert_use').val() === '1');
                                 }
 
-                                $('#cf_cert_hp').on('change', toggle_kcp_v2_notice);
+                                $('#cf_cert_hp, #cf_cert_use').on('change', toggle_kcp_v2_notice);
                                 toggle_kcp_v2_notice();
                             });
                             </script>

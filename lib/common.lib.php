@@ -2782,6 +2782,34 @@ function g5_check_form_token($name, $bind, $token, $ttl = 1800)
     return slow_equals($saved['token'], $token);
 }
 
+// 용도별 토큰을 폐기하지 않고 미리 확인한다. 입력값 검증 실패로 폼에 되돌아가도 같은 토큰으로
+// 다시 제출할 수 있게 하고, 실제 변경 직전에 g5_check_form_token()으로 소모한다. (KVE-2026-3252)
+function g5_peek_form_token($name, $bind, $token, $ttl = 1800)
+{
+    $saved = get_session('ss_form_token_'.$name);
+    if (!is_array($saved) || !isset($saved['token'], $saved['bind'], $saved['time'])) return false;
+    if (!is_string($token) || $token === '' || !is_string($saved['token']) || $saved['token'] === '') return false;
+    if ((string)$bind === '' || $saved['bind'] !== (string)$bind) return false;
+    if (abs(G5_SERVER_TIME - (int)$saved['time']) > $ttl) return false;
+    return slow_equals($saved['token'], $token);
+}
+
+// 회원정보 수정 화면에서 현재 비밀번호(소셜 회원은 소셜 재인증)를 확인한 회원과 시각을 남긴다. (KVE-2026-3252)
+function g5_set_member_reconfirm($mb_id)
+{
+    set_session('ss_member_reconfirm', array('mb_id' => (string)$mb_id, 'time' => G5_SERVER_TIME));
+}
+
+// 같은 회원이 $ttl초 안에 재확인을 통과했는지 확인한다. 비밀번호·이메일 변경에 쓴다. (KVE-2026-3252)
+function g5_check_member_reconfirm($mb_id, $ttl = 600)
+{
+    $saved = get_session('ss_member_reconfirm');
+    if (!is_array($saved) || !isset($saved['mb_id'], $saved['time'])) return false;
+    if ((string)$mb_id === '' || $saved['mb_id'] !== (string)$mb_id) return false;
+    $age = G5_SERVER_TIME - (int)$saved['time'];
+    return $age >= 0 && $age <= $ttl;
+}
+
 // MySQL 이름 잠금(GET_LOCK). MySQL 5.7 미만은 연결당 잠금을 하나만 유지하므로,
 // 다른 잠금을 얻는 함수(insert_point 등)를 부르기 전에 풀어야 한다.
 function g5_get_named_lock($name, $timeout = 5)
@@ -4476,6 +4504,29 @@ function safe_filter_url_host($url) {
     return $regex ? preg_replace('#'. preg_quote($regex, '#') .'#iu', '', $url) : '';
 }
 
+// 브라우저가 해석할 URL과 parse_url() 결과가 어긋나는 절대 URL인지 확인한다. (KVE-2026-3246)
+// 상대 경로(/bbs/..., ./..., board.php?...)는 대상이 아니다. 브라우저처럼 탭·개행을 지우고
+// 앞쪽 제어문자·공백을 무시하며 역슬래시를 슬래시로 본 값이 프로토콜 상대(//) 또는 scheme:으로
+// 시작하는데 호스트가 없거나, 포트가 숫자 5자리 이하가 아니거나, 호스트가 parse_url() 결과와 다르면 참이다.
+function g5_is_malformed_url_host($url, $p)
+{
+    $s = preg_replace('/[\t\r\n]+/', '', (string)$url);
+    $s = str_replace('\\', '/', ltrim($s, "\x00..\x20"));
+    if (!preg_match('#^[a-z][a-z0-9+.\-]*:#i', $s) && substr($s, 0, 2) !== '//') return false;
+    if (!is_array($p) || !isset($p['host']) || $p['host'] === '') return true;
+    if (!preg_match('#^(?:[a-z][a-z0-9+.\-]*:)?//([^/?\#]*)#i', $s, $m)) return true;
+    $authority = $m[1];
+    $at = strrpos($authority, '@');
+    if ($at !== false) $authority = substr($authority, $at + 1);
+    $colon = strrpos($authority, ':');
+    $bracket = strrpos($authority, ']');
+    if ($colon !== false && ($bracket === false || $colon > $bracket)) {
+        if (!preg_match('/^[0-9]{0,5}$/', substr($authority, $colon + 1))) return true;
+        $authority = substr($authority, 0, $colon);
+    }
+    return strtolower($authority) !== strtolower($p['host']);
+}
+
 // 동일한 host url 인지
 function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 {
@@ -4502,6 +4553,12 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     $p = @parse_url(trim(str_replace('\\', '', $url)));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
+
+    // parse_url()이 해석하지 못한 값(예: 0을 채운 6자리 이상 포트)은 브라우저가 외부 주소로 이동할 수 있으므로 거부한다. (KVE-2026-3246)
+    if (!is_array($p)) {
+        $p = array();
+        $is_host_check = true;
+    }
     
     // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
     if ( $is_redirect && !isset($p['host']) && urldecode($url) != $url ){
@@ -4514,6 +4571,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 
         if( urldecode($url) == $url ){
             $p = @parse_url($url);
+            if (!is_array($p)) {
+                $p = array();
+                $is_host_check = true;
+            }
         } else {
             $is_host_check = true;
         }
@@ -4541,9 +4602,13 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         }
     }
 
+    if (!$is_host_check && g5_is_malformed_url_host($url, $p)) {
+        $is_host_check = true;
+    }
+
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
-        if (run_replace('check_same_url_host', (($p['host'] != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
+        if (run_replace('check_same_url_host', (((isset($p['host']) ? $p['host'] : '') != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
             $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
             $js_return_url = function_exists('get_js_safe_string') ? get_js_safe_string($return_url) : '"'.strtr((string)$return_url, $js_replace).'"';
             $html_return_url = htmlspecialchars($return_url, ENT_QUOTES);

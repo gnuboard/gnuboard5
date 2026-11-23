@@ -24,6 +24,13 @@ $ordr_idxx = get_session('ss_uniqid');
 if(!$ordr_idxx)
     $ordr_idxx = get_uniqid();
 
+// 결과 처리기에서 응답을 이 시작 요청과 대조하도록 주문번호·용도·시각을 저장한다. (KVE-2026-3253)
+set_session('ss_kcpcert_v1', array(
+    'ordr_idxx' => (string)$ordr_idxx,
+    'page_type' => ($resultPage === '/find_kcpcert_result.php') ? 'find' : 'register',
+    'time'      => G5_SERVER_TIME
+));
+
 $ct_cert = new C_CT_CLI;
 $ct_cert->mf_clear();
 

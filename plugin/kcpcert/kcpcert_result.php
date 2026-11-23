@@ -1,5 +1,10 @@
 <?php
 include_once('./_common.php');
+
+// 시작 페이지가 저장한 상태를 가장 먼저 꺼내고 지운다. 같은 응답은 다시 쓸 수 없다. (KVE-2026-3253)
+$kcpcert_state = get_session('ss_kcpcert_v1');
+set_session('ss_kcpcert_v1', '');
+
 include_once(G5_KCPCERT_PATH.'/kcpcert_config.php');
 
 $site_cd       = "";
@@ -78,10 +83,10 @@ for($i=0; $i<count($key); $i++)
     {
         $dn_hash = f_get_parm_str ( $valParam );
    }
-
-    // 부모창으로 넘기는 form 데이터 생성 필드
-    $sbParam .= "<input type='hidden' name='" . $nmParam . "' value='" . f_get_parm_str( $valParam ) . "'/>";
 }
+
+// 받은 값 전체를 다시 출력하지 않는다. 부모창 검증에 쓰는 up_hash만 이스케이프해 출력한다. (KVE-2026-3253)
+$up_hash = (isset($_POST['up_hash']) && is_string($_POST['up_hash'])) ? $_POST['up_hash'] : '';
 
 $ct_cert = new C_CT_CLI;
 $ct_cert->mf_clear();
@@ -94,6 +99,10 @@ include_once(G5_PATH.'/head.sub.php');
 
 if( $cert_enc_use == "Y" )
 {
+    // 이 세션에서 같은 용도로 10분 안에 시작한 요청의 주문번호인지 확인한다. (KVE-2026-3253)
+    if (!kcpcert_v1_state_valid($kcpcert_state, 'register', $ordr_idxx))
+        alert_close('본인확인 요청 정보가 없거나 만료되었습니다. 처음부터 다시 시도해 주세요.');
+
     // 인증내역기록
     @insert_cert_history($member['mb_id'], 'kcp', 'hp');
 
@@ -196,7 +205,7 @@ if( $cert_enc_use == "Y" )
     else if( $res_cd != "0000" )
     {
         // 인증실패
-        alert_close('코드 : '.$_POST['res_cd'].'  '.urldecode($_POST['res_msg']));
+        alert_close('코드 : '.$res_cd.'  '.urldecode((isset($_POST['res_msg']) && is_string($_POST['res_msg'])) ? $_POST['res_msg'] : ''));
         exit;
     }
 }
@@ -218,7 +227,7 @@ $ct_cert->mf_clear();
 ?>
 
 <form name="form_auth" method="post">
-    <?php echo $sbParam; ?>
+    <input type="hidden" name="up_hash" value="<?php echo htmlspecialchars($up_hash, ENT_QUOTES); ?>">
 </form>
 
 <script>
@@ -241,10 +250,10 @@ $(function() {
     }
 
     // 인증정보
-    $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
-    $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>").attr("readonly", true);
-    $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
-    $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
+    $opener.$("input[name=cert_type]").val(<?php echo get_js_safe_string($cert_type); ?>);
+    $opener.$("input[name=mb_name]").val(<?php echo get_js_safe_string($user_name); ?>).attr("readonly", true);
+    $opener.$("input[name=mb_hp]").val(<?php echo get_js_safe_string($phone_no); ?>).attr("readonly", true);
+    $opener.$("input[name=cert_no]").val(<?php echo get_js_safe_string($md5_cert_no); ?>);
 
     if(is_mobile) {
         $opener.$("#cert_info").css("display", "");

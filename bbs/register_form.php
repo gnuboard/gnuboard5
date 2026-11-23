@@ -5,14 +5,12 @@ include_once(G5_LIB_PATH.'/register.lib.php');
 
 run_event('register_form_before');
 
-// 불법접근을 막도록 토큰생성
-$token = get_random_token_string(16);
-set_session("ss_token", $token);
 set_session("ss_cert_no",   "");
 set_session("ss_cert_hash", "");
 set_session("ss_cert_type", "");
 
 $is_social_login_modify = false;
+$member_update_token = ''; // 요청 변수로 채워지지 않도록 먼저 비운다. (KVE-2026-3252)
 
 if( isset($_REQUEST['provider']) && $_REQUEST['provider']  && function_exists('social_nonce_is_valid') ){   //모바일로 소셜 연결을 했다면
     if( social_nonce_is_valid(get_session("social_link_token"), $provider) ){  //토큰값이 유효한지 체크
@@ -96,7 +94,18 @@ if ($w == "") {
 
         if (!$pass_check)
             alert('비밀번호가 틀립니다.');
+
+        // 이번 요청에서 현재 비밀번호를 확인한 경우에만 비밀번호·이메일 변경용 재확인 증표를 남긴다. (KVE-2026-3252)
+        // 수정 후 되돌아온 요청(is_update)은 저장된 해시 비교이므로 증표를 새로 만들지 않는다.
+        if (!(isset($_POST['is_update']) && $_POST['is_update']))
+            g5_set_member_reconfirm($member['mb_id']);
+    } else if ($is_social_login_modify) {
+        // 소셜 회원은 소셜 재인증 후 발급된 social_link_token이 유효할 때 증표를 남긴다. (KVE-2026-3252)
+        g5_set_member_reconfirm($member['mb_id']);
     }
+
+    // 회원정보 수정 처리기에서 한 번만 쓰는 회원별 토큰 (KVE-2026-3252)
+    $member_update_token = g5_get_form_token('member_update', $member['mb_id']);
 
     $g5['title'] = '회원 정보 수정';
 
