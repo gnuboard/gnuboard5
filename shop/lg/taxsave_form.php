@@ -1,5 +1,9 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+require_once G5_LIB_PATH.'/shop_cash.lib.php';
+// KVE-2026-3247: 발급 화면에서도 원장의 발급 조건을 확인하고 주문 유형·번호에 묶인 10분 일회용 토큰을 만든다.
+$cash_type = $tx === 'personalpay' ? 'personalpay' : 'order';
+$cash_token = shop_cash_form_token('lg', $cash_type, (string)$od_id);
 ?>
 
 <script>
@@ -121,8 +125,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <h2>현금영수증 발급 정보</h2>
 
         <form method="post" id="LGD_PAYINFO" action="<?php echo G5_SHOP_URL; ?>/lg/taxsave_result.php">
-        <input type="hidden" name="tx"        value="<?php echo $tx; ?>">
-        <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+        <input type="hidden" name="tx"         value="<?php echo $cash_type; ?>">
+        <input type="hidden" name="od_id"      value="<?php echo shop_cash_html($od_id); ?>">
+        <input type="hidden" name="cash_token" value="<?php echo $cash_token; ?>">
         <div class="tbl_head01 tbl_wrap">
             <table>
             <colgroup>

@@ -87,11 +87,16 @@ check(strpos($hc, "is_inicis_url_return(\$url, array('fcstdpay.inicis.com', 'kss
 
 // ---------- KVE-2026-3248 이니시스 현금영수증 ----------
 $tx = src('shop/inicis/taxsave_result.php');
-check(strpos($tx, 'g5_tls_http_post($url') !== false && !preg_match('/curl_setopt\(\$ch, CURLOPT_SSL_VERIFYPEER/', $tx), '3248 현금영수증 요청이 공통 검증 함수 사용');
-check(preg_match('/if \(!is_array\(\$ini_result\).*?alert\(/s', $tx) && strpos($tx, "\$result_code === '00'") !== false, '3248 전송·JSON 실패 시 상태 변경 전에 중단');
-check(strpos($tx, "'authNo'     => '/\\A[A-Za-z0-9]{1,20}\\z/'") !== false && strpos($tx, 'checkdate(') !== false && strpos($tx, "(string) \$ini_result['crPrice'] !== (string) \$crPrice") !== false,
+// KVE-2026-3247 이후에는 요청·응답 처리가 공통 현금영수증 라이브러리의 이니시스 게이트웨이로 옮겨졌다.
+$cash_lib = is_file($root.'/lib/shop_cash.lib.php') ? src('lib/shop_cash.lib.php') : '';
+$txg = $tx.($cash_lib !== '' ? func_src('lib/shop_cash.lib.php', 'shop_cash_gateway_inicis', '') : '');
+check(preg_match('/g5_tls_http_post\((?:\$url|"https:\/\/iniapi\.inicis\.com\/api\/v1\/receipt")/', $txg) && !preg_match('/CURLOPT_SSL_VERIFYPEER/', $txg), '3248 현금영수증 요청이 공통 검증 함수 사용');
+check(preg_match('/if \(!is_array\(\$(?:ini_result|res)\).*?(?:alert\(|return array\(\'ok\'=>false, \'definite\'=>false\))/s', $txg) && preg_match('/\$result_code (?:===|!==) \'00\'/', $txg), '3248 전송·JSON 실패 시 상태 변경 전에 중단');
+check(strpos($txg, "'authNo'     => '/\\A[A-Za-z0-9]{1,20}\\z/'") !== false && strpos($txg, 'checkdate(') !== false && preg_match('/\(string\) ?\$(?:ini_result|res)\[\'crPrice\'\] !== \(string\) ?\$crPrice/', $txg),
     '3248 승인번호·거래번호·승인일시 형식과 응답 금액 확인');
-check(preg_match('/\$result = sql_query\(\$sql, false\);\s*if \(!\$result\) \{\s*\/\/[^\n]*\n\s*alert\(/', $tx), '3248 DB 저장 실패를 성공으로 표시하지 않음');
+check(preg_match('/\$result = sql_query\(\$sql, false\);\s*if \(!\$result\) \{\s*\/\/[^\n]*\n\s*alert\(/', $tx)
+    || (strpos($cash_lib, "shop_cash_update(\$table, \"{\$p}_cash=1, ") !== false && strpos($cash_lib, "'shop_cash_state'=>'reconcile'") !== false),
+    '3248 DB 저장 실패를 성공으로 표시하지 않음');
 check(!preg_match('/echo\s*\(?\s*\$ini_result\[/', $tx) && substr_count($tx, '<?php echo get_text(') === 5 && strpos($tx, 'encodeURIComponent(<?php echo get_js_safe_string($cash_tid); ?>)') !== false,
     '3248 결과 화면은 get_text/get_js_safe_string으로만 출력(응답 원문 미출력)');
 

@@ -1,8 +1,10 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 require_once(dirname(__FILE__).'/shop_order_access.lib.php');
+require_once(dirname(__FILE__).'/shop_cash.lib.php');
 
-class KcpCashRequestException extends RuntimeException {}
+// 원장·토큰·조건부 갱신은 PG 공통 함수(lib/shop_cash.lib.php)를 쓴다. KCP 동작과 SQL은 바꾸지 않는다.
+class KcpCashRequestException extends ShopCashRequestException {}
 
 // KVE-2026-2513: 현금영수증은 화면의 hidden 값이 아닌 주문 원장으로 발급한다.
 function kcp_cash_fail($message = '현금영수증을 발급할 수 없는 요청입니다.')
@@ -10,16 +12,26 @@ function kcp_cash_fail($message = '현금영수증을 발급할 수 없는 요�
     throw new KcpCashRequestException($message);
 }
 
+// 공통 함수의 실패를 KCP 예외로 바꿔 기존 호출부의 처리를 유지한다.
+function kcp_cash_shared($function, $args)
+{
+    try {
+        return call_user_func_array($function, $args);
+    } catch (KcpCashRequestException $e) {
+        throw $e;
+    } catch (ShopCashRequestException $e) {
+        kcp_cash_fail($e->getMessage());
+    }
+}
+
 function kcp_cash_key($type, $id)
 {
-    return 'ss_kcp_cash_'.hash('sha256', $type.':'.$id.':pay');
+    return shop_cash_key('kcp', $type, $id);
 }
 
 function kcp_cash_token($type, $id)
 {
-    $token = shop_order_random_hex(32);
-    set_session(kcp_cash_key($type, $id), array('token'=>$token, 'expires'=>time()+600));
-    return $token;
+    return shop_cash_token('kcp', $type, $id);
 }
 
 function kcp_cash_request($post, $method)
@@ -40,92 +52,40 @@ function kcp_cash_request($post, $method)
 
 function kcp_cash_source($type)
 {
-    global $g5;
-    if ($type === 'personalpay') return array($g5['g5_shop_personalpay_table'], 'pp');
-    if ($type === 'order') return array($g5['g5_shop_order_table'], 'od');
-    kcp_cash_fail();
+    return kcp_cash_shared('shop_cash_source', array($type));
 }
 
 function kcp_cash_order($type, $id)
 {
-    list($table, $p) = kcp_cash_source($type);
-    $row = sql_fetch("SELECT * FROM {$table} WHERE {$p}_id='".sql_escape_string($id)."'", false);
-    if (!$row || empty($row[$p.'_id']) || !function_exists('is_shop_order_owner') || !is_shop_order_owner($row, $type)) kcp_cash_fail('해당 주문 정보에 접근 권한이 없습니다.');
-    return $row;
+    return kcp_cash_shared('shop_cash_order', array($type, $id));
 }
 
 function kcp_cash_data($row, $type)
 {
-    global $default;
-    $p = $type === 'personalpay' ? 'pp' : 'od';
-    if ((int)$row[$p.'_cash'] !== 0 || $row[$p.'_cash_no'] !== '' || $row[$p.'_cash_info'] !== '') kcp_cash_fail('이미 발급되었거나 처리 결과를 확인 중인 주문입니다. 관리자에게 문의해 주십시오.');
-    $pg = $row[$p.'_pg'] !== '' ? $row[$p.'_pg'] : $default['de_pg_service'];
-    if ($pg !== 'kcp' || empty($default['de_taxsave_use'])) kcp_cash_fail();
-    $methods = array('무통장'=>'account', '계좌이체'=>'transfer', '가상계좌'=>'vbank');
-    $method = $row[$p.'_settle_case'];
-    if (!isset($methods[$method]) || strpos($default['de_taxsave_types'], $methods[$method]) === false) kcp_cash_fail();
-    $total = (int)$row[$p.'_receipt_price'];
-    if ($type === 'personalpay') {
-        if (!empty($row['od_id'])) kcp_cash_fail('주문에 연결된 개인결제는 주문 내역에서 현금영수증을 확인해 주십시오.');
-        if ($total <= 0 || $total !== (int)$row['pp_price']) kcp_cash_fail('개인결제 수납 금액을 확인해 주십시오.');
-        $supply = (int)round($total / 1.1);
-        $tax = $total - $supply;
-        $name = $row['pp_name'].'님 개인결제';
-    } else {
-        $total -= (int)$row['od_refund_price'];
-        if ($total <= 0 || (int)$row['od_misu'] > 0 || !in_array($row['od_status'], array('입금','준비','배송','완료'), true)) kcp_cash_fail('주문 수납 및 환불 상태를 확인해 주십시오.');
-        $supply = (int)$row['od_tax_mny'] + (int)$row['od_free_mny'];
-        $tax = (int)$row['od_vat_mny'];
-        if ((int)$row['od_tax_mny'] < 0 || (int)$row['od_free_mny'] < 0 || $tax < 0 || $supply+$tax !== $total) kcp_cash_fail('수납 금액과 과세 정보가 일치하지 않습니다. 관리자에게 문의해 주십시오.');
-        $goods = get_goods($row['od_id']);
-        $name = $goods['full_name'];
-    }
-    return array('ordr_idxx'=>(string)$row[$p.'_id'], 'good_name'=>$name, 'buyr_name'=>$row[$p.'_name'],
-        'buyr_mail'=>$row[$p.'_email'], 'buyr_tel1'=>$row[$p.($p==='pp' ? '_hp' : '_tel')],
-        'amt_tot'=>$total, 'amt_sup'=>$supply, 'amt_tax'=>$tax, 'amt_svc'=>0, 'trad_time'=>date('YmdHis'));
+    $data = kcp_cash_shared('shop_cash_data', array($row, $type, 'kcp'));
+    // KCP 게이트웨이에는 기존과 같은 필드만 넘긴다.
+    unset($data['amt_free']);
+    return $data;
 }
 
-// 발급 직전과 저장 직후의 금액/상태 경합도 검출한다. 외부 통신 중 DB 트랜잭션은 열지 않는다.
 function kcp_cash_snapshot_where($row, $p)
 {
-    $fields = array('id','pg','settle_case','receipt_price');
-    $fields = array_merge($fields, $p === 'pp' ? array('price') : array('refund_price','misu','status','tax_mny','vat_mny','free_mny'));
-    $where = array();
-    foreach ($fields as $field) $where[] = "{$p}_{$field}='".sql_escape_string((string)$row[$p.'_'.$field])."'";
-    if ($p === 'od') $where[] = "mb_id='".sql_escape_string((string)$row['mb_id'])."'";
-    // 개인결제에는 mb_id가 없고, 연결 주문이 없는 od_id는 정수 0이다.
-    if ($p === 'pp') $where[] = "od_id=0";
-    return implode(' AND ', $where);
+    return shop_cash_snapshot_where($row, $p);
 }
 
 function kcp_cash_update($table, $set, $where)
 {
-    try {
-        $ok = sql_query("UPDATE {$table} SET {$set} WHERE {$where}", false);
-        return $ok && (int)get_sql_affected_rows() === 1;
-    } catch (Exception $e) {
-        return false;
-    } catch (Throwable $e) {
-        return false;
-    }
+    return shop_cash_update($table, $set, $where);
 }
 
 function kcp_cash_audit($attempt, $state)
 {
-    // 식별번호, 주문자, 가맹점 키 및 PG 원문 응답을 로그에 남기지 않는다.
-    error_log('KCP cash '.$attempt.' '.$state);
+    shop_cash_audit('kcp', $attempt, $state);
 }
 
 function kcp_cash_matches($table, $where)
 {
-    try {
-        $row = sql_fetch("SELECT 1 AS matched FROM {$table} WHERE {$where}", false);
-        return $row && (int)$row['matched'] === 1;
-    } catch (Exception $e) {
-        return false;
-    } catch (Throwable $e) {
-        return false;
-    }
+    return shop_cash_matches($table, $where);
 }
 
 function kcp_cash_process($request, $gateway)
@@ -193,15 +153,13 @@ function kcp_cash_process($request, $gateway)
 
 function kcp_cash_html($value)
 {
-    return htmlspecialchars((string)$value, ENT_QUOTES | (defined('ENT_SUBSTITUTE') ? ENT_SUBSTITUTE : 0), 'UTF-8');
+    return shop_cash_html($value);
 }
 
+// 관리자 화면 안내. KCP 문구는 그대로이고, 다른 PG의 처리 중·확인 필요 상태도 함께 보여준다.
 function kcp_cash_pending_notice($info)
 {
-    if (!is_string($info) || $info === '') return '';
-    $state = shop_order_decode_data(base64_encode($info));
-    if (!is_array($state) || !isset($state['kcp_cash_state'], $state['attempt']) || !in_array($state['kcp_cash_state'], array('pending','reconcile'), true)) return '';
-    return 'KCP 현금영수증 처리 확인 필요 (확인번호: '.kcp_cash_html($state['attempt']).'). KCP 거래 내역과 주문을 대조하기 전에는 재발급하지 마십시오.';
+    return shop_cash_pending_notice($info);
 }
 
 // KCP 통신은 검증과 영속 처리 선점 이후에만 호출한다.
