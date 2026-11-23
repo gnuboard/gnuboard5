@@ -16,7 +16,7 @@ class LightOpenID
     public $returnUrl
          , $required = array()
          , $optional = array()
-         , $verify_peer = null
+         , $verify_peer = true
          , $capath = null
          , $cainfo = null
          , $cnmatch = null
@@ -192,7 +192,13 @@ class LightOpenID
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_USERAGENT, $this->user_agent);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        // 인증서·호스트명 검증은 항상 켭니다.
+        if (function_exists('g5_curl_tls_verify')) {
+            g5_curl_tls_verify($curl);
+        } else {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_time_out);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out);
@@ -216,8 +222,7 @@ class LightOpenID
             }
         }
 
-        if($this->verify_peer !== null) {
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $this->verify_peer);
+        if($this->verify_peer) {
             if($this->capath) {
                 curl_setopt($curl, CURLOPT_CAPATH, $this->capath);
             }
@@ -396,10 +401,9 @@ class LightOpenID
 
             // Enable validation of the SSL certificates.
             if ($this->verify_peer) {
+                // 기본 컨텍스트를 되돌릴 때도 검증을 끄지 않습니다.
                 $default['ssl'] += array(
-                    'verify_peer' => false,
-                    'capath' => '',
-                    'cafile' => ''
+                    'verify_peer' => true
                 );
                 $opts['ssl'] += array(
                     'verify_peer' => true,

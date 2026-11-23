@@ -45,8 +45,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model_OAuth2 {
 	 */
 	function loginBegin() {
         
-        $token = md5(uniqid(mt_rand(), true));
-        Hybrid_Auth::storage()->set('fb_auth_nonce', $token);
+        $token = $this->createAuthState();
 
         $parameters = array(
             "response_type" => "code",
@@ -62,6 +61,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model_OAuth2 {
 	 * {@inheritdoc}
 	 */
 	function loginFinish() {
+		$this->checkAuthState();
 
 		// in case we get error_reason=user_denied&error=access_denied
 		if (isset($_REQUEST['error']) && $_REQUEST['error'] == "access_denied") {

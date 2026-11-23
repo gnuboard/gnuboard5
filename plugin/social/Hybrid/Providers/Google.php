@@ -62,6 +62,9 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2 {
 			$parameters['approval_prompt'] = 'force';
 		}
 
+		// 콜백을 현재 세션에 묶는 1회용 state(설정 값 대신 사용)
+		$parameters['state'] = $this->createAuthState();
+
 		Hybrid_Auth::redirect($this->api->authorizeUrl($parameters));
 	}
 

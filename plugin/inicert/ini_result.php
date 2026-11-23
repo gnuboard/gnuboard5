@@ -2,53 +2,34 @@
 include_once('./_common.php');
 require_once (dirname(__FILE__) .'/libs/KISA_SEED_CBC.php');
 require_once (dirname(__FILE__) .'/libs/INILib.php');
+require_once (dirname(__FILE__) .'/libs/inicert.lib.php');
 
-$txId = isset($_POST['txId']) ? clean_xss_tags($_POST['txId'], 1, 1) : '';
-$mid  = substr($txId, 6, 10);
-$SEEDKEY = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
+// 시작 단계(ini_request.php)에서 저장한 거래 정보를 먼저 꺼내 지웁니다. 결과가 성공이든 실패든 한 번만 쓸 수 있습니다.
+$inicert_saved = inicert_consume_request('register');
+if (!$inicert_saved) {
+    alert_close('인증 요청 정보가 없거나 만료되었습니다. 다시 시도해 주십시오.');
+}
+
 $SEEDIV = 'SASHOSTSIRIAS000';
 
-if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
+if (isset($_POST['txId']) && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
-    $data = array(
-        'mid' => $mid,        
-        'txId' => $txId
-    );
-
-    $post_data = json_encode($data);
-
-    $authRequestUrl = isset($_POST["authRequestUrl"]) ? is_inicis_url_return($_POST["authRequestUrl"]) : '';
-
-    // SaSample 에 나와있는대로 url을 검증합니다.
-    if (!(strpos($authRequestUrl,"https://kssa.inicis.com") == 0 || strpos($authRequestUrl,"https://fcsa.inicis.com") == 0)) {
-        $authRequestUrl = '';
+    $inicert_req = inicert_check_return($inicert_saved, $_POST);
+    if (!is_array($inicert_req)) {
+        alert_close($inicert_req);
     }
+    $txId = $inicert_req['txId'];
+    $SEEDKEY = $inicert_req['token'];
 
-    if (! $authRequestUrl) {
-        alert('잘못된 요청입니다.', G5_URL);
-        exit;
+    // 고정된 이니시스 HTTPS 주소로 인증서를 검증해 조회하고 응답 형식을 확인합니다.
+    $res_data = inicert_fetch_result($inicert_req, $inicert_saved);
+    if (!is_array($res_data)) {
+        alert_close($res_data);
     }
-
-    // curl 통신 시작 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $authRequestUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    
-    $response = curl_exec($ch);
-    curl_close($ch);
-    $res_data = json_decode($response, true);
-    // -------------------- 결과 수신 -------------------------------------------
-    //  echo '<결과내역>'." '{$mid}' <br/><br/>";
-    //  echo $response;
 
     if($res_data['resultCode'] === "0000") {
         $cert_type      = 'simple';                                 // 인증타입
-        $cert_no        = $res_data['txId'];                    // 이니시스 트랜잭션 ID
+        $cert_no        = $txId;                                // 이니시스 트랜잭션 ID(응답 txId는 같을 때만 통과)
         $phone_no       = $res_data['userPhone'];               // 전화번호
         $user_name      = $res_data['userName'];                // 이름
         $birth_day      = $res_data['userBirthday'];            // 생년월일
@@ -62,10 +43,10 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
             $ci = decrypt_SEED($ci, $SEEDKEY, $SEEDIV);
         }
 
-        @insert_cert_history($member['mb_id'], 'inicis', $cert_type); // 인증성공 시 내역 기록
-
-        if(!$phone_no)
+        if (!inicert_valid_identity($user_name, $phone_no, $birth_day, $ci))
         alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
+
+        @insert_cert_history($member['mb_id'], 'inicis', $cert_type); // 인증성공 시 내역 기록
 
         $mb_dupinfo = md5($ci . $ci);
         $phone_no = hyphen_hp_number($phone_no);
@@ -100,7 +81,7 @@ if ($txId && isset($_POST["resultCode"]) && $_POST["resultCode"] === "0000") {
 
     } else {
         // 인증실패 curl의 인증실패 체크
-        alert_close('코드 : '.$res_data['resultCode'].'  '.urldecode($res_data['resultMsg']));
+        alert_close('정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.');
         exit;
     }
 } else {   // resultCode===0000 아닐경우 아래 인증 실패를 출력함 
@@ -117,10 +98,10 @@ include_once(G5_PATH.'/head.sub.php');
         var $opener = window.opener;
 
         // 인증정보
-        $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
-        $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>").attr("readonly", true);
-        $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
-        $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
+        $opener.$("input[name=cert_type]").val(<?php echo get_js_safe_string($cert_type); ?>);
+        $opener.$("input[name=mb_name]").val(<?php echo get_js_safe_string($user_name); ?>).attr("readonly", true);
+        $opener.$("input[name=mb_hp]").val(<?php echo get_js_safe_string($phone_no); ?>).attr("readonly", true);
+        $opener.$("input[name=cert_no]").val(<?php echo get_js_safe_string($md5_cert_no); ?>);
         
         alert("본인인증이 완료되었습니다.");
 

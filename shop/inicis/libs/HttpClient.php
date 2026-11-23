@@ -36,14 +36,13 @@ class HttpClient {
         // [scheme] => https
         // [host] => fcstdpay.inicis.com || stdpay.inicis.com || ksstdpay.inicis.com
         // [path] => /api/payAuth
-        if (! is_inicis_url_return($url)) {
+        // https, 포트 없음, 승인·망취소 호스트와 정확히 같을 때만 연결합니다.
+        if (! is_inicis_url_return($url, array('fcstdpay.inicis.com', 'ksstdpay.inicis.com', 'stgstdpay.inicis.com'))) {
             return false;
         }
 
-        if ($url_data["scheme"] == "https") {
-            $this->ssl = "ssl://";
-            $this->port = 443;
-        }
+        $this->ssl = "ssl://";
+        $this->port = 443;
 
         $this->host = $url_data["host"];
         /*
@@ -57,7 +56,11 @@ class HttpClient {
 
         $this->path = $url_data["path"];
 
-        if (!$this->sock = @fsockopen($this->ssl . $this->host, $this->port, $errno, $errstr, CONNECT_TIMEOUT)) {
+        // 서버 인증서와 호스트명을 검증합니다(PHP 5.6 미만도 같은 옵션을 직접 지정). 검증 실패 시 다시 시도하지 않습니다.
+        $errno = 0;
+        $errstr = '';
+        $context = stream_context_create(g5_stream_tls_context_options($this->host));
+        if (!$this->sock = @stream_socket_client($this->ssl . $this->host . ':' . $this->port, $errno, $errstr, CONNECT_TIMEOUT, STREAM_CLIENT_CONNECT, $context)) {
 
             switch ($errno) {
                 case -3:

@@ -125,51 +125,83 @@ $data = array(
 
 $url = "https://iniapi.inicis.com/api/v1/receipt";
 
-$ch = curl_init();                               
-curl_setopt($ch, CURLOPT_URL, $url);                
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                 
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);                        
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));        
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);                     
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=utf-8'));   
-curl_setopt($ch, CURLOPT_POST, 1);                                     
- 
-$response = curl_exec($ch);
-curl_close($ch);
+// 인증서·호스트명을 검증해 요청합니다. 전송 실패·HTTP 오류·JSON 오류면 주문 상태를 바꾸지 않습니다.
+$response = g5_tls_http_post($url, http_build_query($data), array('Content-Type: application/x-www-form-urlencoded; charset=utf-8'));
+$ini_result = ($response !== false) ? json_decode($response, true) : null;
+if (!is_array($ini_result) || !isset($ini_result['resultCode']) || !is_scalar($ini_result['resultCode'])) {
+    alert('KG이니시스 현금영수증 서버와 통신하지 못했습니다. 잠시 후 다시 시도해 주십시오.');
+}
 
 //step3. 요청 결과
-$ini_result = json_decode($response, true);
+$result_code = (string) $ini_result['resultCode'];
+$result_msg  = (isset($ini_result['resultMsg']) && is_scalar($ini_result['resultMsg'])) ? cut_str(strip_tags((string) $ini_result['resultMsg']), 200, '') : '';
+$cash_tid = $cash_no = $cash_date = $cash_time = $cash_use_opt = '';
 
-if (isset($ini_result['resultCode']) && $ini_result['resultCode'] == '00') {
+if ($result_code === '00') {
+    // 응답 필드 형식을 확인합니다. 하나라도 어긋나면 발급 정보를 저장하지 않습니다.
+    $cash_fields = array(
+        'tid'        => '/\A[A-Za-z0-9]{1,64}\z/',
+        'authNo'     => '/\A[A-Za-z0-9]{1,20}\z/',
+        'authDate'   => '/\A[0-9]{8}\z/',
+        'authTime'   => '/\A[0-9]{6}\z/',
+        'authUseOpt' => '/\A[A-Za-z0-9]{0,2}\z/',
+    );
+    $cash_values = array();
+    foreach ($cash_fields as $field => $pattern) {
+        $value = (isset($ini_result[$field]) && is_scalar($ini_result[$field])) ? (string) $ini_result[$field] : '';
+        if (!preg_match($pattern, $value)) {
+            alert('KG이니시스 현금영수증 응답 형식이 올바르지 않아 발급 정보를 저장하지 않았습니다. 관리자에게 문의해 주십시오.');
+        }
+        $cash_values[$field] = $value;
+    }
+    if (!checkdate((int) substr($cash_values['authDate'], 4, 2), (int) substr($cash_values['authDate'], 6, 2), (int) substr($cash_values['authDate'], 0, 4))
+        || (int) substr($cash_values['authTime'], 0, 2) > 23 || (int) substr($cash_values['authTime'], 2, 2) > 59 || (int) substr($cash_values['authTime'], 4, 2) > 59) {
+        alert('KG이니시스 현금영수증 응답 형식이 올바르지 않아 발급 정보를 저장하지 않았습니다. 관리자에게 문의해 주십시오.');
+    }
+    // 응답에 금액·MID가 있으면 요청 값과 대조합니다.
+    if ((isset($ini_result['crPrice']) && (string) $ini_result['crPrice'] !== (string) $crPrice)
+        || (isset($ini_result['mid']) && (string) $ini_result['mid'] !== (string) $mid)) {
+        alert('KG이니시스 현금영수증 응답의 금액 또는 상점 정보가 요청과 달라 발급 정보를 저장하지 않았습니다. 관리자에게 문의해 주십시오.');
+    }
+
     // DB 반영
-    $cash_no = $ini_result['authNo'];       // 현금영수증 승인번호
+    $cash_tid     = $cash_values['tid'];
+    $cash_no      = $cash_values['authNo'];       // 현금영수증 승인번호
+    $cash_date    = $cash_values['authDate'];
+    $cash_time    = $cash_values['authTime'];
+    $cash_use_opt = $cash_values['authUseOpt'];
 
     $cash = array();
-    $cash['TID']       = $ini_result['tid'];
+    $cash['TID']       = $cash_tid;
     $cash['ApplNum']   = $cash_no;
-    $cash['ApplDate']  = $ini_result['authDate'];
-    $cash['ApplTime']  = $ini_result['authTime'];
-    $cash['CSHR_Type'] = $ini_result['authUseOpt'];
+    $cash['ApplDate']  = $cash_date;
+    $cash['ApplTime']  = $cash_time;
+    $cash['CSHR_Type'] = $cash_use_opt;
     $cash_info = sql_real_escape_string(serialize($cash));
-    $cash_no   = sql_real_escape_string($cash_no);
+    $sql_cash_no = sql_real_escape_string($cash_no);
 
     if($tx == 'personalpay') {
         $sql = " update {$g5['g5_shop_personalpay_table']}
                     set pp_cash = '1',
-                        pp_cash_no = '$cash_no',
+                        pp_cash_no = '$sql_cash_no',
                         pp_cash_info = '$cash_info'
                   where pp_id = '$od_id' ";
     } else {
         $sql = " update {$g5['g5_shop_order_table']}
                     set od_cash = '1',
-                        od_cash_no = '$cash_no',
+                        od_cash_no = '$sql_cash_no',
                         od_cash_info = '$cash_info'
                   where od_id = '$od_id' ";
     }
 
     $result = sql_query($sql, false);
-
+    if (!$result) {
+        // 발급은 되었으나 주문에 기록하지 못했습니다. 성공 화면을 보여주지 않고 대조에 필요한 거래번호를 안내합니다.
+        alert('현금영수증은 발급되었으나 주문 정보에 저장하지 못했습니다. 관리자에게 문의해 주십시오.\n거래번호: '.$cash_tid);
+    }
 }
+
+$cash_appl_time = ($cash_date !== '') ? preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $cash_date.$cash_time) : '';
 
 $g5['title'] = '현금영수증 발급';
 include_once(G5_PATH.'/head.sub.php');
@@ -178,7 +210,7 @@ include_once(G5_PATH.'/head.sub.php');
 <script>
 function showreceipt() // 현금 영수증 출력
 {
-    var showreceiptUrl = "https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid=<?php echo($ini_result['tid']); ?>" + "&clpaymethod=22";
+    var showreceiptUrl = "https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid=" + encodeURIComponent(<?php echo get_js_safe_string($cash_tid); ?>) + "&clpaymethod=22";
     window.open(showreceiptUrl,"showreceipt","width=380,height=540, scrollbars=no,resizable=no");
 }
 </script>
@@ -195,23 +227,23 @@ function showreceipt() // 현금 영수증 출력
         <tbody>
         <tr>
             <th scope="row">결과코드</th>
-            <td><?php echo $ini_result['resultCode']; ?></td>
+            <td><?php echo get_text($result_code); ?></td>
         </tr>
         <tr>
             <th scope="row">결과 메세지</th>
-            <td><?php echo $ini_result['resultMsg']; ?></td>
+            <td><?php echo get_text($result_msg); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 거래번호</th>
-            <td><?php echo $ini_result['tid']; ?></td>
+            <td><?php echo get_text($cash_tid); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 승인번호</th>
-            <td><?php echo $ini_result['authNo']; ?></td>
+            <td><?php echo get_text($cash_no); ?></td>
         </tr>
         <tr>
             <th scope="row">승인시간</th>
-            <td><?php echo preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6",$ini_result['authDate'].$ini_result['authTime']); ?></td>
+            <td><?php echo get_text($cash_appl_time); ?></td>
         </tr>
         <tr>
             <th scope="row">현금영수증 URL</th>

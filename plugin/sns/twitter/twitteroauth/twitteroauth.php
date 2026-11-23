@@ -23,8 +23,8 @@ class TwitterOAuth {
   public $timeout = 30;
   /* Set connect timeout. */
   public $connecttimeout = 30;
-  /* Verify SSL Cert. */
-  public $ssl_verifypeer = FALSE;
+  /* Verify SSL Cert. 인증서·호스트명 검증은 항상 켭니다(http()는 이 값과 관계없이 검증합니다). */
+  public $ssl_verifypeer = TRUE;
   /* Respons format. */
   public $format = 'json';
   /* Decode returned json data. */
@@ -199,7 +199,12 @@ class TwitterOAuth {
     curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
     curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
-    curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->ssl_verifypeer);
+    if (function_exists('g5_curl_tls_verify')) {
+      g5_curl_tls_verify($ci);
+    } else {
+      curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, TRUE);
+      curl_setopt($ci, CURLOPT_SSL_VERIFYHOST, 2);
+    }
     curl_setopt($ci, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
     curl_setopt($ci, CURLOPT_HEADER, FALSE);
 

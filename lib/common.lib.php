@@ -5255,14 +5255,107 @@ function is_include_path_check($path='', $is_input='')
     return true;
 }
 
-function is_inicis_url_return($url){
-    $url_data = parse_url($url);
-
+function is_inicis_url_return($url, $allowed_hosts=null){
     // KG 이니시스 url이 맞는지 체크하여 맞으면 url을 리턴하고 틀리면 '' 빈값을 리턴합니다.
-    if (isset($url_data['host']) && preg_match('#\.inicis\.com$#i', $url_data['host'])) {
-        return $url;
+    // https만 허용하고 포트·사용자 정보가 있는 주소는 거부합니다. $allowed_hosts를 주면 호스트가 그중 하나와 정확히 같아야 합니다.
+    if (!is_string($url) || $url === '' || preg_match('/[\x00-\x20\x7f\\\\]/', $url)) {
+        return '';
+    }
+    $url_data = @parse_url($url);
+    if (!is_array($url_data) || !isset($url_data['scheme'], $url_data['host']) || strtolower($url_data['scheme']) !== 'https') {
+        return '';
+    }
+    if (isset($url_data['port']) || isset($url_data['user']) || isset($url_data['pass'])) {
+        return '';
+    }
+    $host = strtolower($url_data['host']);
+    if (is_array($allowed_hosts)) {
+        if (!in_array($host, array_map('strtolower', $allowed_hosts), true)) {
+            return '';
+        }
+    } else if (!preg_match('#^(?:[a-z0-9-]+\.)+inicis\.com$#', $host)) {
+        return '';
+    }
+    // parse_url이 다르게 해석할 수 있는 주소를 막기 위해 원문이 https://호스트/ 로 시작하는지 다시 확인합니다.
+    if (strcasecmp($url, 'https://'.$host) !== 0 && stripos($url, 'https://'.$host.'/') !== 0) {
+        return '';
+    }
+    return $url;
+}
+
+// 서버 간 HTTPS 통신에 쓸 CA 묶음 파일. 서버 설정 상수(G5_TLS_CA_FILE)로만 지정하며 요청 값은 쓰지 않습니다.
+function g5_tls_ca_file()
+{
+    if (defined('G5_TLS_CA_FILE') && is_string(G5_TLS_CA_FILE) && G5_TLS_CA_FILE !== '' && is_file(G5_TLS_CA_FILE) && is_readable(G5_TLS_CA_FILE)) {
+        return G5_TLS_CA_FILE;
     }
     return '';
+}
+
+// cURL 요청에 서버 인증서·호스트명 검증을 켭니다. 검증 실패 시 검증을 끄고 다시 시도하지 않습니다.
+function g5_curl_tls_verify($ch)
+{
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+    $ca_file = g5_tls_ca_file();
+    if ($ca_file !== '') {
+        curl_setopt($ch, CURLOPT_CAINFO, $ca_file);
+    }
+    return $ch;
+}
+
+// fsockopen/stream_socket_client('ssl://') 연결에 쓸 인증서·호스트명 검증 컨텍스트 옵션
+function g5_stream_tls_context_options($host)
+{
+    $ssl = array(
+        'verify_peer' => true,
+        'verify_peer_name' => true,
+        'allow_self_signed' => false,
+        'peer_name' => (string) $host,
+        'SNI_enabled' => true,
+    );
+    $ca_file = g5_tls_ca_file();
+    if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+        // PHP 5.6 미만은 기본 CA와 호스트명 검사가 없으므로 CA 파일과 CN_match를 직접 지정합니다.
+        if ($ca_file === '' && ini_get('curl.cainfo')) {
+            $ca_file = (string) ini_get('curl.cainfo');
+        }
+        $ssl['CN_match'] = (string) $host;
+        $ssl['SNI_server_name'] = (string) $host;
+    }
+    if ($ca_file !== '') {
+        $ssl['cafile'] = $ca_file;
+    }
+    return array('ssl' => $ssl);
+}
+
+// 인증서를 검증하는 HTTPS POST. 전송 오류·HTTP 2xx가 아닌 응답이면 false를 반환합니다.
+function g5_tls_http_post($url, $body, $headers=array(), $connect_timeout=10, $timeout=30)
+{
+    if (!function_exists('curl_init') || !is_string($url) || stripos($url, 'https://') !== 0) {
+        return false;
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, (int) $connect_timeout);
+    curl_setopt($ch, CURLOPT_TIMEOUT, (int) $timeout);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+    if (defined('CURLOPT_PROTOCOLS') && defined('CURLPROTO_HTTPS')) {
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+    }
+    g5_curl_tls_verify($ch);
+    $response = curl_exec($ch);
+    $errno = curl_errno($ch);
+    $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($response === false || $errno || $status < 200 || $status > 299) {
+        return false;
+    }
+    return (string) $response;
 }
 
 function check_auth_session_token($str=''){

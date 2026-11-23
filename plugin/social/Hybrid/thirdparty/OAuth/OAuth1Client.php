@@ -22,7 +22,8 @@ class OAuth1Client{
 	public $decode_json           = true;
 	public $curl_time_out         = 10;
 	public $curl_connect_time_out = 15;
-	public $curl_ssl_verifypeer   = false;
+	// 인증서·호스트명 검증은 항상 켭니다(request()는 이 값과 관계없이 검증합니다).
+	public $curl_ssl_verifypeer   = true;
 	public $curl_auth_header      = true;
 	public $curl_useragent        = "OAuth/1 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
 	public $curl_proxy            = null;
@@ -197,7 +198,12 @@ class OAuth1Client{
 		curl_setopt( $ci, CURLOPT_MAXREDIRS , 10);
 		curl_setopt( $ci, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ci, CURLOPT_HTTPHEADER    , array('Expect:') );
-		curl_setopt( $ci, CURLOPT_SSL_VERIFYPEER, $this->curl_ssl_verifypeer );
+		if ( function_exists('g5_curl_tls_verify') ) {
+			g5_curl_tls_verify( $ci );
+		} else {
+			curl_setopt( $ci, CURLOPT_SSL_VERIFYPEER, true );
+			curl_setopt( $ci, CURLOPT_SSL_VERIFYHOST, 2 );
+		}
 		curl_setopt( $ci, CURLOPT_HEADERFUNCTION, array($this, 'getHeader') );
 		curl_setopt( $ci, CURLOPT_HEADER        , false );
 

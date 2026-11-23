@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(dirname(__FILE__).'/libs/inicert.lib.php');
 
 $sql = "select MAX(cr_id) as max_cr_id from {$g5['cert_history_table']} limit 1";
 $res = sql_fetch($sql);
@@ -52,6 +53,9 @@ switch($_GET['pageType']) {
     default:
         alert_close('잘못된 접근입니다.');
 }
+
+// 결과 처리기가 시작하지 않은 거래·다른 용도의 거래를 거부하도록 요청 정보를 세션에 저장합니다.
+inicert_save_request($mTxId, $_GET['pageType'], $mid);
 
 $resultUrl = G5_INICERT_URL . $resultPage;
 $g5['title'] = 'KG이니시스 간편인증';

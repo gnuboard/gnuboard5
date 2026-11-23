@@ -41,7 +41,7 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
     */
     function loginBegin()
     {
-        $token = $this->generate_state_token();
+        $token = $this->createAuthState();
         Hybrid_Auth::storage()->set("naver_state_token", $token);
         
         $parameters = array(
@@ -59,6 +59,8 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
     */
     function loginFinish()
     {
+        $this->checkAuthState();
+
         $error = (array_key_exists('error', $_REQUEST)) ? $_REQUEST['error'] : "";
         // check for errors
         if ( $error ){
@@ -162,9 +164,13 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
         Hybrid_Auth::storage()->set("naver_state_token", null);
 
         $response = $this->request($this->api->token_url, $params, $this->api->curl_authenticate_method);
+        // 전송 오류·HTTP 2xx 아님이면 응답 본문을 쓰지 않습니다.
+        if ($response === false || (int) $this->http_code < 200 || (int) $this->http_code > 299) {
+            throw new Exception("The Authorization Service request failed. " . (int) $this->http_code);
+        }
         $response = $this->parseRequestResult($response);
-        if ( ! $response || ! isset($response->access_token) ) {
-            throw new Exception("The Authorization Service has return: " . $response->error);
+        if ( ! $response || ! isset($response->access_token) || ! is_string($response->access_token) || $response->access_token === '' ) {
+            throw new Exception("The Authorization Service has return an invalid response.");
         }
         if ( isset($response->access_token) )  $this->api->access_token            = $response->access_token;
         if ( isset($response->refresh_token) ) $this->api->refresh_token           = $response->refresh_token;
@@ -192,7 +198,12 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
         curl_setopt($ch, CURLOPT_TIMEOUT       , $this->api->curl_time_out);
         curl_setopt($ch, CURLOPT_USERAGENT     , $this->api->curl_useragent);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->api->curl_connect_time_out);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->api->curl_ssl_verifypeer);
+        if (function_exists('g5_curl_tls_verify')) {
+            g5_curl_tls_verify($ch);
+        } else {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        }
         curl_setopt($ch, CURLOPT_HTTPHEADER    , $this->api->curl_header);
 
         if ( $this->api->curl_proxy ) {
@@ -204,6 +215,9 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
         }
 
         $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            $response = false;
+        }
         if(Class_exists('Hybrid_Logger')){
             Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize(curl_getinfo($ch)) );
             Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize($response ));
