@@ -174,7 +174,9 @@ $colspan = 10;
 
     <div class="btn_fixed_top">
         <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정" class="btn btn_02">
-        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제" class="btn btn_02">
+        <?php if ($is_admin == 'super') { ?>
+            <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제" class="btn btn_02">
+        <?php } ?>
         <a href="./boardgroup_form.php" class="btn btn_01">게시판그룹 추가</a>
     </div>
 </form>

@@ -4,6 +4,9 @@ include_once('./_common.php');
 if (!$is_member)
     goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/wishlist.php'));
 
+// 위시리스트 삭제용 1회용 토큰(삭제는 POST로만 처리)
+$wish_delete_token = g5_get_form_token('wish_delete', $member['mb_id']);
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/wishlist.php');
     return;
@@ -77,7 +80,7 @@ include_once('./_head.php');
                 </div>
                 <a href="<?php echo shop_item_url($row['it_id']); ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>
                 <div class="info_date"><?php echo $row['wi_time']; ?></div>
-                <a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>" class="wish_del"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a>
+                <a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>&amp;token=<?php echo $wish_delete_token; ?>" onclick="return g5_post_href(this.href);" class="wish_del"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a>
            </div>
         </li>
         <?php

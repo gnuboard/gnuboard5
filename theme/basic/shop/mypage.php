@@ -4,6 +4,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 $g5['title'] = '마이페이지';
 include_once('./_head.php');
 
+// 위시리스트 삭제용 1회용 토큰(삭제는 POST로만 처리)
+$wish_delete_token = g5_get_form_token('wish_delete', $member['mb_id']);
+
 // 쿠폰
 $cp_count = 0;
 $sql = " select cp_id
@@ -141,7 +144,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
                     <div class="smb_my_tit"><a href="<?php echo shop_item_url($row['it_id']); ?>"><?php echo stripslashes($row['it_name']); ?></a></div>
                     <div class="smb_my_price"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></div>
                     <div class="smb_my_date"><?php echo $row['wi_time']; ?></div>
-                    <a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>" class="wish_del"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a>
+                    <a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>&amp;token=<?php echo $wish_delete_token; ?>" onclick="return g5_post_href(this.href);" class="wish_del"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a>
                 </li>
 
                 <?php

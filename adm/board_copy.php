@@ -10,6 +10,10 @@ require_once G5_PATH . '/head.sub.php';
 if (empty($bo_table)) {
     alert_close("정상적인 방법으로 이용해주세요.");
 }
+
+if (!admin_board_owner_check($bo_table)) {
+    alert_close('게시판을 관리할 권한이 없습니다.');
+}
 ?>
 <script>
     var g5_admin_csrf_token_key = "<?php echo (function_exists('admin_csrf_token_key')) ? admin_csrf_token_key() : ''; ?>";

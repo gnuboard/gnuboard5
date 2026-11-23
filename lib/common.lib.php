@@ -1149,9 +1149,14 @@ function get_group_select($name, $selected='', $event='')
     global $g5, $is_admin, $member;
 
     $sql = " select gr_id, gr_subject from {$g5['group_table']} a ";
-    if ($is_admin == "group") {
-        $sql .= " left join {$g5['member_table']} b on (b.mb_id = a.gr_admin)
-                  where b.mb_id = '{$member['mb_id']}' ";
+    // 최고관리자가 아니면 본인이 그룹 관리자인 그룹만 보여 준다.
+    if ($is_admin != "super") {
+        $mb_id = isset($member['mb_id']) ? (string)$member['mb_id'] : '';
+        if ($mb_id === '') {
+            $sql .= " where 0 ";
+        } else {
+            $sql .= " where a.gr_admin = '".sql_real_escape_string($mb_id)."' ";
+        }
     }
     $sql .= " order by a.gr_id ";
 

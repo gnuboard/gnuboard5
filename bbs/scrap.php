@@ -21,6 +21,9 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $list = array();
 
+// 스크랩 삭제용 1회용 토큰(삭제는 POST로만 처리)
+$scrap_delete_token = g5_get_form_token('scrap_delete', $member['mb_id']);
+
 $sql = " select *
             $sql_common
             $sql_order
@@ -51,7 +54,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['opener_href_wr_id'] = get_pretty_url($row['bo_table'], $row['wr_id']);
     $list[$i]['bo_subject'] = $row2['bo_subject'];
     $list[$i]['subject'] = $subject;
-    $list[$i]['del_href'] = './scrap_delete.php?ms_id='.$row['ms_id'].'&amp;page='.$page;
+    $list[$i]['del_href'] = './scrap_delete.php?ms_id='.$row['ms_id'].'&amp;page='.$page.'&amp;token='.$scrap_delete_token;
 }
 
 include_once($member_skin_path.'/scrap.skin.php');

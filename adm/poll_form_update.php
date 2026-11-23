@@ -89,6 +89,8 @@ if ($w == '') {
                 where po_id = '{$_POST['po_id']}' ";
     sql_query($sql);
 } elseif ($w == 'd') {
+    auth_check_menu($auth, $sub_menu, 'd');
+
     $sql = " delete from {$g5['poll_table']} where po_id = '{$_POST['po_id']}' ";
     sql_query($sql);
 

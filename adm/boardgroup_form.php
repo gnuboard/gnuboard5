@@ -24,6 +24,10 @@ if ($w == '') {
     $sound_only = '<strong class="sound_only"> 필수</strong>';
     $html_title .= ' 생성';
 } elseif ($w == 'u') {
+    if (!admin_group_owner_check($gr_id)) {
+        alert('게시판그룹을 관리할 권한이 없습니다.');
+    }
+
     $gr_id_attr = 'readonly';
     $gr = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
     $html_title .= ' 수정';

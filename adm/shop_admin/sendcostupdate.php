@@ -11,6 +11,8 @@ check_admin_token();
 $w = isset($_POST['w']) ? $_POST['w'] : '';
 
 if($w == 'd') {
+    auth_check_menu($auth, $sub_menu, "d");
+
     $count = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
     if(!$count)
         alert('삭제하실 항목을 하나이상 선택해 주십시오.');
@@ -18,7 +20,7 @@ if($w == 'd') {
     for($i=0; $i<$count; $i++) {
         $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
 
-        $sc_id = isset($_POST['sc_id'][$i]) ? (int) $_POST['sc_id'][$k] : 0;
+        $sc_id = isset($_POST['sc_id'][$k]) ? (int) $_POST['sc_id'][$k] : 0;
         sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
     }
 } else {

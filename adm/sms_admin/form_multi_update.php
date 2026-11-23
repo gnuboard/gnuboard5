@@ -11,6 +11,8 @@ $atype = isset($_POST['atype']) ? clean_xss_tags($_POST['atype'], 1, 1) : '';
 $fg_no = isset($_POST['fg_no']) ? (int) $_POST['fg_no'] : 0;
 
 if($atype == "del"){
+    auth_check_menu($auth, $sub_menu, "d");
+
     $count = count($post_fo_no);
     if(!$count)
         alert('선택삭제 하실 항목을 하나이상 선택해 주세요.');

@@ -18,6 +18,28 @@ if (!$chk_count) {
     alert($act_button . '할 게시판그룹을 1개이상 선택해 주세요.');
 }
 
+if ($act_button === '선택수정') {
+    // 최고관리자가 아니면 제출된 그룹을 모두 먼저 확인해, 하나라도 본인 그룹이 아니면 요청 전체를 거부한다.
+    if ($is_admin != 'super') {
+        for ($i = 0; $i < $chk_count; $i++) {
+            $k = isset($post_chk[$i]) ? (int) $post_chk[$i] : 0;
+            $chk_gr_id = isset($post_group_id[$k]) ? $post_group_id[$k] : '';
+            if (!admin_group_owner_check($chk_gr_id)) {
+                alert('게시판그룹을 관리할 권한이 없습니다.');
+            }
+        }
+    }
+} elseif ($act_button === '선택삭제') {
+    // 그룹 생성과 같이 삭제도 최고관리자만 한다.
+    if ($is_admin != 'super') {
+        alert('게시판그룹 삭제는 최고관리자만 가능합니다.');
+    }
+
+    auth_check_menu($auth, $sub_menu, 'd');
+} else {
+    alert('올바른 방법으로 이용해 주십시오.');
+}
+
 for ($i = 0; $i < $chk_count; $i++) {
     $k              = isset($post_chk[$i]) ? (int) $post_chk[$i] : 0;
     $gr_id          = preg_replace('/[^a-z0-9_]/i', '', $post_group_id[$k]);
@@ -28,6 +50,11 @@ for ($i = 0; $i < $chk_count; $i++) {
     $gr_order       = isset($_POST['gr_order'][$k]) ? (int) $_POST['gr_order'][$k] : 0;
 
     if ($act_button == '선택수정') {
+        // 그룹 관리자 지정은 최고관리자만 한다. 위임 관리자의 요청 값은 무시하고 기존 값(본인)을 유지한다.
+        if ($is_admin != 'super') {
+            $gr_admin = $member['mb_id'];
+        }
+
         $sql = " update {$g5['group_table']}
                     set gr_subject    = '{$gr_subject}',
                         gr_device     = '" . sql_real_escape_string($gr_device) . "',
@@ -36,7 +63,7 @@ for ($i = 0; $i < $chk_count; $i++) {
                         gr_order      = '" . $gr_order . "'
                   where gr_id         = '{$gr_id}' ";
         if ($is_admin != 'super') {
-            $sql .= " and gr_admin    = '" . sql_real_escape_string($gr_admin) . "' ";
+            $sql .= " and gr_admin    = '" . sql_real_escape_string($member['mb_id']) . "' ";
         }
         sql_query($sql);
     } elseif ($act_button == '선택삭제') {

@@ -7,10 +7,19 @@ if(!$is_member)
 $ad_id = isset($_REQUEST['ad_id']) ? (int) $_REQUEST['ad_id'] : 0;
 
 if($w == 'd') {
+    // 삭제는 배송지 목록에서 발급한 1회용 토큰을 실은 POST로만 처리한다(교차 사이트 GET 삭제 차단).
+    $orderaddress_delete_token = isset($_POST['token']) ? $_POST['token'] : '';
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !g5_check_form_token('orderaddress_delete', $member['mb_id'], $orderaddress_delete_token, 3600))
+        alert('올바른 방법으로 이용해 주십시오.', $_SERVER['SCRIPT_NAME']);
+
+    $ad_id = isset($_POST['ad_id']) ? (int) $_POST['ad_id'] : 0;
     $sql = " delete from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
     sql_query($sql);
     goto_url($_SERVER['SCRIPT_NAME']);
 }
+
+// 배송지 삭제용 1회용 토큰(삭제는 POST로만 처리)
+$orderaddress_delete_token = g5_get_form_token('orderaddress_delete', $member['mb_id']);
 
 $sql_common = " from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' ";
 
@@ -96,7 +105,7 @@ include_once(G5_PATH.'/head.sub.php');
             <td class="td_mng">
                 <input type="hidden" value="<?php echo $addr; ?>" >
                 <button type="button" class="sel_address mng_btn">선택</button>
-                <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address mng_btn">삭제</a>
+                <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>&amp;token=<?php echo $orderaddress_delete_token; ?>" class="del_address mng_btn">삭제</a>
                 <input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>>
                 <label for="ad_default<?php echo $i;?>" class="default_lb mng_btn">기본배송지</label>
 
@@ -151,7 +160,10 @@ $(function() {
     });
 
     $(".del_address").on("click", function() {
-        return confirm("배송지 목록을 삭제하시겠습니까?");
+        if (confirm("배송지 목록을 삭제하시겠습니까?")) {
+            g5_post_href(this.href);
+        }
+        return false;
     });
 
     // 전체선택 부분

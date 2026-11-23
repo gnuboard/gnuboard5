@@ -20,6 +20,11 @@ if (!preg_match("/^([A-Za-z0-9_]{1,10})$/", $gr_id)) {
     alert('그룹 ID는 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (10자 이내)');
 }
 
+// 최고관리자가 아니면 DB에 저장된 그룹 관리자가 본인인 그룹만 수정할 수 있다.
+if ($w == 'u' && !admin_group_owner_check($gr_id)) {
+    alert('게시판그룹을 관리할 권한이 없습니다.');
+}
+
 if (empty($gr_subject)) {
     alert('그룹 제목을 입력하세요.');
 }
@@ -43,6 +48,11 @@ foreach ($check_keys as $key => $value) {
     } else {
         $posts[$key] = isset($_POST[$key]) ? $_POST[$key] : '';
     }
+}
+
+// 그룹 관리자 지정은 최고관리자만 한다. 위임 관리자의 요청 값은 무시하고 기존 값(본인)을 유지한다.
+if ($is_admin != 'super') {
+    $posts['gr_admin'] = sql_real_escape_string($member['mb_id']);
 }
 
 $sql_common = " gr_subject = '{$posts['gr_subject']}',
@@ -89,6 +99,9 @@ if ($w == '') {
     $sql = " update {$g5['group_table']}
                 set {$sql_common}
                 where gr_id = '{$gr_id}' ";
+    if ($is_admin != 'super') {
+        $sql .= " and gr_admin = '" . sql_real_escape_string($member['mb_id']) . "' ";
+    }
     sql_query($sql);
 } else {
     alert('제대로 된 값이 넘어오지 않았습니다.');

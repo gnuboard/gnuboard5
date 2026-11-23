@@ -9,6 +9,10 @@ if (!$gr['gr_id']) {
     alert('존재하지 않는 그룹입니다.');
 }
 
+if (!admin_group_owner_check($gr['gr_id'])) {
+    alert('게시판그룹을 관리할 권한이 없습니다.');
+}
+
 $sql_common = " from {$g5['group_member_table']} a
                          left outer join {$g5['member_table']} b on (a.mb_id = b.mb_id) ";
 $sql_search = " where gr_id = '{$gr_id}' ";

@@ -129,10 +129,9 @@ if ($w == '') {
         alert('존재하지 않은 게시판 입니다.');
     }
 
-    if ($is_admin == 'group') {
-        if ($member['mb_id'] != $group['gr_admin']) {
-            alert('그룹이 틀립니다.');
-        }
+    // 최고관리자가 아니면 DB에 저장된 게시판 소속 그룹의 관리자가 본인이어야 한다.
+    if (!admin_board_owner_check($board['bo_table'])) {
+        alert('게시판을 관리할 권한이 없습니다.');
     }
 
     $readonly = 'readonly';

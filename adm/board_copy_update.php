@@ -20,6 +20,11 @@ if (empty($bo_table)) {
     alert("원본 테이블 정보가 없습니다.");
 }
 
+// 최고관리자가 아니면 원본 게시판이 본인 그룹의 게시판이어야 한다(복사본은 원본 그룹에 만들어진다).
+if (!admin_board_owner_check($bo_table) || !isset($board['bo_table']) || $board['bo_table'] !== $bo_table) {
+    alert('게시판을 관리할 권한이 없습니다.');
+}
+
 if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table)) {
     alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)');
 }
