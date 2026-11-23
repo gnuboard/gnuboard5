@@ -30,7 +30,7 @@ if($ps_run) {
     <tr>
         <th scope="col">
             <label for="spl_chk_all" class="sound_only">전체 추가옵션</label>
-            <input type="checkbox" name="spl_chk_all" value="1">
+            <input type="checkbox" name="spl_chk_all" value="1" id="spl_chk_all">
         </th>
         <th scope="col">옵션명</th>
         <th scope="col">옵션항목</th>
@@ -84,6 +84,7 @@ if($ps_run) {
     <?php
         } // for
     } else {
+        $spl_no = 0; // 생성되는 추가옵션 행마다 고유한 id를 쓰기 위한 번호
         for($i=0; $i<$subject_count; $i++) {
             $spl_subject = isset($_POST['subject'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags(trim(stripslashes($_POST['subject'][$i])))) : '';
             $spl_val = isset($_POST['supply'][$i]) ? explode(',', preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['supply'][$i])))) : '';
@@ -118,32 +119,33 @@ if($ps_run) {
     <tr>
         <td class="td_chk">
             <input type="hidden" name="spl_id[]" value="<?php echo get_text($spl_id); ?>">
-            <label for="spl_chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($spl_subject.' '.$spl); ?></label>
-            <input type="checkbox" name="spl_chk[]" id="spl_chk_<?php echo $i; ?>" value="1">
+            <label for="spl_chk_<?php echo $spl_no; ?>" class="sound_only"><?php echo get_text($spl_subject.' '.$spl); ?></label>
+            <input type="checkbox" name="spl_chk[]" id="spl_chk_<?php echo $spl_no; ?>" value="1">
         </td>
         <td class="spl-subject-cell"><?php echo get_text($spl_subject); ?></td>
         <td class="spl-cell"><?php echo $spl; ?></td>
         <td class="td_numsmall">
-            <label for="spl_price_<?php echo $i; ?>" class="sound_only">상품금액</label>
-            <input type="text" name="spl_price[]" value="<?php echo $spl_price; ?>" id="spl_price_<?php echo $i; ?>" class="frm_input" size="9">
+            <label for="spl_price_<?php echo $spl_no; ?>" class="sound_only">상품금액</label>
+            <input type="text" name="spl_price[]" value="<?php echo $spl_price; ?>" id="spl_price_<?php echo $spl_no; ?>" class="frm_input" size="9">
         </td>
         <td class="td_num">
-            <label for="spl_stock_qty_<?php echo $i; ?>" class="sound_only">재고수량</label>
-            <input type="text" name="spl_stock_qty[]" value="<?php echo $spl_stock_qty; ?>" id="spl_stock_qty_<?php echo $i; ?>" class="frm_input" size="5">
+            <label for="spl_stock_qty_<?php echo $spl_no; ?>" class="sound_only">재고수량</label>
+            <input type="text" name="spl_stock_qty[]" value="<?php echo $spl_stock_qty; ?>" id="spl_stock_qty_<?php echo $spl_no; ?>" class="frm_input" size="5">
         </td>
         <td class="td_num">
-            <label for="spl_noti_qty_<?php echo $i; ?>" class="sound_only">통보수량</label>
-            <input type="text" name="spl_noti_qty[]" value="<?php echo $spl_noti_qty; ?>" id="spl_noti_qty_<?php echo $i; ?>" class="frm_input" size="5">
+            <label for="spl_noti_qty_<?php echo $spl_no; ?>" class="sound_only">통보수량</label>
+            <input type="text" name="spl_noti_qty[]" value="<?php echo $spl_noti_qty; ?>" id="spl_noti_qty_<?php echo $spl_no; ?>" class="frm_input" size="5">
         </td>
         <td class="td_mng">
-            <label for="spl_use_<?php echo $i; ?>" class="sound_only">사용여부</label>
-            <select name="spl_use[]" id="spl_use_<?php echo $i; ?>">
+            <label for="spl_use_<?php echo $spl_no; ?>" class="sound_only">사용여부</label>
+            <select name="spl_use[]" id="spl_use_<?php echo $spl_no; ?>">
                 <option value="1" <?php echo get_selected('1', $spl_use); ?>>사용함</option>
                 <option value="0" <?php echo get_selected('0', $spl_use); ?>>사용안함</option>
             </select>
         </td>
     </tr>
     <?php
+                    $spl_no++;
                 } // if
             } // for
         } // for
