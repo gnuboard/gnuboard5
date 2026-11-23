@@ -28,8 +28,9 @@ class OAuth2Client
   public $sign_token_name          = "access_token";
   public $curl_time_out            = 10;
   public $curl_connect_time_out    = 15;
-  public $curl_ssl_verifypeer      = false;
-  public $curl_ssl_verifyhost      = false;
+  // 인증서·호스트명 검증은 항상 켭니다(아래 request()는 이 값과 관계없이 검증합니다).
+  public $curl_ssl_verifypeer      = true;
+  public $curl_ssl_verifyhost      = 2;
   public $curl_header              = array();
   public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1.1; HybridAuth http://hybridauth.sourceforge.net/";
   public $curl_authenticate_method = "POST";
@@ -78,10 +79,15 @@ class OAuth2Client
 
     $response = $this->request( $this->token_url, $params, $this->curl_authenticate_method );
 
+    // 전송 오류·HTTP 2xx 아님이면 응답 본문을 쓰지 않습니다.
+    if( $response === false || ! $this->isHttpSuccess() ){
+      throw new Exception( "The Authorization Service request failed. " . (int) $this->http_code );
+    }
+
     $response = $this->parseRequestResult( $response );
 
-    if( ! $response || ! isset( $response->access_token ) ){
-      throw new Exception( "The Authorization Service has return: " . $response->error );
+    if( ! $response || ! isset( $response->access_token ) || ! is_string( $response->access_token ) || $response->access_token === '' ){
+      throw new Exception( "The Authorization Service has return an invalid response." );
     }
 
     if( isset( $response->access_token  ) )  $this->access_token           = $response->access_token;
@@ -140,6 +146,11 @@ class OAuth2Client
       case 'POST' : $response = $this->request( $url, $parameters, "POST" ); break;
       case 'DELETE' : $response = $this->request( $url, $parameters, "DELETE" ); break;
       case 'PATCH'  : $response = $this->request( $url, $parameters, "PATCH" ); break;
+    }
+
+    // 전송 오류·HTTP 2xx 아님이면 응답을 쓰지 않습니다(제공자 코드가 식별자 없음으로 처리해 로그인하지 않음).
+    if( $response === false || ! $this->isHttpSuccess() ){
+      return $this->response = null;
     }
 
     if( $response && $decode_json ){
@@ -222,8 +233,12 @@ class OAuth2Client
     curl_setopt($ch, CURLOPT_USERAGENT      , $this->curl_useragent );
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out );
     curl_setopt($ch, CURLOPT_MAXREDIRS , 10);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , $this->curl_ssl_verifypeer );
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST , $this->curl_ssl_verifyhost );
+    if (function_exists('g5_curl_tls_verify')) {
+      g5_curl_tls_verify($ch);
+    } else {
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , true );
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST , 2 );
+    }
     curl_setopt($ch, CURLOPT_HTTPHEADER     , $this->curl_header );
 
     if ($this->curl_compressed){
@@ -271,6 +286,12 @@ class OAuth2Client
     curl_close ($ch);
 
     return $response;
+  }
+
+  public function isHttpSuccess()
+  {
+    $code = (int) $this->http_code;
+    return $code >= 200 && $code < 300;
   }
 
   private function parseRequestResult( $result )

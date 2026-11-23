@@ -1314,6 +1314,10 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             if (!$create) {
                 return null;
             }
+            // gnuboard KVE-2026-3266: no row dimension beyond the last worksheet row
+            if (is_numeric($pRow) && $pRow > 1048576) {
+                throw new PHPExcel_Exception('Row number can not be greater than 1048576');
+            }
             $this->rowDimensions[$pRow] = new PHPExcel_Worksheet_RowDimension($pRow);
 
             $this->cachedHighestRow = max($this->cachedHighestRow, $pRow);
@@ -1336,6 +1340,10 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         if (!isset($this->columnDimensions[$pColumn])) {
             if (!$create) {
                 return null;
+            }
+            // gnuboard KVE-2026-3267: no column dimension beyond the last worksheet column (XFD)
+            if (PHPExcel_Cell::columnIndexFromString($pColumn) > 16384) {
+                throw new PHPExcel_Exception('Column can not be greater than XFD');
             }
             $this->columnDimensions[$pColumn] = new PHPExcel_Worksheet_ColumnDimension($pColumn);
 

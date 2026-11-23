@@ -117,23 +117,24 @@ if ($csv == 'csv')
             $ct_send_cost = iconv_euckr($ct_send_cost);
         }
 
-        echo '"\''.$row['od_b_zip1'].$row['od_b_zip2'].'"\''.',';
-        echo '"'.(function_exists('csv_safe_cell') ? csv_safe_cell($pull_address) : $pull_address).'"'.',';
-        echo '"'.(function_exists('csv_safe_cell') ? csv_safe_cell($row['od_b_name']) : $row['od_b_name']).'"'.',';
-        //echo '"'.multibyte_digit((string)$row[od_b_tel]).'"'.',';
-        //echo '"'.multibyte_digit((string)$row[od_b_hp]).'"'.',';
-        echo '"'.conv_telno($row['od_b_tel']) . '"'.',';
-        echo '"'.conv_telno($row['od_b_hp']) . '"'.',';
-        echo '"'.(function_exists('csv_safe_cell') ? csv_safe_cell(preg_replace("/\"/", "&#034;", $row['it_name'])) : preg_replace("/\"/", "&#034;", $row['it_name'])) . '"'.',';
-        echo '"'.$row['ct_qty'].'"'.',';
-        echo '"'.(function_exists('csv_safe_cell') ? csv_safe_cell($row['ct_option']) : $row['ct_option']).'"'.',';
-        echo '"'.$ct_send_cost.'"'.',';
-        echo '"\''.$row['it_id'].'\'"'.',';
-        echo '"\''.$row['od_id'].'\'"'.',';
-        echo '"'.(function_exists('csv_safe_cell') ? csv_safe_cell($row['od_invoice']) : $row['od_invoice']).'"'.',';
-        //echo '"'.preg_replace("/\"/", "&#034;", preg_replace("/\n/", "", $row[od_memo])).'"';
-        echo '"'.(function_exists('csv_safe_cell') ? csv_safe_cell(preg_replace("/\"/", "&#034;", $row['od_memo'])) : preg_replace("/\"/", "&#034;", $row['od_memo'])).'"';
-        echo "\n";
+        // 모든 열을 csv_build_row()로 출력한다. 셀마다 수식 시작 문자를 중화하고 큰따옴표를 ""로 이스케이프한다.
+        // 값은 위에서 셀 단위로 EUC-KR(UHC) 변환을 마쳤다. 상품명·전하실말씀의 큰따옴표도 &#034; 대신 원래 값으로 보존된다.
+        // 우편번호·상품코드·주문번호는 기존처럼 앞뒤에 '를 붙여 문자열로 둔다.
+        echo csv_build_row(array(
+            "'".$row['od_b_zip1'].$row['od_b_zip2']."'",
+            $pull_address,
+            $row['od_b_name'],
+            conv_telno($row['od_b_tel']),
+            conv_telno($row['od_b_hp']),
+            $row['it_name'],
+            $row['ct_qty'],
+            $row['ct_option'],
+            $ct_send_cost,
+            "'".$row['it_id']."'",
+            "'".$row['od_id']."'",
+            $row['od_invoice'],
+            $row['od_memo']
+        ));
     }
     if ($i == 0)
         echo '자료가 없습니다.'.PHP_EOL;

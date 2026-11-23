@@ -164,7 +164,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
                     <?php if( !$option_item ){ ?>
                     <li>
                         <div class="opt_name">
-                            <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
+                            <span class="sit_opt_subj"><?php echo get_text($it['it_name']); ?></span>
                         </div>
                         <div class="opt_count">
                             <label for="ct_qty_<?php echo $i; ?>" class="sound_only">수량</label>

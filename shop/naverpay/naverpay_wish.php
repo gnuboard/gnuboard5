@@ -47,7 +47,9 @@ if($item) {
     $query .= $item;
 }
 
-$nc_sock = @fsockopen($req_addr, $req_port, $errno, $errstr);
+// 서버 인증서와 호스트명을 검증해 연결합니다(PHP 5.6 미만도 같은 옵션을 직접 지정).
+$nc_context = stream_context_create(g5_stream_tls_context_options($req_host));
+$nc_sock = @stream_socket_client($req_addr.':'.$req_port, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $nc_context);
 if ($nc_sock) {
     fwrite($nc_sock, $wish_req_url."\r\n" );
     fwrite($nc_sock, "Host: ".$req_host.":".$req_port."\r\n" );

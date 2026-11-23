@@ -213,6 +213,44 @@ function del(href)
     }
 }
 
+// 링크 주소의 쿼리 값을 숨은 필드로 담아 POST로 보낸다(삭제처럼 상태를 바꾸는 링크용)
+function g5_post_href(href)
+{
+    var url = String(href).split("#")[0];
+    var pos = url.indexOf("?");
+    var query = pos >= 0 ? url.substring(pos + 1) : "";
+    var form = document.createElement("form");
+    var pairs = query ? query.split("&") : [];
+    var i, p, input;
+
+    form.method = "post";
+    form.action = pos >= 0 ? url.substring(0, pos) : url;
+    form.style.display = "none";
+
+    for (i = 0; i < pairs.length; i++) {
+        if (!pairs[i]) continue;
+        p = pairs[i].split("=");
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = decodeURIComponent(p[0].replace(/\+/g, " "));
+        input.value = p.length > 1 ? decodeURIComponent(p.slice(1).join("=").replace(/\+/g, " ")) : "";
+        form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+    return false;
+}
+
+// 삭제 검사 확인 후 POST로 요청
+function del_post(href)
+{
+    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+        g5_post_href(href);
+    }
+    return false;
+}
+
 // 쿠키 입력
 function set_cookie(name, value, expirehours, domain)
 {

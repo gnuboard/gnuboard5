@@ -103,12 +103,19 @@ $(function(){
     $(document).on( "click", ".autosave_del", function(){
         var $li = $(this).parents("li");
         var as_id = $li.data("as_id");
-        $.get(g5_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){
-            if (data == -1) {
-                alert("임시 저장된글을 삭제중에 오류가 발생하였습니다.");
-            } else {
-                $("#autosave_count").html(data);
-                $li.remove();
+        $.ajax({
+            type: "POST",
+            url: g5_bbs_url+"/ajax.autosavedel.php",
+            data: {"as_id":as_id},
+            headers: {"X-Requested-With": "XMLHttpRequest"},
+            success: function(data){
+                var count = $.trim(String(data));
+                if (!/^[0-9]+$/.test(count)) {
+                    alert("임시 저장된글을 삭제중에 오류가 발생하였습니다.");
+                } else {
+                    $("#autosave_count").html(count);
+                    $li.remove();
+                }
             }
         });
     });

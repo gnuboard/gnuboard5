@@ -77,7 +77,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         <div class="sqa_img">
             <a href="<?php echo $it_href; ?>">
                 <?php echo get_it_image($row['it_id'], 60, 60); ?>
-                <span><?php echo $row['it_name']; ?></span>
+                <span><?php echo get_text($row['it_name']); ?></span>
             </a>
         </div>
 

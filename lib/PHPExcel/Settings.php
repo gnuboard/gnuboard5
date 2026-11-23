@@ -359,30 +359,39 @@ class PHPExcel_Settings
      */
     public static function setLibXmlLoaderOptions($options = null)
     {
-        if (is_null($options) && defined('LIBXML_DTDLOAD')) {
-            $options = LIBXML_DTDLOAD | LIBXML_DTDATTR;
+        // gnuboard KVE-2026-3262: never load DTDs or substitute entities. The original default
+        // (LIBXML_DTDLOAD | LIBXML_DTDATTR) loaded any DTD that slipped past securityScan(), and
+        // passing 0 re-enabled the external entity loader below PHP 8.
+        if (defined('LIBXML_NONET')) {
+            if (is_null($options)) {
+                $options = LIBXML_NONET;
+            }
+            $options = ((int) $options) & ~(LIBXML_NOENT | LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_DTDVALID);
+            if (!$options) {
+                $options = LIBXML_NONET;
+            }
         }
         if (version_compare(PHP_VERSION, '5.2.11') >= 0) {
-            @libxml_disable_entity_loader((bool) $options);
+            @libxml_disable_entity_loader(true);
         }
         self::$libXmlLoaderOptions = $options;
     }
 
     /**
      * Get defined options for libxml loader.
-     * Defaults to LIBXML_DTDLOAD | LIBXML_DTDATTR when not set explicitly.
+     * Defaults to LIBXML_NONET when not set explicitly (gnuboard KVE-2026-3262).
      *
      * @return int Default options for libxml loader
      */
     public static function getLibXmlLoaderOptions()
     {
-        if (is_null(self::$libXmlLoaderOptions) && defined('LIBXML_DTDLOAD')) {
-            self::setLibXmlLoaderOptions(LIBXML_DTDLOAD | LIBXML_DTDATTR);
+        if (is_null(self::$libXmlLoaderOptions) && defined('LIBXML_NONET')) {
+            self::setLibXmlLoaderOptions(null);
         } elseif (is_null(self::$libXmlLoaderOptions)) {
             self::$libXmlLoaderOptions = true;
         }
         if (version_compare(PHP_VERSION, '5.2.11') >= 0) {
-            @libxml_disable_entity_loader((bool) self::$libXmlLoaderOptions);
+            @libxml_disable_entity_loader(true);
         }
         return self::$libXmlLoaderOptions;
     }

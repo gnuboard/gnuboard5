@@ -36,6 +36,8 @@ if ($w == '') {
     run_event('admin_mail_updated', $ma_id);
 
 } elseif ($w == 'd') {
+    auth_check_menu($auth, $sub_menu, 'd');
+
     $sql = " delete from {$g5['mail_table']} where ma_id = '{$ma_id}' ";
     sql_query($sql);
     run_event('admin_mail_deleted', $ma_id);

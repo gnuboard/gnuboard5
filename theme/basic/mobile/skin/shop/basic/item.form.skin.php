@@ -53,7 +53,7 @@ var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
     <section id="sit_ov" class="2017_renewal_itemform">
         <h2>상품간략정보 및 구매기능</h2>
         <div class="sit_ov_wr">
-            <strong id="sit_title"><?php echo stripslashes($it['it_name']); ?></strong>
+            <strong id="sit_title"><?php echo get_text(stripslashes($it['it_name'])); ?></strong>
             <?php if($it['it_basic']) { ?><p id="sit_desc"><?php echo $it['it_basic']; ?></p><?php } ?>
             <?php if($is_orderable) { ?>
             <p id="sit_opt_info">상품 선택옵션 <?php echo $option_count; ?> 개, 추가옵션 <?php echo $supply_count; ?> 개</p>
@@ -285,11 +285,11 @@ var kakao_javascript_apikey = "<?php echo $config['cf_kakao_js_apikey']; ?>";
                 <li class="sit_opt_list">
                     <input type="hidden" name="io_type[<?php echo $it_id; ?>][]" value="0">
                     <input type="hidden" name="io_id[<?php echo $it_id; ?>][]" value="">
-                    <input type="hidden" name="io_value[<?php echo $it_id; ?>][]" value="<?php echo $it['it_name']; ?>">
+                    <input type="hidden" name="io_value[<?php echo $it_id; ?>][]" value="<?php echo get_text($it['it_name']); ?>">
                     <input type="hidden" class="io_price" value="0">
                     <input type="hidden" class="io_stock" value="<?php echo $it['it_stock_qty']; ?>">
                     <div class="opt_name">
-                        <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
+                        <span class="sit_opt_subj"><?php echo get_text($it['it_name']); ?></span>
                     </div>
                     <div class="opt_count">
                         <label for="ct_qty_<?php echo $i; ?>" class="sound_only">수량</label>

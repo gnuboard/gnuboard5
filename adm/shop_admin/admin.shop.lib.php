@@ -26,6 +26,50 @@ function shop_admin_category_owner_check($ca_id)
     return isset($row['ca_mb_id']) && (string)$row['ca_mb_id'] !== '' && (string)$row['ca_mb_id'] === $mb_id;
 }
 
+// 상품 텍스트 항목 정화. 일반 등록(itemformupdate.php)과 엑셀 일괄등록(itemexcelupdate.php)이 같은 규칙을 쓴다.
+// 슬래시가 없는 값을 돌려주므로 DB에 넣을 때 addslashes()한다. $is_slashed가 참이면 요청 값처럼 슬래시가 붙은 값으로 본다.
+// 기본설명(it_basic)은 HTML을 허용하는 항목이라 script 요소만 지우고, 출력할 때 conv_content(..., 1)로 정화한다.
+// 상품명은 앞뒤 공백을 지우고, 나머지(제조사·원산지·브랜드·모델 등)는 태그와 이벤트 속성을 지운다.
+function shop_admin_clean_item_text($key, $value, $is_slashed=false)
+{
+    if (!is_scalar($value)) {
+        return '';
+    }
+
+    $value = (string)$value;
+    if ($is_slashed) {
+        $value = stripslashes($value);
+    }
+
+    if ($key === 'it_basic') {
+        return (string)preg_replace('#<script(.*?)>(.*?)<\/script>#is', '', $value);
+    }
+
+    if ($key === 'it_name') {
+        $value = trim($value);
+    }
+
+    return strip_tags(clean_xss_attributes($value));
+}
+
+// 분류코드 형식 정리: 영문·숫자만 남긴다(itemformupdate.php와 같은 규칙).
+function shop_admin_clean_category_id($ca_id)
+{
+    return is_scalar($ca_id) ? preg_replace('/[^0-9a-z]/i', '', (string)$ca_id) : '';
+}
+
+// 엑셀 일괄등록의 상품코드. 엑셀이 숫자 상품코드를 지수 표기(1.23457E+11)로 준 경우에만 숫자로 되돌린다.
+// 값 전체가 지수 표기일 때만 적용해 AB2E3처럼 중간에 "숫자 e 숫자"가 든 상품코드는 바꾸지 않는다.
+function shop_admin_clean_item_id($it_id)
+{
+    if (!is_scalar($it_id)) return '';
+    $it_id = trim((string)$it_id);
+    if (preg_match('/^[-+]?[0-9]*\.?[0-9]+[eE][-+]?[0-9]+$/', $it_id)) {
+        return sprintf('%.0f', (float)$it_id);
+    }
+    return preg_replace('/[^0-9a-z_\-]/i', '', $it_id);
+}
+
 function get_shop_skin_dirs($is_mobile=false)
 {
     global $config;

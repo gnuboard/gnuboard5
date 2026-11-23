@@ -51,7 +51,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         	<div class="sps_img_inner">
 	            <a href="<?php echo $it_href; ?>">
 	                <?php echo get_it_image($row['it_id'], 100, 100); ?>
-	                <span><?php echo $row2['it_name']; ?></span>
+	                <span><?php echo get_text($row2['it_name']); ?></span>
 	            </a>
 	            <button class="prd_detail" data-url="<?php echo G5_SHOP_URL.'/largeimage.php?it_id='.$row['it_id']; ?>"><i class="fa fa-camera" aria-hidden="true"></i><span class="sound_only">상품 이미지보기</span></button>
 			</div>            

@@ -5,16 +5,32 @@ include_once(G5_LIB_PATH.'/register.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
-// 리퍼러 체크
-referer_check();
+// 요청 출처 검사 (KVE-2026-3252, 기존 referer_check()는 아무 검사도 하지 않았다)
+check_request_origin();
 
 if (!($w == '' || $w == 'u')) {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-if ($w == 'u' && $is_admin == 'super') {
-    if (file_exists(G5_PATH.'/DEMO'))
-        alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
+// 회원정보 수정은 POST와 수정 화면에서 발급한 회원별 1회용 토큰을 요구한다. (KVE-2026-3252)
+// 토큰은 여기서는 확인만 하고, 입력값 검증을 모두 통과한 뒤 UPDATE 직전에 소모한다.
+$member_update_token = '';
+if ($w == 'u') {
+    if (!isset($_SERVER['REQUEST_METHOD']) || strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
+        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
+
+    if (!$is_member)
+        alert('로그인 되어 있지 않습니다.', G5_URL);
+
+    if ($is_admin == 'super') {
+        if (file_exists(G5_PATH.'/DEMO'))
+            alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
+        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G5_URL);
+    }
+
+    $member_update_token = isset($_POST['member_update_token']) && is_string($_POST['member_update_token']) ? $_POST['member_update_token'] : '';
+    if (!g5_peek_form_token('member_update', $member['mb_id'], $member_update_token))
+        alert('회원정보 수정 화면을 다시 열어 주십시오.', G5_BBS_URL.'/member_confirm.php?url=register_form.php');
 }
 
 if (run_replace('register_member_chk_captcha', !chk_captcha(), $w)) {
@@ -97,6 +113,14 @@ if ($w == 'u') {
     if ($mb_mailling_default === null)        $mb_mailling = $member['mb_mailling'];
     if ($mb_sms_default === null)             $mb_sms = $member['mb_sms'];
     if ($mb_thirdparty_agree_default === null) $mb_thirdparty_agree = $member['mb_thirdparty_agree'];
+}
+
+// 비밀번호·이메일 변경은 수정 화면에서 현재 비밀번호(소셜 회원은 소셜 재인증)를 확인한 지 10분 안에만 허용한다. (KVE-2026-3252)
+$is_member_credential_change = false;
+if ($w == 'u') {
+    $is_member_credential_change = ($mb_password !== '' || $mb_email != $member['mb_email']);
+    if ($is_member_credential_change && !g5_check_member_reconfirm($member['mb_id']))
+        alert('비밀번호 또는 이메일을 변경하려면 현재 비밀번호를 다시 확인해 주십시오.', G5_BBS_URL.'/member_confirm.php?url=register_form.php');
 }
 
 run_event('register_form_update_before', $mb_id, $w);
@@ -387,6 +411,10 @@ if ($w == '') {
     if (trim($_POST['mb_id']) != $mb_id)
         alert("로그인된 정보와 수정하려는 정보가 틀리므로 수정할 수 없습니다.\\n만약 올바르지 않은 방법을 사용하신다면 바로 중지하여 주십시오.");
 
+    // 입력값 검증을 모두 통과했으므로 회원정보 수정 토큰을 소모한다. (KVE-2026-3252)
+    if (!g5_check_form_token('member_update', $member['mb_id'], $member_update_token))
+        alert('회원정보 수정 화면을 다시 열어 주십시오.', G5_BBS_URL.'/member_confirm.php?url=register_form.php');
+
     $sql_password = "";
     if ($mb_password)
         $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
@@ -481,6 +509,24 @@ if ($w == '') {
                     {$sql_agree_log}
               where mb_id = '$mb_id' ";
     sql_query($sql);
+
+    if ($mb_password) {
+        // 비밀번호를 바꾸면 이 회원의 자동로그인 토큰을 모두 폐기하고 세션 ID를 새로 만든다. (KVE-2026-3252)
+        if (isset($g5['member_auto_login_table']))
+            sql_query(" delete from {$g5['member_auto_login_table']} where mb_id = '{$mb_id}' ", false);
+        set_cookie('ck_mb_id', '', 0);
+        set_cookie('ck_auto', '', 0);
+        if (! (defined('SKIP_SESSION_REGENERATE_ID') && SKIP_SESSION_REGENERATE_ID)) {
+            session_regenerate_id(true);
+            if (function_exists('session_start_samesite')) {
+                session_start_samesite();
+            }
+        }
+    }
+
+    // 비밀번호·이메일을 바꾸면 재확인 증표를 폐기해 다음 변경은 다시 확인하게 한다. (KVE-2026-3252)
+    if ($is_member_credential_change)
+        set_session('ss_member_reconfirm', '');
 
     if($cert_type == 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { // 아이핀일때 hash 값 체크 hp미포함)
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록

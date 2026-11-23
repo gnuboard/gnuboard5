@@ -8,6 +8,10 @@ if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.');
 }
 
+if (!admin_board_owner_check($board['bo_table'])) {
+    alert('게시판을 관리할 권한이 없습니다.');
+}
+
 $g5['title'] = $board['bo_subject'] . ' 게시판 썸네일 삭제';
 require_once './admin.head.php';
 ?>

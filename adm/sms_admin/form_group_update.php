@@ -8,6 +8,11 @@ if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
 
 $post_cnk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
 
+// 그룹삭제(de)·그룹 이모티콘 비우기(em, no)는 삭제 권한이 필요하다.
+if ($w == 'de' || $w == 'em' || $w == 'no') {
+    auth_check_menu($auth, $sub_menu, "d");
+}
+
 if ($w == 'u') // 업데이트
 {
     for ($i=0; $i<count($post_cnk); $i++)

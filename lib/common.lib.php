@@ -244,6 +244,30 @@ if (!function_exists('csv_safe_cell')) {
     }
 }
 
+// CSV 셀 하나를 출력용 문자열로 만든다. csv_safe_cell()로 수식 시작 문자를 중화한 뒤
+// 값 안의 큰따옴표를 ""로 바꾸고 큰따옴표로 감싸 셀 경계를 지킨다(RFC 4180).
+// 쉼표·줄바꿈은 따옴표 안에서 그대로 두므로 셀 안 줄바꿈 뒤의 = 등은 같은 셀의 문자열로 남는다.
+// fputcsv()는 PHP 7.4 미만에서 escape 문자(\)를 끌 수 없어 \" 다음 경계가 깨질 수 있으므로 쓰지 않는다.
+// 문자셋 변환(EUC-KR 등)은 호출 쪽에서 셀 값마다 먼저 한다. EUC-KR/UHC 다바이트 문자에는 0x22·0x2C 바이트가 없다.
+if (!function_exists('csv_quote_cell')) {
+    function csv_quote_cell($v)
+    {
+        return '"' . str_replace('"', '""', (string)csv_safe_cell($v)) . '"';
+    }
+}
+
+// 셀 배열을 CSV 한 행으로 만든다. 모든 셀에 csv_quote_cell()을 적용한다.
+if (!function_exists('csv_build_row')) {
+    function csv_build_row($cells, $eol = "\n")
+    {
+        $out = array();
+        foreach ((array)$cells as $v) {
+            $out[] = csv_quote_cell($v);
+        }
+        return implode(',', $out) . $eol;
+    }
+}
+
 
 // 경고메세지를 경고창으로
 function alert($msg='', $url='', $error=true, $post=false)
@@ -1149,9 +1173,14 @@ function get_group_select($name, $selected='', $event='')
     global $g5, $is_admin, $member;
 
     $sql = " select gr_id, gr_subject from {$g5['group_table']} a ";
-    if ($is_admin == "group") {
-        $sql .= " left join {$g5['member_table']} b on (b.mb_id = a.gr_admin)
-                  where b.mb_id = '{$member['mb_id']}' ";
+    // 최고관리자가 아니면 본인이 그룹 관리자인 그룹만 보여 준다.
+    if ($is_admin != "super") {
+        $mb_id = isset($member['mb_id']) ? (string)$member['mb_id'] : '';
+        if ($mb_id === '') {
+            $sql .= " where 0 ";
+        } else {
+            $sql .= " where a.gr_admin = '".sql_real_escape_string($mb_id)."' ";
+        }
     }
     $sql .= " order by a.gr_id ";
 
@@ -2775,6 +2804,34 @@ function g5_check_form_token($name, $bind, $token, $ttl = 1800)
     if ((string)$bind === '' || $saved['bind'] !== (string)$bind) return false;
     if (abs(G5_SERVER_TIME - (int)$saved['time']) > $ttl) return false;
     return slow_equals($saved['token'], $token);
+}
+
+// 용도별 토큰을 폐기하지 않고 미리 확인한다. 입력값 검증 실패로 폼에 되돌아가도 같은 토큰으로
+// 다시 제출할 수 있게 하고, 실제 변경 직전에 g5_check_form_token()으로 소모한다. (KVE-2026-3252)
+function g5_peek_form_token($name, $bind, $token, $ttl = 1800)
+{
+    $saved = get_session('ss_form_token_'.$name);
+    if (!is_array($saved) || !isset($saved['token'], $saved['bind'], $saved['time'])) return false;
+    if (!is_string($token) || $token === '' || !is_string($saved['token']) || $saved['token'] === '') return false;
+    if ((string)$bind === '' || $saved['bind'] !== (string)$bind) return false;
+    if (abs(G5_SERVER_TIME - (int)$saved['time']) > $ttl) return false;
+    return slow_equals($saved['token'], $token);
+}
+
+// 회원정보 수정 화면에서 현재 비밀번호(소셜 회원은 소셜 재인증)를 확인한 회원과 시각을 남긴다. (KVE-2026-3252)
+function g5_set_member_reconfirm($mb_id)
+{
+    set_session('ss_member_reconfirm', array('mb_id' => (string)$mb_id, 'time' => G5_SERVER_TIME));
+}
+
+// 같은 회원이 $ttl초 안에 재확인을 통과했는지 확인한다. 비밀번호·이메일 변경에 쓴다. (KVE-2026-3252)
+function g5_check_member_reconfirm($mb_id, $ttl = 600)
+{
+    $saved = get_session('ss_member_reconfirm');
+    if (!is_array($saved) || !isset($saved['mb_id'], $saved['time'])) return false;
+    if ((string)$mb_id === '' || $saved['mb_id'] !== (string)$mb_id) return false;
+    $age = G5_SERVER_TIME - (int)$saved['time'];
+    return $age >= 0 && $age <= $ttl;
 }
 
 // MySQL 이름 잠금(GET_LOCK). MySQL 5.7 미만은 연결당 잠금을 하나만 유지하므로,
@@ -4471,6 +4528,29 @@ function safe_filter_url_host($url) {
     return $regex ? preg_replace('#'. preg_quote($regex, '#') .'#iu', '', $url) : '';
 }
 
+// 브라우저가 해석할 URL과 parse_url() 결과가 어긋나는 절대 URL인지 확인한다. (KVE-2026-3246)
+// 상대 경로(/bbs/..., ./..., board.php?...)는 대상이 아니다. 브라우저처럼 탭·개행을 지우고
+// 앞쪽 제어문자·공백을 무시하며 역슬래시를 슬래시로 본 값이 프로토콜 상대(//) 또는 scheme:으로
+// 시작하는데 호스트가 없거나, 포트가 숫자 5자리 이하가 아니거나, 호스트가 parse_url() 결과와 다르면 참이다.
+function g5_is_malformed_url_host($url, $p)
+{
+    $s = preg_replace('/[\t\r\n]+/', '', (string)$url);
+    $s = str_replace('\\', '/', ltrim($s, "\x00..\x20"));
+    if (!preg_match('#^[a-z][a-z0-9+.\-]*:#i', $s) && substr($s, 0, 2) !== '//') return false;
+    if (!is_array($p) || !isset($p['host']) || $p['host'] === '') return true;
+    if (!preg_match('#^(?:[a-z][a-z0-9+.\-]*:)?//([^/?\#]*)#i', $s, $m)) return true;
+    $authority = $m[1];
+    $at = strrpos($authority, '@');
+    if ($at !== false) $authority = substr($authority, $at + 1);
+    $colon = strrpos($authority, ':');
+    $bracket = strrpos($authority, ']');
+    if ($colon !== false && ($bracket === false || $colon > $bracket)) {
+        if (!preg_match('/^[0-9]{0,5}$/', substr($authority, $colon + 1))) return true;
+        $authority = substr($authority, 0, $colon);
+    }
+    return strtolower($authority) !== strtolower($p['host']);
+}
+
 // 동일한 host url 인지
 function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 {
@@ -4497,6 +4577,12 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
     $p = @parse_url(trim(str_replace('\\', '', $url)));
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
+
+    // parse_url()이 해석하지 못한 값(예: 0을 채운 6자리 이상 포트)은 브라우저가 외부 주소로 이동할 수 있으므로 거부한다. (KVE-2026-3246)
+    if (!is_array($p)) {
+        $p = array();
+        $is_host_check = true;
+    }
     
     // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
     if ( $is_redirect && !isset($p['host']) && urldecode($url) != $url ){
@@ -4509,6 +4595,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 
         if( urldecode($url) == $url ){
             $p = @parse_url($url);
+            if (!is_array($p)) {
+                $p = array();
+                $is_host_check = true;
+            }
         } else {
             $is_host_check = true;
         }
@@ -4536,9 +4626,13 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         }
     }
 
+    if (!$is_host_check && g5_is_malformed_url_host($url, $p)) {
+        $is_host_check = true;
+    }
+
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
-        if (run_replace('check_same_url_host', (($p['host'] != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
+        if (run_replace('check_same_url_host', (((isset($p['host']) ? $p['host'] : '') != $host) || $is_host_check), $p, $host, $is_host_check, $return_url, $is_redirect)) {
             $js_replace = array('\\' => '\\\\', '"' => '\\"', "'" => '\\u0027', '/' => '\\/', "\r" => '\\r', "\n" => '\\n', "\t" => '\\t', '<' => '\\u003C', '>' => '\\u003E', '&' => '\\u0026', "\xE2\x80\xA8" => '\\u2028', "\xE2\x80\xA9" => '\\u2029');
             $js_return_url = function_exists('get_js_safe_string') ? get_js_safe_string($return_url) : '"'.strtr((string)$return_url, $js_replace).'"';
             $html_return_url = htmlspecialchars($return_url, ENT_QUOTES);
@@ -5161,14 +5255,107 @@ function is_include_path_check($path='', $is_input='')
     return true;
 }
 
-function is_inicis_url_return($url){
-    $url_data = parse_url($url);
-
+function is_inicis_url_return($url, $allowed_hosts=null){
     // KG 이니시스 url이 맞는지 체크하여 맞으면 url을 리턴하고 틀리면 '' 빈값을 리턴합니다.
-    if (isset($url_data['host']) && preg_match('#\.inicis\.com$#i', $url_data['host'])) {
-        return $url;
+    // https만 허용하고 포트·사용자 정보가 있는 주소는 거부합니다. $allowed_hosts를 주면 호스트가 그중 하나와 정확히 같아야 합니다.
+    if (!is_string($url) || $url === '' || preg_match('/[\x00-\x20\x7f\\\\]/', $url)) {
+        return '';
+    }
+    $url_data = @parse_url($url);
+    if (!is_array($url_data) || !isset($url_data['scheme'], $url_data['host']) || strtolower($url_data['scheme']) !== 'https') {
+        return '';
+    }
+    if (isset($url_data['port']) || isset($url_data['user']) || isset($url_data['pass'])) {
+        return '';
+    }
+    $host = strtolower($url_data['host']);
+    if (is_array($allowed_hosts)) {
+        if (!in_array($host, array_map('strtolower', $allowed_hosts), true)) {
+            return '';
+        }
+    } else if (!preg_match('#^(?:[a-z0-9-]+\.)+inicis\.com$#', $host)) {
+        return '';
+    }
+    // parse_url이 다르게 해석할 수 있는 주소를 막기 위해 원문이 https://호스트/ 로 시작하는지 다시 확인합니다.
+    if (strcasecmp($url, 'https://'.$host) !== 0 && stripos($url, 'https://'.$host.'/') !== 0) {
+        return '';
+    }
+    return $url;
+}
+
+// 서버 간 HTTPS 통신에 쓸 CA 묶음 파일. 서버 설정 상수(G5_TLS_CA_FILE)로만 지정하며 요청 값은 쓰지 않습니다.
+function g5_tls_ca_file()
+{
+    if (defined('G5_TLS_CA_FILE') && is_string(G5_TLS_CA_FILE) && G5_TLS_CA_FILE !== '' && is_file(G5_TLS_CA_FILE) && is_readable(G5_TLS_CA_FILE)) {
+        return G5_TLS_CA_FILE;
     }
     return '';
+}
+
+// cURL 요청에 서버 인증서·호스트명 검증을 켭니다. 검증 실패 시 검증을 끄고 다시 시도하지 않습니다.
+function g5_curl_tls_verify($ch)
+{
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+    $ca_file = g5_tls_ca_file();
+    if ($ca_file !== '') {
+        curl_setopt($ch, CURLOPT_CAINFO, $ca_file);
+    }
+    return $ch;
+}
+
+// fsockopen/stream_socket_client('ssl://') 연결에 쓸 인증서·호스트명 검증 컨텍스트 옵션
+function g5_stream_tls_context_options($host)
+{
+    $ssl = array(
+        'verify_peer' => true,
+        'verify_peer_name' => true,
+        'allow_self_signed' => false,
+        'peer_name' => (string) $host,
+        'SNI_enabled' => true,
+    );
+    $ca_file = g5_tls_ca_file();
+    if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+        // PHP 5.6 미만은 기본 CA와 호스트명 검사가 없으므로 CA 파일과 CN_match를 직접 지정합니다.
+        if ($ca_file === '' && ini_get('curl.cainfo')) {
+            $ca_file = (string) ini_get('curl.cainfo');
+        }
+        $ssl['CN_match'] = (string) $host;
+        $ssl['SNI_server_name'] = (string) $host;
+    }
+    if ($ca_file !== '') {
+        $ssl['cafile'] = $ca_file;
+    }
+    return array('ssl' => $ssl);
+}
+
+// 인증서를 검증하는 HTTPS POST. 전송 오류·HTTP 2xx가 아닌 응답이면 false를 반환합니다.
+function g5_tls_http_post($url, $body, $headers=array(), $connect_timeout=10, $timeout=30)
+{
+    if (!function_exists('curl_init') || !is_string($url) || stripos($url, 'https://') !== 0) {
+        return false;
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, (int) $connect_timeout);
+    curl_setopt($ch, CURLOPT_TIMEOUT, (int) $timeout);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+    if (defined('CURLOPT_PROTOCOLS') && defined('CURLPROTO_HTTPS')) {
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+    }
+    g5_curl_tls_verify($ch);
+    $response = curl_exec($ch);
+    $errno = curl_errno($ch);
+    $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($response === false || $errno || $status < 200 || $status > 299) {
+        return false;
+    }
+    return (string) $response;
 }
 
 function check_auth_session_token($str=''){

@@ -18,11 +18,24 @@ check_admin_token();
 if ($act_button === "선택수정") {
     auth_check_menu($auth, $sub_menu, 'w');
 
+    // 최고관리자가 아니면 수정 전에 모든 행의 대상 게시판(현재 그룹)과 옮길 그룹을 DB 기준으로 확인한다.
+    // 하나라도 본인 그룹이 아니면 요청 전체를 거부한다.
+    if ($is_admin != 'super') {
+        for ($i = 0; $i < $post_count_chk; $i++) {
+            $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
+            $chk_bo_table = isset($_POST['board_table'][$k]) ? $_POST['board_table'][$k] : '';
+            $chk_gr_id = isset($_POST['gr_id'][$k]) ? $_POST['gr_id'][$k] : '';
+            if (!admin_board_owner_check($chk_bo_table) || !admin_group_owner_check($chk_gr_id)) {
+                alert('최고관리자가 아닌 경우 다른 관리자의 게시판(' . (is_string($chk_bo_table) ? get_text($chk_bo_table) : '') . ')은 수정이 불가합니다.');
+            }
+        }
+    }
+
     for ($i = 0; $i < $post_count_chk; $i++) {
         // 실제 번호를 넘김
         $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
 
-        $post_gr_id = isset($_POST['gr_id'][$k]) ? clean_xss_tags($_POST['gr_id'][$k], 1, 1) : '';
+        $post_gr_id = (isset($_POST['gr_id'][$k]) && is_string($_POST['gr_id'][$k])) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['gr_id'][$k]) : '';
         $post_bo_device = isset($_POST['bo_device'][$k]) ? clean_xss_tags($_POST['bo_device'][$k], 1, 1) : '';
         $post_bo_skin = isset($_POST['bo_skin'][$k]) ? clean_xss_tags($_POST['bo_skin'][$k], 1, 1) : '';
         $post_bo_mobile_skin = isset($_POST['bo_mobile_skin'][$k]) ? clean_xss_tags($_POST['bo_mobile_skin'][$k], 1, 1) : '';
@@ -33,18 +46,7 @@ if ($act_button === "선택수정") {
         $post_bo_use_search = isset($_POST['bo_use_search'][$k]) ? clean_xss_tags($_POST['bo_use_search'][$k], 1, 1) : '';
         $post_bo_use_sns = isset($_POST['bo_use_sns'][$k]) ? clean_xss_tags($_POST['bo_use_sns'][$k], 1, 1) : '';
         $post_bo_order = isset($_POST['bo_order'][$k]) ? clean_xss_tags($_POST['bo_order'][$k], 1, 1) : '';
-        $post_board_table = isset($_POST['board_table'][$k]) ? clean_xss_tags($_POST['board_table'][$k], 1, 1) : '';
-
-        if ($is_admin != 'super') {
-            $sql = " select count(*) as cnt from {$g5['board_table']} a, {$g5['group_table']} b
-                      where a.gr_id = '" . sql_real_escape_string($post_gr_id) . "'
-                        and a.gr_id = b.gr_id
-                        and b.gr_admin = '{$member['mb_id']}' ";
-            $row = sql_fetch($sql);
-            if (!$row['cnt']) {
-                alert('최고관리자가 아닌 경우 다른 관리자의 게시판(' . $board_table[$k] . ')은 수정이 불가합니다.');
-            }
-        }
+        $post_board_table = (isset($_POST['board_table'][$k]) && is_string($_POST['board_table'][$k])) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['board_table'][$k]) : '';
 
         $p_bo_subject = is_array($_POST['bo_subject']) ? addslashes(strip_tags(clean_xss_attributes(stripslashes($_POST['bo_subject'][$k])))) : '';
 
@@ -62,6 +64,7 @@ if ($act_button === "선택수정") {
                         bo_use_sns          = '" . sql_real_escape_string($post_bo_use_sns) . "',
                         bo_order            = '" . sql_real_escape_string($post_bo_order) . "'
                   where bo_table            = '" . sql_real_escape_string($post_board_table) . "' ";
+        $sql .= admin_owned_board_group_sql('gr_id');
 
         sql_query($sql);
     }

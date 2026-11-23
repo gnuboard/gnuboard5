@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+// 위시리스트 삭제용 1회용 토큰(shop/wishlist.php에서 발급하지 않은 경우)
+if (!isset($wish_delete_token)) {
+    $wish_delete_token = $is_member ? g5_get_form_token('wish_delete', $member['mb_id']) : '';
+}
+
 // 테마에 wishlist.php 있으면 include
 if(defined('G5_THEME_MSHOP_PATH')) {
     $theme_wishlist_file = G5_THEME_MSHOP_PATH.'/wishlist.php';
@@ -66,7 +71,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
                     <input type="hidden" name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
                 </div>
-                <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></span>
+                <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>&amp;token=<?php echo $wish_delete_token; ?>" onclick="return g5_post_href(this.href);"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></span>
             </div>
 
         </li>

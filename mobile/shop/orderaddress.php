@@ -45,7 +45,7 @@ include_once(G5_PATH.'/head.sub.php');
                 <div class="addr_btn">
                     <input type="hidden" value="<?php echo $addr; ?>">
                     <button type="button" class="btn_sel sel_address">선택</button>
-                    <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" id="btn_del" class="del_address">삭제</a>
+                    <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>&amp;token=<?php echo isset($orderaddress_delete_token) ? $orderaddress_delete_token : ''; ?>" id="btn_del" class="del_address">삭제</a>
                     <input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>>
                     <label for="ad_default<?php echo $i;?>" class="add_lb">기본배송지</label>
                 </div>
@@ -97,7 +97,10 @@ $(function() {
     });
 
     $(".del_address").on("click", function() {
-        return confirm("배송지 목록을 삭제하시겠습니까?");
+        if (confirm("배송지 목록을 삭제하시겠습니까?")) {
+            g5_post_href(this.href);
+        }
+        return false;
     });
 
     // 전체선택 부분

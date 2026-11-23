@@ -41,6 +41,18 @@ function f_get_parm_str( $val )
     return  $val;
 }
 
+// 결과 처리기가 받은 응답이 이 세션에서 시작한 같은 용도의 요청인지 확인한다. (KVE-2026-3253)
+// $state는 결과 처리기가 맨 앞에서 꺼내고 지운 시작 상태(ss_kcpcert_v1)다.
+function kcpcert_v1_state_valid($state, $page_type, $ordr_idxx, $ttl = 600)
+{
+    if (!is_array($state) || !isset($state['ordr_idxx'], $state['page_type'], $state['time'])) return false;
+    if (!is_string($ordr_idxx) || $ordr_idxx === '' || !is_string($state['ordr_idxx']) || $state['ordr_idxx'] === '') return false;
+    if ($state['page_type'] !== $page_type) return false;
+    $age = G5_SERVER_TIME - (int)$state['time'];
+    if ($age < 0 || $age > $ttl) return false;
+    return slow_equals($state['ordr_idxx'], $ordr_idxx);
+}
+
 //!!중요 해당 함수는 year, month, day 변수가 null 일 경우 00 으로 치환합니다
 function f_get_parm_int( $val )
 {

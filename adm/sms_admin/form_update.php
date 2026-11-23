@@ -48,6 +48,8 @@ if ($w == 'u') // 업데이트
 }
 else if ($w == 'd') // 삭제
 {
+    auth_check_menu($auth, $sub_menu, "d");
+
     if (!is_numeric($fo_no))
         alert('고유번호가 없습니다.');
 

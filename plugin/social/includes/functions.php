@@ -44,6 +44,16 @@ function get_social_convert_id($identifier, $service)
     return strtolower($service).'_'.hash('adler32', md5($identifier));
 }
 
+// 제공자 응답의 회원 식별자 형식을 확인합니다.
+function social_is_valid_identifier($user_profile)
+{
+    if( ! is_object($user_profile) || ! isset($user_profile->identifier) ) return false;
+    $identifier = $user_profile->identifier;
+    if( is_int($identifier) ) $identifier = (string) $identifier;
+    if( ! is_string($identifier) ) return false;
+    return (bool) preg_match('/\A[A-Za-z0-9._:@|\-]{1,255}\z/', $identifier);
+}
+
 function get_social_callbackurl($provider, $no_domain=false, $no_params=false){
 
     $base_url = G5_SOCIAL_LOGIN_BASE_URL;
@@ -483,6 +493,11 @@ function social_check_login_before($p_service=''){
             // then grab the user profile 
             $user_profile = $adapter->getUserProfile();
 
+            // 응답 식별자가 없거나 형식이 다르면 로그인·연결하지 않습니다.
+            if( ! social_is_valid_identifier($user_profile) ){
+                throw new Exception('User profile request failed! invalid identifier.', 6);
+            }
+
             if( ! (isset($_SESSION['sl_userprofile']) && is_array($_SESSION['sl_userprofile'])) ){ 
                 $_SESSION['sl_userprofile'] = array(); 
             }
@@ -749,6 +764,11 @@ function social_member_comfirm_redirect(){
             
             // then grab the user profile 
             $user_profile = $adapter->getUserProfile();
+
+            // 응답 식별자가 없거나 형식이 다르면 로그인·연결하지 않습니다.
+            if( ! social_is_valid_identifier($user_profile) ){
+                throw new Exception('User profile request failed! invalid identifier.', 6);
+            }
         }
 
         catch( Exception $e )

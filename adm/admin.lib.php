@@ -314,6 +314,74 @@ function auth_check($auth, $attr, $return = false)
     }
 }
 
+// 게시판그룹 소유자 검사: 최고관리자가 아니면 DB에 저장된 그룹 관리자(gr_admin)가 현재 회원일 때만 참
+function admin_group_owner_check($gr_id)
+{
+    global $g5, $is_admin, $member;
+
+    if ($is_admin === 'super') {
+        return true;
+    }
+
+    if (!is_string($gr_id)) {
+        return false;
+    }
+
+    $gr_id = preg_replace('/[^a-z0-9_]/i', '', $gr_id);
+    $mb_id = isset($member['mb_id']) ? (string)$member['mb_id'] : '';
+    if ($gr_id === '' || $mb_id === '') {
+        return false;
+    }
+
+    $row = sql_fetch(" select gr_admin from {$g5['group_table']} where gr_id = '".sql_real_escape_string($gr_id)."' ");
+
+    return isset($row['gr_admin']) && (string)$row['gr_admin'] !== '' && (string)$row['gr_admin'] === $mb_id;
+}
+
+// 게시판 소유자 검사: DB에서 다시 조회한 게시판의 소속 그룹(gr_id)으로 그룹 소유자를 확인한다.
+function admin_board_owner_check($bo_table)
+{
+    global $g5, $is_admin;
+
+    if ($is_admin === 'super') {
+        return true;
+    }
+
+    if (!is_string($bo_table)) {
+        return false;
+    }
+
+    $bo_table = preg_replace('/[^a-z0-9_]/i', '', $bo_table);
+    if ($bo_table === '') {
+        return false;
+    }
+
+    $row = sql_fetch(" select gr_id from {$g5['board_table']} where bo_table = '".sql_real_escape_string($bo_table)."' ");
+    if (!isset($row['gr_id'])) {
+        return false;
+    }
+
+    return admin_group_owner_check((string)$row['gr_id']);
+}
+
+// 최고관리자가 아닐 때 게시판 UPDATE에 붙이는 소유 그룹 조건
+function admin_owned_board_group_sql($column = 'gr_id')
+{
+    global $g5, $is_admin, $member;
+
+    if ($is_admin === 'super') {
+        return '';
+    }
+
+    $column = preg_replace('/[^a-z0-9_\.]/i', '', $column);
+    $mb_id = isset($member['mb_id']) ? (string)$member['mb_id'] : '';
+    if ($mb_id === '') {
+        return ' and 0 ';
+    }
+
+    return " and {$column} in ( select gr_id from {$g5['group_table']} where gr_admin = '".sql_real_escape_string($mb_id)."' ) ";
+}
+
 
 // 작업아이콘 출력
 function icon($act, $link = '', $target = '_parent')

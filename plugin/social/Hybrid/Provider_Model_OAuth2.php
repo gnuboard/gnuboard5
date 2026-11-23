@@ -99,13 +99,41 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model {
    */
   function loginBegin() {
     // redirect the user to the provider authentication url
-    Hybrid_Auth::redirect($this->api->authorizeUrl(array("scope" => $this->scope)));
+    Hybrid_Auth::redirect($this->api->authorizeUrl(array("scope" => $this->scope, "state" => $this->createAuthState())));
+  }
+
+  /**
+   * 인가 요청과 콜백을 현재 세션에 묶는 1회용 state 값을 만듭니다.
+   */
+  function createAuthState() {
+    $token = function_exists('get_random_token_string') ? get_random_token_string(32) : md5(uniqid(mt_rand(), true));
+    Hybrid_Auth::storage()->set("hauth_session.{$this->providerId}.g5_oauth_state", array('token' => $token, 'time' => time()));
+    return $token;
+  }
+
+  /**
+   * 콜백의 state가 세션에 저장한 값과 같은지 확인하고 저장 값을 지웁니다(성공·실패와 관계없이 1회용).
+   */
+  function checkAuthState($ttl = 1800) {
+    $key = "hauth_session.{$this->providerId}.g5_oauth_state";
+    $saved = Hybrid_Auth::storage()->get($key);
+    Hybrid_Auth::storage()->delete($key);
+    $state = (isset($_REQUEST['state']) && is_string($_REQUEST['state'])) ? $_REQUEST['state'] : '';
+
+    if (!is_array($saved) || !isset($saved['token'], $saved['time']) || !is_string($saved['token']) || $saved['token'] === '' || $state === ''
+        || time() - (int) $saved['time'] > $ttl || time() < (int) $saved['time']
+        || (function_exists('slow_equals') ? !slow_equals($saved['token'], $state) : $saved['token'] !== $state)) {
+      throw new Exception("Authentication failed! {$this->providerId} returned an invalid state.", 5);
+    }
+    return true;
   }
 
   /**
    * {@inheritdoc}
    */
   function loginFinish() {
+    $this->checkAuthState();
+
     $error = (array_key_exists('error', $_REQUEST)) ? $_REQUEST['error'] : "";
 
     // check for errors

@@ -8,14 +8,22 @@ if (!(isset($_POST['chk']) && is_array($_POST['chk']))) {
     alert($_POST['act_button'] . " 하실 항목을 하나 이상 체크하세요.");
 }
 
-auth_check_menu($auth, $sub_menu, 'w');
+// 동작별 권한: 선택수정은 쓰기(w), 선택삭제는 삭제(d). 그 밖의 값은 거부한다.
+$act_button = (isset($_POST['act_button']) && is_string($_POST['act_button'])) ? $_POST['act_button'] : '';
+if ($act_button === '선택수정') {
+    auth_check_menu($auth, $sub_menu, 'w');
+} elseif ($act_button === '선택삭제') {
+    auth_check_menu($auth, $sub_menu, 'd');
+} else {
+    alert('올바른 방법으로 이용해 주십시오.');
+}
 
 check_admin_token();
 
 $mb_datas = array();
 $msg = '';
 
-if ($_POST['act_button'] == "선택수정") {
+if ($act_button === "선택수정") {
     for ($i = 0; $i < count($_POST['chk']); $i++) {
         // 실제 번호를 넘김
         $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
@@ -83,7 +91,7 @@ if ($_POST['act_button'] == "선택수정") {
             sql_query($sql);
         }
     }
-} elseif ($_POST['act_button'] == "선택삭제") {
+} elseif ($act_button === "선택삭제") {
     for ($i = 0; $i < count($_POST['chk']); $i++) {
         // 실제 번호를 넘김
         $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
@@ -110,6 +118,6 @@ if ($msg) {
     alert($msg);
 }
 
-run_event('admin_member_list_update', $_POST['act_button'], $mb_datas);
+run_event('admin_member_list_update', $act_button, $mb_datas);
 
 goto_url('./member_list.php?' . $qstr);

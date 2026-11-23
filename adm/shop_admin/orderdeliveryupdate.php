@@ -3,6 +3,7 @@ $sub_menu = '400400';
 include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
+include_once(G5_LIB_PATH.'/spreadsheet_upload.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -13,16 +14,17 @@ define("_ORDERMAIL_", true);
 $sms_count = 0;
 $sms_messages = array();
 
-if(isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) {
-    $file = $_FILES['excelfile']['tmp_name'];
+// 파일을 골랐지만 업로드에 실패한 경우(크기 초과 등)도 공통 검사가 원인을 알려 준다.
+if(isset($_FILES['excelfile']['name']) && is_string($_FILES['excelfile']['name']) && $_FILES['excelfile']['name'] !== '') {
+    // 확장자와 시그니처가 맞는 xls·xlsx만 형식별 리더로 읽는다. 주문번호~운송장번호(A~J)열만 읽는다.
+    $spreadsheet = g5_spreadsheet_upload_open($_FILES['excelfile'], array('max_column' => 'J'));
+    if ($spreadsheet['error'] !== '') {
+        alert($spreadsheet['error']);
+    }
+    $sheet = $spreadsheet['sheet'];
 
-    include_once(G5_LIB_PATH.'/PHPExcel/IOFactory.php');
-
-    $objPHPExcel = PHPExcel_IOFactory::load($file);
-    $sheet = $objPHPExcel->getSheet(0);
-
-    $num_rows = $sheet->getHighestRow();
-    $highestColumn = $sheet->getHighestColumn();
+    $num_rows = $spreadsheet['num_rows'];
+    $highestColumn = $spreadsheet['max_column'];
 
     $fail_od_id = array();
     $total_count = 0;
@@ -39,8 +41,10 @@ if(isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) 
                                             FALSE);
 
         $od_id               = isset($rowData[0][0]) ? addslashes(trim($rowData[0][0])) : '';
-        $od_delivery_company = isset($rowData[0][8]) ? addslashes($rowData[0][8]) : '';
-        $od_invoice          = isset($rowData[0][9]) ? addslashes($rowData[0][9]) : '';
+        // 주문 목록의 배송 정보 수정(orderlistupdate.php)과 같은 정화를 적용하고 DB 컬럼 길이(255자)에 맞춘다.
+        // order_update_delivery()가 SQL 이스케이프를 하고 에스크로 등록에도 그대로 넘기므로 addslashes()하지 않는다.
+        $od_delivery_company = isset($rowData[0][8]) && is_scalar($rowData[0][8]) ? clean_xss_tags((string)$rowData[0][8], 1, 1, 255) : '';
+        $od_invoice          = isset($rowData[0][9]) && is_scalar($rowData[0][9]) ? clean_xss_tags((string)$rowData[0][9], 1, 1, 255) : '';
 
         if(!$od_id || !$od_delivery_company || !$od_invoice) {
             $fail_count++;
@@ -172,7 +176,7 @@ include_once(G5_PATH.'/head.sub.php');
         <dd class="result_fail"><?php echo number_format($fail_count); ?></dd>
         <?php if($fail_count > 0) { ?>
         <dt>실패주문코드</dt>
-        <dd><?php echo implode(', ', $fail_od_id); ?></dd>
+        <dd><?php echo get_text(stripslashes(implode(', ', $fail_od_id))); ?></dd>
         <?php } ?>
     </dl>
 

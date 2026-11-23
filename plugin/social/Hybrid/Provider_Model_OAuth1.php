@@ -143,6 +143,13 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model {
 			throw new Exception("Authentication failed! {$this->providerId} returned an invalid oauth verifier.", 5);
 		}
 
+		// 콜백의 oauth_token이 이 세션에서 받은 요청 토큰과 같아야 합니다.
+		$request_token = $this->token("request_token");
+		if (!is_string($oauth_token) || !is_string($request_token) || $request_token === ''
+			|| (function_exists('slow_equals') ? !slow_equals($request_token, $oauth_token) : $request_token !== $oauth_token)) {
+			throw new Exception("Authentication failed! {$this->providerId} returned an invalid oauth token.", 5);
+		}
+
 		// request an access token
 		$tokens = $this->api->accessToken($oauth_verifier);
 

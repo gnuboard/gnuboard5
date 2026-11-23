@@ -34,7 +34,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->view_it_img) {
-        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
+        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', get_text(stripslashes($row['it_name'])))."\n";
     }
 
     if ($this->href) {
@@ -54,7 +54,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->view_it_name) {
-        echo stripslashes($row['it_name'])."\n";
+        echo get_text(stripslashes($row['it_name']))."\n";
     }
 
     if ($this->href) {

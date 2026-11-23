@@ -8,6 +8,11 @@ auth_check_menu($auth, $sub_menu, "w");
 
 if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
 
+// 그룹삭제(de)·그룹 비우기(em)는 삭제 권한이 필요하다.
+if ($w == 'de' || $w == 'em') {
+    auth_check_menu($auth, $sub_menu, "d");
+}
+
 if ($w == 'u') // 업데이트
 {
     for ($i=0; $i<count($post_chk); $i++)

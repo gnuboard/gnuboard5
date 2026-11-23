@@ -51,7 +51,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         <div class="sps_img">
             <a href="<?php echo $it_href; ?>">
                 <?php echo get_itemuselist_thumbnail($row['it_id'], $row['is_content'], 70, 70); ?>
-                <span><?php echo $row2['it_name']; ?></span>
+                <span><?php echo get_text($row2['it_name']); ?></span>
             </a>
         </div>
 

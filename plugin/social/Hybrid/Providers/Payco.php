@@ -43,8 +43,7 @@ class Hybrid_Providers_Payco extends Hybrid_Provider_Model_OAuth2 {
      */
     function loginBegin() {
         
-        $token = md5(uniqid(mt_rand(), true));
-        Hybrid_Auth::storage()->set('payco_auth_token', $token);
+        $token = $this->createAuthState();
 
         $parameters = array(
             "response_type" => "code",
@@ -64,6 +63,7 @@ class Hybrid_Providers_Payco extends Hybrid_Provider_Model_OAuth2 {
      * {@inheritdoc}
      */
     function loginFinish() {
+        $this->checkAuthState();
 
         // in case we get error_reason=user_denied&error=access_denied
         if (isset($_REQUEST['error']) && $_REQUEST['error'] == "access_denied") {

@@ -42,5 +42,9 @@ verify_token(array('token'=>$old), false);
 $token = render_token($match[0]);
 verify_token(array('token'=>$token), true);
 $update = file_get_contents($root.'/adm/shop_admin/orderdeliveryupdate.php');
-if (strpos($update, 'check_admin_token();') > strpos($update, 'PHPExcel_IOFactory::load')) throw new Exception('파일 처리 전 검증 누락');
+// 업로드 파일 읽기(KVE-2026-3262~3267 이후 공통 검사 함수) 전에 토큰을 검증해야 한다.
+$load = strpos($update, 'g5_spreadsheet_upload_open(');
+if ($load === false) $load = strpos($update, 'PHPExcel_IOFactory::load');
+$guard = strpos($update, 'check_admin_token();');
+if ($load === false || $guard === false || $guard > $load) throw new Exception('파일 처리 전 검증 누락');
 echo "PASS: 정상·재사용·빈 토큰·변조·이전 창 토큰·새 토큰 6건\n";

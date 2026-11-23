@@ -10,6 +10,10 @@ $g5['title'] = "전화번호부";
 
 $post_bk_no = (isset($_POST['bk_no']) && is_array($_POST['bk_no'])) ? $_POST['bk_no'] : array();
 
+if ($atype == 'del') {
+    auth_check_menu($auth, $sub_menu, "d");
+}
+
 for ($i=0; $i<count($post_bk_no); $i++) 
 {
     $bk_no = $post_bk_no[$i];

@@ -6,7 +6,12 @@ if (!$is_member)
 
 if ($w == "d")
 {
-    $wi_id = isset($_GET['wi_id']) ? (int) $_GET['wi_id'] : 0;
+    // 삭제는 위시리스트 화면에서 발급한 1회용 토큰을 실은 POST로만 처리한다(교차 사이트 GET 삭제 차단).
+    $wish_delete_token = isset($_POST['token']) ? $_POST['token'] : '';
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !g5_check_form_token('wish_delete', $member['mb_id'], $wish_delete_token, 3600))
+        alert('올바른 방법으로 이용해 주십시오.', './wishlist.php');
+
+    $wi_id = isset($_POST['wi_id']) ? (int) $_POST['wi_id'] : 0;
 
     $sql = " select mb_id from {$g5['g5_shop_wish_table']} where wi_id = '$wi_id' ";
     $row = sql_fetch($sql);

@@ -70,6 +70,35 @@ if (!$is_editor_upload) {
     exit;
 }
 
+// 비회원 업로드 허용 여부·파일당 크기·누적 제한 (KVE-2026-3251)
+include_once(G5_LIB_PATH . '/editor_upload.lib.php');
+
+if (!function_exists('che_upload_reject')) {
+    function che_upload_reject($message)
+    {
+        header('HTTP/1.1 403 Forbidden');
+        header('Content-Type: text/plain; charset=utf-8');
+        echo $message;
+        exit;
+    }
+}
+
+$upload_limit_error = g5_editor_upload_access_error();
+if ($upload_limit_error) {
+    che_upload_reject($upload_limit_error);
+}
+
+if (!isset($_FILES['file']['tmp_name'], $_FILES['file']['error']) || !is_string($_FILES['file']['tmp_name'])
+    || $_FILES['file']['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+    exit;
+}
+
+$upload_limit_reservation = null;
+$upload_limit_error = g5_editor_upload_reserve(filesize($_FILES['file']['tmp_name']), $upload_limit_reservation);
+if ($upload_limit_error) {
+    che_upload_reject($upload_limit_error);
+}
+
 run_event('cheditor_photo_upload', $data_dir, $data_url);
 
 //----------------------------------------------------------------------------
@@ -90,6 +119,7 @@ switch ($type) {
 }
 
 if ($found != true || $filename_len != 23) {
+    g5_editor_upload_release($upload_limit_reservation);
     exit;
 }
 
@@ -100,7 +130,10 @@ if ($found != true || $filename_len != 23) {
 $filename = che_replace_filename($filename);
 $savefile = SAVE_DIR . '/' . $filename;
 
-move_uploaded_file($tempfile, $savefile);
+if (!move_uploaded_file($tempfile, $savefile)) {
+    g5_editor_upload_release($upload_limit_reservation);
+    exit;
+}
 $imgsize = getimagesize($savefile);
 $filesize = filesize($savefile);
 
@@ -114,6 +147,10 @@ if (CHE_UPLOAD_IMG_CHECK && !che_reprocessImage($savefile, null)) {
     $filesize = 0;
     $random_name = '-ERR';
     unlink($savefile);
+}
+
+if (!$filesize) {
+    g5_editor_upload_release($upload_limit_reservation);
 }
 
 try {

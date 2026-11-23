@@ -123,11 +123,11 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">배송회사</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $delivery_list['dl_company']; ?> <?php echo $delivery_list['dl_inquiry']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo get_text($delivery_list['dl_company']); ?> <?php echo $delivery_list['dl_inquiry']; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">운송장번호</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $delivery_list['od_invoice']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo get_text($delivery_list['od_invoice']); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">배송일시</th>

@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400400';
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/spreadsheet_upload.lib.php');
 
 auth_check_menu($auth, $sub_menu, "w");
 
@@ -16,7 +17,8 @@ include_once(G5_PATH.'/head.sub.php');
             엑셀파일을 이용하여 배송정보를 일괄등록할 수 있습니다.<br>
             형식은 <strong>배송처리용 엑셀파일</strong>을 다운로드하여 배송 정보를 입력하시면 됩니다.<br>
             수정 완료 후 엑셀파일을 업로드하시면 배송정보가 일괄등록됩니다.<br>
-            엑셀파일을 저장하실 때는 <strong>Excel 97 - 2003 통합문서 (*.xls)</strong> 로 저장하셔야 합니다.<br>
+            엑셀파일은 <strong>Excel 97 - 2003 통합문서 (*.xls)</strong> 또는 <strong>Excel 통합문서 (*.xlsx)</strong> 형식으로 저장해 올려 주세요.<br>
+            파일은 최대 <?php echo g5_spreadsheet_size_text(G5_SPREADSHEET_UPLOAD_MAX_SIZE); ?>, <?php echo number_format(G5_SPREADSHEET_UPLOAD_MAX_ROWS); ?>행까지 올릴 수 있습니다.<br>
             주문상태가 준비이고 미수금이 0인 주문에 한해 엑셀파일이 생성됩니다.
         </p>
 

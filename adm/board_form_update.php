@@ -28,6 +28,14 @@ if (!$bo_subject) {
     alert('게시판 제목을 입력하세요.');
 }
 
+// 최고관리자가 아니면 수정할 게시판의 현재 그룹과 저장할(옮길) 그룹이 모두 본인 그룹이어야 한다.
+if ($w == 'u' && !admin_board_owner_check($bo_table)) {
+    alert('게시판을 관리할 권한이 없습니다.');
+}
+if (!admin_group_owner_check($gr_id)) {
+    alert('게시판그룹을 관리할 권한이 없습니다.');
+}
+
 // 게시판명이 금지된 단어로 되어 있으면
 if ($w == '' && in_array($bo_table, get_bo_table_banned_word())) {
     alert('입력한 게시판 TABLE명을 사용할수 없습니다. 다른 이름으로 입력해 주세요.');
@@ -387,6 +395,7 @@ if ($w == '') {
                     bo_count_comment = '{$bo_count_comment}',
                     {$sql_common}
               where bo_table = '{$bo_table}' ";
+    $sql .= admin_owned_board_group_sql('gr_id');
     sql_query($sql);
 }
 
@@ -476,8 +485,9 @@ for ($i = 1; $i <= 10; $i++) {
     }
 }
 
+// 그룹적용 대상 그룹($gr_id)은 위에서 소유자를 확인했다.
 if ($grp_fields) {
-    sql_query(" update {$g5['board_table']} set bo_table = bo_table {$grp_fields} where gr_id = '$gr_id' ");
+    sql_query(" update {$g5['board_table']} set bo_table = bo_table {$grp_fields} where gr_id = '$gr_id' " . admin_owned_board_group_sql('gr_id'));
 }
 
 
@@ -566,8 +576,9 @@ for ($i = 1; $i <= 10; $i++) {
     }
 }
 
+// 전체적용: 최고관리자가 아니면 본인이 관리하는 그룹의 게시판에만 적용한다.
 if ($all_fields) {
-    sql_query(" update {$g5['board_table']} set bo_table = bo_table {$all_fields} ");
+    sql_query(" update {$g5['board_table']} set bo_table = bo_table {$all_fields} where (1) " . admin_owned_board_group_sql('gr_id'));
 }
 
 delete_cache_latest($bo_table);
