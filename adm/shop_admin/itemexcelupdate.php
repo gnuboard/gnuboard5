@@ -11,6 +11,9 @@ auth_check_menu($auth, $sub_menu, "w");
 
 if (function_exists('check_request_origin')) check_request_origin(G5_ADMIN_URL);
 
+// 업로드 파일을 읽기 전에 관리자 토큰(itemexcel.php 폼)을 확인한다.
+check_admin_token();
+
 function only_number($n)
 {
     return preg_replace('/[^0-9]/', '', (string)$n);
@@ -36,6 +39,7 @@ if($is_upload_file) {
 
     $dup_it_id = array();
     $fail_it_id = array();
+    $fail_reasons = array();
     $dup_count = 0;
     $total_count = 0;
     $fail_count = 0;
@@ -51,22 +55,22 @@ if($is_upload_file) {
                                             TRUE,
                                             FALSE);
 
-        $it_id              = (string) $rowData[0][$j++];
-        $it_id              = preg_match('/[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)/', $it_id) ? addslashes(sprintf("%.0f", $it_id)) : preg_replace('/[^0-9a-z_\-]/i', '', $it_id);
-        $ca_id              = addslashes($rowData[0][$j++]);
-        $ca_id2             = addslashes((string)$rowData[0][$j++]);
-        $ca_id3             = addslashes((string)$rowData[0][$j++]);
-        $it_name            = addslashes($rowData[0][$j++]);
-        $it_maker           = addslashes((string)$rowData[0][$j++]);
-        $it_origin          = addslashes((string)$rowData[0][$j++]);
-        $it_brand           = addslashes((string)$rowData[0][$j++]);
-        $it_model           = addslashes((string)$rowData[0][$j++]);
+        $it_id              = shop_admin_clean_item_id($rowData[0][$j++]);
+        // 분류코드는 영문·숫자만, 상품명 등 텍스트는 일반 상품 등록과 같은 정화를 적용한다.
+        $ca_id              = shop_admin_clean_category_id($rowData[0][$j++]);
+        $ca_id2             = shop_admin_clean_category_id($rowData[0][$j++]);
+        $ca_id3             = shop_admin_clean_category_id($rowData[0][$j++]);
+        $it_name            = addslashes(shop_admin_clean_item_text('it_name', $rowData[0][$j++]));
+        $it_maker           = addslashes(shop_admin_clean_item_text('it_maker', $rowData[0][$j++]));
+        $it_origin          = addslashes(shop_admin_clean_item_text('it_origin', $rowData[0][$j++]));
+        $it_brand           = addslashes(shop_admin_clean_item_text('it_brand', $rowData[0][$j++]));
+        $it_model           = addslashes(shop_admin_clean_item_text('it_model', $rowData[0][$j++]));
         $it_type1           = addslashes((string)$rowData[0][$j++]);
         $it_type2           = addslashes((string)$rowData[0][$j++]);
         $it_type3           = addslashes((string)$rowData[0][$j++]);
         $it_type4           = addslashes((string)$rowData[0][$j++]);
         $it_type5           = addslashes((string)$rowData[0][$j++]);
-        $it_basic           = addslashes((string)$rowData[0][$j++]);
+        $it_basic           = addslashes(shop_admin_clean_item_text('it_basic', $rowData[0][$j++]));
         $it_explan          = addslashes((string)$rowData[0][$j++]);
         $it_mobile_explan   = addslashes((string)$rowData[0][$j++]);
         $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
@@ -96,6 +100,7 @@ if($is_upload_file) {
 
         if(!$it_id || !$ca_id || !$it_name) {
             $fail_count++;
+            $fail_reasons[] = ($it_id ? $it_id : $i.'행').': 상품코드·기본분류·상품명 누락';
             continue;
         }
 
@@ -107,6 +112,7 @@ if($is_upload_file) {
             $dup_it_id[] = $it_id;
             $dup_count++;
             $fail_count++;
+            $fail_reasons[] = $it_id.': 상품코드 중복';
             continue;
         }
 
@@ -116,7 +122,25 @@ if($is_upload_file) {
         if(! (isset($row2['cnt']) && $row2['cnt'])) {
             $fail_it_id[] = $it_id;
             $fail_count++;
+            $fail_reasons[] = $it_id.': 기본분류 없음';
             continue;
+        }
+
+        // 최고관리자가 아니면 기본분류와 값이 있는 2·3차 분류 모두 본인이 관리 회원인 분류여야 한다.
+        if ($is_admin !== 'super') {
+            $denied_ca_id = '';
+            foreach (array($ca_id, $ca_id2, $ca_id3) as $check_ca_id) {
+                if ($check_ca_id !== '' && !shop_admin_category_owner_check($check_ca_id)) {
+                    $denied_ca_id = $check_ca_id;
+                    break;
+                }
+            }
+            if ($denied_ca_id !== '') {
+                $fail_it_id[] = $it_id;
+                $fail_count++;
+                $fail_reasons[] = $it_id.': 분류 '.$denied_ca_id.'의 관리회원이 아님';
+                continue;
+            }
         }
 
         $sql = " INSERT INTO {$g5['g5_shop_item_table']}
@@ -163,7 +187,12 @@ if($is_upload_file) {
                          it_img9 = '$it_img9',
                          it_img10 = '$it_img10' ";
 
-        sql_query($sql);
+        if (!sql_query($sql, false)) {
+            $fail_it_id[] = $it_id;
+            $fail_count++;
+            $fail_reasons[] = $it_id.': 저장 실패(입력값 길이·형식 확인)';
+            continue;
+        }
 
         $succ_count++;
     }
@@ -189,13 +218,15 @@ include_once(G5_PATH.'/head.sub.php');
         <dd><?php echo number_format($fail_count); ?></dd>
         <?php if($fail_count > 0) { ?>
         <dt>실패상품코드</dt>
-        <dd><?php echo implode(', ', $fail_it_id); ?></dd>
+        <dd><?php echo get_text(implode(', ', $fail_it_id)); ?></dd>
+        <dt>실패사유</dt>
+        <dd><?php echo implode('<br>', array_map('get_text', $fail_reasons)); ?></dd>
         <?php } ?>
         <?php if($dup_count > 0) { ?>
         <dt>상품코드중복건수</dt>
         <dd><?php echo number_format($dup_count); ?></dd>
         <dt>중복상품코드</dt>
-        <dd><?php echo implode(', ', $dup_it_id); ?></dd>
+        <dd><?php echo get_text(implode(', ', $dup_it_id)); ?></dd>
         <?php } ?>
     </dl>
 

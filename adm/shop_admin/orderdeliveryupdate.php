@@ -41,8 +41,10 @@ if(isset($_FILES['excelfile']['name']) && is_string($_FILES['excelfile']['name']
                                             FALSE);
 
         $od_id               = isset($rowData[0][0]) ? addslashes(trim($rowData[0][0])) : '';
-        $od_delivery_company = isset($rowData[0][8]) ? addslashes($rowData[0][8]) : '';
-        $od_invoice          = isset($rowData[0][9]) ? addslashes($rowData[0][9]) : '';
+        // 주문 목록의 배송 정보 수정(orderlistupdate.php)과 같은 정화를 적용하고 DB 컬럼 길이(255자)에 맞춘다.
+        // order_update_delivery()가 SQL 이스케이프를 하고 에스크로 등록에도 그대로 넘기므로 addslashes()하지 않는다.
+        $od_delivery_company = isset($rowData[0][8]) && is_scalar($rowData[0][8]) ? clean_xss_tags((string)$rowData[0][8], 1, 1, 255) : '';
+        $od_invoice          = isset($rowData[0][9]) && is_scalar($rowData[0][9]) ? clean_xss_tags((string)$rowData[0][9], 1, 1, 255) : '';
 
         if(!$od_id || !$od_delivery_company || !$od_invoice) {
             $fail_count++;
@@ -174,7 +176,7 @@ include_once(G5_PATH.'/head.sub.php');
         <dd class="result_fail"><?php echo number_format($fail_count); ?></dd>
         <?php if($fail_count > 0) { ?>
         <dt>실패주문코드</dt>
-        <dd><?php echo implode(', ', $fail_od_id); ?></dd>
+        <dd><?php echo get_text(stripslashes(implode(', ', $fail_od_id))); ?></dd>
         <?php } ?>
     </dl>
 

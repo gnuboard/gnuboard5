@@ -30,7 +30,7 @@ foreach((array) $list as $row){
         echo "<div class=\"sct_img\"><a href=\"{$item_link_href}\">\n";
     }
     if ($this->view_it_img) {
-        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
+        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', get_text(stripslashes($row['it_name'])))."\n";
     }
     if ($this->href) {
         echo "</a></div>\n";
@@ -48,7 +48,7 @@ foreach((array) $list as $row){
         echo "<div class=\"sct_txt\"><a href=\"{$item_link_href}\">\n";
     }
     if ($this->view_it_name) {
-        echo stripslashes($row['it_name'])."\n";
+        echo get_text(stripslashes($row['it_name']))."\n";
     }
     if ($this->href) {
         echo "</a></div>\n";

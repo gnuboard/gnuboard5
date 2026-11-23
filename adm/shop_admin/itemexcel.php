@@ -27,6 +27,7 @@ include_once(G5_PATH.'/head.sub.php');
     </div>
 
     <form name="fitemexcel" method="post" action="./itemexcelupdate.php" enctype="MULTIPART/FORM-DATA" autocomplete="off">
+    <input type="hidden" name="token" value="<?php echo get_admin_token(); ?>">
 
     <div id="excelfile_upload">
         <label for="excelfile">파일선택</label>

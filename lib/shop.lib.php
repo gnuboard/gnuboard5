@@ -2266,9 +2266,10 @@ function get_delivery_inquiry($company, $invoice, $class='')
 
     $str = '';
     if(isset($com) && $com && isset($url) && $url) {
-        $str .= '<a href="'.$url.$invoice.'" target="_blank"';
+        // 운송장번호는 URL 인코딩하고, 주소 전체는 속성 값으로 인코딩한다.
+        $str .= '<a href="'.htmlspecialchars($url.urlencode($invoice), ENT_QUOTES, 'UTF-8').'" target="_blank"';
         if($class)
-            $str .= ' class="'.$class.'"';
+            $str .= ' class="'.htmlspecialchars($class, ENT_QUOTES, 'UTF-8').'"';
         $str .='>배송조회</a>';
         if($tel)
             $str .= ' (문의전화: '.$tel.')';
