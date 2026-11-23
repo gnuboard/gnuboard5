@@ -1140,6 +1140,16 @@ class UploadHandler
         }
 
         if ($this->validate($uploaded_file, $file, $error, $index)) {
+            // 세션·회원 단위 업로드 파일 수·누적 바이트 제한 (KVE-2026-3251)
+            $limit_reservation = null;
+            if (function_exists('g5_editor_upload_reserve')) {
+                $limit_bytes = ($uploaded_file && is_uploaded_file($uploaded_file)) ? $this->get_file_size($uploaded_file) : $file->size;
+                $limit_error = g5_editor_upload_reserve($limit_bytes, $limit_reservation);
+                if ($limit_error) {
+                    $file->error = $limit_error;
+                    return $file;
+                }
+            }
             $this->handle_form_data($file, $index);
             $upload_dir = $this->get_upload_path();
             if (!is_dir($upload_dir)) {
@@ -1213,6 +1223,9 @@ class UploadHandler
                 }
             }
             $this->set_additional_file_properties($file);
+            if (!empty($file->error) && $limit_reservation && function_exists('g5_editor_upload_release')) {
+                g5_editor_upload_release($limit_reservation);
+            }
         }
 
         return $file;

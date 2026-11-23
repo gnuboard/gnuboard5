@@ -22,10 +22,20 @@ require_once './admin.head.php';
 <script>
     $(function() {
         $("#run_update").on("click", function() {
+            var token = get_ajax_token();
+            if (!token) {
+                alert("토큰 정보가 올바르지 않습니다.");
+                return false;
+            }
+
             $("#processing").html('<div class="update_processing"></div><p>Browscap 정보를 업데이트 중입니다.</p>');
 
             $.ajax({
+                type: "POST",
                 url: "./browscap_update.php",
+                data: {
+                    token: token
+                },
                 async: true,
                 cache: false,
                 dataType: "html",

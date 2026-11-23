@@ -41,12 +41,21 @@ if( isset($_GET['_nonce']) && ft_nonce_is_valid( $_GET['_nonce'] , 'smarteditor'
 
 if( $is_editor_upload ) {
     
+    // 비회원 업로드 허용 여부·파일당 크기·누적 제한 (KVE-2026-3251)
+    include_once(G5_LIB_PATH.'/editor_upload.lib.php');
+    $upload_access_error = g5_editor_upload_access_error();
+    if ($upload_access_error) {
+        echo json_encode(array('files'=>array('0'=>array('error'=>$upload_access_error))));
+        exit;
+    }
+
     run_event('smarteditor_photo_upload', $data_dir, $data_url);
 
     require('UploadHandler.php');
     $options = array(
         'upload_dir' => $data_dir,
         'upload_url' => $data_url,
+        'max_file_size' => g5_editor_upload_max_file_size() ? g5_editor_upload_max_file_size() : null,
         // This option will disable creating thumbnail images and will not create that extra folder.
         // However, due to this, the images preview will not be displayed after upload
         'image_versions' => array()

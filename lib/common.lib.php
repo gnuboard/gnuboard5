@@ -244,6 +244,30 @@ if (!function_exists('csv_safe_cell')) {
     }
 }
 
+// CSV 셀 하나를 출력용 문자열로 만든다. csv_safe_cell()로 수식 시작 문자를 중화한 뒤
+// 값 안의 큰따옴표를 ""로 바꾸고 큰따옴표로 감싸 셀 경계를 지킨다(RFC 4180).
+// 쉼표·줄바꿈은 따옴표 안에서 그대로 두므로 셀 안 줄바꿈 뒤의 = 등은 같은 셀의 문자열로 남는다.
+// fputcsv()는 PHP 7.4 미만에서 escape 문자(\)를 끌 수 없어 \" 다음 경계가 깨질 수 있으므로 쓰지 않는다.
+// 문자셋 변환(EUC-KR 등)은 호출 쪽에서 셀 값마다 먼저 한다. EUC-KR/UHC 다바이트 문자에는 0x22·0x2C 바이트가 없다.
+if (!function_exists('csv_quote_cell')) {
+    function csv_quote_cell($v)
+    {
+        return '"' . str_replace('"', '""', (string)csv_safe_cell($v)) . '"';
+    }
+}
+
+// 셀 배열을 CSV 한 행으로 만든다. 모든 셀에 csv_quote_cell()을 적용한다.
+if (!function_exists('csv_build_row')) {
+    function csv_build_row($cells, $eol = "\n")
+    {
+        $out = array();
+        foreach ((array)$cells as $v) {
+            $out[] = csv_quote_cell($v);
+        }
+        return implode(',', $out) . $eol;
+    }
+}
+
 
 // 경고메세지를 경고창으로
 function alert($msg='', $url='', $error=true, $post=false)

@@ -27,13 +27,20 @@ require_once './admin.head.php';
 <script>
     $(function() {
         $(document).on("click", "#run_update", function() {
+            var token = get_ajax_token();
+            if (!token) {
+                alert("토큰 정보가 올바르지 않습니다.");
+                return false;
+            }
+
             $("#processing").html('<div class="update_processing"></div><p>Browscap 정보로 변환 중입니다.</p>');
 
             $.ajax({
-                method: "GET",
+                type: "POST",
                 url: "./browscap_converter.php",
                 data: {
-                    rows: "<?php echo strval($rows); ?>"
+                    rows: "<?php echo strval($rows); ?>",
+                    token: token
                 },
                 async: true,
                 cache: false,

@@ -13,6 +13,14 @@ if ($is_admin != 'super') {
     die('최고관리자로 로그인 후 실행해 주세요.');
 }
 
+// 변환은 POST와 관리자 토큰으로만 실행한다(KVE-2026-3255).
+if (!isset($_SERVER['REQUEST_METHOD']) || strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST'
+    || !isset($_POST['token']) || !is_string($_POST['token']) || $_POST['token'] === ''
+    || !isset($_REQUEST['token']) || $_REQUEST['token'] !== $_POST['token']) {
+    die('올바른 방법으로 이용해 주십시오.');
+}
+check_admin_token();
+
 // browscap cache 파일 체크
 if (!is_file(G5_DATA_PATH . '/cache/browscap_cache.php')) {
     echo '<p>Browscap 정보가 없습니다. 아래 링크로 이동해 Browscap 정보를 업데이트 하세요.</p>' . PHP_EOL;
@@ -23,10 +31,12 @@ if (!is_file(G5_DATA_PATH . '/cache/browscap_cache.php')) {
 require_once G5_PLUGIN_PATH . '/browscap/Browscap.php';
 $browscap = new Browscap(G5_DATA_PATH . '/cache');
 $browscap->doAutoUpdate = false;
+// 변환 중에는 원격 업데이트를 하지 않는다. 캐시가 없거나 이전 형식이면 업데이트 화면에서 다시 받는다.
+$browscap->updateMethod = false;
 $browscap->cacheFilename = 'browscap_cache.php';
 
 // 데이터 변환
-$rows = isset($_GET['rows']) ? preg_replace('#[^0-9]#', '', $_GET['rows']) : 0;
+$rows = isset($_POST['rows']) && is_string($_POST['rows']) ? preg_replace('#[^0-9]#', '', $_POST['rows']) : 0;
 if (!$rows) {
     $rows = 100;
 }
@@ -47,22 +57,32 @@ $result = sql_query($sql);
 
 $cnt = 0;
 for ($i = 0; $row = sql_fetch_array($result); $i++) {
-    $info = $browscap->getBrowser($row['vi_agent']);
+    try {
+        $info = $browscap->getBrowser($row['vi_agent']);
+    } catch (Exception $e) {
+        echo '<p>Browscap 정보를 읽을 수 없습니다. 이전 형식이거나 손상된 정보일 수 있으니 아래 링크로 이동해 Browscap 정보를 다시 업데이트 하세요.</p>' . PHP_EOL;
+        echo '<p><a href="' . G5_ADMIN_URL . '/browscap.php">Browscap 업데이트</a></p>' . PHP_EOL;
+        exit;
+    }
 
     $brow = $row['vi_browser'];
     if (!$brow) {
-        $brow = $info->Comment;
+        $brow = isset($info->Comment) ? $info->Comment : '';
     }
 
     $os = $row['vi_os'];
     if (!$os) {
-        $os = $info->Platform;
+        $os = isset($info->Platform) ? $info->Platform : '';
     }
 
     $device = $row['vi_device'];
     if (!$device) {
-        $device = $info->Device_Type;
+        $device = isset($info->Device_Type) ? $info->Device_Type : '';
     }
+
+    $brow   = sql_real_escape_string($brow);
+    $os     = sql_real_escape_string($os);
+    $device = sql_real_escape_string($device);
 
     $sql2 = " update {$g5['visit_table']}
                 set vi_browser  = '$brow',
