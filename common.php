@@ -10,8 +10,10 @@ header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV
 if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
 @set_time_limit(G5_SET_TIME_LIMIT);
 
-if( version_compare( PHP_VERSION, '5.2.17' , '<' ) ){
-    die(sprintf('PHP 5.2.17 or higher required. Your PHP version is %s', PHP_VERSION));
+// 5.6.45부터 PHP 7.0 문법을 사용하므로, 하위 버전에서는 구문 오류 대신 이 안내를 표시한다.
+// 이 파일과 여기까지의 코드는 PHP 5에서도 해석되도록 유지한다.
+if( version_compare( PHP_VERSION, '7.0.0' , '<' ) ){
+    die(sprintf('PHP 7.0 or higher required. Your PHP version is %s', PHP_VERSION));
 }
 
 //==========================================================================================================================

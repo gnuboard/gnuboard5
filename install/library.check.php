@@ -13,37 +13,37 @@ $install_library_checks = array(
         'name' => 'JSON',
         'required' => true,
         'ok' => function_exists('json_encode') && function_exists('json_decode'),
-        'message' => '설치 전 DB 점검 응답 처리에 필요합니다.'
+        'message' => '설치, 관리자 화면, 외부 연동 응답 처리에 필요합니다.'
     ),
     array(
-        'name' => 'iconv 또는 mbstring',
+        'name' => 'iconv',
         'required' => true,
-        'ok' => function_exists('iconv') || function_exists('mb_convert_encoding'),
-        'message' => '문자열 인코딩 처리에 필요합니다.'
+        'ok' => function_exists('iconv'),
+        'message' => '회원가입, 문자 발송 등의 문자열 인코딩 변환에 필요합니다.'
     ),
     array(
         'name' => 'GD',
-        'required' => false,
+        'required' => true,
         'ok' => extension_loaded('gd') && function_exists('gd_info'),
-        'message' => '자동등록방지 문자와 썸네일 기능에 필요합니다.'
+        'message' => '자동등록방지 문자(기본 캡차)와 썸네일에 필요합니다.'
+    ),
+    array(
+        'name' => 'mbstring',
+        'required' => false,
+        'ok' => function_exists('mb_strlen'),
+        'message' => '다국어 문자열 처리, 메일, 문자 발송에 권장됩니다.'
     ),
     array(
         'name' => 'OpenSSL',
         'required' => false,
         'ok' => extension_loaded('openssl'),
-        'message' => '암호화, 외부 연동, 보안 통신 기능 사용 시 권장됩니다.'
+        'message' => '보안 통신, 소셜 로그인, KCP REST API, 현금영수증 사용 시 권장됩니다.'
     ),
     array(
         'name' => 'cURL',
         'required' => false,
         'ok' => function_exists('curl_init'),
-        'message' => '외부 API, 결제, 소셜 연동 사용 시 권장됩니다.'
-    ),
-    array(
-        'name' => 'Fileinfo',
-        'required' => false,
-        'ok' => function_exists('finfo_open'),
-        'message' => '업로드 파일의 MIME 타입 확인에 권장됩니다.'
+        'message' => '결제(PG) 연동, 소셜 로그인, reCAPTCHA 등 외부 API 사용 시 권장됩니다.'
     )
 );
 
