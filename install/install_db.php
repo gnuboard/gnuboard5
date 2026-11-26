@@ -152,6 +152,21 @@ if($g5_shop_install) {
         <li>전체 테이블 생성 완료</li>
 
 <?php
+// InnoDB를 쓸 수 없는 DB는 요청 제한 저장소가 기본 엔진(MyISAM·Aria)으로 대체된다.
+// 두 엔진은 이름 잠금 방식으로 동작하므로 설치는 계속하고 동작 방식만 알린다.
+if ($g5_install || $is_install === false) {
+    $abuse_rate_status = sql_fetch(" SHOW TABLE STATUS LIKE '".str_replace('_', '\\_', $table_prefix)."abuse\\_rate' ", false, $dblink);
+    $abuse_rate_engine = isset($abuse_rate_status['Engine']) ? strtolower($abuse_rate_status['Engine']) : '';
+    if ($abuse_rate_engine === 'myisam' || $abuse_rate_engine === 'aria') {
+?>
+        <li>비밀번호 찾기 요청 제한 저장소: DB 서버에서 InnoDB를 사용할 수 없어 <?php echo htmlspecialchars($abuse_rate_status['Engine'], ENT_QUOTES, 'UTF-8'); ?>(으)로 생성했습니다. 이름 잠금 방식으로 정상 동작합니다.</li>
+<?php
+    } elseif ($abuse_rate_engine !== 'innodb') {
+?>
+        <li>비밀번호 찾기 요청 제한 저장소의 저장 엔진을 확인하지 못했습니다. 설치 후 관리자 &gt; 환경설정 &gt; DB 업그레이드의 저장소 점검을 확인해 주세요.</li>
+<?php
+    }
+}
 $read_point = 0;
 $write_point = 0;
 $comment_point = 0;

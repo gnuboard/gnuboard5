@@ -12,6 +12,8 @@ import urllib.request, urllib.parse
 ROOT = Path(__file__).resolve().parents[1]
 SOCKET = sys.argv[1]
 DB = 'g5_captcha_installed_' + str(os.getpid())
+# 선택: G5_TEST_ABUSE_ENGINE=MyISAM 이면 요청 제한 저장소를 MyISAM으로 바꿔 이름 잠금 경로를 검사한다.
+ENGINE = {'innodb':'InnoDB','myisam':'MyISAM'}[os.environ.get('G5_TEST_ABUSE_ENGINE','InnoDB').lower()]
 checks = 0
 
 def sql(query):
@@ -23,6 +25,9 @@ def check(ok, label):
     checks += 1
     print('PASS', label, flush=True)
 
+# InnoDB를 끈 DB 서버(mariadbd --skip-innodb 등)에서는 설치 단계의 엔진 대체부터 실제로 재현한다.
+INNODB = sql("SELECT SUPPORT FROM information_schema.ENGINES WHERE ENGINE='InnoDB'") in ('YES','DEFAULT')
+if not INNODB: ENGINE = 'MyISAM'
 sql('CREATE DATABASE '+DB)
 server = None
 try:
@@ -48,6 +53,13 @@ try:
         run=subprocess.run(['php','-d','mysqli.default_socket='+SOCKET,str(installer)],capture_output=True,text=True)
         check(run.returncode==0 and (path/'data/dbconfig.php').exists() and '설치가 완료되었습니다' in run.stdout,'실제 신규 설치 및 사용자 지정 접두어')
         installer.unlink()
+        if not INNODB:
+            check('이름 잠금 방식으로 정상 동작합니다' in run.stdout,'InnoDB 미지원 서버: 설치 완료와 저장소 동작 방식 안내')
+        # InnoDB를 쓸 수 없는 DB에서 대체되는 MyISAM 저장소로도 같은 검사를 실행한다.
+        def set_engine():
+            if ENGINE!='InnoDB': sql('ALTER TABLE '+DB+'.fixture_abuse_rate ENGINE='+ENGINE)
+        set_engine()
+        check(sql("SELECT ENGINE FROM information_schema.tables WHERE table_schema='"+DB+"' AND table_name='fixture_abuse_rate'")==ENGINE,'검사 대상 저장 엔진 '+ENGINE)
         sql('USE '+DB+"; UPDATE fixture_config SET cf_email_use=1, cf_captcha='kcaptcha', cf_captcha_mp3='basic', cf_theme='', cf_use_email_certify=0; CREATE TABLE fixture_mail_capture (recipient varchar(100)); CREATE TABLE fixture_query_audit (value int);")
         # 최초 관리자의 전체 스키마를 복제하되 일반 회원으로 만들어 인증 관련 필수값을 유지한다.
         sql('USE '+DB+"; CREATE TEMPORARY TABLE test_member AS SELECT * FROM fixture_member LIMIT 1; UPDATE test_member SET mb_no=2, mb_id='member', mb_name='검증회원', mb_nick='검증회원', mb_email='member@example.com', mb_level=2, mb_lost_certify='original'; INSERT INTO fixture_member SELECT * FROM test_member;")
@@ -160,7 +172,8 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
         check('안내 메일이 발송됩니다' in lost(actor,challenge(actor)),'전체 발송 한도 초과도 회원 존재 여부 비노출')
         check(mail_count()==before and cert()==old_cert,'전체 한도 차단 시 메일·인증값 보존')
         recipient_key=rate_key('password_lost_recipient','member@example.com')
-        check(sql("SELECT COUNT(*) FROM "+DB+".fixture_abuse_rate WHERE ar_key='"+recipient_key+"'")=='0','전체 한도 거부 시 수신자 한도 미소모')
+        # MyISAM은 준비 행이 남을 수 있으므로 행 존재가 아니라 회복 시각으로 소모 여부를 본다.
+        check(sql("SELECT COUNT(*) FROM "+DB+".fixture_abuse_rate WHERE ar_key='"+recipient_key+"' AND ar_next>UNIX_TIMESTAMP()")=='0','전체 한도 거부 시 수신자 한도 미소모')
         sql("UPDATE "+DB+".fixture_abuse_rate SET ar_next=UNIX_TIMESTAMP()-1 WHERE ar_key='"+global_key+"'")
         retry=client();lost(retry,challenge(retry))
         check(mail_count()==before+1,'전체 한도 회복 직후 수신자 재요청 발송 성공')
@@ -170,7 +183,7 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
         sql("USE "+DB+";\nDELIMITER //\nCREATE TRIGGER rate_failure BEFORE UPDATE ON fixture_abuse_rate FOR EACH ROW BEGIN IF NEW.ar_key='"+failed_key+"' THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='fixture rate failure'; END IF; END//\nDELIMITER ;\n")
         actor=client();old_cert=cert();before=mail_count()
         check('관리자에게 문의' in lost(actor,challenge(actor)),'두 번째 한도 갱신 오류를 서비스 오류로 거부')
-        check(sql("SELECT COUNT(*) FROM "+DB+".fixture_abuse_rate WHERE ar_key IN ('"+recipient_key+"','"+global_key+"')")=='0' and cert()==old_cert and mail_count()==before,'중간 SQL 실패 시 두 한도·메일·인증값 모두 보존')
+        check(sql("SELECT COUNT(*) FROM "+DB+".fixture_abuse_rate WHERE ar_key IN ('"+recipient_key+"','"+global_key+"') AND ar_next>UNIX_TIMESTAMP()")=='0' and cert()==old_cert and mail_count()==before,'중간 SQL 실패 시 두 한도·메일·인증값 모두 보존')
         sql('DROP TRIGGER '+DB+'.rate_failure')
         clear_rates()
         sql('UPDATE '+DB+'.fixture_config SET cf_email_use=0')
@@ -181,19 +194,33 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
         admin=client();request(admin,'/bbs/login_check.php',{'mb_id':'fixtureadmin','mb_password':'fixture-admin-password','url':base+'/adm/'})
         page=html(admin,'/adm/dbupgrade.php')
         notice='비밀번호 찾기 요청 제한 저장소를 확인할 수 없습니다.'
-        check('DB 업그레이드' in page and notice not in page,'실제 최고관리자 화면 정상 상태')
+        mode_label={'InnoDB':'InnoDB 트랜잭션','MyISAM':'이름 잠금(GET_LOCK)'}[ENGINE]
+        check('DB 업그레이드' in page and notice not in page and 'id="abuse_rate_storage"' in page and mode_label in page,'실제 최고관리자 화면 정상 상태와 저장소 점검('+ENGINE+')')
         sql('ALTER TABLE '+DB+'.fixture_abuse_rate DROP PRIMARY KEY')
-        check(request(client(),'/test_ready.php')==b'false' and notice in html(admin,'/adm/dbupgrade.php'),'기본키가 없는 잘못된 저장소 구조도 관리자에게 안내')
+        page=html(admin,'/adm/dbupgrade.php')
+        check(request(client(),'/test_ready.php')==b'false' and notice in page and '구조가 필요한 형식과 다릅니다' in page,'기본키가 없는 잘못된 저장소 구조도 관리자에게 원인과 함께 안내')
         actor=client();before=mail_count();old_cert=cert()
         check('관리자에게 문의' in lost(actor,challenge(actor)) and mail_count()==before and cert()==old_cert,'기본키 누락 상태의 첫 요청부터 실제 발송 거부')
         sql('ALTER TABLE '+DB+'.fixture_abuse_rate ADD PRIMARY KEY (ar_key)')
+        # InnoDB 미지원 DB에서 대체되는 MyISAM은 이름 잠금 경로로 정상 처리한다.
         sql('ALTER TABLE '+DB+'.fixture_abuse_rate ENGINE=MyISAM')
-        actor=client()
-        check(request(client(),'/test_ready.php')==b'false' and '관리자에게 문의' in lost(actor,challenge(actor)) and mail_count()==before,'비트랜잭션 엔진은 준비 상태·실제 처리 모두 거부')
+        clear_rates();actor=client()
+        check(request(client(),'/test_ready.php')==b'true' and '안내 메일이 발송됩니다' in lost(actor,challenge(actor)) and mail_count()==before+1,'MyISAM 저장소는 준비 상태·실제 발송 모두 정상')
+        page=html(admin,'/adm/dbupgrade.php')
+        check(notice not in page and '이름 잠금(GET_LOCK)' in page,'MyISAM 저장소는 관리자 경고 없이 동작 방식만 표시')
+        sql('ALTER TABLE '+DB+'.fixture_abuse_rate ENGINE=MEMORY')
+        page=html(admin,'/adm/dbupgrade.php')
+        check(request(client(),'/test_ready.php')==b'false' and notice in page and '지원하지 않습니다' in page,'허용하지 않은 저장 엔진은 원인과 함께 거부')
+        sql('ALTER TABLE '+DB+'.fixture_abuse_rate ENGINE=MyISAM')
         sql("DELETE FROM "+DB+".fixture_migrations WHERE migration_id='20261008_002_abuse_rate_transaction'")
         converted=json.loads(request(client(),'/test_migrate.php'))
-        check(converted['success'] and request(client(),'/test_ready.php')==b'true','실제 후속 마이그레이션으로 InnoDB 전환')
-        clear_rates()
+        converted_engine=sql("SELECT ENGINE FROM information_schema.tables WHERE table_schema='"+DB+"' AND table_name='fixture_abuse_rate'")
+        if INNODB:
+            check(converted['success'] and request(client(),'/test_ready.php')==b'true' and converted_engine=='InnoDB','실제 후속 마이그레이션으로 InnoDB 전환')
+        else:
+            check(converted['success'] and request(client(),'/test_ready.php')==b'true' and converted_engine=='MyISAM','InnoDB 미지원 서버: 전환 마이그레이션이 MyISAM으로 남아도 준비 상태 유지')
+        set_engine()
+        clear_rates();before=mail_count();old_cert=cert()
         missing=client();a=challenge(missing)
         sql('DROP TABLE '+DB+'.fixture_abuse_rate')
         check(request(client(),'/test_ready.php')==b'false','누락 저장소 준비 상태 거부')
@@ -207,6 +234,7 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
         sql("DELETE FROM "+DB+".fixture_migrations WHERE migration_id IN ('20261008_001_abuse_rate','20261008_002_abuse_rate_transaction')")
         migrated=json.loads(request(client(),'/test_migrate.php'))
         check(migrated['success'] and request(client(),'/test_ready.php')==b'true','실제 마이그레이션 적용 후 준비 상태 회복')
+        set_engine()
         check(notice not in html(admin,'/adm/dbupgrade.php'),'업그레이드 후 관리자 안내 해제')
         actor=client();lost(actor,challenge(actor))
         check(mail_count()==before+1,'업그레이드 후 정상 발송 재개')
@@ -260,19 +288,30 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
         check('자동등록방지' in lost(client(),'incorrect'),'설정 컬럼 추가 전에도 기본값으로 기존 설치 호환')
         check(json.loads(request(client(),'/test_migrate.php'))['success'] and 'password_lost_policy[ip][interval]' in html(admin,'/adm/config_form.php'),'정책 마이그레이션과 최고관리자 설정 화면')
         clear_rates()
-        (path/'test_structure_change.php').write_text("<?php require './common.php'; require G5_LIB_PATH.'/abuse_rate.lib.php'; g5_password_lost_rate_allow('ip','schema-change'); sql_query('ALTER TABLE fixture_abuse_rate ENGINE=MyISAM'); echo json_encode(g5_password_lost_mail_allow('schema@example.com'));")
-        check(request(client(),'/test_structure_change.php')==b'null','같은 요청의 두 트랜잭션 사이 구조 변경도 거부')
-        sql('ALTER TABLE '+DB+'.fixture_abuse_rate ENGINE=InnoDB')
-        # 제한 전용 연결은 작업자가 장시간 대기하지 않도록 현대 MySQL에서 2초에 중단한다.
+        (path/'test_structure_change.php').write_text("<?php require './common.php'; require G5_LIB_PATH.'/abuse_rate.lib.php'; g5_password_lost_rate_allow('ip','schema-change'); sql_query('ALTER TABLE fixture_abuse_rate DROP PRIMARY KEY'); echo json_encode(g5_password_lost_mail_allow('schema@example.com'));")
+        check(request(client(),'/test_structure_change.php')==b'null','같은 요청의 두 확보 사이 구조 변경도 거부')
+        sql('ALTER TABLE '+DB+'.fixture_abuse_rate ADD PRIMARY KEY (ar_key)')
+        clear_rates()
+        (path/'test_engine_change.php').write_text("<?php require './common.php'; require G5_LIB_PATH.'/abuse_rate.lib.php'; $a=g5_password_lost_rate_allow('ip','engine-change'); sql_query('ALTER TABLE fixture_abuse_rate ENGINE="+('InnoDB' if ENGINE=='MyISAM' else 'MyISAM')+"'); echo json_encode(array($a,g5_password_lost_mail_allow('engine@example.com')));")
+        check(request(client(),'/test_engine_change.php')==b'[true,true]','같은 요청 중 InnoDB·MyISAM 전환도 바뀐 엔진의 방식으로 처리')
+        sql('ALTER TABLE '+DB+'.fixture_abuse_rate ENGINE='+ENGINE)
         clear_rates(); locked_key=rate_key('concurrent','one')
         sql("INSERT INTO "+DB+".fixture_abuse_rate VALUES ('"+locked_key+"',0)")
         lock_script=path/'hold_lock.php'
-        lock_script.write_text("<?php $db=new mysqli('localhost','root','','"+DB+"',0,'"+SOCKET+"'); $db->begin_transaction(); $db->query(\"SELECT * FROM fixture_abuse_rate WHERE ar_key='"+locked_key+"' FOR UPDATE\"); echo \"locked\\n\"; flush(); sleep(4); $db->rollback();")
+        if ENGINE=='InnoDB':
+            # 제한 전용 연결은 작업자가 장시간 대기하지 않도록 현대 MySQL에서 2초에 중단한다.
+            lock_script.write_text("<?php $db=new mysqli('localhost','root','','"+DB+"',0,'"+SOCKET+"'); $db->begin_transaction(); $db->query(\"SELECT * FROM fixture_abuse_rate WHERE ar_key='"+locked_key+"' FOR UPDATE\"); echo \"locked\\n\"; flush(); sleep(4); $db->rollback();")
+            lock_label='행 잠금 대기를 약 2초에서 중단하고 오류로 거부'
+        else:
+            # 이름 잠금을 다른 연결이 쥐고 있으면 2초 뒤 오류로 거부하고 한도를 소모하지 않는다.
+            lock_name='g5_abuse_rate_'+hashlib.md5((DB+'\0fixture_abuse_rate').encode()).hexdigest()[:32]
+            lock_script.write_text("<?php $db=new mysqli('localhost','root','','"+DB+"',0,'"+SOCKET+"'); $db->query(\"SELECT GET_LOCK('"+lock_name+"', 0)\"); echo \"locked\\n\"; flush(); sleep(4); $db->query(\"DO RELEASE_LOCK('"+lock_name+"')\");")
+            lock_label='이름 잠금 대기를 약 2초에서 중단하고 오류로 거부'
         holder=subprocess.Popen(['php',str(lock_script)],stdout=subprocess.PIPE,text=True)
         try:
             assert holder.stdout.readline().strip()=='locked'
             started=time.monotonic(); result=request(client(),'/test_rate.php'); elapsed=time.monotonic()-started
-            check(result==b'null' and elapsed<3.5,'행 잠금 대기를 약 2초에서 중단하고 오류로 거부')
+            check(result==b'null' and elapsed<3.5 and sql("SELECT ar_next FROM "+DB+".fixture_abuse_rate WHERE ar_key='"+locked_key+"'")=='0',lock_label)
         finally: holder.wait(timeout=8)
         check(request(client(),'/test_rate.php')==b'true','잠금 해제 후 정상 요청 회복')
         if os.environ.get('G5_TEST_PLAYWRIGHT'):
@@ -285,7 +324,7 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
             check(mail_count()==before_browser+2,'PC·모바일 브라우저 제출 각각 메일 훅 1회')
         log.flush();log.seek(0);output=log.read()
         check('Fatal error' not in output and 'Uncaught' not in output,'PHP 치명 오류 없음')
-        print('통과:',checks,'(실제 설치 HTTP/DB, 외부 메일 전송 없음)',flush=True)
+        print('통과:',checks,'(실제 설치 HTTP/DB, 저장 엔진 '+ENGINE+', 외부 메일 전송 없음)',flush=True)
 finally:
     if server:
         os.killpg(server.pid,signal.SIGTERM);server.wait(timeout=10)

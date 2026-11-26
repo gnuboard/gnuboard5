@@ -3,6 +3,7 @@ $sub_menu = '100410';
 include_once('./_common.php');
 include_once(G5_LIB_PATH . '/migration.lib.php');
 include_once(G5_LIB_PATH . '/shop_install.lib.php');
+include_once(G5_LIB_PATH . '/abuse_rate.lib.php');
 
 auth_check_menu($auth, $sub_menu, 'r');
 
@@ -56,6 +57,11 @@ if ($shop_install_result !== null && $shop_install_result['success']) {
 } else {
     $db_upgrade_msg = '적용할 DB 마이그레이션이 없습니다.';
 }
+
+// 마이그레이션 이력만으로는 알 수 없는 저장 엔진·구조·연결 상태를 조회로 점검한다.
+$abuse_rate_diagnosis = g5_abuse_rate_storage_diagnose();
+$abuse_rate_messages = g5_abuse_rate_storage_messages($abuse_rate_diagnosis);
+$abuse_rate_innodb_labels = array('YES' => '사용 가능', 'DEFAULT' => '사용 가능(기본 엔진)', 'NO' => '지원하지 않음', 'DISABLED' => '비활성화됨');
 
 $g5['title'] = 'DB 업그레이드';
 include_once('./admin.head.php');
@@ -152,6 +158,51 @@ $dbupgrade_token = get_admin_token();
     </table>
 </div>
 </form>
+
+<section id="abuse_rate_storage" class="dbupgrade_storage">
+    <h2 class="h2_frm">비밀번호 찾기 요청 제한 저장소 점검</h2>
+    <div class="local_desc01 local_desc"<?php echo ($abuse_rate_diagnosis['ready'] && $abuse_rate_diagnosis['lock'] !== false) ? '' : ' style="color:#d00"'; ?>>
+        <p><strong><?php echo $abuse_rate_diagnosis['ready'] ? '정상' : '사용 불가'; ?>:</strong> <?php echo htmlspecialchars($abuse_rate_messages['reason'], ENT_QUOTES, 'UTF-8'); ?></p>
+        <?php if ($abuse_rate_messages['action'] !== '') { ?>
+        <p><?php echo htmlspecialchars($abuse_rate_messages['action'], ENT_QUOTES, 'UTF-8'); ?></p>
+        <?php } ?>
+        <?php if (!$abuse_rate_diagnosis['ready']) { ?>
+        <p>위 조치 후에도 같으면 서버의 PHP 오류 로그에 [g5 abuse rate]로 시작하는 기록이 있는지 확인해 주세요.</p>
+        <?php } ?>
+    </div>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+            <caption>요청 제한 저장소 점검 결과</caption>
+            <tbody>
+            <tr>
+                <th scope="row">테이블</th>
+                <td><?php echo htmlspecialchars(g5_abuse_rate_table(), ENT_QUOTES, 'UTF-8'); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">저장 엔진</th>
+                <td><?php echo $abuse_rate_diagnosis['engine'] !== '' ? htmlspecialchars($abuse_rate_diagnosis['engine'], ENT_QUOTES, 'UTF-8') : '확인할 수 없음'; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">동작 방식</th>
+                <td><?php echo $abuse_rate_diagnosis['mode'] === 'transaction' ? 'InnoDB 트랜잭션' : ($abuse_rate_diagnosis['mode'] === 'lock' ? '이름 잠금(GET_LOCK)' . ($abuse_rate_diagnosis['lock'] === false ? ' - 지금 잠금을 얻지 못함' : '') : '없음'); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">DB 서버 InnoDB</th>
+                <td><?php echo isset($abuse_rate_innodb_labels[$abuse_rate_diagnosis['innodb']]) ? $abuse_rate_innodb_labels[$abuse_rate_diagnosis['innodb']] : '확인할 수 없음'; ?></td>
+            </tr>
+            <?php if (!empty($abuse_rate_diagnosis['row'])) { ?>
+            <tr>
+                <th scope="row">컬럼 구조</th>
+                <td>ar_key <?php echo htmlspecialchars($abuse_rate_diagnosis['row']['key_type'] . ($abuse_rate_diagnosis['row']['key_null'] === 'NO' ? ' NOT NULL' : ' NULL'), ENT_QUOTES, 'UTF-8'); ?>,
+                    ar_next <?php echo htmlspecialchars($abuse_rate_diagnosis['row']['next_type'] . ($abuse_rate_diagnosis['row']['next_null'] === 'NO' ? ' NOT NULL' : ' NULL'), ENT_QUOTES, 'UTF-8'); ?>,
+                    기본키 <?php echo htmlspecialchars($abuse_rate_diagnosis['row']['primary_column'], ENT_QUOTES, 'UTF-8'); ?>
+                    (필요: ar_key char(64) NOT NULL 기본키, ar_next bigint unsigned NOT NULL)</td>
+            </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</section>
 
 <style>
 .dbupgrade_all_actions {display:flex;width:100%;margin:0 0 20px;justify-content:flex-end;gap:5px}
