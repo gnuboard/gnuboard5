@@ -29,6 +29,7 @@ InnoDB를 쓸 수 없는 DB 서버에서 비밀번호 찾기가 막히고 관리
   - 필수: MySQL 확장, JSON, iconv, GD
   - 권장: mbstring, OpenSSL, cURL
   - 쓰이지 않는 Fileinfo 항목은 뺐습니다(install/library.check.php).
+- **설치 화면 라이선스:** 라이선스 전문 입력칸의 불필요한 name 속성을 제거했습니다. 이제 설치 폼을 제출할 때 라이선스 전문이 함께 전송되지 않습니다(install/index.php).
 - **README:** 요구사항(PHP 7.0 이상, PHP 확장 표), 설치, 업데이트 안내를 정리했습니다. 이 내용은 5.6.56 배포 후 공개 저장소에 먼저 반영됐습니다.
 
 **[릴리즈 노트 및 업데이트 안내]**
