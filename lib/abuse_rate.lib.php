@@ -122,7 +122,11 @@ function g5_abuse_rate_storage_state()
     $row = g5_abuse_rate_row($connection, $result);
     if (!$row) {
         // 컬럼이나 기본키가 없으면 결합 결과가 비어 있다.
+        // 진단 화면에 표시할 수 있도록 저장 엔진만 따로 읽는다(실패 경로에서만 조회한다).
         $state['reason'] = 'structure';
+        $result = g5_abuse_rate_query($connection, "SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = '{$table}'");
+        $row = $result ? g5_abuse_rate_row($connection, $result) : false;
+        if ($row && $row['ENGINE'] !== null) $state['engine'] = (string)$row['ENGINE'];
         return $state;
     }
     $state['row'] = $row;

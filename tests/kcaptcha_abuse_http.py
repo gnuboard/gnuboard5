@@ -199,6 +199,8 @@ echo json_encode(g5_abuse_rate_allow('concurrent','one',3600,3));
         sql('ALTER TABLE '+DB+'.fixture_abuse_rate DROP PRIMARY KEY')
         page=html(admin,'/adm/dbupgrade.php')
         check(request(client(),'/test_ready.php')==b'false' and notice in page and '구조가 필요한 형식과 다릅니다' in page,'기본키가 없는 잘못된 저장소 구조도 관리자에게 원인과 함께 안내')
+        engine_cell=re.search(r'<th scope="row">저장 엔진</th>\s*<td>(.*?)</td>',page)
+        check(engine_cell is not None and engine_cell.group(1)==ENGINE,'구조 오류에서도 점검 영역에 실제 저장 엔진 표시: '+(engine_cell.group(1) if engine_cell else 'missing'))
         actor=client();before=mail_count();old_cert=cert()
         check('관리자에게 문의' in lost(actor,challenge(actor)) and mail_count()==before and cert()==old_cert,'기본키 누락 상태의 첫 요청부터 실제 발송 거부')
         sql('ALTER TABLE '+DB+'.fixture_abuse_rate ADD PRIMARY KEY (ar_key)')
