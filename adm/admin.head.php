@@ -215,11 +215,15 @@ if (!empty($_COOKIE['g5_admin_btn_gnb'])) {
         <div class="container_wr">
 <?php if ($is_admin === 'super') {
     include_once G5_LIB_PATH.'/abuse_rate.lib.php';
-    if (!g5_abuse_rate_storage_ready()) { ?>
+    // MyISAM·Aria는 이름 잠금 방식으로 정상 동작하므로 안내하지 않는다. 상세 진단은 DB 업그레이드 화면에서만 한다.
+    $abuse_rate_state = g5_abuse_rate_storage_state();
+    if (!$abuse_rate_state['ready']) {
+        $abuse_rate_messages = g5_abuse_rate_storage_messages($abuse_rate_state); ?>
         <div class="local_desc01 local_desc" role="alert">
             <p><strong>비밀번호 찾기 요청 제한 저장소를 확인할 수 없습니다.</strong>
-            <a href="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php">DB 업그레이드</a>에서 대기 중인 변경을 적용해 주세요.
-            이미 적용했다면 테이블 구조와 DB 권한을 확인해 주세요. 준비 전에는 비밀번호 찾기가 제한됩니다.</p>
+            <?php echo htmlspecialchars($abuse_rate_messages['reason'], ENT_QUOTES, 'UTF-8'); ?>
+            <a href="<?php echo G5_ADMIN_URL; ?>/dbupgrade.php#abuse_rate_storage">DB 업그레이드</a>의 저장소 점검에서 조치 방법을 확인해 주세요.
+            준비 전에는 비밀번호 찾기가 제한됩니다.</p>
         </div>
 <?php }
 } ?>
